@@ -261,17 +261,17 @@ void Hachiko::ComponentImage::Load(const YAML::Node& node)
     time_per_frame = 1.0f / frames_per_second;
 }
 
-void Hachiko::ComponentImage::GetResources(const YAML::Node& node, std::set<UID>& resource_ids)
+void Hachiko::ComponentImage::GetResources(const YAML::Node& node, std::map<Resource::Type, std::set<UID>>& resources)
 {
     UID resource_id = node[IMAGE_IMAGE_ID].as<UID>();
     if (resource_id)
     {
-        resource_ids.insert(resource_id);
+        resources[Resource::Type::TEXTURE].insert(resource_id);
     }
     resource_id = node[IMAGE_HOVER_IMAGE_ID].as<UID>();
     if (resource_id)
     {
-        resource_ids.insert(resource_id);
+        resources[Resource::Type::TEXTURE].insert(resource_id);
     }
 }
 

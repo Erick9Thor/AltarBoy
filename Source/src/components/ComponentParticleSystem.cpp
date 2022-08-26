@@ -497,12 +497,12 @@ void Hachiko::ComponentParticleSystem::Load(const YAML::Node& node)
     }
 }
 
-void Hachiko::ComponentParticleSystem::GetResources(const YAML::Node& node, std::set<UID>& resource_ids)
+void Hachiko::ComponentParticleSystem::GetResources(const YAML::Node& node, std::map<Resource::Type, std::set<UID>>& resources)
 {
     UID resource_id = node[PARTICLES_TEXTURE][PARTICLES_TEXTURE_ID].IsDefined() ? node[PARTICLES_TEXTURE][PARTICLES_TEXTURE_ID].as<UID>() : 0;
     if (resource_id)
     {
-        resource_ids.insert(resource_id);
+        resources[Resource::Type::TEXTURE].insert(resource_id);
     }
 }
 

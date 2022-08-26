@@ -130,10 +130,6 @@ namespace Hachiko
         {
         }
 
-        virtual void GetResources(const YAML::Node& node, std::set<UID>& resources_id) 
-        {
-        }
-
         [[nodiscard]] virtual bool CanBeRemoved() const;
         virtual bool HasDependentComponents(GameObject* game_object) const;
 

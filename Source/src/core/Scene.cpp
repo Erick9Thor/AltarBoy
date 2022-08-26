@@ -281,9 +281,23 @@ void Hachiko::Scene::Load(const YAML::Node& node, bool meshes_only)
     loaded = true;
 }
 
-void Hachiko::Scene::GetResources(const YAML::Node& node, std::set<UID>& resources_id) 
+void Hachiko::Scene::GetResources(const YAML::Node& node, std::map<Resource::Type, std::set<UID>>& resources)
 {
-    // TODO: 
+    for (unsigned i = 0; i < static_cast<unsigned>(TextureCube::Side::COUNT); ++i)
+    {
+        std::string side_name = TextureCube::SideString(static_cast<TextureCube::Side>(i));
+        UID resource_id = node[SKYBOX_NODE][TextureCube::SideString(static_cast<TextureCube::Side>(i))].as<UID>();
+        if (resource_id)
+        {
+            resources[Resource::Type::TEXTURE].insert(resource_id);
+        }
+    }
+
+    const YAML::Node children_node = node[CHILD_NODE];
+    for (unsigned i = 0; i < children_node.size(); ++i)
+    {
+        GameObject::GetResources(children_node[i], resources);
+    }
 }
 
 void Hachiko::Scene::GetNavmeshData(std::vector<float>& scene_vertices, std::vector<int>& scene_triangles, std::vector<float>& scene_normals, AABB& scene_bounds)

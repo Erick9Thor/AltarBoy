@@ -73,13 +73,13 @@ namespace Hachiko
 
     private:
         void StopScene();
-        void LoadScene(UID new_scene_id);
-        void LoadScene(ResourceScene* scene, bool keep_navmesh = false);
+        void LoadScene(UID new_scene_id, bool keep_navmesh = false);
         void ChangeMainScene(Scene* new_scene);
-        void CreateEmptyScene(const char* name = nullptr);
+        void LoadEmptyScene();
+        void PostLoadScene();
         void ReloadScene();
 
-        void ThreadLoadScene(ResourceScene* scene_resource);
+        void ThreadLoadScene(UID scene_id, bool keep_navmesh);
 
         // Deletes current resource it it doesnt come from resource manager (for now assume it when id 0)
         void SetSceneResource(ResourceScene* scene);
@@ -99,6 +99,7 @@ namespace Hachiko
 
         bool loading_scene = false;
         bool was_scene_playing = false;
+        ResourceScene* tmp_resource_scene = nullptr;
         Scene* tmp_loading_scene = nullptr;
         std::thread loading_scene_worker;
     };

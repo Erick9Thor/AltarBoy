@@ -433,11 +433,11 @@ void Hachiko::ComponentAnimation::Load(const YAML::Node& node)
     }
 }
 
-void Hachiko::ComponentAnimation::GetResources(const YAML::Node& node, std::set<UID>& resource_ids)
+void Hachiko::ComponentAnimation::GetResources(const YAML::Node& node, std::map<Resource::Type, std::set<UID>>& resources)
 {
     UID resource_id = node[M_STATE_MACHINE].IsDefined() ? node[M_STATE_MACHINE].as<UID>() : 0;
     if (resource_id)
     {
-        resource_ids.insert(node[M_STATE_MACHINE].as<UID>());
+        resources[Resource::Type::STATE_MACHINE].insert(node[M_STATE_MACHINE].as<UID>());
     }
 }

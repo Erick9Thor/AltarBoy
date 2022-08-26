@@ -482,11 +482,11 @@ void Hachiko::ComponentBillboard::Load(const YAML::Node& node)
     blend_factor = node[BLEND_FACTOR].IsDefined() ? node[BLEND_FACTOR].as<float>() : blend_factor;
 }
 
-void Hachiko::ComponentBillboard::GetResources(const YAML::Node& node, std::set<UID>& resource_ids)
+void Hachiko::ComponentBillboard::GetResources(const YAML::Node& node, std::map<Resource::Type, std::set<UID>>& resources)
 {
     if (node[BILLBOARD_TEXTURE_ID].IsDefined())
     {
-        resource_ids.insert(node[BILLBOARD_TEXTURE_ID].as<UID>());
+        resources[Resource::Type::TEXTURE].insert(node[BILLBOARD_TEXTURE_ID].as<UID>());
     }
 }
 

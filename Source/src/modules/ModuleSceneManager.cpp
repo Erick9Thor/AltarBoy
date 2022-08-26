@@ -130,13 +130,7 @@ void Hachiko::ModuleSceneManager::CheckSceneLoading()
             }
         }
 
-        ChangeMainScene(tmp_loading_scene);
-
-        // If the scene was playing previously, continue playing:
-        if (was_scene_playing)
-        {
-            AttemptScenePlay();
-        }
+        PostLoadScene();
 
         App->LoadingComplete();
 
@@ -160,7 +154,7 @@ UpdateStatus Hachiko::ModuleSceneManager::PostUpdate(float delta)
         // Keeps the currently defined navmesh since the one saved in library is from the last time we saved
         scene_reload_requested = false;
         constexpr bool keep_navmesh = true;
-        LoadScene(scene_resource, keep_navmesh);
+        LoadScene(scene_resource->GetID(), keep_navmesh);
         return UpdateStatus::UPDATE_CONTINUE;
     }
 
@@ -210,8 +204,8 @@ bool Hachiko::ModuleSceneManager::CleanUp()
 
     SetSceneResource(nullptr);
 
-    RELEASE(main_scene);
     // Release because not owned by RM
+    RELEASE(main_scene);
 
     return true;
 }
@@ -239,32 +233,44 @@ void Hachiko::ModuleSceneManager::RemovedGameObject(GameObject* go)
     }
 }
 
-void Hachiko::ModuleSceneManager::CreateEmptyScene(const char* name)
+void Hachiko::ModuleSceneManager::LoadEmptyScene()
 {
-    LoadScene(nullptr);
-    if (name)
-    {
-        main_scene->name = name;
-    }
-    else
-    {
-        // Default name with timestamp for new empt unnamed scenes
-        auto t = std::time(nullptr);
-        auto tm = *std::localtime(&t);
-        std::ostringstream oss;
-        oss << "unnamed_scene_" << std::put_time(&tm, "%d-%m-%Y %H-%M-%S");
-        main_scene->name = oss.str().c_str();
-    }
+    tmp_loading_scene = new Scene();
 
-    // Since the empty scene is already loaded, it's loaded flag must be set to
-    // true, for systems that need a "loaded" scene to function such as
-    // ModuleScriptingSystem which needs both engine to be in play mode and
-    // current scene to be flagged as "loaded":
-    main_scene->loaded = true;
+    GameObject* camera_go = tmp_loading_scene->CreateNewGameObject(tmp_loading_scene->GetRoot(), "Main Camera");
+    camera_go->CreateComponent(Component::Type::CAMERA);
+
+    // Default name with timestamp for new empt unnamed scenes
+    auto t = std::time(nullptr);
+    auto tm = *std::localtime(&t);
+    std::ostringstream oss;
+    oss << "unnamed_scene_" << std::put_time(&tm, "%d-%m-%Y %H-%M-%S");
+    tmp_loading_scene->name = oss.str().c_str();
 
     // Create a scene resource not related to an asset to reload the scene as any other
     SceneImporter scene_importer;
-    SetSceneResource(scene_importer.CreateSceneResource(main_scene));
+    tmp_resource_scene = scene_importer.CreateSceneResource(tmp_loading_scene);
+
+    App->navigation->SetNavmesh(nullptr);
+
+    tmp_loading_scene->loaded = true;
+
+    PostLoadScene();
+}
+
+void Hachiko::ModuleSceneManager::PostLoadScene()
+{
+    SetSceneResource(tmp_resource_scene);
+    ChangeMainScene(tmp_loading_scene);
+
+    // If the scene was playing previously, continue playing:
+    if (was_scene_playing)
+    {
+        AttemptScenePlay();
+    }
+
+    tmp_resource_scene = nullptr;
+    tmp_loading_scene = nullptr;
 }
 
 void Hachiko::ModuleSceneManager::StopScene()
@@ -279,16 +285,28 @@ void Hachiko::ModuleSceneManager::StopScene()
     GameTimer::Stop();
 }
 
-void Hachiko::ModuleSceneManager::LoadScene(UID new_scene_id)
+void Hachiko::ModuleSceneManager::LoadScene(UID new_scene_id, bool keep_navmesh)
 {
-    ResourceScene* scene_resource = static_cast<ResourceScene*>(App->resources->GetResource(Resource::Type::SCENE, new_scene_id));
-    if (scene_resource)
+    // Stop the scene if it was playing to avoid scripts calling Start:
+    was_scene_playing = IsScenePlaying();
+    if (was_scene_playing)
     {
-        LoadScene(scene_resource);
+        StopScene();
+    }
+
+    if (new_scene_id && App->resources->ExistResource(Resource::Type::SCENE, new_scene_id))
+    {        
+        HE_LOG("START LOADING");
+
+        App->StartLoading();
+        loading_scene = true;
+
+        loading_scene_worker = std::thread(&ModuleSceneManager::ThreadLoadScene, this, new_scene_id, keep_navmesh);
     }
     else
     {
-        CreateEmptyScene();
+        // Load an empty scene
+        LoadEmptyScene();
     }
 }
 
@@ -352,127 +370,23 @@ void Hachiko::ModuleSceneManager::OptionsMenu()
     main_scene->GetSkybox()->DrawImGui();
 }
 
-void Hachiko::ModuleSceneManager::LoadScene(ResourceScene* new_resource, bool keep_navmesh)
+void Hachiko::ModuleSceneManager::ThreadLoadScene(UID scene_id, bool keep_navmesh)
 {
-    // TODO: Refactor this whole load logic and event handling to be as clear 
-    // as possible.
+    // Load the scene
+    tmp_resource_scene = static_cast<ResourceScene*>(App->resources->GetResource(Resource::Type::SCENE, scene_id));
 
-    // Stop the scene if it was playing to avoid scripts calling Start:
-    was_scene_playing = IsScenePlaying();
-    if (was_scene_playing)
+    if (!keep_navmesh)
     {
-        StopScene();
+        App->navigation->SetNavmesh(tmp_resource_scene->scene_data[NAVMESH_ID].as<UID>());
     }
-
-    SetSceneResource(new_resource);
 
     tmp_loading_scene = new Scene();
-    if (scene_resource)
-    {
-        HE_LOG("START LOADING");
+    tmp_loading_scene->Load(tmp_resource_scene->scene_data);
 
-        App->StartLoading();
-        loading_scene = true;
-        loading_scene_worker = std::thread(&ModuleSceneManager::ThreadLoadScene, this, scene_resource);
-
-        if (!keep_navmesh)
-        {
-            App->navigation->SetNavmesh(scene_resource->scene_data[NAVMESH_ID].as<UID>());
-        }
-
-        //new_scene->Load(scene_resource->scene_data);
-
-        /* loading_scene_worker.join();
-
-        for (auto it = App->resources->loaded_resources.begin(); it != App->resources->loaded_resources.end(); it++)
-        {
-            if (it->second.resource->GetType() == Resource::Type::TEXTURE)
-            {
-                ResourceTexture* texture = static_cast<ResourceTexture*>(it->second.resource);
-                if (!glIsTexture(texture->GetID()))
-                {
-                    texture->GenerateBuffer();
-                }
-            }
-        }
-
-        loading_scene = false;
-        App->LoadingComplete();*/
-        
-        return;
-    }
-    else
-    {
-        if (!keep_navmesh)
-        {
-            App->navigation->SetNavmesh(nullptr);
-        }
-        // This removes current navmesh
-        GameObject* camera_go = tmp_loading_scene->CreateNewGameObject(tmp_loading_scene->GetRoot(), "Main Camera");
-        camera_go->CreateComponent(Component::Type::CAMERA);
-    }
-
-    ChangeMainScene(tmp_loading_scene);
-
-    // If the scene was playing previously, continue playing:
-    if (was_scene_playing)
-    {
-        AttemptScenePlay();
-    }
-}
-
-void Hachiko::ModuleSceneManager::ThreadLoadScene(ResourceScene* scene_resource)
-{
-    tmp_loading_scene->Load(scene_resource->scene_data);
-
-    Sleep(5000);
+    //Sleep(5000);
 
     loading_scene = false;
 }
-
-/* void Hachiko::ModuleSceneManager::LoadScene(ResourceScene* new_resource, bool keep_navmesh)
-{
-    // TODO: Refactor this whole load logic and event handling to be as clear
-    // as possible.
-
-    // Stop the scene if it was playing to avoid scripts calling Start:
-    bool was_scene_playing = IsScenePlaying();
-    if (was_scene_playing)
-    {
-        StopScene();
-    }
-
-    SetSceneResource(new_resource);
-
-    Scene* new_scene = new Scene();
-    if (scene_resource)
-    {
-        if (!keep_navmesh)
-        {
-            App->navigation->SetNavmesh(scene_resource->scene_data[NAVMESH_ID].as<UID>());
-        }
-
-        new_scene->Load(scene_resource->scene_data);
-    }
-    else
-    {
-        if (!keep_navmesh)
-        {
-            App->navigation->SetNavmesh(nullptr);
-        }
-        // This removes current navmesh
-        GameObject* camera_go = new_scene->CreateNewGameObject(new_scene->GetRoot(), "Main Camera");
-        camera_go->CreateComponent(Component::Type::CAMERA);
-    }
-
-    ChangeMainScene(new_scene);
-
-    // If the scene was playing previously, continue playing:
-    if (was_scene_playing)
-    {
-        AttemptScenePlay();
-    }
-}*/
 
 void Hachiko::ModuleSceneManager::ChangeMainScene(Scene* new_scene)
 {

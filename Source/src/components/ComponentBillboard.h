@@ -49,7 +49,7 @@ namespace Hachiko
 
         void Save(YAML::Node& node) const override;
         void Load(const YAML::Node& node) override;
-        void GetResources(const YAML::Node& node, std::set<UID>& resources_id) override;
+        static void GetResources(const YAML::Node& node, std::map<Resource::Type, std::set<UID>>& resources);
         
         void DrawGui() override;
         void Draw(ComponentCamera* camera, Program* program) override;

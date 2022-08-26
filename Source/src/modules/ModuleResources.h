@@ -24,6 +24,7 @@ namespace Hachiko
 
         Hachiko::Resource::AssetType GetAssetTypeFromPath(const std::filesystem::path& file);
 
+        bool ExistResource(Resource::Type type, UID id);
         Resource* GetResource(Resource::Type type, UID id);
         void ReleaseResource(Resource* resource);
         void ReleaseResource(UID id);
