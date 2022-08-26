@@ -130,6 +130,7 @@ namespace Hachiko
 			bool IsDying() const;
 
 			bool IsActionLocked() const;
+			bool IsActionOnProgress() const;
 			bool IsAttackOnCooldown() const;
 			bool IsInComboWindow() const;
 
@@ -281,6 +282,9 @@ namespace Hachiko
 			float _falling_distance = 10.0f;
 			bool _should_rotate = false;
 			bool _is_falling = false;
+
+			// General management
+			float _lock_time = 0.0f;
 
 			// Camera management
 			int _current_cam_setting = 0;

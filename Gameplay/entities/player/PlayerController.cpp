@@ -196,7 +196,11 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	_player_position = _player_transform->GetGlobalPosition();
 	_movement_direction = float3::zero;
 
-	
+	_lock_time -= Time::DeltaTime();
+	if (_lock_time < 0.0f)
+	{
+		_lock_time = 0.0f;
+	}
 	
 	if (_invulnerability_time_remaining > 0.0f)
 	{
@@ -368,7 +372,7 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 		{
 			_state = PlayerState::WALKING;
 		}
-		else
+		else if (!IsActionOnProgress())
 		{
 			_state = PlayerState::IDLE;
 		}
@@ -467,6 +471,7 @@ void Hachiko::Scripting::PlayerController::Dash()
 	_dash_progress = 0.f;
 	_dash_start = _player_position;
 	_current_dash_duration = _dash_duration;
+	_lock_time = _dash_duration;
 
 	StoreDashOrigin(_dash_start);
 
@@ -558,6 +563,9 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 
 	_attack_current_duration = attack.duration;
 	_after_attack_timer = attack.cooldown + _combo_grace_period;
+
+	// The attacks lock the player just for half of the time
+	_lock_time = attack.duration / 2;
 	
 	// Attack will occur in the attack simulation after the delay
 	_attack_current_delay = attack.hit_delay;
@@ -578,9 +586,18 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 	if (attack.dash_distance != 0.0f)
 	{
 		_dash_progress = 0.f;
-		_current_dash_duration = attack.duration;
+		_current_dash_duration = attack.duration * (2/3);
 		_dash_start = _player_position;
-		_dash_end = _player_position + _player_transform->GetFront().Normalized() * attack.dash_distance;
+
+		// Check for inertia
+		float inertia_value = 0;
+		if (_previous_state == PlayerState::WALKING)
+		{
+			inertia_value = _movement_direction.Normalized().Dot(_player_transform->GetFront().Normalized());
+			inertia_value = math::Clamp(inertia_value, 0.0f, 1.0f) * 2;
+		}
+
+		_dash_end = _player_position + _player_transform->GetFront().Normalized() * attack.dash_distance * (1 + inertia_value);
 
 		// Instead of using "CorrectDashDestination(_dash_start, _dash_end);", since its an attack dash use a greater correction 
 		float3 corrected_dash_destination = Navigation::GetCorrectedPosition(_dash_end, float3(1.0f, 0.5f, 1.0f));
@@ -670,7 +687,12 @@ bool Hachiko::Scripting::PlayerController::IsDying() const
 
 bool Hachiko::Scripting::PlayerController::IsActionLocked() const
 {
-	return IsDashing() || IsStunned() || IsAttacking() || IsFalling() || IsPickUp() || IsDying();
+	return _lock_time > 0.0f || IsStunned() || IsFalling() || IsDying();
+}
+
+bool Hachiko::Scripting::PlayerController::IsActionOnProgress() const
+{
+	return IsAttacking() || IsDashing() || IsPickUp() || IsStunned() || IsFalling() || IsDying();
 }
 
 bool Hachiko::Scripting::PlayerController::IsAttackOnCooldown() const
@@ -721,6 +743,7 @@ void Hachiko::Scripting::PlayerController::RangedAttack()
 	{
 		CombatManager::BulletStats stats = GetCurrentWeapon().bullet;
 		_attack_current_duration = stats.charge_time;
+		_lock_time = stats.charge_time;
 		_current_bullet = bullet_controller->ShootBullet(_player_transform, stats);
 		if (_current_bullet >= 0)
 		{
@@ -735,6 +758,8 @@ void Hachiko::Scripting::PlayerController::CancelAttack()
 {
 	// Indirectly cancells atack by putting its remaining duration to 0
 	_attack_current_duration = 0.f;
+	_lock_time = 0.0f;
+
 	if (_state == PlayerState::RANGED_ATTACKING && _current_bullet >= 0)
 	{
 		CombatManager* bullet_controller = _bullet_emitter->GetComponent<CombatManager>();
@@ -1338,6 +1363,8 @@ void Hachiko::Scripting::PlayerController::ResetPlayer(float3 spawn_pos)
 	_should_rotate = false;
 	_is_falling = false;
 
+	_lock_time = 0.0f;
+
 	// Camera
 	_current_cam_setting = 0;
 
@@ -1454,47 +1481,47 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 		// Make hit delay shorter than duration!
 		attack.hit_delay = 0.05f;
 		attack.duration = 0.5f; // 10 frames .45ms
-		attack.cooldown = 0;
+		attack.cooldown = 0.2f;
 		attack.dash_distance = 0.5f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
 		attack.stats.damage = 1;
 		attack.stats.knockback_distance = 0.3f;
 		// If its cone use degrees on width
 		attack.stats.width = 3.f;
-		attack.stats.range = 3.5f;
+		attack.stats.range = 2.5f;
 		break;
 
 	case AttackType::COMMON_2:
 		attack.hit_delay = 0.1f;
 		attack.duration = 0.40f; // 9 frames .45ms
-		attack.cooldown = 0;
+		attack.cooldown = 0.2f;
 		attack.dash_distance = 0.5f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
 		attack.stats.damage = 1;
 		attack.stats.knockback_distance = 0.3f;
 		// If its cone use degrees on width
 		attack.stats.width = 3.f;
-		attack.stats.range = 3.5f;
+		attack.stats.range = 2.5f;
 		break;
 
 	case AttackType::COMMON_3:
 		attack.hit_delay = 0.2f;
 		attack.duration = 0.6f; // 12 frames
-		attack.cooldown = 0;
-		attack.dash_distance = 1.5f;
+		attack.cooldown = 0.2f;
+		attack.dash_distance = 0.7f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
 		attack.stats.damage = 1;
 		attack.stats.knockback_distance = 1.f;
 		// If its cone use degrees on width
 		attack.stats.width = 2.f;
-		attack.stats.range = 6.f;
+		attack.stats.range = 3.5f;
 		break;
 
 	// COMMON ATTACKS
 	case AttackType::QUICK_1:
 		attack.hit_delay = 0.05f;
 		attack.duration = 0.5f;
-		attack.cooldown = 0;
+		attack.cooldown = 0.05f;
 		attack.dash_distance = 1.f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
 		attack.stats.damage = 1;
@@ -1507,7 +1534,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 	case AttackType::QUICK_2:
 		attack.hit_delay = 0.05f;
 		attack.duration = 0.40f;
-		attack.cooldown = 0;
+		attack.cooldown = 0.05f;
 		attack.dash_distance = 1.f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
 		attack.stats.damage = 1;
@@ -1520,7 +1547,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 	case AttackType::QUICK_3:
 		attack.hit_delay = 0.05f;
 		attack.duration = 0.50f;
-		attack.cooldown = 0;
+		attack.cooldown = 0.05f;
 		attack.dash_distance = 1.5f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
 		attack.stats.damage = 1;
@@ -1534,7 +1561,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 	case AttackType::HEAVY_1:
 		attack.hit_delay = 0.1f;
 		attack.duration = 0.6f;
-		attack.cooldown = 0;
+		attack.cooldown = 0.3f;
 		attack.dash_distance = 0.5f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
 		attack.stats.damage = 1;
@@ -1547,7 +1574,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 	case AttackType::HEAVY_2:
 		attack.hit_delay = 0.1f;
 		attack.duration = 0.4f;
-		attack.cooldown = 0;
+		attack.cooldown = 0.3f;
 		attack.dash_distance = 0.5f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
 		attack.stats.damage = 1;
@@ -1560,7 +1587,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 	case AttackType::HEAVY_3:
 		attack.hit_delay = 0.5f;
 		attack.duration = 0.8f;
-		attack.cooldown = 0;
+		attack.cooldown = 0.5f;
 		attack.dash_distance = 0.5f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
 		attack.stats.damage = 2;
