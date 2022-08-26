@@ -25,7 +25,7 @@ namespace Hachiko
         Hachiko::Resource::AssetType GetAssetTypeFromPath(const std::filesystem::path& file);
 
         bool ExistResource(Resource::Type type, UID id);
-        Resource* GetResource(Resource::Type type, UID id);
+        Resource* GetResource(Resource::Type type, UID id, bool loading_scene_resources = false);
         void ReleaseResource(Resource* resource);
         void ReleaseResource(UID id);
         
@@ -66,6 +66,8 @@ namespace Hachiko
         Hachiko::ResourcesPreferences* preferences = nullptr;
         Hachiko::ImporterManager importer_manager;
         std::filesystem::path last_resource_path;
+
+        std::map<Resource::Type, std::set<UID>> scene_loading_resources;
 
         // Checks the current assets folder states and sets library to a valid state
         void GenerateLibrary(const PathNode& folder);

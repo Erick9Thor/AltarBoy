@@ -138,20 +138,22 @@ bool Hachiko::ModuleResources::ExistResource(Resource::Type type, UID id)
     return FileSystem::Exists(file_path.c_str());
 }
 
-Resource* Hachiko::ModuleResources::GetResource(Resource::Type type, UID id)
+Resource* Hachiko::ModuleResources::GetResource(Resource::Type type, UID id, bool loading_scene_resources)
 {
+    unsigned increment = (loading_scene_resources) ? 0 : 1;
+
     // If resource already loaded return
     auto it = loaded_resources.find(id);
     if (it != loaded_resources.end())
     {
-        it->second.n_users += 1;
+        it->second.n_users += increment;
         return it->second.resource;
     }
     // If not loaded try to load and return
     auto res = importer_manager.LoadResource(type, id);
     if (res != nullptr)
     {
-        ResourceInstance& resource_instance = loaded_resources.emplace(id, ResourceInstance {res, 1}).first->second;
+        ResourceInstance& resource_instance = loaded_resources.emplace(id, ResourceInstance {res, increment}).first->second;
         return resource_instance.resource;
     }
     return nullptr;

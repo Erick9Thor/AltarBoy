@@ -4,6 +4,8 @@
 #include "resources/ResourceMesh.h"
 #include "core/preferences/src/ResourcesPreferences.h"
 
+#include "modules/ModuleSceneManager.h"
+
 void Hachiko::MeshImporter::Save(UID id, const Resource* res)
 {
     const ResourceMesh* mesh = static_cast<const ResourceMesh*>(res);
@@ -168,7 +170,11 @@ Hachiko::Resource* Hachiko::MeshImporter::Load(UID id)
         mesh->num_bones = sizes[static_cast<int>(ResourceMesh::Buffers::BONES)];
     }
 
-    mesh->GenerateBuffers();
+    if (!App->scene_manager->IsLoadingScene())
+    {
+        mesh->GenerateBuffers();
+    }
+
     mesh->GenerateAABB();
     mesh->loaded = true;
 
@@ -248,6 +254,7 @@ void Hachiko::MeshImporter::ImportFromAssimp(UID uid, const aiMesh* ai_mesh)
     }
 
     mesh->GenerateBuffers();
+
     mesh->GenerateAABB();
     mesh->loaded = true;
 
