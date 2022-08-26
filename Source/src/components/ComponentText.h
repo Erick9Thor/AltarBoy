@@ -3,6 +3,8 @@
 #include "Component.h"
 #include "Globals.h"
 
+#include "resources/Resource.h"
+
 class FTLabel;
 
 namespace Hachiko

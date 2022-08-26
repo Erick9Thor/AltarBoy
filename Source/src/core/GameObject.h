@@ -28,6 +28,7 @@ namespace Hachiko
     {
         friend class Component;
         friend class Scene;
+        friend class ModuleRender;
         friend class ModuleSceneManager;
 
     public:

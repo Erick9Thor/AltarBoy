@@ -7,7 +7,6 @@
 namespace Hachiko
 {
     class GameObject;
-    class ResourceAnimation;
     class ResourceStateMachine;
 
     class WindowStateMachine;

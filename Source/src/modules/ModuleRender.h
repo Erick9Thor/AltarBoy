@@ -208,12 +208,7 @@ namespace Hachiko
         float current_fps = 0.0f;
         float current_ms = 0.0f;
 
-        // Particle System
-        //void GenerateParticlesBuffers();
-        //unsigned particle_vbo;
-        //unsigned particle_ebo;
-        //unsigned particle_vao;
-
+        // Loading screen
         GameObject* loading_game_object = nullptr;
         ComponentTransform2D* loading_transform2d = nullptr;
         ComponentImage* loading_image = nullptr;
