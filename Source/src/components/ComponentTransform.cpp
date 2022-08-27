@@ -295,14 +295,22 @@ void Hachiko::ComponentTransform::Save(YAML::Node& node) const
 {
     node.SetTag("transform");
     node[TRANSFORM_POSITION] = local_position;
-    node[TRANSFORM_ROTATION] = local_rotation;
+    node[TRANSFORM_ROTATION] = local_rotation_euler;
     node[TRANSFORM_SCALE] = local_scale;
 }
 
 void Hachiko::ComponentTransform::Load(const YAML::Node& node)
 {
     SetLocalPosition(node[TRANSFORM_POSITION].as<float3>());
-    SetLocalRotation(node[TRANSFORM_ROTATION].as<Quat>());
+    // Retrocompatibility: allow loading quaternions, decide based on amount of values
+    if (node[TRANSFORM_ROTATION].size() > 3)
+    {
+        SetLocalRotation(node[TRANSFORM_ROTATION].as<Quat>());
+    }
+    else
+    {
+        SetLocalRotationEuler(node[TRANSFORM_ROTATION].as<float3>());
+    }
     SetLocalScale(node[TRANSFORM_SCALE].as<float3>());
     SetLocalTransform(local_position, local_rotation, local_scale);
 }
