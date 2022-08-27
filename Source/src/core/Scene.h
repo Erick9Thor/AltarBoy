@@ -145,7 +145,7 @@ namespace Hachiko
         
         void Save(YAML::Node& node);
         void Load(const YAML::Node& node, bool meshes_only = false);
-        void GetResources(const YAML::Node& node, std::map<Resource::Type, std::set<UID>>& resources);       
+        static void GetResources(const YAML::Node& node, std::map<Resource::Type, std::set<UID>>& resources);       
 
         void AmbientLightOptionsMenu();
         void FogOptionsMenu();

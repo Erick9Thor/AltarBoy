@@ -25,7 +25,9 @@ namespace Hachiko
         Hachiko::Resource::AssetType GetAssetTypeFromPath(const std::filesystem::path& file);
 
         bool ExistResource(Resource::Type type, UID id);
-        Resource* GetResource(Resource::Type type, UID id, bool loading_scene_resources = false);
+        void LoadSceneResources(const YAML::Node& node);
+        void PostLoadSceneResources();
+        Resource* GetResource(Resource::Type type, UID id);
         void ReleaseResource(Resource* resource);
         void ReleaseResource(UID id);
         
@@ -35,15 +37,16 @@ namespace Hachiko
         void LoadAsset(const std::string& path);
         std::vector<GameObject*> InstantiatePrefab(UID prefab_uid, GameObject* parent, unsigned n_instances);
 
-        // test
+    private:
         struct ResourceInstance
         {
             Resource* resource = nullptr;
             unsigned n_users = 0;
         };
         std::map<UID, ResourceInstance> loaded_resources;
-        //
-    private:
+
+        std::vector<ResourceTexture*> scene_loaded_texures;
+
         unsigned imported_assets = 0;
         unsigned cleaned_resources = 0;
         std::set<UID> managed_uids;
@@ -67,8 +70,6 @@ namespace Hachiko
         Hachiko::ImporterManager importer_manager;
         std::filesystem::path last_resource_path;
 
-        std::map<Resource::Type, std::set<UID>> scene_loading_resources;
-
         // Checks the current assets folder states and sets library to a valid state
         void GenerateLibrary(const PathNode& folder);
         // Gets an asset file and returns its related resources
@@ -83,7 +84,6 @@ namespace Hachiko
         void ClearUnusedResources(const std::set<UID>& seen_uids);
         // Process Cleaning on a specific path node
         void ClearLibrary(const PathNode& folder, const std::set<UID>& seen_uids);
-
 
     public:
         // Create a clean initial meta node

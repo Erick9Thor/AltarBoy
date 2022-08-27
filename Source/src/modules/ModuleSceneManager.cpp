@@ -118,17 +118,7 @@ void Hachiko::ModuleSceneManager::CheckSceneLoading()
 
         loading_scene_worker.join();
 
-        for (auto it = App->resources->loaded_resources.begin(); it != App->resources->loaded_resources.end(); ++it)
-        {
-            if (it->second.resource->GetType() == Resource::Type::TEXTURE)
-            {
-                ResourceTexture* texture = static_cast<ResourceTexture*>(it->second.resource);
-                //if (texture->GetID() == 0)
-                {
-                    texture->GenerateBuffer();
-                }
-            }
-        }
+        App->resources->PostLoadSceneResources();
 
         PostLoadScene();
 
@@ -380,6 +370,8 @@ void Hachiko::ModuleSceneManager::ThreadLoadScene(UID scene_id, bool keep_navmes
     {
         App->navigation->SetNavmesh(tmp_resource_scene->scene_data[NAVMESH_ID].as<UID>());
     }
+
+    App->resources->LoadSceneResources(tmp_resource_scene->scene_data);
 
     tmp_loading_scene = new Scene();
     tmp_loading_scene->Load(tmp_resource_scene->scene_data);
