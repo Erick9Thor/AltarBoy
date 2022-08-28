@@ -273,6 +273,8 @@ namespace Hachiko
 			unsigned _current_weapon = 0;
 			unsigned _attack_charges = 0;
 			float _invulnerability_time_remaining = 0.0f;
+			float _pickUp_duration = 0.5f;
+			float pickUp_time = _pickUp_duration;
 
 			// Movement management
 			float _stun_time = 0.0f;
