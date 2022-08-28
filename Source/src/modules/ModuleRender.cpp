@@ -68,6 +68,11 @@ bool Hachiko::ModuleRender::Init()
     loading_transform2d = static_cast<ComponentTransform2D*>(loading_game_object->CreateComponent(Component::Type::TRANSFORM_2D));
     loading_image = static_cast<ComponentImage*>(loading_game_object->CreateComponent(Component::Type::IMAGE));
 
+    if (App->preferences->GetEditorPreference()->ExistLoadingScreenConfig())
+    {
+        LoadLoadingScreenConfig(App->preferences->GetEditorPreference()->GetLoadingScreenConfig());
+    }
+
     return true;
 }
 
@@ -728,9 +733,15 @@ void Hachiko::ModuleRender::OptionsMenu()
     ImGui::Text("Bloom");
     ImGui::Separator();
     bloom_manager.DrawEditorContent();
+}
 
-    ImGui::Separator();
+void Hachiko::ModuleRender::LoadingScreenOptions() 
+{
+    ImGui::NewLine();
+
     ImGui::Text("Loading screen");
+    ImGui::Separator();
+
     if (loading_image != nullptr)
     {
         loading_image->DrawGui();
@@ -1038,4 +1049,14 @@ void Hachiko::ModuleRender::LoadingScreen(const float delta)
     glBindFramebuffer(GL_READ_FRAMEBUFFER, frame_buffer);
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
     glBlitFramebuffer(0, 0, fb_width, fb_height, 0, 0, fb_width, fb_height, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+}
+
+void Hachiko::ModuleRender::LoadLoadingScreenConfig(const YAML::Node& node) 
+{
+    loading_image->Load(node);
+}
+
+void Hachiko::ModuleRender::SaveLoadingScreenConfig(YAML::Node& node) const 
+{
+    loading_image->Save(node);
 }

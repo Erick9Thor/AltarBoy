@@ -25,7 +25,6 @@ void Hachiko::ComponentImage::DrawGui()
 
     ImGui::PushID(this);
 
-
     if (ImGui::CollapsingHeader("Image", ImGuiTreeNodeFlags_DefaultOpen))
     {   
         ImGui::Checkbox("Fill Window", &fill_window);

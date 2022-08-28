@@ -161,6 +161,16 @@ namespace Hachiko
             shadow_pass_enabled = enabled;
         }
 
+        [[nodiscard]] bool ExistLoadingScreenConfig() const 
+        {
+            return exist_loading_screen_config;
+        }
+
+        [[nodiscard]] YAML::Node GetLoadingScreenConfig() const
+        {
+            return loading_screen_config;
+        }
+
     private:
         bool display_debug_draw = false;
 
@@ -180,5 +190,8 @@ namespace Hachiko
         float fps_threshold = 1000.0f / max_fps;
         Editor::Theme::Type theme = Editor::Theme::Type::DARK;
         bool undo_redo_active = true;
+
+        bool exist_loading_screen_config = false;
+        YAML::Node loading_screen_config;
     };
 }

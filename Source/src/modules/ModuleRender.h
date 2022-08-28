@@ -65,6 +65,7 @@ namespace Hachiko
 
         void OptionsMenu();
         void DeferredOptions();
+        void LoadingScreenOptions();
         void PerformanceMenu();
         void FpsGraph() const;
         void AddFrame(float delta);
@@ -147,6 +148,9 @@ namespace Hachiko
         };
     
         void LoadingScreen(const float delta);
+
+        void LoadLoadingScreenConfig(const YAML::Node& node);
+        void SaveLoadingScreenConfig(YAML::Node& node) const;
 
     private:
         void GenerateFrameBuffer();
