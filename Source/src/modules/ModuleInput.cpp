@@ -99,26 +99,25 @@ UpdateStatus Hachiko::ModuleInput::PreUpdate(const float delta)
             break;
         case SDL_MOUSEMOTION:   
         {
-            mouse_normalized_motion.x = sdl_event.motion.xrel * _window_width_inverse;
-            mouse_normalized_motion.y = sdl_event.motion.yrel * _window_height_inverse;
-
             mouse_pixels_motion.x = sdl_event.motion.xrel;
             mouse_pixels_motion.y = sdl_event.motion.yrel;
 
-            // Normalized mouse position of SDL:
-            mouse_normalized_position.x = static_cast<float>(sdl_event.motion.x) * _window_width_inverse;
-            mouse_normalized_position.y = static_cast<float>(sdl_event.motion.y) * _window_height_inverse;
-
-            // Turn it to the same convention with ImGui and UI Components, and store it like that
-            // to not have multiple coordinate systems:
-            float2 in_imgui_coords(-1.0f + mouse_normalized_position.x * 2, -(-1.0f + mouse_normalized_position.y * 2));
-
-            int height, width;
-            App->window->GetWindowSize(width, height);
+            mouse_normalized_motion.x = mouse_pixels_motion.x * _window_width_inverse;
+            mouse_normalized_motion.y = mouse_pixels_motion.y* _window_height_inverse;
 
             // Store pixel based position in the same coordinate system as well:
-            mouse_pixel_position.x = static_cast<float>(width) * 0.5f * in_imgui_coords.x;
-            mouse_pixel_position.y = static_cast<float>(height) * 0.5f * in_imgui_coords.y;
+            int mouse_global_x, mouse_global_y;
+            SDL_GetGlobalMouseState(&mouse_global_x, &mouse_global_y);
+
+            mouse_pixel_position.x = static_cast<float>(mouse_global_x);
+            mouse_pixel_position.y = static_cast<float>(mouse_global_y);
+
+            // Normalized mouse position of SDL:
+            // NOTE: Contrary to the pixel position, normalized position does
+            // not get updated by the changes when the mouse is outside the
+            // window:
+            mouse_normalized_position.x = static_cast<float>(sdl_event.motion.x) * _window_width_inverse;
+            mouse_normalized_position.y = static_cast<float>(sdl_event.motion.y) * _window_height_inverse;
         }
         break;
         

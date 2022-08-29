@@ -50,17 +50,35 @@ bool Hachiko::Input::IsModifierPressed(KeyCode modifier)
 
 bool Hachiko::Input::IsMouseButtonPressed(MouseButton mouse_button)
 {
+#ifdef PLAY_BUILD
     return App->input->IsMouseButtonPressed(static_cast<int>(mouse_button));
+#else
+    return App->input->IsMouseButtonPressed(static_cast<int>(mouse_button)) && 
+           App->editor->GetSceneWindow()->IsHovering() && 
+           App->editor->GetSceneWindow()->IsFocused();
+#endif // PLAY_BUILD
 }
 
 bool Hachiko::Input::IsMouseButtonUp(MouseButton mouse_button)
 {
+#ifdef PLAY_BUILD
     return App->input->IsMouseButtonUp(static_cast<int>(mouse_button));
+#else
+    return App->input->IsMouseButtonUp(static_cast<int>(mouse_button)) && 
+           App->editor->GetSceneWindow()->IsHovering() && 
+           App->editor->GetSceneWindow()->IsFocused();
+#endif // PLAY_BUILD
 }
 
 bool Hachiko::Input::IsMouseButtonDown(MouseButton mouse_button)
 {
-    return App->input->IsMouseButtonDown(static_cast<int>(mouse_button)); 
+#ifdef PLAY_BUILD
+    return App->input->IsMouseButtonDown(static_cast<int>(mouse_button));
+#else
+    return App->input->IsMouseButtonDown(static_cast<int>(mouse_button)) && 
+           App->editor->GetSceneWindow()->IsHovering() && 
+           App->editor->GetSceneWindow()->IsFocused();
+#endif // PLAY_BUILD
 }
 
 int Hachiko::Input::GetScrollWheelDelta()
@@ -83,11 +101,30 @@ const float2& Hachiko::Input::GetMousePixelPosition()
     return App->input->GetMousePixelPosition();
 }
 
-HACHIKO_API const float2& Hachiko::Input::GetMouseNormalizedPosition()
+HACHIKO_API float2 Hachiko::Input::GetMouseNormalizedPosition()
 {
-    //HE_LOG("Position got as: %f, %f", App->input->GetMouseNormalizedPosition().x, App->input->GetMouseNormalizedPosition().y);
-    
+#ifdef PLAY_BUILD
     return App->input->GetMouseNormalizedPosition();
+#else
+    // Get the scene window:
+    const WindowScene* __restrict scene_window = App->editor->GetSceneWindow();
+    // If the scene window is non existent, return the full screen normalized
+    // mouse position:
+    if (scene_window == nullptr)
+    {
+        return App->input->GetMouseNormalizedPosition();
+    }
+
+    // Get the mouse position in pixels, which is global to the monitor:
+    float2 mouse_position_pixels = App->input->GetMousePixelPosition(); 
+    // If the scene_window is non-nullptr, clamp the mouse position in pixels
+    // to be inside the scene window, if mouse_position_pixels is not inside
+    // scene window, it will be the last mouse position that was inside the
+    // scene window:
+    scene_window->ClampMousePosition(mouse_position_pixels);
+
+    return scene_window->NormalizePositionToScene(mouse_position_pixels);
+#endif // PLAY_BUILD
 }
 
 bool Hachiko::Input::IsGamepadModeOn()

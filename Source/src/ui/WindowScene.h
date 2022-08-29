@@ -15,11 +15,9 @@ namespace Hachiko
     {
     public:
         WindowScene();
-        ~WindowScene() override;
 
         void Init() override;
         void Update() override;
-
         void CleanUp() override;
 
         [[nodiscard]] bool IsHovering() const
@@ -32,8 +30,18 @@ namespace Hachiko
             return focused;
         }
 
-        float2 ImguiToScreenPos(const float2& mouse_pos) const;
-        float2 GetInterfaceClickPos() const;
+        [[nodiscard]] float2 ImguiToScreenPos(const float2& mouse_pos) const;
+
+        // Checks if mouse_position is partially outside of the window meaning
+        // that if the mouse_position.x or mouse_position.y is outside, returns
+        // the latest position that was inside the window, if the
+        // mouse_position is fully inside the window, leaves mouse_position
+        // untouched.
+        void ClampMousePosition(float2& mouse_position) const;
+
+        // Normalizes the position inside the scene window, not the whole
+        // engine editor window.
+        [[nodiscard]] float2 NormalizePositionToScene(const float2& position) const;
 
         [[nodiscard]] const float2& GetViewportSize() const;
         [[nodiscard]] const float2& GetViewportPosition() const;
@@ -59,6 +67,10 @@ namespace Hachiko
         float2 texture_size = float2::zero;
         float2 viewport_position = float2::zero;
         float2 viewport_size = float2::zero;
+
+        float2 last_hover_position = float2::zero;
+        float2 viewport_max_position = float2::zero;
+        float2 viewport_min_position = float2::zero;
 
         bool changed_game_object = false;
     };
