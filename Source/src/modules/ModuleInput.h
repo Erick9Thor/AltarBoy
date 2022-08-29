@@ -5,7 +5,6 @@
 
 #include <SDL.h>
 
-
 namespace Hachiko
 {
     constexpr int MAX_KEYS = 300;
