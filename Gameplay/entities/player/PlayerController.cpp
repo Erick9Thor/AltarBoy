@@ -138,7 +138,7 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	_weapon_charge_bar = _weapon_charge_bar_go->GetComponent<ComponentProgressBar>();
 
 	// First position and rotation set if no camera is found
-	_cam_positions.push_back(float3(0.0f, 19.0f, 13.0f));
+	_cam_positions.push_back(float3(0.0f, 26.0f, 17.5f));
 	_cam_rotations.push_back(float3(125.0f, 0.0f, 180.0f));
 
 	_cam_positions.push_back(float3(0.0f, 4.0f, 12.0f));
