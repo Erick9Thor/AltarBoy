@@ -310,10 +310,6 @@ void Hachiko::ModuleEditor::GenerateDockingSpace()
 
 UpdateStatus Hachiko::ModuleEditor::FileMenu()
 {
-    auto status = UpdateStatus::UPDATE_CONTINUE;
-    // TODO: shortcuts
-    Scene* current_scene = App->scene_manager->GetActiveScene();
-
     if (!ImGui::BeginMenu("File"))
     {
         return UpdateStatus::UPDATE_CONTINUE;
@@ -345,7 +341,7 @@ UpdateStatus Hachiko::ModuleEditor::FileMenu()
     ImGui::Separator();
     if (ImGui::MenuItem("Exit"))
     {
-        status = UpdateStatus::UPDATE_STOP;
+        App->MarkAsQuitting(true);
     }
 
     ImGui::EndMenu();
@@ -370,7 +366,7 @@ UpdateStatus Hachiko::ModuleEditor::FileMenu()
         ImGui::EndPopup();
     }
 
-    return status;
+    return UpdateStatus::UPDATE_CONTINUE;
 }
 
 void Hachiko::ModuleEditor::ViewMenu()
