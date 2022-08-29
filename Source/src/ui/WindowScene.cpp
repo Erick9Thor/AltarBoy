@@ -16,9 +16,6 @@
 
 #include "ui/ImGuiUtils.h"
 
-#define FLOAT2_TO_ARGS(input) (input.x), (input.y)
-
-
 Hachiko::WindowScene::WindowScene() :
     Window("Scene", true)
 {
@@ -38,6 +35,8 @@ void Hachiko::WindowScene::Init()
 
 void Hachiko::WindowScene::Update()
 {
+    UpdatePlayModeBlinker();
+
     if (focused && App->editor->GetSelectedGameObject())
     {
         if (App->input->IsKeyPressed(SDL_SCANCODE_W))
@@ -53,25 +52,28 @@ void Hachiko::WindowScene::Update()
             guizmo_operation = ImGuizmo::SCALE;
         }
     }
+
     ImGui::SetNextWindowDockID(App->editor->dock_main_id, ImGuiCond_FirstUseEver);
+
     if (!ImGui::Begin((std::string(ICON_FA_GLOBE " ") + name).c_str(), &active, ImGuiWindowFlags_NoNavInputs))
     {
         ImGui::End();
         return;
     }
+
     focused = ImGui::IsWindowFocused();
+
     GuizmoOptionsController();
+
     ImGui::SameLine();
     ImGui::SeparatorEx(ImGuiSeparatorFlags_Vertical);
     ImGui::SameLine();
+
     ToolbarMenu();
     DrawScene();
     Controller();
-    ImGui::End();
-}
 
-void Hachiko::WindowScene::CleanUp()
-{
+    ImGui::End();
 }
 
 void Hachiko::WindowScene::GuizmoOptionsController()
@@ -175,15 +177,18 @@ void Hachiko::WindowScene::DrawScene()
 
     // Construct the image of frame buffer from size and uvs:
     const bool is_in_play_mode = App->scene_manager->IsScenePlaying();
-    if (is_in_play_mode)
-    {
-        // TODO: Put blinking border color.
-        ImGui::Image(texture_pointer, size, ImVec2 {0, 1}, ImVec2 {1, 0}, ImVec4(1, 1, 1, 1), ImVec4(1, 1, 1, 1));
-    }
-    else
-    {
-        ImGui::Image(texture_pointer, size, ImVec2{0, 1}, ImVec2{1, 0});
-    }
+    const ImVec4 border_color = is_in_play_mode ? 
+            ImVec4(FLOAT4_TO_ARGS(play_mode_blinker.current_color)) :
+            ImVec4(0, 0, 0, 0);
+    const float border_thickness = is_in_play_mode ? 6.0f : 0.0f;
+    const ImVec2 image_size(size.x, size.y - border_thickness * 0.5f);
+    ImGui::Image(
+        texture_pointer, 
+        image_size, 
+        ImVec2(0, 1), 
+        ImVec2(1, 0), 
+        ImVec4(1, 1, 1, 1),
+        border_color, border_thickness);
 
     // Get if the mouse is on the scene window:
     hovering = ImGui::IsItemHovered();
@@ -196,19 +201,12 @@ void Hachiko::WindowScene::DrawScene()
         float2(FLOAT2_TO_ARGS(viewport_size));
     viewport_min_position = float2(FLOAT2_TO_ARGS(guizmo_rect_origin));
 
-    const float2 sdl = App->input->GetMousePixelPosition();
-
     // If the mouse is on the scene window, update the last hover position to
     // be the current mouse position. Equivalent to ImGui::GetMousePosition():
     if (hovering)
     {
         last_hover_position = App->input->GetMousePixelPosition();
     }
-
-    HE_LOG(
-        "SCENE NORM: [%f, %f] -- NORM: [%f, %f]", 
-        FLOAT2_TO_ARGS(NormalizePositionToScene(sdl)), 
-        FLOAT2_TO_ARGS(App->input->GetMouseNormalizedPosition()));
 
     // TODO: Move to other section to take the input
     if (ImGui::BeginDragDropTarget())
@@ -300,6 +298,44 @@ void Hachiko::WindowScene::Controller() const
         {
             App->editor->SetSelectedGO(picked);
         }
+    }
+}
+
+void Hachiko::WindowScene::UpdatePlayModeBlinker()
+{
+    if (!App->scene_manager->IsScenePlaying())
+    {
+        return;
+    }
+
+    if (play_mode_blinker.progress == 1.0f)
+    {
+        play_mode_blinker.progress = 0.0f;
+
+        play_mode_blinker.is_lerping_to_active = 
+            !play_mode_blinker.is_lerping_to_active;
+    }
+
+    const float delta_time = Time::DeltaTime();
+
+    play_mode_blinker.progress += delta_time / play_mode_blinker.duration;
+    play_mode_blinker.progress = play_mode_blinker.progress > 1.0f
+                                 ? 1.0f
+                                 : play_mode_blinker.progress;
+
+    if (play_mode_blinker.is_lerping_to_active)
+    {
+        play_mode_blinker.current_color = float4::Lerp(
+            play_mode_blinker.passive_color, 
+            play_mode_blinker.active_color, 
+            play_mode_blinker.progress);
+    }
+    else
+    {
+        play_mode_blinker.current_color = float4::Lerp(
+            play_mode_blinker.active_color, 
+            play_mode_blinker.passive_color, 
+            play_mode_blinker.progress);
     }
 }
 

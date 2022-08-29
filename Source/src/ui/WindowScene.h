@@ -1,9 +1,9 @@
 #pragma once
+
 #include "Window.h"
+
 #include <imgui.h>
 #include <ImGuizmo.h>
-
-#include "utils/Timer.h"
 
 namespace Hachiko
 {
@@ -18,7 +18,6 @@ namespace Hachiko
 
         void Init() override;
         void Update() override;
-        void CleanUp() override;
 
         [[nodiscard]] bool IsHovering() const
         {
@@ -51,9 +50,11 @@ namespace Hachiko
         void ToolbarMenu() const;
         void DrawScene();
         void Controller() const;
+        void UpdatePlayModeBlinker();
 
         GameObject* SelectObject(const ComponentCamera* camera, const Scene* scene) const;        
 
+    private:
         ImVec2 imguizmo_size = {100.0f, 100.0f};
         bool using_guizmo = false;
         bool focused = false;
@@ -63,6 +64,17 @@ namespace Hachiko
         ImGuizmo::MODE guizmo_mode = ImGuizmo::WORLD;
 
         ImVec2 guizmo_rect_origin = {0.0f, 0.0f};
+
+        struct PlayModeBlinker
+        {
+            const float duration = 1.0f;
+            const float4 active_color = {0.0f, 0.5f, 1.0f, 1.0f};
+            const float4 passive_color = {0.0f, 0.5f, 1.0f, 0.1f};
+            float4 current_color = {0.0f, 0.0f, 0.0f, 1.0f};
+            float progress = 0.0f; 
+            bool is_lerping_to_active = true;
+        } play_mode_blinker;
+
         float2 texture_position = float2::zero;
         float2 texture_size = float2::zero;
         float2 viewport_position = float2::zero;
