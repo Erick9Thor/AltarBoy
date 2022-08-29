@@ -13,6 +13,16 @@ namespace Hachiko
 
     class WindowScene final : public Window
     {
+        struct PlayModeBlinker
+        {
+            const float duration = 1.0f;
+            const float4 active_color = {0.0f, 0.5f, 1.0f, 1.0f};
+            const float4 passive_color = {0.0f, 0.5f, 1.0f, 0.1f};
+            float4 current_color = {0.0f, 0.0f, 0.0f, 1.0f};
+            float progress = 0.0f;
+            bool is_passive_to_active = true;
+        };
+
     public:
         WindowScene();
 
@@ -54,7 +64,6 @@ namespace Hachiko
 
         GameObject* SelectObject(const ComponentCamera* camera, const Scene* scene) const;        
 
-    private:
         ImVec2 imguizmo_size = {100.0f, 100.0f};
         bool using_guizmo = false;
         bool focused = false;
@@ -65,15 +74,7 @@ namespace Hachiko
 
         ImVec2 guizmo_rect_origin = {0.0f, 0.0f};
 
-        struct PlayModeBlinker
-        {
-            const float duration = 1.0f;
-            const float4 active_color = {0.0f, 0.5f, 1.0f, 1.0f};
-            const float4 passive_color = {0.0f, 0.5f, 1.0f, 0.1f};
-            float4 current_color = {0.0f, 0.0f, 0.0f, 1.0f};
-            float progress = 0.0f; 
-            bool is_lerping_to_active = true;
-        } play_mode_blinker;
+        PlayModeBlinker play_mode_blinker;
 
         float2 texture_position = float2::zero;
         float2 texture_size = float2::zero;

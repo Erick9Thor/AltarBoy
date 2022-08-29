@@ -105,10 +105,10 @@ UpdateStatus Hachiko::ModuleInput::PreUpdate(const float delta)
             mouse_normalized_motion.x = mouse_pixels_motion.x * _window_width_inverse;
             mouse_normalized_motion.y = mouse_pixels_motion.y* _window_height_inverse;
 
-            // Store pixel based position in the same coordinate system as well:
-            int mouse_global_x, mouse_global_y;
+            // Get monitor-global pixel position of mouse:
+            int mouse_global_x = 0;
+            int mouse_global_y = 0;
             SDL_GetGlobalMouseState(&mouse_global_x, &mouse_global_y);
-
             mouse_pixel_position.x = static_cast<float>(mouse_global_x);
             mouse_pixel_position.y = static_cast<float>(mouse_global_y);
 

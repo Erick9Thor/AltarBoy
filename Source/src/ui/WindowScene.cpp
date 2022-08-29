@@ -37,7 +37,9 @@ void Hachiko::WindowScene::Update()
 {
     UpdatePlayModeBlinker();
 
-    if (focused && App->editor->GetSelectedGameObject())
+    const bool is_in_play_mode = App->scene_manager->IsScenePlaying();
+
+    if (!is_in_play_mode && focused && App->editor->GetSelectedGameObject())
     {
         if (App->input->IsKeyPressed(SDL_SCANCODE_W))
         {
@@ -71,7 +73,11 @@ void Hachiko::WindowScene::Update()
 
     ToolbarMenu();
     DrawScene();
-    Controller();
+
+    if (!is_in_play_mode)
+    {
+        Controller();
+    }
 
     ImGui::End();
 }
@@ -312,8 +318,8 @@ void Hachiko::WindowScene::UpdatePlayModeBlinker()
     {
         play_mode_blinker.progress = 0.0f;
 
-        play_mode_blinker.is_lerping_to_active = 
-            !play_mode_blinker.is_lerping_to_active;
+        play_mode_blinker.is_passive_to_active = 
+            !play_mode_blinker.is_passive_to_active;
     }
 
     const float delta_time = Time::DeltaTime();
@@ -323,7 +329,7 @@ void Hachiko::WindowScene::UpdatePlayModeBlinker()
                                  ? 1.0f
                                  : play_mode_blinker.progress;
 
-    if (play_mode_blinker.is_lerping_to_active)
+    if (play_mode_blinker.is_passive_to_active)
     {
         play_mode_blinker.current_color = float4::Lerp(
             play_mode_blinker.passive_color, 
