@@ -11,6 +11,8 @@ namespace Hachiko
 class GameObject;
 class Component;
 class ComponentCamera;
+
+HACHIKO_API void Quit();
 }
 
 namespace Hachiko::Time
