@@ -979,6 +979,7 @@ bool Hachiko::ModuleRender::CleanUp()
     App->preferences->GetEditorPreference()->SetDrawSkybox(draw_skybox);
     App->preferences->GetEditorPreference()->SetDrawNavmesh(draw_navmesh);
 
+    SaveLoadingScreenConfig();
     delete loading_game_object;
 
     return true;
@@ -1019,31 +1020,6 @@ void Hachiko::ModuleRender::LoadingScreen(const float delta)
 
     loading_image->Draw(loading_transform2d, img_program);
 
-    /*
-    
-    // Activate program & bind square:
-    img_program->Activate();
-    App->ui->BindSquare();
-
-    float4x4 model = float4x4::identity;
-    img_program->BindUniformFloat4x4("model", model.ptr());
-    //const ResourceTexture* img_to_draw = image;
-
-    img_program->BindUniformBool("diffuse_flag", false);
-    img_program->BindUniformFloat4("img_color", float4(1.0, 0.0, 0.0, 1.0).ptr());
-    //ModuleTexture::Bind(img_to_draw ? img_to_draw->GetImageId() : 0, static_cast<int>(Hachiko::ModuleProgram::TextureSlots::DIFFUSE));
-
-    img_program->BindUniformFloat2("factor", float2::one.ptr());
-    img_program->BindUniformFloat2("animation_index", float2::one.ptr());
-
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
-    // Unbind square & deactivate program:
-    App->ui->UnbindSquare();
-    Program::Deactivate();
-
-    */
-
     glDepthFunc(GL_LESS);
 
     glBindFramebuffer(GL_READ_FRAMEBUFFER, frame_buffer);
@@ -1056,7 +1032,9 @@ void Hachiko::ModuleRender::LoadLoadingScreenConfig(const YAML::Node& node)
     loading_image->Load(node);
 }
 
-void Hachiko::ModuleRender::SaveLoadingScreenConfig(YAML::Node& node) const 
+void Hachiko::ModuleRender::SaveLoadingScreenConfig() const 
 {
+    YAML::Node node;
     loading_image->Save(node);
+    App->preferences->GetEditorPreference()->SetLoadingScreenConfig(node);
 }

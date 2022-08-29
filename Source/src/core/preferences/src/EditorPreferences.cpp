@@ -117,5 +117,5 @@ void EditorPreferences::SaveConfigurationData(YAML::Node& node)
 
     App->renderer->GetBloomManager().SaveConfig(node[group_name]);
 
-    App->renderer->SaveLoadingScreenConfig(node[group_name][LOADING_SCREEN_CONFIG]);
+    node[group_name][LOADING_SCREEN_CONFIG] = loading_screen_config;
 }

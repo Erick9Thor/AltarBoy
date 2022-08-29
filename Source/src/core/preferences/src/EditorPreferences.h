@@ -171,6 +171,11 @@ namespace Hachiko
             return loading_screen_config;
         }
 
+        void SetLoadingScreenConfig(YAML::Node& node)
+        {
+            loading_screen_config = node;
+        }
+
     private:
         bool display_debug_draw = false;
 
