@@ -224,7 +224,7 @@ void Hachiko::ModuleAudio::OptionsMenu()
         SetMusicVolume(volume * 0.1);
     }
 
-    if (ImGui::Button("Reload Wwise Audio"))
+    if (ImGui::Button("Reload Sound Banks"))
     {
         ReloadAssets();
     }
