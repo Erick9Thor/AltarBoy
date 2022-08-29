@@ -22,7 +22,7 @@ public:
 	};
 
 public:
-	MainMenuManager(GameObject* game_object);
+	MainMenuManager(GameObject* new_game_object);
 	~MainMenuManager() override = default;
 
 	void OnAwake() override;

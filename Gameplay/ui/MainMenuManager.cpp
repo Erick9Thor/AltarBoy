@@ -3,22 +3,21 @@
 #include "constants/Sounds.h"
 #include "ui/MainMenuManager.h"
 
-Hachiko::Scripting::MainMenuManager::MainMenuManager(GameObject* game_object)
-	: Script(game_object, "MainMenuManager")
-	, _state(State::MAIN)
-	, _state_changed(false)
-	, _main_background(nullptr)
-	, _button_background(nullptr)
-	, _button_play(nullptr)
-	, _button_quit(nullptr)
-	, _button_settings(nullptr)
-	, _button_credits(nullptr)
-	, _credits(nullptr)
-	, _settings(nullptr)
-	, _button_back(nullptr)
-	, _audio_source(nullptr)
-{
-}
+Hachiko::Scripting::MainMenuManager::MainMenuManager(GameObject* new_game_object)
+    : Script(new_game_object, "MainMenuManager")
+    , _state(State::MAIN)
+    , _state_changed(false)
+    , _main_background(nullptr)
+    , _button_background(nullptr)
+    , _button_play(nullptr)
+    , _button_quit(nullptr)
+    , _button_settings(nullptr)
+    , _button_credits(nullptr)
+    , _game_title(nullptr)
+    , _settings(nullptr)
+    , _credits(nullptr)
+    , _button_back(nullptr)
+    , _audio_source(nullptr) {}
 
 void Hachiko::Scripting::MainMenuManager::OnAwake()
 {
@@ -29,10 +28,6 @@ void Hachiko::Scripting::MainMenuManager::OnAwake()
 	_main_background = game_object->GetFirstChildWithName(
 		"button_whitebackground");
 	any_null |= (_main_background == nullptr);
-	
-	//_button_background = game_object->GetFirstChildWithName(
-	//	"button_background");
-	//any_null |= (_button_background == nullptr);
 
 	_button_play = game_object->GetFirstChildWithName(
 		"button_play")->GetComponent<ComponentButton>();
@@ -79,24 +74,20 @@ void Hachiko::Scripting::MainMenuManager::OnUpdate()
 {
 	switch (_state)
 	{
-		case Hachiko::Scripting::MainMenuManager::State::MAIN:
+		case State::MAIN:
 			OnUpdateMain();
 		break;
 		
-		case Hachiko::Scripting::MainMenuManager::State::SETTINGS:
+		case State::SETTINGS:
 			OnUpdateSettings();
 		break;
 		
-		case Hachiko::Scripting::MainMenuManager::State::CREDITS:
+		case State::CREDITS:
 			OnUpdateCredits();
 		break;
 
-		case Hachiko::Scripting::MainMenuManager::State::PLAY:
+		case State::PLAY:
 			SceneManagement::SwitchScene(Scenes::GAME);
-		break;
-		
-		default:
-			HE_LOG("This should never happen.");
 		break;
 	}
 }
@@ -109,7 +100,6 @@ void Hachiko::Scripting::MainMenuManager::OnUpdateMain()
 		_main_background->SetActive(true);
 
 		// Main:
-		//_button_background->SetActive(true);
 		_button_play->GetGameObject()->SetActive(true);
 		_button_settings->GetGameObject()->SetActive(true);
 		_button_quit->GetGameObject()->SetActive(true);
@@ -124,8 +114,15 @@ void Hachiko::Scripting::MainMenuManager::OnUpdateMain()
 		_state_changed = false;
 	}
 
-	// TODO: Uncomment this in the next PR after adding the new scenes with
-	// YAML based serialization.
+	if (_button_quit->IsSelected())
+	{
+		_audio_source->PostEvent(Sounds::CLICK);
+
+		Hachiko::Quit();
+
+	    return;
+	}
+
 	if (_button_play->IsSelected())
 	{
 		_audio_source->PostEvent(Sounds::CLICK);
@@ -149,16 +146,6 @@ void Hachiko::Scripting::MainMenuManager::OnUpdateMain()
 		_audio_source->PostEvent(Sounds::CLICK);
 		_state = State::CREDITS;
 		_state_changed = true;
-
-		return;
-	}
-
-	if (_button_quit->IsSelected())
-	{
-		_audio_source->PostEvent(Sounds::CLICK);
-		HE_LOG("This should quit the game");
-		
-		return;
 	}
 }
 
@@ -175,7 +162,6 @@ void Hachiko::Scripting::MainMenuManager::OnUpdateSettings()
 
 		// Other
 		_credits->SetActive(false);
-		//_button_background->SetActive(false);
 		_button_play->GetGameObject()->SetActive(false);
 		_button_settings->GetGameObject()->SetActive(false);
 		_button_quit->GetGameObject()->SetActive(false);
@@ -206,7 +192,6 @@ void Hachiko::Scripting::MainMenuManager::OnUpdateCredits()
 
 		// Other
 		_settings->SetActive(false);
-		//_button_background->SetActive(false);
 		_button_play->GetGameObject()->SetActive(false);
 		_button_settings->GetGameObject()->SetActive(false);
 		_button_quit->GetGameObject()->SetActive(false);
