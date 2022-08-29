@@ -164,10 +164,14 @@ void Hachiko::Scripting::LaserController::CheckPlayerCollision() const
 	const float3 player_pos = _player->GetComponent<ComponentTransform>()->GetGlobalPosition();
 	const OBB* laser_obb = _laser->GetFirstMeshRendererOBB();
 
-	const Sphere hitbox = Sphere(player_pos, 0.5f); // player radious
+	const Capsule hitbox = Capsule(player_pos, player_pos + float3(0, 3, 0), 0.5);
+	//const Sphere hitbox = Sphere(player_pos, 0.5f); // player radious
 
-	if (laser_obb->Intersects(hitbox, &intersection_point))
+	//if (laser_obb->Intersects(hitbox, &intersection_point))
+	if (laser_obb->Intersects(hitbox))
 	{
+		vec intersection_point = laser_obb->ClosestPoint(player_pos);
+
 		ComponentTransform* transform = _laser->GetComponent<ComponentTransform>();
 		const float3 point_in_line = transform->GetGlobalPosition();
 		const float3 line = transform->GetFront();
@@ -183,5 +187,4 @@ void Hachiko::Scripting::LaserController::CheckPlayerCollision() const
 		_audio_source->PostEvent(Hachiko::Sounds::PLAY_LASER_HIT);
 		_player->GetComponent<PlayerController>()->RegisterHit(_damage, true, knockback);
 	}
-
 }
