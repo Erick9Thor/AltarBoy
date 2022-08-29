@@ -64,7 +64,7 @@ bool Hachiko::ModuleRender::Init()
     shadow_manager.SetGaussianBlurringEnabled(
         App->preferences->GetEditorPreference()->GetShadowMapGaussianBlurringEnabled());
 
-    GameObject* loading_game_object = new GameObject(nullptr, float4x4::identity, "Loading");
+    loading_game_object = new GameObject(nullptr, float4x4::identity, "Loading");
     loading_transform2d = static_cast<ComponentTransform2D*>(loading_game_object->CreateComponent(Component::Type::TRANSFORM_2D));
     loading_image = static_cast<ComponentImage*>(loading_game_object->CreateComponent(Component::Type::IMAGE));
 
