@@ -158,10 +158,8 @@ UpdateStatus Hachiko::ModuleEditor::Update(const float delta)
     ImGui::CaptureMouseFromApp(true);
     ImGui::CaptureKeyboardFromApp(true);
 
-#ifdef PLAY_BUILD
-    const UpdateStatus retval = UpdateStatus::UPDATE_CONTINUE;
-#else
-    const UpdateStatus retval = MainMenuBar();
+#ifndef PLAY_BUILD
+    MainMenuBar();
 
     if (ImGuiFileDialog::Instance()->Display("LoadScene"))
     {
@@ -195,7 +193,7 @@ UpdateStatus Hachiko::ModuleEditor::Update(const float delta)
         }
     }
 
-    return retval;
+    return UpdateStatus::UPDATE_CONTINUE;
 }
 
 UpdateStatus Hachiko::ModuleEditor::PostUpdate(const float delta)
@@ -220,14 +218,13 @@ UpdateStatus Hachiko::ModuleEditor::PostUpdate(const float delta)
     return UpdateStatus::UPDATE_CONTINUE;
 }
 
-UpdateStatus Hachiko::ModuleEditor::MainMenuBar()
+void Hachiko::ModuleEditor::MainMenuBar()
 {
-    auto status = UpdateStatus::UPDATE_CONTINUE;
     ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0);
     ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 4));
     if (ImGui::BeginMainMenuBar())
     {
-        status = FileMenu();
+        FileMenu();
         EditMenu();
         GoMenu();
         ThemeMenu();
@@ -284,8 +281,6 @@ UpdateStatus Hachiko::ModuleEditor::MainMenuBar()
         ImGui::PopStyleVar(2);
         ImGui::EndMainMenuBar();
     }
-
-    return status;
 }
 
 void Hachiko::ModuleEditor::GenerateDockingSpace()
@@ -331,12 +326,13 @@ void Hachiko::ModuleEditor::GenerateDockingSpace()
     }
 }
 
-UpdateStatus Hachiko::ModuleEditor::FileMenu()
+void Hachiko::ModuleEditor::FileMenu()
 {
     if (!ImGui::BeginMenu("File"))
     {
-        return UpdateStatus::UPDATE_CONTINUE;
+        return;
     }
+
     if (ImGui::MenuItem(ICON_FA_PLUS "New"))
     {
         history.CleanUp();
@@ -369,7 +365,6 @@ UpdateStatus Hachiko::ModuleEditor::FileMenu()
     }
 
     ImGui::EndMenu();
-    return UpdateStatus::UPDATE_CONTINUE;
 }
 
 void Hachiko::ModuleEditor::ViewMenu()

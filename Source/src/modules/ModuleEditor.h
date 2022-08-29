@@ -101,8 +101,8 @@ namespace Hachiko
         void GenerateDockingSpace();
 
         // Main menu bar
-        UpdateStatus MainMenuBar();
-        UpdateStatus FileMenu();
+        void MainMenuBar();
+        void FileMenu();
         void EditMenu();
         void GoMenu() const;
         void ViewMenu();
