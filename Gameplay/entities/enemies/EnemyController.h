@@ -22,9 +22,9 @@ namespace Hachiko
         enum class EnemyType
         {
             BEETLE,
-            WORM
+            WORM,
         };
-        enum class BugState
+        enum class EnemyState
         {
             INVALID,
             DEAD,
@@ -53,9 +53,10 @@ namespace Hachiko
             void OnStart() override;
             void OnUpdate() override;
             
-            BugState GetState() const;
+            EnemyState GetState() const { return _state; };
 
-            const Stats* GetStats();
+            const Stats* GetStats() { return _combat_stats; };
+
             bool IsAlive() { return _combat_stats->IsAlive(); };
             void SetIsFromGauntlet(bool v) { _is_from_gautlet = v; }
             void RegisterHit(int player_atk, math::float3 direction, float knockback, bool is_from_player, bool is_ranged);
@@ -70,28 +71,36 @@ namespace Hachiko
         private:
             void SpawnController();
             void DeathController();
+
+            void GetComponents();
+            void SetStats();
+            void SetVfx();
+            void SetUpWormVfx();
+            
             void StunController();
-            void AttackController();
-            void IdleController();
-
-            void Attack();
-            void ChasePlayer();
-            void GoBack();
+            void BeetleStunController();
             void RecieveKnockback();
-            void Stop();
+            void WormStunController();
 
-            void WormSpit();
+            void MovementController();
+            void WormMovementController();
+            void BeetleMovementController();
 
-            void MoveInNavmesh();
+            void AttackController();
+            void BeetleAttackController();
+            void BeetleAttack();
+            float4x4 GetMeleeAttackOrigin(float attack_range) const;
+            void ChasePlayer();
             void PatrolMovement();
+            void StopMoving();
+            void MoveInNavmesh();
+            void WormAttackController();
+            void WormSpit();
+            
             void DropParasite();
             void DestroyEntity();
 
-            float4x4 GetMeleeAttackOrigin(float attack_range) const;
-            bool IsAttacking() const
-            {
-                return _state == BugState::ATTACKING;
-            }
+            bool IsAttacking() const { return _state == EnemyState::ATTACKING; }
 
         private:
             Stats* _combat_stats;
@@ -102,7 +111,6 @@ namespace Hachiko
             SERIALIZE_FIELD(float, _idle_cooldown);
             SERIALIZE_FIELD(float, _spawning_time);
             SERIALIZE_FIELD(float3, _spawn_pos);
-            SERIALIZE_FIELD(bool, _spawn_is_initial);
             
             SERIALIZE_FIELD(GameObject*, _enemy_body);
             SERIALIZE_FIELD(GameObject*, _parasite);
@@ -145,8 +153,8 @@ namespace Hachiko
             SERIALIZE_FIELD(float, _attack_animation_duration);
             SERIALIZE_FIELD(float, _attack_animation_timer);
 
-            BugState _state = BugState::SPAWNING;
-            BugState _previous_state = BugState::INVALID;
+            EnemyState _state = EnemyState::SPAWNING;
+            EnemyState _previous_state = EnemyState::INVALID;
 
             bool _parasite_dropped = false;
             bool _is_stunned = false;
