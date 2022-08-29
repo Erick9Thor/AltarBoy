@@ -440,7 +440,7 @@ HACHIKO_API bool IsMouseButtonPressed(MouseButton mouse_button);
 HACHIKO_API bool IsMouseButtonUp(MouseButton mouse_button);
 HACHIKO_API bool IsMouseButtonDown(MouseButton mouse_button);
 HACHIKO_API int GetScrollWheelDelta();
-HACHIKO_API const float2& GetMouseNormalizedMotion();
+HACHIKO_API float2 GetMouseNormalizedMotion();
 HACHIKO_API const float2& GetMousePixelsMotion();
 HACHIKO_API const float2& GetMousePixelPosition();
 HACHIKO_API float2 GetMouseNormalizedPosition();

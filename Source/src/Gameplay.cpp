@@ -54,8 +54,7 @@ bool Hachiko::Input::IsMouseButtonPressed(MouseButton mouse_button)
     return App->input->IsMouseButtonPressed(static_cast<int>(mouse_button));
 #else
     return App->input->IsMouseButtonPressed(static_cast<int>(mouse_button)) && 
-           App->editor->GetSceneWindow()->IsHovering() && 
-           App->editor->GetSceneWindow()->IsFocused();
+           App->editor->GetSceneWindow()->IsActive();
 #endif // PLAY_BUILD
 }
 
@@ -65,8 +64,7 @@ bool Hachiko::Input::IsMouseButtonUp(MouseButton mouse_button)
     return App->input->IsMouseButtonUp(static_cast<int>(mouse_button));
 #else
     return App->input->IsMouseButtonUp(static_cast<int>(mouse_button)) && 
-           App->editor->GetSceneWindow()->IsHovering() && 
-           App->editor->GetSceneWindow()->IsFocused();
+           App->editor->GetSceneWindow()->IsActive();
 #endif // PLAY_BUILD
 }
 
@@ -76,22 +74,33 @@ bool Hachiko::Input::IsMouseButtonDown(MouseButton mouse_button)
     return App->input->IsMouseButtonDown(static_cast<int>(mouse_button));
 #else
     return App->input->IsMouseButtonDown(static_cast<int>(mouse_button)) && 
-           App->editor->GetSceneWindow()->IsHovering() && 
-           App->editor->GetSceneWindow()->IsFocused();
+           App->editor->GetSceneWindow()->IsActive();
 #endif // PLAY_BUILD
 }
 
 int Hachiko::Input::GetScrollWheelDelta()
 {
+#ifdef PLAY_BUILD
     return App->input->GetScrollDelta();
+#else
+    return App->editor->GetSceneWindow()->IsActive()
+            ? App->input->GetScrollDelta()
+            : 0;
+#endif // PLAY_BUILD
 }
 
-const float2& Hachiko::Input::GetMouseNormalizedMotion()
+float2 Hachiko::Input::GetMouseNormalizedMotion()
 {
+#ifdef PLAY_BUILD
     return App->input->GetMouseNormalizedMotion();
+#else
+    return App->editor->GetSceneWindow()->IsActive()
+            ? App->input->GetMouseNormalizedMotion()
+            : float2::zero;
+#endif // PLAY_BUILD
 }
 
-HACHIKO_API const float2& Hachiko::Input::GetMousePixelsMotion()
+const float2& Hachiko::Input::GetMousePixelsMotion()
 {
     return App->input->GetMousePixelsMotion();
 }
@@ -101,7 +110,7 @@ const float2& Hachiko::Input::GetMousePixelPosition()
     return App->input->GetMousePixelPosition();
 }
 
-HACHIKO_API float2 Hachiko::Input::GetMouseNormalizedPosition()
+float2 Hachiko::Input::GetMouseNormalizedPosition()
 {
 #ifdef PLAY_BUILD
     return App->input->GetMouseNormalizedPosition();

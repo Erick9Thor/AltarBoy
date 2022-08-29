@@ -39,6 +39,12 @@ namespace Hachiko
             return focused;
         }
 
+        // Returns IsHovering() && IsFocused.
+        [[nodiscard]] bool IsActive() const
+        {
+            return IsHovering() && IsFocused();
+        }
+
         [[nodiscard]] float2 ImguiToScreenPos(const float2& mouse_pos) const;
 
         // Checks if mouse_position is partially outside of the window meaning
