@@ -902,10 +902,8 @@ void Hachiko::Scripting::PlayerController::DashController()
 	_player_position = math::float3::Lerp(_dash_start, _dash_end,
 		acceleration);
 
-	if (_state != PlayerState::MELEE_ATTACKING)
-	{
-		DashTrailManager(_dash_progress);
-	}
+
+	DashTrailManager(_dash_progress);
 	
 	// Attack status is stopped in attack controller
 	if (_dash_progress >= 1.0f && IsDashing())
@@ -937,7 +935,7 @@ void Hachiko::Scripting::PlayerController::DashChargesManager()
 
 void Hachiko::Scripting::PlayerController::DashTrailManager(float dash_progress)
 {
-	if (!_show_dashtrail)
+	if (!_show_dashtrail && _state == PlayerState::DASHING)
 	{
 		_show_dashtrail = true;
 		_dash_trail->SetActive(_show_dashtrail);
