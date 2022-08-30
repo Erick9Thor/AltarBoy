@@ -18,6 +18,11 @@ Hachiko::ComponentParticleSystem::ComponentParticleSystem(GameObject* container)
     particle_modifiers.push_back(std::make_shared<ForceParticleModifier>("Force over lifetime"));
     particle_modifiers.push_back(std::make_shared<AnimationParticleModifier>("Animation"));
     particle_modifiers.push_back(std::make_shared<NoiseParticleModifier>("Noise"));
+
+    for (auto& particle : particles)
+    {
+        particle.SetEmitter(this);
+    }
 }
 
 Hachiko::ComponentParticleSystem::~ComponentParticleSystem()
@@ -35,10 +40,6 @@ void Hachiko::ComponentParticleSystem::Start()
     {
         App->scene_manager->GetActiveScene()->AddParticleComponent(this);
         in_scene = true;
-    }
-    for (auto& particle : particles)
-    {
-        particle.SetEmitter(this);
     }
 
     std::function edit_curve = [&](Event& evt) {
