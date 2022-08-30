@@ -61,7 +61,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	claw.bullet = common_bullet;
 	claw.color = float4(0.0f, 0.0f, 255.0f, 255.0f);
 	claw.unlimited = false;
-	claw.charges = 5;
+	claw.charges = 10;
 	claw.attacks.push_back(GetAttackType(AttackType::QUICK_1));
 	claw.attacks.push_back(GetAttackType(AttackType::QUICK_2));
 	claw.attacks.push_back(GetAttackType(AttackType::QUICK_3));
@@ -71,7 +71,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	sword.bullet = common_bullet;
 	sword.color = float4(0.0f, 255.0f, 0.0f, 255.0f);
 	sword.unlimited = false;
-	sword.charges = 5;
+	sword.charges = 10;
 	sword.attacks.push_back(GetAttackType(AttackType::HEAVY_1));
 	sword.attacks.push_back(GetAttackType(AttackType::HEAVY_2));
 	sword.attacks.push_back(GetAttackType(AttackType::HEAVY_3));
@@ -594,7 +594,7 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 		if (_previous_state == PlayerState::WALKING)
 		{
 			inertia_value = _movement_direction.Normalized().Dot(_player_transform->GetFront().Normalized());
-			inertia_value = math::Clamp(inertia_value, 0.0f, 1.0f) * 2;
+			inertia_value = math::Clamp(inertia_value, 0.0f, 1.0f);
 		}
 
 		_dash_end = _player_position + _player_transform->GetFront().Normalized() * attack.dash_distance * (1 + inertia_value);
@@ -717,6 +717,7 @@ const Hachiko::Scripting::PlayerController::PlayerAttack& Hachiko::Scripting::Pl
 		++_attack_idx;
 		if (_attack_idx >= GetCurrentWeapon().attacks.size())
 		{
+			ResetClickBuffer();
 			_attack_idx = 0;
 		}
 	}
@@ -1020,17 +1021,20 @@ void Hachiko::Scripting::PlayerController::AttackController()
 			const Weapon& weapon = GetCurrentWeapon();
 			CombatManager* combat_manager = _bullet_emitter->GetComponent<CombatManager>();
 
-			if (attack.stats.type == CombatManager::AttackType::CONE)
-			{
-				_attack_indicator->SetActive(true);
-			}
-			else
-			{
-				if (combat_manager)
-				{
-					Debug::DebugDraw(combat_manager->CreateAttackHitbox(GetMeleeAttackOrigin(attack.stats.range), attack.stats), weapon.color.Float3Part());
-				}
-			}
+			/***
+			* UNCOMMENT THIS SECTION IF YOU WANT TO DEBUG DRAW ATTACK HIT BOXES
+			//if (attack.stats.type == CombatManager::AttackType::CONE)
+			//{
+			//	_attack_indicator->SetActive(true);
+			//}
+			//else
+			//{
+			//	if (combat_manager)
+			//	{
+			//		Debug::DebugDraw(combat_manager->CreateAttackHitbox(GetMeleeAttackOrigin(attack.stats.range), attack.stats), weapon.color.Float3Part());
+			//	}
+			//}
+			***/
 
 			if (_attack_current_delay > 0.f)
 			{
@@ -1479,8 +1483,8 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 		// Make hit delay shorter than duration!
 		attack.hit_delay = 0.05f;
 		attack.duration = 0.5f; // 10 frames .45ms
-		attack.cooldown = 0.2f;
-		attack.dash_distance = 0.5f;
+		attack.cooldown = 0.1f;
+		attack.dash_distance = 1.0f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
 		attack.stats.damage = 1;
 		attack.stats.knockback_distance = 0.3f;
@@ -1492,8 +1496,8 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 	case AttackType::COMMON_2:
 		attack.hit_delay = 0.1f;
 		attack.duration = 0.40f; // 9 frames .45ms
-		attack.cooldown = 0.2f;
-		attack.dash_distance = 0.5f;
+		attack.cooldown = 0.1f;
+		attack.dash_distance = 1.0f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
 		attack.stats.damage = 1;
 		attack.stats.knockback_distance = 0.3f;
@@ -1506,7 +1510,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 		attack.hit_delay = 0.2f;
 		attack.duration = 0.6f; // 12 frames
 		attack.cooldown = 0.2f;
-		attack.dash_distance = 0.7f;
+		attack.dash_distance = 1.3f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
 		attack.stats.damage = 1;
 		attack.stats.knockback_distance = 1.f;
@@ -1559,7 +1563,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 	case AttackType::HEAVY_1:
 		attack.hit_delay = 0.1f;
 		attack.duration = 0.6f;
-		attack.cooldown = 0.3f;
+		attack.cooldown = 0.2f;
 		attack.dash_distance = 0.5f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
 		attack.stats.damage = 1;
@@ -1572,7 +1576,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 	case AttackType::HEAVY_2:
 		attack.hit_delay = 0.1f;
 		attack.duration = 0.4f;
-		attack.cooldown = 0.3f;
+		attack.cooldown = 0.2f;
 		attack.dash_distance = 0.5f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
 		attack.stats.damage = 1;
