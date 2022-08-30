@@ -165,9 +165,7 @@ void Hachiko::Scripting::LaserController::CheckPlayerCollision() const
 	const OBB* laser_obb = _laser->GetFirstMeshRendererOBB();
 
 	const Capsule hitbox = Capsule(player_pos, player_pos + float3(0, 3, 0), 0.5);
-	//const Sphere hitbox = Sphere(player_pos, 0.5f); // player radious
 
-	//if (laser_obb->Intersects(hitbox, &intersection_point))
 	if (laser_obb->Intersects(hitbox))
 	{
 		vec intersection_point = laser_obb->ClosestPoint(player_pos);
