@@ -91,7 +91,7 @@ namespace Hachiko
 			PlayerState GetState() const;
 
 			void CheckGoal(const float3& current_position);
-			void RegisterHit(int damage, float knockback = 0, math::float3 direction = float3::zero);
+			bool RegisterHit(int damage, float knockback = 0, math::float3 direction = float3::zero, bool force_dmg = false);
 			void UpdateHealthBar();
 			void UpdateAmmoUI();
 			void UpdateWeaponChargeUI();
@@ -223,6 +223,10 @@ namespace Hachiko
 			std::vector<GameObject*> ammo_cells;
 			int _ammo_count;
 
+			SERIALIZE_FIELD(GameObject*, _sword_ui_addon);
+			SERIALIZE_FIELD(GameObject*, _maze_ui_addon);
+			SERIALIZE_FIELD(GameObject*, _claw_ui_addon);
+
 			SERIALIZE_FIELD(GameObject*, _weapon_charge_bar_go);
 			ComponentProgressBar* _weapon_charge_bar = nullptr;
 
@@ -273,6 +277,8 @@ namespace Hachiko
 			unsigned _current_weapon = 0;
 			unsigned _attack_charges = 0;
 			float _invulnerability_time_remaining = 0.0f;
+			float _pickUp_duration = 0.5f;
+			float pickUp_time = _pickUp_duration;
 
 			// Movement management
 			float _stun_time = 0.0f;

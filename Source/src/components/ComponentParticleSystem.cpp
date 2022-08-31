@@ -93,6 +93,11 @@ void Hachiko::ComponentParticleSystem::Update()
     }
 }
 
+void Hachiko::ComponentParticleSystem::OnDisable() 
+{
+    ResetActiveParticles();
+}
+
 void Hachiko::ComponentParticleSystem::Draw(ComponentCamera* camera, Program* program)
 {
     for (auto& particle : particles)
