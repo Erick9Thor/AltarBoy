@@ -36,6 +36,7 @@ void Hachiko::ComponentParticleSystem::Start()
         App->scene_manager->GetActiveScene()->AddParticleComponent(this);
         in_scene = true;
     }
+
     for (auto& particle : particles)
     {
         particle.SetEmitter(this);
