@@ -40,23 +40,16 @@ bool Hachiko::ModuleUserInterface::Init()
 
 UpdateStatus Hachiko::ModuleUserInterface::Update(float delta)
 {
+    // Returns OpenGL mouse position local to the program window if the engine
+    // was built with PLAY_BUILD flag. Returns OpenGL mouse position local to
+    // scene window otherwise:
+    const float2 mouse_pos = Input::GetMouseOpenGLPosition();
+    constexpr bool is_click = false;
 
-    // On playbuild mouse position is taken from the Window, not ImGUI
-#ifdef PLAY_BUILD   
-    float2 mouse_pos = Input::GetMousePixelPosition();
-
-    RecursiveCheckMousePos(App->scene_manager->GetActiveScene()->GetRoot(), 
-        mouse_pos, false);
-#else
-    const WindowScene* w_scene = App->editor->GetSceneWindow();
-    
-    ImVec2 mouse_pos = ImGui::GetMousePos();
-    float2 click_pos = w_scene->ImguiToScreenPos(
-        float2(mouse_pos.x, mouse_pos.y));
-
-    RecursiveCheckMousePos(App->scene_manager->GetActiveScene()->GetRoot(), 
-        click_pos, false);
-#endif
+    RecursiveCheckMousePos(
+        App->scene_manager->GetActiveScene()->GetRoot(), 
+        mouse_pos, 
+        is_click);
 
     return UpdateStatus::UPDATE_CONTINUE;
 }
