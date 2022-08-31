@@ -103,14 +103,15 @@ UpdateStatus Hachiko::ModuleInput::PreUpdate(const float delta)
             mouse_pixels_motion.y = sdl_event.motion.yrel;
 
             mouse_normalized_motion.x = mouse_pixels_motion.x * _window_width_inverse;
-            mouse_normalized_motion.y = mouse_pixels_motion.y* _window_height_inverse;
+            mouse_normalized_motion.y = mouse_pixels_motion.y * _window_height_inverse;
 
             // Get monitor-global pixel position of mouse:
             int mouse_global_x = 0;
             int mouse_global_y = 0;
+            
             SDL_GetGlobalMouseState(&mouse_global_x, &mouse_global_y);
-            mouse_pixel_position.x = static_cast<float>(mouse_global_x);
-            mouse_pixel_position.y = static_cast<float>(mouse_global_y);
+            mouse_global_pixel_position.x = static_cast<float>(mouse_global_x);
+            mouse_global_pixel_position.y = static_cast<float>(mouse_global_y);
 
             // Normalized mouse position of SDL:
             // NOTE: Contrary to the pixel position, normalized position does
@@ -118,6 +119,22 @@ UpdateStatus Hachiko::ModuleInput::PreUpdate(const float delta)
             // window:
             mouse_normalized_position.x = static_cast<float>(sdl_event.motion.x) * _window_width_inverse;
             mouse_normalized_position.y = static_cast<float>(sdl_event.motion.y) * _window_height_inverse;
+
+            // Get OpenGL position of mouse:
+            int height = 0;
+            int width = 0;
+            App->window->GetWindowSize(width, height);
+            int window_x = 0;
+            int window_y = 0;
+            App->window->GetWindowPosition(
+                window_x, 
+                window_y);
+
+            mouse_opengl_position = ConvertGlobalPixelToOpenGLPosition(
+                float2(static_cast<float>(width), static_cast<float>(height)), 
+                float2(static_cast<float>(window_x), static_cast<float>(window_y)), 
+                mouse_global_pixel_position
+            );
         }
         break;
         
@@ -209,6 +226,19 @@ UpdateStatus Hachiko::ModuleInput::PreUpdate(const float delta)
     }
 
     return UpdateStatus::UPDATE_CONTINUE;
+}
+
+float2 Hachiko::ModuleInput::ConvertGlobalPixelToOpenGLPosition(
+    const float2& viewport_size, 
+    const float2& viewport_position, 
+    const float2& position_to_convert)
+{
+    float2 converted_position = position_to_convert - viewport_position;
+
+    converted_position.x -= viewport_size.x * 0.5f;
+    converted_position.y = -converted_position.y + viewport_size.y * 0.5f;
+
+    return converted_position;
 }
 
 void Hachiko::ModuleInput::UpdateInputMaps()
