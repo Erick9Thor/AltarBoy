@@ -564,8 +564,8 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 	_attack_current_duration = attack.duration;
 	_after_attack_timer = attack.cooldown + _combo_grace_period;
 
-	// The attacks lock the player just for half of the time
-	_lock_time = attack.duration / 2;
+	// The attacks lock the player just for 2/3 of the duration
+	_lock_time = attack.duration * 0.6666f;
 	
 	// Attack will occur in the attack simulation after the delay
 	_attack_current_delay = attack.hit_delay;
@@ -579,8 +579,6 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 	{
 		GetBufferedClick();
 	}
-
-	CombatManager* combat_manager = _bullet_emitter->GetComponent<CombatManager>();
 
 	// Move player a bit forward if it wouldnt fall	
 	if (attack.dash_distance != 0.0f)
@@ -610,6 +608,7 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 			_dash_end = _dash_start;
 		}
 	}
+	_new_attack = true;
 
 	// Fast and Scuffed, has to be changed when changing attack indicator
 	float4 attack_color = float4(1.0f, 1.0f, 1.0f, 1.0f);
@@ -1220,7 +1219,8 @@ void Hachiko::Scripting::PlayerController::CheckState()
 	PlayerState current_state = GetState();
 	bool state_changed = current_state != _previous_state;
 
-	if (!state_changed)
+	// Check also if another attack is made
+	if (!state_changed && !_new_attack)
 	{
 		return;
 	}
@@ -1318,6 +1318,7 @@ void Hachiko::Scripting::PlayerController::CheckComboAnimation()
 			animation->SendTrigger("isSwordThree");
 		}
 	}
+	_new_attack = false;
 }
 
 void Hachiko::Scripting::PlayerController::ResetPlayer(float3 spawn_pos)
@@ -1483,7 +1484,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 		// Make hit delay shorter than duration!
 		attack.hit_delay = 0.05f;
 		attack.duration = 0.5f; // 10 frames .45ms
-		attack.cooldown = 0.1f;
+		attack.cooldown = 0.0f;
 		attack.dash_distance = 1.0f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
 		attack.stats.damage = 1;
@@ -1496,7 +1497,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 	case AttackType::COMMON_2:
 		attack.hit_delay = 0.1f;
 		attack.duration = 0.40f; // 9 frames .45ms
-		attack.cooldown = 0.1f;
+		attack.cooldown = 0.0f;
 		attack.dash_distance = 1.0f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
 		attack.stats.damage = 1;
@@ -1509,7 +1510,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 	case AttackType::COMMON_3:
 		attack.hit_delay = 0.2f;
 		attack.duration = 0.6f; // 12 frames
-		attack.cooldown = 0.2f;
+		attack.cooldown = 0.4f;
 		attack.dash_distance = 1.3f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
 		attack.stats.damage = 1;
@@ -1522,8 +1523,8 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 	// COMMON ATTACKS
 	case AttackType::QUICK_1:
 		attack.hit_delay = 0.05f;
-		attack.duration = 0.5f;
-		attack.cooldown = 0.05f;
+		attack.duration = 0.4f;
+		attack.cooldown = 0.0f;
 		attack.dash_distance = 1.f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
 		attack.stats.damage = 1;
@@ -1535,8 +1536,8 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 
 	case AttackType::QUICK_2:
 		attack.hit_delay = 0.05f;
-		attack.duration = 0.40f;
-		attack.cooldown = 0.05f;
+		attack.duration = 0.4f;
+		attack.cooldown = 0.0f;
 		attack.dash_distance = 1.f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
 		attack.stats.damage = 1;
@@ -1548,22 +1549,22 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 
 	case AttackType::QUICK_3:
 		attack.hit_delay = 0.05f;
-		attack.duration = 0.50f;
-		attack.cooldown = 0.05f;
+		attack.duration = 0.6f;
+		attack.cooldown = 0.2f;
 		attack.dash_distance = 1.5f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
 		attack.stats.damage = 1;
 		attack.stats.knockback_distance = 0.f;
 		// If its cone use degrees on width
-		attack.stats.width = 5.f;
-		attack.stats.range = 3.5f;
+		attack.stats.width = 3.f;
+		attack.stats.range = 2.5f;
 		break;
 
 	// COMMON ATTACKS
 	case AttackType::HEAVY_1:
 		attack.hit_delay = 0.1f;
-		attack.duration = 0.6f;
-		attack.cooldown = 0.2f;
+		attack.duration = 0.8f;
+		attack.cooldown = 0.0f;
 		attack.dash_distance = 0.5f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
 		attack.stats.damage = 1;
@@ -1575,8 +1576,8 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 
 	case AttackType::HEAVY_2:
 		attack.hit_delay = 0.1f;
-		attack.duration = 0.4f;
-		attack.cooldown = 0.2f;
+		attack.duration = 0.8f;
+		attack.cooldown = 0.0f;
 		attack.dash_distance = 0.5f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
 		attack.stats.damage = 1;
@@ -1588,12 +1589,12 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 
 	case AttackType::HEAVY_3:
 		attack.hit_delay = 0.5f;
-		attack.duration = 0.8f;
+		attack.duration = 1.0f;
 		attack.cooldown = 0.5f;
 		attack.dash_distance = 0.5f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
-		attack.stats.damage = 2;
-		attack.stats.knockback_distance = 2.f;
+		attack.stats.damage = 3;
+		attack.stats.knockback_distance = 2.5f;
 		// If its cone use degrees on width
 		attack.stats.width = 4.f;
 		attack.stats.range = 4.5f;

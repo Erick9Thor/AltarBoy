@@ -205,7 +205,7 @@ namespace Hachiko
 			SERIALIZE_FIELD(GameObject*, _heal_effect);
 
 			const float _ranged_attack_cooldown = 0.2f;
-			const float _combo_grace_period = 0.4f;
+			const float _combo_grace_period = .5f;
 
 			SERIALIZE_FIELD(float, _rotation_duration);
 
@@ -274,6 +274,7 @@ namespace Hachiko
 			unsigned _current_weapon = 0;
 			unsigned _attack_charges = 0;
 			float _invulnerability_time_remaining = 0.0f;
+			bool _new_attack = false;
 
 			// Movement management
 			float _stun_time = 0.0f;
