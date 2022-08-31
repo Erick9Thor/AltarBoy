@@ -374,7 +374,9 @@ Hachiko::GameObject* Hachiko::Scripting::CombatManager::FindBulletClosestObstacl
 		float obstacle_radius = obstacle_component->GetSize().x;
 		Sphere hitbox = Sphere(obstacle_position, obstacle_radius + bullet_size);
 
-		if (obstacle->active && obstacle_component->IsActive() && trajectory.Intersects(hitbox))
+		CrystalExplosion* crystal_component = obstacle->GetComponent<CrystalExplosion>();
+
+		if (obstacle->active && obstacle_component->IsActive() && !crystal_component->isDestroyed() && trajectory.Intersects(hitbox))
 		{
 			float hit_distance = bullet_position.Distance(obstacle_position);
 			if (hit_distance < closest_hit)

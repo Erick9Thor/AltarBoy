@@ -227,6 +227,7 @@ void Hachiko::Scripting::CrystalExplosion::ResetCrystal()
 
 void Hachiko::Scripting::CrystalExplosion::DestroyCrystal()
 {
+	is_destroyed = true;
 	_audio_source->PostEvent(Sounds::CRYSTAL);
 	_static_crystal->SetActive(false);
 	_explosion_crystal->SetActive(true);
@@ -238,7 +239,6 @@ void Hachiko::Scripting::CrystalExplosion::DestroyCrystal()
 	ComponentAnimation* exploding_animation = _explosion_crystal->GetComponent<ComponentAnimation>();
 	if (exploding_animation)
 	{
-		is_destroyed = true;
 		exploding_animation->StartAnimating();
 	}
 }

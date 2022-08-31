@@ -29,6 +29,7 @@ namespace Hachiko
 
 			void RegisterHit(int damage);
 			bool isAlive() { return _stats->IsAlive(); };
+			bool isDestroyed() { return is_destroyed; };
 
 		private:
 			void SetVisible(bool v);
