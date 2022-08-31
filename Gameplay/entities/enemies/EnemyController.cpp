@@ -496,6 +496,10 @@ void Hachiko::Scripting::EnemyController::BeetleAttack()
 		_attack_current_delay = _attack_delay;
 		_state = EnemyState::ATTACKING;
 	}
+	else 
+	{
+		_current_idle_cooldown = _idle_cooldown;
+	}
 
 	// If attacking lower attack delay
 	if (_previous_state == EnemyState::ATTACKING)
