@@ -618,18 +618,30 @@ void Hachiko::Scripting::PlayerController::ChangeWeapon(unsigned weapon_idx)
 		_claw_weapon->SetActive(false);
 		_sword_upper->SetActive(false);
 		_sword_weapon->SetActive(false);
+
+		_sword_ui_addon->SetActive(false);
+		_claw_ui_addon->SetActive(false);
+		_maze_ui_addon->SetActive(false);
 	}
 	else if (_current_weapon == 1) // CLAW
 	{
 		_claw_weapon->SetActive(true);
 		_sword_upper->SetActive(false);
 		_sword_weapon->SetActive(false);
+
+		_sword_ui_addon->SetActive(false);
+		_claw_ui_addon->SetActive(true);
+		_maze_ui_addon->SetActive(false);
 	}
 	else if (_current_weapon == 2) // SWORD
 	{
 		_claw_weapon->SetActive(false);
 		_sword_upper->SetActive(true);
 		_sword_weapon->SetActive(true);
+
+		_sword_ui_addon->SetActive(true);
+		_claw_ui_addon->SetActive(false);
+		_maze_ui_addon->SetActive(false);
 	}
 }
 
@@ -1122,24 +1134,25 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 	}
 }
 
-void Hachiko::Scripting::PlayerController::RegisterHit(int damage_received, float knockback, float3 direction)
+bool Hachiko::Scripting::PlayerController::RegisterHit(int damage_received, float knockback, float3 direction)
 {
 	if (_god_mode || !IsAlive())
 	{
-	    return;
+		return false;
 	}
 
-	if (_invulnerability_time_remaining <= 0.0f)
+	bool dmg_received = _invulnerability_time_remaining <= 0.0f;
+	if (dmg_received)
 	{
 		_invulnerability_time_remaining = _invulnerability_time;
-		if (_player_geometry != nullptr) 
+		if (_player_geometry != nullptr)
 		{
 			_player_geometry->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, 0.5f), true);
 		}
 		_combat_stats->ReceiveDamage(damage_received);
 		UpdateHealthBar();
 		Input::GoBrr(0.3f, 500);
-		
+
 		if (_player_geometry != nullptr)
 		{
 			_player_geometry->ChangeEmissiveColor(float4(255, 255, 255, 255), 0.3f, true);
@@ -1151,10 +1164,10 @@ void Hachiko::Scripting::PlayerController::RegisterHit(int damage_received, floa
 			_ui_damage->SetActive(true);
 		}
 	}
-	
-	if(knockback > 0.0f)
+
+	if (knockback > 0.0f)
 	{
-		if (IsDashing()) 
+		if (IsDashing())
 		{
 			_dash_trail->SetActive(false);
 			_show_dashtrail = false;
@@ -1173,6 +1186,7 @@ void Hachiko::Scripting::PlayerController::RegisterHit(int damage_received, floa
 			_camera->GetComponent<PlayerCamera>()->Shake(0.2f, 0.05f);
 		}
 	}
+	return dmg_received;
 }
 
 void Hachiko::Scripting::PlayerController::RecieveKnockback(const math::float3 direction)
