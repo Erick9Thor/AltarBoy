@@ -17,7 +17,10 @@ Hachiko::Scripting::MainMenuManager::MainMenuManager(GameObject* new_game_object
     , _settings(nullptr)
     , _credits(nullptr)
     , _button_back(nullptr)
-    , _audio_source(nullptr) {}
+    , _audio_source(nullptr)
+    , _quit_button_delay_duration(1.0f)
+    , _remaining_waiting_time_for_quit(0.0f)
+    , _started_to_quit(false) {}
 
 void Hachiko::Scripting::MainMenuManager::OnAwake()
 {
@@ -94,6 +97,13 @@ void Hachiko::Scripting::MainMenuManager::OnUpdate()
 
 void Hachiko::Scripting::MainMenuManager::OnUpdateMain()
 {
+	// Skip the update if the application is marked as quitting by the quit
+	// button:
+    if (OnUpdateQuit())
+	{
+		return;
+	}
+
 	if (_state_changed)
 	{
 		// Common:
@@ -116,9 +126,7 @@ void Hachiko::Scripting::MainMenuManager::OnUpdateMain()
 
 	if (_button_quit->IsSelected())
 	{
-		_audio_source->PostEvent(Sounds::CLICK);
-
-		Hachiko::Quit();
+		QuitDelayed();
 
 	    return;
 	}
@@ -207,4 +215,41 @@ void Hachiko::Scripting::MainMenuManager::OnUpdateCredits()
 		_state = State::MAIN;
 		_state_changed = true;
 	}
+}
+
+bool Hachiko::Scripting::MainMenuManager::OnUpdateQuit()
+{
+	if (!_started_to_quit)
+	{
+		return false;
+	}
+
+	// Tick the time for the quit button activation delay:
+	_remaining_waiting_time_for_quit -= Time::DeltaTime();
+	_remaining_waiting_time_for_quit = _remaining_waiting_time_for_quit < 0.0f
+		? 0.0f
+		: _remaining_waiting_time_for_quit;
+
+	// Quit when the delay is over:
+	if (_remaining_waiting_time_for_quit == 0.0f)
+	{
+		// Not necessary as the application is quitting but done anyways to
+		// ensure a valid state:
+		_started_to_quit = false;
+
+		Hachiko::Quit();
+
+	    return true;
+	}
+
+	return true;
+}
+
+void Hachiko::Scripting::MainMenuManager::QuitDelayed()
+{
+	_audio_source->PostEvent(Sounds::CLICK);
+
+	_remaining_waiting_time_for_quit = _quit_button_delay_duration;
+
+	_started_to_quit = true;
 }
