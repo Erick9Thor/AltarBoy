@@ -62,22 +62,23 @@ bool Hachiko::Application::Init()
 
     file_system.Init();
 
+    // Execute Init:
     for (auto it = modules.begin(); it != modules.end() && ret; ++it)
     {
         ret = (*it)->Init();
     }
 
+    delta = 0;
+    EngineTimer::Start();
+
+    // GameTimer is triggered when the scene is loaded on PLAY_BUILD or when
+    // Play button on engine was hit. Therefore it won't be started here.
+
+    // Execute Start:
     for (auto it = modules.begin(); it != modules.end() && ret; ++it)
     {
         ret = (*it)->Start();
     }
-
-    delta = 0;
-    EngineTimer::Start();
-    
-#ifdef PLAY_BUILD 
-    GameTimer::Start();
-#endif
 
     return ReturnStatusWithQuit(ret);
 }
