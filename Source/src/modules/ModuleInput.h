@@ -158,7 +158,7 @@ namespace Hachiko
         // TODO: Make ModuleWindow store window size instead of monitor
         // size. And get width and height from there.
         void UpdateWindowSizeInversedCaches(int width, int height);
-        void NotifyMouseAction(const float2& position, MouseEventPayload::Action action);
+        void NotifyMouseAction(MouseEventPayload::Action action);
 
         // Gamepad Controller
         const char* GetControllerTypeAsString(SDL_GameControllerType type);

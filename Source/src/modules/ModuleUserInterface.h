@@ -19,7 +19,7 @@ namespace Hachiko
         void RecursiveDrawUI(GameObject* game_object, Program* img_program, Program* txt_program);
         void RecursiveCheckMousePos(GameObject* game_object, const float2& mouse_pos, bool is_click = false);
         
-        void HandleMouseAction(const float2&);
+    static void HandleMouseAction(MouseEventPayload::Action mouse_action);
 
         void CreateSquare();
         void BindSquare() const;

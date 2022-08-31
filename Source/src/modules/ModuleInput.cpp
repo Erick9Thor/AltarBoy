@@ -86,7 +86,7 @@ UpdateStatus Hachiko::ModuleInput::PreUpdate(const float delta)
             
             if (sdl_event.button.button == SDL_BUTTON_LEFT)
             {
-                NotifyMouseAction(float2(mouse_pixel_position.x, mouse_pixel_position.y), MouseEventPayload::Action::CLICK);
+                NotifyMouseAction(MouseEventPayload::Action::Click);
             }
 
             break;
@@ -94,7 +94,7 @@ UpdateStatus Hachiko::ModuleInput::PreUpdate(const float delta)
             mouse[sdl_event.button.button - 1] = KeyState::KEY_UP;
             if (sdl_event.button.button == SDL_BUTTON_LEFT)
             {
-                NotifyMouseAction(float2(mouse_pixel_position.x, mouse_pixel_position.y), MouseEventPayload::Action::RELEASE);
+                NotifyMouseAction(MouseEventPayload::Action::Release);
             }
             break;
         case SDL_MOUSEMOTION:   
@@ -306,10 +306,10 @@ void Hachiko::ModuleInput::UpdateWindowSizeInversedCaches(int width,
     _window_height_inverse = 1.0f / height;
 }
 
-void Hachiko::ModuleInput::NotifyMouseAction(const float2& position, MouseEventPayload::Action action)
+void Hachiko::ModuleInput::NotifyMouseAction(MouseEventPayload::Action action)
 {
     Event mouse_action(Event::Type::MOUSE_ACTION);
-    mouse_action.SetEventData<MouseEventPayload>(action, position);
+    mouse_action.SetEventData<MouseEventPayload>(action);
     App->event->Publish(mouse_action);
 }
 
