@@ -86,7 +86,7 @@ void Hachiko::ModuleUserInterface::RecursiveDrawUI(
     Program* img_program, 
     Program* txt_program)
 {
-    ComponentCanvasRenderer* renderer = 
+    const ComponentCanvasRenderer* renderer = 
         game_object->GetComponent<ComponentCanvasRenderer>();
 
     if (renderer && game_object->IsActive() && renderer->IsActive())
