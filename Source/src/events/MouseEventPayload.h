@@ -6,8 +6,8 @@ namespace Hachiko
     {
         enum class Action
         {
-            Click,
-            Release,
+            CLICK,
+            RELEASE,
         };
 
         explicit MouseEventPayload(Action action) : action(action) {}

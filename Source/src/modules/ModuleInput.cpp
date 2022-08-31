@@ -87,7 +87,7 @@ UpdateStatus Hachiko::ModuleInput::PreUpdate(const float delta)
             
             if (sdl_event.button.button == SDL_BUTTON_LEFT)
             {
-                NotifyMouseAction(MouseEventPayload::Action::Click);
+                NotifyMouseAction(MouseEventPayload::Action::CLICK);
             }
 
             break;
@@ -95,7 +95,7 @@ UpdateStatus Hachiko::ModuleInput::PreUpdate(const float delta)
             mouse[sdl_event.button.button - 1] = KeyState::KEY_UP;
             if (sdl_event.button.button == SDL_BUTTON_LEFT)
             {
-                NotifyMouseAction(MouseEventPayload::Action::Release);
+                NotifyMouseAction(MouseEventPayload::Action::RELEASE);
             }
             break;
         case SDL_MOUSEMOTION:   

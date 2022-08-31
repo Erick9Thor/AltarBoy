@@ -139,7 +139,7 @@ void Hachiko::ModuleUserInterface::RecursiveCheckMousePos(
 void Hachiko::ModuleUserInterface::HandleMouseAction(
     const MouseEventPayload::Action mouse_action)
 {
-    if (mouse_action != MouseEventPayload::Action::Click)
+    if (mouse_action != MouseEventPayload::Action::CLICK)
     {
         return;
     }
