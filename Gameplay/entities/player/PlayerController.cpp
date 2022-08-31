@@ -239,7 +239,10 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		{
 			if (Input::IsKeyPressed(Input::KeyCode::KEY_R) || Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_Y))
 			{
-				_death_screen->SetActive(false);
+				if (_death_screen != nullptr)
+				{
+					_death_screen->SetActive(false);
+				}
 
 				ResetPlayer(_level_manager->Respawn());
 
@@ -255,7 +258,10 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 			{
 				_state = PlayerState::READY_TO_RESPAWN;
 
-				_death_screen->SetActive(true);
+				if (_death_screen != nullptr) 
+				{
+					_death_screen->SetActive(true);
+				}
 			}
 		}
 	}
