@@ -787,14 +787,14 @@ void Hachiko::Scripting::PlayerController::MovementController()
 			_walking_dust_particles->Stop();
 	}
 
-	if (_god_mode)
-	{
-		return;
-	}
-
 	if (IsPickUp() && animation->IsAnimationStopped())
 	{
 		_state = PlayerState::IDLE;
+	}
+
+	if (_god_mode)
+	{
+		return;
 	}
 
 	if (IsFalling())
