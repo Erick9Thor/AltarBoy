@@ -45,8 +45,6 @@ namespace Hachiko
             return IsHovering() && IsFocused();
         }
 
-        [[nodiscard]] float2 ImguiToScreenPos(const float2& mouse_pos) const;
-
         // Checks if mouse_position is partially outside of the window meaning
         // that if the mouse_position.x or mouse_position.y is outside, returns
         // the latest position that was inside the window, if the

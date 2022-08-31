@@ -383,6 +383,7 @@ enum class HACHIKO_API KeyCode
     KEY_AUDIOREWIND = 285,
     KEY_AUDIOFASTFORWARD = 286,
 };
+
 enum class HACHIKO_API MouseButton
 {
     // These are taken from SDL source code.
@@ -444,11 +445,11 @@ HACHIKO_API bool IsMouseButtonDown(MouseButton mouse_button);
 HACHIKO_API int GetScrollWheelDelta();
 HACHIKO_API float2 GetMouseNormalizedMotion();
 HACHIKO_API const float2& GetMousePixelsMotion();
-HACHIKO_API const float2& GetMousePixelPosition();
+HACHIKO_API const float2& GetMouseGlobalPixelPosition();
 HACHIKO_API float2 GetMouseNormalizedPosition();
+HACHIKO_API float2 GetMouseOpenGLPosition();
 HACHIKO_API bool IsGamepadModeOn();
 HACHIKO_API bool IsGameControllerButtonUp(GameControllerButton id);
-HACHIKO_API bool IsGameControllerButtonDown(GameControllerButton id);
 HACHIKO_API bool IsGameControllerButtonDown(GameControllerButton id);
 HACHIKO_API float GetAxisNormalized(GameControllerAxis id);
 HACHIKO_API void GoBrr(float strength, float duration);
