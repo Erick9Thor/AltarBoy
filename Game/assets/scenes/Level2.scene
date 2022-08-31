@@ -28,7 +28,7 @@ child:
         enabled: true
         position: [-80.89, 25.2, 20.95]
         rotation: [0, 0.887, -0.4617, 0]
-        scale: [0.994, 1, 0.994]
+        scale: [0.9939, 1, 0.9939]
       - !<camera>
         id: 10896445531580738069
         type: 4
@@ -11125,7 +11125,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1133, 630]
+            size: [1242, 659]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -11169,6 +11169,7 @@ child:
                 image_color: [1, 1, 1, 1]
                 hover_image_color: [1, 1, 1, 1]
                 image_is_tiled: false
+                image_randomize_initial_frame: false
                 image_x_tiles: 1
                 image_y_tiles: 1
                 image_tiles_per_second: 1
@@ -11595,7 +11596,6 @@ child:
                 "'_idle_cooldown@float'": 2
                 "'_spawning_time@float'": 2
                 "'_spawn_pos@float3'": [0, 0, 0]
-                "'_spawn_is_initial@bool'": true
                 "'_enemy_body@GameObject*'": 6416059454913251095
                 "'_parasite@GameObject*'": 774902273813563624
                 "'_blood_trail@GameObject*'": 17506872281698893678
@@ -12277,7 +12277,7 @@ child:
                                                                                                                                     enabled: true
                                                                                                                                     position: [0, 0, 0]
                                                                                                                                     rotation: [-0.6647, -0.2755, 0.1059, 0.6863]
-                                                                                                                                    scale: [1, 1, 0.9922]
+                                                                                                                                    scale: [1, 1, 0.9921]
                                                                                                               - id: 3429638207402232947
                                                                                                                 name: loc_Forearm
                                                                                                                 enabled: true
@@ -12878,7 +12878,6 @@ child:
                 "'_idle_cooldown@float'": 2
                 "'_spawning_time@float'": 2
                 "'_spawn_pos@float3'": [0, 0, 0]
-                "'_spawn_is_initial@bool'": true
                 "'_enemy_body@GameObject*'": 1859943913230722456
                 "'_parasite@GameObject*'": 4049483187360583706
                 "'_blood_trail@GameObject*'": 5292793981102301956
@@ -13560,7 +13559,7 @@ child:
                                                                                                                                     enabled: true
                                                                                                                                     position: [0, 0, 0]
                                                                                                                                     rotation: [-0.6647, -0.2755, 0.1059, 0.6863]
-                                                                                                                                    scale: [1, 1, 0.9922]
+                                                                                                                                    scale: [1, 1, 0.9921]
                                                                                                               - id: 8159827220249771103
                                                                                                                 name: loc_Forearm
                                                                                                                 enabled: true
@@ -14173,7 +14172,6 @@ child:
                 "'_idle_cooldown@float'": 2
                 "'_spawning_time@float'": 2
                 "'_spawn_pos@float3'": [0, 0, 0]
-                "'_spawn_is_initial@bool'": true
                 "'_enemy_body@GameObject*'": 16566165136749916714
                 "'_parasite@GameObject*'": 16441109202310502955
                 "'_blood_trail@GameObject*'": 8647728162370394285
@@ -14855,7 +14853,7 @@ child:
                                                                                                                                     enabled: true
                                                                                                                                     position: [0, 0, 0]
                                                                                                                                     rotation: [-0.6647, -0.2755, 0.1059, 0.6863]
-                                                                                                                                    scale: [1, 1, 0.9922]
+                                                                                                                                    scale: [1, 1, 0.9921]
                                                                                                               - id: 16844127398146480544
                                                                                                                 name: loc_Forearm
                                                                                                                 enabled: true
@@ -15456,7 +15454,6 @@ child:
                 "'_idle_cooldown@float'": 2
                 "'_spawning_time@float'": 2
                 "'_spawn_pos@float3'": [0, 0, 0]
-                "'_spawn_is_initial@bool'": true
                 "'_enemy_body@GameObject*'": 1258262380685522532
                 "'_parasite@GameObject*'": 4741529891486612853
                 "'_blood_trail@GameObject*'": 11869932753895285163
@@ -16138,7 +16135,7 @@ child:
                                                                                                                                     enabled: true
                                                                                                                                     position: [0, 0, 0]
                                                                                                                                     rotation: [-0.6647, -0.2755, 0.1059, 0.6863]
-                                                                                                                                    scale: [1, 1, 0.9924]
+                                                                                                                                    scale: [1, 1, 0.9923]
                                                                                                               - id: 5207271356149382198
                                                                                                                 name: loc_Forearm
                                                                                                                 enabled: true
@@ -16739,7 +16736,6 @@ child:
                 "'_idle_cooldown@float'": 2
                 "'_spawning_time@float'": 2
                 "'_spawn_pos@float3'": [0, 0, 0]
-                "'_spawn_is_initial@bool'": true
                 "'_enemy_body@GameObject*'": 5702173036185776095
                 "'_parasite@GameObject*'": 11410642676657315259
                 "'_blood_trail@GameObject*'": 18365485115518203542
@@ -17421,7 +17417,7 @@ child:
                                                                                                                                     enabled: true
                                                                                                                                     position: [0, 0, 0]
                                                                                                                                     rotation: [-0.6647, -0.2755, 0.1059, 0.6863]
-                                                                                                                                    scale: [1, 1, 0.9924]
+                                                                                                                                    scale: [1, 1, 0.9923]
                                                                                                               - id: 13089068325276777363
                                                                                                                 name: loc_Forearm
                                                                                                                 enabled: true
@@ -18022,7 +18018,6 @@ child:
                 "'_idle_cooldown@float'": 2
                 "'_spawning_time@float'": 2
                 "'_spawn_pos@float3'": [0, 0, 0]
-                "'_spawn_is_initial@bool'": true
                 "'_enemy_body@GameObject*'": 13885654144899060688
                 "'_parasite@GameObject*'": 10896193003519739820
                 "'_blood_trail@GameObject*'": 11050223725697538582
@@ -18704,7 +18699,7 @@ child:
                                                                                                                                     enabled: true
                                                                                                                                     position: [0, 0, 0]
                                                                                                                                     rotation: [-0.6647, -0.2755, 0.1059, 0.6863]
-                                                                                                                                    scale: [1, 1, 0.9924]
+                                                                                                                                    scale: [1, 1, 0.9923]
                                                                                                               - id: 4790080646810137177
                                                                                                                 name: loc_Forearm
                                                                                                                 enabled: true
@@ -19317,7 +19312,6 @@ child:
                 "'_idle_cooldown@float'": 2
                 "'_spawning_time@float'": 2
                 "'_spawn_pos@float3'": [0, 0, 0]
-                "'_spawn_is_initial@bool'": true
                 "'_enemy_body@GameObject*'": 12956123744914927350
                 "'_parasite@GameObject*'": 9738824206151180022
                 "'_blood_trail@GameObject*'": 3771314543481233377
@@ -19999,7 +19993,7 @@ child:
                                                                                                                                     enabled: true
                                                                                                                                     position: [0, 0, 0]
                                                                                                                                     rotation: [-0.6647, -0.2755, 0.1059, 0.6863]
-                                                                                                                                    scale: [1, 1, 0.9922]
+                                                                                                                                    scale: [1, 1, 0.9921]
                                                                                                               - id: 8468856603431138971
                                                                                                                 name: loc_Forearm
                                                                                                                 enabled: true
@@ -20600,7 +20594,6 @@ child:
                 "'_idle_cooldown@float'": 2
                 "'_spawning_time@float'": 2
                 "'_spawn_pos@float3'": [0, 0, 0]
-                "'_spawn_is_initial@bool'": true
                 "'_enemy_body@GameObject*'": 18371168732206449683
                 "'_parasite@GameObject*'": 3926465849538199006
                 "'_blood_trail@GameObject*'": 8040944622768878658
@@ -21282,7 +21275,7 @@ child:
                                                                                                                                     enabled: true
                                                                                                                                     position: [0, 0, 0]
                                                                                                                                     rotation: [-0.6647, -0.2755, 0.1059, 0.6863]
-                                                                                                                                    scale: [1, 1, 0.9922]
+                                                                                                                                    scale: [1, 1, 0.9921]
                                                                                                               - id: 13691087978600250765
                                                                                                                 name: loc_Forearm
                                                                                                                 enabled: true
@@ -21883,7 +21876,6 @@ child:
                 "'_idle_cooldown@float'": 2
                 "'_spawning_time@float'": 2
                 "'_spawn_pos@float3'": [0, 0, 0]
-                "'_spawn_is_initial@bool'": true
                 "'_enemy_body@GameObject*'": 10874887815220262819
                 "'_parasite@GameObject*'": 17797880877382293535
                 "'_blood_trail@GameObject*'": 11872650979825439727
@@ -22565,7 +22557,7 @@ child:
                                                                                                                                     enabled: true
                                                                                                                                     position: [0, 0, 0]
                                                                                                                                     rotation: [-0.6647, -0.2755, 0.1059, 0.6863]
-                                                                                                                                    scale: [1, 1, 0.9922]
+                                                                                                                                    scale: [1, 1, 0.9921]
                                                                                                               - id: 6027660935168381040
                                                                                                                 name: loc_Forearm
                                                                                                                 enabled: true
@@ -23166,7 +23158,6 @@ child:
                 "'_idle_cooldown@float'": 2
                 "'_spawning_time@float'": 2
                 "'_spawn_pos@float3'": [0, 0, 0]
-                "'_spawn_is_initial@bool'": true
                 "'_enemy_body@GameObject*'": 17859516913462768137
                 "'_parasite@GameObject*'": 16842230903745688588
                 "'_blood_trail@GameObject*'": 7498845987070316310
@@ -23848,7 +23839,7 @@ child:
                                                                                                                                     enabled: true
                                                                                                                                     position: [0, 0, 0]
                                                                                                                                     rotation: [-0.6647, -0.2755, 0.1059, 0.6863]
-                                                                                                                                    scale: [1, 1, 0.9922]
+                                                                                                                                    scale: [1, 1, 0.9921]
                                                                                                               - id: 13067736761385187006
                                                                                                                 name: loc_Forearm
                                                                                                                 enabled: true
@@ -24449,7 +24440,6 @@ child:
                 "'_idle_cooldown@float'": 2
                 "'_spawning_time@float'": 2
                 "'_spawn_pos@float3'": [0, 0, 0]
-                "'_spawn_is_initial@bool'": true
                 "'_enemy_body@GameObject*'": 4958139201546674453
                 "'_parasite@GameObject*'": 14101597013611334332
                 "'_blood_trail@GameObject*'": 6970175497186854563
@@ -25131,7 +25121,7 @@ child:
                                                                                                                                     enabled: true
                                                                                                                                     position: [0, 0, 0]
                                                                                                                                     rotation: [-0.6647, -0.2755, 0.1059, 0.6863]
-                                                                                                                                    scale: [1, 1, 0.9922]
+                                                                                                                                    scale: [1, 1, 0.9921]
                                                                                                               - id: 17663525587217194020
                                                                                                                 name: loc_Forearm
                                                                                                                 enabled: true
@@ -25732,7 +25722,6 @@ child:
                 "'_idle_cooldown@float'": 2
                 "'_spawning_time@float'": 2
                 "'_spawn_pos@float3'": [0, 0, 0]
-                "'_spawn_is_initial@bool'": true
                 "'_enemy_body@GameObject*'": 17968478904254508955
                 "'_parasite@GameObject*'": 6691118295505169519
                 "'_blood_trail@GameObject*'": 18294816864598166674
@@ -26414,7 +26403,7 @@ child:
                                                                                                                                     enabled: true
                                                                                                                                     position: [0, 0, 0]
                                                                                                                                     rotation: [-0.6647, -0.2755, 0.1059, 0.6863]
-                                                                                                                                    scale: [1, 1, 0.9922]
+                                                                                                                                    scale: [1, 1, 0.9921]
                                                                                                               - id: 5701538364224828094
                                                                                                                 name: loc_Forearm
                                                                                                                 enabled: true
@@ -27015,7 +27004,6 @@ child:
                 "'_idle_cooldown@float'": 2
                 "'_spawning_time@float'": 2
                 "'_spawn_pos@float3'": [0, 0, 0]
-                "'_spawn_is_initial@bool'": true
                 "'_enemy_body@GameObject*'": 16538879029224455810
                 "'_parasite@GameObject*'": 15579653939071586640
                 "'_blood_trail@GameObject*'": 16530046716657593463
@@ -27697,7 +27685,7 @@ child:
                                                                                                                                     enabled: true
                                                                                                                                     position: [0, 0, 0]
                                                                                                                                     rotation: [-0.6647, -0.2755, 0.1059, 0.6863]
-                                                                                                                                    scale: [1, 1, 0.9922]
+                                                                                                                                    scale: [1, 1, 0.9921]
                                                                                                               - id: 9507468232028224713
                                                                                                                 name: loc_Forearm
                                                                                                                 enabled: true
@@ -28298,7 +28286,6 @@ child:
                 "'_idle_cooldown@float'": 2
                 "'_spawning_time@float'": 2
                 "'_spawn_pos@float3'": [0, 0, 0]
-                "'_spawn_is_initial@bool'": true
                 "'_enemy_body@GameObject*'": 2705320769411001046
                 "'_parasite@GameObject*'": 7769385678137790820
                 "'_blood_trail@GameObject*'": 12585911957723975190
@@ -28980,7 +28967,7 @@ child:
                                                                                                                                     enabled: true
                                                                                                                                     position: [0, 0, 0]
                                                                                                                                     rotation: [-0.6647, -0.2755, 0.1059, 0.6863]
-                                                                                                                                    scale: [1, 1, 0.9922]
+                                                                                                                                    scale: [1, 1, 0.9921]
                                                                                                               - id: 5084966591514581558
                                                                                                                 name: loc_Forearm
                                                                                                                 enabled: true
@@ -29593,7 +29580,6 @@ child:
                 "'_idle_cooldown@float'": 2
                 "'_spawning_time@float'": 2
                 "'_spawn_pos@float3'": [0, 0, 0]
-                "'_spawn_is_initial@bool'": true
                 "'_enemy_body@GameObject*'": 3570164684814665354
                 "'_parasite@GameObject*'": 5103859254071484098
                 "'_blood_trail@GameObject*'": 7525129291284784905
@@ -30275,7 +30261,7 @@ child:
                                                                                                                                     enabled: true
                                                                                                                                     position: [0, 0, 0]
                                                                                                                                     rotation: [-0.6647, -0.2755, 0.1059, 0.6863]
-                                                                                                                                    scale: [1, 1, 0.9922]
+                                                                                                                                    scale: [1, 1, 0.9921]
                                                                                                               - id: 5082327546702959017
                                                                                                                 name: loc_Forearm
                                                                                                                 enabled: true
@@ -34839,8 +34825,8 @@ child:
             type: 1
             enabled: true
             position: [12.34, -13.66, 16.88]
-            rotation: [-0.6409, -0.2988, -0.2988, 0.6408]
-            scale: [1, 1, 1]
+            rotation: [-0.6409, -0.2988, -0.2988, 0.6409]
+            scale: [1, 0.9999, 0.9999]
         child:
           - id: 7008665827016225724
             name: Box173
@@ -43316,7 +43302,7 @@ child:
             enabled: true
             position: [78.34, 57.99, 108.4]
             rotation: [0.2988, -0.6409, 0.6409, 0.2988]
-            scale: [0.6233, 0.6176, 0.6176]
+            scale: [0.6234, 0.6176, 0.6176]
           - !<mesh_renderer>
             id: 5819104067998357593
             type: 2
@@ -43336,7 +43322,7 @@ child:
             enabled: true
             position: [71.77, 57.99, 108.4]
             rotation: [0.2988, -0.6409, 0.6409, 0.2988]
-            scale: [0.6233, 0.6176, 0.6176]
+            scale: [0.6234, 0.6176, 0.6176]
           - !<mesh_renderer>
             id: 16791808442327275136
             type: 2
@@ -43356,7 +43342,7 @@ child:
             enabled: true
             position: [78.34, 57.99, 134.7]
             rotation: [0.2988, -0.6409, 0.6409, 0.2988]
-            scale: [0.6233, 0.6176, 0.6176]
+            scale: [0.6234, 0.6176, 0.6176]
           - !<mesh_renderer>
             id: 3329365984374950898
             type: 2
@@ -43376,7 +43362,7 @@ child:
             enabled: true
             position: [71.77, 57.99, 134.7]
             rotation: [0.2988, -0.6409, 0.6409, 0.2988]
-            scale: [0.6233, 0.6176, 0.6176]
+            scale: [0.6234, 0.6176, 0.6176]
           - !<mesh_renderer>
             id: 12123002851679638302
             type: 2
@@ -43856,7 +43842,7 @@ child:
             enabled: true
             position: [-24, 57.99, -1.203]
             rotation: [0.2988, -0.6409, 0.6409, 0.2988]
-            scale: [0.6233, 0.6176, 0.6176]
+            scale: [0.6234, 0.6176, 0.6176]
           - !<mesh_renderer>
             id: 4611814328006415440
             type: 2
@@ -43876,7 +43862,7 @@ child:
             enabled: true
             position: [-45, 57.99, -1.203]
             rotation: [0.2988, -0.6409, 0.6409, 0.2988]
-            scale: [0.6233, 0.6176, 0.6176]
+            scale: [0.6234, 0.6176, 0.6176]
           - !<mesh_renderer>
             id: 7571390482361782387
             type: 2
@@ -43896,7 +43882,7 @@ child:
             enabled: true
             position: [-24, 57.99, 4.266]
             rotation: [0.2988, -0.6409, 0.6409, 0.2988]
-            scale: [0.6233, 0.6176, 0.6176]
+            scale: [0.6234, 0.6176, 0.6176]
           - !<mesh_renderer>
             id: 1939475259225912656
             type: 2
@@ -43916,7 +43902,7 @@ child:
             enabled: true
             position: [-45, 57.99, 4.266]
             rotation: [0.2988, -0.6409, 0.6409, 0.2988]
-            scale: [0.6233, 0.6176, 0.6176]
+            scale: [0.6234, 0.6176, 0.6176]
           - !<mesh_renderer>
             id: 18076091297113264662
             type: 2
@@ -47312,7 +47298,7 @@ child:
             enabled: true
             position: [33.22, -0.7113, 85.75]
             rotation: [-0.4777, 0.5213, 0.5213, 0.4777]
-            scale: [1.345, 0.984, 0.8677]
+            scale: [1.345, 0.9839, 0.8676]
           - !<mesh_renderer>
             id: 2340356675121566044
             type: 2
@@ -48132,7 +48118,7 @@ child:
             enabled: true
             position: [47.52, -0.7113, 93.25]
             rotation: [-0.4777, 0.5213, 0.5213, 0.4777]
-            scale: [1.345, 0.984, 0.8677]
+            scale: [1.345, 0.9839, 0.8676]
           - !<mesh_renderer>
             id: 7757814749040790717
             type: 2
@@ -48172,7 +48158,7 @@ child:
             enabled: true
             position: [47.52, -0.7113, 99.45]
             rotation: [-0.4777, 0.5213, 0.5213, 0.4777]
-            scale: [1.345, 0.984, 0.8677]
+            scale: [1.345, 0.9839, 0.8676]
           - !<mesh_renderer>
             id: 10347052849173274121
             type: 2
@@ -52171,7 +52157,7 @@ child:
             type: 1
             enabled: true
             position: [71.95, -6.446, 123.9]
-            rotation: [0, -0.6124, 0, 0.7906]
+            rotation: [0, -0.6124, 0, 0.7905]
             scale: [0.0548, 0.0548, 0.1014]
           - !<mesh_renderer>
             id: 11107213043607805913
@@ -54704,7 +54690,7 @@ child:
             enabled: true
             position: [69.03, 4.09, 157.7]
             rotation: [-0.2418, 0.6645, 0.6645, 0.2418]
-            scale: [0.7217, 0.716, 0.716]
+            scale: [0.7218, 0.716, 0.716]
           - !<mesh_renderer>
             id: 18313554091341308657
             type: 2
@@ -54724,7 +54710,7 @@ child:
             enabled: true
             position: [65.03, 4.09, 162.4]
             rotation: [-0.2418, 0.6645, 0.6645, 0.2418]
-            scale: [0.7217, 0.716, 0.716]
+            scale: [0.7218, 0.716, 0.716]
           - !<mesh_renderer>
             id: 17163937804265586495
             type: 2
@@ -54744,7 +54730,7 @@ child:
             enabled: true
             position: [56.91, 7.113, 152.3]
             rotation: [-0.7044, 0.0616, 0.0616, 0.7044]
-            scale: [1, 0.9943, 0.9943]
+            scale: [1, 0.9942, 0.9942]
           - !<mesh_renderer>
             id: 11151442276338484363
             type: 2
@@ -56932,7 +56918,7 @@ child:
             enabled: true
             position: [91.65, -31.29, -36.42]
             rotation: [0.4305, 0.561, 0.561, -0.4305]
-            scale: [1.27, 1.27, 0.7119]
+            scale: [1.27, 1.27, 0.712]
         child:
           - id: 8314455341466143350
             name: Box1210
@@ -60204,7 +60190,7 @@ child:
             enabled: true
             position: [128.1, -47.23, -148.1]
             rotation: [0.1927, 0.6709, 0.7045, 0.1278]
-            scale: [0.3146, 0.3203, 0.5875]
+            scale: [0.3145, 0.3203, 0.5874]
           - !<mesh_renderer>
             id: 1983075821126825456
             type: 2
@@ -62149,7 +62135,7 @@ child:
                                                                                                     type: 1
                                                                                                     enabled: true
                                                                                                     position: [0, 0, 0]
-                                                                                                    rotation: [-0.0336, 0.0593, -0.4916, 0.8682]
+                                                                                                    rotation: [-0.0336, 0.0593, -0.4916, 0.8681]
                                                                                                     scale: [1, 1, 1]
                                                                                                 child:
                                                                                                   - id: 3765807892923461448
@@ -62197,7 +62183,7 @@ child:
                                                                                                                     type: 1
                                                                                                                     enabled: true
                                                                                                                     position: [0, 0, 0]
-                                                                                                                    rotation: [0.0336, -0.0593, 0.4916, 0.8682]
+                                                                                                                    rotation: [0.0336, -0.0593, 0.4916, 0.8681]
                                                                                                                     scale: [1, 1, 1]
                                                                                                                 child:
                                                                                                                   - id: 1874734059251522252
@@ -62233,7 +62219,7 @@ child:
                                         enabled: true
                                         position: [0, 0, 0]
                                         rotation: [0.2065, -0.119, 0.8415, 0.4848]
-                                        scale: [0.9872, 0.9872, 1]
+                                        scale: [0.9871, 0.9871, 1]
                                     child:
                                       - id: 9585142661946195075
                                         name: CenterShoulder_$AssimpFbx$_Rotation
@@ -62555,7 +62541,7 @@ child:
                                                                                                                 enabled: true
                                                                                                                 position: [0, 0, 0]
                                                                                                                 rotation: [0, 0.9999, 0, 0.0118]
-                                                                                                                scale: [0.9872, 1, 0.9872]
+                                                                                                                scale: [0.9871, 1, 0.9871]
                                                                                                             child:
                                                                                                               - id: 4975635379277887325
                                                                                                                 name: Claw_Jnt
@@ -62591,7 +62577,7 @@ child:
                                                                                                                             enabled: true
                                                                                                                             position: [0, 0, 0]
                                                                                                                             rotation: [0, 0.9999, 0, -0.0118]
-                                                                                                                            scale: [0.9872, 1, 0.9872]
+                                                                                                                            scale: [0.9871, 1, 0.9871]
                                                                                                                         child:
                                                                                                                           - id: 17028208151869563194
                                                                                                                             name: Claw_Mid_Jnt
@@ -62627,7 +62613,7 @@ child:
                                                                                                                                         enabled: true
                                                                                                                                         position: [0, 0, 0]
                                                                                                                                         rotation: [0, -0.7329, 0, 0.6803]
-                                                                                                                                        scale: [0.9873, 1, 0.9873]
+                                                                                                                                        scale: [0.9872, 1, 0.9872]
                                                                                                                                     child:
                                                                                                                                       - id: 8282257174038454927
                                                                                                                                         name: Thumb_Start_$AssimpFbx$_Rotation
@@ -62901,7 +62887,7 @@ child:
                                                                                                                                         enabled: true
                                                                                                                                         position: [0, 0, 0]
                                                                                                                                         rotation: [0, 0.9979, 0, 0.0641]
-                                                                                                                                        scale: [0.9744, 1, 0.9744]
+                                                                                                                                        scale: [0.9742, 1, 0.9742]
                                                                                                                                     child:
                                                                                                                                       - id: 6541234970057691527
                                                                                                                                         name: Index_start_$AssimpFbx$_Rotation
@@ -62949,7 +62935,7 @@ child:
                                                                                                                                                         enabled: true
                                                                                                                                                         position: [0, 0, 0]
                                                                                                                                                         rotation: [0, 0.9979, 0, -0.0641]
-                                                                                                                                                        scale: [0.9744, 1, 0.9744]
+                                                                                                                                                        scale: [0.9742, 1, 0.9742]
                                                                                                                                                     child:
                                                                                                                                                       - id: 11524570503980389344
                                                                                                                                                         name: Index_finish_$AssimpFbx$_Rotation
@@ -63173,7 +63159,7 @@ child:
                                         type: 1
                                         enabled: true
                                         position: [0, 0, 0]
-                                        rotation: [-0.3566, -0.5758, -0.3468, 0.6489]
+                                        rotation: [-0.3566, -0.5758, -0.3468, 0.6488]
                                         scale: [0.9936, 1, 0.9936]
                                     child:
                                       - id: 17837029945982444641
@@ -63269,7 +63255,7 @@ child:
                                                                         type: 1
                                                                         enabled: true
                                                                         position: [0, 0, 0]
-                                                                        rotation: [-0.0447, -0.4873, -0.0796, 0.8685]
+                                                                        rotation: [-0.0447, -0.4873, -0.0796, 0.8684]
                                                                         scale: [1, 1, 1]
                                                                     child:
                                                                       - id: 5575515360189920540
@@ -63352,7 +63338,7 @@ child:
                                                                         type: 1
                                                                         enabled: true
                                                                         position: [0, 0, 0]
-                                                                        rotation: [-0.0447, -0.4873, -0.0796, 0.8685]
+                                                                        rotation: [-0.0447, -0.4873, -0.0796, 0.8684]
                                                                         scale: [1, 1, 1]
                                                                     child:
                                                                       - id: 3671042386017070902
@@ -63901,7 +63887,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1133, 630]
+            size: [1242, 659]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -63957,6 +63943,7 @@ child:
                     image_color: [1, 1, 1, 1]
                     hover_image_color: [1, 1, 1, 1]
                     image_is_tiled: false
+                    image_randomize_initial_frame: false
                     image_x_tiles: 1
                     image_y_tiles: 1
                     image_tiles_per_second: 1
@@ -63995,6 +63982,7 @@ child:
                     image_color: [1, 1, 1, 1]
                     hover_image_color: [1, 1, 1, 1]
                     image_is_tiled: false
+                    image_randomize_initial_frame: false
                     image_x_tiles: 1
                     image_y_tiles: 1
                     image_tiles_per_second: 1
@@ -64046,6 +64034,7 @@ child:
                             image_color: [1, 1, 1, 1]
                             hover_image_color: [1, 1, 1, 1]
                             image_is_tiled: false
+                            image_randomize_initial_frame: false
                             image_x_tiles: 1
                             image_y_tiles: 1
                             image_tiles_per_second: 1
@@ -64084,6 +64073,7 @@ child:
                             image_color: [1, 1, 1, 1]
                             hover_image_color: [1, 1, 1, 1]
                             image_is_tiled: false
+                            image_randomize_initial_frame: false
                             image_x_tiles: 1
                             image_y_tiles: 1
                             image_tiles_per_second: 1
@@ -64122,6 +64112,7 @@ child:
                             image_color: [1, 1, 1, 1]
                             hover_image_color: [1, 1, 1, 1]
                             image_is_tiled: false
+                            image_randomize_initial_frame: false
                             image_x_tiles: 1
                             image_y_tiles: 1
                             image_tiles_per_second: 1
@@ -64160,6 +64151,7 @@ child:
                             image_color: [1, 1, 1, 1]
                             hover_image_color: [1, 1, 1, 1]
                             image_is_tiled: false
+                            image_randomize_initial_frame: false
                             image_x_tiles: 1
                             image_y_tiles: 1
                             image_tiles_per_second: 1
@@ -64210,6 +64202,7 @@ child:
                             image_color: [1, 1, 1, 1]
                             hover_image_color: [1, 1, 1, 1]
                             image_is_tiled: true
+                            image_randomize_initial_frame: true
                             image_x_tiles: 7
                             image_y_tiles: 2
                             image_tiles_per_second: 14
@@ -64248,6 +64241,7 @@ child:
                             image_color: [1, 1, 1, 1]
                             hover_image_color: [1, 1, 1, 1]
                             image_is_tiled: true
+                            image_randomize_initial_frame: true
                             image_x_tiles: 7
                             image_y_tiles: 2
                             image_tiles_per_second: 14
@@ -64286,6 +64280,7 @@ child:
                             image_color: [1, 1, 1, 1]
                             hover_image_color: [1, 1, 1, 1]
                             image_is_tiled: true
+                            image_randomize_initial_frame: true
                             image_x_tiles: 7
                             image_y_tiles: 2
                             image_tiles_per_second: 14
@@ -64324,6 +64319,7 @@ child:
                             image_color: [1, 1, 1, 1]
                             hover_image_color: [1, 1, 1, 1]
                             image_is_tiled: true
+                            image_randomize_initial_frame: true
                             image_x_tiles: 7
                             image_y_tiles: 2
                             image_tiles_per_second: 14
@@ -64393,6 +64389,7 @@ child:
                             image_color: [1, 0, 0, 1]
                             hover_image_color: [1, 1, 1, 1]
                             image_is_tiled: false
+                            image_randomize_initial_frame: false
                             image_x_tiles: 1
                             image_y_tiles: 1
                             image_tiles_per_second: 1
@@ -64431,6 +64428,7 @@ child:
                             image_color: [1, 1, 1, 1]
                             hover_image_color: [1, 1, 1, 1]
                             image_is_tiled: false
+                            image_randomize_initial_frame: false
                             image_x_tiles: 1
                             image_y_tiles: 1
                             image_tiles_per_second: 1
@@ -64469,6 +64467,7 @@ child:
                     image_color: [1, 1, 1, 1]
                     hover_image_color: [1, 1, 1, 1]
                     image_is_tiled: false
+                    image_randomize_initial_frame: false
                     image_x_tiles: 1
                     image_y_tiles: 1
                     image_tiles_per_second: 1
@@ -64507,6 +64506,7 @@ child:
                     image_color: [1, 1, 1, 1]
                     hover_image_color: [1, 1, 1, 1]
                     image_is_tiled: false
+                    image_randomize_initial_frame: false
                     image_x_tiles: 1
                     image_y_tiles: 1
                     image_tiles_per_second: 1
