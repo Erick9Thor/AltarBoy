@@ -600,7 +600,9 @@ void Hachiko::Scripting::EnemyController::WormAttackController()
 		return;
 	}
 
-	if (_previous_state == EnemyState::IDLE && _state != EnemyState::ATTACKING && !_attack_landing)
+	float dist_to_player = _current_pos.Distance(_player_pos);
+
+	if (_previous_state == EnemyState::IDLE && _state != EnemyState::ATTACKING && !_attack_landing && dist_to_player <= _attack_range)
 	{
 		_state = EnemyState::ATTACKING;
 		return;

@@ -196,8 +196,7 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	_player_position = _player_transform->GetGlobalPosition();
 	_movement_direction = float3::zero;
 
-	
-	
+
 	if (_invulnerability_time_remaining > 0.0f)
 	{
 		_invulnerability_time_remaining -= Time::DeltaTime();
@@ -793,11 +792,6 @@ void Hachiko::Scripting::PlayerController::MovementController()
 			_walking_dust_particles->Stop();
 	}
 
-	if (_god_mode)
-	{
-		return;
-	}
-
 	if (IsPickUp())
 	{
 		if (pickUp_time <= 0.0f || animation->IsAnimationStopped())
@@ -809,6 +803,11 @@ void Hachiko::Scripting::PlayerController::MovementController()
 		{
 			pickUp_time -= Time::DeltaTime();
 		}
+	}
+
+	if (_god_mode)
+	{
+		return;
 	}
 
 	if (IsFalling())
@@ -1468,7 +1467,7 @@ void Hachiko::Scripting::PlayerController::CheckGoal(const float3& current_posit
 
 	if (Distance(current_position, goal_position) < 10.0f)
 	{
-		SceneManagement::SwitchScene(Scenes::LEVEL2);
+		_level_manager->GoalReached();
 	}
 }
 
