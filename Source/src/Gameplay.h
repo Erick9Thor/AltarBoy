@@ -11,6 +11,8 @@ namespace Hachiko
 class GameObject;
 class Component;
 class ComponentCamera;
+
+HACHIKO_API void Quit();
 }
 
 namespace Hachiko::Time
@@ -440,10 +442,10 @@ HACHIKO_API bool IsMouseButtonPressed(MouseButton mouse_button);
 HACHIKO_API bool IsMouseButtonUp(MouseButton mouse_button);
 HACHIKO_API bool IsMouseButtonDown(MouseButton mouse_button);
 HACHIKO_API int GetScrollWheelDelta();
-HACHIKO_API const float2& GetMouseNormalizedMotion();
+HACHIKO_API float2 GetMouseNormalizedMotion();
 HACHIKO_API const float2& GetMousePixelsMotion();
 HACHIKO_API const float2& GetMousePixelPosition();
-HACHIKO_API const float2& GetMouseNormalizedPosition();
+HACHIKO_API float2 GetMouseNormalizedPosition();
 HACHIKO_API bool IsGamepadModeOn();
 HACHIKO_API bool IsGameControllerButtonUp(GameControllerButton id);
 HACHIKO_API bool IsGameControllerButtonDown(GameControllerButton id);
