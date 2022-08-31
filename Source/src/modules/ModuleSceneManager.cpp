@@ -78,8 +78,6 @@ void Hachiko::ModuleSceneManager::AttemptScenePlay()
 {
     ComponentCamera* scene_camera = main_scene->GetMainCamera();
 
-    HE_LOG("Attempt scene play.");
-
     if (scene_camera == nullptr)
     {
         HE_LOG("Current scene does not have a CameraComponent inside."
