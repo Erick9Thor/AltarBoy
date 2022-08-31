@@ -223,6 +223,10 @@ namespace Hachiko
 			std::vector<GameObject*> ammo_cells;
 			int _ammo_count;
 
+			SERIALIZE_FIELD(GameObject*, _sword_ui_addon);
+			SERIALIZE_FIELD(GameObject*, _maze_ui_addon);
+			SERIALIZE_FIELD(GameObject*, _claw_ui_addon);
+
 			SERIALIZE_FIELD(GameObject*, _weapon_charge_bar_go);
 			ComponentProgressBar* _weapon_charge_bar = nullptr;
 
