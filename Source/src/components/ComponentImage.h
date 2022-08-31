@@ -19,6 +19,7 @@ namespace Hachiko
 
         void DrawGui() override;
         void Draw(ComponentTransform2D* transform, Program* program) const;
+        void Start() override;
         void Update() override;
 
         void Save(YAML::Node& node) const override;
@@ -61,6 +62,7 @@ namespace Hachiko
         unsigned size_y = 0;
 
         bool is_tiled = false;
+        bool randomize_initial_frame = false;
         float elapse = 0.0f;
         int frames_per_second = 1;
         float time_per_frame = 1;

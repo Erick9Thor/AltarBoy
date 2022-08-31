@@ -96,6 +96,8 @@ void Hachiko::ComponentImage::DrawGui()
             }
             if (is_tiled)
             {
+                ImGui::Checkbox("Randomize initial frame", &randomize_initial_frame);
+
                 if (ImGui::DragInt("Frames per second", &frames_per_second, 1, 1))
                 {
                     time_per_frame = 1.0f / frames_per_second;
@@ -199,6 +201,16 @@ void Hachiko::ComponentImage::Draw(ComponentTransform2D* transform, Program* pro
     Program::Deactivate();
 }
 
+void Hachiko::ComponentImage::Start()
+{
+    if (image != nullptr && is_tiled && randomize_initial_frame)
+    {
+        animation_index = float2(
+            RandomUtil::RandomIntBetween(0, x_tiles - 1), RandomUtil::RandomIntBetween(0, y_tiles - 1)
+        );
+    }
+}
+
 void Hachiko::ComponentImage::Update()
 {
     if (fill_window)
@@ -238,6 +250,7 @@ void Hachiko::ComponentImage::Save(YAML::Node& node) const
     node[IMAGE_COLOR] = color;
     node[IMAGE_HOVER_COLOR] = hover_color;
     node[IMAGE_TILED] = is_tiled;
+    node[IMAGE_RANDOMIZE_INITIAL_FRAME] = randomize_initial_frame;
     node[IMAGE_X_TILES] = x_tiles;
     node[IMAGE_Y_TILES] = y_tiles;
     node[IMAGE_TILES_PER_SEC] = frames_per_second;
@@ -253,6 +266,7 @@ void Hachiko::ComponentImage::Load(const YAML::Node& node)
     hover_color = node[IMAGE_HOVER_COLOR].as<float4>();
     fill_window = node[IMAGE_FILL_WINDOW].IsDefined() ? node[IMAGE_FILL_WINDOW].as<bool>() : false;
     is_tiled = node[IMAGE_TILED].IsDefined() ? node[IMAGE_TILED].as<bool>() : false;
+    randomize_initial_frame = node[IMAGE_RANDOMIZE_INITIAL_FRAME].IsDefined() ? node[IMAGE_RANDOMIZE_INITIAL_FRAME].as<bool>() : false;
     x_tiles = node[IMAGE_X_TILES].IsDefined() ? node[IMAGE_X_TILES].as<int>() : 1;
     y_tiles = node[IMAGE_Y_TILES].IsDefined() ? node[IMAGE_Y_TILES].as<int>() : 1;
 

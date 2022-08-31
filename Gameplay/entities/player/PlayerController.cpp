@@ -239,7 +239,10 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		{
 			if (Input::IsKeyPressed(Input::KeyCode::KEY_R) || Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_Y))
 			{
-				_death_screen->SetActive(false);
+				if (_death_screen != nullptr)
+				{
+					_death_screen->SetActive(false);
+				}
 
 				ResetPlayer(_level_manager->Respawn());
 
@@ -255,7 +258,10 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 			{
 				_state = PlayerState::READY_TO_RESPAWN;
 
-				_death_screen->SetActive(true);
+				if (_death_screen != nullptr) 
+				{
+					_death_screen->SetActive(true);
+				}
 			}
 		}
 	}
@@ -813,7 +819,7 @@ void Hachiko::Scripting::PlayerController::MovementController()
 		if (_start_fall_pos.y - _player_position.y > _falling_distance)
 		{
 			// Fall dmg
-			RegisterHit(1);
+			RegisterHit(1, 0, float3::zero, true);
 
 			// If its still alive place it in the first valid position, if none exists respawn it
 			_player_position = GetLastValidDashOrigin();
@@ -886,7 +892,6 @@ void Hachiko::Scripting::PlayerController::DashController()
 	{
 		return;
 	}
-
 
 	_dash_progress += Time::DeltaTime() / _dash_duration;
 	_dash_progress = _dash_progress > 1.0f ? 1.0f : _dash_progress;
@@ -1142,7 +1147,7 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 	}
 }
 
-bool Hachiko::Scripting::PlayerController::RegisterHit(int damage_received, float knockback, float3 direction)
+bool Hachiko::Scripting::PlayerController::RegisterHit(int damage_received, float knockback, float3 direction, bool force_dmg)
 {
 	if (_god_mode || !IsAlive())
 	{
@@ -1150,7 +1155,7 @@ bool Hachiko::Scripting::PlayerController::RegisterHit(int damage_received, floa
 	}
 
 	bool dmg_received = _invulnerability_time_remaining <= 0.0f;
-	if (dmg_received)
+	if (dmg_received || force_dmg)
 	{
 		_invulnerability_time_remaining = _invulnerability_time;
 		if (_player_geometry != nullptr)
@@ -1328,6 +1333,7 @@ void Hachiko::Scripting::PlayerController::ResetPlayer(float3 spawn_pos)
 	{
 		click_buffer.pop();
 	}
+	dash_buffer = false;
 
 	_dash_charges = 2;
 	_current_dash_duration = 0.f;
