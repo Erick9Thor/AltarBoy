@@ -1,10 +1,11 @@
 #include "core/hepch.h"
-#include "ModuleInput.h"
 
 #include "Application.h"
-#include "ModuleWindow.h"
-#include "ModuleSceneManager.h"
-#include "ModuleEvent.h"
+
+#include "modules/ModuleInput.h"
+#include "modules/ModuleWindow.h"
+#include "modules/ModuleEvent.h"
+
 #include "events/Event.h"
 
 Hachiko::ModuleInput::ModuleInput() :
@@ -69,7 +70,7 @@ UpdateStatus Hachiko::ModuleInput::PreUpdate(const float delta)
 
                     // Update the cached inverses of window size so that we have a
                     // sensitive MousePositionDelta and MousePosition.
-                    UpdateWindowSizeInversedCaches(sdl_event.window.data1, sdl_event.window.data2);
+                    UpdateWindowSizeInvertedCaches(sdl_event.window.data1, sdl_event.window.data2);
                 }
                 if (sdl_event.window.event == SDL_WINDOWEVENT_CLOSE)
                 {
@@ -273,37 +274,35 @@ void Hachiko::ModuleInput::UpdateInputMaps()
         }
     }
 
-    for (auto& mouse_button : mouse)
+    for (KeyState& mouse_button : mouse)
     {
         if (mouse_button == KeyState::KEY_DOWN)
         {
             mouse_button = KeyState::KEY_REPEAT;
         }
-
-        if (mouse_button == KeyState::KEY_UP)
+        else if (mouse_button == KeyState::KEY_UP)
         {
             mouse_button = KeyState::KEY_IDLE;
         }
     }
 
-    for (int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; ++i) {
-        if (game_controller[i] == KeyState::KEY_DOWN) 
+    for (KeyState& controller_button : game_controller)
+    {
+        if (controller_button == KeyState::KEY_DOWN) 
         {
-            game_controller[i] = KeyState::KEY_REPEAT;
+            controller_button = KeyState::KEY_REPEAT;
         }
-
-        if (game_controller[i] == KeyState::KEY_UP)
+        else if (controller_button == KeyState::KEY_UP)
         {
-            game_controller[i] = KeyState::KEY_IDLE;
+            controller_button = KeyState::KEY_IDLE;
         }
     }
 }
 
-void Hachiko::ModuleInput::UpdateWindowSizeInversedCaches(int width,
-                                                          int height)
+void Hachiko::ModuleInput::UpdateWindowSizeInvertedCaches(int width, int height)
 {
-    _window_width_inverse = 1.0f / width;
-    _window_height_inverse = 1.0f / height;
+    _window_width_inverse = 1.0f / static_cast<float>(width);
+    _window_height_inverse = 1.0f / static_cast<float>(height);
 }
 
 void Hachiko::ModuleInput::NotifyMouseAction(MouseEventPayload::Action action)
