@@ -273,6 +273,13 @@ void Hachiko::GameObject::SetActive(bool set_active)
     {
         Start();
     }
+    else if (active && !set_active)
+    {
+        for (Component* component : components)
+        {
+            component->OnDisable();
+        }
+    }
     active = set_active;
 }
 

@@ -13,6 +13,7 @@ namespace Hachiko
 
         HACHIKO_API void Start() override;
         void Update() override;
+        void OnDisable() override;
         void Draw(ComponentCamera* camera, Program* program) override;
         void DrawGui() override;
         void DebugDraw() override;
