@@ -792,9 +792,17 @@ void Hachiko::Scripting::PlayerController::MovementController()
 			_walking_dust_particles->Stop();
 	}
 
-	if (IsPickUp() && animation->IsAnimationStopped())
+	if (IsPickUp())
 	{
-		_state = PlayerState::IDLE;
+		if (pickUp_time <= 0.0f || animation->IsAnimationStopped())
+		{
+			_state = PlayerState::IDLE;
+			pickUp_time = _pickUp_duration;
+		}
+		else
+		{
+			pickUp_time -= Time::DeltaTime();
+		}
 	}
 
 	if (_god_mode)
