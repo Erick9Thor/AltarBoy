@@ -114,9 +114,9 @@ const float2& Hachiko::Input::GetMousePixelsMotion()
     return App->input->GetMousePixelsMotion();
 }
 
-const float2& Hachiko::Input::GetMousePixelPosition()
+const float2& Hachiko::Input::GetMouseGlobalPixelPosition()
 {
-    return App->input->GetMousePixelPosition();
+    return App->input->GetMouseGlobalPixelPosition();
 }
 
 float2 Hachiko::Input::GetMouseNormalizedPosition()
@@ -134,7 +134,7 @@ float2 Hachiko::Input::GetMouseNormalizedPosition()
     }
 
     // Get the mouse position in pixels, which is global to the monitor:
-    float2 mouse_position_pixels = App->input->GetMousePixelPosition(); 
+    float2 mouse_position_pixels = App->input->GetMouseGlobalPixelPosition(); 
     // If the scene_window is non-nullptr, clamp the mouse position in pixels
     // to be inside the scene window, if mouse_position_pixels is not inside
     // scene window, it will be the last mouse position that was inside the
@@ -143,6 +143,22 @@ float2 Hachiko::Input::GetMouseNormalizedPosition()
 
     return scene_window->NormalizePositionToScene(mouse_position_pixels);
 #endif // PLAY_BUILD
+}
+
+float2 Hachiko::Input::GetMouseOpenGLPosition()
+{
+#ifdef PLAY_BUILD
+    return App->input->GetMouseOpenGLPosition();
+#else
+    // Get the scene window:
+    const WindowScene* __restrict scene_window = App->editor->GetSceneWindow();
+    
+    return ModuleInput::ConvertGlobalPixelToOpenGLPosition(
+        scene_window->GetViewportSize(),
+        scene_window->GetViewportPosition(),
+        Input::GetMouseGlobalPixelPosition()
+    );
+#endif
 }
 
 bool Hachiko::Input::IsGamepadModeOn()

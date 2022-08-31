@@ -172,6 +172,7 @@ void Hachiko::WindowScene::DrawScene()
 
     // Top left corner of the image in imgui coords, top is y = 0
     guizmo_rect_origin = ImGui::GetCursorScreenPos();
+
     // Bottom left corner in opengl coordinates, bottom is y = 0
     const float window_height(App->window->GetHeight());
     texture_position = float2(
@@ -211,7 +212,7 @@ void Hachiko::WindowScene::DrawScene()
     // be the current mouse position. Equivalent to ImGui::GetMousePosition():
     if (hovering)
     {
-        last_hover_position = App->input->GetMousePixelPosition();
+        last_hover_position = App->input->GetMouseGlobalPixelPosition();
     }
 
     // TODO: Move to other section to take the input
@@ -363,14 +364,6 @@ Hachiko::GameObject* Hachiko::WindowScene::SelectObject(const ComponentCamera* c
     GameObject* selected = scene->Raycast(line);
 
     return selected;
-}
-
-float2 Hachiko::WindowScene::ImguiToScreenPos(const float2& mouse_pos) const
-{
-    const float2 mouse_viewport_pos = float2(mouse_pos.x - guizmo_rect_origin.x, mouse_pos.y - guizmo_rect_origin.y);
-    const float2 center = texture_size * 0.5f;
-    float2 mouse_ui_pos = float2(mouse_viewport_pos.x - center.x, (-mouse_viewport_pos.y) + center.y);
-    return mouse_ui_pos;
 }
 
 void Hachiko::WindowScene::ClampMousePosition(float2& mouse_position) const

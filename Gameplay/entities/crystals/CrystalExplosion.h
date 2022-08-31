@@ -28,7 +28,8 @@ namespace Hachiko
 			void ExplodeCrystal();
 
 			void RegisterHit(int damage);
-			bool isAlive() { return _stats->IsAlive(); };
+			bool IsAlive() { return _stats->IsAlive(); };
+			bool IsDestroyed() { return _is_destroyed; };
 
 		private:
 			void SetVisible(bool v);
@@ -40,7 +41,7 @@ namespace Hachiko
 			Stats* _stats;
 
 		private:
-			ComponentTransform* transform;
+			ComponentTransform* _transform;
 
 			SERIALIZE_FIELD(GameObject*, _explosion_crystal);
 			SERIALIZE_FIELD(GameObject*, _static_crystal);
@@ -55,9 +56,9 @@ namespace Hachiko
 			SERIALIZE_FIELD(float, _regen_time);
 
 			ComponentAudioSource* _audio_source;
-			bool is_destroyed = false;
-			bool is_exploding = false;
-			bool visible = false;
+			bool _is_destroyed = false;
+			bool _is_exploding = false;
+			bool _visible = false;
 			float _current_regen_time = 0.f;
 			float _current_explosion_timer = 0.f;
 

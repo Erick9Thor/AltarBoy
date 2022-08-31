@@ -374,7 +374,9 @@ Hachiko::GameObject* Hachiko::Scripting::CombatManager::FindBulletClosestObstacl
 		float obstacle_radius = obstacle_component->GetSize().x;
 		Sphere hitbox = Sphere(obstacle_position, obstacle_radius + bullet_size);
 
-		if (obstacle->active && obstacle_component->IsActive() && trajectory.Intersects(hitbox))
+		CrystalExplosion* crystal_component = obstacle->GetComponent<CrystalExplosion>();
+
+		if (obstacle->active && obstacle_component->IsActive() && !crystal_component->IsDestroyed() && trajectory.Intersects(hitbox))
 		{
 			float hit_distance = bullet_position.Distance(obstacle_position);
 			if (hit_distance < closest_hit)
@@ -585,7 +587,7 @@ int Hachiko::Scripting::CombatManager::ProcessObstaclesCone(const float3& attack
 		if (ConeHitsObstacle(obstacle, attack_source_pos, attack_dir, min_dot_prod, hit_distance))
 		{
 			CrystalExplosion* crystal_controller = obstacle->GetComponent<CrystalExplosion>();
-			if (crystal_controller && crystal_controller->isAlive())
+			if (crystal_controller && crystal_controller->IsAlive())
 			{
 				hit++;
 				HitObstacle(obstacle, attack_stats.damage);
@@ -685,7 +687,7 @@ int Hachiko::Scripting::CombatManager::ProcessObstaclesOBB(const OBB& attack_box
 		{
 			// Hit enemy here
 			CrystalExplosion* crystal_controller = obstacle->GetComponent<CrystalExplosion>();
-			if (crystal_controller && crystal_controller->isAlive())
+			if (crystal_controller && crystal_controller->IsAlive())
 			{
 				hit++;
 				HitObstacle(obstacle, attack_stats.damage);
@@ -787,7 +789,7 @@ int Hachiko::Scripting::CombatManager::ProcessObstaclesCircle(const float3& atta
 		{
 			// Hit enemy here
 			CrystalExplosion* crystal_controller = obstacle->GetComponent<CrystalExplosion>();
-			if (crystal_controller && crystal_controller->isAlive())
+			if (crystal_controller && crystal_controller->IsAlive())
 			{
 				hit++;
 				HitObstacle(obstacle, attack_stats.damage);
