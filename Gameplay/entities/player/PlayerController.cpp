@@ -792,9 +792,17 @@ void Hachiko::Scripting::PlayerController::MovementController()
 		return;
 	}
 
-	if (IsPickUp() && animation->IsAnimationStopped())
+	if (IsPickUp())
 	{
-		_state = PlayerState::IDLE;
+		if (pickUp_time <= 0.0f || animation->IsAnimationStopped())
+		{
+			_state = PlayerState::IDLE;
+			pickUp_time = _pickUp_duration;
+		}
+		else
+		{
+			pickUp_time -= Time::DeltaTime();
+		}
 	}
 
 	if (IsFalling())
