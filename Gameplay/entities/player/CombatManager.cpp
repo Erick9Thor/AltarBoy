@@ -376,6 +376,12 @@ Hachiko::GameObject* Hachiko::Scripting::CombatManager::FindBulletClosestObstacl
 
 		CrystalExplosion* crystal_component = obstacle->GetComponent<CrystalExplosion>();
 
+		// Crystals on Level2 does not have crystal explosion attached to them:
+		if (!crystal_component)
+		{
+			continue;
+		}
+
 		if (obstacle->active && obstacle_component->IsActive() && !crystal_component->IsDestroyed() && trajectory.Intersects(hitbox))
 		{
 			float hit_distance = bullet_position.Distance(obstacle_position);
