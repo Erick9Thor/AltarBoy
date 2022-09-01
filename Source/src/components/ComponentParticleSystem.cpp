@@ -63,7 +63,7 @@ void Hachiko::ComponentParticleSystem::Start()
 
     std::function selection_changed = [&](Event& evt) {
         const auto data = evt.GetEventData<SelectionChangedEventPayload>();
-        if (data.GetSelected() != GetGameObject())
+        if (!data.GetSelected() || data.GetSelected() != GetGameObject())
         {
             Pause();
         }
