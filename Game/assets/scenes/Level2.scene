@@ -5,9 +5,9 @@ ambient_light:
   color: [1, 1, 1, 1]
 fog:
   fog: false
-  color: [1, 1, 1]
-  global_density: 0.01
-  height_falloff: 0.01
+  color: [0.4228, 0.4228, 0.4228]
+  global_density: 0.009
+  height_falloff: 0.077
 ibl: false
 skybox:
   right_cube_id: 0
