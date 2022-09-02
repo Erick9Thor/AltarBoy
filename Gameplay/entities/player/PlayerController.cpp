@@ -280,15 +280,16 @@ math::float3 Hachiko::Scripting::PlayerController::GetRaycastPosition(
 
 	if(Input::IsGamepadModeOn())
 	{
+		// TODO: Check the Look at of the player to not force the user move the stick because it's not accurate
 		const math::float2 gamepad_normalized_position =
-			math::float2(Input::GetAxisNormalized(Input::GameControllerAxis::CONTROLLER_AXIS_RIGHTX), Input::GetAxisNormalized(Input::GameControllerAxis::CONTROLLER_AXIS_RIGHTY));
+			math::float2(Input::GetAxisNormalized(Input::GameControllerAxis::CONTROLLER_AXIS_LEFTX), Input::GetAxisNormalized(Input::GameControllerAxis::CONTROLLER_AXIS_LEFTY));
 
 		const math::float2 gamepad_position_view =
 			ComponentCamera::ScreenPositionToView(gamepad_normalized_position);
 
 		const math::LineSegment ray = Debug::GetRenderingCamera()->Raycast(
 			gamepad_position_view.x, gamepad_position_view.y);
-
+		
 		return plane.ClosestPoint(ray);
 	}
 
@@ -355,11 +356,11 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 			ResetClickBuffer();
 			Dash();
 		}
-		else if (!IsAttackOnCooldown() && (HasBufferedClick() || Input::IsMouseButtonDown(Input::MouseButton::LEFT) || Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_RIGHTSHOULDER)))
+		else if (!IsAttackOnCooldown() && (HasBufferedClick() || Input::IsMouseButtonDown(Input::MouseButton::LEFT) || Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_X)))
 		{
 			MeleeAttack();
 		}
-		else if (!IsAttackOnCooldown() && _ammo_count > 0 && (Input::IsMouseButtonDown(Input::MouseButton::RIGHT) || Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_LEFTSHOULDER)))
+		else if (!IsAttackOnCooldown() && _ammo_count > 0 && (Input::IsMouseButtonDown(Input::MouseButton::RIGHT) || (Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_LEFTSHOULDER) || Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_RIGHTSHOULDER))))
 		{
 			RangedAttack();
 		}
@@ -377,7 +378,7 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 			_state = PlayerState::IDLE;
 		}
 
-		if (Input::IsKeyDown(Input::KeyCode::KEY_F) || Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_X))
+		if (Input::IsKeyDown(Input::KeyCode::KEY_F) || Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_B))
 		{
 			PickupParasite(_player_position);
 		}
@@ -424,7 +425,7 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 
 void Hachiko::Scripting::PlayerController::HandleInputBuffering()
 {
-	if (Input::IsMouseButtonDown(Input::MouseButton::LEFT) || Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_RIGHTSHOULDER))
+	if (Input::IsMouseButtonDown(Input::MouseButton::LEFT) || Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_X))
 	{
 		// Melee combo input buffer
 		click_buffer.push(GetRaycastPosition(_player_position));
