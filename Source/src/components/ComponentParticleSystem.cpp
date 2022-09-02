@@ -36,6 +36,7 @@ void Hachiko::ComponentParticleSystem::Start()
         App->scene_manager->GetActiveScene()->AddParticleComponent(this);
         in_scene = true;
     }
+
     for (auto& particle : particles)
     {
         particle.SetEmitter(this);
@@ -62,7 +63,7 @@ void Hachiko::ComponentParticleSystem::Start()
 
     std::function selection_changed = [&](Event& evt) {
         const auto data = evt.GetEventData<SelectionChangedEventPayload>();
-        if (data.GetSelected() != GetGameObject())
+        if (!data.GetSelected() || data.GetSelected() != GetGameObject())
         {
             Pause();
         }
@@ -89,6 +90,14 @@ void Hachiko::ComponentParticleSystem::Update()
         UpdateEmitterTimes();
         UpdateActiveParticles();
         UpdateModifiers();
+    }
+}
+
+void Hachiko::ComponentParticleSystem::OnDisable() 
+{
+    if (in_scene)
+    {
+        ResetActiveParticles();
     }
 }
 

@@ -4,8 +4,12 @@
 
 #include "entities/player/PlayerController.h"
 
+#include "Gameplay.h"
+#include "constants/Scenes.h"
+
 Hachiko::Scripting::LevelManager::LevelManager(GameObject* game_object)
 	: Script(game_object, "LevelManager")
+	, _level(1)
 	, _respawn_position(float3::zero)
 	, _last_gauntlet(nullptr)
 {}
@@ -42,4 +46,16 @@ float3 Hachiko::Scripting::LevelManager::Respawn()
 	return GetRespawnPosition();
 
 	//Disable gauntlet ui
+}
+
+void Hachiko::Scripting::LevelManager::GoalReached() 
+{
+	if (_level == 1)
+	{
+		SceneManagement::SwitchScene(Scenes::LEVEL2);
+	}
+	else 
+	{
+		SceneManagement::SwitchScene(Scenes::MAIN_MENU);
+	}
 }

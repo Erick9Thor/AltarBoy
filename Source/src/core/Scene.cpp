@@ -5,13 +5,11 @@
 #include "components/ComponentCamera.h"
 #include "components/ComponentMeshRenderer.h"
 #include "components/ComponentImage.h"
-#include "components/ComponentParticleSystem.h"
 
 #include "modules/ModuleEditor.h"
 #include "modules/ModuleCamera.h"
 #include "modules/ModuleEvent.h"
 #include "modules/ModuleNavigation.h"
-#include "modules/ModuleProgram.h"
 
 #include "resources/ResourceMaterial.h"
 #include "resources/ResourceAnimation.h"
@@ -19,7 +17,7 @@
 #include <debugdraw.h>
 #include <algorithm>
 
-#include "batching/BatchManager.h"
+#include "Batching/BatchManager.h"
 
 Hachiko::Scene::Scene() :
     name(UNNAMED_SCENE),
@@ -43,12 +41,16 @@ Hachiko::Scene::~Scene()
 
 void Hachiko::Scene::CleanScene()
 {
-    App->editor->SetSelectedGO(nullptr);
     delete root;
     delete skybox;
     delete quadtree;
     delete batch_manager;
     loaded = false;
+
+    // Important that this gets executed after all the GameObjects in the scene
+    // is deleted as this publishes an event, and unnecessary code may execute
+    // because of it:
+    App->editor->SetSelectedGO(nullptr);
 }
 
 Hachiko::ComponentCamera* Hachiko::Scene::GetMainCamera() const

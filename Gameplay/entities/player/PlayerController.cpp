@@ -1,24 +1,20 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "constants/Scenes.h"
-#include "entities/crystals/CrystalExplosion.h"
 #include "entities/enemies/EnemyController.h"
 #include "entities/player/CombatManager.h"
 #include "entities/player/PlayerCamera.h"
 #include "entities/player/PlayerController.h"
-#include "constants/Scenes.h"
 
-#include "constants/Sounds.h"
-
-// TODO: Delete this include:
-#include <modules/ModuleSceneManager.h>
-
-#define RAD_TO_DEG 180.0f / math::pi
-const int MAX_AMMO = 4;
-
-constexpr const int ATTACK_VFX_POOL_SIZE = 6;
+constexpr int MAX_AMMO = 4;
+constexpr int ATTACK_VFX_POOL_SIZE = 6;
 
 Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	: Script(game_object, "PlayerController")
+	, _state(PlayerState::INVALID)
+	, _sword_weapon(nullptr)
+	, _sword_upper(nullptr)
+	, _claw_weapon(nullptr)
+	, _combat_stats()
 	, _attack_indicator(nullptr)
 	, _goal(nullptr)
 	, _player_geometry(nullptr)
@@ -27,18 +23,13 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _dash_cooldown(0.0f)
 	, _invulnerability_time(1.0f)
 	, _dash_scaler(3)
-	, _rotation_duration(0.0f)
-	, _combat_stats()
 	, _max_dash_charges(0)
-	, _state(PlayerState::INVALID)
+	, _dash_trail(nullptr)
+	, _trail_enlarger(10.0f)
+	, _rotation_duration(0.0f)
+	, _death_screen(nullptr)
 	, _camera(nullptr)
 	, _ui_damage(nullptr)
-	, _dash_trail(nullptr)
-	, _sword_weapon(nullptr)
-	, _sword_upper(nullptr)
-	, _claw_weapon(nullptr)
-	, _trail_enlarger(10.0f)
-	, _death_screen(nullptr)
 {
 	CombatManager::BulletStats common_bullet;
 	common_bullet.charge_time = .5f;
@@ -243,7 +234,10 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		{
 			if (Input::IsKeyPressed(Input::KeyCode::KEY_R) || Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_Y))
 			{
-				_death_screen->SetActive(false);
+				if (_death_screen != nullptr)
+				{
+					_death_screen->SetActive(false);
+				}
 
 				ResetPlayer(_level_manager->Respawn());
 
@@ -259,7 +253,10 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 			{
 				_state = PlayerState::READY_TO_RESPAWN;
 
-				_death_screen->SetActive(true);
+				if (_death_screen != nullptr) 
+				{
+					_death_screen->SetActive(true);
+				}
 			}
 		}
 	}
@@ -635,18 +632,30 @@ void Hachiko::Scripting::PlayerController::ChangeWeapon(unsigned weapon_idx)
 		_claw_weapon->SetActive(false);
 		_sword_upper->SetActive(false);
 		_sword_weapon->SetActive(false);
+
+		_sword_ui_addon->SetActive(false);
+		_claw_ui_addon->SetActive(false);
+		_maze_ui_addon->SetActive(false);
 	}
 	else if (_current_weapon == 1) // CLAW
 	{
 		_claw_weapon->SetActive(true);
 		_sword_upper->SetActive(false);
 		_sword_weapon->SetActive(false);
+
+		_sword_ui_addon->SetActive(false);
+		_claw_ui_addon->SetActive(true);
+		_maze_ui_addon->SetActive(false);
 	}
 	else if (_current_weapon == 2) // SWORD
 	{
 		_claw_weapon->SetActive(false);
 		_sword_upper->SetActive(true);
 		_sword_weapon->SetActive(true);
+
+		_sword_ui_addon->SetActive(true);
+		_claw_ui_addon->SetActive(false);
+		_maze_ui_addon->SetActive(false);
 	}
 }
 
@@ -801,14 +810,22 @@ void Hachiko::Scripting::PlayerController::MovementController()
 			_walking_dust_particles->Stop();
 	}
 
+	if (IsPickUp())
+	{
+		if (_pick_up_time <= 0.0f || animation->IsAnimationStopped())
+		{
+			_state = PlayerState::IDLE;
+			_pick_up_time = _pick_up_duration;
+		}
+		else
+		{
+			_pick_up_time -= Time::DeltaTime();
+		}
+	}
+
 	if (_god_mode)
 	{
 		return;
-	}
-
-	if (IsPickUp() && animation->IsAnimationStopped())
-	{
-		_state = PlayerState::IDLE;
 	}
 
 	if (IsFalling())
@@ -819,7 +836,7 @@ void Hachiko::Scripting::PlayerController::MovementController()
 		if (_start_fall_pos.y - _player_position.y > _falling_distance)
 		{
 			// Fall dmg
-			RegisterHit(1);
+			RegisterHit(1, 0, float3::zero, true);
 
 			// If its still alive place it in the first valid position, if none exists respawn it
 			_player_position = GetLastValidDashOrigin();
@@ -892,7 +909,6 @@ void Hachiko::Scripting::PlayerController::DashController()
 	{
 		return;
 	}
-
 
 	_dash_progress += Time::DeltaTime() / _dash_duration;
 	_dash_progress = _dash_progress > 1.0f ? 1.0f : _dash_progress;
@@ -1149,24 +1165,25 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 	}
 }
 
-void Hachiko::Scripting::PlayerController::RegisterHit(int damage_received, float knockback, float3 direction)
+bool Hachiko::Scripting::PlayerController::RegisterHit(int damage_received, float knockback, float3 direction, bool force_dmg)
 {
 	if (_god_mode || !IsAlive())
 	{
-	    return;
+		return false;
 	}
 
-	if (_invulnerability_time_remaining <= 0.0f)
+	bool dmg_received = _invulnerability_time_remaining <= 0.0f;
+	if (dmg_received || force_dmg)
 	{
 		_invulnerability_time_remaining = _invulnerability_time;
-		if (_player_geometry != nullptr) 
+		if (_player_geometry != nullptr)
 		{
 			_player_geometry->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, 0.5f), true);
 		}
 		_combat_stats->ReceiveDamage(damage_received);
 		UpdateHealthBar();
 		Input::GoBrr(0.3f, 500);
-		
+
 		if (_player_geometry != nullptr)
 		{
 			_player_geometry->ChangeEmissiveColor(float4(255, 255, 255, 255), 0.3f, true);
@@ -1178,10 +1195,10 @@ void Hachiko::Scripting::PlayerController::RegisterHit(int damage_received, floa
 			_ui_damage->SetActive(true);
 		}
 	}
-	
-	if(knockback > 0.0f)
+
+	if (knockback > 0.0f)
 	{
-		if (IsDashing()) 
+		if (IsDashing())
 		{
 			_dash_trail->SetActive(false);
 			_show_dashtrail = false;
@@ -1200,6 +1217,7 @@ void Hachiko::Scripting::PlayerController::RegisterHit(int damage_received, floa
 			_camera->GetComponent<PlayerCamera>()->Shake(0.2f, 0.05f);
 		}
 	}
+	return dmg_received;
 }
 
 void Hachiko::Scripting::PlayerController::RecieveKnockback(const math::float3 direction)
@@ -1335,6 +1353,7 @@ void Hachiko::Scripting::PlayerController::ResetPlayer(float3 spawn_pos)
 	{
 		click_buffer.pop();
 	}
+	dash_buffer = false;
 
 	_dash_charges = 2;
 	_current_dash_duration = 0.f;
@@ -1471,7 +1490,7 @@ void Hachiko::Scripting::PlayerController::CheckGoal(const float3& current_posit
 
 	if (Distance(current_position, goal_position) < 10.0f)
 	{
-		SceneManagement::SwitchScene(Scenes::LEVEL2);
+		_level_manager->GoalReached();
 	}
 }
 
