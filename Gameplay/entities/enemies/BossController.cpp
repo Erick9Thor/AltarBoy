@@ -25,7 +25,7 @@ void Hachiko::Scripting::BossController::OnStart()
 
 void Hachiko::Scripting::BossController::OnUpdate()
 {
-	if (Input::IsKeyPressed(Input::KeyCode::KEY_H))
+	if (Input::IsKeyDown(Input::KeyCode::KEY_H))
 	{
 		constexpr int player_dmg = 5;
 		RegisterHit(player_dmg);
