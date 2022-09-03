@@ -37,7 +37,9 @@ namespace Hachiko
 			}
 
 			float3 Respawn();
+			void GoalReached();
 
+			SERIALIZE_FIELD(unsigned, _level);
 			SERIALIZE_FIELD(float3, _respawn_position);
 			SERIALIZE_FIELD(GameObject*, _gauntlet_ui_go);
 			SERIALIZE_FIELD(GameObject*, _gauntlet_counter_go);

@@ -24,7 +24,7 @@ void Hachiko::RenderList::CollectMeshes(const Frustum& camera_frustum, Quadtree*
 
     quadtree->GetIntersections(meshes, camera_frustum);
 
-    float3 camera_position = camera_frustum.Pos();
+    const float3& camera_position = camera_frustum.Pos();
 
     for (ComponentMeshRenderer* mesh_renderer : meshes)
     {
