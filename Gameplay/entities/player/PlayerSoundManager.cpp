@@ -92,6 +92,11 @@ void Hachiko::Scripting::PlayerSoundManager::OnUpdate()
 		}
 		_timer = 0.0f;
 		break;
+	case PlayerState::STUNNED:
+		if (state_changed)
+		{
+			_audio_source->PostEvent(Sounds::RECEIVE_DAMAGE);
+		}
 	case PlayerState::INVALID:
 	default:
 		_timer = 0.0f;
