@@ -177,19 +177,32 @@ void Hachiko::Scripting::CombatManager::RunBulletSimulation()
 			//bullet->GetTransform()->SetGlobalScale(float3(stats.GetChargedPercent()));
 			SetBulletTrajectory(i);
 			stats.update_ui = true;
+
 			continue;
 		}
 
-		if (stats.current_charge >= stats.charge_time && stats.update_ui)	// When a bullet starts moving only update ui once
+		if (stats.current_charge >= stats.charge_time)
 		{
-			bullet->SetActive(true);
 			_charge_particles->Stop();
-			_shot_particles->Play();
-			_shot_particles->Restart();
-			if (!_player_controller)	return;
+		}
 
-			_player_controller->UpdateAmmoUI();
-			stats.update_ui = false;
+		// Just update th ui once
+		if (stats.update_ui)
+		{
+			if (stats.shot)
+			{
+				bullet->SetActive(true);
+				_shot_particles->Play();
+				_shot_particles->Restart();
+				if (!_player_controller)	return;
+				_player_controller->UpdateAmmoUI();
+				stats.update_ui = false;
+			}
+			else
+			{
+				SetBulletTrajectory(i);
+				continue;
+			}
 		}
 		
 		// Move bullet forward
@@ -409,7 +422,7 @@ void Hachiko::Scripting::CombatManager::SerializeEnemyPacks()
 	}
 }
 
-int Hachiko::Scripting::CombatManager::ShootBullet(ComponentTransform* emitter_transform, BulletStats new_stats)
+int Hachiko::Scripting::CombatManager::ChargeBullet(ComponentTransform* emitter_transform, BulletStats new_stats)
 {
 	_charge_particles->Play();
 	_charge_particles->Restart();
@@ -433,6 +446,22 @@ int Hachiko::Scripting::CombatManager::ShootBullet(ComponentTransform* emitter_t
 		return static_cast<int>(i);
 	}
 	return -1;
+}
+
+bool Hachiko::Scripting::CombatManager::ShootBullet(unsigned bullet_index)
+{
+	BulletStats& stats = _bullet_stats[bullet_index];
+
+	if (stats.current_charge >= stats.charge_time)
+	{
+		stats.shot = true;
+		return true;
+	}
+	else
+	{
+		StopBullet(bullet_index);
+		return false;
+	}
 }
 
 void Hachiko::Scripting::CombatManager::StopBullet(unsigned bullet_index)

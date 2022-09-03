@@ -19,6 +19,9 @@ clips:
   - clip_name: meleeThree
     clips_id: 9741971980889188744
     clips_loop: false
+  - clip_name: charge
+    clips_id: 14680319140328100188
+    clips_loop: true
   - clip_name: shot
     clips_id: 14680319140328100188
     clips_loop: false
@@ -65,8 +68,8 @@ nodes:
     node_clip_name: run
   - node_name: dash
     node_clip_name: dash
-  - node_name: shot
-    node_clip_name: shot
+  - node_name: charge
+    node_clip_name: charge
   - node_name: pickUp
     node_clip_name: pickUp
   - node_name: meleeOne
@@ -93,14 +96,16 @@ nodes:
     node_clip_name: fall
   - node_name: ANY
     node_clip_name: none
+  - node_name: shot
+    node_clip_name: shot
 transitions:
   - transition_source: idle
     transition_target: dash
     transition_trigger: isDash
     transition_blend: 300
   - transition_source: idle
-    transition_target: shot
-    transition_trigger: isShot
+    transition_target: charge
+    transition_trigger: isCharge
     transition_blend: 300
   - transition_source: idle
     transition_target: pickUp
@@ -207,8 +212,8 @@ transitions:
     transition_trigger: isSwordThree
     transition_blend: 300
   - transition_source: run
-    transition_target: shot
-    transition_trigger: isShot
+    transition_target: charge
+    transition_trigger: isCharge
     transition_blend: 300
   - transition_source: run
     transition_target: dash
@@ -238,3 +243,7 @@ transitions:
     transition_target: idle
     transition_trigger: isRespawn
     transition_blend: 0
+  - transition_source: charge
+    transition_target: shot
+    transition_trigger: isShot
+    transition_blend: 300

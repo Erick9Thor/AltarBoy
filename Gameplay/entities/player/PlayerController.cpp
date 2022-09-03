@@ -52,10 +52,9 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	claw.bullet = common_bullet;
 	claw.color = float4(0.0f, 0.0f, 255.0f, 255.0f);
 	claw.unlimited = false;
-	claw.charges = 10;
+	claw.charges = 15;
 	claw.attacks.push_back(GetAttackType(AttackType::QUICK_1));
 	claw.attacks.push_back(GetAttackType(AttackType::QUICK_2));
-	claw.attacks.push_back(GetAttackType(AttackType::QUICK_3));
 	
 	Weapon sword;
 	sword.name = "Sword";
@@ -386,9 +385,11 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 	}
 
 	// Range attack charge cancel
-	if (_state == PlayerState::RANGED_ATTACKING && (Input::IsMouseButtonUp(Input::MouseButton::RIGHT) || Input::IsGameControllerButtonUp(Input::GameControllerButton::CONTROLLER_BUTTON_LEFTSHOULDER)))
+	if (Input::IsMouseButtonUp(Input::MouseButton::RIGHT) ||
+		Input::IsGameControllerButtonUp(Input::GameControllerButton::CONTROLLER_BUTTON_LEFTSHOULDER) ||
+		Input::IsGameControllerButtonUp(Input::GameControllerButton::CONTROLLER_BUTTON_RIGHTSHOULDER))
 	{
-		CancelAttack();
+		ReleaseAttack();
 	}
 
 	if (_god_mode && (Input::IsKeyPressed(Input::KeyCode::KEY_Q) || Input::GetAxisNormalized(Input::GameControllerAxis::CONTROLLER_AXIS_TRIGGERLEFT) > 0))
@@ -430,6 +431,7 @@ void Hachiko::Scripting::PlayerController::HandleInputBuffering()
 	if (Input::IsKeyDown(Input::KeyCode::KEY_SPACE) || Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_A))
 	{
 		// Dash to cut a combo
+		CancelAttack();
 		dash_buffer = true;
 	}
 }
@@ -661,7 +663,7 @@ void Hachiko::Scripting::PlayerController::ChangeWeapon(unsigned weapon_idx)
 
 bool Hachiko::Scripting::PlayerController::IsAttacking() const
 {
-	return _state == PlayerState::MELEE_ATTACKING || _state == PlayerState::RANGED_ATTACKING;
+	return _state == PlayerState::MELEE_ATTACKING || _state == PlayerState::RANGED_ATTACKING || _state == PlayerState::RANGED_CHARGING;
 }
 
 bool Hachiko::Scripting::PlayerController::IsDashing() const
@@ -752,16 +754,34 @@ void Hachiko::Scripting::PlayerController::RangedAttack()
 	if (bullet_controller)
 	{
 		CombatManager::BulletStats stats = GetCurrentWeapon().bullet;
-		_attack_current_duration = stats.charge_time;
-		_lock_time = stats.charge_time;
-		_current_bullet = bullet_controller->ShootBullet(_player_transform, stats);
+		_attack_current_duration = 0.f;
+		_lock_time = 999.f;
+		_current_bullet = bullet_controller->ChargeBullet(_player_transform, stats);
 		if (_current_bullet >= 0)
 		{
 			math::Clamp(--_ammo_count, 0, MAX_AMMO);
-			_state = PlayerState::RANGED_ATTACKING;
+			_state = PlayerState::RANGED_CHARGING;
 		}
 	}
-	_after_attack_timer = _ranged_attack_cooldown;
+}
+
+void Hachiko::Scripting::PlayerController::ReleaseAttack()
+{
+	_lock_time = 0.0f;
+
+	if (_state == PlayerState::RANGED_CHARGING && _current_bullet >= 0)
+	{
+		CombatManager* bullet_controller = _bullet_emitter->GetComponent<CombatManager>();
+		if (bullet_controller->ShootBullet(_current_bullet))
+		{
+			_attack_current_duration = 0.4f;
+			_state = PlayerState::RANGED_ATTACKING;
+		}
+		else
+		{
+			math::Clamp(++_ammo_count, 0, MAX_AMMO);
+		}
+	}
 }
 
 void Hachiko::Scripting::PlayerController::CancelAttack()
@@ -770,7 +790,7 @@ void Hachiko::Scripting::PlayerController::CancelAttack()
 	_attack_current_duration = 0.f;
 	_lock_time = 0.0f;
 
-	if (_state == PlayerState::RANGED_ATTACKING && _current_bullet >= 0)
+	if (_state == PlayerState::RANGED_CHARGING && _current_bullet >= 0)
 	{
 		CombatManager* bullet_controller = _bullet_emitter->GetComponent<CombatManager>();
 		bullet_controller->StopBullet(_current_bullet);
@@ -808,19 +828,6 @@ void Hachiko::Scripting::PlayerController::MovementController()
 	{
 		if (_walking_dust_particles)
 			_walking_dust_particles->Stop();
-	}
-	// CHECK THIS
-	if (IsPickUp())
-	{
-		if (_pick_up_time <= 0.0f || animation->IsAnimationStopped())
-		{
-			_state = PlayerState::IDLE;
-			_pick_up_time = _pick_up_duration;
-		}
-		else
-		{
-			_pick_up_time -= Time::DeltaTime();
-		}
 	}
 
 	if (_god_mode)
@@ -1081,15 +1088,20 @@ void Hachiko::Scripting::PlayerController::AttackController()
 				}
 			}	
 		}
-		else
-		{
-			// Range attack
-			_player_transform->LookAtTarget(GetRaycastPosition(_player_position));
-		}
+	}
+
+	if (_state == PlayerState::RANGED_CHARGING)
+	{
+		_player_transform->LookAtTarget(GetRaycastPosition(_player_position));
 	}
 
 	if(_attack_current_duration <= 0)
 	{
+		if (_state == PlayerState::RANGED_CHARGING)
+		{
+			return;
+		}
+
 		if (_state == PlayerState::RANGED_ATTACKING)
 		{
 			// We only need the bullet reference to cancell it while charging
@@ -1261,6 +1273,9 @@ void Hachiko::Scripting::PlayerController::CheckState()
 		break;
 	case PlayerState::PICK_UP:
 		animation->SendTrigger("isPickUp");
+		break;
+	case PlayerState::RANGED_CHARGING:
+		animation->SendTrigger("isCharge");
 		break;
 	case PlayerState::RANGED_ATTACKING:
 		animation->SendTrigger("isShot");
@@ -1540,12 +1555,12 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 		attack.stats.range = 3.5f;
 		break;
 
-	// COMMON ATTACKS
+	// QUICK ATTACKS
 	case AttackType::QUICK_1:
 		attack.hit_delay = 0.05f;
 		attack.duration = 0.4f;
 		attack.cooldown = 0.0f;
-		attack.dash_distance = 1.f;
+		attack.dash_distance = 0.3f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
 		attack.stats.damage = 1;
 		attack.stats.knockback_distance = 0.f;
@@ -1558,7 +1573,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 		attack.hit_delay = 0.05f;
 		attack.duration = 0.4f;
 		attack.cooldown = 0.0f;
-		attack.dash_distance = 1.f;
+		attack.dash_distance = 0.3f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
 		attack.stats.damage = 1;
 		attack.stats.knockback_distance = 0.f;
@@ -1567,20 +1582,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 		attack.stats.range = 2.5f;
 		break;
 
-	case AttackType::QUICK_3:
-		attack.hit_delay = 0.05f;
-		attack.duration = 0.6f;
-		attack.cooldown = 0.2f;
-		attack.dash_distance = 1.5f;
-		attack.stats.type = CombatManager::AttackType::RECTANGLE;
-		attack.stats.damage = 1;
-		attack.stats.knockback_distance = 0.f;
-		// If its cone use degrees on width
-		attack.stats.width = 3.f;
-		attack.stats.range = 2.5f;
-		break;
-
-	// COMMON ATTACKS
+	// HEAVY ATTACKS
 	case AttackType::HEAVY_1:
 		attack.hit_delay = 0.1f;
 		attack.duration = 0.8f;
