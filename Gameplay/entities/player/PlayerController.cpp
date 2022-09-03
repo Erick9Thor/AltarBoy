@@ -1,24 +1,20 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "constants/Scenes.h"
-#include "entities/crystals/CrystalExplosion.h"
 #include "entities/enemies/EnemyController.h"
 #include "entities/player/CombatManager.h"
 #include "entities/player/PlayerCamera.h"
 #include "entities/player/PlayerController.h"
-#include "constants/Scenes.h"
 
-#include "constants/Sounds.h"
-
-// TODO: Delete this include:
-#include <modules/ModuleSceneManager.h>
-
-#define RAD_TO_DEG 180.0f / math::pi
-const int MAX_AMMO = 4;
-
-constexpr const int ATTACK_VFX_POOL_SIZE = 6;
+constexpr int MAX_AMMO = 4;
+constexpr int ATTACK_VFX_POOL_SIZE = 6;
 
 Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	: Script(game_object, "PlayerController")
+	, _state(PlayerState::INVALID)
+	, _sword_weapon(nullptr)
+	, _sword_upper(nullptr)
+	, _claw_weapon(nullptr)
+	, _combat_stats()
 	, _attack_indicator(nullptr)
 	, _goal(nullptr)
 	, _player_geometry(nullptr)
@@ -27,18 +23,13 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _dash_cooldown(0.0f)
 	, _invulnerability_time(1.0f)
 	, _dash_scaler(3)
-	, _rotation_duration(0.0f)
-	, _combat_stats()
 	, _max_dash_charges(0)
-	, _state(PlayerState::INVALID)
+	, _dash_trail(nullptr)
+	, _trail_enlarger(10.0f)
+	, _rotation_duration(0.0f)
+	, _death_screen(nullptr)
 	, _camera(nullptr)
 	, _ui_damage(nullptr)
-	, _dash_trail(nullptr)
-	, _sword_weapon(nullptr)
-	, _sword_upper(nullptr)
-	, _claw_weapon(nullptr)
-	, _trail_enlarger(10.0f)
-	, _death_screen(nullptr)
 {
 	CombatManager::BulletStats common_bullet;
 	common_bullet.charge_time = .5f;
@@ -286,15 +277,16 @@ math::float3 Hachiko::Scripting::PlayerController::GetRaycastPosition(
 
 	if(Input::IsGamepadModeOn())
 	{
+		// TODO: Check the Look at of the player to not force the user move the stick because it's not accurate
 		const math::float2 gamepad_normalized_position =
-			math::float2(Input::GetAxisNormalized(Input::GameControllerAxis::CONTROLLER_AXIS_RIGHTX), Input::GetAxisNormalized(Input::GameControllerAxis::CONTROLLER_AXIS_RIGHTY));
+			math::float2(Input::GetAxisNormalized(Input::GameControllerAxis::CONTROLLER_AXIS_LEFTX), Input::GetAxisNormalized(Input::GameControllerAxis::CONTROLLER_AXIS_LEFTY));
 
 		const math::float2 gamepad_position_view =
 			ComponentCamera::ScreenPositionToView(gamepad_normalized_position);
 
 		const math::LineSegment ray = Debug::GetRenderingCamera()->Raycast(
 			gamepad_position_view.x, gamepad_position_view.y);
-
+		
 		return plane.ClosestPoint(ray);
 	}
 
@@ -361,11 +353,11 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 			ResetClickBuffer();
 			Dash();
 		}
-		else if (!IsAttackOnCooldown() && (HasBufferedClick() || Input::IsMouseButtonDown(Input::MouseButton::LEFT) || Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_RIGHTSHOULDER)))
+		else if (!IsAttackOnCooldown() && (HasBufferedClick() || Input::IsMouseButtonDown(Input::MouseButton::LEFT) || Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_X)))
 		{
 			MeleeAttack();
 		}
-		else if (!IsAttackOnCooldown() && _ammo_count > 0 && (Input::IsMouseButtonDown(Input::MouseButton::RIGHT) || Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_LEFTSHOULDER)))
+		else if (!IsAttackOnCooldown() && _ammo_count > 0 && (Input::IsMouseButtonDown(Input::MouseButton::RIGHT) || (Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_LEFTSHOULDER) || Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_RIGHTSHOULDER))))
 		{
 			RangedAttack();
 		}
@@ -383,7 +375,7 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 			_state = PlayerState::IDLE;
 		}
 
-		if (Input::IsKeyDown(Input::KeyCode::KEY_F) || Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_X))
+		if (Input::IsKeyDown(Input::KeyCode::KEY_F) || Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_B))
 		{
 			PickupParasite(_player_position);
 		}
@@ -430,7 +422,7 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 
 void Hachiko::Scripting::PlayerController::HandleInputBuffering()
 {
-	if (Input::IsMouseButtonDown(Input::MouseButton::LEFT) || Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_RIGHTSHOULDER))
+	if (Input::IsMouseButtonDown(Input::MouseButton::LEFT) || Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_X))
 	{
 		// Melee combo input buffer
 		click_buffer.push(GetRaycastPosition(_player_position));
@@ -820,14 +812,14 @@ void Hachiko::Scripting::PlayerController::MovementController()
 	// CHECK THIS
 	if (IsPickUp())
 	{
-		if (pickUp_time <= 0.0f || animation->IsAnimationStopped())
+		if (_pick_up_time <= 0.0f || animation->IsAnimationStopped())
 		{
 			_state = PlayerState::IDLE;
-			pickUp_time = _pickUp_duration;
+			_pick_up_time = _pick_up_duration;
 		}
 		else
 		{
-			pickUp_time -= Time::DeltaTime();
+			_pick_up_time -= Time::DeltaTime();
 		}
 	}
 

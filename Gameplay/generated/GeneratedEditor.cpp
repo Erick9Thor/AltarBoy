@@ -73,7 +73,6 @@ void Hachiko::Scripting::EnemyController::OnEditor()
 	Editor::Show("Idle Cooldown", _idle_cooldown);
 	Editor::Show("Spawning Time", _spawning_time);
 	Editor::Show("Spawn Pos", _spawn_pos);
-	Editor::Show("Spawn Is Initial", _spawn_is_initial);
 	Editor::Show("Enemy Body", _enemy_body);
 	Editor::Show("Parasite", _parasite);
 	Editor::Show("Blood Trail", _blood_trail);
@@ -140,6 +139,7 @@ void Hachiko::Scripting::PlayerController::OnEditor()
 	Editor::Show("Walking Dust", _walking_dust);
 	Editor::Show("Heal Effect", _heal_effect);
 	Editor::Show("Rotation Duration", _rotation_duration);
+	Editor::Show("Death Screen", _death_screen);
 	Editor::Show("Hp Cell 1", _hp_cell_1);
 	Editor::Show("Hp Cell 2", _hp_cell_2);
 	Editor::Show("Hp Cell 3", _hp_cell_3);
@@ -148,6 +148,9 @@ void Hachiko::Scripting::PlayerController::OnEditor()
 	Editor::Show("Ammo Cell 2", _ammo_cell_2);
 	Editor::Show("Ammo Cell 3", _ammo_cell_3);
 	Editor::Show("Ammo Cell 4", _ammo_cell_4);
+	Editor::Show("Sword Ui Addon", _sword_ui_addon);
+	Editor::Show("Maze Ui Addon", _maze_ui_addon);
+	Editor::Show("Claw Ui Addon", _claw_ui_addon);
 	Editor::Show("Weapon Charge Bar Go", _weapon_charge_bar_go);
 	Editor::Show("Camera", _camera);
 	Editor::Show("Ui Damage", _ui_damage);
@@ -176,7 +179,8 @@ void Hachiko::Scripting::RoomTeleporter::OnEditor()
 void Hachiko::Scripting::AudioManager::OnEditor()
 {
 	Editor::Show("Enemies In Combat", _enemies_in_combat);
-	Editor::Show("Previous In Combat", _previous_in_combat);
+	Editor::Show("In Combat", _in_combat);
+	Editor::Show("In Gaunlet", _in_gaunlet);
 }
 
 void Hachiko::Scripting::BlinkingLight::OnEditor()
@@ -269,6 +273,7 @@ void Hachiko::Scripting::LaserController::OnEditor()
 
 void Hachiko::Scripting::LevelManager::OnEditor()
 {
+	Editor::Show("Level", _level);
 	Editor::Show("Respawn Position", _respawn_position);
 	Editor::Show("Gauntlet Ui Go", _gauntlet_ui_go);
 	Editor::Show("Gauntlet Counter Go", _gauntlet_counter_go);
