@@ -4,6 +4,8 @@
 #include "entities/Stats.h"
 #include "entities/player/CombatManager.h"
 
+#include <queue>
+
 namespace Hachiko
 {
     class GameObject;
@@ -22,12 +24,10 @@ namespace Hachiko
 
         enum class BossState
         {
-            INVALID,
             WAITING_ENCOUNTER,
             STARTING_ENCOUNTER,
             COMBAT_FORM,
             CACOON_FORM,
-            DEFEATED,
             DEAD,
         };
 
@@ -58,20 +58,61 @@ namespace Hachiko
             void RegisterHit(int dmg);
             void UpdateHpBar();
 
+
         private:
             void SetUpHpBar();
+            void SetHpBarActive(bool v);
+            void StateController();
+            void StateTransitionController();
+            void CombatController();
+            void CombatTransitionController();
+
+            float GetPlayerDistance();
+
+            // Fight States
+            void WaitingController();
+            void StartEncounter();
+            void StartEncounterController();
+            void ResetCombatState();
+            void Die();
+            void DieController();
+
+            // Cacoon
+            void StartCacoon();
+            void CacoonController();
+
+            bool CacoonTrigger();
+            void FinishCacoon();
+
+            // Combat States (While COMBAT_FORM)
+            void Chase();
+            void ChaseController();
+
+            void MeleeAttack();
+            void MeleeAttackController();
+
+            void SpawnCrystals();
+            void SpawnCrystalsController();
+            void ConsumeParasytes();
+            void ConsumeParasytesController();
 
         private:
             SERIALIZE_FIELD(int, state_value);
             SERIALIZE_FIELD(GameObject*, hp_bar_go);
+            SERIALIZE_FIELD(GameObject*, crystal_target_go);
+            SERIALIZE_FIELD(float, start_encounter_range);
+            GameObject* player = nullptr; // It's found on scene based on name
+            ComponentTransform* transform = nullptr;
             ComponentProgressBar* hp_bar = nullptr;
-            BossState state = BossState::INVALID;
-            BossState prev_state = BossState::INVALID;
-            int total_hp = 100;
-            int current_hp = total_hp;
-
-
-
+            ComponentAgent* agent = nullptr;
+            Stats* combat_stats = nullptr;
+            BossState state = BossState::WAITING_ENCOUNTER;
+            BossState prev_state = state;
+            CombatState combat_state = CombatState::IDLE;
+            CombatState prev_combat_state = combat_state;
+            bool hitable = true;
+            std::vector<int> gauntlet_thresholds{30, 70};
+            float3 target_position = float3::zero;
         };
     } // namespace Scripting
 } // namespace Hachiko*/

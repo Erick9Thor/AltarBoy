@@ -26,9 +26,9 @@ child:
         id: 10172179169732309591
         type: 1
         enabled: true
-        position: [-113.7, 0, -14.85]
+        position: [-85.36, 20.2, -48.15]
         rotation: [125, 0, -180]
-        scale: [0.9889, 1, 0.9889]
+        scale: [1, 1, 1]
       - !<camera>
         id: 1219616210356617501
         type: 4
@@ -37,7 +37,7 @@ child:
           near_distance: 1
           far_distance: 100
           fov: 65
-          position: [-113.7, 0, -14.85]
+          position: [-85.36, 20.2, -48.15]
           front: [0, -0.8192, -0.5736]
           up: [0, 0.5736, -0.8192]
           pinned_camera: [0, 0, 0]
@@ -143,7 +143,7 @@ child:
                 "'_attack_delay@float'": 0.3
                 "'_idle_cooldown@float'": 2
                 "'_spawning_time@float'": 2
-                "'_spawn_pos@float3'": [0, 0, 0]
+                "'_spawn_pos@float3'": [-84.25, 1.615, -45.56]
                 "'_enemy_body@GameObject*'": 1130507181834747918
                 "'_parasite@GameObject*'": 4784366738528838534
                 "'_blood_trail@GameObject*'": 18418551199523093346
@@ -1425,7 +1425,7 @@ child:
                 "'_attack_delay@float'": 0.3
                 "'_idle_cooldown@float'": 2
                 "'_spawning_time@float'": 2
-                "'_spawn_pos@float3'": [0, 0, 0]
+                "'_spawn_pos@float3'": [-74.3, 1.651, -45.88]
                 "'_enemy_body@GameObject*'": 2299968731216342421
                 "'_parasite@GameObject*'": 6731362233376716606
                 "'_blood_trail@GameObject*'": 12392562315848717697
@@ -2707,7 +2707,7 @@ child:
                 "'_attack_delay@float'": 0.3
                 "'_idle_cooldown@float'": 2
                 "'_spawning_time@float'": 2
-                "'_spawn_pos@float3'": [0, 0, 0]
+                "'_spawn_pos@float3'": [-76.67, 1.453, -59.54]
                 "'_enemy_body@GameObject*'": 112280058179575675
                 "'_parasite@GameObject*'": 13963663924966011826
                 "'_blood_trail@GameObject*'": 934820171149749532
@@ -4007,7 +4007,7 @@ child:
             "'_attack_range@float'": 3.5
             "'_move_speed@float'": 0
             "'_max_hp@int'": 1
-            "'_current_hp@int'": 3
+            "'_current_hp@int'": 1
         child:
           - id: 10596636722425909089
             name: crystalSpike_mesh
@@ -4043,7 +4043,7 @@ child:
                     tint_color: [1, 1, 1, 1]
           - id: 186483731231135853
             name: crystalSpikeAnimacion_meshExplision
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 7438480298230727843
@@ -4060,7 +4060,7 @@ child:
             child:
               - id: 3876377728843125045
                 name: Mesh
-                enabled: true
+                enabled: false
                 component:
                   - !<transform>
                     id: 6254612010985307076
@@ -4072,7 +4072,7 @@ child:
                 child:
                   - id: 4687174686599202866
                     name: crystalSpikeTop_mesh
-                    enabled: true
+                    enabled: false
                     component:
                       - !<transform>
                         id: 15446058507417187928
@@ -4092,7 +4092,7 @@ child:
                         tint_color: [1, 1, 1, 1]
                   - id: 4426685882320274910
                     name: crystalSpikeBottom_mesh
-                    enabled: true
+                    enabled: false
                     component:
                       - !<transform>
                         id: 9140245212268330135
@@ -4112,7 +4112,7 @@ child:
                         tint_color: [1, 1, 1, 1]
                   - id: 7807628682193679573
                     name: crystalSpikeMiddle_mesh
-                    enabled: true
+                    enabled: false
                     component:
                       - !<transform>
                         id: 3235223245306384792
@@ -4132,7 +4132,7 @@ child:
                         tint_color: [1, 1, 1, 1]
                   - id: 1560450266873232053
                     name: crystalSpikeBottom2_mesh
-                    enabled: true
+                    enabled: false
                     component:
                       - !<transform>
                         id: 349846024100628228
@@ -4152,7 +4152,7 @@ child:
                         tint_color: [1, 1, 1, 1]
               - id: 630500816932703804
                 name: Father
-                enabled: true
+                enabled: false
                 component:
                   - !<transform>
                     id: 11556465288841147365
@@ -4164,7 +4164,7 @@ child:
                 child:
                   - id: 627497714226463515
                     name: Bottom2
-                    enabled: true
+                    enabled: false
                     component:
                       - !<transform>
                         id: 10057418257232186238
@@ -4175,7 +4175,7 @@ child:
                         scale: [1, 1, 1]
                   - id: 6222254652726396762
                     name: Bottom
-                    enabled: true
+                    enabled: false
                     component:
                       - !<transform>
                         id: 16460709569915038626
@@ -4186,7 +4186,7 @@ child:
                         scale: [1, 1, 1]
                   - id: 17023238217511934196
                     name: Top
-                    enabled: true
+                    enabled: false
                     component:
                       - !<transform>
                         id: 16407944311662658096
@@ -4197,7 +4197,7 @@ child:
                         scale: [1, 1, 1]
                   - id: 3269825848916360412
                     name: Middle
-                    enabled: true
+                    enabled: false
                     component:
                       - !<transform>
                         id: 9667065938295841812
@@ -5332,6 +5332,187 @@ child:
         class_name: CombatManager
         "'_charge_vfx@GameObject*'": 14255447253216105291
         "'_shot_vfx@GameObject*'": 8060897708641524708
+    child:
+      - id: 12204796513569285688
+        name: VFX_CI_W_SpitBall
+        enabled: false
+        component:
+          - !<transform>
+            id: 10142999750239983186
+            type: 1
+            enabled: true
+            position: [0, 1.035, 7.313]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+          - !<billboard>
+            id: 8825814829622578871
+            type: 21
+            enabled: true
+            play_on_awake: true
+            texture_id: 9624166589911938546
+            tiles: [1, 1]
+            flip: [false, false]
+            billboard_lifetime: 5
+            properties: [1, 0, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 0
+            total_tiles: 1
+            animation_loop: true
+            color_cycles: 1
+            color_gradient: [[0, 1, 0.1503, 0, 1]]
+            animation_section: false
+            color_section: true
+            size_section: false
+            size_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [3, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 0
+      - id: 17727813928751328263
+        name: VFX_CI_W_SpitBall
+        enabled: false
+        component:
+          - !<transform>
+            id: 4263333580058068891
+            type: 1
+            enabled: true
+            position: [0, 1.035, 7.313]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+          - !<billboard>
+            id: 17086747721222720655
+            type: 21
+            enabled: true
+            play_on_awake: true
+            texture_id: 9624166589911938546
+            tiles: [1, 1]
+            flip: [false, false]
+            billboard_lifetime: 5
+            properties: [1, 0, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 0
+            total_tiles: 1
+            animation_loop: true
+            color_cycles: 1
+            color_gradient: [[0, 1, 0.1503, 0, 1]]
+            animation_section: false
+            color_section: true
+            size_section: false
+            size_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [3, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 0
+      - id: 1299952316031160402
+        name: VFX_CI_W_SpitBall
+        enabled: false
+        component:
+          - !<transform>
+            id: 1124512504204702210
+            type: 1
+            enabled: true
+            position: [0, 1.035, 7.313]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+          - !<billboard>
+            id: 17249313613976460895
+            type: 21
+            enabled: true
+            play_on_awake: true
+            texture_id: 9624166589911938546
+            tiles: [1, 1]
+            flip: [false, false]
+            billboard_lifetime: 5
+            properties: [1, 0, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 0
+            total_tiles: 1
+            animation_loop: true
+            color_cycles: 1
+            color_gradient: [[0, 1, 0.1503, 0, 1]]
+            animation_section: false
+            color_section: true
+            size_section: false
+            size_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [3, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 0
+      - id: 7724705639041070782
+        name: VFX_CI_W_SpitBall
+        enabled: false
+        component:
+          - !<transform>
+            id: 2902596683505190375
+            type: 1
+            enabled: true
+            position: [0, 1.035, 7.313]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+          - !<billboard>
+            id: 9143710507097626471
+            type: 21
+            enabled: true
+            play_on_awake: true
+            texture_id: 9624166589911938546
+            tiles: [1, 1]
+            flip: [false, false]
+            billboard_lifetime: 5
+            properties: [1, 0, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 0
+            total_tiles: 1
+            animation_loop: true
+            color_cycles: 1
+            color_gradient: [[0, 1, 0.1503, 0, 1]]
+            animation_section: false
+            color_section: true
+            size_section: false
+            size_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [3, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 0
+      - id: 1459582642304905863
+        name: VFX_CI_W_SpitBall
+        enabled: false
+        component:
+          - !<transform>
+            id: 10438447777162828509
+            type: 1
+            enabled: true
+            position: [0, 1.035, 7.313]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+          - !<billboard>
+            id: 10989085139537316748
+            type: 21
+            enabled: true
+            play_on_awake: true
+            texture_id: 9624166589911938546
+            tiles: [1, 1]
+            flip: [false, false]
+            billboard_lifetime: 5
+            properties: [1, 0, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 0
+            total_tiles: 1
+            animation_loop: true
+            color_cycles: 1
+            color_gradient: [[0, 1, 0.1503, 0, 1]]
+            animation_section: false
+            color_section: true
+            size_section: false
+            size_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [3, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 0
   - id: 8002262312438975456
     name: LevelManager
     enabled: true
@@ -5349,7 +5530,7 @@ child:
         enabled: true
         class_name: LevelManager
         "'_level@unsigned'": 1
-        "'_respawn_position@float3'": [-80.79, 3.33, -57.33]
+        "'_respawn_position@float3'": [-84.74, 3.466, -56.32]
         "'_gauntlet_ui_go@GameObject*'": 11815393408956331148
         "'_gauntlet_counter_go@GameObject*'": 290730714737929416
     child:
@@ -5399,7 +5580,7 @@ child:
                     tint_color: [1, 1, 1, 1]
       - id: 11815393408956331148
         name: GauntletUI
-        enabled: true
+        enabled: false
         component:
           - !<transform>
             id: 14047231738512029451
@@ -5425,7 +5606,7 @@ child:
         child:
           - id: 7108655066481101915
             name: Icon
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 10925479155328805212
@@ -5464,7 +5645,7 @@ child:
                 fill_window: false
           - id: 290730714737929416
             name: Counter
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 9874650094312303743
@@ -5576,7 +5757,7 @@ child:
                 tint_color: [1, 1, 1, 1]
       - id: 314563168739567085
         name: SpawnPos
-        enabled: true
+        enabled: false
         component:
           - !<transform>
             id: 4739380583633692402
@@ -5602,8 +5783,8 @@ child:
         id: 15251945614683961629
         type: 1
         enabled: true
-        position: [-84.74, 3.466, -56.32]
-        rotation: [-180, -55.25, -180]
+        position: [-82.4, 1.2, -58.27]
+        rotation: [-0, 0, -0]
         scale: [0.4416, 0.45, 0.4416]
       - !<animation>
         id: 106777366532151100
@@ -5661,7 +5842,7 @@ child:
         "'_step_frequency@float'": 0.4
         "'_melee_frequency@float'": 0.3
         "'_ranged_frequency@float'": 0.3
-        "'_timer@float'": 0.0666
+        "'_timer@float'": 0.007
       - !<script>
         id: 9882740558167259746
         type: 15
@@ -5672,7 +5853,7 @@ child:
         "'_attack_range@float'": 3.5
         "'_move_speed@float'": 7
         "'_max_hp@int'": 4
-        "'_current_hp@int'": 4
+        "'_current_hp@int'": 3
       - !<agent>
         id: 5066338725609162683
         type: 17
@@ -6019,7 +6200,7 @@ child:
                 id: 2749731455413006103
                 type: 1
                 enabled: true
-                position: [0, 0.1649, -0.1247]
+                position: [0, 0.2218, -0.1247]
                 rotation: [-0, 0, -0]
                 scale: [1, 1, 1]
             child:
@@ -6068,7 +6249,7 @@ child:
                                 type: 1
                                 enabled: true
                                 position: [0, 0, 0]
-                                rotation: [4.266, 12.75, 50.36]
+                                rotation: [4.728, 8.783, 42.73]
                                 scale: [1, 1, 1]
                             child:
                               - id: 683326342727424019
@@ -6092,7 +6273,7 @@ child:
                                         type: 1
                                         enabled: true
                                         position: [0.4062, 0, -0.1398]
-                                        rotation: [-16.17, -3.761, -34.77]
+                                        rotation: [-10.74, -4.613, -24.26]
                                         scale: [1, 1, 1]
                                     child:
                                       - id: 4147557875840862233
@@ -6104,7 +6285,7 @@ child:
                                             type: 1
                                             enabled: true
                                             position: [0.547, -0.2996, -0.0779]
-                                            rotation: [-3.434, 1.053, 0.8112]
+                                            rotation: [-3.437, 1.054, 0.8153]
                                             scale: [1, 1, 1]
                                         child:
                                           - id: 8840728064092589795
@@ -6115,8 +6296,8 @@ child:
                                                 id: 8085940534315477492
                                                 type: 1
                                                 enabled: true
-                                                position: [0.0771, 0.1602, 0.0194]
-                                                rotation: [6.946, 0.0515, -17.58]
+                                                position: [0.0837, 0.1577, 0.0101]
+                                                rotation: [4.05, 0.711, -19.94]
                                                 scale: [1, 1, 1]
                                             child:
                                               - id: 4296896645516629166
@@ -6163,7 +6344,7 @@ child:
                                 type: 1
                                 enabled: true
                                 position: [0, 0, 0]
-                                rotation: [-15.57, 20.55, 14.92]
+                                rotation: [-16.7, 16.36, 9.681]
                                 scale: [1, 1, 1]
                             child:
                               - id: 14045136313247213942
@@ -6187,7 +6368,7 @@ child:
                                         type: 1
                                         enabled: true
                                         position: [-0.4062, 0, 0.1398]
-                                        rotation: [-16, -3.814, -34.48]
+                                        rotation: [-10.57, -4.611, -23.92]
                                         scale: [1, 1, 1]
                                     child:
                                       - id: 18083868611560557550
@@ -6210,8 +6391,8 @@ child:
                                                 id: 16313126207636167989
                                                 type: 1
                                                 enabled: true
-                                                position: [0.0339, -0.1492, -0.0926]
-                                                rotation: [32.34, -2.641, 18.92]
+                                                position: [0.0211, -0.1576, -0.082]
+                                                rotation: [27.89, -3.433, 14.76]
                                                 scale: [1, 1, 1]
                                             child:
                                               - id: 11079537855291541034
@@ -6270,7 +6451,7 @@ child:
                                 type: 1
                                 enabled: true
                                 position: [0.2502, 0, 0]
-                                rotation: [-3.389, -1.965, 5.115]
+                                rotation: [-3.386, -1.961, 0.7473]
                                 scale: [1, 1, 1]
                             child:
                               - id: 6775982009289378488
@@ -6281,7 +6462,7 @@ child:
                                     id: 7858948610105958699
                                     type: 1
                                     enabled: true
-                                    position: [0.2519, 0.2077, 0.0086]
+                                    position: [0.2434, 0.2033, 0.0086]
                                     rotation: [-0, 0, -0]
                                     scale: [1, 1, 1]
                                 child:
@@ -6401,7 +6582,7 @@ child:
                                             type: 1
                                             enabled: true
                                             position: [0, 0, 0]
-                                            rotation: [11.68, -36.51, -8.854]
+                                            rotation: [10.54, -29.9, -8.62]
                                             scale: [1, 1, 1]
                                         child:
                                           - id: 5327932432256748511
@@ -6424,7 +6605,7 @@ child:
                                                     id: 16479659785113125746
                                                     type: 1
                                                     enabled: true
-                                                    position: [0.278, 0.0182, 0.1519]
+                                                    position: [0.2613, 0.0046, 0.144]
                                                     rotation: [-0, 0, -0]
                                                     scale: [1, 1, 1]
                                                 child:
@@ -6449,7 +6630,7 @@ child:
                                                             type: 1
                                                             enabled: true
                                                             position: [0, 0, 0]
-                                                            rotation: [-0.0818, -13.58, -31.79]
+                                                            rotation: [1.92, -10.39, -31.37]
                                                             scale: [1, 1, 1]
                                                         child:
                                                           - id: 653493640462009249
@@ -6497,7 +6678,7 @@ child:
                                                                             type: 1
                                                                             enabled: true
                                                                             position: [0, 0, 0]
-                                                                            rotation: [0, -37.46, 0]
+                                                                            rotation: [0, -37.45, 0]
                                                                             scale: [1, 1, 1]
                                                                         child:
                                                                           - id: 1599742803427731412
@@ -6830,7 +7011,7 @@ child:
                                             type: 1
                                             enabled: true
                                             position: [0, 0, 0]
-                                            rotation: [0.7815, 5.706, -0.4864]
+                                            rotation: [0.0977, 0.7147, -0.0523]
                                             scale: [1, 1, 1]
                                         child:
                                           - id: 11020326013490594336
@@ -6853,7 +7034,7 @@ child:
                                                     id: 8866676223546744149
                                                     type: 1
                                                     enabled: true
-                                                    position: [-0.178, -0.0109, -0.0412]
+                                                    position: [-0.184, -0.0017, -0.0573]
                                                     rotation: [-0, 0, -0]
                                                     scale: [1, 1, 1]
                                                 child:
@@ -6878,7 +7059,7 @@ child:
                                                             type: 1
                                                             enabled: true
                                                             position: [0, 0, 0]
-                                                            rotation: [4.655, 11.41, -22.45]
+                                                            rotation: [4.43, 11.49, -17.82]
                                                             scale: [1, 1, 1]
                                                         child:
                                                           - id: 16391972305923093647
@@ -7034,7 +7215,7 @@ child:
                                                                                                                 type: 1
                                                                                                                 enabled: true
                                                                                                                 position: [0.0944, 0.0526, -0.0407]
-                                                                                                                rotation: [-34.14, -27.6, -25.4]
+                                                                                                                rotation: [-145.7, 32.06, -167.6]
                                                                                                                 scale: [1, 1, 1]
                                                                                           - id: 12305489068155002130
                                                                                             name: MouthDown_$AssimpFbx$_Translation
@@ -7044,7 +7225,7 @@ child:
                                                                                                 id: 13129514628987144998
                                                                                                 type: 1
                                                                                                 enabled: true
-                                                                                                position: [-0.4199, 0.1991, 0.0735]
+                                                                                                position: [-0.4521, 0.1251, 0.0374]
                                                                                                 rotation: [-0, 0, -0]
                                                                                                 scale: [1, 1, 1]
                                                                                             child:
@@ -7069,7 +7250,7 @@ child:
                                                                                                         type: 1
                                                                                                         enabled: true
                                                                                                         position: [0, 0, 0]
-                                                                                                        rotation: [1.099, -5.075, 11.23]
+                                                                                                        rotation: [0.0175, -0.6489, 1.399]
                                                                                                         scale: [1, 1, 1]
                                                                                                     child:
                                                                                                       - id: 2158288984032570078
@@ -7746,7 +7927,7 @@ child:
                                     id: 6010165310553055611
                                     type: 1
                                     enabled: true
-                                    position: [0.2526, 0.0031, 0.0094]
+                                    position: [0.2442, -0.0013, 0.0094]
                                     rotation: [-0, 0, -0]
                                     scale: [1, 1, 1]
                                 child:
@@ -7819,7 +8000,7 @@ child:
                                                             type: 1
                                                             enabled: true
                                                             position: [0, 0, 0]
-                                                            rotation: [-6.349, 1.808, -10.74]
+                                                            rotation: [-0.9237, 0.1836, -1.541]
                                                             scale: [1, 1, 1]
                                                         child:
                                                           - id: 11726769068846520210
@@ -7902,7 +8083,7 @@ child:
                                                             type: 1
                                                             enabled: true
                                                             position: [0, 0, 0]
-                                                            rotation: [-6.349, 1.808, -10.74]
+                                                            rotation: [-0.9237, 0.1836, -1.541]
                                                             scale: [1, 1, 1]
                                                         child:
                                                           - id: 14200952151726222592
@@ -7960,7 +8141,7 @@ child:
                     id: 12625300926279911854
                     type: 1
                     enabled: true
-                    position: [-0.3263, -0.7387, -0.3238]
+                    position: [-0.3263, -0.7956, -0.3238]
                     rotation: [-0, 0, -0]
                     scale: [1, 1, 1]
               - id: 15453282881197792022
@@ -7971,7 +8152,7 @@ child:
                     id: 18092933909226095931
                     type: 1
                     enabled: true
-                    position: [0.3264, -0.7387, 0.3066]
+                    position: [0.3264, -0.7956, 0.3066]
                     rotation: [-0, 0, -0]
                     scale: [1, 1, 1]
       - id: 16352596015915431896
@@ -7998,7 +8179,7 @@ child:
             scale: [2.222, 2.222, 2.222]
       - id: 7265271896377421763
         name: DashTrail
-        enabled: true
+        enabled: false
         component:
           - !<transform>
             id: 1763664720009823518
@@ -8010,7 +8191,7 @@ child:
         child:
           - id: 17234363070731728154
             name: Plane001
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 960718684810609017
@@ -8913,7 +9094,7 @@ child:
                           - !<image>
                             id: 7038494767590557117
                             type: 11
-                            enabled: true
+                            enabled: false
                             image_id: 15478304056567162071
                             hover_image_id: 0
                             image_color: [1, 1, 1, 1]
@@ -8926,7 +9107,7 @@ child:
                             fill_window: false
                   - id: 3748806639438209308
                     name: Stamina
-                    enabled: true
+                    enabled: false
                     component:
                       - !<transform>
                         id: 1474456713453417631
@@ -8941,7 +9122,7 @@ child:
                         enabled: true
                         params:
                           min: 0
-                          max: 1
+                          max: 0
                           filled: 1
                           direction: 0
                       - !<transform_2d>
@@ -8957,7 +9138,7 @@ child:
                     child:
                       - id: 3936998307436356395
                         name: Bar Background
-                        enabled: true
+                        enabled: false
                         component:
                           - !<transform>
                             id: 12123223867221976742
@@ -8996,7 +9177,7 @@ child:
                             fill_window: false
                       - id: 5618124060329844262
                         name: Bar Fill
-                        enabled: true
+                        enabled: false
                         component:
                           - !<transform>
                             id: 5286143981153786411
@@ -9074,7 +9255,7 @@ child:
                     fill_window: false
               - id: 17331972610280890033
                 name: CLAW_ADDON
-                enabled: true
+                enabled: false
                 component:
                   - !<transform>
                     id: 373548418260191576
@@ -9748,24 +9929,54 @@ child:
             visible: true
             material_id: 6750369022920963075
             tint_color: [1, 1, 1, 1]
-  - id: 7044248859289754767
+  - id: 7487883486290686774
     name: Boss
     enabled: true
     component:
       - !<transform>
-        id: 7764799690605049794
+        id: 17819489957119917047
         type: 1
         enabled: true
-        position: [0, 0, 0]
-        rotation: [-0, 0, -0]
-        scale: [1, 1, 1]
+        position: [-78.62, 2.537, -64.41]
+        rotation: [-90, 0, 0]
+        scale: [1, 0.9998, 0.9998]
+      - !<mesh_renderer>
+        id: 10278331383462390603
+        type: 2
+        enabled: true
+        mesh_id: 1309944288732959230
+        navigable: false
+        visible: true
+        material_id: 6750369022920963075
+        tint_color: [1, 1, 1, 1]
       - !<script>
-        id: 14325834279174659378
+        id: 7846503258327909697
         type: 15
         enabled: true
         class_name: BossController
         "'state_value@int'": 0
         "'hp_bar_go@GameObject*'": 7108423070420499537
+        "'crystal_target_go@GameObject*'": 0
+      - !<script>
+        id: 10384265854115039839
+        type: 15
+        enabled: true
+        class_name: Stats
+        "'_attack_power@int'": 1
+        "'_attack_cd@float'": 2
+        "'_attack_range@float'": 3.5
+        "'_move_speed@float'": 7
+        "'_max_hp@int'": 100
+        "'_current_hp@int'": 100
+      - !<agent>
+        id: 14649641130496254185
+        type: 17
+        enabled: true
+        max_speed: 7
+        max_acceleration: 2
+        avoid_obstacles: false
+        radius: 0.5
+        is_player: false
     child:
       - id: 12699659652520607022
         name: BossUI
@@ -9775,8 +9986,8 @@ child:
             id: 15615816958220744837
             type: 1
             enabled: true
-            position: [0, 0, 0]
-            rotation: [-0, 0, -0]
+            position: [36.3, -18.35, 7.754]
+            rotation: [90, 0, -0]
             scale: [1, 1, 1]
           - !<transform_2d>
             id: 8077597359363059088
