@@ -10,8 +10,6 @@
 #include "utils/FileSystem.h"
 #include "debugdraw.h"
 
-#include "components/ComponentAgent.h"
-
 /*HACHIKO--------------------------------------------------------------------*/
 
 void Hachiko::Quit()
@@ -28,7 +26,7 @@ float Hachiko::Time::DeltaTime()
     // TODO: Return Gameplay Timer.
     // Added for easiness of exposing to scripts. We need to refactor that
     // timer code as it's unnecessarily complicated.
-    return EngineTimer::delta_time;
+    return GameTimer::delta_time;
 }
 
 /*---------------------------------------------------------------------------*/
