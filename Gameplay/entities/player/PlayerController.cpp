@@ -119,6 +119,10 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 		_heal_effect_particles_1 = _heal_effect->GetComponent<ComponentParticleSystem>();
 		_heal_effect_particles_2 = _heal_effect->GetComponentInDescendants<ComponentParticleSystem>();
 	}
+	if (_damage_effect != nullptr)
+	{
+		_damage_effect_billboard = _damage_effect->GetComponent<ComponentBillboard>();
+	}
 
 	_combat_stats = game_object->GetComponent<Stats>();
 	// Player doesnt use all combat stats since some depend on weapon
@@ -1161,6 +1165,12 @@ bool Hachiko::Scripting::PlayerController::RegisterHit(int damage_received, floa
 		{
 			_player_geometry->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, 0.5f), true);
 		}
+
+		if (_damage_effect_billboard != nullptr)
+		{
+			_damage_effect_billboard->Play();
+		}
+
 		_combat_stats->ReceiveDamage(damage_received);
 		UpdateHealthBar();
 		Input::GoBrr(0.3f, 500);
