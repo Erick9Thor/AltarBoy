@@ -9,6 +9,7 @@
 
 #include "core/rendering/Program.h"
 #include "modules/ModuleResources.h"
+#include "modules/ModuleSceneManager.h"
 
 #include "modules/ModuleEvent.h"
 
@@ -93,6 +94,18 @@ void Hachiko::ComponentText::Draw(ComponentTransform2D* transform, Program* prog
 {   
     OPTICK_CATEGORY("Draw", Optick::Category::Rendering);
 
+    if (build_font && font)
+    {
+        try        
+        {
+            BuildLabel(game_object->GetComponent<ComponentTransform2D>());
+        }
+        catch (std::exception& e)
+        {
+            // Catch exception and return unloaded font if fails
+            HE_LOG("Failed to load font %s", std::to_string(font->GetID()).c_str());
+        }    
+    }
     if (!label)
     {
         return;
@@ -165,7 +178,7 @@ void Hachiko::ComponentText::LoadFont(UID id)
     {
         App->resources->ReleaseResource(font);
         font = static_cast<ResourceFont*>(App->resources->GetResource(Resource::Type::FONT, id));
-        if (font)
+        if (font && !App->scene_manager->IsLoadingScene())
         {
             BuildLabel(game_object->GetComponent<ComponentTransform2D>());
         }
@@ -197,6 +210,8 @@ void Hachiko::ComponentText::RefreshLabel(ComponentTransform2D* transform)
 
 void Hachiko::ComponentText::BuildLabel(ComponentTransform2D* transform)
 {
+    build_font = false;
+
     unsigned windowWidth, windowHeight;
     App->camera->GetRenderingCamera()->GetResolution(windowWidth, windowHeight);
 

@@ -41,6 +41,7 @@ namespace Hachiko
         void RefreshLabel(ComponentTransform2D* transform);
         void BuildLabel(ComponentTransform2D* transform);
 
+        bool build_font = true;
         bool dirty = true;
 
         ResourceFont* font = nullptr;

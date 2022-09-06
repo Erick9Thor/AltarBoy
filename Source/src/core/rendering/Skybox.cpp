@@ -5,6 +5,7 @@
 #include "components/ComponentCamera.h"
 #include "modules/ModuleResources.h"
 #include "modules/ModuleRender.h"
+#include "modules/ModuleSceneManager.h"
 #include "resources/ResourceTexture.h"
 #include "resources/ResourceSkybox.h"
 
@@ -18,8 +19,11 @@ Hachiko::Skybox::Skybox()
 
 Hachiko::Skybox::Skybox(TextureCube new_cube) : cube(new_cube)
 {
-    cube = ModuleTexture::LoadCubeMap(cube);
-    CreateBuffers();
+    if (!App->scene_manager->IsLoadingScene())
+    {
+        cube = ModuleTexture::LoadCubeMap(cube);
+        CreateBuffers();
+    }
 }
 
 Hachiko::Skybox::~Skybox()
@@ -37,6 +41,11 @@ void Hachiko::Skybox::Draw(ComponentCamera* camera) const
     // Use for optimized version (draw at the end) glDepthFunc(GL_LEQUAL);
     OPTICK_CATEGORY("Draw", Optick::Category::Rendering);
     
+    if (!cube.loaded)
+    {
+        return;
+    }
+
     glDepthFunc(GL_LEQUAL);
     glClearDepth(1.0);
 
@@ -53,6 +62,12 @@ void Hachiko::Skybox::Draw(ComponentCamera* camera) const
     Program::Deactivate();
     
     glDepthFunc(GL_LESS);
+}
+
+void Hachiko::Skybox::Reload()
+{
+    cube = ModuleTexture::LoadCubeMap(cube);
+    CreateBuffers();
 }
 
 void Hachiko::Skybox::ReleaseCubemap()
