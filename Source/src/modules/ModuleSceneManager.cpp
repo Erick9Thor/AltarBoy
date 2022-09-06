@@ -131,6 +131,15 @@ void Hachiko::ModuleSceneManager::CheckSceneLoading()
 
 UpdateStatus Hachiko::ModuleSceneManager::Update(const float delta)
 {
+#ifndef PLAY_BUILD
+    // If the scene was playing previously, continue playing:
+    if (was_scene_playing)
+    {
+        AttemptScenePlay();
+        was_scene_playing = false;
+    }
+#endif
+
     main_scene->Update();
 
     return UpdateStatus::UPDATE_CONTINUE;
@@ -254,11 +263,16 @@ void Hachiko::ModuleSceneManager::PostLoadScene()
     SetSceneResource(tmp_resource_scene);
     ChangeMainScene(tmp_loading_scene);
 
+#ifdef PLAY_BUILD
+    // In Play build there is no problem in engine mode it crashes
+    // because it tries to access the engine ui
     // If the scene was playing previously, continue playing:
     if (was_scene_playing)
     {
         AttemptScenePlay();
+        was_scene_playing = false;
     }
+#endif
 
     tmp_resource_scene = nullptr;
     tmp_loading_scene = nullptr;
