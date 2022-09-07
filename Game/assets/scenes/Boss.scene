@@ -8668,7 +8668,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1261, 625]
+            size: [1707, 937]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -9937,7 +9937,7 @@ child:
         id: 17819489957119917047
         type: 1
         enabled: true
-        position: [-78.62, 2.537, -64.41]
+        position: [-78.62, 1.312, -64.41]
         rotation: [-90, 0, 0]
         scale: [1, 0.9998, 0.9998]
       - !<mesh_renderer>
@@ -9957,6 +9957,7 @@ child:
         "'state_value@int'": 0
         "'hp_bar_go@GameObject*'": 7108423070420499537
         "'crystal_target_go@GameObject*'": 0
+        "'start_encounter_range@float'": 5
       - !<script>
         id: 10384265854115039839
         type: 15
@@ -9994,7 +9995,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1261, 625]
+            size: [1707, 937]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
