@@ -4,12 +4,11 @@
 #include "entities/Stats.h"
 #include "constants/Scenes.h"
 
-
-
 Hachiko::Scripting::BossController::BossController(GameObject* game_object)
 	: Script(game_object, "BossController")
 	, state_value(0)
 	, hp_bar_go(nullptr)
+	, cocoon_placeholder_go(nullptr)
 {
 	
 }
@@ -24,6 +23,11 @@ void Hachiko::Scripting::BossController::OnAwake()
 	SetUpHpBar();
 	// Hp bar starts hidden untill encounter starts
 	SetHpBarActive(false);
+	if (cocoon_placeholder_go)
+	{
+		cocoon_placeholder_go->SetActive(false);
+	}
+	gauntlet = gauntlet_go->GetComponent<GauntletManager>();
 }
 
 void Hachiko::Scripting::BossController::OnStart()
@@ -39,6 +43,11 @@ void Hachiko::Scripting::BossController::OnUpdate()
 	}
 	StateController();
 	state_value = static_cast<int>(state);
+}
+
+bool Hachiko::Scripting::BossController::IsAlive() const
+{
+	return combat_stats->IsAlive();
 }
 
 void Hachiko::Scripting::BossController::RegisterHit(int dmg)
@@ -140,6 +149,12 @@ void Hachiko::Scripting::BossController::CombatController()
 	if (CacoonTrigger())
 	{
 		state = BossState::CACOON_FORM;
+		return;
+	}
+
+	if (combat_stats->_current_hp <= 0)
+	{
+		state = BossState::DEAD;
 		return;
 	}
 	
@@ -249,12 +264,16 @@ void Hachiko::Scripting::BossController::DieController()
 void Hachiko::Scripting::BossController::StartCacoon()
 {
 	hitable = false;
+	if (cocoon_placeholder_go)
+	{
+		cocoon_placeholder_go->SetActive(true);
+	}
 }
 
 void Hachiko::Scripting::BossController::CacoonController()
 {
 	// Replace with is gauntlet completed
-	if (Input::IsKeyDown(Input::KeyCode::KEY_J))
+	if (gauntlet->IsFinished() || Input::IsKeyDown(Input::KeyCode::KEY_J))
 	{
 		FinishCacoon();
 	}
@@ -262,13 +281,14 @@ void Hachiko::Scripting::BossController::CacoonController()
 
 bool Hachiko::Scripting::BossController::CacoonTrigger()
 {
-	if (gauntlet_thresholds.empty())
+	if (gauntlet_thresholds_percent.empty())
 	{
 		return false;
 	}
-	if (gauntlet_thresholds.back() >= combat_stats->_current_hp)
+	if (gauntlet_thresholds_percent.back() >= static_cast<float>(combat_stats->_current_hp) / combat_stats->_max_hp)
 	{
-		gauntlet_thresholds.pop_back();
+		gauntlet_thresholds_percent.pop_back();
+		gauntlet->StartGauntlet();
 		return true;
 	}
 	return false;
@@ -281,6 +301,11 @@ void Hachiko::Scripting::BossController::FinishCacoon()
 		return;
 	}
 	hitable = true;
+	if (cocoon_placeholder_go)
+	{
+		cocoon_placeholder_go->SetActive(false);
+	}
+	gauntlet->ResetGauntlet();
 	state = BossState::COMBAT_FORM;
 }
 

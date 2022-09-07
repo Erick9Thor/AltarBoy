@@ -8668,7 +8668,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1707, 937]
+            size: [1316, 686]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -9957,6 +9957,8 @@ child:
         "'state_value@int'": 0
         "'hp_bar_go@GameObject*'": 7108423070420499537
         "'crystal_target_go@GameObject*'": 0
+        "'cocoon_placeholder_go@GameObject*'": 8228481781157390397
+        "'gauntlet_go@GameObject*'": 17975232777243703469
         "'start_encounter_range@float'": 5
       - !<script>
         id: 10384265854115039839
@@ -9967,8 +9969,8 @@ child:
         "'_attack_cd@float'": 2
         "'_attack_range@float'": 3.5
         "'_move_speed@float'": 7
-        "'_max_hp@int'": 100
-        "'_current_hp@int'": 100
+        "'_max_hp@int'": 50
+        "'_current_hp@int'": 50
       - !<agent>
         id: 14649641130496254185
         type: 17
@@ -9977,7 +9979,7 @@ child:
         max_acceleration: 2
         avoid_obstacles: false
         radius: 0.5
-        is_player: false
+        is_player: true
     child:
       - id: 12699659652520607022
         name: BossUI
@@ -9995,7 +9997,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1707, 937]
+            size: [1316, 686]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -10114,3 +10116,48 @@ child:
                     image_y_tiles: 1
                     image_tiles_per_second: 1
                     fill_window: false
+      - id: 8228481781157390397
+        name: CacoonPlaceholder
+        enabled: true
+        component:
+          - !<transform>
+            id: 9648225228079183753
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0, 0, -0]
+            scale: [3.45, 3.451, 3.451]
+          - !<mesh_renderer>
+            id: 2741182431062764107
+            type: 2
+            enabled: true
+            mesh_id: 1654487118907036717
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+            tint_color: [1, 1, 1, 1]
+      - id: 17975232777243703469
+        name: BossGauntlet1
+        enabled: true
+        component:
+          - !<transform>
+            id: 14299595757840576735
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [90, 0, -0]
+            scale: [1, 1, 1]
+          - !<script>
+            id: 15706629455078009928
+            type: 15
+            enabled: true
+            class_name: GauntletManager
+            "'_combat_manager_go@GameObject*'": 8459539939456400839
+            "'_trigger_radius@float'": 0
+            "'_round_wait_time@float'": 3
+            "'_complete_wait_time@float'": 2
+            "'_door_controller_1@GameObject*'": 0
+            "'_door_controller_2@GameObject*'": 0
+            "'_pack_1@GameObject*'": 1174210901548760683
+            "'_pack_2@GameObject*'": 0
+            "'_pack_3@GameObject*'": 0
