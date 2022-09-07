@@ -31,7 +31,7 @@ bool Hachiko::ModuleSceneManager::Init()
     constexpr bool should_force_start_scene = false;
 #endif
     // If uid is not found this will load an empty scene:
-    LoadScene(preferences->GetSceneUID(), should_force_start_scene);
+    LoadScene(preferences->GetSceneUID(), false, should_force_start_scene);
 
     std::function handle_scene_swapping = [&](Event& evt) {
         auto scene = evt.GetEventData<EditorHistoryEntryRestore>().GetScene();
@@ -49,7 +49,7 @@ bool Hachiko::ModuleSceneManager::Init()
     return true;
 }
 
-bool Hachiko::ModuleSceneManager::Start()
+/*bool Hachiko::ModuleSceneManager::Start()
 {
     if (should_call_attempt_scene_play_on_start)
     {
@@ -61,7 +61,7 @@ bool Hachiko::ModuleSceneManager::Start()
     }
 
     return true;
-}
+}*/
 
 void Hachiko::ModuleSceneManager::AttemptScenePause()
 {
@@ -90,7 +90,7 @@ void Hachiko::ModuleSceneManager::AttemptScenePlay()
 
     App->camera->SetRenderingCamera(scene_camera);
 
-    if (!GameTimer::running)
+    if (!GameTimer::running || should_call_attempt_scene_play_on_start)
     {
         RefreshSceneResource();
 
@@ -157,10 +157,11 @@ UpdateStatus Hachiko::ModuleSceneManager::Update(const float delta)
 {
 #ifndef PLAY_BUILD
     // If the scene was playing previously, continue playing:
-    if (was_scene_playing)
+    if (was_scene_playing || should_call_attempt_scene_play_on_start)
     {
         AttemptScenePlay();
         was_scene_playing = false;
+        should_call_attempt_scene_play_on_start = false;
     }
 #endif
 
@@ -283,12 +284,12 @@ void Hachiko::ModuleSceneManager::LoadEmptyScene()
     PostLoadScene();
 }
 
-void Hachiko::ModuleSceneManager::PostLoadScene()
+void Hachiko::ModuleSceneManager::PostLoadScene()//bool should_force_start_scene)
 {
     SetSceneResource(tmp_resource_scene);
     ChangeMainScene(tmp_loading_scene);
 
-#ifdef PLAY_BUILD
+/*#ifdef PLAY_BUILD
     // In Play build there is no problem in engine mode it crashes
     // because it tries to access the engine ui
     // If the scene was playing previously, continue playing:
@@ -296,6 +297,15 @@ void Hachiko::ModuleSceneManager::PostLoadScene()
     {
         AttemptScenePlay();
         was_scene_playing = false;
+    }
+#endif*/
+
+#ifdef PLAY_BUILD
+    if (was_scene_playing || should_call_attempt_scene_play_on_start)
+    {
+        AttemptScenePlay();
+        //was_scene_playing = false;
+        //should_call_attempt_scene_play_on_start = false;
     }
 #endif
 
@@ -315,7 +325,7 @@ void Hachiko::ModuleSceneManager::StopScene()
     GameTimer::Stop();
 }
 
-void Hachiko::ModuleSceneManager::LoadScene(UID new_scene_id, bool keep_navmesh)
+void Hachiko::ModuleSceneManager::LoadScene(UID new_scene_id, bool keep_navmesh, bool should_force_start_scene)
 {
     // Stop the scene if it was playing to avoid scripts calling Start:
     was_scene_playing = IsScenePlaying();
@@ -323,6 +333,12 @@ void Hachiko::ModuleSceneManager::LoadScene(UID new_scene_id, bool keep_navmesh)
     {
         StopScene();
     }
+    
+    // If the scene was playing previously, continue playing. But if it's the
+    // initial load and was marked as force start, defer the execution of
+    // AttemptScenePlay to Start method to ensure that scene starts after every
+    // module is initialized:
+    should_call_attempt_scene_play_on_start = should_force_start_scene;
 
     if (new_scene_id && App->resources->ExistResource(Resource::Type::SCENE, new_scene_id))
     {        

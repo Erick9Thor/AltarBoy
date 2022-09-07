@@ -21,7 +21,10 @@ namespace Hachiko
 
         // --- Life cycle --- //
         bool Init() override;
-        bool Start() override;
+        //bool Start() override;
+        UpdateStatus Update(const float delta) override;
+        UpdateStatus PostUpdate(const float delta) override;
+        bool CleanUp() override;
         
         void AttemptScenePause();
         void AttemptScenePlay();
@@ -29,10 +32,6 @@ namespace Hachiko
         bool IsScenePlaying();
 
         void RebuildBatches();
-        
-        UpdateStatus Update(const float delta) override;
-        UpdateStatus PostUpdate(const float delta) override;
-        bool CleanUp() override;
 
         void RemoveGameObject(GameObject* go);
         void RemovedGameObject(GameObject* go);
@@ -75,7 +74,7 @@ namespace Hachiko
 
     private:
         void StopScene();
-        void LoadScene(UID new_scene_id, bool keep_navmesh = false);
+        void LoadScene(UID new_scene_id, bool keep_navmesh = false, bool should_force_start_scene = false);
         void ChangeMainScene(Scene* new_scene);
         void LoadEmptyScene();
         void PostLoadScene();
