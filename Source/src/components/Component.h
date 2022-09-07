@@ -66,6 +66,10 @@ namespace Hachiko
         {
         }
 
+        virtual void OnDisable() 
+        {
+        }
+
         virtual void OnTransformUpdated()
         {
         }

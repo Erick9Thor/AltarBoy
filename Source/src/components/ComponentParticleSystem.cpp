@@ -36,6 +36,7 @@ void Hachiko::ComponentParticleSystem::Start()
         App->scene_manager->GetActiveScene()->AddParticleComponent(this);
         in_scene = true;
     }
+
     for (auto& particle : particles)
     {
         particle.SetEmitter(this);
@@ -62,7 +63,7 @@ void Hachiko::ComponentParticleSystem::Start()
 
     std::function selection_changed = [&](Event& evt) {
         const auto data = evt.GetEventData<SelectionChangedEventPayload>();
-        if (data.GetSelected() != GetGameObject())
+        if (!data.GetSelected() || data.GetSelected() != GetGameObject())
         {
             Pause();
         }
@@ -92,6 +93,14 @@ void Hachiko::ComponentParticleSystem::Update()
     }
 }
 
+void Hachiko::ComponentParticleSystem::OnDisable() 
+{
+    if (in_scene)
+    {
+        ResetActiveParticles();
+    }
+}
+
 void Hachiko::ComponentParticleSystem::Draw(ComponentCamera* camera, Program* program)
 {
     for (auto& particle : particles)
@@ -107,7 +116,7 @@ void Hachiko::ComponentParticleSystem::Draw(ComponentCamera* camera, Program* pr
 
 void Hachiko::ComponentParticleSystem::DrawGui()
 {
-    if (ImGuiUtils::CollapsingHeader(game_object, this, "Particle system"))
+    if (ImGuiUtils::CollapsingHeader(this, "Particle system"))
     {
         const char* particle_render_modes[] = {"Additive", "Transparent"};
         const char* particle_orientations[] = {"Normal", "Vertical", "Horizontal", "Stretch"};

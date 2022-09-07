@@ -5,13 +5,11 @@
 #include "components/ComponentCamera.h"
 #include "components/ComponentMeshRenderer.h"
 #include "components/ComponentImage.h"
-#include "components/ComponentParticleSystem.h"
 
 #include "modules/ModuleEditor.h"
 #include "modules/ModuleCamera.h"
 #include "modules/ModuleEvent.h"
 #include "modules/ModuleNavigation.h"
-#include "modules/ModuleProgram.h"
 
 #include "resources/ResourceMaterial.h"
 #include "resources/ResourceAnimation.h"
@@ -19,7 +17,7 @@
 #include <debugdraw.h>
 #include <algorithm>
 
-#include "batching/BatchManager.h"
+#include "Batching/BatchManager.h"
 
 Hachiko::Scene::Scene() :
     name(UNNAMED_SCENE),
@@ -43,12 +41,16 @@ Hachiko::Scene::~Scene()
 
 void Hachiko::Scene::CleanScene()
 {
-    App->editor->SetSelectedGO(nullptr);
     delete root;
     delete skybox;
     delete quadtree;
     delete batch_manager;
     loaded = false;
+
+    // Important that this gets executed after all the GameObjects in the scene
+    // is deleted as this publishes an event, and unnecessary code may execute
+    // because of it:
+    App->editor->SetSelectedGO(nullptr);
 }
 
 Hachiko::ComponentCamera* Hachiko::Scene::GetMainCamera() const
@@ -356,22 +358,27 @@ void Hachiko::Scene::FogConfig::SaveFogParams(YAML::Node& node)
 
 void Hachiko::Scene::AmbientLightOptionsMenu()
 {
-    ImGui::PushItemWidth(100.0f);
-    ImGui::Text("Ambient");
-    ImGui::DragFloat("Ambient Intensity", &ambient_light.intensity, 0.001, 0.f, 5.f);
+    ImGui::TextWrapped("Ambient");
+    Widgets::DragFloatConfig cfg;
+    cfg.speed = 0.001f;
+    cfg.min = 0.0f;
+    cfg.max = 5.0f;
+    DragFloat("Ambient Intensity", ambient_light.intensity, &cfg);
     ImGuiUtils::CompactColorPicker("Ambient Color", ambient_light.color.ptr());
-    ImGui::PopItemWidth();
 }
 
 void Hachiko::Scene::FogOptionsMenu()
 {
-    ImGui::PushItemWidth(100.0f);
-    ImGui::Text("Fog");
-    ImGui::Checkbox("Use Fog", &fog.enabled);
+    ImGui::TextWrapped("Fog");
+    Widgets::Checkbox("Use Fog", &fog.enabled);
     ImGuiUtils::CompactOpaqueColorPicker("Fog Color", fog.color.ptr());
-    ImGui::DragFloat("Global Density", &fog.global_density, 0.001, 0.f, 1.f);
-    ImGui::DragFloat("Height Falloff", &fog.height_falloff, 0.001, 0.f, 1.f);
-    ImGui::PopItemWidth();
+    Widgets::DragFloatConfig cfg;
+    cfg.speed = 0.001f;
+    cfg.min = 0.0f;
+    cfg.max = 1.0f;
+    cfg.format = "%.3f";
+    DragFloat("Global Density", fog.global_density, &cfg);
+    DragFloat("Height Falloff", fog.height_falloff, &cfg);
 }
 
 void Hachiko::Scene::SkyboxOptionsMenu()

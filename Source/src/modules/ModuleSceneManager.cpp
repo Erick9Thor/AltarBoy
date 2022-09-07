@@ -13,7 +13,6 @@
 #include "core/preferences/src/EditorPreferences.h"
 #include "importers/SceneImporter.h"
 
-#include <iostream>
 #include <iomanip>
 #include <ctime>
 #include <thread>
@@ -24,19 +23,43 @@ bool Hachiko::ModuleSceneManager::Init()
 
     preferences = App->preferences->GetResourcesPreference();
 
-    // If uid is not found it will load an empty scene
-    LoadScene(preferences->GetSceneUID());
+    // Use the should_force_start_scene to force & defer the initial run of
+    // AttempScenePlay to the execution of ModuleSceneManager::Start:
+#ifdef PLAY_BUILD
+    constexpr bool should_force_start_scene = true;
+#else
+    constexpr bool should_force_start_scene = false;
+#endif
+    // If uid is not found this will load an empty scene:
+    LoadScene(preferences->GetSceneUID(), should_force_start_scene);
 
-    std::function handleSceneSwapping = [&](Event& evt) {
+    std::function handle_scene_swapping = [&](Event& evt) {
         auto scene = evt.GetEventData<EditorHistoryEntryRestore>().GetScene();
         ChangeMainScene(scene);
     };
-    App->event->Subscribe(Event::Type::RESTORE_EDITOR_HISTORY_ENTRY, handleSceneSwapping);
+
+    App->event->Subscribe(
+        Event::Type::RESTORE_EDITOR_HISTORY_ENTRY, 
+        handle_scene_swapping);
 
 #ifndef PLAY_BUILD
     EditorPreferences* editor_prefs = App->preferences->GetEditorPreference();
     scene_autosave = editor_prefs->GetAutosave();
 #endif
+    return true;
+}
+
+bool Hachiko::ModuleSceneManager::Start()
+{
+    if (should_call_attempt_scene_play_on_start)
+    {
+        // Execute AttemptScenePlay deferred by the LoadScene:
+        AttemptScenePlay();
+        // Not used after the this Start is executed, but set to false to
+        // ensure correct state of ModuleSceneManager:
+        should_call_attempt_scene_play_on_start = false;
+    }
+
     return true;
 }
 
@@ -73,6 +96,7 @@ void Hachiko::ModuleSceneManager::AttemptScenePlay()
 
         Event game_state(Event::Type::GAME_STATE);
         game_state.SetEventData<GameStateEventPayload>(GameStateEventPayload::State::STARTED);
+
         App->event->Publish(game_state);
         main_scene->Start();
 
@@ -196,15 +220,16 @@ bool Hachiko::ModuleSceneManager::CleanUp()
     EditorPreferences* editor_prefs = App->preferences->GetEditorPreference();
     editor_prefs->SetAutosave(scene_autosave);
 
-    #ifndef PLAY_BUILD
-    // If it was a temporary scene it will set id to 0 which will generate a new temporary scene on load
+#ifndef PLAY_BUILD
+    // If such scene was a temporary one it will set id to 0 which will
+    // generate a new temporary scene on load:
     preferences->SetSceneUID(scene_resource->GetID());
     preferences->SetSceneName(scene_resource->name.c_str());
-    #endif
+#endif
 
     SetSceneResource(nullptr);
 
-    // Release because not owned by RM
+    // Release main_scene because it's not owned by the resource manager:
     RELEASE(main_scene);
 
     return true;
@@ -360,14 +385,13 @@ void Hachiko::ModuleSceneManager::ReloadScene()
 
 void Hachiko::ModuleSceneManager::OptionsMenu()
 {
-    char scene_name[50];
-    strcpy_s(scene_name, 50, main_scene->GetName());
+    std::string scene_name =main_scene->GetName();
     const ImGuiInputTextFlags name_input_flags = ImGuiInputTextFlags_AutoSelectAll | ImGuiInputTextFlags_EnterReturnsTrue;
-    if (ImGui::InputText("###", scene_name, 50, name_input_flags))
+    if (Widgets::Input("Scene name", scene_name, name_input_flags))
     {
-        main_scene->SetName(scene_name);
+        main_scene->SetName(scene_name.c_str());
     }
-    ImGui::Checkbox("Autosave Scene", &scene_autosave);
+    Widgets::Checkbox("Autosave scene", &scene_autosave);
     ImGui::Separator();
     main_scene->AmbientLightOptionsMenu();
     ImGui::Separator();

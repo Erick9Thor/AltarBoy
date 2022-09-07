@@ -249,6 +249,7 @@
 #define IMAGE_COLOR "image_color"
 #define IMAGE_HOVER_COLOR "hover_image_color"
 #define IMAGE_TILED "image_is_tiled"
+#define IMAGE_RANDOMIZE_INITIAL_FRAME "image_randomize_initial_frame"
 #define IMAGE_X_TILES "image_x_tiles"
 #define IMAGE_Y_TILES "image_y_tiles"
 #define IMAGE_TILES_PER_SEC "image_tiles_per_second"

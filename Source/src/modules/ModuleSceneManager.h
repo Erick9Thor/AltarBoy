@@ -21,6 +21,7 @@ namespace Hachiko
 
         // --- Life cycle --- //
         bool Init() override;
+        bool Start() override;
         
         void AttemptScenePause();
         void AttemptScenePlay();
@@ -82,26 +83,30 @@ namespace Hachiko
 
         void ThreadLoadScene(UID scene_id, bool keep_navmesh);
 
-        // Deletes current resource it it doesnt come from resource manager (for now assume it when id 0)
+        // Deletes current resource if it doesn't come from resource manager
+        // (for now assume it when id 0)
         void SetSceneResource(ResourceScene* scene);
+
         void RefreshSceneResource();
         Scene* main_scene = nullptr;
         ResourcesPreferences* preferences = nullptr;
 
-
         bool scene_change_requested = false;
         bool scene_reload_requested = false;
-        UID scene_to_load_id;
+        UID scene_to_load_id = 0;
         std::vector<GameObject*> to_remove;
 
         bool scene_autosave = false;
-        ResourceScene* scene_resource;
-        ResourceNavMesh* navmesh_resource;
+
+        ResourceScene* scene_resource = nullptr;
+        ResourceNavMesh* navmesh_resource = nullptr;
 
         bool loading_scene = false;
         bool was_scene_playing = false;
         ResourceScene* tmp_resource_scene = nullptr;
         Scene* tmp_loading_scene = nullptr;
         std::thread loading_scene_worker;
+
+        bool should_call_attempt_scene_play_on_start = false;
     };
 } // namespace Hachiko
