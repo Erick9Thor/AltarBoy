@@ -21,11 +21,16 @@ namespace Hachiko
 
 
 			void OnAwake() override;
+			void OnStart() override;
 			void OnUpdate() override;
 
 			void StartExplosion();
 			void CheckRadiusExplosion();
 			void ExplodeCrystal();
+
+			void ShakeCrystal();
+
+			float3 GetShakeOffset();
 
 			void RegisterHit(int damage);
 			bool IsAlive() { return _stats->IsAlive(); };
@@ -43,10 +48,10 @@ namespace Hachiko
 		private:
 			ComponentTransform* _transform;
 
-			SERIALIZE_FIELD(GameObject*, _explosion_crystal);
-			SERIALIZE_FIELD(GameObject*, _static_crystal);
 			SERIALIZE_FIELD(GameObject*, _explosion_indicator_helper);
 			SERIALIZE_FIELD(GameObject*, _explosion_effect);
+			SERIALIZE_FIELD(float, _shake_intensity);
+			SERIALIZE_FIELD(float, _seconds_shaking);
 
 			SERIALIZE_FIELD(unsigned, _crashing_index);
 			SERIALIZE_FIELD(float, _detecting_radius);
@@ -66,6 +71,14 @@ namespace Hachiko
 			
 
 			GameObject* enemies;
+
+			ComponentAnimation* cp_animation;
+			ComponentObstacle* obstacle;
+
+			float4x4 _initial_transform = float4x4::identity;
+
+			float regen_elapsed = 0.f;
+			float shake_magnitude = 1.0f;
 		};
 	}
 }
