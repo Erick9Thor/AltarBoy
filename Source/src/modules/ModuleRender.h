@@ -149,9 +149,6 @@ namespace Hachiko
     
         void LoadingScreen(const float delta);
 
-        void LoadLoadingScreenConfig(const YAML::Node& node);
-        void SaveLoadingScreenConfig() const;
-
     private:
         void GenerateFrameBuffer();
         void ResizeFrameBuffer(int width, int height) const;

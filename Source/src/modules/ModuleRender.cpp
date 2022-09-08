@@ -68,9 +68,26 @@ bool Hachiko::ModuleRender::Init()
     loading_transform2d = static_cast<ComponentTransform2D*>(loading_game_object->CreateComponent(Component::Type::TRANSFORM_2D));
     loading_image = static_cast<ComponentImage*>(loading_game_object->CreateComponent(Component::Type::IMAGE));
 
-    if (App->preferences->GetEditorPreference()->ExistLoadingScreenConfig())
+    //if (App->preferences->GetEditorPreference()->ExistLoadingScreenConfig())
     {
-        LoadLoadingScreenConfig(App->preferences->GetEditorPreference()->GetLoadingScreenConfig());
+        //Load the loading screen config
+        //loading_image->Load(App->preferences->GetEditorPreference()->GetLoadingScreenConfig());
+
+        //For now the loading screen configuration will be hardcoded
+        YAML::Node node;
+        node.SetTag("image");
+        node[IMAGE_IMAGE_ID] = 9856915381281154687;
+        node[IMAGE_HOVER_IMAGE_ID] = 0;
+        node[IMAGE_COLOR] = float4::one;
+        node[IMAGE_HOVER_COLOR] = float4::one;
+        node[IMAGE_TILED] = true;
+        node[IMAGE_RANDOMIZE_INITIAL_FRAME] = false;
+        node[IMAGE_X_TILES] = 2;
+        node[IMAGE_Y_TILES] = 2;
+        node[IMAGE_TILES_PER_SEC] = 2;
+        node[IMAGE_FILL_WINDOW] = true;
+
+        loading_image->Load(node);
     }
 
     return true;
@@ -991,7 +1008,10 @@ bool Hachiko::ModuleRender::CleanUp()
     App->preferences->GetEditorPreference()->SetDrawSkybox(draw_skybox);
     App->preferences->GetEditorPreference()->SetDrawNavmesh(draw_navmesh);
 
-    SaveLoadingScreenConfig();
+    //Save the loading screen config
+    //YAML::Node node;
+    //loading_image->Save(node);
+    //App->preferences->GetEditorPreference()->SetLoadingScreenConfig(node);
     delete loading_game_object;
 
     return true;
@@ -1037,16 +1057,4 @@ void Hachiko::ModuleRender::LoadingScreen(const float delta)
     glBindFramebuffer(GL_READ_FRAMEBUFFER, frame_buffer);
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
     glBlitFramebuffer(0, 0, fb_width, fb_height, 0, 0, fb_width, fb_height, GL_COLOR_BUFFER_BIT, GL_NEAREST);
-}
-
-void Hachiko::ModuleRender::LoadLoadingScreenConfig(const YAML::Node& node) 
-{
-    loading_image->Load(node);
-}
-
-void Hachiko::ModuleRender::SaveLoadingScreenConfig() const 
-{
-    YAML::Node node;
-    loading_image->Save(node);
-    App->preferences->GetEditorPreference()->SetLoadingScreenConfig(node);
 }
