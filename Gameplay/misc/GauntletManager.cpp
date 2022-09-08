@@ -69,19 +69,6 @@ void Hachiko::Scripting::GauntletManager::OnUpdate()
 
 }
 
-void Hachiko::Scripting::GauntletManager::StartGauntlet()
-{
-	started = true;
-	current_round = 0;
-	SpawnRound(current_round);
-
-	// Notify level manager
-	_level_manager->SetGauntlet(this);
-	
-	// Notify audio manager
-	_audio_manager->RegisterGaunlet();
-}
-
 void Hachiko::Scripting::GauntletManager::ResetGauntlet()
 {
 	CloseDoors();
@@ -92,6 +79,19 @@ void Hachiko::Scripting::GauntletManager::ResetGauntlet()
 	started = false;
 	current_round = 0;
 	remaining_between_round_time = 0.f;
+}
+
+void Hachiko::Scripting::GauntletManager::StartGauntlet()
+{
+	started = true;
+	current_round = 0;
+	SpawnRound(current_round);
+
+	// Notify level manager
+	_level_manager->SetGauntlet(this);
+
+	// Notify audio manager
+	_audio_manager->RegisterGaunlet();
 }
 
 bool Hachiko::Scripting::GauntletManager::IsFinished() const

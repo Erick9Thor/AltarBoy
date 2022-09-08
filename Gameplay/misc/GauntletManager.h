@@ -26,6 +26,7 @@ namespace Hachiko
 			void OnStart() override;
 			void OnUpdate() override;
 			void ResetGauntlet();
+			void StartGauntlet();
 			bool IsCompleted() const { return completed; }
 			bool IsFinished() const;
 			bool IsStarted() const { return started; }
@@ -43,8 +44,7 @@ namespace Hachiko
 			SERIALIZE_FIELD(GameObject*, _pack_3);		
 
 		private:
-
-			void StartGauntlet();
+			
 			void CheckRoundStatus();
 			void OpenDoors();
 			void CloseDoors();
