@@ -822,7 +822,7 @@ void Hachiko::Scripting::PlayerController::MovementController()
 		if (_start_fall_pos.y - _player_position.y > _falling_distance)
 		{
 			// Fall dmg
-			RegisterHit(1, 0, float3::zero, true);
+			RegisterHit(1, 0, float3::zero, true, DamageType::FALL);
 
 			// If its still alive place it in the first valid position, if none exists respawn it
 			_player_position = GetLastValidDashOrigin();
@@ -1150,13 +1150,14 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 	}
 }
 
-bool Hachiko::Scripting::PlayerController::RegisterHit(int damage_received, float knockback, float3 direction, bool force_dmg)
+bool Hachiko::Scripting::PlayerController::RegisterHit(int damage_received, float knockback, float3 direction, bool force_dmg, DamageType dmg_by)
 {
 	if (_god_mode || !IsAlive())
 	{
 		return false;
 	}
 
+	damaged_by = dmg_by;
 	bool dmg_received = _invulnerability_time_remaining <= 0.0f;
 	if (dmg_received || force_dmg)
 	{

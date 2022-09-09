@@ -183,7 +183,7 @@ void Hachiko::Scripting::LaserController::CheckPlayerCollision() const
 		}
 
 		// sound only if hit
-		if (_player->GetComponent<PlayerController>()->RegisterHit(_damage, true, knockback))
+		if (_player->GetComponent<PlayerController>()->RegisterHit(_damage, true, knockback, false, PlayerController::DamageType::LASER))
 		{
 			_audio_source->PostEvent(Hachiko::Sounds::PLAY_LASER_HIT);
 		}

@@ -980,7 +980,7 @@ void Hachiko::Scripting::CombatManager::HitEnemy(EnemyController* enemy, int dam
 
 void Hachiko::Scripting::CombatManager::HitPlayer(int damage, float knockback, float3 knockback_dir)
 {
-	_player->GetComponent<PlayerController>()->RegisterHit(damage, knockback, knockback_dir);
+	_player->GetComponent<PlayerController>()->RegisterHit(damage, knockback, knockback_dir, false, PlayerController::DamageType::ENEMY);
 }
 
 float Hachiko::Scripting::CombatManager::BulletStats::GetChargedPercent()

@@ -150,7 +150,7 @@ void Hachiko::Scripting::CrystalExplosion::ExplodeCrystal()
 
 		if (player_controller != nullptr)
 		{
-			player_controller->RegisterHit(_stats->_attack_power, true, relative_dir.Normalized());
+			player_controller->RegisterHit(_stats->_attack_power, true, relative_dir.Normalized(), false, PlayerController::DamageType::CRYSTAL);
 		}
 	}
 	

@@ -59,6 +59,15 @@ namespace Hachiko
 				HEAVY_3
 			};
 
+			enum class DamageType
+			{
+				NONE,
+				ENEMY,
+				FALL,
+				LASER,
+				CRYSTAL
+			};
+
 			struct PlayerAttack
 			{
 				float hit_delay = 0.f;
@@ -91,7 +100,7 @@ namespace Hachiko
 			PlayerState GetState() const;
 
 			void CheckGoal(const float3& current_position);
-			bool RegisterHit(int damage, float knockback = 0, math::float3 direction = float3::zero, bool force_dmg = false);
+			bool RegisterHit(int damage, float knockback = 0, math::float3 direction = float3::zero, bool force_dmg = false, DamageType dmg_type = DamageType::NONE);
 			void UpdateHealthBar();
 			void UpdateAmmoUI();
 			void UpdateWeaponChargeUI();
@@ -109,6 +118,13 @@ namespace Hachiko
 			WeaponUsed GetCurrentWeaponType() const
 			{
 				return static_cast<WeaponUsed>(_current_weapon);
+			}
+
+			DamageType ReadDamageState()
+			{
+				DamageType ret_value = damaged_by;
+				damaged_by = DamageType::NONE;
+				return ret_value;
 			}
 
 		private:
@@ -250,6 +266,7 @@ namespace Hachiko
 			// Use for combo for now, reset when combo ends
 			std::queue<float3> click_buffer{};
 			bool dash_buffer = false;
+			DamageType damaged_by = DamageType::NONE;
 
 			// Dash management
 			unsigned _dash_charges = 2;
