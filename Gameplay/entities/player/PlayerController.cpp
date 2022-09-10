@@ -192,6 +192,11 @@ void Hachiko::Scripting::PlayerController::OnStart()
 
 void Hachiko::Scripting::PlayerController::OnUpdate()
 {
+	if (_level_manager->AreInputsBlocked())
+	{
+		return;
+	}
+
 	_player_transform = game_object->GetTransform();
 	_player_position = _player_transform->GetGlobalPosition();
 	_movement_direction = float3::zero;
@@ -1148,7 +1153,7 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 
 bool Hachiko::Scripting::PlayerController::RegisterHit(int damage_received, float knockback, float3 direction, bool force_dmg)
 {
-	if (_god_mode || !IsAlive())
+	if (_god_mode || !IsAlive() || _level_manager->AreInputsBlocked())
 	{
 		return false;
 	}

@@ -16,6 +16,9 @@ Hachiko::Scripting::BossController::BossController(GameObject* game_object)
 void Hachiko::Scripting::BossController::OnAwake()
 {
 	player = Scenes::GetPlayer();
+	level_manager = Scenes::GetLevelManager()->GetComponent<LevelManager>();
+	player_camera = Scenes::GetMainCamera()->GetComponent<PlayerCamera>();
+
 	transform = game_object->GetTransform();
 	combat_stats = game_object->GetComponent<Stats>();
 	agent = game_object->GetComponent<ComponentAgent>();
@@ -40,6 +43,16 @@ void Hachiko::Scripting::BossController::OnUpdate()
 	{
 		constexpr int player_dmg = 5;
 		RegisterHit(player_dmg);
+	}
+	if (Input::IsKeyDown(Input::KeyCode::KEY_F)) // TEST CAMERA FOCUS TO BOSS
+	{
+		level_manager->BlockInputs(true);
+		player_camera->SetObjective(game_object);
+	}
+	if (Input::IsKeyDown(Input::KeyCode::KEY_P)) // TEST CAMERA FOCUS TO PLAYER
+	{
+		level_manager->BlockInputs(false);
+		player_camera->SetObjective(player);
 	}
 	StateController();
 	state_value = static_cast<int>(state);

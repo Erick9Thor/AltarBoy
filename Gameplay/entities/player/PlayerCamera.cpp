@@ -103,6 +103,11 @@ void Hachiko::Scripting::PlayerCamera::MoveCamera()
 
 float2 Hachiko::Scripting::PlayerCamera::MoveCameraWithMouse()
 {
+	if (_player_ctrl == nullptr) 
+	{
+		return float2::zero;
+	}
+
 	float2 added_movement, mouse_pos;
 	mouse_pos = Input::GetMouseNormalizedPosition();
 	mouse_pos = mouse_pos - float2(0.5f, 0.5f);
