@@ -8,7 +8,6 @@ Hachiko::Scripting::PlayerSoundManager::PlayerSoundManager(Hachiko::GameObject* 
 	, _player_controller(nullptr)
 	, _timer(0.0f)
 	, _step_frequency(0.0f)
-	, _melee_frequency(0.0f)
 	, _ranged_frequency(0.0f)
 	, _previous_state(PlayerState::INVALID)
 	, _audio_source(nullptr)
@@ -51,11 +50,10 @@ void Hachiko::Scripting::PlayerSoundManager::OnUpdate()
 		break;
 
 	case PlayerState::MELEE_ATTACKING:
-		_current_frequency = _melee_frequency;
-
-		if (_timer == 0.0f)
+		if (_player_controller->IsAttackSoundRequested())
 		{
 			_audio_source->PostEvent(Sounds::MELEE_ATTACK);
+			_player_controller->AttackSoundPlayed();
 		}
 
 		break;
@@ -100,7 +98,7 @@ void Hachiko::Scripting::PlayerSoundManager::OnUpdate()
 
 	_timer += delta_time;
 
-	if (_timer >= _step_frequency)
+	if (_timer >= _current_frequency)
 	{
 		_timer = 0.0f;
 	}

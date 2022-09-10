@@ -607,6 +607,7 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 		}
 	}
 	_new_attack = true;
+	_request_attack_sound = true;
 
 	// Fast and Scuffed, has to be changed when changing attack indicator
 	float4 attack_color = float4(1.0f, 1.0f, 1.0f, 1.0f);

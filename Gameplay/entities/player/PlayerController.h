@@ -102,6 +102,9 @@ namespace Hachiko
 			int GetCurrentHp() const { return _combat_stats->_current_hp; }
 			bool _isInDebug = false;
 
+			bool IsAttackSoundRequested() const { return _request_attack_sound; };
+			void AttackSoundPlayed() { _request_attack_sound = false; };
+
 			int GetAttackIndex() const
 			{
 				return _attack_idx;
@@ -283,6 +286,7 @@ namespace Hachiko
 			unsigned _attack_charges = 0;
 			float _invulnerability_time_remaining = 0.0f;
 			bool _new_attack = false;
+			bool _request_attack_sound = false;
 
 			// Movement management
 			float _stun_time = 0.0f;
