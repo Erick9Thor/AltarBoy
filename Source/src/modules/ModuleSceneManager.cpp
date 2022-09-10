@@ -143,7 +143,7 @@ void Hachiko::ModuleSceneManager::CheckSceneLoading()
 
     PostLoadScene();
 
-    App->LoadingComplete();
+    App->FinishLoading();
 
     HE_LOG("Scene is loaded.");
 }

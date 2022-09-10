@@ -76,7 +76,7 @@ namespace Hachiko
             loading = true;
         }
 
-        void LoadingComplete()
+        void FinishLoading()
         {
             loading = false;
         }
