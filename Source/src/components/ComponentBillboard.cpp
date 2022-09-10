@@ -12,6 +12,7 @@
 #include "resources/ResourceTexture.h"
 #include "ComponentTransform.h"
 #include "ComponentCamera.h"
+#include "utils/ComponentUtility.h"
 
 Hachiko::ComponentBillboard::ComponentBillboard(GameObject* container) :
     Component(Component::Type::BILLBOARD, container)
@@ -480,6 +481,14 @@ void Hachiko::ComponentBillboard::Load(const YAML::Node& node)
     start_rotation = node[START_ROTATION].IsDefined() ? node[START_ROTATION].as<ParticleSystem::VariableTypeProperty>() : start_rotation;
 
     blend_factor = node[BLEND_FACTOR].IsDefined() ? node[BLEND_FACTOR].as<float>() : blend_factor;
+}
+
+void Hachiko::ComponentBillboard::CollectResources(const YAML::Node& node, std::map<Resource::Type, std::set<UID>>& resources)
+{
+    ComponentUtility::CollectResource(
+        Resource::Type::TEXTURE, 
+        node[BILLBOARD_TEXTURE_ID], 
+        resources);
 }
 
 void Hachiko::ComponentBillboard::AddTexture()
