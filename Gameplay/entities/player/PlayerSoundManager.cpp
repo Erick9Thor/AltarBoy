@@ -97,7 +97,7 @@ void Hachiko::Scripting::PlayerSoundManager::OnUpdate()
 		break;
 	}
 
-	if (state != PlayerState::DIE)
+	if (state != PlayerState::DIE && state != PlayerState::READY_TO_RESPAWN)
 	{
 		PlayerController::DamageType damage = _player_controller->ReadDamageState();
 		if (damage == PlayerController::DamageType::ENEMY ||
