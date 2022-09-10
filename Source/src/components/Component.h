@@ -8,7 +8,6 @@
 
 #include "utils/UUID.h"
 #include "yaml-cpp/yaml.h"
-#include <set>
 
 namespace Hachiko
 {
