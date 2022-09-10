@@ -111,17 +111,17 @@ void Hachiko::Scene::RebuildBatching()
     rebuild_batch = false;
 }
 
-Hachiko::GameObject* Hachiko::Scene::Raycast(const float3& origin, const float3& destination, float3* closest_hit, GameObject* parent_filter, bool active_only) const
+Hachiko::GameObject* Hachiko::Scene::RayCast(const float3& origin, const float3& destination, float3* closest_hit, GameObject* parent_filter, bool active_only) const
 {
     LineSegment line_seg(origin, destination);
-    return Raycast(line_seg, true, closest_hit, parent_filter, active_only);
+    return RayCast(line_seg, true, closest_hit, parent_filter, active_only);
 }
 
-Hachiko::GameObject* Hachiko::Scene::BoundingRaycast(const float3& origin, const float3& destination, GameObject* parent_filter, bool active_only) const
+Hachiko::GameObject* Hachiko::Scene::BoundingRayCast(const float3& origin, const float3& destination, GameObject* parent_filter, bool active_only) const
 {
     LineSegment line_seg(origin, destination);
     // Pass false to not use triangles
-    return Raycast(line_seg, false, nullptr, parent_filter, active_only);
+    return RayCast(line_seg, false, nullptr, parent_filter, active_only);
 }
 
 Hachiko::GameObject* Hachiko::Scene::Find(UID id) const
@@ -129,7 +129,7 @@ Hachiko::GameObject* Hachiko::Scene::Find(UID id) const
     return root->Find(id);
 }
 
-Hachiko::GameObject* Hachiko::Scene::Raycast(const LineSegment& segment, bool triangle_level, float3* closest_hit, GameObject* parent_filter, bool active_only) const
+Hachiko::GameObject* Hachiko::Scene::RayCast(const LineSegment& segment, bool triangle_level, float3* closest_hit, GameObject* parent_filter, bool active_only) const
 {
     GameObject* selected = nullptr;
     float closest_hit_distance = inf;
@@ -193,13 +193,13 @@ Hachiko::GameObject* Hachiko::Scene::Raycast(const LineSegment& segment, bool tr
                 continue;
             }
 
-            // Rough Raycast
+            // Rough ray cast:
             float hit_far;
             if (local_segment.Intersects(mesh_renderer->GetOBB(), hit_distance, hit_far))
             {
                 if (hit_distance < closest_hit_distance)
                 {
-                    // Bounding box raycast does not set intersection point
+                    // Bounding box ray cast does not set intersection point:
                     closest_hit_distance = hit_distance;
                     selected = game_object;
                 }

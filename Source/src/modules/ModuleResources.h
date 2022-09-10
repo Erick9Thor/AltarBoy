@@ -24,7 +24,7 @@ namespace Hachiko
 
         Hachiko::Resource::AssetType GetAssetTypeFromPath(const std::filesystem::path& file);
 
-        bool ExistResource(Resource::Type type, UID id);
+        bool DoesResourceExist(Resource::Type type, UID id);
         void LoadSceneResources(const YAML::Node& node);
         void PostLoadSceneResources();
         Resource* GetResource(Resource::Type type, UID id);

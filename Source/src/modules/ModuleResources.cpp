@@ -130,7 +130,7 @@ Resource::AssetType ModuleResources::GetAssetTypeFromPath(const std::filesystem:
     return Resource::AssetType::UNKNOWN;
 }
 
-bool Hachiko::ModuleResources::ExistResource(Resource::Type type, UID id) 
+bool Hachiko::ModuleResources::DoesResourceExist(Resource::Type type, UID id) 
 {
     std::string file_path
         = StringUtils::Concat(App->preferences->GetResourcesPreference()->GetLibraryPath(type), std::to_string(id));

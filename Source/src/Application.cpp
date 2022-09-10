@@ -107,13 +107,13 @@ UpdateStatus Hachiko::Application::Update()
             ret = (*it)->PostUpdate(static_cast<float>(delta));
         }
     }
+
     else
     {
         scene_manager->CheckSceneLoading();
 
         renderer->LoadingScreen(static_cast<float>(delta));
         renderer->PostUpdate(static_cast<float>(delta));
-        ret = UpdateStatus::UPDATE_CONTINUE;
     }
 
     return ReturnStatusWithQuit(ret);

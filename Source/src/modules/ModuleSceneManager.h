@@ -21,19 +21,18 @@ namespace Hachiko
 
         // --- Life cycle --- //
         bool Init() override;
-        //bool Start() override;
         UpdateStatus Update(const float delta) override;
         UpdateStatus PostUpdate(const float delta) override;
         bool CleanUp() override;
-        
-        void AttemptScenePause();
-        void AttemptScenePlay();
+
+        static void AttemptScenePause();
+        void AttemptScenePlay() const;
         void AttemptSceneStop();
-        bool IsScenePlaying();
+        static bool IsScenePlaying();
 
-        void RebuildBatches();
+        void RebuildBatches() const;
 
-        void RemoveGameObject(GameObject* go);
+        void RemoveGameObject(GameObject* game_object);
         void RemovedGameObject(GameObject* go);
 
         GameObject* GetRoot()
@@ -58,10 +57,20 @@ namespace Hachiko
 
         void ChangeSceneById(UID new_scene_id, bool stop_scene = false);
         
-        void SaveScene(const char* file_path = nullptr);
+        void SaveScene(const char* save_name = nullptr);
 
-        GameObject* Raycast(const float3& origin, const float3& destination, float3* closest_hit = nullptr, GameObject* parent_filter = nullptr, bool active_only = false);
-        GameObject* BoundingRaycast(const float3& origin, const float3& destination, GameObject* parent_filter = nullptr, bool active_only = false);
+        GameObject* RayCast(
+            const float3& origin, 
+            const float3& destination, 
+            float3* closest_hit = nullptr, 
+            GameObject* parent_filter = nullptr, 
+            bool active_only = false) const;
+        
+        GameObject* BoundingRayCast(
+            const float3& origin, 
+            const float3& destination, 
+            GameObject* parent_filter = nullptr, 
+            bool active_only = false) const;
 
         void OptionsMenu();
 
@@ -73,8 +82,8 @@ namespace Hachiko
         void CheckSceneLoading();
 
     private:
-        void StopScene();
-        void LoadScene(UID new_scene_id, bool keep_navmesh = false, bool should_force_start_scene = false);
+        void StopScene() const;
+        void LoadScene(UID new_scene_id, bool keep_navigation_mesh = false);
         void ChangeMainScene(Scene* new_scene);
         void LoadEmptyScene();
         void PostLoadScene();
@@ -84,9 +93,9 @@ namespace Hachiko
 
         // Deletes current resource if it doesn't come from resource manager
         // (for now assume it when id 0)
-        void SetSceneResource(ResourceScene* scene);
+        void SetSceneResource(ResourceScene* new_scene_resource);
 
-        void RefreshSceneResource();
+        void RefreshSceneResource() const;
         Scene* main_scene = nullptr;
         ResourcesPreferences* preferences = nullptr;
 
@@ -101,11 +110,11 @@ namespace Hachiko
         ResourceNavMesh* navmesh_resource = nullptr;
 
         bool loading_scene = false;
-        bool was_scene_playing = false;
+
+        bool should_trigger_attempt_play = false;
+
         ResourceScene* tmp_resource_scene = nullptr;
         Scene* tmp_loading_scene = nullptr;
         std::thread loading_scene_worker;
-
-        bool should_call_attempt_scene_play_on_start = false;
     };
 } // namespace Hachiko
