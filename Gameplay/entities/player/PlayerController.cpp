@@ -325,6 +325,13 @@ void Hachiko::Scripting::PlayerController::SpawnGameObject() const
 
 void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 {
+	// Buffered click remaining time
+	_remaining_buffer_time -= Time::DeltaTime();
+	if (_remaining_buffer_time < 0.0f)
+	{
+		_remaining_buffer_time = 0.0f;
+	}
+
 	// Movement Direction
 	if (Input::IsKeyPressed(Input::KeyCode::KEY_W) || Input::GetAxisNormalized(Input::GameControllerAxis::CONTROLLER_AXIS_LEFTY) < 0)
 	{
@@ -349,7 +356,7 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 		if (!IsAttackOnCooldown() && dash_buffer && _dash_charges > 0)
 		{
 			dash_buffer = false;
-			ResetClickBuffer();
+			_remaining_buffer_time = 0.0f;
 			Dash();
 		}
 		else if (!IsAttackOnCooldown() && (HasBufferedClick() || Input::IsMouseButtonDown(Input::MouseButton::LEFT) || Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_X)))
@@ -426,7 +433,8 @@ void Hachiko::Scripting::PlayerController::HandleInputBuffering()
 	if (Input::IsMouseButtonDown(Input::MouseButton::LEFT) || Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_X))
 	{
 		// Melee combo input buffer
-		click_buffer.push(GetRaycastPosition(_player_position));
+		click_buffer = GetRaycastPosition(_player_position);
+		_remaining_buffer_time = _buffer_time;
 	}
 	if (Input::IsKeyDown(Input::KeyCode::KEY_SPACE) || Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_A))
 	{
@@ -438,30 +446,20 @@ void Hachiko::Scripting::PlayerController::HandleInputBuffering()
 
 bool Hachiko::Scripting::PlayerController::HasBufferedClick()
 {
-	return !click_buffer.empty();
+	return _remaining_buffer_time > 0.0f;
 }
 
 float3 Hachiko::Scripting::PlayerController::GetBufferedClick()
 {
-	if (click_buffer.empty())
+	if (_remaining_buffer_time < 0.0f)
 	{
 		return float3::zero;
 	}
 
-	float3 direction = click_buffer.front();
-	click_buffer.pop();
+	float3 direction = click_buffer;
+	_remaining_buffer_time = 0.0f;
 
-	if (_attack_idx == GetCurrentWeapon().attacks.size() - 1)
-	{
-		ResetClickBuffer();
-	}
 	return direction;
-}
-
-void Hachiko::Scripting::PlayerController::ResetClickBuffer()
-{
-	std::queue<float3> new_buffer;
-	std::swap(click_buffer, new_buffer);
 }
 
 void Hachiko::Scripting::PlayerController::Dash()
@@ -728,7 +726,7 @@ const Hachiko::Scripting::PlayerController::PlayerAttack& Hachiko::Scripting::Pl
 		++_attack_idx;
 		if (_attack_idx >= GetCurrentWeapon().attacks.size())
 		{
-			ResetClickBuffer();
+			_remaining_buffer_time = 0.0f;
 			_attack_idx = 0;
 		}
 	}
@@ -1364,10 +1362,7 @@ void Hachiko::Scripting::PlayerController::ResetPlayer(float3 spawn_pos)
 
 	_ammo_count = 4;
 	
-	while (!click_buffer.empty())
-	{
-		click_buffer.pop();
-	}
+	_remaining_buffer_time = 0.0f;
 	dash_buffer = false;
 
 	_dash_charges = 2;

@@ -248,8 +248,10 @@ namespace Hachiko
 			// Internal state variables
 
 			// Input buffer
-			// Use for combo for now, reset when combo ends
-			std::queue<float3> click_buffer{};
+			// Remembers last click for some time
+			float3 click_buffer = float3::zero;
+			float _buffer_time = .5f;
+			float _remaining_buffer_time = 0.0f;
 			bool dash_buffer = false;
 
 			// Dash management
