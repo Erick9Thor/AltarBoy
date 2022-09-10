@@ -112,7 +112,7 @@ UpdateStatus Hachiko::Application::Update()
     {
         scene_manager->CheckSceneLoading();
 
-        renderer->LoadingScreen(static_cast<float>(delta));
+        renderer->DrawLoadingScreen(static_cast<float>(delta));
         renderer->PostUpdate(static_cast<float>(delta));
     }
 

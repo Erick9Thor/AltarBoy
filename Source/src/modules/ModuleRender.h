@@ -2,7 +2,6 @@
 #include "Module.h"
 #include "Globals.h"
 
-#include "batching/BatchManager.h"
 #include "core/rendering/RenderList.h"
 #include "core/rendering/GBuffer.h"
 #include "core/rendering/ShadowManager.h"
@@ -147,7 +146,7 @@ namespace Hachiko
             return bloom_manager;
         };
     
-        void LoadingScreen(const float delta);
+        void DrawLoadingScreen(const float delta);
 
     private:
         void GenerateFrameBuffer();

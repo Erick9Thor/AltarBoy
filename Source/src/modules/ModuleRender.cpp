@@ -13,12 +13,12 @@
 #include "ModuleNavigation.h"
 #include "ModuleInput.h"
 
+#include "Batching/BatchManager.h"
+
 #include "core/GameObject.h"
 #include "components/ComponentCamera.h"
-#include "components/ComponentTransform.h"
 #include "components/ComponentTransform2D.h"
 #include "components/ComponentDirLight.h"
-#include "components/ComponentParticleSystem.h"
 #include "components/ComponentImage.h"
 
 #ifdef _DEBUG
@@ -68,13 +68,10 @@ bool Hachiko::ModuleRender::Init()
     loading_transform2d = static_cast<ComponentTransform2D*>(loading_game_object->CreateComponent(Component::Type::TRANSFORM_2D));
     loading_image = static_cast<ComponentImage*>(loading_game_object->CreateComponent(Component::Type::IMAGE));
 
-    //if (App->preferences->GetEditorPreference()->ExistLoadingScreenConfig())
+    // For now the loading screen configuration will be hardcoded:
     {
-        //Load the loading screen config
-        //loading_image->Load(App->preferences->GetEditorPreference()->GetLoadingScreenConfig());
-
-        //For now the loading screen configuration will be hardcoded
         YAML::Node node;
+
         node.SetTag("image");
         node[IMAGE_IMAGE_ID] = 9856915381281154687;
         node[IMAGE_HOVER_IMAGE_ID] = 0;
@@ -1008,18 +1005,14 @@ bool Hachiko::ModuleRender::CleanUp()
     App->preferences->GetEditorPreference()->SetDrawSkybox(draw_skybox);
     App->preferences->GetEditorPreference()->SetDrawNavmesh(draw_navmesh);
 
-    //Save the loading screen config
-    //YAML::Node node;
-    //loading_image->Save(node);
-    //App->preferences->GetEditorPreference()->SetLoadingScreenConfig(node);
     delete loading_game_object;
 
     return true;
 }
 
-void Hachiko::ModuleRender::LoadingScreen(const float delta)
+void Hachiko::ModuleRender::DrawLoadingScreen(const float delta)
 {
-    OPTICK_CATEGORY("LoadingScreen", Optick::Category::Rendering);
+    OPTICK_CATEGORY("DrawLoadingScreen", Optick::Category::Rendering);
 
     Program* img_program = App->program->GetUserInterfaceImageProgram();
 

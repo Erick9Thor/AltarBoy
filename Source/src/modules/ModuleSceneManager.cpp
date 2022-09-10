@@ -238,7 +238,7 @@ bool Hachiko::ModuleSceneManager::CleanUp()
 
 void Hachiko::ModuleSceneManager::RemoveGameObject(GameObject* game_object)
 {
-    if (game_object)
+    if (!game_object)
     {
         return;
     }
