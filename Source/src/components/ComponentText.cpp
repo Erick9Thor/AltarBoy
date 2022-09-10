@@ -15,6 +15,7 @@
 
 #include "resources/ResourceFont.h"
 #include "FTLabel.h"
+#include "utils/ComponentUtility.h"
 
 Hachiko::ComponentText::ComponentText(GameObject* container) :
     Component(Type::TEXT, container)
@@ -117,7 +118,7 @@ void Hachiko::ComponentText::Draw(ComponentTransform2D* transform, Program* prog
     }
 
     RefreshLabel(transform);
-    // Program is activated inside hachikorender
+    // Program is activated inside HachikoRender
     label->HachikoRender(program);
 }
 
@@ -141,13 +142,12 @@ void Hachiko::ComponentText::Load(const YAML::Node& node)
     SetFontColor(font_color);
 }
 
-void Hachiko::ComponentText::GetResources(const YAML::Node& node, std::map<Resource::Type, std::set<UID>>& resources)
+void Hachiko::ComponentText::CollectResources(const YAML::Node& node, std::map<Resource::Type, std::set<UID>>& resources)
 {
-    UID resource_id = node[FONT_ID].IsDefined() ? node[FONT_ID].as<UID>() : 0;
-    if (resource_id)
-    {
-        resources[Resource::Type::FONT].insert(resource_id);
-    }
+    ComponentUtility::CollectResource(
+        Resource::Type::FONT,
+        node[FONT_ID],
+        resources);
 }
 
 void Hachiko::ComponentText::SetText(const char* new_text)

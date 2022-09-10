@@ -2573,6 +2573,7 @@
     <ClInclude Include="src\ui\widgets\SliderFloat.h">
       <Filter>UI\Widgets</Filter>
     </ClInclude>
+    <ClInclude Include="src\utils\ComponentUtility.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">

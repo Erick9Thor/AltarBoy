@@ -12,6 +12,7 @@
 #include "resources/ResourceTexture.h"
 #include "ComponentTransform.h"
 #include "ComponentCamera.h"
+#include "utils/ComponentUtility.h"
 
 Hachiko::ComponentBillboard::ComponentBillboard(GameObject* container) :
     Component(Component::Type::BILLBOARD, container)
@@ -482,12 +483,12 @@ void Hachiko::ComponentBillboard::Load(const YAML::Node& node)
     blend_factor = node[BLEND_FACTOR].IsDefined() ? node[BLEND_FACTOR].as<float>() : blend_factor;
 }
 
-void Hachiko::ComponentBillboard::GetResources(const YAML::Node& node, std::map<Resource::Type, std::set<UID>>& resources)
+void Hachiko::ComponentBillboard::CollectResources(const YAML::Node& node, std::map<Resource::Type, std::set<UID>>& resources)
 {
-    if (node[BILLBOARD_TEXTURE_ID].IsDefined())
-    {
-        resources[Resource::Type::TEXTURE].insert(node[BILLBOARD_TEXTURE_ID].as<UID>());
-    }
+    ComponentUtility::CollectResource(
+        Resource::Type::TEXTURE, 
+        node[BILLBOARD_TEXTURE_ID], 
+        resources);
 }
 
 void Hachiko::ComponentBillboard::AddTexture()

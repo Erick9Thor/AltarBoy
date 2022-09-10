@@ -8,6 +8,7 @@
 #include "modules/ModuleResources.h"
 
 #include "debugdraw.h"
+#include "utils/ComponentUtility.h"
 
 Hachiko::ComponentParticleSystem::ComponentParticleSystem(GameObject* container) :
     Component(Type::PARTICLE_SYSTEM, container)
@@ -506,13 +507,12 @@ void Hachiko::ComponentParticleSystem::Load(const YAML::Node& node)
     }
 }
 
-void Hachiko::ComponentParticleSystem::GetResources(const YAML::Node& node, std::map<Resource::Type, std::set<UID>>& resources)
+void Hachiko::ComponentParticleSystem::CollectResources(const YAML::Node& node, std::map<Resource::Type, std::set<UID>>& resources)
 {
-    UID resource_id = node[PARTICLES_TEXTURE][PARTICLES_TEXTURE_ID].IsDefined() ? node[PARTICLES_TEXTURE][PARTICLES_TEXTURE_ID].as<UID>() : 0;
-    if (resource_id)
-    {
-        resources[Resource::Type::TEXTURE].insert(resource_id);
-    }
+    ComponentUtility::CollectResource(
+        Resource::Type::TEXTURE, 
+        node[PARTICLES_TEXTURE][PARTICLES_TEXTURE_ID], 
+        resources);
 }
 
 const Hachiko::ParticleSystem::VariableTypeProperty& Hachiko::ComponentParticleSystem::GetParticlesLife() const

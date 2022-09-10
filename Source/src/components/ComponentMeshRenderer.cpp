@@ -18,6 +18,8 @@
 
 #include <debugdraw.h>
 
+#include "utils/ComponentUtility.h"
+
 Hachiko::ComponentMeshRenderer::ComponentMeshRenderer(GameObject* container) :
     Component(Type::MESH_RENDERER, container)
 {
@@ -248,18 +250,17 @@ void Hachiko::ComponentMeshRenderer::Load(const YAML::Node& node)
     tint_color = node[RENDERER_TINT_COLOR].IsDefined() ? node[RENDERER_TINT_COLOR].as<float4>() : float4::one;
 }
 
-void Hachiko::ComponentMeshRenderer::GetResources(const YAML::Node& node, std::map<Resource::Type, std::set<UID>>& resources)
+void Hachiko::ComponentMeshRenderer::CollectResources(const YAML::Node& node, std::map<Resource::Type, std::set<UID>>& resources)
 {
-    UID resource_id = node[RENDERER_MESH_ID].as<UID>();
-    if (resource_id)
-    {
-        resources[Resource::Type::MESH].insert(resource_id);
-    }
-    resource_id = node[RENDERER_MATERIAL_ID].as<UID>();
-    if (resource_id)
-    {
-        resources[Resource::Type::MATERIAL].insert(resource_id);
-    }
+    ComponentUtility::CollectResource(
+        Resource::Type::MESH, 
+        node[RENDERER_MESH_ID], 
+        resources);
+
+    ComponentUtility::CollectResource(
+        Resource::Type::MATERIAL,
+        node[RENDERER_MATERIAL_ID],
+        resources);
 }
 
 Hachiko::GameObject* GetRoot(Hachiko::GameObject* posible_root) 

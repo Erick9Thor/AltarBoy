@@ -311,7 +311,7 @@ void Hachiko::Scene::GetResources(const YAML::Node& node, std::map<Resource::Typ
     const YAML::Node children_node = node[CHILD_NODE];
     for (unsigned i = 0; i < children_node.size(); ++i)
     {
-        GameObject::GetResources(children_node[i], resources);
+        GameObject::CollectResources(children_node[i], resources);
     }
 }
 

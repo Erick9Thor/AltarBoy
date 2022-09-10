@@ -581,7 +581,7 @@ void Hachiko::GameObject::Load(const YAML::Node& node, bool as_prefab, bool mesh
     }
 }
 
-void Hachiko::GameObject::GetResources(const YAML::Node& node, std::map<Resource::Type, std::set<UID>>& resources)
+void Hachiko::GameObject::CollectResources(const YAML::Node& node, std::map<Resource::Type, std::set<UID>>& resources)
 {
     const YAML::Node components_node = node[COMPONENT_NODE];
     for (unsigned i = 0; i < components_node.size(); ++i)
@@ -591,22 +591,22 @@ void Hachiko::GameObject::GetResources(const YAML::Node& node, std::map<Resource
         switch (type)
         {
             case Component::Type::ANIMATION:
-                ComponentAnimation::GetResources(components_node[i], resources);
+                ComponentAnimation::CollectResources(components_node[i], resources);
                 break;
             case Component::Type::MESH_RENDERER:
-                ComponentMeshRenderer::GetResources(components_node[i], resources);
+                ComponentMeshRenderer::CollectResources(components_node[i], resources);
                 break;
             case Component::Type::IMAGE:
-                ComponentImage::GetResources(components_node[i], resources);
+                ComponentImage::CollectResources(components_node[i], resources);
                 break;
             case Component::Type::TEXT:
-                ComponentText::GetResources(components_node[i], resources);
+                ComponentText::CollectResources(components_node[i], resources);
                 break;
             case Component::Type::PARTICLE_SYSTEM:
-                ComponentParticleSystem::GetResources(components_node[i], resources);
+                ComponentParticleSystem::CollectResources(components_node[i], resources);
                 break;
             case Component::Type::BILLBOARD:
-                ComponentBillboard::GetResources(components_node[i], resources);
+                ComponentBillboard::CollectResources(components_node[i], resources);
                 break;
         }
     }
@@ -619,7 +619,7 @@ void Hachiko::GameObject::GetResources(const YAML::Node& node, std::map<Resource
 
     for (unsigned i = 0; i < children_nodes.size(); ++i)
     {
-        GetResources(children_nodes[i], resources);
+        CollectResources(children_nodes[i], resources);
     }
 }
 
