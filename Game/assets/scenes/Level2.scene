@@ -12695,7 +12695,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1812, 910]
+            size: [814, 472]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -65457,7 +65457,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1812, 910]
+            size: [814, 472]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -70074,3 +70074,235 @@ child:
             visible: true
             material_id: 14695989268197528901
             tint_color: [1, 1, 1, 1]
+  - id: 12842077192213807134
+    name: Checkpoint1
+    enabled: true
+    component:
+      - !<transform>
+        id: 2601539159840749073
+        type: 1
+        enabled: true
+        position: [39.3, 2, -19.98]
+        rotation: [-0, 0, -0]
+        scale: [1, 1, 1]
+      - !<animation>
+        id: 6982225419433472036
+        type: 14
+        enabled: true
+        state_machine: 3647268182634800656
+      - !<script>
+        id: 17809266971697207843
+        type: 15
+        enabled: true
+        class_name: PillarCheckpoint
+        "'_respawn_go@GameObject*'": 16271077681762791392
+        "'_activation_range@float'": 5
+    child:
+      - id: 497751929505977202
+        name: Root
+        enabled: true
+        component:
+          - !<transform>
+            id: 7249700513445377977
+            type: 1
+            enabled: true
+            position: [-0.0047, -0.944, 0]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+        child:
+          - id: 4296643281104558314
+            name: MainJoint
+            enabled: true
+            component:
+              - !<transform>
+                id: 4828119492540000658
+                type: 1
+                enabled: true
+                position: [0.0047, 1.002, 0]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+      - id: 16098363369488024104
+        name: Floating_pilarGRP
+        enabled: true
+        component:
+          - !<transform>
+            id: 2109640752331574928
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+        child:
+          - id: 4475964099157804432
+            name: floatingPilar_2
+            enabled: true
+            component:
+              - !<transform>
+                id: 12832870393159268173
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<mesh_renderer>
+                id: 9098962579987469667
+                type: 2
+                enabled: true
+                mesh_id: 5306447057776503981
+                navigable: false
+                visible: true
+                material_id: 7555422350562069233
+                tint_color: [1, 1, 1, 1]
+      - id: 16271077681762791392
+        name: SpawnPos
+        enabled: true
+        component:
+          - !<transform>
+            id: 5602112715745062437
+            type: 1
+            enabled: true
+            position: [-1.085, -0.75, 1.477]
+            rotation: [-90, 0, 0]
+            scale: [0.39, 0.39, 0.39]
+          - !<mesh_renderer>
+            id: 8061972752609184558
+            type: 2
+            enabled: true
+            mesh_id: 10210867973034302559
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+            tint_color: [1, 1, 1, 1]
+      - id: 13893682853675141610
+        name: Obstacle
+        enabled: true
+        component:
+          - !<transform>
+            id: 2416360783958014481
+            type: 1
+            enabled: true
+            position: [0, -1, 0]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+          - !<obstacle>
+            id: 583613962393584107
+            type: 18
+            enabled: true
+            obstacle_type: 0
+            obstacle_size: [0.25, 1, 1]
+  - id: 10852874149063201769
+    name: Checkpoint2
+    enabled: true
+    component:
+      - !<transform>
+        id: 8004249999948434199
+        type: 1
+        enabled: true
+        position: [120.1, 2, 49.63]
+        rotation: [-0, 0, -0]
+        scale: [1, 1, 1]
+      - !<animation>
+        id: 15579616235465425808
+        type: 14
+        enabled: true
+        state_machine: 3647268182634800656
+      - !<script>
+        id: 7645764945279438379
+        type: 15
+        enabled: true
+        class_name: PillarCheckpoint
+        "'_respawn_go@GameObject*'": 12850722435261159665
+        "'_activation_range@float'": 5
+    child:
+      - id: 9808325379723428683
+        name: Root
+        enabled: true
+        component:
+          - !<transform>
+            id: 6723188700601358076
+            type: 1
+            enabled: true
+            position: [-0.0047, -0.944, 0]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+        child:
+          - id: 18418865114690623420
+            name: MainJoint
+            enabled: true
+            component:
+              - !<transform>
+                id: 16728838204660290087
+                type: 1
+                enabled: true
+                position: [0.0047, 1.002, 0]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+      - id: 5455536887783761567
+        name: Floating_pilarGRP
+        enabled: true
+        component:
+          - !<transform>
+            id: 16696273278751505325
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+        child:
+          - id: 15011122835531495186
+            name: floatingPilar_2
+            enabled: true
+            component:
+              - !<transform>
+                id: 4348334504679057776
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<mesh_renderer>
+                id: 4995158271224060435
+                type: 2
+                enabled: true
+                mesh_id: 5306447057776503981
+                navigable: false
+                visible: true
+                material_id: 7555422350562069233
+                tint_color: [1, 1, 1, 1]
+      - id: 12850722435261159665
+        name: SpawnPos
+        enabled: true
+        component:
+          - !<transform>
+            id: 1773826365911544955
+            type: 1
+            enabled: true
+            position: [1.726, -0.75, 1.627]
+            rotation: [-90, 0, 0]
+            scale: [0.39, 0.39, 0.39]
+          - !<mesh_renderer>
+            id: 589993832459841500
+            type: 2
+            enabled: true
+            mesh_id: 10210867973034302559
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+            tint_color: [1, 1, 1, 1]
+      - id: 3870037516220705920
+        name: Obstacle
+        enabled: true
+        component:
+          - !<transform>
+            id: 16084575810098684016
+            type: 1
+            enabled: true
+            position: [0, -1, 0]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+          - !<obstacle>
+            id: 11230164000657542381
+            type: 18
+            enabled: true
+            obstacle_type: 0
+            obstacle_size: [0.25, 1, 1]
