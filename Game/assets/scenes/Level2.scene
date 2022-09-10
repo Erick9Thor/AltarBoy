@@ -12630,7 +12630,7 @@ child:
         type: 15
         enabled: true
         class_name: LevelManager
-        "'_level@unsigned'": 1
+        "'_level@unsigned'": 2
         "'_respawn_position@float3'": [-85, 1.49, 3.16]
         "'_gauntlet_ui_go@GameObject*'": 5741094800248935353
         "'_gauntlet_counter_go@GameObject*'": 13853085409061284678

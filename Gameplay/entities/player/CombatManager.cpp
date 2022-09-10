@@ -6,6 +6,7 @@
 #include "entities/enemies/EnemyController.h"
 #include "entities/player/PlayerController.h"
 #include "entities/player/CombatManager.h"
+#include "entities/enemies/BossController.h"
 
 // TODO: Delete this include:
 #include <modules/ModuleSceneManager.h>
@@ -36,6 +37,8 @@ void Hachiko::Scripting::CombatManager::OnAwake()
 	}
 
 	_player = Scenes::GetPlayer();
+	_boss = Scenes::GetBoss();
+
 	_enemy_packs_container = Scenes::GetEnemiesContainer();
 
 	_charge_particles = _charge_vfx->GetComponent<ComponentParticleSystem>();
@@ -44,6 +47,11 @@ void Hachiko::Scripting::CombatManager::OnAwake()
 	if (_player)
 	{
 		_player_controller = _player->GetComponent<PlayerController>();
+	}
+
+	if (_boss)
+	{
+		_boss_controller = _boss->GetComponent<BossController>();
 	}
 
 	SerializeEnemyPacks();
@@ -79,6 +87,7 @@ int Hachiko::Scripting::CombatManager::PlayerRectangleAttack(const float4x4& ori
 
 	hit +=  ProcessAgentsOBB(hitbox, attack_stats, origin.Col3(3), true);
 	hit +=  ProcessObstaclesOBB(hitbox, attack_stats);
+	hit += ProcessBossOBB(hitbox, attack_stats);
 	
 	return hit;
 }
@@ -844,6 +853,22 @@ int Hachiko::Scripting::CombatManager::ProcessPlayerCircle(const float3& attack_
 		HitPlayer(attack_stats.damage, attack_stats.knockback_distance, knockback_dir);
 		return 1;
 	}
+	return 0;
+}
+
+int Hachiko::Scripting::CombatManager::ProcessBossOBB(const OBB& attack_box, const AttackStats& attack_stats)
+{
+	if (!_boss_controller || !_boss_controller->IsAlive())
+	{
+		return 0;
+	}
+
+	if (OBBHitsAgent(_boss, attack_box))
+	{
+		_boss_controller->RegisterHit(attack_stats.damage);
+		return 1;
+	}
+	
 	return 0;
 }
 

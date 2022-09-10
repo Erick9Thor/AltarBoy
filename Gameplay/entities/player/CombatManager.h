@@ -12,6 +12,7 @@ namespace Hachiko
     {
         class EnemyController;
         class PlayerController;
+        class BossController;
         class CrystalExplosion;
 
         class CombatManager : public Script
@@ -97,7 +98,7 @@ namespace Hachiko
             int EnemyRectangleAttack(const float4x4& origin, const AttackStats& attack_stats);
             int EnemyCircleAttack(const float4x4& origin, const AttackStats& attack_stats);
 
-            // Evaluate for all units
+            // Evaluate for all level units
             int ProcessAgentsCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats, bool is_from_player);
             int ProcessObstaclesCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats);
             int ProcessPlayerCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats);
@@ -107,6 +108,8 @@ namespace Hachiko
             int ProcessAgentsCircle(const float3& attack_source_pos, const AttackStats& attack_stats, bool is_from_player);
             int ProcessObstaclesCircle(const float3& attack_source_pos, const AttackStats& attack_stats);
             int ProcessPlayerCircle(const float3& attack_source_pos, const AttackStats& attack_stats);
+            // Evaluate for boss if exists Note: for now only added the attack the player uses
+            int ProcessBossOBB(const OBB& attack_box, const AttackStats& attack_stats);
 
             // Specifics of the collision check
             bool ConeHitsAgent(GameObject* agent_go, const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance);
@@ -141,6 +144,7 @@ namespace Hachiko
 
         private:
             GameObject* _player = nullptr;
+            GameObject* _boss = nullptr;
             unsigned _max_bullets = 5;
             std::vector<GameObject*> _bullets{};
             std::vector<BulletStats> _bullet_stats;
@@ -152,6 +156,7 @@ namespace Hachiko
             int _damage;
 
             PlayerController* _player_controller;
+            BossController* _boss_controller;
 
             SERIALIZE_FIELD(GameObject*, _charge_vfx);
             SERIALIZE_FIELD(GameObject*, _shot_vfx);
