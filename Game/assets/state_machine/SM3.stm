@@ -247,3 +247,7 @@ transitions:
     transition_target: shot
     transition_trigger: isShot
     transition_blend: 300
+  - transition_source: clawTwo
+    transition_target: clawOne
+    transition_trigger: isClawOne
+    transition_blend: 300
