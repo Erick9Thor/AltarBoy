@@ -7,9 +7,11 @@ Hachiko::Scripting::PlayerSoundManager::PlayerSoundManager(Hachiko::GameObject* 
 	: Script(game_object, "PlayerSoundManager")
 	, _player_controller(nullptr)
 	, _timer(0.0f)
+	, _damage_timer(0.0f)
 	, _step_frequency(0.0f)
 	, _melee_frequency(0.0f)
 	, _ranged_frequency(0.0f)
+	, _dmg_cool_down(1.0f)
 	, _previous_state(PlayerState::INVALID)
 	, _audio_source(nullptr)
 {
@@ -97,18 +99,24 @@ void Hachiko::Scripting::PlayerSoundManager::OnUpdate()
 		break;
 	}
 
-	if (state != PlayerState::DIE && state != PlayerState::READY_TO_RESPAWN)
+	PlayerController::DamageType damage = _player_controller->ReadDamageState();
+	
+	if (_damage_timer >= _dmg_cool_down &&
+		state != PlayerState::DIE && 
+		state != PlayerState::READY_TO_RESPAWN)
 	{
-		PlayerController::DamageType damage = _player_controller->ReadDamageState();
+		
 		if (damage == PlayerController::DamageType::ENEMY ||
 			damage == PlayerController::DamageType::LASER ||
 			damage == PlayerController::DamageType::CRYSTAL)
 		{
 			_audio_source->PostEvent(Sounds::RECEIVE_DAMAGE);
+			_damage_timer = 0.0f;
 		}
 	}
 
 	_timer += delta_time;
+	_damage_timer += delta_time;
 
 	if (_timer >= _step_frequency)
 	{

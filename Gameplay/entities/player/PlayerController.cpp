@@ -260,6 +260,7 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 			if (_previous_state == PlayerState::DIE && animation->IsAnimationStopped())
 			{
 				_state = PlayerState::READY_TO_RESPAWN;
+				damaged_by = DamageType::NONE;
 
 				if (_death_screen != nullptr) 
 				{
@@ -1152,12 +1153,13 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 
 bool Hachiko::Scripting::PlayerController::RegisterHit(int damage_received, float knockback, float3 direction, bool force_dmg, DamageType dmg_by)
 {
+	damaged_by = dmg_by;
+	
 	if (_god_mode || !IsAlive())
 	{
 		return false;
 	}
 
-	damaged_by = dmg_by;
 	bool dmg_received = _invulnerability_time_remaining <= 0.0f;
 	if (dmg_received || force_dmg)
 	{
