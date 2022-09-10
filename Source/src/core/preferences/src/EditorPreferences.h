@@ -2,7 +2,6 @@
 
 #include "core/preferences/Preferences.h"
 #include "ui/editor/Theme.h"
-#include "Math/float3.h"
 
 namespace Hachiko
 {
@@ -161,11 +160,6 @@ namespace Hachiko
             shadow_pass_enabled = enabled;
         }
 
-        [[nodiscard]] bool ExistLoadingScreenConfig() const 
-        {
-            return exist_loading_screen_config;
-        }
-
         [[nodiscard]] YAML::Node GetLoadingScreenConfig() const
         {
             return loading_screen_config;
@@ -196,7 +190,6 @@ namespace Hachiko
         Editor::Theme::Type theme = Editor::Theme::Type::DARK;
         bool undo_redo_active = true;
 
-        bool exist_loading_screen_config = false;
         YAML::Node loading_screen_config;
     };
 }

@@ -94,7 +94,6 @@ void EditorPreferences::LoadConfigurationData(const YAML::Node& node)
 
     if (node[LOADING_SCREEN_CONFIG].IsDefined())
     {
-        exist_loading_screen_config = true;
         loading_screen_config = node[LOADING_SCREEN_CONFIG];
     }
 }
