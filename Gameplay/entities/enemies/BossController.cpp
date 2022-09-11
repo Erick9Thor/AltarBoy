@@ -44,16 +44,6 @@ void Hachiko::Scripting::BossController::OnUpdate()
 		constexpr int player_dmg = 5;
 		RegisterHit(player_dmg);
 	}
-	if (Input::IsKeyDown(Input::KeyCode::KEY_F)) // TEST CAMERA FOCUS TO BOSS
-	{
-		level_manager->BlockInputs(true);
-		player_camera->SetObjective(game_object);
-	}
-	if (Input::IsKeyDown(Input::KeyCode::KEY_P)) // TEST CAMERA FOCUS TO PLAYER
-	{
-		level_manager->BlockInputs(false);
-		player_camera->SetObjective(player);
-	}
 	StateController();
 	state_value = static_cast<int>(state);
 }
@@ -277,14 +267,27 @@ void Hachiko::Scripting::BossController::DieController()
 void Hachiko::Scripting::BossController::StartCacoon()
 {
 	hitable = false;
+	time_elapse = 0.0;
 	if (cocoon_placeholder_go)
 	{
 		cocoon_placeholder_go->SetActive(true);
 	}
+	FocusCamera(true);
 }
 
 void Hachiko::Scripting::BossController::CacoonController()
 {
+	// Handle camera focus
+	if (camera_focus_on_boss)
+	{
+		time_elapse += Time::DeltaTime();
+
+		if (time_elapse >= 2) // HARDCODED TIME FOR CAMERA FOCUS
+		{
+			FocusCamera(false);
+		}
+	}
+
 	// Replace with is gauntlet completed
 	if (gauntlet->IsFinished() || Input::IsKeyDown(Input::KeyCode::KEY_J))
 	{
@@ -373,4 +376,19 @@ void Hachiko::Scripting::BossController::ConsumeParasytes()
 
 void Hachiko::Scripting::BossController::ConsumeParasytesController()
 {
+}
+
+void Hachiko::Scripting::BossController::FocusCamera(bool focus_on_boss)
+{
+	camera_focus_on_boss = focus_on_boss;
+	if (camera_focus_on_boss)
+	{
+		level_manager->BlockInputs(true);
+		player_camera->SetObjective(game_object);
+	}
+	else
+	{
+		level_manager->BlockInputs(false);
+		player_camera->SetObjective(player);
+	}
 }

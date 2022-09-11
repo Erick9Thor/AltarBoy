@@ -100,6 +100,8 @@ namespace Hachiko
             void ConsumeParasytes();
             void ConsumeParasytesController();
 
+            void FocusCamera(bool focus_on_boss);
+
         private:
             SERIALIZE_FIELD(int, state_value);
             SERIALIZE_FIELD(GameObject*, hp_bar_go);
@@ -122,6 +124,9 @@ namespace Hachiko
             bool hitable = true;
             std::vector<float> gauntlet_thresholds_percent{0.3, 0.7};
             float3 target_position = float3::zero;
+
+            bool camera_focus_on_boss = false;
+            float time_elapse = 0.0;
         };
     } // namespace Scripting
 } // namespace Hachiko*/
