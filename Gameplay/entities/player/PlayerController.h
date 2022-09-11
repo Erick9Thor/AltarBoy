@@ -24,6 +24,7 @@ namespace Hachiko
 			WALKING,
 			PICK_UP,
 			DASHING,
+			RANGED_CHARGING,
 			RANGED_ATTACKING,
 			MELEE_ATTACKING,
 			FALLING,
@@ -101,6 +102,9 @@ namespace Hachiko
 			int GetCurrentHp() const { return _combat_stats->_current_hp; }
 			bool _isInDebug = false;
 
+			bool IsAttackSoundRequested() const { return _request_attack_sound; };
+			void AttackSoundPlayed() { _request_attack_sound = false; };
+
 			int GetAttackIndex() const
 			{
 				return _attack_idx;
@@ -130,6 +134,7 @@ namespace Hachiko
 			bool IsDying() const;
 
 			bool IsActionLocked() const;
+			bool IsActionOnProgress() const;
 			bool IsAttackOnCooldown() const;
 			bool IsInComboWindow() const;
 
@@ -152,6 +157,7 @@ namespace Hachiko
 			void MeleeAttack();
 			void ChangeWeapon(unsigned weapon_idx);
 			void RangedAttack();
+			void ReleaseAttack();
 			void CancelAttack();
 			float4x4 GetMeleeAttackOrigin(float attack_range) const;
 
@@ -204,7 +210,7 @@ namespace Hachiko
 			SERIALIZE_FIELD(GameObject*, _heal_effect);
 
 			const float _ranged_attack_cooldown = 0.2f;
-			const float _combo_grace_period = 0.4f;
+			const float _combo_grace_period = .5f;
 
 			SERIALIZE_FIELD(float, _rotation_duration);
 
@@ -245,8 +251,10 @@ namespace Hachiko
 			// Internal state variables
 
 			// Input buffer
-			// Use for combo for now, reset when combo ends
-			std::queue<float3> click_buffer{};
+			// Remembers last click for some time
+			float3 click_buffer = float3::zero;
+			float _buffer_time = .5f;
+			float _remaining_buffer_time = 0.0f;
 			bool dash_buffer = false;
 
 			// Dash management
@@ -277,8 +285,8 @@ namespace Hachiko
 			unsigned _current_weapon = 0;
 			unsigned _attack_charges = 0;
 			float _invulnerability_time_remaining = 0.0f;
-			float _pickUp_duration = 0.5f;
-			float pickUp_time = _pickUp_duration;
+			bool _new_attack = false;
+			bool _request_attack_sound = false;
 
 			// Movement management
 			float _stun_time = 0.0f;
@@ -287,6 +295,9 @@ namespace Hachiko
 			float _falling_distance = 10.0f;
 			bool _should_rotate = false;
 			bool _is_falling = false;
+
+			// General management
+			float _lock_time = 0.0f;
 
 			// Camera management
 			int _current_cam_setting = 0;
