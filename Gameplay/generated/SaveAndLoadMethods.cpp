@@ -252,8 +252,6 @@ void Hachiko::Scripting::EnemyController::OnSave(YAML::Node& node) const
 
 	node["'_spawn_pos@float3'"] = _spawn_pos;
 
-	node["'_spawn_is_initial@bool'"] = _spawn_is_initial;
-
 	if (_enemy_body != nullptr)
 	{
 		node["'_enemy_body@GameObject*'"] = _enemy_body->GetID();
@@ -374,11 +372,6 @@ void Hachiko::Scripting::EnemyController::OnLoad()
 	if (load_node["'_spawn_pos@float3'"].IsDefined())
 	{
 		_spawn_pos = load_node["'_spawn_pos@float3'"].as<float3>();
-	}
-
-	if (load_node["'_spawn_is_initial@bool'"].IsDefined())
-	{
-		_spawn_is_initial = load_node["'_spawn_is_initial@bool'"].as<bool>();
 	}
 
 	if (load_node["'_enemy_body@GameObject*'"].IsDefined())
@@ -717,6 +710,15 @@ void Hachiko::Scripting::PlayerController::OnSave(YAML::Node& node) const
 
 	node["'_rotation_duration@float'"] = _rotation_duration;
 
+	if (_death_screen != nullptr)
+	{
+		node["'_death_screen@GameObject*'"] = _death_screen->GetID();
+	}
+	else
+	{
+		node["'_death_screen@GameObject*'"] = 0;
+	}
+
 	if (_hp_cell_1 != nullptr)
 	{
 		node["'_hp_cell_1@GameObject*'"] = _hp_cell_1->GetID();
@@ -787,6 +789,33 @@ void Hachiko::Scripting::PlayerController::OnSave(YAML::Node& node) const
 	else
 	{
 		node["'_ammo_cell_4@GameObject*'"] = 0;
+	}
+
+	if (_sword_ui_addon != nullptr)
+	{
+		node["'_sword_ui_addon@GameObject*'"] = _sword_ui_addon->GetID();
+	}
+	else
+	{
+		node["'_sword_ui_addon@GameObject*'"] = 0;
+	}
+
+	if (_maze_ui_addon != nullptr)
+	{
+		node["'_maze_ui_addon@GameObject*'"] = _maze_ui_addon->GetID();
+	}
+	else
+	{
+		node["'_maze_ui_addon@GameObject*'"] = 0;
+	}
+
+	if (_claw_ui_addon != nullptr)
+	{
+		node["'_claw_ui_addon@GameObject*'"] = _claw_ui_addon->GetID();
+	}
+	else
+	{
+		node["'_claw_ui_addon@GameObject*'"] = 0;
 	}
 
 	if (_weapon_charge_bar_go != nullptr)
@@ -915,6 +944,11 @@ void Hachiko::Scripting::PlayerController::OnLoad()
 		_rotation_duration = load_node["'_rotation_duration@float'"].as<float>();
 	}
 
+	if (load_node["'_death_screen@GameObject*'"].IsDefined())
+	{
+		_death_screen = SceneManagement::FindInCurrentScene(load_node["'_death_screen@GameObject*'"].as<unsigned long long>());
+	}
+
 	if (load_node["'_hp_cell_1@GameObject*'"].IsDefined())
 	{
 		_hp_cell_1 = SceneManagement::FindInCurrentScene(load_node["'_hp_cell_1@GameObject*'"].as<unsigned long long>());
@@ -953,6 +987,21 @@ void Hachiko::Scripting::PlayerController::OnLoad()
 	if (load_node["'_ammo_cell_4@GameObject*'"].IsDefined())
 	{
 		_ammo_cell_4 = SceneManagement::FindInCurrentScene(load_node["'_ammo_cell_4@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_sword_ui_addon@GameObject*'"].IsDefined())
+	{
+		_sword_ui_addon = SceneManagement::FindInCurrentScene(load_node["'_sword_ui_addon@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_maze_ui_addon@GameObject*'"].IsDefined())
+	{
+		_maze_ui_addon = SceneManagement::FindInCurrentScene(load_node["'_maze_ui_addon@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_claw_ui_addon@GameObject*'"].IsDefined())
+	{
+		_claw_ui_addon = SceneManagement::FindInCurrentScene(load_node["'_claw_ui_addon@GameObject*'"].as<unsigned long long>());
 	}
 
 	if (load_node["'_weapon_charge_bar_go@GameObject*'"].IsDefined())
@@ -1114,7 +1163,9 @@ void Hachiko::Scripting::AudioManager::OnSave(YAML::Node& node) const
 {
 	node["'_enemies_in_combat@int'"] = _enemies_in_combat;
 
-	node["'_previous_in_combat@bool'"] = _previous_in_combat;
+	node["'_in_combat@bool'"] = _in_combat;
+
+	node["'_in_gaunlet@bool'"] = _in_gaunlet;
 }
 
 void Hachiko::Scripting::AudioManager::OnLoad()
@@ -1124,9 +1175,14 @@ void Hachiko::Scripting::AudioManager::OnLoad()
 		_enemies_in_combat = load_node["'_enemies_in_combat@int'"].as<int>();
 	}
 
-	if (load_node["'_previous_in_combat@bool'"].IsDefined())
+	if (load_node["'_in_combat@bool'"].IsDefined())
 	{
-		_previous_in_combat = load_node["'_previous_in_combat@bool'"].as<bool>();
+		_in_combat = load_node["'_in_combat@bool'"].as<bool>();
+	}
+
+	if (load_node["'_in_gaunlet@bool'"].IsDefined())
+	{
+		_in_gaunlet = load_node["'_in_gaunlet@bool'"].as<bool>();
 	}
 }
 
@@ -1656,6 +1712,8 @@ void Hachiko::Scripting::LaserController::OnLoad()
 
 void Hachiko::Scripting::LevelManager::OnSave(YAML::Node& node) const
 {
+	node["'_level@unsigned'"] = _level;
+
 	node["'_respawn_position@float3'"] = _respawn_position;
 
 	if (_gauntlet_ui_go != nullptr)
@@ -1679,6 +1737,11 @@ void Hachiko::Scripting::LevelManager::OnSave(YAML::Node& node) const
 
 void Hachiko::Scripting::LevelManager::OnLoad()
 {
+	if (load_node["'_level@unsigned'"].IsDefined())
+	{
+		_level = load_node["'_level@unsigned'"].as<unsigned>();
+	}
+
 	if (load_node["'_respawn_position@float3'"].IsDefined())
 	{
 		_respawn_position = load_node["'_respawn_position@float3'"].as<float3>();

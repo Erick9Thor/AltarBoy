@@ -26,6 +26,7 @@ namespace Hachiko
 			void OnStart() override;
 			void OnUpdate() override;
 			void ResetGauntlet();
+			void StartGauntlet();
 			bool IsCompleted() const { return completed; }
 			bool IsFinished() const;
 			bool IsStarted() const { return started; }
@@ -43,8 +44,7 @@ namespace Hachiko
 			SERIALIZE_FIELD(GameObject*, _pack_3);		
 
 		private:
-
-			void StartGauntlet();
+			
 			void CheckRoundStatus();
 			void OpenDoors();
 			void CloseDoors();
@@ -54,7 +54,7 @@ namespace Hachiko
 			bool completed = false;
 			bool started = false;
 			bool changing_rounds = false;
-			float remaining_between_round_time;
+			float remaining_between_round_time{};
 			CombatManager* _combat_manager = nullptr;
 			LevelManager* _level_manager = nullptr;
 			AudioManager* _audio_manager = nullptr;
