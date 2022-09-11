@@ -44,6 +44,7 @@ namespace Hachiko
 				RED = 0,
 				GREEN,
 				BLUE,
+				YELLOW,
 				SIZE
 			};
 
@@ -57,7 +58,10 @@ namespace Hachiko
 				QUICK_3,
 				HEAVY_1,
 				HEAVY_2,
-				HEAVY_3
+				HEAVY_3,
+				HAMMER_1,
+				HAMMER_2,
+				HAMMER_3,
 			};
 
 			struct PlayerAttack
@@ -186,6 +190,7 @@ namespace Hachiko
 			SERIALIZE_FIELD(GameObject*, _sword_weapon);
 			SERIALIZE_FIELD(GameObject*, _sword_upper);
 			SERIALIZE_FIELD(GameObject*, _claw_weapon);
+			SERIALIZE_FIELD(GameObject*, _hammer_weapon);
 
 			Stats* _combat_stats;
 			bool _god_mode = false;

@@ -14,6 +14,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _sword_weapon(nullptr)
 	, _sword_upper(nullptr)
 	, _claw_weapon(nullptr)
+	, _hammer_weapon(nullptr)
 	, _combat_stats()
 	, _attack_indicator(nullptr)
 	, _goal(nullptr)
@@ -66,9 +67,20 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	sword.attacks.push_back(GetAttackType(AttackType::HEAVY_2));
 	sword.attacks.push_back(GetAttackType(AttackType::HEAVY_3));
 
+	Weapon hammer;
+	hammer.name = "Hammer";
+	hammer.bullet = common_bullet;
+	hammer.color = float4(0.0f, 255.0f, 255.0f, 0.0f);
+	hammer.unlimited = false;
+	hammer.charges = 10;
+	hammer.attacks.push_back(GetAttackType(AttackType::HAMMER_1));
+	hammer.attacks.push_back(GetAttackType(AttackType::HAMMER_2));
+	hammer.attacks.push_back(GetAttackType(AttackType::HAMMER_3));
+
 	weapons.push_back(melee);
 	weapons.push_back(claw);
 	weapons.push_back(sword);
+	weapons.push_back(hammer);
 
 	_current_cam_setting = 0;
 }
@@ -633,6 +645,7 @@ void Hachiko::Scripting::PlayerController::ChangeWeapon(unsigned weapon_idx)
 		_claw_weapon->SetActive(false);
 		_sword_upper->SetActive(false);
 		_sword_weapon->SetActive(false);
+		_hammer_weapon->SetActive(false);
 
 		_sword_ui_addon->SetActive(false);
 		_claw_ui_addon->SetActive(false);
@@ -643,6 +656,7 @@ void Hachiko::Scripting::PlayerController::ChangeWeapon(unsigned weapon_idx)
 		_claw_weapon->SetActive(true);
 		_sword_upper->SetActive(false);
 		_sword_weapon->SetActive(false);
+		_hammer_weapon->SetActive(false);
 
 		_sword_ui_addon->SetActive(false);
 		_claw_ui_addon->SetActive(true);
@@ -653,6 +667,18 @@ void Hachiko::Scripting::PlayerController::ChangeWeapon(unsigned weapon_idx)
 		_claw_weapon->SetActive(false);
 		_sword_upper->SetActive(true);
 		_sword_weapon->SetActive(true);
+		_hammer_weapon->SetActive(false);
+
+		_sword_ui_addon->SetActive(true);
+		_claw_ui_addon->SetActive(false);
+		_maze_ui_addon->SetActive(false);
+	}
+	else if (_current_weapon == 3) // HAMMER
+	{
+		_claw_weapon->SetActive(false);
+		_sword_upper->SetActive(false);
+		_sword_weapon->SetActive(false);
+		_hammer_weapon->SetActive(true);
 
 		_sword_ui_addon->SetActive(true);
 		_claw_ui_addon->SetActive(false);
@@ -1351,6 +1377,21 @@ void Hachiko::Scripting::PlayerController::CheckComboAnimation()
 			animation->SendTrigger("isSwordThree");
 		}
 	}
+	else if (_current_weapon == 3) // SWORD
+	{
+		if (_attack_idx == 0)
+		{
+			animation->SendTrigger("isHammerOne");
+		}
+		else if (_attack_idx == 1)
+		{
+			animation->SendTrigger("isHammerTwo");
+		}
+		else if (_attack_idx == 2)
+		{
+			animation->SendTrigger("isHammerThree");
+		}
+	}
 	_new_attack = false;
 }
 
@@ -1617,6 +1658,47 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 		attack.stats.width = 4.f;
 		attack.stats.range = 4.5f;
 		break;
+
+	// HAMMER ATTACKS
+	case AttackType::HAMMER_1:
+		attack.hit_delay = 0.1f;
+		attack.duration = 0.8f;
+		attack.cooldown = 0.0f;
+		attack.dash_distance = 0.5f;
+		attack.stats.type = CombatManager::AttackType::RECTANGLE;
+		attack.stats.damage = 1;
+		attack.stats.knockback_distance = 1.f;
+		// If its cone use degrees on width
+		attack.stats.width = 5.f;
+		attack.stats.range = 3.f;
+		break;
+
+	case AttackType::HAMMER_2:
+		attack.hit_delay = 0.1f;
+		attack.duration = 0.8f;
+		attack.cooldown = 0.0f;
+		attack.dash_distance = 0.5f;
+		attack.stats.type = CombatManager::AttackType::RECTANGLE;
+		attack.stats.damage = 1;
+		attack.stats.knockback_distance = 1.f;
+		// If its cone use degrees on width
+		attack.stats.width = 5.f;
+		attack.stats.range = 3.f;
+		break;
+
+	case AttackType::HAMMER_3:
+		attack.hit_delay = 0.5f;
+		attack.duration = 1.0f;
+		attack.cooldown = 0.5f;
+		attack.dash_distance = 0.5f;
+		attack.stats.type = CombatManager::AttackType::RECTANGLE;
+		attack.stats.damage = 3;
+		attack.stats.knockback_distance = 2.5f;
+		// If its cone use degrees on width
+		attack.stats.width = 4.f;
+		attack.stats.range = 4.5f;
+		break;
+	
 	}
 	return attack;
 }
