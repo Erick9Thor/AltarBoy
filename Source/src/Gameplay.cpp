@@ -21,12 +21,33 @@ void Hachiko::Quit()
 
 /*TIME-----------------------------------------------------------------------*/
 
-float Hachiko::Time::DeltaTime()
+namespace Hachiko::Time
 {
-    // TODO: Return Gameplay Timer.
-    // Added for easiness of exposing to scripts. We need to refactor that
-    // timer code as it's unnecessarily complicated.
-    return GameTimer::delta_time;
+
+namespace // private
+{
+volatile float time_scale = 1.0f;
+}
+
+float DeltaTime()
+{
+    return static_cast<float>(GameTimer::delta_time);
+}
+
+float DeltaTimeScaled()
+{
+    return time_scale * DeltaTime();
+}
+
+void SetTimeScale(const float new_time_scale)
+{
+    time_scale = new_time_scale;
+}
+
+float GetTimeScale()
+{
+    return time_scale;
+}
 }
 
 /*---------------------------------------------------------------------------*/
