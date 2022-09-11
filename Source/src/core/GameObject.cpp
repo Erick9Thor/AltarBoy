@@ -535,8 +535,7 @@ void Hachiko::GameObject::Load(const YAML::Node& node, bool as_prefab, bool mesh
         }
         else if (type == Component::Type::SCRIPT)
         {
-            std::string script_name =
-                components_node[i][SCRIPT_NAME].as<std::string>();
+            std::string script_name = components_node[i][SCRIPT_NAME].as<std::string>();
             component = (Component*)App->scripting_system->InstantiateScript(script_name, this);
 
             if (component != nullptr)
@@ -582,6 +581,47 @@ void Hachiko::GameObject::Load(const YAML::Node& node, bool as_prefab, bool mesh
     }
 }
 
+void Hachiko::GameObject::CollectResources(const YAML::Node& node, std::map<Resource::Type, std::set<UID>>& resources)
+{
+    const YAML::Node components_node = node[COMPONENT_NODE];
+    for (unsigned i = 0; i < components_node.size(); ++i)
+    {
+        const auto type = static_cast<Component::Type>(components_node[i][COMPONENT_TYPE].as<int>());
+
+        switch (type)
+        {
+            case Component::Type::ANIMATION:
+                ComponentAnimation::CollectResources(components_node[i], resources);
+                break;
+            case Component::Type::MESH_RENDERER:
+                ComponentMeshRenderer::CollectResources(components_node[i], resources);
+                break;
+            case Component::Type::IMAGE:
+                ComponentImage::CollectResources(components_node[i], resources);
+                break;
+            case Component::Type::TEXT:
+                ComponentText::CollectResources(components_node[i], resources);
+                break;
+            case Component::Type::PARTICLE_SYSTEM:
+                ComponentParticleSystem::CollectResources(components_node[i], resources);
+                break;
+            case Component::Type::BILLBOARD:
+                ComponentBillboard::CollectResources(components_node[i], resources);
+                break;
+        }
+    }
+
+    const YAML::Node children_nodes = node[CHILD_NODE];
+    if (!children_nodes.IsDefined())
+    {
+        return;
+    }
+
+    for (unsigned i = 0; i < children_nodes.size(); ++i)
+    {
+        CollectResources(children_nodes[i], resources);
+    }
+}
 
 void Hachiko::GameObject::SavePrefabReferences(YAML::Node& node, std::vector<const GameObject*>& object_collection, std::vector<const Component*>& component_collection) const
 {

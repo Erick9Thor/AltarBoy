@@ -33,7 +33,7 @@ bool Hachiko::ModuleUserInterface::Init()
     return true;
 }
 
-UpdateStatus Hachiko::ModuleUserInterface::Update(float delta)
+UpdateStatus Hachiko::ModuleUserInterface::Update(const float delta)
 {
     // Returns OpenGL mouse position local to the program window if the engine
     // was built with PLAY_BUILD flag. Returns OpenGL mouse position local to

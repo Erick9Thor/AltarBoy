@@ -27,7 +27,6 @@ bool ModuleResources::Init()
     preferences = App->preferences->GetResourcesPreference();
 
     // create assets & library directory tree
-
     for (auto& lib_path : preferences->GetLibraryPathsMap())
     {
         FileSystem::CreateDir(lib_path.second.c_str());
@@ -62,7 +61,7 @@ bool ModuleResources::CleanUp()
 {
     for (auto& it : loaded_resources)
     {
-        HE_LOG("Removing unreleased resources (fbi coming)");
+        HE_LOG("Removing unreleased resources %llu %i", it.first, it.second.n_users);
         delete it.second.resource;
     }
 
@@ -129,6 +128,73 @@ Resource::AssetType ModuleResources::GetAssetTypeFromPath(const std::filesystem:
         return it->first;
     }
     return Resource::AssetType::UNKNOWN;
+}
+
+bool Hachiko::ModuleResources::DoesResourceExist(Resource::Type type, UID id) 
+{
+    std::string file_path
+        = StringUtils::Concat(App->preferences->GetResourcesPreference()->GetLibraryPath(type), std::to_string(id));
+    return FileSystem::Exists(file_path.c_str());
+}
+
+void Hachiko::ModuleResources::LoadSceneResources(const YAML::Node& node) 
+{
+    const unsigned amount_resources = static_cast<unsigned>(Resource::Type::COUNT);
+    std::map<Resource::Type, std::set<UID>> scene_loading_resources;
+    for (unsigned i = 1; i < amount_resources; ++i)
+    {
+        scene_loading_resources.insert({static_cast<Resource::Type>(i), std::set<UID>()});
+    }
+
+    Scene::GetResources(node, scene_loading_resources);
+
+    // Load resources
+    for (unsigned i = 1; i < amount_resources; ++i)
+    {
+        Resource::Type resource_type = static_cast<Resource::Type>(i);
+        if (resource_type == Resource::Type::TEXTURE)
+        {
+            for (auto it = scene_loading_resources[resource_type].begin(); it != scene_loading_resources[resource_type].end(); it++)
+            {
+                if (loaded_resources.find(*it) == loaded_resources.end())
+                {
+                    auto res = importer_manager.LoadResource(resource_type, *it);
+                    if (res != nullptr)
+                    {
+                        loaded_resources.emplace(*it, ResourceInstance {res, 0});
+                        scene_loaded_texures.push_back(static_cast<ResourceTexture*>(res));
+                    }
+                }
+            }
+        }
+        else
+        {
+            for (auto it = scene_loading_resources[resource_type].begin(); it != scene_loading_resources[resource_type].end(); it++)
+            {
+                if (loaded_resources.find(*it) == loaded_resources.end())
+                {
+                    auto res = importer_manager.LoadResource(resource_type, *it);
+                    if (res != nullptr)
+                    {
+                        loaded_resources.emplace(*it, ResourceInstance {res, 0});
+                    }
+                }
+            }
+        }
+        scene_loading_resources[static_cast<Resource::Type>(i)].clear();
+    }
+    scene_loading_resources.clear();
+}
+
+void Hachiko::ModuleResources::PostLoadSceneResources()
+{
+    // Load textures
+    for (ResourceTexture* texture : scene_loaded_texures)
+    {
+        texture->GenerateBuffer();
+    }
+
+    scene_loaded_texures.clear();
 }
 
 Resource* Hachiko::ModuleResources::GetResource(Resource::Type type, UID id)
