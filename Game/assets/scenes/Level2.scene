@@ -62024,6 +62024,7 @@ child:
             start_size: [true, true, 1, [1.5, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
+            projection: true
       - id: 15378187777120281388
         name: CombatVisualEffectBillboard
         enabled: true
@@ -62060,6 +62061,7 @@ child:
             start_size: [true, true, 1, [1.5, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
+            projection: true
       - id: 527529641029129796
         name: CombatVisualEffectBillboard
         enabled: true
@@ -62096,6 +62098,7 @@ child:
             start_size: [true, true, 1, [1.5, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
+            projection: true
       - id: 5040771952285695032
         name: CombatVisualEffectBillboard
         enabled: true
@@ -62132,6 +62135,7 @@ child:
             start_size: [true, true, 1, [1.5, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
+            projection: true
       - id: 12874188945509383534
         name: CombatVisualEffectBillboard
         enabled: true
@@ -62168,6 +62172,7 @@ child:
             start_size: [true, true, 1, [1.5, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
+            projection: true
       - id: 10036126666444990103
         name: CombatVisualEffectBillboard
         enabled: true
@@ -62204,6 +62209,7 @@ child:
             start_size: [true, true, 1, [1.5, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
+            projection: true
       - id: 6148550005582459292
         name: CombatVisualEffectBillboard
         enabled: true
@@ -62240,6 +62246,7 @@ child:
             start_size: [true, true, 1, [1.5, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
+            projection: true
       - id: 7062445247254001205
         name: CombatVisualEffectBillboard
         enabled: true
@@ -62276,6 +62283,7 @@ child:
             start_size: [true, true, 1, [1.5, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
+            projection: true
       - id: 14039487502737659816
         name: CombatVisualEffectBillboard
         enabled: true
@@ -62312,6 +62320,7 @@ child:
             start_size: [true, true, 1, [1.5, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
+            projection: true
       - id: 6896021615444038222
         name: CombatVisualEffectBillboard
         enabled: true
@@ -62348,6 +62357,7 @@ child:
             start_size: [true, true, 1, [1.5, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
+            projection: true
       - id: 11391158428621123869
         name: CombatVisualEffectBillboard
         enabled: true
@@ -62384,6 +62394,7 @@ child:
             start_size: [true, true, 1, [1.5, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
+            projection: true
       - id: 359332678782560188
         name: CombatVisualEffectBillboard
         enabled: true
@@ -62420,6 +62431,7 @@ child:
             start_size: [true, true, 1, [1.5, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
+            projection: true
       - id: 13116177273001401439
         name: CombatVisualEffectBillboard
         enabled: true
@@ -62456,6 +62468,7 @@ child:
             start_size: [true, true, 1, [1.5, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
+            projection: true
       - id: 16578174189532716782
         name: CombatVisualEffectBillboard
         enabled: true
@@ -62492,6 +62505,7 @@ child:
             start_size: [true, true, 1, [1.5, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
+            projection: true
       - id: 4057872658436799155
         name: CombatVisualEffectBillboard
         enabled: true
@@ -62528,6 +62542,7 @@ child:
             start_size: [true, true, 1, [1.5, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
+            projection: true
       - id: 66201861899567020
         name: CombatVisualEffectBillboard
         enabled: true
@@ -62564,6 +62579,7 @@ child:
             start_size: [true, true, 1, [1.5, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
+            projection: true
   - id: 13433321974207229500
     name: Player
     enabled: true
@@ -62606,6 +62622,7 @@ child:
         "'_falling_dust@GameObject*'": 15978994932787315509
         "'_walking_dust@GameObject*'": 9360802933542224699
         "'_heal_effect@GameObject*'": 5632300181883578781
+        "'_damage_effect@GameObject*'": 6903493020210152247
         "'_rotation_duration@float'": 0.075
         "'_death_screen@GameObject*'": 5669764609591625485
         "'_hp_cell_1@GameObject*'": 10783921632432947916
@@ -62631,6 +62648,7 @@ child:
         "'_step_frequency@float'": 0.4
         "'_melee_frequency@float'": 0.3
         "'_ranged_frequency@float'": 0.3
+        "'_damage_frecuency@float'": 1
         "'_timer@float'": 0.0666
       - !<script>
         id: 14328404394293474949
@@ -66081,6 +66099,42 @@ child:
                     image_y_tiles: 1
                     image_tiles_per_second: 1
                     fill_window: false
+      - id: 6903493020210152247
+        name: Damage_VFX
+        enabled: true
+        component:
+          - !<transform>
+            id: 9335290106489446800
+            type: 1
+            enabled: true
+            position: [156.1, -2.569, 122.3]
+            rotation: [0, -45, 0]
+            scale: [2.259, 2.222, 2.259]
+          - !<billboard>
+            id: 5632512737731077427
+            type: 21
+            enabled: true
+            play_on_awake: false
+            tiles: [5, 2]
+            flip: [true, true]
+            billboard_lifetime: 0.2
+            properties: [1, 0, 0, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 0.97
+            total_tiles: 10
+            animation_loop: false
+            color_cycles: 1
+            color_gradient: [[0.2197, 0, 0, 0, 0], [0.0925, 0, 0, 0, 0.9867]]
+            animation_section: false
+            color_section: true
+            size_section: false
+            size_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [1, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 0
+            projection: false
   - id: 10383158510979483947
     name: Level2_1stPass
     enabled: true
