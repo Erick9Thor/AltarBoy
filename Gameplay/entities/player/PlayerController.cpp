@@ -192,11 +192,6 @@ void Hachiko::Scripting::PlayerController::OnStart()
 
 void Hachiko::Scripting::PlayerController::OnUpdate()
 {
-	if (_level_manager->AreInputsBlocked())
-	{
-		return;
-	}
-
 	_player_transform = game_object->GetTransform();
 	_player_position = _player_transform->GetGlobalPosition();
 	_movement_direction = float3::zero;
@@ -220,8 +215,11 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 
 	if (IsAlive()) 
 	{
-		// Handle player the input
-		HandleInputAndStatus();
+		if (!_level_manager->AreInputsBlocked())
+		{
+			// Handle player the input
+			HandleInputAndStatus();
+		}
 
 		// Run attack simulation
 		AttackController();
@@ -257,6 +255,11 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		else 
 		{
 			_state = PlayerState::DIE;
+
+			// Some basic resets as disabling the dash and restarting the particles
+			_dash_trail->SetActive(false);
+			RestartParticles();
+
 			// By checking previous state we know that the current animation is the correct one
 			if (_previous_state == PlayerState::DIE && animation->IsAnimationStopped())
 			{
@@ -1383,12 +1386,35 @@ void Hachiko::Scripting::PlayerController::ResetPlayer(float3 spawn_pos)
 	// Color
 	_player_geometry->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, 1.0f), true);
 
+	// Particles
+	RestartParticles();
+
 	// State
 	_state = PlayerState::IDLE;
 
 	ChangeWeapon(_current_weapon);
 	UpdateHealthBar();
 	UpdateAmmoUI();
+}
+
+void Hachiko::Scripting::PlayerController::RestartParticles()
+{
+	if (_falling_dust_particles)
+	{
+		_falling_dust_particles->Restart();
+	}
+	if (_walking_dust_particles)
+	{
+		_walking_dust_particles->Restart();
+	}
+	if (_heal_effect_particles_1)
+	{
+		_heal_effect_particles_1->Restart();
+	}
+	if (_heal_effect_particles_2)
+	{
+		_heal_effect_particles_2->Restart();
+	}
 }
 
 void Hachiko::Scripting::PlayerController::UpdateHealthBar()
