@@ -171,7 +171,7 @@ namespace Hachiko
 			void CheckState();
 			void CheckComboAnimation();
 			void ResetPlayer(float3 spawn_pos);
-			void RestartParticles();
+			void StopParticles();
 
 		public:
 			SERIALIZE_FIELD(PlayerState, _state);

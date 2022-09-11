@@ -258,7 +258,7 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 
 			// Some basic resets as disabling the dash and restarting the particles
 			_dash_trail->SetActive(false);
-			RestartParticles();
+			StopParticles();
 
 			// By checking previous state we know that the current animation is the correct one
 			if (_previous_state == PlayerState::DIE && animation->IsAnimationStopped())
@@ -1387,7 +1387,7 @@ void Hachiko::Scripting::PlayerController::ResetPlayer(float3 spawn_pos)
 	_player_geometry->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, 1.0f), true);
 
 	// Particles
-	RestartParticles();
+	StopParticles();
 
 	// State
 	_state = PlayerState::IDLE;
@@ -1397,23 +1397,23 @@ void Hachiko::Scripting::PlayerController::ResetPlayer(float3 spawn_pos)
 	UpdateAmmoUI();
 }
 
-void Hachiko::Scripting::PlayerController::RestartParticles()
+void Hachiko::Scripting::PlayerController::StopParticles()
 {
 	if (_falling_dust_particles)
 	{
-		_falling_dust_particles->Restart();
+		_falling_dust_particles->Stop();
 	}
 	if (_walking_dust_particles)
 	{
-		_walking_dust_particles->Restart();
+		_walking_dust_particles->Stop();
 	}
 	if (_heal_effect_particles_1)
 	{
-		_heal_effect_particles_1->Restart();
+		_heal_effect_particles_1->Stop();
 	}
 	if (_heal_effect_particles_2)
 	{
-		_heal_effect_particles_2->Restart();
+		_heal_effect_particles_2->Stop();
 	}
 }
 
