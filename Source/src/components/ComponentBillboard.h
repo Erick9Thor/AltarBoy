@@ -86,6 +86,7 @@ namespace Hachiko
 
         // Render
         ParticleSystem::ParticleProperties render_properties;
+        bool projection = true;
 
         // Texture
         TextureProperties texture_properties = {};

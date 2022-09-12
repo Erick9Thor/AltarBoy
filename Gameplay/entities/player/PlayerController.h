@@ -60,6 +60,15 @@ namespace Hachiko
 				HEAVY_3
 			};
 
+			enum class DamageType
+			{
+				NONE,
+				ENEMY,
+				FALL,
+				LASER,
+				CRYSTAL
+			};
+
 			struct PlayerAttack
 			{
 				float hit_delay = 0.f;
@@ -92,7 +101,7 @@ namespace Hachiko
 			PlayerState GetState() const;
 
 			void CheckGoal(const float3& current_position);
-			bool RegisterHit(int damage, float knockback = 0, math::float3 direction = float3::zero, bool force_dmg = false);
+			bool RegisterHit(int damage, float knockback = 0, math::float3 direction = float3::zero, bool force_dmg = false, DamageType dmg_type = DamageType::NONE);
 			void UpdateHealthBar();
 			void UpdateAmmoUI();
 			void UpdateWeaponChargeUI();
@@ -113,6 +122,13 @@ namespace Hachiko
 			WeaponUsed GetCurrentWeaponType() const
 			{
 				return static_cast<WeaponUsed>(_current_weapon);
+			}
+
+			DamageType ReadDamageState()
+			{
+				DamageType ret_value = damaged_by;
+				damaged_by = DamageType::NONE;
+				return ret_value;
 			}
 
 		private:
@@ -208,6 +224,7 @@ namespace Hachiko
 			SERIALIZE_FIELD(GameObject*, _falling_dust);
 			SERIALIZE_FIELD(GameObject*, _walking_dust);
 			SERIALIZE_FIELD(GameObject*, _heal_effect);
+			SERIALIZE_FIELD(GameObject*, _damage_effect);
 
 			const float _ranged_attack_cooldown = 0.2f;
 			const float _combo_grace_period = .5f;
@@ -245,7 +262,8 @@ namespace Hachiko
 			ComponentParticleSystem* _walking_dust_particles = nullptr;
 			ComponentParticleSystem* _heal_effect_particles_1 = nullptr;
 			ComponentParticleSystem* _heal_effect_particles_2 = nullptr;
-			
+			ComponentBillboard* _damage_effect_billboard = nullptr;
+
 			std::vector<Weapon> weapons{};
 
 			// Internal state variables
@@ -256,6 +274,7 @@ namespace Hachiko
 			float _buffer_time = .5f;
 			float _remaining_buffer_time = 0.0f;
 			bool dash_buffer = false;
+			DamageType damaged_by = DamageType::NONE;
 
 			// Dash management
 			unsigned _dash_charges = 2;

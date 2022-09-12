@@ -34,6 +34,8 @@ private:
 	SERIALIZE_FIELD(PlayerState, _previous_state);
 
 	float _current_frequency;
+	float _damage_timer;
+	float _dmg_cool_down;
 };
 } // namespace Scripting
 } // namespace Hachiko

@@ -109,6 +109,10 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 		_heal_effect_particles_1 = _heal_effect->GetComponent<ComponentParticleSystem>();
 		_heal_effect_particles_2 = _heal_effect->GetComponentInDescendants<ComponentParticleSystem>();
 	}
+	if (_damage_effect != nullptr)
+	{
+		_damage_effect_billboard = _damage_effect->GetComponent<ComponentBillboard>();
+	}
 
 	_combat_stats = game_object->GetComponent<Stats>();
 	// Player doesnt use all combat stats since some depend on weapon
@@ -251,6 +255,7 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 			if (_previous_state == PlayerState::DIE && animation->IsAnimationStopped())
 			{
 				_state = PlayerState::READY_TO_RESPAWN;
+				damaged_by = DamageType::NONE;
 
 				if (_death_screen != nullptr) 
 				{
@@ -842,7 +847,7 @@ void Hachiko::Scripting::PlayerController::MovementController()
 		if (_start_fall_pos.y - _player_position.y > _falling_distance)
 		{
 			// Fall dmg
-			RegisterHit(1, 0, float3::zero, true);
+			RegisterHit(1, 0, float3::zero, true, DamageType::FALL);
 
 			// If its still alive place it in the first valid position, if none exists respawn it
 			_player_position = GetLastValidDashOrigin();
@@ -1176,8 +1181,10 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 	}
 }
 
-bool Hachiko::Scripting::PlayerController::RegisterHit(int damage_received, float knockback, float3 direction, bool force_dmg)
+bool Hachiko::Scripting::PlayerController::RegisterHit(int damage_received, float knockback, float3 direction, bool force_dmg, DamageType dmg_by)
 {
+	damaged_by = dmg_by;
+	
 	if (_god_mode || !IsAlive())
 	{
 		return false;
@@ -1191,6 +1198,12 @@ bool Hachiko::Scripting::PlayerController::RegisterHit(int damage_received, floa
 		{
 			_player_geometry->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, 0.5f), true);
 		}
+
+		if (_damage_effect_billboard != nullptr)
+		{
+			_damage_effect_billboard->Play();
+		}
+
 		_combat_stats->ReceiveDamage(damage_received);
 		UpdateHealthBar();
 		Input::GoBrr(0.3f, 500);
