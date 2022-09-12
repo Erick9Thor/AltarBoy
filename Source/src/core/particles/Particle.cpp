@@ -82,8 +82,8 @@ void Hachiko::Particle::Draw(ComponentCamera* camera, const Program* program)
     float4x4 model_matrix = float4x4::identity;
     GetModelMatrix(camera, model_matrix);
     program->BindUniformFloat4x4("model", model_matrix.ptr());
-    program->BindUniformFloat4x4("view", &camera->GetViewMatrix()[0][0]);
-    program->BindUniformFloat4x4("proj", &camera->GetProjectionMatrix()[0][0]);
+    int ignore_camera = 0; // Always apply camera projection
+    program->BindUniformInts("ignore_camera", 1, &ignore_camera);
 
     const float x_factor = emitter->GetFactor().x;
     const float y_factor = emitter->GetFactor().y;

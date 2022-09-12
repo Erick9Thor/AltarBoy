@@ -50,6 +50,7 @@ void Hachiko::WindowConfiguration::Update()
         Widgets::Checkbox("Undo/Redo", &App->editor->undo_redo_active);
         App->window->OptionsMenu();
         App->renderer->PerformanceMenu();
+        App->renderer->LoadingScreenOptions();
     }
 
     if (ImGui::CollapsingHeader("Batching"))

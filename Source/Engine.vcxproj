@@ -712,6 +712,7 @@
     <ClInclude Include="src\ui\widgets\Label.h" />
     <ClInclude Include="src\ui\widgets\RadioButton.h" />
     <ClInclude Include="src\ui\widgets\SliderFloat.h" />
+    <ClInclude Include="src\utils\ComponentUtility.h" />
     <ClInclude Include="src\utils\MathUtil.h" />
     <ClInclude Include="src\ui\widgets\Input.h" />
     <ClInclude Include="src\utils\RandomUtilDefinitions.h" />

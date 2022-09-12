@@ -28,7 +28,7 @@ namespace Hachiko
         ~ModuleInput() override;
 
         bool Init() override;
-        UpdateStatus PreUpdate(float delta) override;
+        UpdateStatus PreUpdate(const float delta) override;
         bool CleanUp() override;
 
         //general function to get the state of a key

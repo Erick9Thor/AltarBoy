@@ -14,6 +14,7 @@
 #include "modules/ModuleEvent.h"
 #include "modules/ModuleCamera.h"
 #include "ComponentCamera.h"
+#include "utils/ComponentUtility.h"
 
 Hachiko::ComponentImage::ComponentImage(GameObject* container) :
     Component(Type::IMAGE, container)
@@ -275,6 +276,20 @@ void Hachiko::ComponentImage::Load(const YAML::Node& node)
     frames_per_second = node[IMAGE_TILES_PER_SEC].IsDefined() ? node[IMAGE_TILES_PER_SEC].as<int>() : 1;
     factor = float2(1.0f / tiles.x, 1.0f / tiles.y);
     time_per_frame = 1.0f / frames_per_second;
+}
+
+void Hachiko::ComponentImage::CollectResources(const YAML::Node& node, std::map<Resource::Type, std::set<UID>>& resources)
+{
+    // Collect default image resource:
+    ComponentUtility::CollectResource(
+        Resource::Type::TEXTURE,
+        node[IMAGE_IMAGE_ID],
+        resources);
+    // Collect hover image resource:
+    ComponentUtility::CollectResource(
+        Resource::Type::TEXTURE,
+        node[IMAGE_HOVER_IMAGE_ID],
+        resources);
 }
 
 void Hachiko::ComponentImage::UpdateSize()

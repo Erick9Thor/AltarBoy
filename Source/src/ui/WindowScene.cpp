@@ -361,7 +361,7 @@ Hachiko::GameObject* Hachiko::WindowScene::SelectObject(const ComponentCamera* c
 
     const LineSegment line = camera->Raycast(x_normalized, y_normalized);
     App->debug_mode->SetLine(line);
-    GameObject* selected = scene->Raycast(line);
+    GameObject* selected = scene->RayCast(line);
 
     return selected;
 }

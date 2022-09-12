@@ -28,8 +28,8 @@ namespace Hachiko
 
         bool Init() override;
         bool Start() override;
-        UpdateStatus PreUpdate(float delta) override;
-        UpdateStatus Update(float delta) override;
+        UpdateStatus PreUpdate(const float delta) override;
+        UpdateStatus Update(const float delta) override;
         UpdateStatus PostUpdate(const float delta) override;
         bool CleanUp() override;
 
@@ -150,7 +150,7 @@ namespace Hachiko
         bool save_as_popup = false;
         std::string file_name_buffer {""};
 #ifndef PLAY_BUILD
-        inline static bool history_enabled = true;
+        inline static bool history_enabled = false;
 #else
         inline static bool history_enabled = false;
 #endif
