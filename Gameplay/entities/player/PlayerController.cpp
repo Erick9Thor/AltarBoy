@@ -214,8 +214,11 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 
 	if (IsAlive()) 
 	{
-		// Handle player the input
-		HandleInputAndStatus();
+		if (!_level_manager->AreInputsBlocked())
+		{
+			// Handle player the input
+			HandleInputAndStatus();
+		}
 
 		// Run attack simulation
 		AttackController();
@@ -251,6 +254,11 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		else 
 		{
 			_state = PlayerState::DIE;
+
+			// Some basic resets as disabling the dash and restarting the particles
+			_dash_trail->SetActive(false);
+			StopParticles();
+
 			// By checking previous state we know that the current animation is the correct one
 			if (_previous_state == PlayerState::DIE && animation->IsAnimationStopped())
 			{
@@ -1185,7 +1193,7 @@ bool Hachiko::Scripting::PlayerController::RegisterHit(int damage_received, floa
 {
 	damaged_by = dmg_by;
 	
-	if (_god_mode || !IsAlive())
+	if (_god_mode || !IsAlive() || _level_manager->AreInputsBlocked())
 	{
 		return false;
 	}
@@ -1425,12 +1433,35 @@ void Hachiko::Scripting::PlayerController::ResetPlayer(float3 spawn_pos)
 	// Color
 	_player_geometry->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, 1.0f), true);
 
+	// Particles
+	StopParticles();
+
 	// State
 	_state = PlayerState::IDLE;
 
 	ChangeWeapon(_current_weapon);
 	UpdateHealthBar();
 	UpdateAmmoUI();
+}
+
+void Hachiko::Scripting::PlayerController::StopParticles()
+{
+	if (_falling_dust_particles)
+	{
+		_falling_dust_particles->Stop();
+	}
+	if (_walking_dust_particles)
+	{
+		_walking_dust_particles->Stop();
+	}
+	if (_heal_effect_particles_1)
+	{
+		_heal_effect_particles_1->Stop();
+	}
+	if (_heal_effect_particles_2)
+	{
+		_heal_effect_particles_2->Stop();
+	}
 }
 
 void Hachiko::Scripting::PlayerController::UpdateHealthBar()
