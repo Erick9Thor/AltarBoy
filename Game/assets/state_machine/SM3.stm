@@ -20,10 +20,10 @@ clips:
     clips_id: 9741971980889188744
     clips_loop: false
   - clip_name: charge
-    clips_id: 14680319140328100188
+    clips_id: 12182644846570405273
     clips_loop: true
   - clip_name: shot
-    clips_id: 14680319140328100188
+    clips_id: 53152947715296143
     clips_loop: false
   - clip_name: dash
     clips_id: 786971983245796595
@@ -70,6 +70,9 @@ clips:
   - clip_name: hammerThree
     clips_id: 3991727125863517679
     clips_loop: false
+  - clip_name: Wounded
+    clips_id: 14339518451560539032
+    clips_loop: true
 nodes:
   - node_name: idle
     node_clip_name: idle
@@ -113,6 +116,8 @@ nodes:
     node_clip_name: hammerTwo
   - node_name: hammerThree
     node_clip_name: hammerThree
+  - node_name: Wounded
+    node_clip_name: Wounded
 transitions:
   - transition_source: idle
     transition_target: dash
@@ -305,4 +310,12 @@ transitions:
   - transition_source: ANY
     transition_target: hammerOne
     transition_trigger: isHammerOne
+    transition_blend: 300
+  - transition_source: ANY
+    transition_target: Wounded
+    transition_trigger: isWounded
+    transition_blend: 300
+  - transition_source: idle
+    transition_target: Wounded
+    transition_trigger: isWounded
     transition_blend: 300
