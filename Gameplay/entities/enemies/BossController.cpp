@@ -18,7 +18,7 @@ void Hachiko::Scripting::BossController::OnAwake()
 	player = Scenes::GetPlayer();
 	level_manager = Scenes::GetLevelManager()->GetComponent<LevelManager>();
 	player_camera = Scenes::GetMainCamera()->GetComponent<PlayerCamera>();
-
+	combat_manager = Scenes::GetCombatManager()->GetComponent<CombatManager>();
 	transform = game_object->GetTransform();
 	combat_stats = game_object->GetComponent<Stats>();
 	agent = game_object->GetComponent<ComponentAgent>();
@@ -44,6 +44,12 @@ void Hachiko::Scripting::BossController::OnUpdate()
 		constexpr int player_dmg = 5;
 		RegisterHit(player_dmg);
 	}
+
+	if (attack_current_cd > 0.0f)
+	{
+		attack_current_cd -= Time::DeltaTime();
+	}
+
 	StateController();
 	state_value = static_cast<int>(state);
 }
@@ -253,7 +259,7 @@ void Hachiko::Scripting::BossController::ResetCombatState()
 {
 	// Reset combat related variables to prevent bugs
 	combat_state = CombatState::IDLE;
-	prev_combat_state = combat_state;
+	prev_combat_state = CombatState::CRYSTAL_JUMP;
 }
 
 void Hachiko::Scripting::BossController::Die()
@@ -328,6 +334,7 @@ void Hachiko::Scripting::BossController::FinishCacoon()
 
 void Hachiko::Scripting::BossController::Chase()
 {
+	combat_state = CombatState::CHASING;
 }
 
 void Hachiko::Scripting::BossController::ChaseController()
@@ -336,22 +343,46 @@ void Hachiko::Scripting::BossController::ChaseController()
 
 	// If player is very cloose change to attack mode
 	float player_distance = transform->GetGlobalPosition().Distance(player_position);
-	
-	if (player_distance <= combat_stats->_attack_range) {
+
+	if (attack_current_cd <= 0.0f && player_distance <= combat_stats->_attack_range) {
 		// We expect transition to attack to start the attack
 		combat_state = CombatState::ATTACKING;
+		attack_current_cd = combat_stats->_attack_cd;
 		return;
 	}
 
+	transform->LookAtTarget(player_position);
+
+	float3 moving_position;
+	// If the boss can not attack it will try to keep some distance
+	if (attack_current_cd > 0.0f && player_distance < 8.f)
+	{
+		// Back down if too close
+		if (player_distance < 6.f)
+		{
+			moving_position = transform->GetGlobalPosition() - transform->GetFront();
+			agent->SetMaxSpeed(2.0f);
+		}
+		// Dont move if already far enough
+		else
+		{
+			return;
+		}
+	}
 	// If not close enough to attack keep chasing
-	// Possible improvement: If player is close enough not chase to not go inside of it
-	float3 corrected_position = Navigation::GetCorrectedPosition(player_position, math::float3(10.0f, 10.0f, 10.0f));
+	else
+	{
+		moving_position = player_position;
+		agent->SetMaxSpeed(combat_stats->_move_speed);
+	}
+
+	float3 corrected_position = Navigation::GetCorrectedPosition(moving_position, math::float3(10.0f, 10.0f, 10.0f));
 	if (corrected_position.x < FLT_MAX)
 	{
 		target_position = corrected_position;
 		transform->LookAtTarget(target_position);
 		ComponentAgent* agc = game_object->GetComponent<ComponentAgent>();
-		agent->SetTargetPosition(player_position);
+		agent->SetTargetPosition(target_position);
 	}
 }
 
@@ -361,6 +392,23 @@ void Hachiko::Scripting::BossController::MeleeAttack()
 
 void Hachiko::Scripting::BossController::MeleeAttackController()
 {
+	// Enemy like attacks for alpha testing, this should be changed
+	// It deals no damage also
+	CombatManager::AttackStats attack_stats;
+	attack_stats.damage = 0;
+	attack_stats.knockback_distance = 0.0f;
+	attack_stats.width = 4.f;
+	attack_stats.range = combat_stats->_attack_range * 1.3f;
+	attack_stats.type = CombatManager::AttackType::RECTANGLE;
+
+	float3 emitter_direction = transform->GetFront().Normalized();
+	float3 emitter_position = transform->GetGlobalPosition() + emitter_direction * (combat_stats->_attack_range / 2.f);
+	float4x4 emitter = float4x4::FromTRS(emitter_position, transform->GetGlobalRotation(), transform->GetGlobalScale());
+	Debug::DebugDraw(combat_manager->CreateAttackHitbox(emitter, attack_stats), float3(1.0f, 1.0f, 0.0f));
+
+	combat_manager->EnemyMeleeAttack(emitter, attack_stats);
+
+	combat_state = CombatState::IDLE;
 }
 
 void Hachiko::Scripting::BossController::SpawnCrystals()

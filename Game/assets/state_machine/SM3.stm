@@ -124,10 +124,6 @@ transitions:
     transition_trigger: isDash
     transition_blend: 300
   - transition_source: idle
-    transition_target: charge
-    transition_trigger: isCharge
-    transition_blend: 300
-  - transition_source: idle
     transition_target: pickUp
     transition_trigger: isPickUp
     transition_blend: 300
@@ -318,4 +314,8 @@ transitions:
   - transition_source: idle
     transition_target: Wounded
     transition_trigger: isWounded
+    transition_blend: 300
+  - transition_source: ANY
+    transition_target: charge
+    transition_trigger: isCharge
     transition_blend: 300
