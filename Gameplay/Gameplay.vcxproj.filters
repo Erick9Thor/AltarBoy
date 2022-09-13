@@ -530,6 +530,7 @@
     <ClInclude Include="misc\CameraPosChange.h" />
     <ClInclude Include="entities\enemies\BossController.h" />
     <ClInclude Include="misc\AssetsObstacle.h" />
+    <ClInclude Include="misc\BossLaserController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scriptingUtil\gameplaypch.cpp">
@@ -810,6 +811,7 @@
     <ClCompile Include="misc\CameraPosChange.cpp" />
     <ClCompile Include="entities\enemies\BossController.cpp" />
     <ClCompile Include="misc\AssetsObstacle.cpp" />
+    <ClCompile Include="misc\BossLaserController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Source\vendors\MathGeoLib\Math\float2.inl">

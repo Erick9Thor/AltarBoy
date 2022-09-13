@@ -157,6 +157,7 @@ void Hachiko::Scripting::BossController::CombatController()
 
 	if (combat_stats->_current_hp <= 0)
 	{
+		level_manager->GoalReached();
 		state = BossState::DEAD;
 		return;
 	}

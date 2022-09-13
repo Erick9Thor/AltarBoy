@@ -32,6 +32,7 @@ namespace Hachiko
             GameObject* _player = nullptr;
             LevelManager* _level_manager = nullptr;
             ComponentAnimation* _animation = nullptr;
+            ComponentObstacle* _obstacle = nullptr;
             float3 _restart_position;
             bool _used = false;
         };
