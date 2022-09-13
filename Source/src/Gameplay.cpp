@@ -24,7 +24,7 @@ void Hachiko::Quit()
 namespace Hachiko::Time
 {
 
-namespace // private
+namespace Private
 {
 volatile float time_scale = 1.0f;
 }
@@ -36,17 +36,25 @@ float DeltaTime()
 
 float DeltaTimeScaled()
 {
-    return time_scale * DeltaTime();
+    return Private::time_scale * DeltaTime();
 }
 
 void SetTimeScale(const float new_time_scale)
 {
-    time_scale = new_time_scale;
+    // If the time scale is actually different from the previous one, fire
+    // event, or set the value:
+    if (abs(Private::time_scale - new_time_scale) <= FLT_EPSILON)
+    {
+        return;
+    }
+
+    App->event->Publish(Event::Type::TIME_SCALE_CHANGED);   
+    Private::time_scale = new_time_scale;
 }
 
 float GetTimeScale()
 {
-    return time_scale;
+    return Private::time_scale;
 }
 }
 
