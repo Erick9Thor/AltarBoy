@@ -23,6 +23,11 @@ void Hachiko::Scripting::PillarCheckpoint::OnAwake()
 	_level_manager = Scenes::GetLevelManager()->GetComponent<LevelManager>();
 	assert(_player != nullptr);
 	assert(_level_manager != nullptr);
+	_obstacle = game_object->GetComponentInDescendants<ComponentObstacle>();
+	if (_obstacle != nullptr)
+	{
+		_obstacle->AddObstacle();
+	}
 }
 
 void Hachiko::Scripting::PillarCheckpoint::OnUpdate()
