@@ -67,7 +67,7 @@
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="PlaceholderNavigation" ID="{B3BA09D0-6A64-4A3A-B91F-13BE62A37BF7}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+									<ObjectRef Name="Exploracion A" ID="{5B57C681-1577-4D3C-9AE0-B128CF44FA34}" WorkUnitID="{9B3979AF-6373-40FD-A6FD-C5074B4E0B6D}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
@@ -82,7 +82,7 @@
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="PlaceholderCombat" ID="{495AEE8B-4F4E-4582-A57B-6DCB378F2ED6}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+									<ObjectRef Name="Combate A" ID="{D5F3B85B-226D-42E7-BD15-6120ED3D2477}" WorkUnitID="{9B3979AF-6373-40FD-A6FD-C5074B4E0B6D}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
@@ -104,7 +104,7 @@
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="PlaceholderCombat" ID="{495AEE8B-4F4E-4582-A57B-6DCB378F2ED6}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+									<ObjectRef Name="Combate A" ID="{D5F3B85B-226D-42E7-BD15-6120ED3D2477}" WorkUnitID="{9B3979AF-6373-40FD-A6FD-C5074B4E0B6D}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
@@ -120,7 +120,7 @@
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="PlaceholderNavigation" ID="{B3BA09D0-6A64-4A3A-B91F-13BE62A37BF7}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+									<ObjectRef Name="Exploracion A" ID="{5B57C681-1577-4D3C-9AE0-B128CF44FA34}" WorkUnitID="{9B3979AF-6373-40FD-A6FD-C5074B4E0B6D}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
