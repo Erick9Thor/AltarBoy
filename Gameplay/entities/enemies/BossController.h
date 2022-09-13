@@ -116,6 +116,7 @@ namespace Hachiko
             ComponentProgressBar* hp_bar = nullptr;
             ComponentAgent* agent = nullptr;
             GauntletManager* gauntlet = nullptr;
+            CombatManager* combat_manager = nullptr;
             Stats* combat_stats = nullptr;
             BossState state = BossState::WAITING_ENCOUNTER;
             BossState prev_state = state;
@@ -124,6 +125,8 @@ namespace Hachiko
             bool hitable = true;
             std::vector<float> gauntlet_thresholds_percent{0.3, 0.7};
             float3 target_position = float3::zero;
+
+            float attack_current_cd;
 
             bool camera_focus_on_boss = false;
             float time_elapse = 0.0;
