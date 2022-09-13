@@ -9,11 +9,13 @@
 
 #include "core/rendering/Program.h"
 #include "modules/ModuleResources.h"
+#include "modules/ModuleSceneManager.h"
 
 #include "modules/ModuleEvent.h"
 
 #include "resources/ResourceFont.h"
 #include "FTLabel.h"
+#include "utils/ComponentUtility.h"
 
 Hachiko::ComponentText::ComponentText(GameObject* container) :
     Component(Type::TEXT, container)
@@ -98,13 +100,25 @@ void Hachiko::ComponentText::Draw(ComponentTransform2D* transform, Program* prog
 {
     OPTICK_CATEGORY("Draw", Optick::Category::Rendering);
 
+    if (build_font && font)
+    {
+        try        
+        {
+            BuildLabel(game_object->GetComponent<ComponentTransform2D>());
+        }
+        catch (std::exception& e)
+        {
+            // Catch exception and return unloaded font if fails
+            HE_LOG("Failed to load font %s", std::to_string(font->GetID()).c_str());
+        }    
+    }
     if (!label)
     {
         return;
     }
 
     RefreshLabel(transform);
-    // Program is activated inside hachikorender
+    // Program is activated inside HachikoRender
     label->HachikoRender(program);
 }
 
@@ -126,6 +140,14 @@ void Hachiko::ComponentText::Load(const YAML::Node& node)
     SetText(label_text.c_str());
     SetFontSize(font_size);
     SetFontColor(font_color);
+}
+
+void Hachiko::ComponentText::CollectResources(const YAML::Node& node, std::map<Resource::Type, std::set<UID>>& resources)
+{
+    ComponentUtility::CollectResource(
+        Resource::Type::FONT,
+        node[FONT_ID],
+        resources);
 }
 
 void Hachiko::ComponentText::SetText(const char* new_text)
@@ -161,7 +183,7 @@ void Hachiko::ComponentText::LoadFont(UID id)
     {
         App->resources->ReleaseResource(font);
         font = static_cast<ResourceFont*>(App->resources->GetResource(Resource::Type::FONT, id));
-        if (font)
+        if (font && !App->scene_manager->IsLoadingScene())
         {
             BuildLabel(game_object->GetComponent<ComponentTransform2D>());
         }
@@ -193,6 +215,8 @@ void Hachiko::ComponentText::RefreshLabel(ComponentTransform2D* transform)
 
 void Hachiko::ComponentText::BuildLabel(ComponentTransform2D* transform)
 {
+    build_font = false;
+
     unsigned windowWidth, windowHeight;
     App->camera->GetRenderingCamera()->GetResolution(windowWidth, windowHeight);
 

@@ -2,11 +2,14 @@
 
 #include <MathGeoLib.h>
 #include <vector>
+#include <map>
+#include <set>
 #include <string>
 #include <typeinfo>
 
 #include "utils/UUID.h"
 #include "components/Component.h"
+#include "resources/Resource.h"
 
 #if defined(HACHIKO_API)
 // Do Nothing
@@ -25,6 +28,7 @@ namespace Hachiko
     {
         friend class Component;
         friend class Scene;
+        friend class ModuleRender;
         friend class ModuleSceneManager;
 
     public:
@@ -86,6 +90,7 @@ namespace Hachiko
         void Save(YAML::Node& node, bool as_prefab = false) const;
         void CollectObjectsAndComponents(std::vector<const GameObject*>& object_collector, std::vector<const Component*>& component_collector);
         void Load(const YAML::Node& node, bool as_prefab = false, bool meshes_only = false);
+        static void CollectResources(const YAML::Node& node, std::map<Resource::Type, std::set<UID>>& resources);
 
         void SavePrefabReferences(YAML::Node& node, std::vector<const GameObject*>& object_collection, std::vector<const Component*>& component_collection) const;
         void LoadPrefabReferences(std::vector<const GameObject*>& object_collection, std::vector<const Component*>& component_collection);

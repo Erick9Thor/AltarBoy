@@ -11,6 +11,7 @@
 #include "animation/AnimationController.h"
 
 #include "ui/WindowStateMachine.h"
+#include "utils/ComponentUtility.h"
 
 Hachiko::ComponentAnimation::ComponentAnimation(GameObject* container) :
     Component(Type::ANIMATION, container)
@@ -417,4 +418,12 @@ void Hachiko::ComponentAnimation::Load(const YAML::Node& node)
         App->resources->ReleaseResource(state_machine);
         state_machine = dynamic_cast<ResourceStateMachine*>(App->resources->GetResource(Resource::Type::STATE_MACHINE, state_machine_uid));
     }
+}
+
+void Hachiko::ComponentAnimation::CollectResources(const YAML::Node& node, std::map<Resource::Type, std::set<UID>>& resources)
+{
+    ComponentUtility::CollectResource(
+        Resource::Type::STATE_MACHINE,
+        node[M_STATE_MACHINE],
+        resources);
 }

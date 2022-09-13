@@ -2,7 +2,6 @@
 
 #include "core/preferences/Preferences.h"
 #include "ui/editor/Theme.h"
-#include "Math/float3.h"
 
 namespace Hachiko
 {
@@ -161,6 +160,16 @@ namespace Hachiko
             shadow_pass_enabled = enabled;
         }
 
+        [[nodiscard]] YAML::Node GetLoadingScreenConfig() const
+        {
+            return loading_screen_config;
+        }
+
+        void SetLoadingScreenConfig(YAML::Node& node)
+        {
+            loading_screen_config = node;
+        }
+
     private:
         bool display_debug_draw = false;
 
@@ -180,5 +189,7 @@ namespace Hachiko
         float fps_threshold = 1000.0f / max_fps;
         Editor::Theme::Type theme = Editor::Theme::Type::DARK;
         bool undo_redo_active = true;
+
+        YAML::Node loading_screen_config;
     };
 }

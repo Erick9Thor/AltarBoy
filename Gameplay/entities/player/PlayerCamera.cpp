@@ -9,7 +9,7 @@
 
 Hachiko::Scripting::PlayerCamera::PlayerCamera(GameObject* game_object)
 	: Script(game_object, "PlayerCamera")
-	, _relative_position_to_player(math::float3(0.0f, 24.0f, 16.0f))
+	, _relative_position_to_player(math::float3(0.0f, 26.0f, 17.5f))
 	, _objective(nullptr)
 	, _follow_delay(0.6f)
 {
@@ -103,6 +103,11 @@ void Hachiko::Scripting::PlayerCamera::MoveCamera()
 
 float2 Hachiko::Scripting::PlayerCamera::MoveCameraWithMouse()
 {
+	if (_player_ctrl == nullptr) 
+	{
+		return float2::zero;
+	}
+
 	float2 added_movement, mouse_pos;
 	mouse_pos = Input::GetMouseNormalizedPosition();
 	mouse_pos = mouse_pos - float2(0.5f, 0.5f);
