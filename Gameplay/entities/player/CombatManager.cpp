@@ -6,6 +6,7 @@
 #include "entities/enemies/EnemyController.h"
 #include "entities/player/PlayerController.h"
 #include "entities/player/CombatManager.h"
+#include "entities/enemies/BossController.h"
 
 // TODO: Delete this include:
 #include <modules/ModuleSceneManager.h>
@@ -36,6 +37,8 @@ void Hachiko::Scripting::CombatManager::OnAwake()
 	}
 
 	_player = Scenes::GetPlayer();
+	_boss = Scenes::GetBoss();
+
 	_enemy_packs_container = Scenes::GetEnemiesContainer();
 
 	_charge_particles = _charge_vfx->GetComponent<ComponentParticleSystem>();
@@ -44,6 +47,11 @@ void Hachiko::Scripting::CombatManager::OnAwake()
 	if (_player)
 	{
 		_player_controller = _player->GetComponent<PlayerController>();
+	}
+
+	if (_boss)
+	{
+		_boss_controller = _boss->GetComponent<BossController>();
 	}
 
 	SerializeEnemyPacks();
@@ -79,6 +87,7 @@ int Hachiko::Scripting::CombatManager::PlayerRectangleAttack(const float4x4& ori
 
 	hit +=  ProcessAgentsOBB(hitbox, attack_stats, origin.Col3(3), true);
 	hit +=  ProcessObstaclesOBB(hitbox, attack_stats);
+	hit += ProcessBossOBB(hitbox, attack_stats);
 	
 	return hit;
 }
@@ -177,19 +186,32 @@ void Hachiko::Scripting::CombatManager::RunBulletSimulation()
 			//bullet->GetTransform()->SetGlobalScale(float3(stats.GetChargedPercent()));
 			SetBulletTrajectory(i);
 			stats.update_ui = true;
+
 			continue;
 		}
 
-		if (stats.current_charge >= stats.charge_time && stats.update_ui)	// When a bullet starts moving only update ui once
+		if (stats.current_charge >= stats.charge_time)
 		{
-			bullet->SetActive(true);
 			_charge_particles->Stop();
-			_shot_particles->Play();
-			_shot_particles->Restart();
-			if (!_player_controller)	return;
+		}
 
-			_player_controller->UpdateAmmoUI();
-			stats.update_ui = false;
+		// Just update th ui once
+		if (stats.update_ui)
+		{
+			if (stats.shot)
+			{
+				bullet->SetActive(true);
+				_shot_particles->Play();
+				_shot_particles->Restart();
+				if (!_player_controller)	return;
+				_player_controller->UpdateAmmoUI();
+				stats.update_ui = false;
+			}
+			else
+			{
+				SetBulletTrajectory(i);
+				continue;
+			}
 		}
 		
 		// Move bullet forward
@@ -409,7 +431,7 @@ void Hachiko::Scripting::CombatManager::SerializeEnemyPacks()
 	}
 }
 
-int Hachiko::Scripting::CombatManager::ShootBullet(ComponentTransform* emitter_transform, BulletStats new_stats)
+int Hachiko::Scripting::CombatManager::ChargeBullet(ComponentTransform* emitter_transform, BulletStats new_stats)
 {
 	_charge_particles->Play();
 	_charge_particles->Restart();
@@ -433,6 +455,22 @@ int Hachiko::Scripting::CombatManager::ShootBullet(ComponentTransform* emitter_t
 		return static_cast<int>(i);
 	}
 	return -1;
+}
+
+bool Hachiko::Scripting::CombatManager::ShootBullet(unsigned bullet_index)
+{
+	BulletStats& stats = _bullet_stats[bullet_index];
+
+	if (stats.current_charge >= stats.charge_time)
+	{
+		stats.shot = true;
+		return true;
+	}
+	else
+	{
+		StopBullet(bullet_index);
+		return false;
+	}
 }
 
 void Hachiko::Scripting::CombatManager::StopBullet(unsigned bullet_index)
@@ -818,6 +856,22 @@ int Hachiko::Scripting::CombatManager::ProcessPlayerCircle(const float3& attack_
 	return 0;
 }
 
+int Hachiko::Scripting::CombatManager::ProcessBossOBB(const OBB& attack_box, const AttackStats& attack_stats)
+{
+	if (!_boss_controller || !_boss_controller->IsAlive())
+	{
+		return 0;
+	}
+
+	if (OBBHitsAgent(_boss, attack_box))
+	{
+		_boss_controller->RegisterHit(attack_stats.damage);
+		return 1;
+	}
+	
+	return 0;
+}
+
 bool Hachiko::Scripting::CombatManager::ConeHitsAgent(GameObject* agent_go, const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance)
 {
 	ComponentAgent* agent = agent_go->GetComponent<ComponentAgent>();
@@ -980,7 +1034,7 @@ void Hachiko::Scripting::CombatManager::HitEnemy(EnemyController* enemy, int dam
 
 void Hachiko::Scripting::CombatManager::HitPlayer(int damage, float knockback, float3 knockback_dir)
 {
-	_player->GetComponent<PlayerController>()->RegisterHit(damage, knockback, knockback_dir);
+	_player->GetComponent<PlayerController>()->RegisterHit(damage, knockback, knockback_dir, false, PlayerController::DamageType::ENEMY);
 }
 
 float Hachiko::Scripting::CombatManager::BulletStats::GetChargedPercent()

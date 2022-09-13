@@ -39,6 +39,15 @@ namespace Hachiko
 			float3 Respawn();
 			void GoalReached();
 
+			void BlockInputs(bool block)
+			{
+				_inputs_blocked = block;
+			}
+			[[nodiscard]] bool AreInputsBlocked() const
+			{
+				return _inputs_blocked;
+			}
+
 			SERIALIZE_FIELD(unsigned, _level);
 			SERIALIZE_FIELD(float3, _respawn_position);
 			SERIALIZE_FIELD(GameObject*, _gauntlet_ui_go);
@@ -48,6 +57,7 @@ namespace Hachiko
 		private:
 			GauntletManager* _last_gauntlet = nullptr;
 			ComponentText* _enemy_counter = nullptr;
+			bool _inputs_blocked = false;
 		};
 	}
 

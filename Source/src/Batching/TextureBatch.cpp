@@ -1,12 +1,12 @@
 #include "core/hepch.h"
 #include "TextureBatch.h"
 
-#include "core/GameObject.h"
+#include "Batching/BatchManager.h"
 #include "components/ComponentMeshRenderer.h"
 #include "resources/ResourceMaterial.h"
 
-#include "Modules/ModuleProgram.h"
-#include "Modules/ModuleTexture.h"
+#include "modules/ModuleProgram.h"
+#include "modules/ModuleTexture.h"
 #include "core/rendering/Program.h"
 
 Hachiko::TextureBatch::~TextureBatch()

@@ -2,7 +2,6 @@
 #include "Module.h"
 #include "Globals.h"
 
-#include "batching/BatchManager.h"
 #include "core/rendering/RenderList.h"
 #include "core/rendering/GBuffer.h"
 #include "core/rendering/ShadowManager.h"
@@ -12,7 +11,10 @@
 
 namespace Hachiko
 {
+    class GameObject;
     class ComponentCamera;
+    class ComponentTransform2D;
+    class ComponentImage;
     class Scene;
     class StandaloneGLTexture;
 
@@ -45,9 +47,9 @@ namespace Hachiko
         ~ModuleRender() override;
 
         bool Init() override;
-        UpdateStatus PreUpdate(float delta) override;
-        UpdateStatus Update(float delta) override;
-        UpdateStatus PostUpdate(float delta) override;
+        UpdateStatus PreUpdate(const float delta) override;
+        UpdateStatus Update(const float delta) override;
+        UpdateStatus PostUpdate(const float delta) override;
         bool CleanUp() override;
 
         [[nodiscard]] unsigned int GetFrameBuffer() const
@@ -62,6 +64,7 @@ namespace Hachiko
 
         void OptionsMenu();
         void DeferredOptions();
+        void LoadingScreenOptions();
         void PerformanceMenu();
         void FpsGraph() const;
         void AddFrame(float delta);
@@ -143,6 +146,8 @@ namespace Hachiko
             return bloom_manager;
         };
     
+        void DrawLoadingScreen(const float delta);
+
     private:
         void GenerateFrameBuffer();
         void ResizeFrameBuffer(int width, int height) const;
@@ -202,5 +207,10 @@ namespace Hachiko
         std::vector<float> ms_log;
         float current_fps = 0.0f;
         float current_ms = 0.0f;
+
+        // Loading screen
+        GameObject* loading_game_object = nullptr;
+        ComponentTransform2D* loading_transform2d = nullptr;
+        ComponentImage* loading_image = nullptr;
     };
 }
