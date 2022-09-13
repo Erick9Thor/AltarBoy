@@ -53,7 +53,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	claw.bullet = common_bullet;
 	claw.color = float4(0.0f, 0.0f, 255.0f, 255.0f);
 	claw.unlimited = false;
-	claw.charges = 15;
+	claw.charges = 12;
 	claw.attacks.push_back(GetAttackType(AttackType::QUICK_1));
 	claw.attacks.push_back(GetAttackType(AttackType::QUICK_2));
 	claw.attacks.push_back(GetAttackType(AttackType::QUICK_3));
@@ -1129,6 +1129,12 @@ void Hachiko::Scripting::PlayerController::AttackController()
 		_player_transform->LookAtTarget(GetRaycastPosition(_player_position));
 	}
 
+	Weapon& weapon = GetCurrentWeapon();
+	if (!weapon.unlimited && !_attack_charges)
+	{
+		ChangeWeapon(0);
+	}
+
 	if(_attack_current_duration <= 0)
 	{
 		if (_state == PlayerState::RANGED_CHARGING)
@@ -1143,12 +1149,6 @@ void Hachiko::Scripting::PlayerController::AttackController()
 		}
 		// Melee attack
 		_attack_indicator->SetActive(false);
-		
-		Weapon& weapon = GetCurrentWeapon();
-		if (!weapon.unlimited && !_attack_charges)
-		{
-			ChangeWeapon(0);
-		}
 			
 		// When attack is over
 		_state = PlayerState::IDLE;
@@ -1641,7 +1641,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 		attack.stats.damage = 1;
 		attack.stats.knockback_distance = 0.f;
 		// If its cone use degrees on width
-		attack.stats.width = 3.f;
+		attack.stats.width = 2.5f;
 		attack.stats.range = 2.5f;
 		break;
 
@@ -1654,7 +1654,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 		attack.stats.damage = 1;
 		attack.stats.knockback_distance = 0.f;
 		// If its cone use degrees on width
-		attack.stats.width = 3.f;
+		attack.stats.width = 2.5f;
 		attack.stats.range = 2.5f;
 		break;
 
