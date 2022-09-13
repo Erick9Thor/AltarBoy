@@ -28,14 +28,7 @@ namespace Hachiko
             return cube;
         }
 
-        void ActivateIBL(bool active)
-        {
-            if (active && !ibl_built)
-            {
-                BuildIBL();
-            }
-            activate_ibl = active;
-        }
+        void ActivateIBL(bool active);
         void BuildIBL();
 
         void DrawImGui();
