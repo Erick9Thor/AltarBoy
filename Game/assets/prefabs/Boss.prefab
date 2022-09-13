@@ -1,0 +1,222 @@
+prefab_name: Boss
+name: Boss
+enabled: true
+component:
+  - !<transform>
+    type: 1
+    enabled: true
+    position: [-78.62, 1.312, -64.41]
+    rotation: [-0, 0, -0]
+    scale: [1, 0.9998, 0.9998]
+  - !<agent>
+    type: 17
+    enabled: true
+    max_speed: 3
+    max_acceleration: 15
+    avoid_obstacles: false
+    radius: 1
+    is_player: false
+  - !<script>
+    type: 15
+    enabled: true
+    class_name: BossController
+    "'state_value@int'": 0
+    "'hp_bar_go@GameObject*'": 3
+    "'crystal_target_go@GameObject*'": 0
+    "'cocoon_placeholder_go@GameObject*'": 6
+    "'gauntlet_go@GameObject*'": 7
+    "'start_encounter_range@float'": 5
+  - !<script>
+    type: 15
+    enabled: true
+    class_name: Stats
+    "'_attack_power@int'": 1
+    "'_attack_cd@float'": 3
+    "'_attack_range@float'": 3.5
+    "'_move_speed@float'": 5
+    "'_max_hp@int'": 50
+    "'_current_hp@int'": 50
+child:
+  - name: BossUI
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [36.3, -18.35, 7.754]
+        rotation: [90, 0, -0]
+        scale: [1, 1, 1]
+      - !<transform_2d>
+        type: 10
+        enabled: true
+        position: [0, 0, 0]
+        size: [1191, 635]
+        scale: [1, 1]
+        rotation: [0, 0, 0, 1]
+        pivot: [0.5, 0.5]
+        anchor: [0.5, 0.5]
+      - !<canvas>
+        type: 8
+        enabled: true
+    child:
+      - name: BossHP
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+          - !<progress_bar>
+            type: 13
+            enabled: true
+            params:
+              min: 0
+              max: 1
+              filled: 1
+              direction: 0
+          - !<transform_2d>
+            type: 10
+            enabled: true
+            position: [0, 0, 0]
+            size: [20, 20]
+            scale: [1, 1]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [0.5, 0.05]
+        child:
+          - name: Bar Background
+            enabled: true
+            component:
+              - !<transform>
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<transform_2d>
+                type: 10
+                enabled: true
+                position: [0, 0, 0]
+                size: [500, 20]
+                scale: [1, 1]
+                rotation: [0, 0, 0, 1]
+                pivot: [0.5, 0.5]
+                anchor: [0.5, 0.5]
+              - !<canvas_renderer>
+                type: 9
+                enabled: true
+              - !<image>
+                type: 11
+                enabled: true
+                image_id: 0
+                hover_image_id: 0
+                image_color: [1, 1, 1, 1]
+                hover_image_color: [1, 1, 1, 1]
+                image_is_tiled: false
+                image_randomize_initial_frame: false
+                image_x_tiles: 1
+                image_y_tiles: 1
+                image_tiles_per_second: 1
+                fill_window: false
+          - name: Bar Fill
+            enabled: true
+            component:
+              - !<transform>
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<transform_2d>
+                type: 10
+                enabled: true
+                position: [0, 0, 0]
+                size: [500, 20]
+                scale: [1, 1]
+                rotation: [0, 0, 0, 1]
+                pivot: [0.5, 0.5]
+                anchor: [0.5, 0.5]
+              - !<canvas_renderer>
+                type: 9
+                enabled: true
+              - !<image>
+                type: 11
+                enabled: true
+                image_id: 0
+                hover_image_id: 0
+                image_color: [1, 0, 0, 1]
+                hover_image_color: [1, 1, 1, 1]
+                image_is_tiled: false
+                image_randomize_initial_frame: false
+                image_x_tiles: 1
+                image_y_tiles: 1
+                image_tiles_per_second: 1
+                fill_window: false
+  - name: CacoonPlaceholder
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [-90, 0, 0]
+        scale: [3.45, 3.451, 3.451]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 1654487118907036717
+        navigable: false
+        visible: true
+        material_id: 6750369022920963075
+        tint_color: [1, 1, 1, 1]
+  - name: BossGauntlet1
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [90, 0, -0]
+        scale: [1, 1, 1]
+      - !<script>
+        type: 15
+        enabled: true
+        class_name: GauntletManager
+        "'_combat_manager_go@GameObject*'": 0
+        "'_trigger_radius@float'": 0
+        "'_round_wait_time@float'": 3
+        "'_complete_wait_time@float'": 2
+        "'_door_controller_1@GameObject*'": 0
+        "'_door_controller_2@GameObject*'": 0
+        "'_pack_1@GameObject*'": 0
+        "'_pack_2@GameObject*'": 0
+        "'_pack_3@GameObject*'": 0
+  - name: BossBody
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [-0, 0, -0]
+        scale: [1, 1, 1]
+    child:
+      - name: Capsule001
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-90, 0, 0]
+            scale: [1, 1, 1]
+          - !<mesh_renderer>
+            type: 2
+            enabled: true
+            mesh_id: 1309944288732959230
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+            tint_color: [1, 1, 1, 1]

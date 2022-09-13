@@ -355,7 +355,7 @@ void Hachiko::ComponentAgent::DrawGui()
             }
 
             Widgets::DragFloatConfig cfg;
-            cfg.min = 100.0f;
+            cfg.min = 0.01f;
             if (DragFloat("Radius", radius, &cfg))
             {
                 SetRadius(radius);
