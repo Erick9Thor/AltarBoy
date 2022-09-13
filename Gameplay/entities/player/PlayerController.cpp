@@ -940,6 +940,7 @@ void Hachiko::Scripting::PlayerController::DashController()
 
 	if (!IsDashing() && _state != PlayerState::MELEE_ATTACKING)
 	{
+		DashTrailManager(_dash_progress);
 		return;
 	}
 
@@ -985,25 +986,19 @@ void Hachiko::Scripting::PlayerController::DashChargesManager()
 
 void Hachiko::Scripting::PlayerController::DashTrailManager(float dash_progress)
 {
-	if (!_show_dashtrail && _state == PlayerState::DASHING)
+	
+	_show_dashtrail = _state == PlayerState::DASHING;
+	_dash_trail->SetActive(_show_dashtrail);
+
+	if (!_show_dashtrail)
 	{
-		_show_dashtrail = true;
-		_dash_trail->SetActive(_show_dashtrail);
+		return;
 	}
 	
 	_dash_trail->GetTransform()->SetLocalPosition(math::float3::Lerp(_trail_start_pos, _trail_end_pos,
 		_dash_progress));
 	_dash_trail->GetTransform()->SetLocalScale(math::float3::Lerp(_trail_start_scale, _trail_end_scale,
 		_dash_progress));
-
-	if (_dash_progress >= 1.0f)
-	{
-		_dash_trail->GetTransform()->SetLocalPosition(_trail_start_pos);
-		_dash_trail->GetTransform()->SetLocalScale(_trail_start_scale);
-		_show_dashtrail = false;
-		_dash_trail->SetActive(_show_dashtrail);
-
-	}
 }
 
 void Hachiko::Scripting::PlayerController::WalkingOrientationController()
@@ -1238,8 +1233,7 @@ bool Hachiko::Scripting::PlayerController::RegisterHit(int damage_received, floa
 	{
 		if (IsDashing())
 		{
-			_dash_trail->SetActive(false);
-			_show_dashtrail = false;
+			_state == PlayerState::IDLE;
 		}
 		RecieveKnockback(direction * knockback);
 		_camera->GetComponent<PlayerCamera>()->Shake(0.5f, 0.5f);
