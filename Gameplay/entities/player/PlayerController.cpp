@@ -1568,10 +1568,10 @@ void Hachiko::Scripting::PlayerController::ToggleGodMode()
 		}
 		else
 		{
+			// Started falling
+			_state = PlayerState::FALLING;
 			_player_position = float3::zero;
 		}
-		// Started falling
-		_state = PlayerState::FALLING;
 	}
 }
 
