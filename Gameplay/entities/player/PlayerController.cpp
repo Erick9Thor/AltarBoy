@@ -681,9 +681,9 @@ void Hachiko::Scripting::PlayerController::ChangeWeapon(unsigned weapon_idx)
 		_sword_weapon->SetActive(false);
 		_hammer_weapon->SetActive(true);
 
-		_sword_ui_addon->SetActive(true);
+		_sword_ui_addon->SetActive(false);
 		_claw_ui_addon->SetActive(false);
-		_maze_ui_addon->SetActive(false);
+		_maze_ui_addon->SetActive(true);
 	}
 }
 
@@ -1378,7 +1378,7 @@ void Hachiko::Scripting::PlayerController::CheckComboAnimation()
 			animation->SendTrigger("isSwordThree");
 		}
 	}
-	else if (_current_weapon == 3) // SWORD
+	else if (_current_weapon == 3) // HAMMER
 	{
 		if (_attack_idx == 0)
 		{
@@ -1609,7 +1609,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 
 	case AttackType::QUICK_2:
 		attack.hit_delay = 0.05f;
-		attack.duration = 0.5f;
+		attack.duration = 0.6f;
 		attack.cooldown = 0.0f;
 		attack.dash_distance = 0.3f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
