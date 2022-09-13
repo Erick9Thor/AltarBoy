@@ -131,6 +131,7 @@
 #define SCENE_AUTOSAVE "scene_autosave"
 #define SHADOW_MAP_GAUSSIAN_BLURRING_ENABLED "shadow_map_gaussian_blurring"
 #define SHADOW_PASS_ENABLED "shadow_pass_enabled"
+#define LOADING_SCREEN_CONFIG "loading_screen_config"
 
 // Resources
 #define RESOURCES_NODE "resources"
@@ -293,6 +294,7 @@
 #define START_SIZE "start_size"
 #define START_ROTATION "start_rotation"
 #define BILLBOARD_PROPERTIES "properties"
+#define BILLBOARD_PROJECTION "projection"
 
 #define COLOR_CYCLES "color_cycles"
 #define COLOR_GRADIENT "color_gradient"

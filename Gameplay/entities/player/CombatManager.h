@@ -32,6 +32,7 @@ namespace Hachiko
                 bool update_ui = false;
             private:
                 bool alive = false;
+                bool shot = false;
                 float elapsed_lifetime = 0.f;
                 float current_charge = 0.f;
                 float3 direction = float3::zero;
@@ -73,7 +74,8 @@ namespace Hachiko
 
             // If the emitter is deleted u are obligated to stop its bullet at that point to be safe
             // Player only system for now
-            int ShootBullet(ComponentTransform* emitter_transform, BulletStats new_stats);
+            int ChargeBullet(ComponentTransform* emitter_transform, BulletStats new_stats);
+            bool ShootBullet(unsigned bullet_index);
             void StopBullet(unsigned bullet_index);
             const BulletStats& GetBulletStats(unsigned bullet_idx) const;
 

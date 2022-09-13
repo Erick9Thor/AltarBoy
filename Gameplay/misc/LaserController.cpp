@@ -145,7 +145,7 @@ void Hachiko::Scripting::LaserController::AdjustLength()
 	const float3 start = _laser->GetTransform()->GetGlobalPosition();
 	const float3 end = start + _laser->GetTransform()->GetFront() * _max_length;
 
-	const GameObject* terrain_hit = SceneManagement::Raycast(start, end, &collision_point, _terrain);
+	const GameObject* terrain_hit = SceneManagement::RayCast(start, end, &collision_point, _terrain);
 	if (terrain_hit != nullptr)
 	{
 		new_length = std::min(start.Distance(collision_point), _max_length);
@@ -183,7 +183,7 @@ void Hachiko::Scripting::LaserController::CheckPlayerCollision() const
 		}
 
 		// sound only if hit
-		if (_player->GetComponent<PlayerController>()->RegisterHit(_damage, true, knockback))
+		if (_player->GetComponent<PlayerController>()->RegisterHit(_damage, true, knockback, false, PlayerController::DamageType::LASER))
 		{
 			_audio_source->PostEvent(Hachiko::Sounds::PLAY_LASER_HIT);
 		}

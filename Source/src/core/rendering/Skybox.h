@@ -14,6 +14,8 @@ namespace Hachiko
         ~Skybox();
         void Draw(ComponentCamera* camera) const;
 
+        void Reload();
+
         void ChangeCubeMapSide(UID texture_uid, TextureCube::Side cube_side);
         void ReleaseCubemap();
 

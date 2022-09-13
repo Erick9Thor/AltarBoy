@@ -3,7 +3,9 @@
 #include <scripting/Script.h>
 #include "entities/Stats.h"
 #include "entities/player/CombatManager.h"
+#include "entities/player/PlayerCamera.h"
 #include "misc/GauntletManager.h"
+#include "misc/LevelManager.h"
 
 #include <queue>
 
@@ -98,6 +100,8 @@ namespace Hachiko
             void ConsumeParasytes();
             void ConsumeParasytesController();
 
+            void FocusCamera(bool focus_on_boss);
+
         private:
             SERIALIZE_FIELD(int, state_value);
             SERIALIZE_FIELD(GameObject*, hp_bar_go);
@@ -106,6 +110,8 @@ namespace Hachiko
             SERIALIZE_FIELD(GameObject*, gauntlet_go);
             SERIALIZE_FIELD(float, start_encounter_range);
             GameObject* player = nullptr; // It's found on scene based on name
+            LevelManager* level_manager = nullptr; // It's found on scene based on name
+            PlayerCamera* player_camera = nullptr; // It's found on scene based on name
             ComponentTransform* transform = nullptr;
             ComponentProgressBar* hp_bar = nullptr;
             ComponentAgent* agent = nullptr;
@@ -118,6 +124,9 @@ namespace Hachiko
             bool hitable = true;
             std::vector<float> gauntlet_thresholds_percent{0.3, 0.7};
             float3 target_position = float3::zero;
+
+            bool camera_focus_on_boss = false;
+            float time_elapse = 0.0;
         };
     } // namespace Scripting
 } // namespace Hachiko*/

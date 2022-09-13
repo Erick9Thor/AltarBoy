@@ -12,6 +12,7 @@
 #include "resources/ResourceTexture.h"
 #include "ComponentTransform.h"
 #include "ComponentCamera.h"
+#include "utils/ComponentUtility.h"
 
 Hachiko::ComponentBillboard::ComponentBillboard(GameObject* container) :
     Component(Component::Type::BILLBOARD, container)
@@ -56,8 +57,8 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
     float4x4 model_matrix;
     GetOrientationMatrix(camera, model_matrix);
     program->BindUniformFloat4x4("model", model_matrix.ptr());
-    program->BindUniformFloat4x4("view", &camera->GetViewMatrix()[0][0]);
-    program->BindUniformFloat4x4("proj", &camera->GetProjectionMatrix()[0][0]);
+    int ignore_camera = projection ? 0 : 1;
+    program->BindUniformInts("ignore_camera", 1, &ignore_camera);
 
     program->BindUniformFloat("x_factor", &texture_properties.GetFactor().x);
     program->BindUniformFloat("y_factor", &texture_properties.GetFactor().y);
@@ -77,7 +78,7 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
     program->BindUniformInts("flip_x", 1, &flip_x);
     program->BindUniformInts("flip_y", 1, &flip_y);
     program->BindUniformFloat("animation_blend", &blend_factor);
-
+    
     glBindVertexArray(App->renderer->GetFullScreenQuadVAO());
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
@@ -121,11 +122,18 @@ void Hachiko::ComponentBillboard::DrawGui()
         if (CollapsingHeader("Renderer", &renderer_section, Widgets::CollapsibleHeaderType::Checkbox))
         {
             ImGui::BeginDisabled(!renderer_section);
-            int orientation = static_cast<int>(render_properties.orientation);
-            if (Widgets::Combo("Particle Orientations", &orientation, billboards, IM_ARRAYSIZE(billboards)))
+            if (projection)
             {
-                render_properties.orientation = static_cast<ParticleSystem::ParticleOrientation>(orientation);
-                App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
+                int orientation = static_cast<int>(render_properties.orientation);
+                if (Widgets::Combo("Particle Orientations", &orientation, billboards, IM_ARRAYSIZE(billboards)))
+                {
+                    render_properties.orientation = static_cast<ParticleSystem::ParticleOrientation>(orientation);
+                    App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
+                }
+            }
+            else
+            {
+                render_properties.orientation = ParticleSystem::ParticleOrientation::NORMAL;
             }
 
             int render_mode = static_cast<int>(render_properties.render_mode);
@@ -136,6 +144,7 @@ void Hachiko::ComponentBillboard::DrawGui()
             }
 
             Widgets::Checkbox("Orientate to direction", &render_properties.orientate_to_direction);
+            Widgets::Checkbox("Camera projection", &projection);
 
             Widgets::DragFloatConfig alpha_config;
             alpha_config.format = "%.2f";
@@ -417,6 +426,7 @@ void Hachiko::ComponentBillboard::Save(YAML::Node& node) const
     node[START_SIZE] = start_size;
     node[START_ROTATION] = start_rotation;
     node[BLEND_FACTOR] = blend_factor;
+    node[BILLBOARD_PROJECTION] = projection;
 }
 
 void Hachiko::ComponentBillboard::Load(const YAML::Node& node)
@@ -447,6 +457,8 @@ void Hachiko::ComponentBillboard::Load(const YAML::Node& node)
     total_tiles = node[TOTAL_TILES].IsDefined() ? node[TOTAL_TILES].as<float>() : 0;
 
     loop = node[ANIMATION_LOOP].IsDefined() ? node[ANIMATION_LOOP].as<bool>() : false;
+    
+    projection = node[BILLBOARD_PROJECTION].IsDefined() ? node[BILLBOARD_PROJECTION].as<bool>() : projection;
 
     texture_properties.SetFlip(node[FLIP].IsDefined() ? node[FLIP].as<bool2>() : bool2::False);
 
@@ -480,6 +492,14 @@ void Hachiko::ComponentBillboard::Load(const YAML::Node& node)
     start_rotation = node[START_ROTATION].IsDefined() ? node[START_ROTATION].as<ParticleSystem::VariableTypeProperty>() : start_rotation;
 
     blend_factor = node[BLEND_FACTOR].IsDefined() ? node[BLEND_FACTOR].as<float>() : blend_factor;
+}
+
+void Hachiko::ComponentBillboard::CollectResources(const YAML::Node& node, std::map<Resource::Type, std::set<UID>>& resources)
+{
+    ComponentUtility::CollectResource(
+        Resource::Type::TEXTURE, 
+        node[BILLBOARD_TEXTURE_ID], 
+        resources);
 }
 
 void Hachiko::ComponentBillboard::AddTexture()
@@ -681,20 +701,6 @@ void Hachiko::ComponentBillboard::GetOrientationMatrix(ComponentCamera* camera, 
             break;
         }
     }
-    // TODO: To add
-    //case BillboardType::STRETCH:
-    //{
-    //    float3 camera_direction = (camera_position - position).Normalized();
-    //    float3 up_dir = Cross(direction, camera_direction);
-    //    float3 new_camera_dir = Cross(direction, up_dir);
-
-    //    float3x3 new_rotation;
-    //    new_rotation.SetCol(0, up_dir);
-    //    new_rotation.SetCol(1, direction);
-    //    new_rotation.SetCol(2, new_camera_dir);
-
-    //    model_matrix = float4x4::FromTRS(position, new_rotation * model_stretch, scale);
-    //}
 }
 
 bool Hachiko::ComponentBillboard::HasTexture()
