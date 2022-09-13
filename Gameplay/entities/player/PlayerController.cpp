@@ -1233,7 +1233,7 @@ bool Hachiko::Scripting::PlayerController::RegisterHit(int damage_received, floa
 	{
 		if (IsDashing())
 		{
-			_state == PlayerState::IDLE;
+			_state = PlayerState::IDLE;
 		}
 		RecieveKnockback(direction * knockback);
 		_camera->GetComponent<PlayerCamera>()->Shake(0.5f, 0.5f);
