@@ -717,6 +717,13 @@
 					</ChildrenList>
 				</Folder>
 				<Folder Name="Music" ID="{B483E18B-0E69-4A37-8A64-5B372A9DF5BD}" ShortID="1019250760">
+					<PropertyList>
+						<Property Name="Inclusion" Type="bool">
+							<ValueList>
+								<Value>False</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
 					<ChildrenList>
 						<Sound Name="BackgroundMusic" ID="{CB42BC61-300C-4E57-BC4D-161B23968908}" ShortID="205591408">
 							<ReferenceList>

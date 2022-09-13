@@ -1,42 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="12" SoundbankVersion="140">
 	<RootPaths>
-		<ProjectRoot>C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\</ProjectRoot>
-		<SourceFilesRoot>C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\</SourceFilesRoot>
-		<SoundBanksRoot>C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\GeneratedSoundBanks\Windows\</SoundBanksRoot>
+		<ProjectRoot>D:\PreAlpha2_backup\PreAlpha2\Game\ErimosWwise\</ProjectRoot>
+		<SourceFilesRoot>D:\PreAlpha2_backup\PreAlpha2\Game\ErimosWwise\.cache\Windows\</SourceFilesRoot>
+		<SoundBanksRoot>D:\PreAlpha2_backup\PreAlpha2\Game\ErimosWwise\GeneratedSoundBanks\Windows\</SoundBanksRoot>
 		<ExternalSourcesInputFile></ExternalSourcesInputFile>
-		<ExternalSourcesOutputRoot>C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
+		<ExternalSourcesOutputRoot>D:\PreAlpha2_backup\PreAlpha2\Game\ErimosWwise\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
 	</RootPaths>
 	<DialogueEvents/>
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="626769978" Language="SFX" Hash="1880952237">
+		<SoundBank Id="626769978" Language="SFX" Hash="4202865845">
 			<ObjectPath>\SoundBanks\Default Work Unit\BackgroundMusic</ObjectPath>
 			<ShortName>BackgroundMusic</ShortName>
 			<Path>BackgroundMusic.bnk</Path>
 			<IncludedEvents>
-				<Event Id="548088167" Name="Play_BackgroundMusic" ObjectPath="\Events\Default Work Unit\Play_BackgroundMusic">
-					<IncludedMemoryFiles>
-						<File Id="125142864" Language="SFX">
-							<ShortName>BackgroundMusic.wav</ShortName>
-							<Path>SFX\BackgroundMusic_10C4C929.wem</Path>
-						</File>
-					</IncludedMemoryFiles>
-				</Event>
+				<Event Id="548088167" Name="Play_BackgroundMusic" ObjectPath="\Events\Default Work Unit\Play_BackgroundMusic"/>
 				<Event Id="513571230" Name="Play_Combat" ObjectPath="\Events\Default Work Unit\Play_Combat">
 					<IncludedMemoryFiles>
-						<File Id="363091743" Language="SFX">
-							<ShortName>PlaceholderBlackShroudBattleTheme.wav</ShortName>
-							<Path>SFX\PlaceholderBlackShroudBattleTheme_D79FB2B7.wem</Path>
+						<File Id="181335723" Language="SFX">
+							<ShortName>Com_b_108bpm.wav</ShortName>
+							<Path>SFX\Com_b_108bpm_D79FB2B7.wem</Path>
+						</File>
+						<File Id="220998542" Language="SFX">
+							<ShortName>Com_e_108bpm.wav</ShortName>
+							<Path>SFX\Com_e_108bpm_D79FB2B7.wem</Path>
+						</File>
+						<File Id="283120831" Language="SFX">
+							<ShortName>Com_d_108bpm.wav</ShortName>
+							<Path>SFX\Com_d_108bpm_D79FB2B7.wem</Path>
+						</File>
+						<File Id="503682454" Language="SFX">
+							<ShortName>Com_a_108bpm.wav</ShortName>
+							<Path>SFX\Com_a_108bpm_D79FB2B7.wem</Path>
+						</File>
+						<File Id="715960795" Language="SFX">
+							<ShortName>Com_c_108bpm.wav</ShortName>
+							<Path>SFX\Com_c_108bpm_D79FB2B7.wem</Path>
+						</File>
+						<File Id="759444810" Language="SFX">
+							<ShortName>Com_108bpm_full.wav</ShortName>
+							<Path>SFX\Com_108bpm_full_D79FB2B7.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
 				<Event Id="3849525492" Name="Play_Navigation" ObjectPath="\Events\Default Work Unit\Play_Navigation">
 					<IncludedMemoryFiles>
-						<File Id="743935933" Language="SFX">
-							<ShortName>PlaceholderAmhAraeng.wav</ShortName>
-							<Path>SFX\PlaceholderAmhAraeng_D79FB2B7.wem</Path>
+						<File Id="126846833" Language="SFX">
+							<ShortName>Exp_b_108bpm.wav</ShortName>
+							<Path>SFX\Exp_b_108bpm_D79FB2B7.wem</Path>
+						</File>
+						<File Id="341546302" Language="SFX">
+							<ShortName>Exp_a_108bpm.wav</ShortName>
+							<Path>SFX\Exp_a_108bpm_D79FB2B7.wem</Path>
+						</File>
+						<File Id="718840818" Language="SFX">
+							<ShortName>Exp_d_108bpm.wav</ShortName>
+							<Path>SFX\Exp_d_108bpm_D79FB2B7.wem</Path>
+						</File>
+						<File Id="854415901" Language="SFX">
+							<ShortName>Exp_c_108bpm.wav</ShortName>
+							<Path>SFX\Exp_c_108bpm_D79FB2B7.wem</Path>
+						</File>
+						<File Id="903340460" Language="SFX">
+							<ShortName>Exp_108bpm_full.wav</ShortName>
+							<Path>SFX\Exp_108bpm_full_D79FB2B7.wem</Path>
+						</File>
+						<File Id="988655692" Language="SFX">
+							<ShortName>Exp_e_108bpm.wav</ShortName>
+							<Path>SFX\Exp_e_108bpm_D79FB2B7.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -49,7 +82,7 @@
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
 		</SoundBank>
-		<SoundBank Id="1551306167" Language="SFX" Hash="245703994">
+		<SoundBank Id="1551306167" Language="SFX" Hash="1805102344">
 			<ObjectPath>\SoundBanks\Default Work Unit\UI</ObjectPath>
 			<ShortName>UI</ShortName>
 			<Path>UI.bnk</Path>
@@ -72,7 +105,7 @@
 				</Event>
 			</IncludedEvents>
 		</SoundBank>
-		<SoundBank Id="2385628198" Language="SFX" Hash="193242147">
+		<SoundBank Id="2385628198" Language="SFX" Hash="3837336879">
 			<ObjectPath>\SoundBanks\Default Work Unit\Footsteps</ObjectPath>
 			<ShortName>Footsteps</ShortName>
 			<Path>Footsteps.bnk</Path>
@@ -402,7 +435,7 @@
 				</SwitchGroup>
 			</SwitchGroups>
 		</SoundBank>
-		<SoundBank Id="3768541028" Language="SFX" Hash="2730518902">
+		<SoundBank Id="3768541028" Language="SFX" Hash="2643980876">
 			<ObjectPath>\SoundBanks\Default Work Unit\Attacks</ObjectPath>
 			<ShortName>Attacks</ShortName>
 			<Path>Attacks.bnk</Path>
@@ -521,7 +554,7 @@
 				</Event>
 			</IncludedEvents>
 		</SoundBank>
-		<SoundBank Id="3909959462" Language="SFX" Hash="549727102">
+		<SoundBank Id="3909959462" Language="SFX" Hash="2487878154">
 			<ObjectPath>\SoundBanks\Default Work Unit\Enviroment</ObjectPath>
 			<ShortName>Enviroment</ShortName>
 			<Path>Enviroment.bnk</Path>
