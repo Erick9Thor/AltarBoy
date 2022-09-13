@@ -11,9 +11,9 @@
 
 #include "resources/ResourceTexture.h"
 
-void Hachiko::Particle::Update()
+void Hachiko::Particle::Update(const float delta_time)
 {
-    current_life -= EngineTimer::delta_time;
+    current_life -= delta_time;
 
     if (current_life <= 0)
     {

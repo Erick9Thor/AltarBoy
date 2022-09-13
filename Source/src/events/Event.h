@@ -12,7 +12,7 @@
 #include "SceneLoadEventPayload.h"
 #include "EditorHistoryEntryRestore.h"
 #include "CurveEditorEventPayload.h";
-#include "TimeScaleChangeEventPayloadf.h"
+#include "TimeScaleChangeEventPayload.h"
 
 namespace Hachiko
 {

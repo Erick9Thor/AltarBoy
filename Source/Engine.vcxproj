@@ -703,6 +703,7 @@
     <ClCompile Include="vendors\recast\include\Recast\SampleInterfaces.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\components\TimeScaleMode.h" />
     <ClInclude Include="src\events\TimeScaleChangeEventPayload.h" />
     <ClInclude Include="src\resources\ResourceVideo.h" />
     <ClInclude Include="src\components\ComponentVideo.h" />

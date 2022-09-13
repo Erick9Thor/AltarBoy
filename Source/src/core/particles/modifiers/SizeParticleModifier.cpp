@@ -11,7 +11,7 @@ Hachiko::SizeParticleModifier::SizeParticleModifier(const std::string& name):
     cfg.format = "%.2f";
 }
 
-void Hachiko::SizeParticleModifier::Update(std::vector<Particle>& particles)
+void Hachiko::SizeParticleModifier::Update(std::vector<Particle>& particles, const float delta_time)
 {
     if (!IsActive())
     {
