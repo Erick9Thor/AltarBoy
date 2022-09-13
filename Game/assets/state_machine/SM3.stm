@@ -5,7 +5,7 @@ clips:
     clips_id: 0
     clips_loop: false
   - clip_name: idle
-    clips_id: 18303446198230088858
+    clips_id: 4905526186048550931
     clips_loop: true
   - clip_name: run
     clips_id: 17063392249428625345
@@ -61,6 +61,15 @@ clips:
   - clip_name: fall
     clips_id: 18424576933785159401
     clips_loop: true
+  - clip_name: hammerOne
+    clips_id: 4394700582092389549
+    clips_loop: false
+  - clip_name: hammerTwo
+    clips_id: 18046269277240889654
+    clips_loop: false
+  - clip_name: hammerThree
+    clips_id: 13844232937354473954
+    clips_loop: false
 nodes:
   - node_name: idle
     node_clip_name: idle
@@ -98,6 +107,12 @@ nodes:
     node_clip_name: none
   - node_name: shot
     node_clip_name: shot
+  - node_name: hammerOne
+    node_clip_name: hammerOne
+  - node_name: hammerTwo
+    node_clip_name: hammerTwo
+  - node_name: hammerThree
+    node_clip_name: hammerThree
 transitions:
   - transition_source: idle
     transition_target: dash
@@ -250,4 +265,36 @@ transitions:
   - transition_source: clawTwo
     transition_target: clawOne
     transition_trigger: isClawOne
+    transition_blend: 300
+  - transition_source: hammerOne
+    transition_target: hammerTwo
+    transition_trigger: isHammerTwo
+    transition_blend: 300
+  - transition_source: hammerTwo
+    transition_target: hammerThree
+    transition_trigger: isHammerThree
+    transition_blend: 300
+  - transition_source: run
+    transition_target: hammerOne
+    transition_trigger: isHammerOne
+    transition_blend: 300
+  - transition_source: run
+    transition_target: hammerTwo
+    transition_trigger: isHammerTwo
+    transition_blend: 300
+  - transition_source: run
+    transition_target: hammerThree
+    transition_trigger: isHammerThree
+    transition_blend: 300
+  - transition_source: idle
+    transition_target: hammerOne
+    transition_trigger: isHammerOne
+    transition_blend: 300
+  - transition_source: idle
+    transition_target: hammerTwo
+    transition_trigger: isHammerTwo
+    transition_blend: 300
+  - transition_source: idle
+    transition_target: hammerThree
+    transition_trigger: isHammerThree
     transition_blend: 300

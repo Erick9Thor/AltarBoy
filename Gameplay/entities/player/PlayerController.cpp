@@ -56,6 +56,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	claw.charges = 15;
 	claw.attacks.push_back(GetAttackType(AttackType::QUICK_1));
 	claw.attacks.push_back(GetAttackType(AttackType::QUICK_2));
+	claw.attacks.push_back(GetAttackType(AttackType::QUICK_3));
 	
 	Weapon sword;
 	sword.name = "Sword";
@@ -1595,7 +1596,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 	// QUICK ATTACKS
 	case AttackType::QUICK_1:
 		attack.hit_delay = 0.05f;
-		attack.duration = 0.4f;
+		attack.duration = 0.6f;
 		attack.cooldown = 0.0f;
 		attack.dash_distance = 0.3f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
@@ -1608,7 +1609,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 
 	case AttackType::QUICK_2:
 		attack.hit_delay = 0.05f;
-		attack.duration = 0.4f;
+		attack.duration = 0.5f;
 		attack.cooldown = 0.0f;
 		attack.dash_distance = 0.3f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
@@ -1662,7 +1663,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 	// HAMMER ATTACKS
 	case AttackType::HAMMER_1:
 		attack.hit_delay = 0.1f;
-		attack.duration = 0.8f;
+		attack.duration = 0.5f;
 		attack.cooldown = 0.0f;
 		attack.dash_distance = 0.5f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
@@ -1675,7 +1676,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 
 	case AttackType::HAMMER_2:
 		attack.hit_delay = 0.1f;
-		attack.duration = 0.8f;
+		attack.duration = 0.5f;
 		attack.cooldown = 0.0f;
 		attack.dash_distance = 0.5f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
@@ -1688,7 +1689,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 
 	case AttackType::HAMMER_3:
 		attack.hit_delay = 0.5f;
-		attack.duration = 1.0f;
+		attack.duration = 0.6f;
 		attack.cooldown = 0.5f;
 		attack.dash_distance = 0.5f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
