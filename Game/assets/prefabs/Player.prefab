@@ -5,9 +5,9 @@ component:
   - !<transform>
     type: 1
     enabled: true
-    position: [-84.74, 3.466, -56.32]
-    rotation: [0, 0.886, 0, -0.4636]
-    scale: [0.4418, 0.45, 0.4418]
+    position: [-87.14, 1.27, 10.57]
+    rotation: [-180, 45, -180]
+    scale: [0.4427, 0.45, 0.4427]
   - !<animation>
     type: 14
     enabled: true
@@ -36,6 +36,7 @@ component:
     "'_falling_dust@GameObject*'": 196
     "'_walking_dust@GameObject*'": 195
     "'_heal_effect@GameObject*'": 197
+    "'_damage_effect@GameObject*'": 220
     "'_rotation_duration@float'": 0.075
     "'_death_screen@GameObject*'": 0
     "'_hp_cell_1@GameObject*'": 211
@@ -60,7 +61,7 @@ component:
     "'_step_frequency@float'": 0.4
     "'_melee_frequency@float'": 0.3
     "'_ranged_frequency@float'": 0.3
-    "'_timer@float'": 0.0666
+    "'_timer@float'": 0.0167
   - !<script>
     type: 15
     enabled: true
@@ -70,7 +71,7 @@ component:
     "'_attack_range@float'": 3.5
     "'_move_speed@float'": 7
     "'_max_hp@int'": 4
-    "'_current_hp@int'": 4
+    "'_current_hp@int'": 3
   - !<agent>
     type: 17
     enabled: true
@@ -87,7 +88,7 @@ child:
         type: 1
         enabled: true
         position: [0, 0, 0]
-        rotation: [0, 0, 0, 1]
+        rotation: [-0, 0, -0]
         scale: [1, 1, 1]
     child:
       - name: mainCharacter_mesh
@@ -97,7 +98,7 @@ child:
             type: 1
             enabled: true
             position: [0, 1.542, -0.2536]
-            rotation: [0, 0, 0, 1]
+            rotation: [-0, 0, -0]
             scale: [2.54, 2.54, 2.54]
         child:
           - name: mainCharacterEye_mesh_$AssimpFbx$_RotationPivot
@@ -107,7 +108,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-0.4985, 0.0203, 0.1084]
-                rotation: [0, 0, 0, 1]
+                rotation: [-0, 0, -0]
                 scale: [1, 1, 1]
             child:
               - name: mainCharacterEye_mesh_$AssimpFbx$_RotationPivotInverse
@@ -117,7 +118,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0.4985, -0.0203, -0.1084]
-                    rotation: [0, 0, 0, 1]
+                    rotation: [-0, 0, -0]
                     scale: [1, 1, 1]
                 child:
                   - name: mainCharacterEye_mesh_$AssimpFbx$_ScalingPivot
@@ -127,7 +128,7 @@ child:
                         type: 1
                         enabled: true
                         position: [-0.4985, 0.0203, 0.1084]
-                        rotation: [0, 0, 0, 1]
+                        rotation: [-0, 0, -0]
                         scale: [1, 1, 1]
                     child:
                       - name: mainCharacterEye_mesh_$AssimpFbx$_ScalingPivotInverse
@@ -137,7 +138,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0.4985, -0.0203, -0.1084]
-                            rotation: [0, 0, 0, 1]
+                            rotation: [-0, 0, -0]
                             scale: [1, 1, 1]
                         child:
                           - name: mainCharacterEye_mesh
@@ -147,7 +148,7 @@ child:
                                 type: 1
                                 enabled: true
                                 position: [0, 0, 0]
-                                rotation: [0, 0, 0, 1]
+                                rotation: [-0, 0, -0]
                                 scale: [1, 1, 1]
                               - !<mesh_renderer>
                                 type: 2
@@ -164,7 +165,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0, 0, 0]
-                rotation: [0, 0, 0, 1]
+                rotation: [-0, 0, -0]
                 scale: [1, 1, 1]
               - !<mesh_renderer>
                 type: 2
@@ -181,7 +182,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-0.6728, 0.0044, 0.016]
-                rotation: [0, 0, 0, 1]
+                rotation: [-0, 0, -0]
                 scale: [1, 1, 1]
             child:
               - name: weaponClaw_$AssimpFbx$_RotationPivotInverse
@@ -191,7 +192,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0.6728, -0.0044, -0.016]
-                    rotation: [0, 0, 0, 1]
+                    rotation: [-0, 0, -0]
                     scale: [1, 1, 1]
                 child:
                   - name: weaponClaw_$AssimpFbx$_ScalingPivot
@@ -201,7 +202,7 @@ child:
                         type: 1
                         enabled: true
                         position: [-0.6728, 0.0044, 0.016]
-                        rotation: [0, 0, 0, 1]
+                        rotation: [-0, 0, -0]
                         scale: [1, 1, 1]
                     child:
                       - name: weaponClaw_$AssimpFbx$_ScalingPivotInverse
@@ -211,7 +212,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0.6728, -0.0044, -0.016]
-                            rotation: [0, 0, 0, 1]
+                            rotation: [-0, 0, -0]
                             scale: [1, 1, 1]
                         child:
                           - name: weaponClaw
@@ -221,7 +222,7 @@ child:
                                 type: 1
                                 enabled: true
                                 position: [0, 0, 0]
-                                rotation: [0, 0, 0, 1]
+                                rotation: [-0, 0, -0]
                                 scale: [1, 1, 1]
                               - !<mesh_renderer>
                                 type: 2
@@ -238,7 +239,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-0.5754, 0.0197, -0.0109]
-                rotation: [0, 0, 0, 1]
+                rotation: [-0, 0, -0]
                 scale: [1, 1, 1]
             child:
               - name: parasite_low_$AssimpFbx$_RotationPivotInverse
@@ -248,7 +249,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0.5754, -0.0197, 0.0109]
-                    rotation: [0, 0, 0, 1]
+                    rotation: [-0, 0, -0]
                     scale: [1, 1, 1]
                 child:
                   - name: parasite_low_$AssimpFbx$_ScalingPivot
@@ -258,7 +259,7 @@ child:
                         type: 1
                         enabled: true
                         position: [-0.5754, 0.0197, -0.0109]
-                        rotation: [0, 0, 0, 1]
+                        rotation: [-0, 0, -0]
                         scale: [1, 1, 1]
                     child:
                       - name: parasite_low_$AssimpFbx$_ScalingPivotInverse
@@ -268,7 +269,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0.5754, -0.0197, 0.0109]
-                            rotation: [0, 0, 0, 1]
+                            rotation: [-0, 0, -0]
                             scale: [1, 1, 1]
                         child:
                           - name: parasite_low
@@ -278,7 +279,7 @@ child:
                                 type: 1
                                 enabled: true
                                 position: [0, 0, 0]
-                                rotation: [0, 0, 0, 1]
+                                rotation: [-0, 0, -0]
                                 scale: [1, 1, 1]
                               - !<mesh_renderer>
                                 type: 2
@@ -295,7 +296,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-0.7822, -0.0014, -0.0109]
-                rotation: [0, 0, 0, 1]
+                rotation: [-0, 0, -0]
                 scale: [1, 1, 1]
             child:
               - name: blade_low_$AssimpFbx$_RotationPivotInverse
@@ -305,7 +306,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0.7822, 0.0014, 0.0109]
-                    rotation: [0, 0, 0, 1]
+                    rotation: [-0, 0, -0]
                     scale: [1, 1, 1]
                 child:
                   - name: blade_low_$AssimpFbx$_ScalingPivot
@@ -315,7 +316,7 @@ child:
                         type: 1
                         enabled: true
                         position: [-0.7822, -0.0014, -0.0109]
-                        rotation: [0, 0, 0, 1]
+                        rotation: [-0, 0, -0]
                         scale: [1, 1, 1]
                     child:
                       - name: blade_low_$AssimpFbx$_ScalingPivotInverse
@@ -325,7 +326,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0.7822, 0.0014, 0.0109]
-                            rotation: [0, 0, 0, 1]
+                            rotation: [-0, 0, -0]
                             scale: [1, 1, 1]
                         child:
                           - name: blade_low
@@ -335,7 +336,7 @@ child:
                                 type: 1
                                 enabled: true
                                 position: [0, 0, 0]
-                                rotation: [0, 0, 0, 1]
+                                rotation: [-0, 0, -0]
                                 scale: [1, 1, 1]
                               - !<mesh_renderer>
                                 type: 2
@@ -352,7 +353,7 @@ child:
         type: 1
         enabled: true
         position: [0, 0, 0]
-        rotation: [0, 0, 0, 1]
+        rotation: [-0, 0, -0]
         scale: [1, 1, 1]
     child:
       - name: Root
@@ -361,8 +362,8 @@ child:
           - !<transform>
             type: 1
             enabled: true
-            position: [0, 0.1649, -0.1247]
-            rotation: [0, 0, 0, 1]
+            position: [-0, 0.208, -0.1247]
+            rotation: [-0, 0, -0]
             scale: [1, 1, 1]
         child:
           - name: CenterHip
@@ -372,7 +373,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0.0034, 0.0784, -0.0059]
-                rotation: [0, 0, 0, 1]
+                rotation: [-0, 0, -0]
                 scale: [1, 1, 1]
             child:
               - name: LeftLeg_$AssimpFbx$_Translation
@@ -382,7 +383,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0.1052, -0.0192, -0.0005]
-                    rotation: [0, 0, 0, 1]
+                    rotation: [-0, 0, -0]
                     scale: [1, 1, 1]
                 child:
                   - name: LeftLeg_$AssimpFbx$_PreRotation
@@ -392,7 +393,7 @@ child:
                         type: 1
                         enabled: true
                         position: [0, 0, 0]
-                        rotation: [0.4626, -0.5348, -0.4626, 0.5348]
+                        rotation: [-141.9, -89.97, 136.3]
                         scale: [1, 1, 1]
                     child:
                       - name: LeftLeg_$AssimpFbx$_Rotation
@@ -402,7 +403,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0, 0, 0]
-                            rotation: [0.0807, 0.0847, 0.4263, 0.897]
+                            rotation: [4.667, 9.777, 44.67]
                             scale: [1, 1, 1]
                         child:
                           - name: LeftLeg
@@ -412,7 +413,7 @@ child:
                                 type: 1
                                 enabled: true
                                 position: [0, 0, 0]
-                                rotation: [0, 0, 0, 1]
+                                rotation: [-0, 0, -0]
                                 scale: [1, 1, 1]
                             child:
                               - name: LeftKnee
@@ -422,7 +423,7 @@ child:
                                     type: 1
                                     enabled: true
                                     position: [0.4062, 0, -0.1398]
-                                    rotation: [-0.1244, -0.073, -0.2913, 0.9457]
+                                    rotation: [-12.14, -4.565, -27]
                                     scale: [1, 1, 1]
                                 child:
                                   - name: LeftToe
@@ -432,7 +433,7 @@ child:
                                         type: 1
                                         enabled: true
                                         position: [0.547, -0.2996, -0.0779]
-                                        rotation: [-0.0299, 0.0094, 0.0068, 0.9995]
+                                        rotation: [-3.437, 1.054, 0.8153]
                                         scale: [1, 1, 1]
                                     child:
                                       - name: LeftToe_MId
@@ -441,8 +442,8 @@ child:
                                           - !<transform>
                                             type: 1
                                             enabled: true
-                                            position: [0.0771, 0.1602, 0.0194]
-                                            rotation: [0.0598, 0.0097, -0.1525, 0.9864]
+                                            position: [0.0819, 0.1586, 0.0123]
+                                            rotation: [4.738, 0.5964, -19.27]
                                             scale: [1, 1, 1]
                                         child:
                                           - name: LeftToe_End
@@ -451,8 +452,8 @@ child:
                                               - !<transform>
                                                 type: 1
                                                 enabled: true
-                                                position: [0, 0.1526, 0]
-                                                rotation: [0.0349, 0, 0, 0.9994]
+                                                position: [0, 0.1526, -0]
+                                                rotation: [4, 0, -0]
                                                 scale: [1, 1, 1]
               - name: RightLeg_$AssimpFbx$_Translation
                 enabled: true
@@ -461,7 +462,7 @@ child:
                     type: 1
                     enabled: true
                     position: [-0.112, -0.0192, -0.0005]
-                    rotation: [0, 0, 0, 1]
+                    rotation: [-0, 0, -0]
                     scale: [1, 1, 1]
                 child:
                   - name: RightLeg_$AssimpFbx$_PreRotation
@@ -471,7 +472,7 @@ child:
                         type: 1
                         enabled: true
                         position: [0, 0, 0]
-                        rotation: [-0.5348, -0.4626, 0.5348, 0.4626]
+                        rotation: [-98.28, -90, 0]
                         scale: [1, 1, 1]
                     child:
                       - name: RightLeg_$AssimpFbx$_Rotation
@@ -481,7 +482,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0, 0, 0]
-                            rotation: [-0.1092, 0.1925, 0.1026, 0.9698]
+                            rotation: [-16.38, 17.37, 11.06]
                             scale: [1, 1, 1]
                         child:
                           - name: RightLeg
@@ -491,7 +492,7 @@ child:
                                 type: 1
                                 enabled: true
                                 position: [0, 0, 0]
-                                rotation: [0, 0, 0, 1]
+                                rotation: [-0, 0, -0]
                                 scale: [1, 1, 1]
                             child:
                               - name: RightKnee
@@ -500,8 +501,8 @@ child:
                                   - !<transform>
                                     type: 1
                                     enabled: true
-                                    position: [-0.4062, 0, 0.1398]
-                                    rotation: [-0.1231, -0.0727, -0.2889, 0.9466]
+                                    position: [-0.4062, -0, 0.1398]
+                                    rotation: [-11.98, -4.577, -26.68]
                                     scale: [1, 1, 1]
                                 child:
                                   - name: RightToe
@@ -511,7 +512,7 @@ child:
                                         type: 1
                                         enabled: true
                                         position: [-0.547, 0.2996, 0.078]
-                                        rotation: [0, 0, 0, 1]
+                                        rotation: [-0, 0, -0]
                                         scale: [1, 1, 1]
                                     child:
                                       - name: RightToe_Mid
@@ -520,8 +521,8 @@ child:
                                           - !<transform>
                                             type: 1
                                             enabled: true
-                                            position: [0.0339, -0.1492, -0.0926]
-                                            rotation: [0.271, -0.0676, 0.1515, 0.9482]
+                                            position: [0.0244, -0.1557, -0.0846]
+                                            rotation: [28.95, -3.17, 15.83]
                                             scale: [1, 1, 1]
                                         child:
                                           - name: RightToe_End
@@ -531,7 +532,7 @@ child:
                                                 type: 1
                                                 enabled: true
                                                 position: [-0.0214, -0.1526, 0]
-                                                rotation: [0, 0, 0, 1]
+                                                rotation: [-0, 0, -0]
                                                 scale: [1, 1, 1]
           - name: Spine_$AssimpFbx$_Translation
             enabled: true
@@ -540,7 +541,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0, 0.1649, 0.0109]
-                rotation: [0, 0, 0, 1]
+                rotation: [-0, 0, -0]
                 scale: [1, 1, 1]
             child:
               - name: Spine_$AssimpFbx$_PreRotation
@@ -550,7 +551,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [0.353, 0.6127, 0.353, 0.6127]
+                    rotation: [60, 90, 0]
                     scale: [1, 1, 1]
                 child:
                   - name: Spine
@@ -560,7 +561,7 @@ child:
                         type: 1
                         enabled: true
                         position: [0, 0, 0]
-                        rotation: [0, 0, 0, 1]
+                        rotation: [-0, 0, -0]
                         scale: [1, 1, 1]
                     child:
                       - name: Spine_mid
@@ -570,7 +571,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0.2502, 0, 0]
-                            rotation: [-0.0303, -0.0158, 0.0451, 0.9984]
+                            rotation: [-3.386, -1.961, 1.362]
                             scale: [1, 1, 1]
                         child:
                           - name: CenterNeck
@@ -579,8 +580,8 @@ child:
                               - !<transform>
                                 type: 1
                                 enabled: true
-                                position: [0.2519, 0.2077, 0.0086]
-                                rotation: [0, 0, 0, 1]
+                                position: [0.2446, 0.204, 0.0086]
+                                rotation: [-0, 0, -0]
                                 scale: [1, 1, 1]
                             child:
                               - name: CenterHead_$AssimpFbx$_Translation
@@ -590,7 +591,7 @@ child:
                                     type: 1
                                     enabled: true
                                     position: [0.0259, 0.0623, 0.0032]
-                                    rotation: [0, 0, 0, 1]
+                                    rotation: [-0, 0, -0]
                                     scale: [1, 1, 1]
                                 child:
                                   - name: CenterHead_$AssimpFbx$_PreRotation
@@ -600,7 +601,7 @@ child:
                                         type: 1
                                         enabled: true
                                         position: [0, 0, 0]
-                                        rotation: [-0.6828, -0.1836, 0.1836, 0.6829]
+                                        rotation: [-89.99, -30.1, 0.0025]
                                         scale: [1, 0.9998, 0.9998]
                                     child:
                                       - name: CenterHead_$AssimpFbx$_Rotation
@@ -610,7 +611,7 @@ child:
                                             type: 1
                                             enabled: true
                                             position: [0, 0, 0]
-                                            rotation: [0, 0, 0, 1]
+                                            rotation: [-0, 0, -0]
                                             scale: [1, 1, 1]
                                         child:
                                           - name: CenterHead
@@ -620,7 +621,7 @@ child:
                                                 type: 1
                                                 enabled: true
                                                 position: [0, 0, 0]
-                                                rotation: [0, 0, 0, 1]
+                                                rotation: [-0, 0, -0]
                                                 scale: [1, 1, 1]
                                             child:
                                               - name: ZeroHead_$AssimpFbx$_Translation
@@ -630,7 +631,7 @@ child:
                                                     type: 1
                                                     enabled: true
                                                     position: [0.4476, 0, 0]
-                                                    rotation: [0, 0, 0, 1]
+                                                    rotation: [-0, 0, -0]
                                                     scale: [1, 1, 1]
                                                 child:
                                                   - name: ZeroHead_$AssimpFbx$_PreRotation
@@ -640,7 +641,7 @@ child:
                                                         type: 1
                                                         enabled: true
                                                         position: [0, 0, 0]
-                                                        rotation: [0, 0, -0.7071, 0.7071]
+                                                        rotation: [0, 0, -90]
                                                         scale: [1, 1, 1]
                                                     child:
                                                       - name: ZeroHead
@@ -650,7 +651,7 @@ child:
                                                             type: 1
                                                             enabled: true
                                                             position: [0, 0, 0]
-                                                            rotation: [0, 0, 0, 1]
+                                                            rotation: [-0, 0, -0]
                                                             scale: [1, 1, 1]
                           - name: LeftShoulder_$AssimpFbx$_Translation
                             enabled: true
@@ -659,7 +660,7 @@ child:
                                 type: 1
                                 enabled: true
                                 position: [0.1438, 0.2114, 0.1284]
-                                rotation: [0, 0, 0, 1]
+                                rotation: [-0, 0, -0]
                                 scale: [1, 1, 1]
                             child:
                               - name: LeftShoulder_$AssimpFbx$_PreRotation
@@ -669,7 +670,7 @@ child:
                                     type: 1
                                     enabled: true
                                     position: [0, 0, 0]
-                                    rotation: [-0.119, -0.2065, -0.4848, 0.8415]
+                                    rotation: [-24.31, -13.42, -62.8]
                                     scale: [1, 1, 1]
                                 child:
                                   - name: LeftShoulder_$AssimpFbx$_Rotation
@@ -679,7 +680,7 @@ child:
                                         type: 1
                                         enabled: true
                                         position: [0, 0, 0]
-                                        rotation: [0.1204, -0.3032, -0.1047, 0.9395]
+                                        rotation: [10.72, -31.03, -8.681]
                                         scale: [1, 1, 1]
                                     child:
                                       - name: LeftShoulder
@@ -689,7 +690,7 @@ child:
                                             type: 1
                                             enabled: true
                                             position: [0, 0, 0]
-                                            rotation: [0, 0, 0, 1]
+                                            rotation: [-0, 0, -0]
                                             scale: [1, 1, 1]
                                         child:
                                           - name: LeftArm_$AssimpFbx$_Translation
@@ -698,8 +699,8 @@ child:
                                               - !<transform>
                                                 type: 1
                                                 enabled: true
-                                                position: [0.278, 0.0182, 0.1519]
-                                                rotation: [0, 0, 0, 1]
+                                                position: [0.2642, 0.0066, 0.1456]
+                                                rotation: [-0, 0, -0]
                                                 scale: [1, 1, 1]
                                             child:
                                               - name: LeftArm_$AssimpFbx$_PreRotation
@@ -709,7 +710,7 @@ child:
                                                     type: 1
                                                     enabled: true
                                                     position: [0, 0, 0]
-                                                    rotation: [0, -0.4964, 0, 0.8681]
+                                                    rotation: [0, -59.52, 0]
                                                     scale: [1, 1, 1]
                                                 child:
                                                   - name: LeftArm_$AssimpFbx$_Rotation
@@ -719,7 +720,7 @@ child:
                                                         type: 1
                                                         enabled: true
                                                         position: [0, 0, 0]
-                                                        rotation: [0.0317, -0.1139, -0.2719, 0.955]
+                                                        rotation: [1.582, -10.93, -31.44]
                                                         scale: [1, 1, 1]
                                                     child:
                                                       - name: LeftArm
@@ -729,7 +730,7 @@ child:
                                                             type: 1
                                                             enabled: true
                                                             position: [0, 0, 0]
-                                                            rotation: [0, 0, 0, 1]
+                                                            rotation: [-0, 0, -0]
                                                             scale: [1, 1, 1]
                                                         child:
                                                           - name: LeftElbow_$AssimpFbx$_Translation
@@ -739,7 +740,7 @@ child:
                                                                 type: 1
                                                                 enabled: true
                                                                 position: [0.373, 0.0162, 0.0133]
-                                                                rotation: [0, 0, 0, 1]
+                                                                rotation: [-0, 0, -0]
                                                                 scale: [1, 1, 1]
                                                             child:
                                                               - name: LeftElbow_$AssimpFbx$_PreRotation
@@ -749,7 +750,7 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [0, 0, 0]
-                                                                    rotation: [0, -0.0684, 0, 0.9977]
+                                                                    rotation: [0, -7.844, 0]
                                                                     scale: [1, 1, 1]
                                                                 child:
                                                                   - name: LeftElbow_$AssimpFbx$_Rotation
@@ -759,7 +760,7 @@ child:
                                                                         type: 1
                                                                         enabled: true
                                                                         position: [0, 0, 0]
-                                                                        rotation: [0, -0.3211, 0, 0.947]
+                                                                        rotation: [0, -37.45, 0]
                                                                         scale: [1, 1, 1]
                                                                     child:
                                                                       - name: LeftElbow
@@ -769,7 +770,7 @@ child:
                                                                             type: 1
                                                                             enabled: true
                                                                             position: [0, 0, 0]
-                                                                            rotation: [0, 0, 0, 1]
+                                                                            rotation: [-0, 0, -0]
                                                                             scale: [1, 1, 1]
                                                                         child:
                                                                           - name: LeftFinger_$AssimpFbx$_Translation
@@ -779,7 +780,7 @@ child:
                                                                                 type: 1
                                                                                 enabled: true
                                                                                 position: [0.3521, -0.0773, 0.0085]
-                                                                                rotation: [0, 0, 0, 1]
+                                                                                rotation: [-0, 0, -0]
                                                                                 scale: [1, 1, 1]
                                                                             child:
                                                                               - name: LeftFinger_$AssimpFbx$_PreRotation
@@ -789,7 +790,7 @@ child:
                                                                                     type: 1
                                                                                     enabled: true
                                                                                     position: [0, 0, 0]
-                                                                                    rotation: [0, 0.0431, 0, 0.9991]
+                                                                                    rotation: [-0, 4.941, -0]
                                                                                     scale: [1, 1, 1]
                                                                                 child:
                                                                                   - name: LeftFinger
@@ -799,7 +800,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [0, 0, 0, 1]
+                                                                                        rotation: [-0, 0, -0]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - name: LeftFinger_Index_Start_$AssimpFbx$_Translation
@@ -809,7 +810,7 @@ child:
                                                                                             type: 1
                                                                                             enabled: true
                                                                                             position: [0.0975, 0.0207, -0.0576]
-                                                                                            rotation: [0, 0, 0, 1]
+                                                                                            rotation: [-0, 0, -0]
                                                                                             scale: [1, 1, 1]
                                                                                         child:
                                                                                           - name: LeftFinger_Index_Start_$AssimpFbx$_PreRotation
@@ -819,7 +820,7 @@ child:
                                                                                                 type: 1
                                                                                                 enabled: true
                                                                                                 position: [0, 0, 0]
-                                                                                                rotation: [-0.0122, 0.0242, -0.4489, 0.8932]
+                                                                                                rotation: [-0.0038, 3.106, -53.37]
                                                                                                 scale: [1, 1, 1]
                                                                                             child:
                                                                                               - name: LeftFinger_Index_Start_$AssimpFbx$_Rotation
@@ -829,7 +830,7 @@ child:
                                                                                                     type: 1
                                                                                                     enabled: true
                                                                                                     position: [0, 0, 0]
-                                                                                                    rotation: [0, 0, 0, 1]
+                                                                                                    rotation: [-0, 0, -0]
                                                                                                     scale: [1, 1, 1]
                                                                                                 child:
                                                                                                   - name: LeftFinger_Index_Start
@@ -839,7 +840,7 @@ child:
                                                                                                         type: 1
                                                                                                         enabled: true
                                                                                                         position: [0, 0, 0]
-                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                        rotation: [-0, 0, -0]
                                                                                                         scale: [1, 1, 1]
                                                                                                     child:
                                                                                                       - name: LeftFingerIndex_End_$AssimpFbx$_Translation
@@ -849,7 +850,7 @@ child:
                                                                                                             type: 1
                                                                                                             enabled: true
                                                                                                             position: [0.1393, 0, 0]
-                                                                                                            rotation: [0, 0, 0, 1]
+                                                                                                            rotation: [-0, 0, -0]
                                                                                                             scale: [1, 1, 1]
                                                                                                         child:
                                                                                                           - name: LeftFingerIndex_End_$AssimpFbx$_PreRotation
@@ -859,7 +860,7 @@ child:
                                                                                                                 type: 1
                                                                                                                 enabled: true
                                                                                                                 position: [0, 0, 0]
-                                                                                                                rotation: [0.0122, -0.0242, 0.4489, 0.8932]
+                                                                                                                rotation: [2.496, -1.85, 53.41]
                                                                                                                 scale: [1, 1, 1]
                                                                                                             child:
                                                                                                               - name: LeftFingerIndex_End
@@ -869,7 +870,7 @@ child:
                                                                                                                     type: 1
                                                                                                                     enabled: true
                                                                                                                     position: [0, 0, 0]
-                                                                                                                    rotation: [0, 0, 0, 1]
+                                                                                                                    rotation: [-0, 0, -0]
                                                                                                                     scale: [1, 1, 1]
                                                                                       - name: LeftFinger_Middle_Start_$AssimpFbx$_Translation
                                                                                         enabled: true
@@ -878,7 +879,7 @@ child:
                                                                                             type: 1
                                                                                             enabled: true
                                                                                             position: [0.0975, 0.0207, 0.046]
-                                                                                            rotation: [0, 0, 0, 1]
+                                                                                            rotation: [-0, 0, -0]
                                                                                             scale: [1, 1, 1]
                                                                                         child:
                                                                                           - name: LeftFinger_Middle_Start_$AssimpFbx$_PreRotation
@@ -888,7 +889,7 @@ child:
                                                                                                 type: 1
                                                                                                 enabled: true
                                                                                                 position: [0, 0, 0]
-                                                                                                rotation: [-0.0122, 0.0242, -0.4489, 0.8932]
+                                                                                                rotation: [-0.0038, 3.106, -53.37]
                                                                                                 scale: [1, 1, 1]
                                                                                             child:
                                                                                               - name: LeftFinger_Middle_Start_$AssimpFbx$_Rotation
@@ -898,7 +899,7 @@ child:
                                                                                                     type: 1
                                                                                                     enabled: true
                                                                                                     position: [0, 0, 0]
-                                                                                                    rotation: [0, 0, 0, 1]
+                                                                                                    rotation: [-0, 0, -0]
                                                                                                     scale: [1, 1, 1]
                                                                                                 child:
                                                                                                   - name: LeftFinger_Middle_Start
@@ -908,7 +909,7 @@ child:
                                                                                                         type: 1
                                                                                                         enabled: true
                                                                                                         position: [0, 0, 0]
-                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                        rotation: [-0, 0, -0]
                                                                                                         scale: [1, 1, 1]
                                                                                                     child:
                                                                                                       - name: LeftFinger_Middle_End_$AssimpFbx$_Translation
@@ -918,7 +919,7 @@ child:
                                                                                                             type: 1
                                                                                                             enabled: true
                                                                                                             position: [0.1393, 0, 0]
-                                                                                                            rotation: [0, 0, 0, 1]
+                                                                                                            rotation: [-0, 0, -0]
                                                                                                             scale: [1, 1, 1]
                                                                                                         child:
                                                                                                           - name: LeftFinger_Middle_End_$AssimpFbx$_PreRotation
@@ -928,7 +929,7 @@ child:
                                                                                                                 type: 1
                                                                                                                 enabled: true
                                                                                                                 position: [0, 0, 0]
-                                                                                                                rotation: [0.0122, -0.0242, 0.4489, 0.8932]
+                                                                                                                rotation: [2.496, -1.85, 53.41]
                                                                                                                 scale: [1, 1, 1]
                                                                                                             child:
                                                                                                               - name: LeftFinger_Middle_End
@@ -938,7 +939,7 @@ child:
                                                                                                                     type: 1
                                                                                                                     enabled: true
                                                                                                                     position: [0, 0, 0]
-                                                                                                                    rotation: [0, 0, 0, 1]
+                                                                                                                    rotation: [-0, 0, -0]
                                                                                                                     scale: [1, 1, 1]
                                                                                       - name: LeftFinger_Thumb_Start_$AssimpFbx$_Translation
                                                                                         enabled: true
@@ -947,7 +948,7 @@ child:
                                                                                             type: 1
                                                                                             enabled: true
                                                                                             position: [-0.0242, -0.0561, 0.0988]
-                                                                                            rotation: [0, 0, 0, 1]
+                                                                                            rotation: [-0, 0, -0]
                                                                                             scale: [1, 1, 1]
                                                                                         child:
                                                                                           - name: LeftFinger_Thumb_Start_$AssimpFbx$_PreRotation
@@ -957,7 +958,7 @@ child:
                                                                                                 type: 1
                                                                                                 enabled: true
                                                                                                 position: [0, 0, 0]
-                                                                                                rotation: [-0.0336, 0.0593, -0.4916, 0.8682]
+                                                                                                rotation: [-0.0023, 7.816, -59.04]
                                                                                                 scale: [1, 1, 1]
                                                                                             child:
                                                                                               - name: LeftFinger_Thumb_Start_$AssimpFbx$_Rotation
@@ -967,7 +968,7 @@ child:
                                                                                                     type: 1
                                                                                                     enabled: true
                                                                                                     position: [0, 0, 0]
-                                                                                                    rotation: [0, 0, 0, 1]
+                                                                                                    rotation: [-0, 0, -0]
                                                                                                     scale: [1, 1, 1]
                                                                                                 child:
                                                                                                   - name: LeftFinger_Thumb_Start
@@ -977,7 +978,7 @@ child:
                                                                                                         type: 1
                                                                                                         enabled: true
                                                                                                         position: [0, 0, 0]
-                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                        rotation: [-0, 0, -0]
                                                                                                         scale: [1, 1, 1]
                                                                                                     child:
                                                                                                       - name: LeftFinger_Thumb_End_$AssimpFbx$_Translation
@@ -987,7 +988,7 @@ child:
                                                                                                             type: 1
                                                                                                             enabled: true
                                                                                                             position: [0.134, -0.0029, 0.0245]
-                                                                                                            rotation: [0, 0, 0, 1]
+                                                                                                            rotation: [-0, 0, -0]
                                                                                                             scale: [1, 1, 1]
                                                                                                         child:
                                                                                                           - name: LeftFinger_Thumb_End_$AssimpFbx$_PreRotation
@@ -997,7 +998,7 @@ child:
                                                                                                                 type: 1
                                                                                                                 enabled: true
                                                                                                                 position: [0, 0, 0]
-                                                                                                                rotation: [0.0336, -0.0593, 0.4916, 0.8682]
+                                                                                                                rotation: [6.715, -4.01, 59.28]
                                                                                                                 scale: [1, 1, 1]
                                                                                                             child:
                                                                                                               - name: LeftFinger_Thumb_End
@@ -1007,7 +1008,7 @@ child:
                                                                                                                     type: 1
                                                                                                                     enabled: true
                                                                                                                     position: [0, 0, 0]
-                                                                                                                    rotation: [0, 0, 0, 1]
+                                                                                                                    rotation: [-0, 0, -0]
                                                                                                                     scale: [1, 1, 1]
                           - name: CenterShoulder_$AssimpFbx$_Translation
                             enabled: true
@@ -1016,7 +1017,7 @@ child:
                                 type: 1
                                 enabled: true
                                 position: [0.1438, 0.2114, -0.1284]
-                                rotation: [0, 0, 0, 1]
+                                rotation: [-0, 0, -0]
                                 scale: [1, 1, 1]
                             child:
                               - name: CenterShoulder_$AssimpFbx$_PreRotation
@@ -1026,8 +1027,8 @@ child:
                                     type: 1
                                     enabled: true
                                     position: [0, 0, 0]
-                                    rotation: [0.2065, -0.119, 0.8415, 0.4848]
-                                    scale: [0.9881, 0.9881, 1]
+                                    rotation: [24.32, 13.42, 117.2]
+                                    scale: [0.987, 0.987, 1]
                                 child:
                                   - name: CenterShoulder_$AssimpFbx$_Rotation
                                     enabled: true
@@ -1036,7 +1037,7 @@ child:
                                         type: 1
                                         enabled: true
                                         position: [0, 0, 0]
-                                        rotation: [0.0066, 0.0498, -0.0039, 0.9987]
+                                        rotation: [0.2143, 1.567, -0.1177]
                                         scale: [1, 1, 1]
                                     child:
                                       - name: CenterShoulder
@@ -1046,7 +1047,7 @@ child:
                                             type: 1
                                             enabled: true
                                             position: [0, 0, 0]
-                                            rotation: [0, 0, 0, 1]
+                                            rotation: [-0, 0, -0]
                                             scale: [1, 1, 1]
                                         child:
                                           - name: RightElbow_$AssimpFbx$_Translation
@@ -1055,8 +1056,8 @@ child:
                                               - !<transform>
                                                 type: 1
                                                 enabled: true
-                                                position: [-0.178, -0.0109, -0.0412]
-                                                rotation: [0, 0, 0, 1]
+                                                position: [-0.1828, -0.003, -0.0546]
+                                                rotation: [-0, 0, -0]
                                                 scale: [1, 1, 1]
                                             child:
                                               - name: RightElbow_$AssimpFbx$_PreRotation
@@ -1066,7 +1067,7 @@ child:
                                                     type: 1
                                                     enabled: true
                                                     position: [0, 0, 0]
-                                                    rotation: [0, -0.4964, 0, 0.8681]
+                                                    rotation: [0, -59.52, 0]
                                                     scale: [1, 1, 1]
                                                 child:
                                                   - name: RightElbow_$AssimpFbx$_Rotation
@@ -1076,7 +1077,7 @@ child:
                                                         type: 1
                                                         enabled: true
                                                         position: [0, 0, 0]
-                                                        rotation: [0.0203, 0.1053, -0.1896, 0.976]
+                                                        rotation: [4.467, 11.47, -18.61]
                                                         scale: [1, 1, 1]
                                                     child:
                                                       - name: RightElbow
@@ -1086,7 +1087,7 @@ child:
                                                             type: 1
                                                             enabled: true
                                                             position: [0, 0, 0]
-                                                            rotation: [0, 0, 0, 1]
+                                                            rotation: [-0, 0, -0]
                                                             scale: [1, 1, 1]
                                                         child:
                                                           - name: RightHand_$AssimpFbx$_Translation
@@ -1096,7 +1097,7 @@ child:
                                                                 type: 1
                                                                 enabled: true
                                                                 position: [-0.2993, 0.0065, -0.009]
-                                                                rotation: [0, 0, 0, 1]
+                                                                rotation: [-0, 0, -0]
                                                                 scale: [1, 1, 1]
                                                             child:
                                                               - name: RightHand_$AssimpFbx$_PreRotation
@@ -1106,7 +1107,7 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [0, 0, 0]
-                                                                    rotation: [0, -0.0684, 0, 0.9977]
+                                                                    rotation: [0, -7.844, 0]
                                                                     scale: [1, 1, 1]
                                                                 child:
                                                                   - name: RightHand_$AssimpFbx$_Rotation
@@ -1116,7 +1117,7 @@ child:
                                                                         type: 1
                                                                         enabled: true
                                                                         position: [0, 0, 0]
-                                                                        rotation: [0, 0.0343, 0, 0.9994]
+                                                                        rotation: [-0, 3.931, -0]
                                                                         scale: [1, 1, 1]
                                                                     child:
                                                                       - name: RightHand
@@ -1126,7 +1127,7 @@ child:
                                                                             type: 1
                                                                             enabled: true
                                                                             position: [0, 0, 0]
-                                                                            rotation: [0, 0, 0, 1]
+                                                                            rotation: [-0, 0, -0]
                                                                             scale: [1, 1, 1]
                                                                         child:
                                                                           - name: Parasite_$AssimpFbx$_Translation
@@ -1136,7 +1137,7 @@ child:
                                                                                 type: 1
                                                                                 enabled: true
                                                                                 position: [-0.3932, -0.0196, -0.0049]
-                                                                                rotation: [0, 0, 0, 1]
+                                                                                rotation: [-0, 0, -0]
                                                                                 scale: [1, 1, 1]
                                                                             child:
                                                                               - name: Parasite_$AssimpFbx$_PreRotation
@@ -1146,7 +1147,7 @@ child:
                                                                                     type: 1
                                                                                     enabled: true
                                                                                     position: [0, 0, 0]
-                                                                                    rotation: [0, 0.0431, 0, 0.9991]
+                                                                                    rotation: [-0, 4.941, -0]
                                                                                     scale: [1, 1, 1]
                                                                                 child:
                                                                                   - name: Parasite
@@ -1156,7 +1157,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [0, 0, 0, 1]
+                                                                                        rotation: [-0, 0, -0]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - name: MouthUp_$AssimpFbx$_Translation
@@ -1166,7 +1167,7 @@ child:
                                                                                             type: 1
                                                                                             enabled: true
                                                                                             position: [-0.3949, -0.3249, 0.0322]
-                                                                                            rotation: [0, 0, 0, 1]
+                                                                                            rotation: [-0, 0, -0]
                                                                                             scale: [1, 1, 1]
                                                                                         child:
                                                                                           - name: MouthUp_$AssimpFbx$_PreRotation
@@ -1176,7 +1177,7 @@ child:
                                                                                                 type: 1
                                                                                                 enabled: true
                                                                                                 position: [0, 0, 0]
-                                                                                                rotation: [1, 0, 0, 0]
+                                                                                                rotation: [-180, 0, -0]
                                                                                                 scale: [1, 1, 1]
                                                                                             child:
                                                                                               - name: MouthUp_$AssimpFbx$_Rotation
@@ -1186,7 +1187,7 @@ child:
                                                                                                     type: 1
                                                                                                     enabled: true
                                                                                                     position: [0, 0, 0]
-                                                                                                    rotation: [0, 0, 0, 1]
+                                                                                                    rotation: [-0, 0, -0]
                                                                                                     scale: [1, 1, 1]
                                                                                                 child:
                                                                                                   - name: MouthUp
@@ -1196,7 +1197,7 @@ child:
                                                                                                         type: 1
                                                                                                         enabled: true
                                                                                                         position: [0, 0, 0]
-                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                        rotation: [-0, 0, -0]
                                                                                                         scale: [1, 1, 1]
                                                                                                     child:
                                                                                                       - name: Eye
@@ -1206,7 +1207,7 @@ child:
                                                                                                             type: 1
                                                                                                             enabled: true
                                                                                                             position: [0.0944, 0.0526, -0.0407]
-                                                                                                            rotation: [-0.228, -0.2851, -0.1358, 0.921]
+                                                                                                            rotation: [-71.4, 12.77, 36.97]
                                                                                                             scale: [1, 1, 1]
                                                                                       - name: MouthDown_$AssimpFbx$_Translation
                                                                                         enabled: true
@@ -1214,8 +1215,8 @@ child:
                                                                                           - !<transform>
                                                                                             type: 1
                                                                                             enabled: true
-                                                                                            position: [-0.4199, 0.1991, 0.0735]
-                                                                                            rotation: [0, 0, 0, 1]
+                                                                                            position: [-0.4477, 0.1382, 0.0436]
+                                                                                            rotation: [-0, 0, -0]
                                                                                             scale: [1, 1, 1]
                                                                                         child:
                                                                                           - name: MouthDown_$AssimpFbx$_PreRotation
@@ -1225,7 +1226,7 @@ child:
                                                                                                 type: 1
                                                                                                 enabled: true
                                                                                                 position: [0, 0, 0]
-                                                                                                rotation: [1, 0, 0, 0]
+                                                                                                rotation: [-180, 0, -0]
                                                                                                 scale: [1, 1, 1]
                                                                                             child:
                                                                                               - name: MouthDown_$AssimpFbx$_Rotation
@@ -1235,7 +1236,7 @@ child:
                                                                                                     type: 1
                                                                                                     enabled: true
                                                                                                     position: [0, 0, 0]
-                                                                                                    rotation: [0.0052, -0.045, 0.0973, 0.9942]
+                                                                                                    rotation: [0.0834, -1.421, 3.068]
                                                                                                     scale: [1, 1, 1]
                                                                                                 child:
                                                                                                   - name: MouthDown
@@ -1245,7 +1246,7 @@ child:
                                                                                                         type: 1
                                                                                                         enabled: true
                                                                                                         position: [0, 0, 0]
-                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                        rotation: [-0, 0, -0]
                                                                                                         scale: [1, 1, 1]
                                                                                       - name: Weapon_$AssimpFbx$_Translation
                                                                                         enabled: true
@@ -1254,7 +1255,7 @@ child:
                                                                                             type: 1
                                                                                             enabled: true
                                                                                             position: [-0.1891, 0, 0.0194]
-                                                                                            rotation: [0, 0, 0, 1]
+                                                                                            rotation: [-0, 0, -0]
                                                                                             scale: [1, 1, 1]
                                                                                         child:
                                                                                           - name: Weapon_$AssimpFbx$_PreRotation
@@ -1264,7 +1265,7 @@ child:
                                                                                                 type: 1
                                                                                                 enabled: true
                                                                                                 position: [0, 0, 0]
-                                                                                                rotation: [1, 0, 0, 0]
+                                                                                                rotation: [-180, 0, -0]
                                                                                                 scale: [1, 1, 1]
                                                                                             child:
                                                                                               - name: Weapon
@@ -1274,7 +1275,7 @@ child:
                                                                                                     type: 1
                                                                                                     enabled: true
                                                                                                     position: [0, 0, 0]
-                                                                                                    rotation: [0, 0, 0, 1]
+                                                                                                    rotation: [-0, 0, -0]
                                                                                                     scale: [1, 1, 1]
                                                                                                 child:
                                                                                                   - name: Claw_Jnt_$AssimpFbx$_Translation
@@ -1284,7 +1285,7 @@ child:
                                                                                                         type: 1
                                                                                                         enabled: true
                                                                                                         position: [0.1466, 0.0707, -0.0489]
-                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                        rotation: [-0, 0, -0]
                                                                                                         scale: [1, 1, 1]
                                                                                                     child:
                                                                                                       - name: Claw_Jnt_$AssimpFbx$_PreRotation
@@ -1294,8 +1295,8 @@ child:
                                                                                                             type: 1
                                                                                                             enabled: true
                                                                                                             position: [0, 0, 0]
-                                                                                                            rotation: [0, 0.9999, 0, 0.0118]
-                                                                                                            scale: [0.9881, 1, 0.9881]
+                                                                                                            rotation: [-180, 1.352, -180]
+                                                                                                            scale: [0.987, 1, 0.987]
                                                                                                         child:
                                                                                                           - name: Claw_Jnt
                                                                                                             enabled: true
@@ -1304,7 +1305,7 @@ child:
                                                                                                                 type: 1
                                                                                                                 enabled: true
                                                                                                                 position: [0, 0, 0]
-                                                                                                                rotation: [0, 0, 0, 1]
+                                                                                                                rotation: [-0, 0, -0]
                                                                                                                 scale: [1, 1, 1]
                                                                                                             child:
                                                                                                               - name: Claw_Mid_Jnt_$AssimpFbx$_Translation
@@ -1314,7 +1315,7 @@ child:
                                                                                                                     type: 1
                                                                                                                     enabled: true
                                                                                                                     position: [0.4152, 0, 0]
-                                                                                                                    rotation: [0, 0, 0, 1]
+                                                                                                                    rotation: [-0, 0, -0]
                                                                                                                     scale: [1, 1, 1]
                                                                                                                 child:
                                                                                                                   - name: Claw_Mid_Jnt_$AssimpFbx$_PreRotation
@@ -1324,8 +1325,8 @@ child:
                                                                                                                         type: 1
                                                                                                                         enabled: true
                                                                                                                         position: [0, 0, 0]
-                                                                                                                        rotation: [0, 0.9999, 0, -0.0118]
-                                                                                                                        scale: [0.9881, 1, 0.9881]
+                                                                                                                        rotation: [-180, -1.352, -180]
+                                                                                                                        scale: [0.987, 1, 0.987]
                                                                                                                     child:
                                                                                                                       - name: Claw_Mid_Jnt
                                                                                                                         enabled: true
@@ -1334,7 +1335,7 @@ child:
                                                                                                                             type: 1
                                                                                                                             enabled: true
                                                                                                                             position: [0, 0, 0]
-                                                                                                                            rotation: [0, 0, 0, 1]
+                                                                                                                            rotation: [-0, 0, -0]
                                                                                                                             scale: [1, 1, 1]
                                                                                                                         child:
                                                                                                                           - name: Thumb_Start_$AssimpFbx$_Translation
@@ -1343,8 +1344,8 @@ child:
                                                                                                                               - !<transform>
                                                                                                                                 type: 1
                                                                                                                                 enabled: true
-                                                                                                                                position: [0.0614, 0, 0.3218]
-                                                                                                                                rotation: [0, 0, 0, 1]
+                                                                                                                                position: [0.0614, -0, 0.3218]
+                                                                                                                                rotation: [-0, 0, -0]
                                                                                                                                 scale: [1, 1, 1]
                                                                                                                             child:
                                                                                                                               - name: Thumb_Start_$AssimpFbx$_PreRotation
@@ -1354,8 +1355,8 @@ child:
                                                                                                                                     type: 1
                                                                                                                                     enabled: true
                                                                                                                                     position: [0, 0, 0]
-                                                                                                                                    rotation: [0, -0.7329, 0, 0.6803]
-                                                                                                                                    scale: [0.9882, 1, 0.9882]
+                                                                                                                                    rotation: [180, -85.74, 180]
+                                                                                                                                    scale: [0.9871, 1, 0.9871]
                                                                                                                                 child:
                                                                                                                                   - name: Thumb_Start_$AssimpFbx$_Rotation
                                                                                                                                     enabled: true
@@ -1364,7 +1365,7 @@ child:
                                                                                                                                         type: 1
                                                                                                                                         enabled: true
                                                                                                                                         position: [0, 0, 0]
-                                                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                                                        rotation: [-0, 0, -0]
                                                                                                                                         scale: [1, 1, 1]
                                                                                                                                     child:
                                                                                                                                       - name: Thumb_Start
@@ -1374,7 +1375,7 @@ child:
                                                                                                                                             type: 1
                                                                                                                                             enabled: true
                                                                                                                                             position: [0, 0, 0]
-                                                                                                                                            rotation: [0, 0, 0, 1]
+                                                                                                                                            rotation: [-0, 0, -0]
                                                                                                                                             scale: [1, 1, 1]
                                                                                                                                         child:
                                                                                                                                           - name: Thumb_Mid_$AssimpFbx$_Translation
@@ -1384,7 +1385,7 @@ child:
                                                                                                                                                 type: 1
                                                                                                                                                 enabled: true
                                                                                                                                                 position: [0.298, 0, 0]
-                                                                                                                                                rotation: [0, 0, 0, 1]
+                                                                                                                                                rotation: [-0, 0, -0]
                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                             child:
                                                                                                                                               - name: Thumb_Mid_$AssimpFbx$_PreRotation
@@ -1394,7 +1395,7 @@ child:
                                                                                                                                                     type: 1
                                                                                                                                                     enabled: true
                                                                                                                                                     position: [0, 0, 0]
-                                                                                                                                                    rotation: [0, -0.7335, 0, 0.6797]
+                                                                                                                                                    rotation: [180, -85.64, 180]
                                                                                                                                                     scale: [1, 1, 1]
                                                                                                                                                 child:
                                                                                                                                                   - name: Thumb_Mid
@@ -1404,7 +1405,7 @@ child:
                                                                                                                                                         type: 1
                                                                                                                                                         enabled: true
                                                                                                                                                         position: [0, 0, 0]
-                                                                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                                                                        rotation: [-0, 0, -0]
                                                                                                                                                         scale: [1, 1, 1]
                                                                                                                                                     child:
                                                                                                                                                       - name: Thumb_Finish_$AssimpFbx$_Translation
@@ -1413,8 +1414,8 @@ child:
                                                                                                                                                           - !<transform>
                                                                                                                                                             type: 1
                                                                                                                                                             enabled: true
-                                                                                                                                                            position: [0.164, 0, 0]
-                                                                                                                                                            rotation: [0, 0, 0, 1]
+                                                                                                                                                            position: [0.164, -0, 0]
+                                                                                                                                                            rotation: [-0, 0, -0]
                                                                                                                                                             scale: [1, 1, 1]
                                                                                                                                                         child:
                                                                                                                                                           - name: Thumb_Finish_$AssimpFbx$_PreRotation
@@ -1424,7 +1425,7 @@ child:
                                                                                                                                                                 type: 1
                                                                                                                                                                 enabled: true
                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                rotation: [0, -0.0282, 0, 0.9996]
+                                                                                                                                                                rotation: [0, -3.232, 0]
                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                             child:
                                                                                                                                                               - name: Thumb_Finish_$AssimpFbx$_Rotation
@@ -1434,7 +1435,7 @@ child:
                                                                                                                                                                     type: 1
                                                                                                                                                                     enabled: true
                                                                                                                                                                     position: [0, 0, 0]
-                                                                                                                                                                    rotation: [0, 0, 0, 1]
+                                                                                                                                                                    rotation: [-0, 0, -0]
                                                                                                                                                                     scale: [1, 1, 1]
                                                                                                                                                                 child:
                                                                                                                                                                   - name: Thumb_Finish
@@ -1444,7 +1445,7 @@ child:
                                                                                                                                                                         type: 1
                                                                                                                                                                         enabled: true
                                                                                                                                                                         position: [0, 0, 0]
-                                                                                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                                                                                        rotation: [-0, 0, -0]
                                                                                                                                                                         scale: [1, 1, 1]
                                                                                                                                                                     child:
                                                                                                                                                                       - name: Thumb_zero_$AssimpFbx$_Translation
@@ -1454,7 +1455,7 @@ child:
                                                                                                                                                                             type: 1
                                                                                                                                                                             enabled: true
                                                                                                                                                                             position: [0.4066, 0.0995, 0]
-                                                                                                                                                                            rotation: [0, 0, 0, 1]
+                                                                                                                                                                            rotation: [-0, 0, -0]
                                                                                                                                                                             scale: [1, 1, 1]
                                                                                                                                                                         child:
                                                                                                                                                                           - name: Thumb_zero_$AssimpFbx$_PreRotation
@@ -1464,7 +1465,7 @@ child:
                                                                                                                                                                                 type: 1
                                                                                                                                                                                 enabled: true
                                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                                rotation: [0, 0.9947, 0, -0.1033]
+                                                                                                                                                                                rotation: [-180, -11.86, -180]
                                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                                             child:
                                                                                                                                                                               - name: Thumb_zero_$AssimpFbx$_Rotation
@@ -1474,7 +1475,7 @@ child:
                                                                                                                                                                                     type: 1
                                                                                                                                                                                     enabled: true
                                                                                                                                                                                     position: [0, 0, 0]
-                                                                                                                                                                                    rotation: [0, 0, 0, 1]
+                                                                                                                                                                                    rotation: [-0, 0, -0]
                                                                                                                                                                                     scale: [1, 1, 1]
                                                                                                                                                                                 child:
                                                                                                                                                                                   - name: Thumb_zero
@@ -1484,7 +1485,7 @@ child:
                                                                                                                                                                                         type: 1
                                                                                                                                                                                         enabled: true
                                                                                                                                                                                         position: [0, 0, 0]
-                                                                                                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                                                                                                        rotation: [-0, 0, -0]
                                                                                                                                                                                         scale: [1, 1, 1]
                                                                                                                           - name: Middle_Start_$AssimpFbx$_Translation
                                                                                                                             enabled: true
@@ -1493,7 +1494,7 @@ child:
                                                                                                                                 type: 1
                                                                                                                                 enabled: true
                                                                                                                                 position: [-0.1965, 0.0468, 0.0442]
-                                                                                                                                rotation: [0, 0, 0, 1]
+                                                                                                                                rotation: [-0, 0, -0]
                                                                                                                                 scale: [1, 1, 1]
                                                                                                                             child:
                                                                                                                               - name: Middle_Start_$AssimpFbx$_PreRotation
@@ -1503,7 +1504,7 @@ child:
                                                                                                                                     type: 1
                                                                                                                                     enabled: true
                                                                                                                                     position: [0, 0, 0]
-                                                                                                                                    rotation: [0, 0.9983, 0, -0.0585]
+                                                                                                                                    rotation: [-180, -6.707, -180]
                                                                                                                                     scale: [1, 1, 1]
                                                                                                                                 child:
                                                                                                                                   - name: Middle_Start_$AssimpFbx$_Rotation
@@ -1513,7 +1514,7 @@ child:
                                                                                                                                         type: 1
                                                                                                                                         enabled: true
                                                                                                                                         position: [0, 0, 0]
-                                                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                                                        rotation: [-0, 0, -0]
                                                                                                                                         scale: [1, 1, 1]
                                                                                                                                     child:
                                                                                                                                       - name: Middle_Start
@@ -1523,7 +1524,7 @@ child:
                                                                                                                                             type: 1
                                                                                                                                             enabled: true
                                                                                                                                             position: [0, 0, 0]
-                                                                                                                                            rotation: [0, 0, 0, 1]
+                                                                                                                                            rotation: [-0, 0, -0]
                                                                                                                                             scale: [1, 1, 1]
                                                                                                                                         child:
                                                                                                                                           - name: Middle_Finish_$AssimpFbx$_Translation
@@ -1532,8 +1533,8 @@ child:
                                                                                                                                               - !<transform>
                                                                                                                                                 type: 1
                                                                                                                                                 enabled: true
-                                                                                                                                                position: [0.6727, 0.0941, 0]
-                                                                                                                                                rotation: [0, 0, 0, 1]
+                                                                                                                                                position: [0.6727, 0.0941, -0]
+                                                                                                                                                rotation: [-0, 0, -0]
                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                             child:
                                                                                                                                               - name: Middle_Finish_$AssimpFbx$_PreRotation
@@ -1543,7 +1544,7 @@ child:
                                                                                                                                                     type: 1
                                                                                                                                                     enabled: true
                                                                                                                                                     position: [0, 0, 0]
-                                                                                                                                                    rotation: [0, 0.9983, 0, 0.0585]
+                                                                                                                                                    rotation: [-180, 6.707, -180]
                                                                                                                                                     scale: [1, 1, 1]
                                                                                                                                                 child:
                                                                                                                                                   - name: Middle_Finish_$AssimpFbx$_Rotation
@@ -1553,7 +1554,7 @@ child:
                                                                                                                                                         type: 1
                                                                                                                                                         enabled: true
                                                                                                                                                         position: [0, 0, 0]
-                                                                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                                                                        rotation: [-0, 0, -0]
                                                                                                                                                         scale: [1, 1, 1]
                                                                                                                                                     child:
                                                                                                                                                       - name: Middle_Finish
@@ -1563,7 +1564,7 @@ child:
                                                                                                                                                             type: 1
                                                                                                                                                             enabled: true
                                                                                                                                                             position: [0, 0, 0]
-                                                                                                                                                            rotation: [0, 0, 0, 1]
+                                                                                                                                                            rotation: [-0, 0, -0]
                                                                                                                                                             scale: [1, 1, 1]
                                                                                                                           - name: Index_start_$AssimpFbx$_Translation
                                                                                                                             enabled: true
@@ -1572,7 +1573,7 @@ child:
                                                                                                                                 type: 1
                                                                                                                                 enabled: true
                                                                                                                                 position: [-0.1646, 0.0964, -0.1916]
-                                                                                                                                rotation: [0, 0, 0, 1]
+                                                                                                                                rotation: [-0, 0, -0]
                                                                                                                                 scale: [1, 1, 1]
                                                                                                                             child:
                                                                                                                               - name: Index_start_$AssimpFbx$_PreRotation
@@ -1582,8 +1583,8 @@ child:
                                                                                                                                     type: 1
                                                                                                                                     enabled: true
                                                                                                                                     position: [0, 0, 0]
-                                                                                                                                    rotation: [0, 0.9979, 0, 0.0641]
-                                                                                                                                    scale: [0.9762, 1, 0.9762]
+                                                                                                                                    rotation: [-180, 7.351, -180]
+                                                                                                                                    scale: [0.974, 1, 0.974]
                                                                                                                                 child:
                                                                                                                                   - name: Index_start_$AssimpFbx$_Rotation
                                                                                                                                     enabled: true
@@ -1592,7 +1593,7 @@ child:
                                                                                                                                         type: 1
                                                                                                                                         enabled: true
                                                                                                                                         position: [0, 0, 0]
-                                                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                                                        rotation: [-0, 0, -0]
                                                                                                                                         scale: [1, 1, 1]
                                                                                                                                     child:
                                                                                                                                       - name: Index_start
@@ -1602,7 +1603,7 @@ child:
                                                                                                                                             type: 1
                                                                                                                                             enabled: true
                                                                                                                                             position: [0, 0, 0]
-                                                                                                                                            rotation: [0, 0, 0, 1]
+                                                                                                                                            rotation: [-0, 0, -0]
                                                                                                                                             scale: [1, 1, 1]
                                                                                                                                         child:
                                                                                                                                           - name: Index_finish_$AssimpFbx$_Translation
@@ -1612,7 +1613,7 @@ child:
                                                                                                                                                 type: 1
                                                                                                                                                 enabled: true
                                                                                                                                                 position: [0.3839, 0.1321, 0]
-                                                                                                                                                rotation: [0, 0, 0, 1]
+                                                                                                                                                rotation: [-0, 0, -0]
                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                             child:
                                                                                                                                               - name: Index_finish_$AssimpFbx$_PreRotation
@@ -1622,8 +1623,8 @@ child:
                                                                                                                                                     type: 1
                                                                                                                                                     enabled: true
                                                                                                                                                     position: [0, 0, 0]
-                                                                                                                                                    rotation: [0, 0.9979, 0, -0.0641]
-                                                                                                                                                    scale: [0.9762, 1, 0.9762]
+                                                                                                                                                    rotation: [-180, -7.351, -180]
+                                                                                                                                                    scale: [0.974, 1, 0.974]
                                                                                                                                                 child:
                                                                                                                                                   - name: Index_finish_$AssimpFbx$_Rotation
                                                                                                                                                     enabled: true
@@ -1632,7 +1633,7 @@ child:
                                                                                                                                                         type: 1
                                                                                                                                                         enabled: true
                                                                                                                                                         position: [0, 0, 0]
-                                                                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                                                                        rotation: [-0, 0, -0]
                                                                                                                                                         scale: [1, 1, 1]
                                                                                                                                                     child:
                                                                                                                                                       - name: Index_finish
@@ -1642,7 +1643,7 @@ child:
                                                                                                                                                             type: 1
                                                                                                                                                             enabled: true
                                                                                                                                                             position: [0, 0, 0]
-                                                                                                                                                            rotation: [0, 0, 0, 1]
+                                                                                                                                                            rotation: [-0, 0, -0]
                                                                                                                                                             scale: [1, 1, 1]
                                                                                                                           - name: Pinky_start_$AssimpFbx$_Translation
                                                                                                                             enabled: true
@@ -1651,7 +1652,7 @@ child:
                                                                                                                                 type: 1
                                                                                                                                 enabled: true
                                                                                                                                 position: [0.0884, 0.0959, -0.2972]
-                                                                                                                                rotation: [0, 0, 0, 1]
+                                                                                                                                rotation: [-0, 0, -0]
                                                                                                                                 scale: [1, 1, 1]
                                                                                                                             child:
                                                                                                                               - name: Pinky_start_$AssimpFbx$_PreRotation
@@ -1661,7 +1662,7 @@ child:
                                                                                                                                     type: 1
                                                                                                                                     enabled: true
                                                                                                                                     position: [0, 0, 0]
-                                                                                                                                    rotation: [0, 0.9464, 0, 0.323]
+                                                                                                                                    rotation: [-180, 37.69, -180]
                                                                                                                                     scale: [1, 1, 1]
                                                                                                                                 child:
                                                                                                                                   - name: Pinky_start_$AssimpFbx$_Rotation
@@ -1671,7 +1672,7 @@ child:
                                                                                                                                         type: 1
                                                                                                                                         enabled: true
                                                                                                                                         position: [0, 0, 0]
-                                                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                                                        rotation: [-0, 0, -0]
                                                                                                                                         scale: [1, 1, 1]
                                                                                                                                     child:
                                                                                                                                       - name: Pinky_start
@@ -1681,7 +1682,7 @@ child:
                                                                                                                                             type: 1
                                                                                                                                             enabled: true
                                                                                                                                             position: [0, 0, 0]
-                                                                                                                                            rotation: [0, 0, 0, 1]
+                                                                                                                                            rotation: [-0, 0, -0]
                                                                                                                                             scale: [1, 1, 1]
                                                                                                                                         child:
                                                                                                                                           - name: Pinky_finish_$AssimpFbx$_Translation
@@ -1691,7 +1692,7 @@ child:
                                                                                                                                                 type: 1
                                                                                                                                                 enabled: true
                                                                                                                                                 position: [0.3415, 0.0683, 0]
-                                                                                                                                                rotation: [0, 0, 0, 1]
+                                                                                                                                                rotation: [-0, 0, -0]
                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                             child:
                                                                                                                                               - name: Pinky_finish_$AssimpFbx$_PreRotation
@@ -1701,7 +1702,7 @@ child:
                                                                                                                                                     type: 1
                                                                                                                                                     enabled: true
                                                                                                                                                     position: [0, 0, 0]
-                                                                                                                                                    rotation: [0, 0.9464, 0, -0.323]
+                                                                                                                                                    rotation: [-180, -37.69, -180]
                                                                                                                                                     scale: [1, 1, 1]
                                                                                                                                                 child:
                                                                                                                                                   - name: Pinky_finish_$AssimpFbx$_Rotation
@@ -1711,7 +1712,7 @@ child:
                                                                                                                                                         type: 1
                                                                                                                                                         enabled: true
                                                                                                                                                         position: [0, 0, 0]
-                                                                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                                                                        rotation: [-0, 0, -0]
                                                                                                                                                         scale: [1, 1, 1]
                                                                                                                                                     child:
                                                                                                                                                       - name: Pinky_finish
@@ -1721,7 +1722,7 @@ child:
                                                                                                                                                             type: 1
                                                                                                                                                             enabled: true
                                                                                                                                                             position: [0, 0, 0]
-                                                                                                                                                            rotation: [0, 0, 0, 1]
+                                                                                                                                                            rotation: [-0, 0, -0]
                                                                                                                                                             scale: [1, 1, 1]
                                                                                                   - name: Sword_start_$AssimpFbx$_Translation
                                                                                                     enabled: true
@@ -1730,7 +1731,7 @@ child:
                                                                                                         type: 1
                                                                                                         enabled: true
                                                                                                         position: [0.0328, 0.0737, 0.0458]
-                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                        rotation: [-0, 0, -0]
                                                                                                         scale: [1, 1, 1]
                                                                                                     child:
                                                                                                       - name: Sword_start_$AssimpFbx$_PreRotation
@@ -1740,7 +1741,7 @@ child:
                                                                                                             type: 1
                                                                                                             enabled: true
                                                                                                             position: [0, 0, 0]
-                                                                                                            rotation: [0, 1, 0, -0.0041]
+                                                                                                            rotation: [-180, -0.4698, -180]
                                                                                                             scale: [1, 1, 1]
                                                                                                         child:
                                                                                                           - name: Sword_start
@@ -1750,7 +1751,7 @@ child:
                                                                                                                 type: 1
                                                                                                                 enabled: true
                                                                                                                 position: [0, 0, 0]
-                                                                                                                rotation: [0, 0, 0, 1]
+                                                                                                                rotation: [-0, 0, -0]
                                                                                                                 scale: [1, 1, 1]
                                                                                                             child:
                                                                                                               - name: Sword_finish_$AssimpFbx$_Translation
@@ -1759,8 +1760,8 @@ child:
                                                                                                                   - !<transform>
                                                                                                                     type: 1
                                                                                                                     enabled: true
-                                                                                                                    position: [1.481, 0, 0.0837]
-                                                                                                                    rotation: [0, 0, 0, 1]
+                                                                                                                    position: [1.481, -0, 0.0837]
+                                                                                                                    rotation: [-0, 0, -0]
                                                                                                                     scale: [1, 1, 1]
                                                                                                                 child:
                                                                                                                   - name: Sword_finish_$AssimpFbx$_PreRotation
@@ -1770,7 +1771,7 @@ child:
                                                                                                                         type: 1
                                                                                                                         enabled: true
                                                                                                                         position: [0, 0, 0]
-                                                                                                                        rotation: [0, 1, 0, 0.0041]
+                                                                                                                        rotation: [-180, 0.4698, -180]
                                                                                                                         scale: [1, 1, 1]
                                                                                                                     child:
                                                                                                                       - name: Sword_finish_$AssimpFbx$_Rotation
@@ -1780,7 +1781,7 @@ child:
                                                                                                                             type: 1
                                                                                                                             enabled: true
                                                                                                                             position: [0, 0, 0]
-                                                                                                                            rotation: [0, 0, 0, 1]
+                                                                                                                            rotation: [-0, 0, -0]
                                                                                                                             scale: [1, 1, 1]
                                                                                                                         child:
                                                                                                                           - name: Sword_finish
@@ -1790,7 +1791,7 @@ child:
                                                                                                                                 type: 1
                                                                                                                                 enabled: true
                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                rotation: [0, 0, 0, 1]
+                                                                                                                                rotation: [-0, 0, -0]
                                                                                                                                 scale: [1, 1, 1]
                           - name: JetPack_$AssimpFbx$_Translation
                             enabled: true
@@ -1798,8 +1799,8 @@ child:
                               - !<transform>
                                 type: 1
                                 enabled: true
-                                position: [0.2526, 0.0031, 0.0094]
-                                rotation: [0, 0, 0, 1]
+                                position: [0.2453, -0.0006, 0.0094]
+                                rotation: [-0, 0, -0]
                                 scale: [1, 1, 1]
                             child:
                               - name: JetPack_$AssimpFbx$_PreRotation
@@ -1809,8 +1810,8 @@ child:
                                     type: 1
                                     enabled: true
                                     position: [0, 0, 0]
-                                    rotation: [-0.3566, -0.5758, -0.3468, 0.6488]
-                                    scale: [0.9941, 1, 0.9941]
+                                    rotation: [-84.53, -29.99, -83.61]
+                                    scale: [0.9935, 1, 0.9935]
                                 child:
                                   - name: JetPack_$AssimpFbx$_Rotation
                                     enabled: true
@@ -1819,7 +1820,7 @@ child:
                                         type: 1
                                         enabled: true
                                         position: [0, 0, 0]
-                                        rotation: [0, 0, 0, 1]
+                                        rotation: [-0, 0, -0]
                                         scale: [1, 1, 1]
                                     child:
                                       - name: JetPack
@@ -1829,7 +1830,7 @@ child:
                                             type: 1
                                             enabled: true
                                             position: [0, 0, 0]
-                                            rotation: [0, 0, 0, 1]
+                                            rotation: [-0, 0, -0]
                                             scale: [1, 1, 1]
                                         child:
                                           - name: RightWing_$AssimpFbx$_Translation
@@ -1839,7 +1840,7 @@ child:
                                                 type: 1
                                                 enabled: true
                                                 position: [0.1346, 0.0517, -0.0673]
-                                                rotation: [0, 0, 0, 1]
+                                                rotation: [-0, 0, -0]
                                                 scale: [1, 1, 1]
                                             child:
                                               - name: RightWing_$AssimpFbx$_PreRotation
@@ -1849,7 +1850,7 @@ child:
                                                     type: 1
                                                     enabled: true
                                                     position: [0, 0, 0]
-                                                    rotation: [0.0557, 0.4494, 0.0531, 0.89]
+                                                    rotation: [4.982, 53.69, 4.306]
                                                     scale: [1, 1, 1]
                                                 child:
                                                   - name: RightWing_$AssimpFbx$_Rotation
@@ -1859,7 +1860,7 @@ child:
                                                         type: 1
                                                         enabled: true
                                                         position: [0, 0, 0]
-                                                        rotation: [-0.0566, 0.0105, -0.0943, 0.9939]
+                                                        rotation: [-1.65, 0.3464, -2.757]
                                                         scale: [1, 1, 1]
                                                     child:
                                                       - name: RightWing
@@ -1869,7 +1870,7 @@ child:
                                                             type: 1
                                                             enabled: true
                                                             position: [0, 0, 0]
-                                                            rotation: [0, 0, 0, 1]
+                                                            rotation: [-0, 0, -0]
                                                             scale: [1, 1, 1]
                                                         child:
                                                           - name: Zero_RightWing_$AssimpFbx$_Translation
@@ -1879,7 +1880,7 @@ child:
                                                                 type: 1
                                                                 enabled: true
                                                                 position: [0.4996, 0.0094, -0.0851]
-                                                                rotation: [0, 0, 0, 1]
+                                                                rotation: [-0, 0, -0]
                                                                 scale: [1, 1, 1]
                                                             child:
                                                               - name: Zero_RightWing_$AssimpFbx$_PreRotation
@@ -1889,7 +1890,7 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [0, 0, 0]
-                                                                    rotation: [-0.0447, -0.4873, -0.0796, 0.8685]
+                                                                    rotation: [-16.59, -57.06, -19.54]
                                                                     scale: [1, 1, 1]
                                                                 child:
                                                                   - name: Zero_RightWing
@@ -1899,7 +1900,7 @@ child:
                                                                         type: 1
                                                                         enabled: true
                                                                         position: [0, 0, 0]
-                                                                        rotation: [0, 0, 0, 1]
+                                                                        rotation: [-0, 0, -0]
                                                                         scale: [1, 1, 1]
                                           - name: LefttWing_$AssimpFbx$_Translation
                                             enabled: true
@@ -1908,7 +1909,7 @@ child:
                                                 type: 1
                                                 enabled: true
                                                 position: [-0.1141, 0.0675, -0.0879]
-                                                rotation: [0, 0, 0, 1]
+                                                rotation: [-0, 0, -0]
                                                 scale: [1, 1, 1]
                                             child:
                                               - name: LefttWing_$AssimpFbx$_PreRotation
@@ -1918,7 +1919,7 @@ child:
                                                     type: 1
                                                     enabled: true
                                                     position: [0, 0, 0]
-                                                    rotation: [0.8447, -0.1046, 0.524, -0.0312]
+                                                    rotation: [172.8, 63.1, 18.56]
                                                     scale: [1, 1, 1]
                                                 child:
                                                   - name: LefttWing_$AssimpFbx$_Rotation
@@ -1928,7 +1929,7 @@ child:
                                                         type: 1
                                                         enabled: true
                                                         position: [0, 0, 0]
-                                                        rotation: [-0.0566, 0.0105, -0.0943, 0.9939]
+                                                        rotation: [-1.65, 0.3464, -2.757]
                                                         scale: [1, 1, 1]
                                                     child:
                                                       - name: LefttWing
@@ -1938,7 +1939,7 @@ child:
                                                             type: 1
                                                             enabled: true
                                                             position: [0, 0, 0]
-                                                            rotation: [0, 0, 0, 1]
+                                                            rotation: [-0, 0, -0]
                                                             scale: [1, 1, 1]
                                                         child:
                                                           - name: Zero_LefttWing_$AssimpFbx$_Translation
@@ -1948,7 +1949,7 @@ child:
                                                                 type: 1
                                                                 enabled: true
                                                                 position: [-0.4996, -0.0095, 0.0851]
-                                                                rotation: [0, 0, 0, 1]
+                                                                rotation: [-0, 0, -0]
                                                                 scale: [1, 1, 1]
                                                             child:
                                                               - name: Zero_LefttWing_$AssimpFbx$_PreRotation
@@ -1958,7 +1959,7 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [0, 0, 0]
-                                                                    rotation: [-0.0447, -0.4873, -0.0796, 0.8685]
+                                                                    rotation: [-16.59, -57.06, -19.54]
                                                                     scale: [1, 1, 1]
                                                                 child:
                                                                   - name: Zero_LefttWing
@@ -1968,7 +1969,7 @@ child:
                                                                         type: 1
                                                                         enabled: true
                                                                         position: [0, 0, 0]
-                                                                        rotation: [0, 0, 0, 1]
+                                                                        rotation: [-0, 0, -0]
                                                                         scale: [1, 1, 1]
           - name: ikHandle_R
             enabled: true
@@ -1976,8 +1977,8 @@ child:
               - !<transform>
                 type: 1
                 enabled: true
-                position: [-0.3263, -0.7387, -0.3238]
-                rotation: [0, 0, 0, 1]
+                position: [-0.3263, -0.7817, -0.3238]
+                rotation: [-0, 0, -0]
                 scale: [1, 1, 1]
           - name: ikHandle_L
             enabled: true
@@ -1985,8 +1986,8 @@ child:
               - !<transform>
                 type: 1
                 enabled: true
-                position: [0.3264, -0.7387, 0.3066]
-                rotation: [0, 0, 0, 1]
+                position: [0.3264, -0.7817, 0.3066]
+                rotation: [-0, 0, -0]
                 scale: [1, 1, 1]
   - name: Goal
     enabled: false
@@ -1995,7 +1996,7 @@ child:
         type: 1
         enabled: true
         position: [-350.3, -33.37, 74.22]
-        rotation: [-0, -0, 0, 1]
+        rotation: [-0, 0, -0]
         scale: [2.444, 2.444, 2.444]
   - name: AttackIndicator
     enabled: false
@@ -2004,26 +2005,26 @@ child:
         type: 1
         enabled: true
         position: [0, 0, 0]
-        rotation: [0, 0.8513, 0, 0.5247]
+        rotation: [-180, 63.29, -180]
         scale: [2.222, 2.222, 2.222]
   - name: DashTrail
-    enabled: true
+    enabled: false
     component:
       - !<transform>
         type: 1
         enabled: true
         position: [0, 3.48, -1.02]
-        rotation: [0, 0.7071, 0, 0.7071]
+        rotation: [180, 89.98, 180]
         scale: [2.04, 0.4071, 2.17]
     child:
       - name: Plane001
-        enabled: true
+        enabled: false
         component:
           - !<transform>
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [-0.7071, 0, 0, 0.7071]
+            rotation: [-90, 0, 0]
             scale: [1.012, 1.019, 1.003]
           - !<mesh_renderer>
             type: 2
@@ -2040,7 +2041,7 @@ child:
         type: 1
         enabled: true
         position: [0, 1, 0]
-        rotation: [0, 0, 0, 1]
+        rotation: [-0, 0, -0]
         scale: [2, 2, 2]
       - !<particle_system>
         type: 22
@@ -2111,7 +2112,7 @@ child:
         type: 1
         enabled: true
         position: [0, 1, 0]
-        rotation: [0, 0, 0, 1]
+        rotation: [-0, 0, -0]
         scale: [2, 2, 2]
       - !<particle_system>
         type: 22
@@ -2182,7 +2183,7 @@ child:
         type: 1
         enabled: true
         position: [0, 0, 0]
-        rotation: [0, 0.886, 0, 0.4636]
+        rotation: [-180, 55.25, -180]
         scale: [2, 2, 2]
       - !<particle_system>
         type: 22
@@ -2253,7 +2254,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [0, 0, 0, 1]
+            rotation: [-0, 0, -0]
             scale: [1, 1, 1]
           - !<particle_system>
             type: 22
@@ -2324,7 +2325,7 @@ child:
         type: 1
         enabled: true
         position: [0, 0, 0]
-        rotation: [0.7071, 0, 0, 0.7071]
+        rotation: [90, 0, -0]
         scale: [3, 3, 3]
       - !<particle_system>
         type: 22
@@ -2395,7 +2396,7 @@ child:
         type: 1
         enabled: true
         position: [-0.8439, 2.157, 3.179]
-        rotation: [0, 0.7071, 0.7071, 0]
+        rotation: [-90, -0, -180]
         scale: [2, 2, 2]
       - !<particle_system>
         type: 22
@@ -2464,14 +2465,14 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [-426, -24.82, 74.89]
-        rotation: [-0, -0.8216, 0, 0.5701]
-        scale: [5.112, 4.938, 5.112]
+        position: [142.1, -4.178, 129.4]
+        rotation: [0, -45, 0]
+        scale: [2.259, 2.222, 2.259]
       - !<transform_2d>
         type: 10
         enabled: true
         position: [0, 0, 0]
-        size: [1242, 659]
+        size: [1605, 934]
         scale: [1, 1]
         rotation: [0, 0, 0, 1]
         pivot: [0.5, 0.5]
@@ -2487,7 +2488,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [0, 0, 0, 1]
+            rotation: [-0, 0, -0]
             scale: [1, 1, 1]
         child:
           - name: SWORD_ADDON
@@ -2497,7 +2498,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0, 0, 0]
-                rotation: [0, 0, 0, 1]
+                rotation: [-0, 0, -0]
                 scale: [1, 1, 1]
               - !<transform_2d>
                 type: 10
@@ -2531,7 +2532,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0, 0, 0]
-                rotation: [0, 0, 0, 1]
+                rotation: [-0, 0, -0]
                 scale: [1, 1, 1]
               - !<transform_2d>
                 type: 10
@@ -2566,7 +2567,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [0, 0, 0, 1]
+                    rotation: [-0, 0, -0]
                     scale: [1, 1, 1]
                 child:
                   - name: BULLET_CELL_1
@@ -2576,7 +2577,7 @@ child:
                         type: 1
                         enabled: true
                         position: [0, 0, 0]
-                        rotation: [0, 0, 0, 1]
+                        rotation: [-0, 0, -0]
                         scale: [1, 1, 1]
                       - !<transform_2d>
                         type: 10
@@ -2610,7 +2611,7 @@ child:
                         type: 1
                         enabled: true
                         position: [0, 0, 0]
-                        rotation: [0, 0, 0, 1]
+                        rotation: [-0, 0, -0]
                         scale: [1, 1, 1]
                       - !<transform_2d>
                         type: 10
@@ -2644,7 +2645,7 @@ child:
                         type: 1
                         enabled: true
                         position: [0, 0, 0]
-                        rotation: [0, 0, 0, 1]
+                        rotation: [-0, 0, -0]
                         scale: [1, 1, 1]
                       - !<transform_2d>
                         type: 10
@@ -2678,7 +2679,7 @@ child:
                         type: 1
                         enabled: true
                         position: [0, 0, 0]
-                        rotation: [0, 0, 0, 1]
+                        rotation: [-0, 0, -0]
                         scale: [1, 1, 1]
                       - !<transform_2d>
                         type: 10
@@ -2712,7 +2713,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [0, 0, 0, 1]
+                    rotation: [-0, 0, -0]
                     scale: [1, 1, 1]
                 child:
                   - name: Health_capsule_1
@@ -2722,7 +2723,7 @@ child:
                         type: 1
                         enabled: true
                         position: [0, 0, 0]
-                        rotation: [0, 0, 0, 1]
+                        rotation: [-0, 0, -0]
                         scale: [1, 1, 1]
                       - !<transform_2d>
                         type: 10
@@ -2756,7 +2757,7 @@ child:
                         type: 1
                         enabled: true
                         position: [0, 0, 0]
-                        rotation: [0, 0, 0, 1]
+                        rotation: [-0, 0, -0]
                         scale: [1, 1, 1]
                       - !<transform_2d>
                         type: 10
@@ -2790,7 +2791,7 @@ child:
                         type: 1
                         enabled: true
                         position: [0, 0, 0]
-                        rotation: [0, 0, 0, 1]
+                        rotation: [-0, 0, -0]
                         scale: [1, 1, 1]
                       - !<transform_2d>
                         type: 10
@@ -2824,7 +2825,7 @@ child:
                         type: 1
                         enabled: true
                         position: [0, 0, 0]
-                        rotation: [0, 0, 0, 1]
+                        rotation: [-0, 0, -0]
                         scale: [1, 1, 1]
                       - !<transform_2d>
                         type: 10
@@ -2840,7 +2841,7 @@ child:
                         enabled: true
                       - !<image>
                         type: 11
-                        enabled: true
+                        enabled: false
                         image_id: 15478304056567162071
                         hover_image_id: 0
                         image_color: [1, 1, 1, 1]
@@ -2852,20 +2853,20 @@ child:
                         image_tiles_per_second: 14
                         fill_window: false
               - name: Stamina
-                enabled: true
+                enabled: false
                 component:
                   - !<transform>
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [0, 0, 0, 1]
+                    rotation: [-0, 0, -0]
                     scale: [1, 1, 1]
                   - !<progress_bar>
                     type: 13
                     enabled: true
                     params:
                       min: 0
-                      max: 1
+                      max: 0
                       filled: 1
                       direction: 0
                   - !<transform_2d>
@@ -2879,13 +2880,13 @@ child:
                     anchor: [0.5, 0.5]
                 child:
                   - name: Bar Background
-                    enabled: true
+                    enabled: false
                     component:
                       - !<transform>
                         type: 1
                         enabled: true
                         position: [0, 0, 0]
-                        rotation: [0, 0, 0, 1]
+                        rotation: [-0, 0, -0]
                         scale: [1, 1, 1]
                       - !<transform_2d>
                         type: 10
@@ -2913,13 +2914,13 @@ child:
                         image_tiles_per_second: 1
                         fill_window: false
                   - name: Bar Fill
-                    enabled: true
+                    enabled: false
                     component:
                       - !<transform>
                         type: 1
                         enabled: true
                         position: [0, 0, 0]
-                        rotation: [0, 0, 0, 1]
+                        rotation: [-0, 0, -0]
                         scale: [1, 1, 1]
                       - !<transform_2d>
                         type: 10
@@ -2953,7 +2954,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0, 0, 0]
-                rotation: [0, 0, 0, 1]
+                rotation: [-0, 0, -0]
                 scale: [1, 1, 1]
               - !<transform_2d>
                 type: 10
@@ -2981,13 +2982,13 @@ child:
                 image_tiles_per_second: 1
                 fill_window: false
           - name: CLAW_ADDON
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 type: 1
                 enabled: true
                 position: [0, 0, 0]
-                rotation: [0, 0, 0, 1]
+                rotation: [-0, 0, -0]
                 scale: [1, 1, 1]
               - !<transform_2d>
                 type: 10
@@ -3014,3 +3015,36 @@ child:
                 image_y_tiles: 1
                 image_tiles_per_second: 1
                 fill_window: false
+  - name: Damage_VFX
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [156.1, -2.696, 122.3]
+        rotation: [0, -45, 0]
+        scale: [2.259, 2.222, 2.259]
+      - !<billboard>
+        type: 21
+        enabled: true
+        play_on_awake: false
+        tiles: [5, 2]
+        flip: [true, true]
+        billboard_lifetime: 0.2
+        properties: [1, 0, 0, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+        animation_speed: 0.97
+        total_tiles: 10
+        animation_loop: false
+        color_cycles: 1
+        color_gradient: [[0.2197, 0, 0, 0, 0], [0.0925, 0, 0, 0, 0.9867]]
+        animation_section: false
+        color_section: true
+        size_section: false
+        size_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+        rotation_section: false
+        rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+        start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+        start_size: [true, true, 0, [1, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+        start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+        blend_factor: 0
+        projection: false

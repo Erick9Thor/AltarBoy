@@ -54,6 +54,10 @@ void Hachiko::Scripting::LevelManager::GoalReached()
 	{
 		SceneManagement::SwitchScene(Scenes::LEVEL2);
 	}
+	else if (_level == 2)
+	{
+		SceneManagement::SwitchScene(Scenes::BOSS_LEVEL);
+	}
 	else 
 	{
 		SceneManagement::SwitchScene(Scenes::MAIN_MENU);
