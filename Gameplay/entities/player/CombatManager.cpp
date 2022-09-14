@@ -7,6 +7,7 @@
 #include "entities/player/PlayerController.h"
 #include "entities/player/CombatManager.h"
 #include "entities/enemies/BossController.h"
+#include "misc/TimeManager.h"
 
 // TODO: Delete this include:
 #include <modules/ModuleSceneManager.h>
@@ -56,6 +57,7 @@ void Hachiko::Scripting::CombatManager::OnAwake()
 
 	SerializeEnemyPacks();
 
+	_time_manager = game_object->GetComponent<TimeManager>();
 }
 
 void Hachiko::Scripting::CombatManager::OnUpdate()
@@ -68,35 +70,47 @@ void Hachiko::Scripting::CombatManager::OnUpdate()
 	RunBulletSimulation();
 }
 
-int Hachiko::Scripting::CombatManager::PlayerConeAttack(const float4x4& origin, const AttackStats& attack_stats)
+int Hachiko::Scripting::CombatManager::PlayerConeAttack(const float4x4& origin, const AttackStats& attack_stats, bool& hit_enemies)
 {
 	float3 attack_dir = origin.WorldZ().Normalized();
 	float min_dot_product = std::cos(math::DegToRad(attack_stats.width));
 	
 	int hit = 0;
 	hit += ProcessAgentsCone(origin.Col3(3), attack_dir, min_dot_product, attack_stats.range, attack_stats, true);
+
+	// Take the values after enemies, not obstacles such as crystals:
+	hit_enemies = hit > 0;
+
 	hit += ProcessObstaclesCone(origin.Col3(3), attack_dir, min_dot_product, attack_stats.range, attack_stats);
 
 	return hit;
 }
 
-int Hachiko::Scripting::CombatManager::PlayerRectangleAttack(const float4x4& origin, const AttackStats& attack_stats)
+int Hachiko::Scripting::CombatManager::PlayerRectangleAttack(const float4x4& origin, const AttackStats& attack_stats, bool& hit_enemies)
 {
 	OBB hitbox = CreateAttackHitbox(origin, attack_stats);
 	int hit = 0;
 
-	hit +=  ProcessAgentsOBB(hitbox, attack_stats, origin.Col3(3), true);
-	hit +=  ProcessObstaclesOBB(hitbox, attack_stats);
+	hit += ProcessAgentsOBB(hitbox, attack_stats, origin.Col3(3), true);
 	hit += ProcessBossOBB(hitbox, attack_stats);
+
+	// Take the values after enemies and boss, not obstacles such as crystals:
+	hit_enemies = hit > 0;
+
+    hit += ProcessObstaclesOBB(hitbox, attack_stats);
 	
 	return hit;
 }
 
-int Hachiko::Scripting::CombatManager::PlayerCircleAttack(const float4x4& origin, const AttackStats& attack_stats)
+int Hachiko::Scripting::CombatManager::PlayerCircleAttack(const float4x4& origin, const AttackStats& attack_stats, bool& hit_enemies)
 {
 	int hit = 0;
 
 	hit +=  ProcessAgentsCircle(origin.Col3(3), attack_stats, true);
+
+	// Take the values after enemies, not obstacles such as crystals:
+	hit_enemies = hit > 0;
+
 	hit +=  ProcessObstaclesCircle(origin.Col3(3), attack_stats);
 
 	return hit;
@@ -104,15 +118,34 @@ int Hachiko::Scripting::CombatManager::PlayerCircleAttack(const float4x4& origin
 
 int Hachiko::Scripting::CombatManager::PlayerMeleeAttack(const float4x4& origin, const AttackStats& attack_stats)
 {
+	int hit_count = 0;
+	bool hit_enemies = false;
+
 	switch (attack_stats.type)
 	{
 	case AttackType::RECTANGLE:
-		return PlayerRectangleAttack(origin, attack_stats);
+		hit_count = PlayerRectangleAttack(origin, attack_stats, hit_enemies);
+		break;
 	case AttackType::CONE:
-		return PlayerConeAttack(origin, attack_stats);
+		hit_count = PlayerConeAttack(origin, attack_stats, hit_enemies);
+		break;
 	default:
-		return false;
+		hit_count = 0;
+		break;
 	}
+
+	if (hit_enemies)
+	{
+		// TODO: Make these settable from editor, but the values are good ngl.
+
+		// Set the time scale to 0.075 instantly:
+		Time::SetTimeScale(0.075f);
+		// Wait for 0.2 seconds, and Lerp time scale back to
+		// 1.0 in 0.1 seconds:
+		_time_manager->InterpolateToTimeScale(1.0f, 0.1f, 0.2f);
+	}
+
+	return hit_count;
 }
 
 int Hachiko::Scripting::CombatManager::EnemyConeAttack(const float4x4& origin, const AttackStats& attack_stats)

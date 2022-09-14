@@ -175,7 +175,7 @@ namespace Hachiko
             //float _current_spawning_time = 0.f;
             bool _has_spawned = false;
 
-            bool _inmune = false;
+            bool _immune = false;
             bool _attack_landing = false;
 
             EnemyType _enemy_type = EnemyType::BEETLE;
