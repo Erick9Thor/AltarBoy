@@ -121,10 +121,10 @@ namespace Hachiko
         void AddTexture();
         void RemoveTexture();
         
-        void UpdateAnimationData();
-        void UpdateColorOverLifetime();
-        void UpdateRotationOverLifetime();
-        void UpdateSizeOverLifetime();
+        void UpdateAnimationData(float delta_time);
+        void UpdateColorOverLifetime(float delta_time);
+        void UpdateRotationOverLifetime(float delta_time);
+        void UpdateSizeOverLifetime(float delta_time);
 
         void GetOrientationMatrix(ComponentCamera* camera, float4x4& model_matrix);
         void DisplayControls();

@@ -95,6 +95,8 @@ namespace Hachiko
         void SavePrefabReferences(YAML::Node& node, std::vector<const GameObject*>& object_collection, std::vector<const Component*>& component_collection) const;
         void LoadPrefabReferences(std::vector<const GameObject*>& object_collection, std::vector<const Component*>& component_collection);
 
+        void SetTimeScaleMode(TimeScaleMode time_scale_mode) const;
+
 
         [[nodiscard]] const std::vector<Component*>& GetComponents() const
         {

@@ -340,30 +340,38 @@ void Hachiko::ComponentBillboard::Update()
         Reset();
         return;
     }
-    else if (state == ParticleSystem::Emitter::State::PLAYING)
+
+    if (state != ParticleSystem::Emitter::State::PLAYING)
     {
-        elapsed_time += EngineTimer::delta_time;
-
-        // Delay
-        if (elapsed_time < start_delay.GetValue())
-        {
-            return;
-        }
-
-        if (!loop && elapsed_time >= duration)
-        {
-            state = ParticleSystem::Emitter::State::STOPPED;
-        }
-        else if (loop && elapsed_time >= duration)
-        {
-            Reset();
-        }
-
-        UpdateAnimationData();
-        UpdateColorOverLifetime();
-        UpdateSizeOverLifetime();
-        UpdateRotationOverLifetime();
+        return;
     }
+
+    const float unscaled = static_cast<float>(EngineTimer::delta_time);
+    const float delta_time = GetTimeScaleMode() == TimeScaleMode::SCALED
+        ? unscaled * Time::GetTimeScale()
+        : unscaled;
+
+    elapsed_time += delta_time;
+
+    // Delay
+    if (elapsed_time < start_delay.GetValue())
+    {
+        return;
+    }
+
+    if (!loop && elapsed_time >= duration)
+    {
+        state = ParticleSystem::Emitter::State::STOPPED;
+    }
+    else if (loop && elapsed_time >= duration)
+    {
+        Reset();
+    }
+
+    UpdateAnimationData(delta_time);
+    UpdateColorOverLifetime(delta_time);
+    UpdateSizeOverLifetime(delta_time);
+    UpdateRotationOverLifetime(delta_time);
 }
 
 inline void Hachiko::ComponentBillboard::Play()
@@ -539,14 +547,14 @@ void Hachiko::ComponentBillboard::RemoveTexture()
     texture_properties.SetTexture(nullptr);
 }
 
-inline void Hachiko::ComponentBillboard::UpdateAnimationData()
+inline void Hachiko::ComponentBillboard::UpdateAnimationData(const float delta_time)
 {
     if (!HasTexture() || !animation_section)
     {
         return;
     }
 
-    animation_time += EngineTimer::delta_time;
+    animation_time += delta_time;
 
     if (animation_time <= animation_speed)
     {
@@ -570,14 +578,14 @@ inline void Hachiko::ComponentBillboard::UpdateAnimationData()
     animation_index = {0.0f, 0.0f};
 }
 
-inline void Hachiko::ComponentBillboard::UpdateColorOverLifetime()
+inline void Hachiko::ComponentBillboard::UpdateColorOverLifetime(const float delta_time)
 {
     if (!color_section)
     {
         return;
     }
 
-    color_time += EngineTimer::delta_time;
+    color_time += delta_time;
     float time_mod = fmod(color_time, duration / color_cycles);
     color_frame = time_mod / duration * color_cycles;
 
@@ -588,24 +596,24 @@ inline void Hachiko::ComponentBillboard::UpdateColorOverLifetime()
     }
 }
 
-void Hachiko::ComponentBillboard::UpdateRotationOverLifetime()
+void Hachiko::ComponentBillboard::UpdateRotationOverLifetime(const float delta_time)
 {
     if (!rotation_section)
     {
         return;
     }
 
-    rotation += rotation_over_time.GetValue() * EngineTimer::delta_time;
+    rotation += rotation_over_time.GetValue() * delta_time;
 }
 
-void Hachiko::ComponentBillboard::UpdateSizeOverLifetime()
+void Hachiko::ComponentBillboard::UpdateSizeOverLifetime(const float delta_time)
 {
     if (!size_section)
     {
         return;
     }
 
-    size += size_over_time.GetValue() * EngineTimer::delta_time;
+    size += size_over_time.GetValue() * delta_time;
 }
 
 void Hachiko::ComponentBillboard::PublishIntoScene()

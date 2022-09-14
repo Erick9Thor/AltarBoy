@@ -1,7 +1,6 @@
 #include "core/hepch.h"
 #include "ComponentAgent.h"
 
-#include "modules/ModuleSceneManager.h"
 #include "modules/ModuleNavigation.h"
 #include "modules/ModuleEvent.h"
 
@@ -34,16 +33,16 @@ void Hachiko::ComponentAgent::Update()
         return;
     }
 
+    dtCrowdAgent* dt_agent = App->navigation->GetEditableAgent(agent_id);
+
     // Move agent through NavMesh
     if (!is_player)
     {
-        const dtCrowdAgent* dt_agent = App->navigation->GetCrowd()->getAgent(agent_id);
-        float3 agent_position(dt_agent->npos[0], dt_agent->npos[1], dt_agent->npos[2]);
+        const float3 agent_position(dt_agent->npos[0], dt_agent->npos[1], dt_agent->npos[2]);
         game_object->GetTransform()->SetGlobalPosition(agent_position);
     }
     else
     {
-        dtCrowdAgent* dt_agent = App->navigation->GetEditableAgent(agent_id);
         const float3& position = game_object->GetTransform()->GetGlobalPosition();
         dt_agent->npos[0] = position.x;
         dt_agent->npos[1] = position.y;
@@ -93,7 +92,7 @@ void Hachiko::ComponentAgent::SetTargetPosition(const float3& target_pos)
     if (agent_id == -1)
         return;
 
-    dtNavMeshQuery* navQuery = App->navigation->GetNavQuery();
+    const dtNavMeshQuery* navQuery = App->navigation->GetNavQuery();
     dtCrowd* crowd = App->navigation->GetCrowd();
     const dtQueryFilter* filter = crowd->getFilter(0);
     const dtCrowdAgent* ag = App->navigation->GetAgent(agent_id);
@@ -107,19 +106,22 @@ void Hachiko::ComponentAgent::SetTargetPosition(const float3& target_pos)
     {
         float3 corrected_target = target_pos;
         navQuery->findNearestPoly(target_pos.ptr(), closest_point_half_range.ptr(), filter, &target_poly, corrected_target.ptr());
+
         if (target_poly == 0)
         {
-            // HE_LOG("Failed to find valid target position");
             return;
         }
+
         target_position = corrected_target;
+
         crowd->requestMoveTarget(agent_id, target_poly, target_position.ptr());
     }
     else
     {
-        float3 new_dir = (target_pos - float3(ag->npos)).Normalized();
-        float3 new_vel = new_dir * max_speed;
-        crowd->requestMoveVelocity(agent_id, new_vel.ptr());
+        const float3 new_dir = (target_pos - float3(ag->npos)).Normalized();
+        float3 new_velocity = new_dir * GetMaxSpeedBasedOnTimeScaleMode();
+
+        crowd->requestMoveVelocity(agent_id, new_velocity.ptr());
     }
 }
 
@@ -140,6 +142,7 @@ void Hachiko::ComponentAgent::SetRadius(float new_radius)
 void Hachiko::ComponentAgent::SetMaxSpeed(float new_max_speed)
 {
     max_speed = new_max_speed;
+    max_speed_scaled = max_speed * Time::GetTimeScale();
 
     dtCrowdAgent* agent = App->navigation->GetEditableAgent(agent_id);
 
@@ -148,12 +151,13 @@ void Hachiko::ComponentAgent::SetMaxSpeed(float new_max_speed)
         return;
     }
 
-    agent->params.maxSpeed = max_speed;
+    agent->params.maxSpeed = GetMaxSpeedBasedOnTimeScaleMode();
 }
 
 void Hachiko::ComponentAgent::SetMaxAcceleration(float new_max_acceleration)
 {
     max_acceleration = new_max_acceleration;
+    max_acceleration_scaled = max_acceleration * Time::GetTimeScale();
 
     dtCrowdAgent* agent = App->navigation->GetEditableAgent(agent_id);
 
@@ -162,7 +166,7 @@ void Hachiko::ComponentAgent::SetMaxAcceleration(float new_max_acceleration)
         return;
     }
 
-    agent->params.maxAcceleration = max_acceleration;
+    agent->params.maxAcceleration = GetMaxAccelerationBasedOnTimeScaleMode();
 }
 
 void Hachiko::ComponentAgent::SetObstacleAvoidance(bool obstacle_avoidance)
@@ -191,6 +195,26 @@ void Hachiko::ComponentAgent::SetAsPlayer(bool new_is_player)
     is_player = new_is_player;
 }
 
+void Hachiko::ComponentAgent::RefreshSpeedAndAcceleration()
+{
+    SetMaxAcceleration(max_acceleration);
+    SetMaxSpeed(max_speed);
+}
+
+float Hachiko::ComponentAgent::GetMaxSpeedBasedOnTimeScaleMode() const
+{
+    return GetTimeScaleMode() == TimeScaleMode::SCALED
+        ? max_speed_scaled
+        : max_speed;
+}
+
+float Hachiko::ComponentAgent::GetMaxAccelerationBasedOnTimeScaleMode() const
+{
+    return GetTimeScaleMode() == TimeScaleMode::SCALED
+        ? max_acceleration_scaled
+        : max_acceleration;
+}
+
 void Hachiko::ComponentAgent::AddToCrowd()
 {
     ResourceNavMesh* navMesh = App->navigation->GetNavMesh();
@@ -201,12 +225,11 @@ void Hachiko::ComponentAgent::AddToCrowd()
     }
 
     // PARAMS INIT
-    dtCrowdAgentParams ap;
-    memset(&ap, 0, sizeof(ap));
+    dtCrowdAgentParams ap = {};
     ap.radius = radius;
     ap.height = navMesh->build_params.agent_height;
-    ap.maxAcceleration = max_acceleration;
-    ap.maxSpeed = max_speed;
+    ap.maxAcceleration = GetMaxAccelerationBasedOnTimeScaleMode();
+    ap.maxSpeed = GetMaxSpeedBasedOnTimeScaleMode();
     ap.collisionQueryRange = ap.radius * 12.0f;
     ap.pathOptimizationRange = ap.radius * 30.0f;
     ap.updateFlags = 0;
@@ -226,6 +249,22 @@ void Hachiko::ComponentAgent::AddToCrowd()
 
     // Add to Crowd
     agent_id = navMesh->GetCrowd()->addAgent(game_object->GetTransform()->GetGlobalMatrix().TranslatePart().ptr(), &ap);
+
+     // Handle the changes in time scale:
+    std::function handle_time_scale_changes = [&](Event& evt) {
+        if (evt.GetType() != Event::Type::TIME_SCALE_CHANGED)
+        {
+            return;
+        }
+
+        RefreshSpeedAndAcceleration();
+    };
+
+    // Respond to changes in time scale while in the crowd:
+    App->event->Subscribe(
+        Event::Type::TIME_SCALE_CHANGED, 
+        handle_time_scale_changes, 
+        GetID());
 }
 
 void Hachiko::ComponentAgent::RemoveFromCrowd()
@@ -249,6 +288,9 @@ void Hachiko::ComponentAgent::RemoveFromCrowd()
         crowd->removeAgent(agent_id);
         agent_id = -1;
     }
+
+    // Unsubscribe from the time scale changes event, when out of crowd:
+    App->event->Unsubscribe(Event::Type::TIME_SCALE_CHANGED, GetID());
 }
 
 void Hachiko::ComponentAgent::MoveToNearestNavmeshPoint()

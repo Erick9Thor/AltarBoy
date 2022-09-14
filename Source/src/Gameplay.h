@@ -18,6 +18,9 @@ HACHIKO_API void Quit();
 namespace Hachiko::Time
 {
 HACHIKO_API float DeltaTime();
+HACHIKO_API float DeltaTimeScaled();
+HACHIKO_API float GetTimeScale();
+HACHIKO_API void SetTimeScale(float new_time_scale);
 } // namespace Hachiko::Time
 
 namespace Hachiko::Input
