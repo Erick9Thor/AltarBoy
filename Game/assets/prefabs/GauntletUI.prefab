@@ -6,13 +6,13 @@ component:
     type: 1
     enabled: true
     position: [0, 0, 0]
-    rotation: [0, 0, 0, 1]
+    rotation: [-0, 0, -0]
     scale: [1, 1, 1]
   - !<transform_2d>
     type: 10
     enabled: true
     position: [0, 0, 0]
-    size: [814, 472]
+    size: [1707, 941]
     scale: [1, 1]
     rotation: [0, 0, 0, 1]
     pivot: [0.5, 0.5]
@@ -28,7 +28,7 @@ child:
         type: 1
         enabled: true
         position: [0, 0, 0]
-        rotation: [0, 0, 0, 1]
+        rotation: [-0, 0, -0]
         scale: [1, 1, 1]
       - !<transform_2d>
         type: 10
@@ -45,11 +45,12 @@ child:
       - !<image>
         type: 11
         enabled: true
-        image_id: 3566589708735269996
+        image_id: 15126335777279321710
         hover_image_id: 0
         image_color: [1, 1, 1, 1]
         hover_image_color: [1, 1, 1, 1]
         image_is_tiled: false
+        image_randomize_initial_frame: false
         image_x_tiles: 1
         image_y_tiles: 1
         image_tiles_per_second: 1
@@ -61,7 +62,7 @@ child:
         type: 1
         enabled: true
         position: [0, 0, 0]
-        rotation: [0, 0, 0, 1]
+        rotation: [-0, 0, -0]
         scale: [1, 1, 1]
       - !<transform_2d>
         type: 10
