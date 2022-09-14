@@ -5638,7 +5638,7 @@ child:
                 id: 6767309111992902835
                 type: 11
                 enabled: true
-                image_id: 6742704004173880459
+                image_id: 15126335777279321710
                 hover_image_id: 0
                 image_color: [1, 1, 1, 1]
                 hover_image_color: [1, 1, 1, 1]
@@ -6433,238 +6433,6 @@ child:
             visible: true
             material_id: 6750369022920963075
             tint_color: [1, 1, 1, 1]
-  - id: 7487883486290686774
-    name: Boss
-    enabled: true
-    component:
-      - !<transform>
-        id: 17819489957119917047
-        type: 1
-        enabled: true
-        position: [-78.62, 1.312, -64.41]
-        rotation: [-90, 0, 0]
-        scale: [1, 0.9998, 0.9998]
-      - !<mesh_renderer>
-        id: 10278331383462390603
-        type: 2
-        enabled: true
-        mesh_id: 1309944288732959230
-        navigable: false
-        visible: true
-        material_id: 6750369022920963075
-        tint_color: [1, 1, 1, 1]
-      - !<script>
-        id: 7846503258327909697
-        type: 15
-        enabled: true
-        class_name: BossController
-        "'state_value@int'": 0
-        "'hp_bar_go@GameObject*'": 7108423070420499537
-        "'crystal_target_go@GameObject*'": 0
-        "'cocoon_placeholder_go@GameObject*'": 8228481781157390397
-        "'gauntlet_go@GameObject*'": 17975232777243703469
-        "'start_encounter_range@float'": 5
-      - !<script>
-        id: 10384265854115039839
-        type: 15
-        enabled: true
-        class_name: Stats
-        "'_attack_power@int'": 1
-        "'_attack_cd@float'": 2
-        "'_attack_range@float'": 3.5
-        "'_move_speed@float'": 7
-        "'_max_hp@int'": 50
-        "'_current_hp@int'": 50
-      - !<agent>
-        id: 14649641130496254185
-        type: 17
-        enabled: true
-        max_speed: 7
-        max_acceleration: 2
-        avoid_obstacles: false
-        radius: 0.5
-        is_player: true
-    child:
-      - id: 12699659652520607022
-        name: BossUI
-        enabled: true
-        component:
-          - !<transform>
-            id: 15615816958220744837
-            type: 1
-            enabled: true
-            position: [36.3, -18.35, 7.754]
-            rotation: [90, 0, -0]
-            scale: [1, 1, 1]
-          - !<transform_2d>
-            id: 8077597359363059088
-            type: 10
-            enabled: true
-            position: [0, 0, 0]
-            size: [1124, 509]
-            scale: [1, 1]
-            rotation: [0, 0, 0, 1]
-            pivot: [0.5, 0.5]
-            anchor: [0.5, 0.5]
-          - !<canvas>
-            id: 7418844372798423597
-            type: 8
-            enabled: true
-        child:
-          - id: 7108423070420499537
-            name: BossHP
-            enabled: true
-            component:
-              - !<transform>
-                id: 3199967058627938567
-                type: 1
-                enabled: true
-                position: [0, 0, 0]
-                rotation: [-0, 0, -0]
-                scale: [1, 1, 1]
-              - !<progress_bar>
-                id: 9545520030026853145
-                type: 13
-                enabled: true
-                params:
-                  min: 0
-                  max: 1
-                  filled: 1
-                  direction: 0
-              - !<transform_2d>
-                id: 8249281127461450990
-                type: 10
-                enabled: true
-                position: [0, 0, 0]
-                size: [20, 20]
-                scale: [1, 1]
-                rotation: [0, 0, 0, 1]
-                pivot: [0.5, 0.5]
-                anchor: [0.5, 0.05]
-            child:
-              - id: 17018972173077158950
-                name: Bar Background
-                enabled: true
-                component:
-                  - !<transform>
-                    id: 15525795746817269372
-                    type: 1
-                    enabled: true
-                    position: [0, 0, 0]
-                    rotation: [-0, 0, -0]
-                    scale: [1, 1, 1]
-                  - !<transform_2d>
-                    id: 10822610544100442762
-                    type: 10
-                    enabled: true
-                    position: [0, 0, 0]
-                    size: [500, 20]
-                    scale: [1, 1]
-                    rotation: [0, 0, 0, 1]
-                    pivot: [0.5, 0.5]
-                    anchor: [0.5, 0.5]
-                  - !<canvas_renderer>
-                    id: 9878338835673695146
-                    type: 9
-                    enabled: true
-                  - !<image>
-                    id: 16517742351297645317
-                    type: 11
-                    enabled: true
-                    image_id: 0
-                    hover_image_id: 0
-                    image_color: [1, 1, 1, 1]
-                    hover_image_color: [1, 1, 1, 1]
-                    image_is_tiled: false
-                    image_randomize_initial_frame: false
-                    image_x_tiles: 1
-                    image_y_tiles: 1
-                    image_tiles_per_second: 1
-                    fill_window: false
-              - id: 17078095186191672458
-                name: Bar Fill
-                enabled: true
-                component:
-                  - !<transform>
-                    id: 6735109018127227305
-                    type: 1
-                    enabled: true
-                    position: [0, 0, 0]
-                    rotation: [-0, 0, -0]
-                    scale: [1, 1, 1]
-                  - !<transform_2d>
-                    id: 8807463573043139478
-                    type: 10
-                    enabled: true
-                    position: [0, 0, 0]
-                    size: [500, 20]
-                    scale: [1, 1]
-                    rotation: [0, 0, 0, 1]
-                    pivot: [0.5, 0.5]
-                    anchor: [0.5, 0.5]
-                  - !<canvas_renderer>
-                    id: 3678818122357559108
-                    type: 9
-                    enabled: true
-                  - !<image>
-                    id: 7427054279395428745
-                    type: 11
-                    enabled: true
-                    image_id: 0
-                    hover_image_id: 0
-                    image_color: [1, 0, 0, 1]
-                    hover_image_color: [1, 1, 1, 1]
-                    image_is_tiled: false
-                    image_randomize_initial_frame: false
-                    image_x_tiles: 1
-                    image_y_tiles: 1
-                    image_tiles_per_second: 1
-                    fill_window: false
-      - id: 8228481781157390397
-        name: CacoonPlaceholder
-        enabled: true
-        component:
-          - !<transform>
-            id: 9648225228079183753
-            type: 1
-            enabled: true
-            position: [0, 0, 0]
-            rotation: [-0, 0, -0]
-            scale: [3.45, 3.451, 3.451]
-          - !<mesh_renderer>
-            id: 2741182431062764107
-            type: 2
-            enabled: true
-            mesh_id: 1654487118907036717
-            navigable: false
-            visible: true
-            material_id: 6750369022920963075
-            tint_color: [1, 1, 1, 1]
-      - id: 17975232777243703469
-        name: BossGauntlet1
-        enabled: true
-        component:
-          - !<transform>
-            id: 14299595757840576735
-            type: 1
-            enabled: true
-            position: [0, 0, 0]
-            rotation: [90, 0, -0]
-            scale: [1, 1, 1]
-          - !<script>
-            id: 15706629455078009928
-            type: 15
-            enabled: true
-            class_name: GauntletManager
-            "'_combat_manager_go@GameObject*'": 8459539939456400839
-            "'_trigger_radius@float'": 0
-            "'_round_wait_time@float'": 3
-            "'_complete_wait_time@float'": 2
-            "'_door_controller_1@GameObject*'": 0
-            "'_door_controller_2@GameObject*'": 0
-            "'_pack_1@GameObject*'": 1174210901548760683
-            "'_pack_2@GameObject*'": 0
-            "'_pack_3@GameObject*'": 0
   - id: 18228802010358417349
     name: Player
     enabled: true
@@ -9831,7 +9599,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1124, 509]
+            size: [1707, 941]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -10455,3 +10223,258 @@ child:
                     image_y_tiles: 1
                     image_tiles_per_second: 1
                     fill_window: false
+  - id: 4089779087202767202
+    name: Boss
+    enabled: true
+    component:
+      - !<transform>
+        id: 6762555072553532388
+        type: 1
+        enabled: true
+        position: [-78.62, 1.312, -64.41]
+        rotation: [-0, 0, -0]
+        scale: [1, 0.9998, 0.9998]
+      - !<agent>
+        id: 15663727873625911105
+        type: 17
+        enabled: true
+        max_speed: 3
+        max_acceleration: 15
+        avoid_obstacles: false
+        radius: 1
+        is_player: false
+      - !<script>
+        id: 15926566413477171586
+        type: 15
+        enabled: true
+        class_name: BossController
+        "'state_value@int'": 0
+        "'hp_bar_go@GameObject*'": 15692304318452093635
+        "'crystal_target_go@GameObject*'": 0
+        "'cocoon_placeholder_go@GameObject*'": 5095342542163341665
+        "'gauntlet_go@GameObject*'": 18385462906160147608
+        "'start_encounter_range@float'": 5
+      - !<script>
+        id: 6581887006493112275
+        type: 15
+        enabled: true
+        class_name: Stats
+        "'_attack_power@int'": 1
+        "'_attack_cd@float'": 3
+        "'_attack_range@float'": 3.5
+        "'_move_speed@float'": 5
+        "'_max_hp@int'": 50
+        "'_current_hp@int'": 50
+    child:
+      - id: 11548889258290284569
+        name: BossUI
+        enabled: true
+        component:
+          - !<transform>
+            id: 13568527416430676349
+            type: 1
+            enabled: true
+            position: [36.3, -18.35, 7.754]
+            rotation: [90, 0, -0]
+            scale: [1, 1, 1]
+          - !<transform_2d>
+            id: 14650081662930357050
+            type: 10
+            enabled: true
+            position: [0, 0, 0]
+            size: [1707, 941]
+            scale: [1, 1]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [0.5, 0.5]
+          - !<canvas>
+            id: 3706674642056651913
+            type: 8
+            enabled: true
+        child:
+          - id: 15692304318452093635
+            name: BossHP
+            enabled: true
+            component:
+              - !<transform>
+                id: 11206713810776502158
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<progress_bar>
+                id: 7900491062586717147
+                type: 13
+                enabled: true
+                params:
+                  min: 0
+                  max: 1
+                  filled: 1
+                  direction: 0
+              - !<transform_2d>
+                id: 10731301770385134737
+                type: 10
+                enabled: true
+                position: [0, 0, 0]
+                size: [20, 20]
+                scale: [1, 1]
+                rotation: [0, 0, 0, 1]
+                pivot: [0.5, 0.5]
+                anchor: [0.5, 0.05]
+            child:
+              - id: 3976277933814764459
+                name: Bar Background
+                enabled: true
+                component:
+                  - !<transform>
+                    id: 8411862917823710602
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                  - !<transform_2d>
+                    id: 3202587353373047718
+                    type: 10
+                    enabled: true
+                    position: [0, 0, 0]
+                    size: [500, 20]
+                    scale: [1, 1]
+                    rotation: [0, 0, 0, 1]
+                    pivot: [0.5, 0.5]
+                    anchor: [0.5, 0.5]
+                  - !<canvas_renderer>
+                    id: 12374242934978211652
+                    type: 9
+                    enabled: true
+                  - !<image>
+                    id: 14320585457451712180
+                    type: 11
+                    enabled: true
+                    image_id: 0
+                    hover_image_id: 0
+                    image_color: [1, 1, 1, 1]
+                    hover_image_color: [1, 1, 1, 1]
+                    image_is_tiled: false
+                    image_randomize_initial_frame: false
+                    image_x_tiles: 1
+                    image_y_tiles: 1
+                    image_tiles_per_second: 1
+                    fill_window: false
+              - id: 72601202364237609
+                name: Bar Fill
+                enabled: true
+                component:
+                  - !<transform>
+                    id: 1366938498323443801
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                  - !<transform_2d>
+                    id: 14575775931369157315
+                    type: 10
+                    enabled: true
+                    position: [0, 0, 0]
+                    size: [500, 20]
+                    scale: [1, 1]
+                    rotation: [0, 0, 0, 1]
+                    pivot: [0.5, 0.5]
+                    anchor: [0.5, 0.5]
+                  - !<canvas_renderer>
+                    id: 9683381574565253647
+                    type: 9
+                    enabled: true
+                  - !<image>
+                    id: 1104292676293236574
+                    type: 11
+                    enabled: true
+                    image_id: 0
+                    hover_image_id: 0
+                    image_color: [1, 0, 0, 1]
+                    hover_image_color: [1, 1, 1, 1]
+                    image_is_tiled: false
+                    image_randomize_initial_frame: false
+                    image_x_tiles: 1
+                    image_y_tiles: 1
+                    image_tiles_per_second: 1
+                    fill_window: false
+      - id: 5095342542163341665
+        name: CacoonPlaceholder
+        enabled: true
+        component:
+          - !<transform>
+            id: 3314535305967949588
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-90, 0, 0]
+            scale: [3.45, 3.451, 3.451]
+          - !<mesh_renderer>
+            id: 17776573699886760134
+            type: 2
+            enabled: true
+            mesh_id: 1654487118907036717
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+            tint_color: [1, 1, 1, 1]
+      - id: 18385462906160147608
+        name: BossGauntlet1
+        enabled: true
+        component:
+          - !<transform>
+            id: 11560237152964305342
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [90, 0, -0]
+            scale: [1, 1, 1]
+          - !<script>
+            id: 7290421154587323669
+            type: 15
+            enabled: true
+            class_name: GauntletManager
+            "'_combat_manager_go@GameObject*'": 8459539939456400839
+            "'_trigger_radius@float'": 0
+            "'_round_wait_time@float'": 3
+            "'_complete_wait_time@float'": 2
+            "'_door_controller_1@GameObject*'": 0
+            "'_door_controller_2@GameObject*'": 0
+            "'_pack_1@GameObject*'": 1174210901548760683
+            "'_pack_2@GameObject*'": 0
+            "'_pack_3@GameObject*'": 0
+      - id: 17438915250675716431
+        name: BossBody
+        enabled: true
+        component:
+          - !<transform>
+            id: 5059942347166401070
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+        child:
+          - id: 3421741787962177820
+            name: Capsule001
+            enabled: true
+            component:
+              - !<transform>
+                id: 3759144290639716750
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-90, 0, 0]
+                scale: [1, 1, 1]
+              - !<mesh_renderer>
+                id: 8009037882170075753
+                type: 2
+                enabled: true
+                mesh_id: 1309944288732959230
+                navigable: false
+                visible: true
+                material_id: 6750369022920963075
+                tint_color: [1, 1, 1, 1]
