@@ -108,10 +108,10 @@ child:
             type: 15
             enabled: true
             class_name: CrystalPlatform
-            "'_seconds_before_shaking@float'": 5
-            "'_seconds_shaking@float'": 4
+            "'_seconds_before_shaking@float'": 0.5
+            "'_seconds_shaking@float'": 1.5
             "'_seconds_to_regen@float'": 1
-            "'_shake_intensity@float'": 0.1
+            "'_shake_intensity@float'": 0.6
             "'_invisible_obstacle@GameObject*'": 106790266070166904
             "'_crystal_platform@GameObject*'": 5125711237713688678
         child:
@@ -1644,10 +1644,10 @@ child:
             type: 15
             enabled: true
             class_name: CrystalPlatform
-            "'_seconds_before_shaking@float'": 5
-            "'_seconds_shaking@float'": 4
+            "'_seconds_before_shaking@float'": 0.5
+            "'_seconds_shaking@float'": 1.5
             "'_seconds_to_regen@float'": 1
-            "'_shake_intensity@float'": 0.1
+            "'_shake_intensity@float'": 0.6
             "'_invisible_obstacle@GameObject*'": 16422057000332222214
             "'_crystal_platform@GameObject*'": 6574103506058772067
         child:
@@ -3180,10 +3180,10 @@ child:
             type: 15
             enabled: true
             class_name: CrystalPlatform
-            "'_seconds_before_shaking@float'": 5
-            "'_seconds_shaking@float'": 4
+            "'_seconds_before_shaking@float'": 0.5
+            "'_seconds_shaking@float'": 1.5
             "'_seconds_to_regen@float'": 1
-            "'_shake_intensity@float'": 0.1
+            "'_shake_intensity@float'": 0.6
             "'_invisible_obstacle@GameObject*'": 52011396565994366
             "'_crystal_platform@GameObject*'": 7215520170438639238
         child:
@@ -4716,10 +4716,10 @@ child:
             type: 15
             enabled: true
             class_name: CrystalPlatform
-            "'_seconds_before_shaking@float'": 5
-            "'_seconds_shaking@float'": 4
+            "'_seconds_before_shaking@float'": 0.5
+            "'_seconds_shaking@float'": 1.5
             "'_seconds_to_regen@float'": 1
-            "'_shake_intensity@float'": 0.1
+            "'_shake_intensity@float'": 0.6
             "'_invisible_obstacle@GameObject*'": 1879406824441156855
             "'_crystal_platform@GameObject*'": 9628716310972382564
         child:
@@ -6252,10 +6252,10 @@ child:
             type: 15
             enabled: true
             class_name: CrystalPlatform
-            "'_seconds_before_shaking@float'": 5
-            "'_seconds_shaking@float'": 4
+            "'_seconds_before_shaking@float'": 0.5
+            "'_seconds_shaking@float'": 1.5
             "'_seconds_to_regen@float'": 1
-            "'_shake_intensity@float'": 0.1
+            "'_shake_intensity@float'": 0.6
             "'_invisible_obstacle@GameObject*'": 13239903575670730423
             "'_crystal_platform@GameObject*'": 6063876565301502754
         child:
@@ -7788,10 +7788,10 @@ child:
             type: 15
             enabled: true
             class_name: CrystalPlatform
-            "'_seconds_before_shaking@float'": 5
-            "'_seconds_shaking@float'": 4
+            "'_seconds_before_shaking@float'": 0.5
+            "'_seconds_shaking@float'": 1.5
             "'_seconds_to_regen@float'": 1
-            "'_shake_intensity@float'": 0.1
+            "'_shake_intensity@float'": 0.6
             "'_invisible_obstacle@GameObject*'": 4367531508146647203
             "'_crystal_platform@GameObject*'": 5842122123803935331
         child:
@@ -9324,10 +9324,10 @@ child:
             type: 15
             enabled: true
             class_name: CrystalPlatform
-            "'_seconds_before_shaking@float'": 5
-            "'_seconds_shaking@float'": 4
+            "'_seconds_before_shaking@float'": 0.5
+            "'_seconds_shaking@float'": 1.5
             "'_seconds_to_regen@float'": 1
-            "'_shake_intensity@float'": 0.1
+            "'_shake_intensity@float'": 0.6
             "'_invisible_obstacle@GameObject*'": 14335712724429505975
             "'_crystal_platform@GameObject*'": 11793307326929071406
         child:
@@ -10860,10 +10860,10 @@ child:
             type: 15
             enabled: true
             class_name: CrystalPlatform
-            "'_seconds_before_shaking@float'": 5
-            "'_seconds_shaking@float'": 4
+            "'_seconds_before_shaking@float'": 0.5
+            "'_seconds_shaking@float'": 1.5
             "'_seconds_to_regen@float'": 1
-            "'_shake_intensity@float'": 0.2
+            "'_shake_intensity@float'": 0.6
             "'_invisible_obstacle@GameObject*'": 7087912891944634821
             "'_crystal_platform@GameObject*'": 17720731074353733668
         child:
@@ -12651,7 +12651,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1124, 509]
+            size: [1707, 941]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -39668,7 +39668,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1124, 509]
+            size: [1707, 941]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
