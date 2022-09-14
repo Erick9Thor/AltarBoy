@@ -61,6 +61,11 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 	{
 		_enemy_type = EnemyType::BEETLE;
 	}
+
+	// Mark enemies as using scaled delta time for its components such as agent,
+	// particle, animation and billboard to respond to the changes in time
+	// scale:
+	game_object->SetTimeScaleMode(TimeScaleMode::SCALED);
 	
 	GetComponents();
 
@@ -140,7 +145,7 @@ void Hachiko::Scripting::EnemyController::SpawnController()
 	{
 	case EnemyType::BEETLE:
 		// Beetle logic may change once we have its spawning animations
-		_current_spawning_time -= Time::DeltaTime();
+		_current_spawning_time -= Time::DeltaTimeScaled();
 		if (_current_spawning_time <= 0.0f)
 		{
 			_state = EnemyState::IDLE;
@@ -170,7 +175,7 @@ void Hachiko::Scripting::EnemyController::SpawnController()
 			return;
 		}
 
-		_current_spawning_time -= Time::DeltaTime();
+		_current_spawning_time -= Time::DeltaTimeScaled();
 		if (_current_spawning_time <= 0.0f)
 		{
 			_state = EnemyState::SPAWNING;
@@ -188,7 +193,7 @@ void Hachiko::Scripting::EnemyController::DeathController()
 	case EnemyState::PARASITE:
 
 		_enemy_body->SetActive(false);
-		_parasite_dissolving_time_progress += Time::DeltaTime();
+		_parasite_dissolving_time_progress += Time::DeltaTimeScaled();
 		alpha_transition = math::Sqrt(_parasite_dissolve_time - _parasite_dissolving_time_progress) * _parasite_dissolving;
 		_parasite->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, alpha_transition), true);
 
@@ -208,7 +213,7 @@ void Hachiko::Scripting::EnemyController::DeathController()
 		{
 			if (_enemy_dissolve_time >= _enemy_dissolving_time_progress)
 			{
-				_enemy_dissolving_time_progress += Time::DeltaTime();
+				_enemy_dissolving_time_progress += Time::DeltaTimeScaled();
 				alpha_transition = math::Sqrt(_enemy_dissolve_time - _enemy_dissolving_time_progress) * _enemy_dissolving;
 				_enemy_body->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, alpha_transition), true);
 			}
@@ -343,6 +348,7 @@ void Hachiko::Scripting::EnemyController::BeetleStunController()
 	{
 		if (_stun_time > 0.0f)
 		{
+			// Run the timer for stun in unscaled time:
 			_stun_time -= Time::DeltaTime();
 			RecieveKnockback();
 			return;
@@ -369,12 +375,12 @@ void Hachiko::Scripting::EnemyController::WormStunController()
 {
 	if (_state == EnemyState::HIT)
 	{
-		_inmune = true;
+		//_immune = true;
 		_is_stunned = true;
 	}
 	else
 	{
-		_inmune = false;
+		_immune = false;
 		_is_stunned = false;
 	}
 
@@ -414,7 +420,7 @@ void Hachiko::Scripting::EnemyController::BeetleMovementController()
 
 	if (_state == EnemyState::IDLE)
 	{
-		_current_idle_cooldown -= Time::DeltaTime();
+		_current_idle_cooldown -= Time::DeltaTimeScaled();
 		if (_current_idle_cooldown <= 0.0f)
 		{
 			PatrolMovement();
@@ -433,7 +439,7 @@ void Hachiko::Scripting::EnemyController::BeetleMovementController()
 
 void Hachiko::Scripting::EnemyController::AttackController()
 {
-	_attack_cooldown -= Time::DeltaTime();
+	_attack_cooldown -= Time::DeltaTimeScaled();
 	_attack_cooldown = _attack_cooldown < 0.0f ? 0.0f : _attack_cooldown;
 
 	switch (_enemy_type)
@@ -449,12 +455,12 @@ void Hachiko::Scripting::EnemyController::AttackController()
 
 void Hachiko::Scripting::EnemyController::BeetleAttackController()
 {
-	_enraged -= Time::DeltaTime();
+	_enraged -= Time::DeltaTimeScaled();
 	_enraged = _enraged < 0.0f ? 0.0f : _enraged;
 
 	if (IsAttacking())
 	{
-		_attack_animation_timer += Time::DeltaTime();
+		_attack_animation_timer += Time::DeltaTimeScaled();
 
 		if (_attack_animation_timer >= _attack_animation_duration)
 		{
@@ -504,7 +510,7 @@ void Hachiko::Scripting::EnemyController::BeetleAttack()
 	// If attacking lower attack delay
 	if (_previous_state == EnemyState::ATTACKING)
 	{
-		_attack_current_delay -= Time::DeltaTime();
+		_attack_current_delay -= Time::DeltaTimeScaled();
 	}
 
 	// Dont process attack untill its finished
@@ -629,7 +635,7 @@ void Hachiko::Scripting::EnemyController::WormSpit()
 
 	if (_attack_landing)
 	{
-		_attack_animation_timer += Time::DeltaTime();
+		_attack_animation_timer += Time::DeltaTimeScaled();
 		if (_attack_animation_timer >= 1.0f)
 		{
 			CombatManager::AttackStats attack_stats;
@@ -665,9 +671,9 @@ void Hachiko::Scripting::EnemyController::DropParasite()
 
 void Hachiko::Scripting::EnemyController::RegisterHit(int damage, float3 direction, float knockback, bool is_from_player, bool is_ranged)
 {
-	if (_state == EnemyState::SPAWNING || !_enemy_body->IsActive() || _inmune)
+	if (_state == EnemyState::SPAWNING || !_enemy_body->IsActive() || _immune)
 	{
-		return; // Inmune while spawning or if it isn't there
+		return; // Immune while spawning or if it isn't there
 	}
 
 	switch (_enemy_type)
@@ -876,12 +882,3 @@ void Hachiko::Scripting::EnemyController::ResetEnemyPosition()
 	transform->SetGlobalPosition(_spawn_pos);
 	transform->SetGlobalRotation(_spawn_rot);
 }
-
-
-
-
-
-
-
-
-
