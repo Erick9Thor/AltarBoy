@@ -3437,7 +3437,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1463, 1187]
+            size: [1707, 941]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -3635,11 +3635,6 @@ child:
         class_name: CombatManager
         "'_charge_vfx@GameObject*'": 7213186911531395669
         "'_shot_vfx@GameObject*'": 17225991888385232786
-      - !<script>
-        id: 15043875587965114147
-        type: 15
-        enabled: true
-        class_name: TimeManager
     child:
       - id: 4785197727348365208
         name: VFX_CI_W_SpitBall
@@ -7801,7 +7796,7 @@ child:
                 id: 9785498240839119984
                 type: 11
                 enabled: true
-                image_id: 3566589708735269996
+                image_id: 15126335777279321710
                 hover_image_id: 0
                 image_color: [1, 1, 1, 1]
                 hover_image_color: [1, 1, 1, 1]
@@ -11021,7 +11016,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1463, 1187]
+            size: [1707, 941]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]

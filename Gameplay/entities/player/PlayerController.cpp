@@ -56,7 +56,6 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	claw.charges = 12;
 	claw.attacks.push_back(GetAttackType(AttackType::QUICK_1));
 	claw.attacks.push_back(GetAttackType(AttackType::QUICK_2));
-	claw.attacks.push_back(GetAttackType(AttackType::QUICK_3));
 	
 	Weapon sword;
 	sword.name = "Sword";
@@ -911,7 +910,7 @@ void Hachiko::Scripting::PlayerController::MovementController()
 			float stun_completion = (_stun_duration - _stun_time) * (1.0 / _stun_duration);
 			_player_position = math::float3::Lerp(_knock_start, _knock_end,
 				stun_completion);
-			
+			_state = PlayerState::STUNNED;
 		}
 		else
 		{
@@ -1312,6 +1311,9 @@ void Hachiko::Scripting::PlayerController::CheckState()
 	case PlayerState::WALKING:
 		animation->SendTrigger("isRun");
 		break;
+	case PlayerState::STUNNED:
+		animation->SendTrigger("isWounded");
+		break;
 	case PlayerState::PICK_UP:
 		animation->SendTrigger("isPickUp");
 		break;
@@ -1332,9 +1334,6 @@ void Hachiko::Scripting::PlayerController::CheckState()
 		break;
 	case PlayerState::DIE:
 		animation->SendTrigger("isDead");
-		break;
-	case PlayerState::STUNNED:
-		animation->SendTrigger("isIdle");
 		break;
 
 	case PlayerState::INVALID:
