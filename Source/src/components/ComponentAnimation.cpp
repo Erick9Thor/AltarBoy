@@ -41,7 +41,8 @@ void Hachiko::ComponentAnimation::StartAnimating()
 void Hachiko::ComponentAnimation::StopAnimating()
 {
     controller->Stop();
-    unsigned active_node = 0;
+
+    active_node = 0;
 }
 
 void Hachiko::ComponentAnimation::ResetState()
@@ -53,6 +54,12 @@ void Hachiko::ComponentAnimation::ResetState()
 
     controller->Stop();
     PlayNode(state_machine->GetDefaultNode(), 0);
+}
+
+void Hachiko::ComponentAnimation::SetTimeScaleMode(TimeScaleMode new_time_scale_mode)
+{
+    Component::SetTimeScaleMode(new_time_scale_mode);
+    controller->SetTimeScaleMode(new_time_scale_mode);
 }
 
 void Hachiko::ComponentAnimation::SendTrigger(const std::string& trigger)

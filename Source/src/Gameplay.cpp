@@ -10,8 +10,6 @@
 #include "utils/FileSystem.h"
 #include "debugdraw.h"
 
-#include "components/ComponentAgent.h"
-
 /*HACHIKO--------------------------------------------------------------------*/
 
 void Hachiko::Quit()
@@ -23,12 +21,41 @@ void Hachiko::Quit()
 
 /*TIME-----------------------------------------------------------------------*/
 
-float Hachiko::Time::DeltaTime()
+namespace Hachiko::Time
 {
-    // TODO: Return Gameplay Timer.
-    // Added for easiness of exposing to scripts. We need to refactor that
-    // timer code as it's unnecessarily complicated.
-    return EngineTimer::delta_time;
+
+namespace Private
+{
+volatile float time_scale = 1.0f;
+}
+
+float DeltaTime()
+{
+    return static_cast<float>(GameTimer::delta_time);
+}
+
+float DeltaTimeScaled()
+{
+    return Private::time_scale * DeltaTime();
+}
+
+void SetTimeScale(const float new_time_scale)
+{
+    // If the time scale is actually different from the previous one, fire
+    // event, or set the value:
+    if (abs(Private::time_scale - new_time_scale) <= FLT_EPSILON)
+    {
+        return;
+    }
+
+    App->event->Publish(Event::Type::TIME_SCALE_CHANGED);   
+    Private::time_scale = new_time_scale;
+}
+
+float GetTimeScale()
+{
+    return Private::time_scale;
+}
 }
 
 /*---------------------------------------------------------------------------*/

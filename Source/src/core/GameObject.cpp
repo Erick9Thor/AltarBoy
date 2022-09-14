@@ -660,6 +660,14 @@ void Hachiko::GameObject::LoadPrefabReferences(std::vector<const GameObject*>& o
     }
 }
 
+void Hachiko::GameObject::SetTimeScaleMode(TimeScaleMode time_scale_mode) const
+{
+    for (Component* component : components)
+    {
+        component->SetTimeScaleMode(time_scale_mode);
+    }
+}
+
 Hachiko::GameObject* Hachiko::GameObject::Find(UID id) const
 {
     for (GameObject* child : children)
