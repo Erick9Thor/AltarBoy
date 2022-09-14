@@ -2574,6 +2574,8 @@
       <Filter>UI\Widgets</Filter>
     </ClInclude>
     <ClInclude Include="src\utils\ComponentUtility.h" />
+    <ClInclude Include="src\components\TimeScaleMode.h" />
+    <ClInclude Include="src\events\TimeScaleChangeEventPayload.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">

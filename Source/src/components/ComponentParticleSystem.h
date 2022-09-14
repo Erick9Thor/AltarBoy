@@ -108,9 +108,9 @@ namespace Hachiko
         void RemoveTexture();
 
         void ActivateParticles();
-        void UpdateActiveParticles();
-        void UpdateModifiers();
-        void UpdateEmitterTimes();
+        void UpdateActiveParticles(float delta_time);
+        void UpdateModifiers(float delta_time);
+        void UpdateEmitterTimes(float delta_time);
         void ResetActiveParticles();
         void Reset();
 

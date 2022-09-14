@@ -6,6 +6,7 @@
 #define HACHIKO_API __declspec(dllexport)
 #endif
 
+#include "TimeScaleMode.h"
 #include "utils/UUID.h"
 #include "yaml-cpp/yaml.h"
 
@@ -114,6 +115,16 @@ namespace Hachiko
             game_object = container;
         }
 
+        virtual void SetTimeScaleMode(TimeScaleMode new_time_scale_mode)
+        {
+            time_scale_mode = new_time_scale_mode;
+        }
+
+        [[nodiscard]] TimeScaleMode GetTimeScaleMode() const
+        {
+            return time_scale_mode;
+        }
+
         virtual void DrawGui()
         {
         }
@@ -148,5 +159,8 @@ namespace Hachiko
         bool active = true;
         Type type = Type::UNKNOWN;
         UID uid = 0;
+
+    private:
+        TimeScaleMode time_scale_mode;
     };
 }

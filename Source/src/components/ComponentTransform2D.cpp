@@ -256,12 +256,12 @@ void Hachiko::ComponentTransform2D::Save(YAML::Node& node) const
 
 void Hachiko::ComponentTransform2D::Load(const YAML::Node& node)
 {
+    SetPivot(node[TRANSFORM_PIVOT].as<float2>());
+    SetAnchor(node[TRANSFORM_ANCHOR].as<float2>());
     SetPosition(node[TRANSFORM_POSITION].as<float3>());
     SetSize(node[TRANSFORM_SIZE].as<float2>());
     SetScale(node[TRANSFORM_SCALE].as<float2>());
     SetRotation(node[TRANSFORM_ROTATION].as<Quat>());
-    SetPivot(node[TRANSFORM_PIVOT].as<float2>());
-    SetAnchor(node[TRANSFORM_ANCHOR].as<float2>());
 }
 
 void Hachiko::ComponentTransform2D::Invalidate()

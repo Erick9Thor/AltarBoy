@@ -68,6 +68,8 @@ void Hachiko::Skybox::Reload()
 {
     cube = ModuleTexture::LoadCubeMap(cube);
     CreateBuffers();
+
+    ActivateIBL(activate_ibl);
 }
 
 void Hachiko::Skybox::ReleaseCubemap()
@@ -304,7 +306,16 @@ void Hachiko::Skybox::ChangeCubeMapSide(UID texture_uid, TextureCube::Side cube_
     cube = ModuleTexture::LoadCubeMap(cube);
 }
 
-void Hachiko::Skybox::BuildIBL() 
+void Hachiko::Skybox::ActivateIBL(bool active)
+{
+    if (!App->scene_manager->IsLoadingScene() && active && !ibl_built)
+    {
+        BuildIBL();
+    }
+    activate_ibl = active;
+}
+
+void Hachiko::Skybox::BuildIBL()
 {
     glDeleteTextures(1, &diffuse_ibl_id);
     glDeleteTextures(1, &prefiltered_ibl_id);

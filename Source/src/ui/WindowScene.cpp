@@ -323,7 +323,7 @@ void Hachiko::WindowScene::UpdatePlayModeBlinker()
             !play_mode_blinker.is_passive_to_active;
     }
 
-    const float delta_time = Time::DeltaTime();
+    const float delta_time = GameTimer::delta_time;
 
     play_mode_blinker.progress += delta_time / play_mode_blinker.duration;
     play_mode_blinker.progress = play_mode_blinker.progress > 1.0f

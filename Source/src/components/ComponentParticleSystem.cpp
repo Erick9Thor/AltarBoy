@@ -87,10 +87,15 @@ void Hachiko::ComponentParticleSystem::Update()
 #endif //PLAY_BUILD
     if (emitter_state != ParticleSystem::Emitter::State::PAUSED)
     {
+        const float unscaled = static_cast<float>(EngineTimer::delta_time);
+        const float delta_time = GetTimeScaleMode() == TimeScaleMode::SCALED
+            ? unscaled * Time::GetTimeScale()
+            : unscaled;
+
         ActivateParticles();
-        UpdateEmitterTimes();
-        UpdateActiveParticles();
-        UpdateModifiers();
+        UpdateEmitterTimes(delta_time);
+        UpdateActiveParticles(delta_time);
+        UpdateModifiers(delta_time);
     }
 }
 
@@ -575,29 +580,32 @@ const float2& Hachiko::ComponentParticleSystem::GetFactor() const
     return factor;
 }
 
-void Hachiko::ComponentParticleSystem::UpdateActiveParticles()
+void Hachiko::ComponentParticleSystem::UpdateActiveParticles(const float delta_time)
 {
     active_particles = 0;
+
     for (auto& particle : particles)
     {
         if (!particle.IsActive())
         {
             continue;
         }
+
         ++active_particles;
-        particle.Update();
+
+        particle.Update(delta_time);
     }
 }
 
-void Hachiko::ComponentParticleSystem::UpdateModifiers()
+void Hachiko::ComponentParticleSystem::UpdateModifiers(const float delta_time)
 {
     for (const auto& particle_module : particle_modifiers)
     {
-        particle_module->Update(particles);
+        particle_module->Update(particles, delta_time);
     }
 }
 
-void Hachiko::ComponentParticleSystem::UpdateEmitterTimes()
+void Hachiko::ComponentParticleSystem::UpdateEmitterTimes(const float delta_time)
 {
     if (active_particles == 0 && emitter_state == ParticleSystem::Emitter::State::STOPPED)
     {
@@ -613,8 +621,8 @@ void Hachiko::ComponentParticleSystem::UpdateEmitterTimes()
         return;
     }
 
-    time += EngineTimer::delta_time;
-    emitter_elapsed_time += EngineTimer::delta_time;
+    time += delta_time;
+    emitter_elapsed_time += delta_time;
 
     if (emitter_elapsed_time < start_delay.GetValue() ||
         emitter_state != ParticleSystem::Emitter::State::PLAYING)
@@ -625,7 +633,7 @@ void Hachiko::ComponentParticleSystem::UpdateEmitterTimes()
 
     if (burst)
     {
-        burst_time += EngineTimer::delta_time;
+        burst_time += delta_time;
 
         if (burst_time >= start_life.values.x)
         {
