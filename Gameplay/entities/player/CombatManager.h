@@ -10,6 +10,7 @@ namespace Hachiko
 
     namespace Scripting
     {
+        class TimeManager;
         class EnemyController;
         class PlayerController;
         class BossController;
@@ -90,9 +91,10 @@ namespace Hachiko
 
         private:
             // Start attack depending on its type
-            int PlayerConeAttack(const float4x4& origin, const AttackStats& attack_stats);
-            int PlayerRectangleAttack(const float4x4& origin, const AttackStats& attack_stats);
-            int PlayerCircleAttack(const float4x4& origin, const AttackStats& attack_stats);
+            // TODO: Make this hit_enemies into a struct return type with int:
+            int PlayerConeAttack(const float4x4& origin, const AttackStats& attack_stats, bool& hit_enemies);
+            int PlayerRectangleAttack(const float4x4& origin, const AttackStats& attack_stats, bool& hit_enemies);
+            int PlayerCircleAttack(const float4x4& origin, const AttackStats& attack_stats, bool& hit_enemies);
 
             int EnemyConeAttack(const float4x4& origin, const AttackStats& attack_stats);
             int EnemyRectangleAttack(const float4x4& origin, const AttackStats& attack_stats);
@@ -157,6 +159,7 @@ namespace Hachiko
 
             PlayerController* _player_controller;
             BossController* _boss_controller;
+            TimeManager* _time_manager;
 
             SERIALIZE_FIELD(GameObject*, _charge_vfx);
             SERIALIZE_FIELD(GameObject*, _shot_vfx);
