@@ -56,7 +56,6 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	claw.charges = 12;
 	claw.attacks.push_back(GetAttackType(AttackType::QUICK_1));
 	claw.attacks.push_back(GetAttackType(AttackType::QUICK_2));
-	claw.attacks.push_back(GetAttackType(AttackType::QUICK_3));
 	
 	Weapon sword;
 	sword.name = "Sword";

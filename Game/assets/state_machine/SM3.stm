@@ -50,7 +50,7 @@ clips:
     clips_id: 7241399800701620650
     clips_loop: false
   - clip_name: clawTwo
-    clips_id: 8501411481015884247
+    clips_id: 13967982993898321496
     clips_loop: false
   - clip_name: clawThree
     clips_id: 12871651413963507001
@@ -171,10 +171,6 @@ transitions:
     transition_target: clawOne
     transition_trigger: isClawOne
     transition_blend: 300
-  - transition_source: clawOne
-    transition_target: clawTwo
-    transition_trigger: isClawTwo
-    transition_blend: 300
   - transition_source: idle
     transition_target: clawTwo
     transition_trigger: isClawTwo
@@ -263,10 +259,6 @@ transitions:
     transition_target: shot
     transition_trigger: isShot
     transition_blend: 300
-  - transition_source: clawTwo
-    transition_target: clawOne
-    transition_trigger: isClawOne
-    transition_blend: 300
   - transition_source: hammerOne
     transition_target: hammerTwo
     transition_trigger: isHammerTwo
@@ -318,4 +310,8 @@ transitions:
   - transition_source: ANY
     transition_target: charge
     transition_trigger: isCharge
+    transition_blend: 300
+  - transition_source: clawOne
+    transition_target: clawTwo
+    transition_trigger: isClawTwo
     transition_blend: 300
