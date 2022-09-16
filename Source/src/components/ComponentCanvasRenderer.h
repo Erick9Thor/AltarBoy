@@ -23,6 +23,7 @@ namespace Hachiko
         ComponentCanvas* FindClosestParentCanvas() const;
         void Render(ComponentCanvas* canvas, Program* img_program, Program* txt_program) const;
 
+    private:
         bool scale_ui = false;
         unsigned original_size_x = 0;
         unsigned original_size_y = 0;

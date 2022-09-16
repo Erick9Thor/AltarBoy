@@ -27,12 +27,25 @@ void Hachiko::ComponentCanvasRenderer::DrawGui()
 void Hachiko::ComponentCanvasRenderer::Save(YAML::Node& node) const
 {
     node.SetTag("canvas_renderer");
-    // TODO
+    node[SCALE_UI] = scale_ui;
+    node[ORIGINAL_SIZE_X] = original_size_x;
+    node[ORIGINAL_SIZE_Y] = original_size_y;
 }
 
 void Hachiko::ComponentCanvasRenderer::Load(const YAML::Node& node) 
 {
-    // TODO
+    if (node[SCALE_UI].IsDefined())
+    {
+        scale_ui = node[SCALE_UI].as<bool>();
+    }
+    if (node[ORIGINAL_SIZE_X].IsDefined())
+    {
+        original_size_x = node[ORIGINAL_SIZE_X].as<unsigned>();
+    }
+    if (node[ORIGINAL_SIZE_Y].IsDefined())
+    {
+        original_size_y = node[ORIGINAL_SIZE_Y].as<unsigned>();
+    }
 }
 
 Hachiko::ComponentCanvas* Hachiko::ComponentCanvasRenderer::FindClosestParentCanvas() const
