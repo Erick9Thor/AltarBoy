@@ -21,6 +21,7 @@ namespace Hachiko
     {
         class AudioManager;
         class PlayerController;
+        class EnemyController;
         class CombatVisualEffectsPool;
 
         class PlayerCamera;
@@ -102,6 +103,9 @@ namespace Hachiko
 
             void FocusCamera(bool focus_on_boss);
 
+            void SpawnEnemy();
+            void ResetEnemies();
+
         private:
             SERIALIZE_FIELD(int, state_value);
             SERIALIZE_FIELD(GameObject*, hp_bar_go);
@@ -130,6 +134,11 @@ namespace Hachiko
 
             bool camera_focus_on_boss = false;
             float time_elapse = 0.0;
+
+            SERIALIZE_FIELD(float, time_between_enemies);
+            SERIALIZE_FIELD(GameObject*, enemy_pool);
+            std::vector<EnemyController*> enemies;
+            float enemy_timer = 0.0;
         };
     } // namespace Scripting
 } // namespace Hachiko*/
