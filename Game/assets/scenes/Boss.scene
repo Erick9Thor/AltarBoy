@@ -9604,7 +9604,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1931, 1187]
+            size: [1695, 862]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -10258,6 +10258,8 @@ child:
         "'crystal_target_go@GameObject*'": 0
         "'cocoon_placeholder_go@GameObject*'": 5095342542163341665
         "'gauntlet_go@GameObject*'": 18385462906160147608
+        "'_current_index_crystals@int'": 0
+        "'crystal_pool@GameObject*'": 11688580810785056582
         "'start_encounter_range@float'": 5
       - !<script>
         id: 6581887006493112275
@@ -10287,7 +10289,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1931, 1187]
+            size: [1695, 862]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -10483,3 +10485,2625 @@ child:
                 visible: true
                 material_id: 6750369022920963075
                 tint_color: [1, 1, 1, 1]
+  - id: 11688580810785056582
+    name: CrystalsToSpawn
+    enabled: true
+    component:
+      - !<transform>
+        id: 14835901537290449078
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [-0, 0, -0]
+        scale: [1, 1, 1]
+    child:
+      - id: 8149284311084572172
+        name: ExplodingCrystal
+        enabled: false
+        component:
+          - !<transform>
+            id: 7656811796806235075
+            type: 1
+            enabled: true
+            position: [-93.77, 3.31, -54.89]
+            rotation: [-0, 7.9, -0]
+            scale: [2.5, 2.5, 2.5]
+          - !<animation>
+            id: 4067064961698937005
+            type: 14
+            enabled: true
+            state_machine: 14686609166423751852
+          - !<script>
+            id: 5210942747023433800
+            type: 15
+            enabled: true
+            class_name: Stats
+            "'_attack_power@int'": 2
+            "'_attack_cd@float'": 2
+            "'_attack_range@float'": 3.5
+            "'_move_speed@float'": 0
+            "'_max_hp@int'": 1
+            "'_current_hp@int'": 3
+          - id: 3776947275417861688
+            type: 20
+            enabled: true
+          - !<script>
+            id: 10351770146057412453
+            type: 15
+            enabled: true
+            class_name: CrystalExplosion
+            "'_explosion_indicator_helper@GameObject*'": 9379993342314799430
+            "'_explosion_effect@GameObject*'": 13296777787815138955
+            "'_shake_intensity@float'": 0.2
+            "'_seconds_shaking@float'": 5
+            "'_crashing_index@unsigned'": 0
+            "'_detecting_radius@float'": 3
+            "'_explosion_radius@float'": 5
+            "'_timer_explosion@float'": 1
+            "'_explosive_crystal@bool'": true
+            "'_regen_time@float'": 5
+          - !<obstacle>
+            id: 14674822954761812630
+            type: 18
+            enabled: true
+            obstacle_type: 0
+            obstacle_size: [1, 1, 1]
+        child:
+          - id: 6056625832955852171
+            name: Geo
+            enabled: false
+            component:
+              - !<transform>
+                id: 17316158653538835852
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+            child:
+              - id: 6625866328924386910
+                name: crystalSpike_mesh_Part_1_$AssimpFbx$_RotationPivot
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 9530278338030847726
+                    type: 1
+                    enabled: true
+                    position: [-0.0762, 0.4947, 0.1023]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 10205925780228781510
+                    name: crystalSpike_mesh_Part_1_$AssimpFbx$_RotationPivotInverse
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 7204175710652963873
+                        type: 1
+                        enabled: true
+                        position: [0.0762, -0.4947, -0.1023]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 6834808874952211731
+                        name: crystalSpike_mesh_Part_1_$AssimpFbx$_ScalingPivot
+                        enabled: false
+                        component:
+                          - !<transform>
+                            id: 3879799301939193967
+                            type: 1
+                            enabled: true
+                            position: [-0.0762, 0.4947, 0.1023]
+                            rotation: [-0, 0, -0]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 9074697679884667064
+                            name: crystalSpike_mesh_Part_1_$AssimpFbx$_ScalingPivotInverse
+                            enabled: false
+                            component:
+                              - !<transform>
+                                id: 1267772455315920234
+                                type: 1
+                                enabled: true
+                                position: [0.0762, -0.4947, -0.1023]
+                                rotation: [-0, 0, -0]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 12450998528450217089
+                                name: crystalSpike_mesh_Part_1
+                                enabled: false
+                                component:
+                                  - !<transform>
+                                    id: 8930830449370738872
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [-0, 0, -0]
+                                    scale: [1, 1, 1]
+                                  - !<mesh_renderer>
+                                    id: 2622426831264246196
+                                    type: 2
+                                    enabled: true
+                                    mesh_id: 10175395471774891078
+                                    navigable: false
+                                    visible: true
+                                    material_id: 5759363592208955763
+                                    tint_color: [1, 1, 1, 1]
+              - id: 17882361306106347588
+                name: crystalSpike_mesh_Part_2_$AssimpFbx$_RotationPivot
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 6961928937221799631
+                    type: 1
+                    enabled: true
+                    position: [0.0911, 0.2996, 0.0456]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 6155654624308387915
+                    name: crystalSpike_mesh_Part_2_$AssimpFbx$_RotationPivotInverse
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 1300061131104188661
+                        type: 1
+                        enabled: true
+                        position: [-0.0911, -0.2996, -0.0456]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 190798791953783808
+                        name: crystalSpike_mesh_Part_2_$AssimpFbx$_ScalingPivot
+                        enabled: false
+                        component:
+                          - !<transform>
+                            id: 6838125398163548161
+                            type: 1
+                            enabled: true
+                            position: [0.0911, 0.2996, 0.0456]
+                            rotation: [-0, 0, -0]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 3057478603575046595
+                            name: crystalSpike_mesh_Part_2_$AssimpFbx$_ScalingPivotInverse
+                            enabled: false
+                            component:
+                              - !<transform>
+                                id: 2933251650205164387
+                                type: 1
+                                enabled: true
+                                position: [-0.0911, -0.2996, -0.0456]
+                                rotation: [-0, 0, -0]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 6976880736456620133
+                                name: crystalSpike_mesh_Part_2
+                                enabled: false
+                                component:
+                                  - !<transform>
+                                    id: 14238349887934238442
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [-0, 0, -0]
+                                    scale: [1, 1, 1]
+                                  - !<mesh_renderer>
+                                    id: 3402906079189062178
+                                    type: 2
+                                    enabled: true
+                                    mesh_id: 6229385771345559983
+                                    navigable: false
+                                    visible: true
+                                    material_id: 5759363592208955763
+                                    tint_color: [1, 1, 1, 1]
+              - id: 10961503096706848698
+                name: crystalSpike_mesh_Part_3_$AssimpFbx$_RotationPivot
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 13021796642986223060
+                    type: 1
+                    enabled: true
+                    position: [0.187, 0.4844, 0.0622]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 1302750016156248236
+                    name: crystalSpike_mesh_Part_3_$AssimpFbx$_RotationPivotInverse
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 16232997453171153758
+                        type: 1
+                        enabled: true
+                        position: [-0.187, -0.4844, -0.0622]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 17826778273813743501
+                        name: crystalSpike_mesh_Part_3_$AssimpFbx$_ScalingPivot
+                        enabled: false
+                        component:
+                          - !<transform>
+                            id: 15175693588745578813
+                            type: 1
+                            enabled: true
+                            position: [0.187, 0.4844, 0.0622]
+                            rotation: [-0, 0, -0]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 12668728102089262408
+                            name: crystalSpike_mesh_Part_3_$AssimpFbx$_ScalingPivotInverse
+                            enabled: false
+                            component:
+                              - !<transform>
+                                id: 11757717969091089479
+                                type: 1
+                                enabled: true
+                                position: [-0.187, -0.4844, -0.0622]
+                                rotation: [-0, 0, -0]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 3001855531200206008
+                                name: crystalSpike_mesh_Part_3
+                                enabled: false
+                                component:
+                                  - !<transform>
+                                    id: 2975621685021523596
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [-0, 0, -0]
+                                    scale: [1, 1, 1]
+                                  - !<mesh_renderer>
+                                    id: 5473170908401564835
+                                    type: 2
+                                    enabled: true
+                                    mesh_id: 903393536084662082
+                                    navigable: false
+                                    visible: true
+                                    material_id: 5759363592208955763
+                                    tint_color: [1, 1, 1, 1]
+              - id: 16651744491664331112
+                name: crystalSpike_mesh_Part_4_$AssimpFbx$_RotationPivot
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 1350163105686332797
+                    type: 1
+                    enabled: true
+                    position: [0.1453, 0.2564, 0.2718]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 9133262636704355502
+                    name: crystalSpike_mesh_Part_4_$AssimpFbx$_RotationPivotInverse
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 7700124047069055966
+                        type: 1
+                        enabled: true
+                        position: [-0.1453, -0.2564, -0.2718]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 11225661423092499793
+                        name: crystalSpike_mesh_Part_4_$AssimpFbx$_ScalingPivot
+                        enabled: false
+                        component:
+                          - !<transform>
+                            id: 18393800121288679895
+                            type: 1
+                            enabled: true
+                            position: [0.1453, 0.2564, 0.2718]
+                            rotation: [-0, 0, -0]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 2947542842742325389
+                            name: crystalSpike_mesh_Part_4_$AssimpFbx$_ScalingPivotInverse
+                            enabled: false
+                            component:
+                              - !<transform>
+                                id: 10478083856014276778
+                                type: 1
+                                enabled: true
+                                position: [-0.1453, -0.2564, -0.2718]
+                                rotation: [-0, 0, -0]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 9620092839071352727
+                                name: crystalSpike_mesh_Part_4
+                                enabled: false
+                                component:
+                                  - !<transform>
+                                    id: 3079161870566852504
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [-0, 0, -0]
+                                    scale: [1, 1, 1]
+                                  - !<mesh_renderer>
+                                    id: 14659291056789902635
+                                    type: 2
+                                    enabled: true
+                                    mesh_id: 17479070581851126897
+                                    navigable: false
+                                    visible: true
+                                    material_id: 5759363592208955763
+                                    tint_color: [1, 1, 1, 1]
+          - id: 14958684486917886276
+            name: Bones
+            enabled: false
+            component:
+              - !<transform>
+                id: 3338571424329767108
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+            child:
+              - id: 11828384960463194823
+                name: Root
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 10587925941452040654
+                    type: 1
+                    enabled: true
+                    position: [-0.0003, 0, -0.0006]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 13909813775319053152
+                    name: Up
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 6690671273852154619
+                        type: 1
+                        enabled: true
+                        position: [-0.0759, 0.4947, 0.1029]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                  - id: 13142790714937584559
+                    name: Down
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 1215743734294262245
+                        type: 1
+                        enabled: true
+                        position: [0.0915, 0.2996, 0.0463]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                  - id: 7868289740025617313
+                    name: Middle
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 6454685280085267449
+                        type: 1
+                        enabled: true
+                        position: [0.1873, 0.4844, 0.0629]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                  - id: 8487155474453577663
+                    name: Down_two
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 9639768843897527412
+                        type: 1
+                        enabled: true
+                        position: [0.1457, 0.2564, 0.2724]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+          - id: 9379993342314799430
+            name: ExplosionIndicatorHelper
+            enabled: false
+            component:
+              - !<transform>
+                id: 11993360212538624787
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-0, 0, -0]
+                scale: [2, 0.07, 2]
+            child:
+              - id: 13390408949247532318
+                name: Cylinder001
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 12589159097621264407
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0]
+                    rotation: [-90, 0, 0]
+                    scale: [1, 1, 1]
+                  - !<mesh_renderer>
+                    id: 7175807609090477807
+                    type: 2
+                    enabled: true
+                    mesh_id: 10210867973034302559
+                    navigable: false
+                    visible: true
+                    material_id: 6462450398853139216
+                    tint_color: [1, 1, 1, 1]
+          - id: 13296777787815138955
+            name: ExplosionEffect
+            enabled: false
+            component:
+              - !<transform>
+                id: 12300888305895726230
+                type: 1
+                enabled: true
+                position: [0, 0.15, 0]
+                rotation: [-0, 7.901, -0]
+                scale: [1, 1, 1]
+            child:
+              - id: 10284058403934144466
+                name: InnerEffect
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 11306896101016637595
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                  - !<billboard>
+                    id: 9269008192103282729
+                    type: 21
+                    enabled: true
+                    play_on_awake: true
+                    texture_id: 15537058005441777461
+                    tiles: [1, 1]
+                    flip: [false, false]
+                    billboard_lifetime: 1
+                    properties: [1, 2, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                    animation_speed: 0
+                    total_tiles: 1
+                    animation_loop: false
+                    color_cycles: 0
+                    color_gradient: [[0.763, 0, 0, 0, 0]]
+                    animation_section: false
+                    color_section: true
+                    size_section: true
+                    size_over_time: [true, false, 0, [30, 5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    rotation_section: false
+                    rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_size: [true, true, 0, [0.5, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    blend_factor: 0
+                    projection: true
+              - id: 6261117714959284682
+                name: OuterEffect
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 17191284866159706079
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0]
+                    rotation: [-0, 0, -0]
+                    scale: [4.8, 4.8, 1]
+                  - !<billboard>
+                    id: 9208512301329448204
+                    type: 21
+                    enabled: true
+                    play_on_awake: true
+                    texture_id: 1822181409804484943
+                    tiles: [1, 1]
+                    flip: [false, false]
+                    billboard_lifetime: 1
+                    properties: [1, 2, 0, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                    animation_speed: 0
+                    total_tiles: 1
+                    animation_loop: false
+                    color_cycles: 1
+                    color_gradient: [[0, 0, 0, 0, 0], [1, 1, 1, 0, 1]]
+                    animation_section: false
+                    color_section: false
+                    size_section: false
+                    size_over_time: [true, false, 0, [0.5, 0.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    rotation_section: true
+                    rotation_over_time: [true, false, 0, [5, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_size: [true, true, 0, [0.5, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    blend_factor: 0
+                    projection: true
+      - id: 14491062179751931169
+        name: ExplodingCrystal
+        enabled: false
+        component:
+          - !<transform>
+            id: 9077388448868309232
+            type: 1
+            enabled: true
+            position: [-93.77, 3.31, -54.89]
+            rotation: [-0, 7.9, -0]
+            scale: [2.5, 2.5, 2.5]
+          - !<animation>
+            id: 3712233024097582531
+            type: 14
+            enabled: true
+            state_machine: 14686609166423751852
+          - !<script>
+            id: 12627605712653742363
+            type: 15
+            enabled: true
+            class_name: Stats
+            "'_attack_power@int'": 2
+            "'_attack_cd@float'": 2
+            "'_attack_range@float'": 3.5
+            "'_move_speed@float'": 0
+            "'_max_hp@int'": 1
+            "'_current_hp@int'": 3
+          - id: 1376634362764923836
+            type: 20
+            enabled: true
+          - !<script>
+            id: 8973484180119100456
+            type: 15
+            enabled: true
+            class_name: CrystalExplosion
+            "'_explosion_indicator_helper@GameObject*'": 8905861437885313688
+            "'_explosion_effect@GameObject*'": 5844803734930276679
+            "'_shake_intensity@float'": 0.2
+            "'_seconds_shaking@float'": 5
+            "'_crashing_index@unsigned'": 0
+            "'_detecting_radius@float'": 3
+            "'_explosion_radius@float'": 5
+            "'_timer_explosion@float'": 1
+            "'_explosive_crystal@bool'": true
+            "'_regen_time@float'": 5
+          - !<obstacle>
+            id: 13755679723979275857
+            type: 18
+            enabled: true
+            obstacle_type: 0
+            obstacle_size: [1, 1, 1]
+        child:
+          - id: 9837199135195506142
+            name: Geo
+            enabled: false
+            component:
+              - !<transform>
+                id: 18326210784769224234
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+            child:
+              - id: 7241247323172533472
+                name: crystalSpike_mesh_Part_1_$AssimpFbx$_RotationPivot
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 2240063163301656560
+                    type: 1
+                    enabled: true
+                    position: [-0.0762, 0.4947, 0.1023]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 959318539384849777
+                    name: crystalSpike_mesh_Part_1_$AssimpFbx$_RotationPivotInverse
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 4167654204830522303
+                        type: 1
+                        enabled: true
+                        position: [0.0762, -0.4947, -0.1023]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 1942079618719468652
+                        name: crystalSpike_mesh_Part_1_$AssimpFbx$_ScalingPivot
+                        enabled: false
+                        component:
+                          - !<transform>
+                            id: 5364175045889890137
+                            type: 1
+                            enabled: true
+                            position: [-0.0762, 0.4947, 0.1023]
+                            rotation: [-0, 0, -0]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 880413246944402987
+                            name: crystalSpike_mesh_Part_1_$AssimpFbx$_ScalingPivotInverse
+                            enabled: false
+                            component:
+                              - !<transform>
+                                id: 3313003378110175574
+                                type: 1
+                                enabled: true
+                                position: [0.0762, -0.4947, -0.1023]
+                                rotation: [-0, 0, -0]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 10039671433426775902
+                                name: crystalSpike_mesh_Part_1
+                                enabled: false
+                                component:
+                                  - !<transform>
+                                    id: 7178376400077916151
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [-0, 0, -0]
+                                    scale: [1, 1, 1]
+                                  - !<mesh_renderer>
+                                    id: 13280912339664250557
+                                    type: 2
+                                    enabled: true
+                                    mesh_id: 10175395471774891078
+                                    navigable: false
+                                    visible: true
+                                    material_id: 5759363592208955763
+                                    tint_color: [1, 1, 1, 1]
+              - id: 15471053410046744402
+                name: crystalSpike_mesh_Part_2_$AssimpFbx$_RotationPivot
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 789601130806867507
+                    type: 1
+                    enabled: true
+                    position: [0.0911, 0.2996, 0.0456]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 15055264308952012730
+                    name: crystalSpike_mesh_Part_2_$AssimpFbx$_RotationPivotInverse
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 6613537022080155546
+                        type: 1
+                        enabled: true
+                        position: [-0.0911, -0.2996, -0.0456]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 10877271554954561268
+                        name: crystalSpike_mesh_Part_2_$AssimpFbx$_ScalingPivot
+                        enabled: false
+                        component:
+                          - !<transform>
+                            id: 12769179138657976908
+                            type: 1
+                            enabled: true
+                            position: [0.0911, 0.2996, 0.0456]
+                            rotation: [-0, 0, -0]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 5450867023940566922
+                            name: crystalSpike_mesh_Part_2_$AssimpFbx$_ScalingPivotInverse
+                            enabled: false
+                            component:
+                              - !<transform>
+                                id: 3717448975770001239
+                                type: 1
+                                enabled: true
+                                position: [-0.0911, -0.2996, -0.0456]
+                                rotation: [-0, 0, -0]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 16640991772389688658
+                                name: crystalSpike_mesh_Part_2
+                                enabled: false
+                                component:
+                                  - !<transform>
+                                    id: 5157712080955907558
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [-0, 0, -0]
+                                    scale: [1, 1, 1]
+                                  - !<mesh_renderer>
+                                    id: 5849766115070452299
+                                    type: 2
+                                    enabled: true
+                                    mesh_id: 6229385771345559983
+                                    navigable: false
+                                    visible: true
+                                    material_id: 5759363592208955763
+                                    tint_color: [1, 1, 1, 1]
+              - id: 17078007529810308037
+                name: crystalSpike_mesh_Part_3_$AssimpFbx$_RotationPivot
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 5706489909316769152
+                    type: 1
+                    enabled: true
+                    position: [0.187, 0.4844, 0.0622]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 4364505178845113614
+                    name: crystalSpike_mesh_Part_3_$AssimpFbx$_RotationPivotInverse
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 1845868911748412892
+                        type: 1
+                        enabled: true
+                        position: [-0.187, -0.4844, -0.0622]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 5434828382760661661
+                        name: crystalSpike_mesh_Part_3_$AssimpFbx$_ScalingPivot
+                        enabled: false
+                        component:
+                          - !<transform>
+                            id: 8486280246771778668
+                            type: 1
+                            enabled: true
+                            position: [0.187, 0.4844, 0.0622]
+                            rotation: [-0, 0, -0]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 4559795850541761351
+                            name: crystalSpike_mesh_Part_3_$AssimpFbx$_ScalingPivotInverse
+                            enabled: false
+                            component:
+                              - !<transform>
+                                id: 10536973138294854491
+                                type: 1
+                                enabled: true
+                                position: [-0.187, -0.4844, -0.0622]
+                                rotation: [-0, 0, -0]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 7134440931154451983
+                                name: crystalSpike_mesh_Part_3
+                                enabled: false
+                                component:
+                                  - !<transform>
+                                    id: 4856907056303065213
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [-0, 0, -0]
+                                    scale: [1, 1, 1]
+                                  - !<mesh_renderer>
+                                    id: 15391992130829878131
+                                    type: 2
+                                    enabled: true
+                                    mesh_id: 903393536084662082
+                                    navigable: false
+                                    visible: true
+                                    material_id: 5759363592208955763
+                                    tint_color: [1, 1, 1, 1]
+              - id: 9108802735580781560
+                name: crystalSpike_mesh_Part_4_$AssimpFbx$_RotationPivot
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 14952295891540859103
+                    type: 1
+                    enabled: true
+                    position: [0.1453, 0.2564, 0.2718]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 18410501457214322023
+                    name: crystalSpike_mesh_Part_4_$AssimpFbx$_RotationPivotInverse
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 5535757128692307993
+                        type: 1
+                        enabled: true
+                        position: [-0.1453, -0.2564, -0.2718]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 2706539597216086888
+                        name: crystalSpike_mesh_Part_4_$AssimpFbx$_ScalingPivot
+                        enabled: false
+                        component:
+                          - !<transform>
+                            id: 17223267446405427147
+                            type: 1
+                            enabled: true
+                            position: [0.1453, 0.2564, 0.2718]
+                            rotation: [-0, 0, -0]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 1333052325799751008
+                            name: crystalSpike_mesh_Part_4_$AssimpFbx$_ScalingPivotInverse
+                            enabled: false
+                            component:
+                              - !<transform>
+                                id: 1106491053046992173
+                                type: 1
+                                enabled: true
+                                position: [-0.1453, -0.2564, -0.2718]
+                                rotation: [-0, 0, -0]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 4593117031471762498
+                                name: crystalSpike_mesh_Part_4
+                                enabled: false
+                                component:
+                                  - !<transform>
+                                    id: 4185820901488600657
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [-0, 0, -0]
+                                    scale: [1, 1, 1]
+                                  - !<mesh_renderer>
+                                    id: 5797537592057820254
+                                    type: 2
+                                    enabled: true
+                                    mesh_id: 17479070581851126897
+                                    navigable: false
+                                    visible: true
+                                    material_id: 5759363592208955763
+                                    tint_color: [1, 1, 1, 1]
+          - id: 1434782595554408568
+            name: Bones
+            enabled: false
+            component:
+              - !<transform>
+                id: 14594813661744641346
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+            child:
+              - id: 17683278465013211275
+                name: Root
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 3479899982656978557
+                    type: 1
+                    enabled: true
+                    position: [-0.0003, 0, -0.0006]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 2794558134963903529
+                    name: Up
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 15029254628452581433
+                        type: 1
+                        enabled: true
+                        position: [-0.0759, 0.4947, 0.1029]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                  - id: 13454329284949788517
+                    name: Down
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 8860086244248333313
+                        type: 1
+                        enabled: true
+                        position: [0.0915, 0.2996, 0.0463]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                  - id: 6457700714883788563
+                    name: Middle
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 4778162223054675518
+                        type: 1
+                        enabled: true
+                        position: [0.1873, 0.4844, 0.0629]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                  - id: 6140604971432694036
+                    name: Down_two
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 9264665280220602920
+                        type: 1
+                        enabled: true
+                        position: [0.1457, 0.2564, 0.2724]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+          - id: 8905861437885313688
+            name: ExplosionIndicatorHelper
+            enabled: false
+            component:
+              - !<transform>
+                id: 11028388829370454765
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-0, 0, -0]
+                scale: [2, 0.07, 2]
+            child:
+              - id: 10986164890537449574
+                name: Cylinder001
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 12713267545035440239
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0]
+                    rotation: [-90, 0, 0]
+                    scale: [1, 1, 1]
+                  - !<mesh_renderer>
+                    id: 4852257113413941345
+                    type: 2
+                    enabled: true
+                    mesh_id: 10210867973034302559
+                    navigable: false
+                    visible: true
+                    material_id: 6462450398853139216
+                    tint_color: [1, 1, 1, 1]
+          - id: 5844803734930276679
+            name: ExplosionEffect
+            enabled: false
+            component:
+              - !<transform>
+                id: 330890325670046755
+                type: 1
+                enabled: true
+                position: [0, 0.15, 0]
+                rotation: [-0, 7.901, -0]
+                scale: [1, 1, 1]
+            child:
+              - id: 3575205103188180569
+                name: InnerEffect
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 8520218120130637545
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                  - !<billboard>
+                    id: 7683604869946806347
+                    type: 21
+                    enabled: true
+                    play_on_awake: true
+                    texture_id: 15537058005441777461
+                    tiles: [1, 1]
+                    flip: [false, false]
+                    billboard_lifetime: 1
+                    properties: [1, 2, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                    animation_speed: 0
+                    total_tiles: 1
+                    animation_loop: false
+                    color_cycles: 0
+                    color_gradient: [[0.763, 0, 0, 0, 0]]
+                    animation_section: false
+                    color_section: true
+                    size_section: true
+                    size_over_time: [true, false, 0, [30, 5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    rotation_section: false
+                    rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_size: [true, true, 0, [0.5, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    blend_factor: 0
+                    projection: true
+              - id: 3956941360896768007
+                name: OuterEffect
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 16385456265377439048
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0]
+                    rotation: [-0, 0, -0]
+                    scale: [4.8, 4.8, 1]
+                  - !<billboard>
+                    id: 7436377576968092843
+                    type: 21
+                    enabled: true
+                    play_on_awake: true
+                    texture_id: 1822181409804484943
+                    tiles: [1, 1]
+                    flip: [false, false]
+                    billboard_lifetime: 1
+                    properties: [1, 2, 0, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                    animation_speed: 0
+                    total_tiles: 1
+                    animation_loop: false
+                    color_cycles: 1
+                    color_gradient: [[0, 0, 0, 0, 0], [1, 1, 1, 0, 1]]
+                    animation_section: false
+                    color_section: false
+                    size_section: false
+                    size_over_time: [true, false, 0, [0.5, 0.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    rotation_section: true
+                    rotation_over_time: [true, false, 0, [5, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_size: [true, true, 0, [0.5, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    blend_factor: 0
+                    projection: true
+      - id: 4648752374439362969
+        name: ExplodingCrystal
+        enabled: false
+        component:
+          - !<transform>
+            id: 9451771865653908691
+            type: 1
+            enabled: true
+            position: [-93.77, 3.31, -54.89]
+            rotation: [-0, 7.9, -0]
+            scale: [2.5, 2.5, 2.5]
+          - !<animation>
+            id: 8262563222592650346
+            type: 14
+            enabled: true
+            state_machine: 14686609166423751852
+          - !<script>
+            id: 7729423463707898188
+            type: 15
+            enabled: true
+            class_name: Stats
+            "'_attack_power@int'": 2
+            "'_attack_cd@float'": 2
+            "'_attack_range@float'": 3.5
+            "'_move_speed@float'": 0
+            "'_max_hp@int'": 1
+            "'_current_hp@int'": 3
+          - id: 14320887488516141646
+            type: 20
+            enabled: true
+          - !<script>
+            id: 9619761957081938335
+            type: 15
+            enabled: true
+            class_name: CrystalExplosion
+            "'_explosion_indicator_helper@GameObject*'": 8779914444901754560
+            "'_explosion_effect@GameObject*'": 14868162817066586212
+            "'_shake_intensity@float'": 0.2
+            "'_seconds_shaking@float'": 5
+            "'_crashing_index@unsigned'": 0
+            "'_detecting_radius@float'": 3
+            "'_explosion_radius@float'": 5
+            "'_timer_explosion@float'": 1
+            "'_explosive_crystal@bool'": true
+            "'_regen_time@float'": 5
+          - !<obstacle>
+            id: 1161333272699434239
+            type: 18
+            enabled: true
+            obstacle_type: 0
+            obstacle_size: [1, 1, 1]
+        child:
+          - id: 18248600122970560300
+            name: Geo
+            enabled: false
+            component:
+              - !<transform>
+                id: 3870059701937142100
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+            child:
+              - id: 64169551628026831
+                name: crystalSpike_mesh_Part_1_$AssimpFbx$_RotationPivot
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 13691359099580418664
+                    type: 1
+                    enabled: true
+                    position: [-0.0762, 0.4947, 0.1023]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 15757814343227215741
+                    name: crystalSpike_mesh_Part_1_$AssimpFbx$_RotationPivotInverse
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 13842417793035829826
+                        type: 1
+                        enabled: true
+                        position: [0.0762, -0.4947, -0.1023]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 15903821763257765965
+                        name: crystalSpike_mesh_Part_1_$AssimpFbx$_ScalingPivot
+                        enabled: false
+                        component:
+                          - !<transform>
+                            id: 2391555815238069523
+                            type: 1
+                            enabled: true
+                            position: [-0.0762, 0.4947, 0.1023]
+                            rotation: [-0, 0, -0]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 1634975224467630479
+                            name: crystalSpike_mesh_Part_1_$AssimpFbx$_ScalingPivotInverse
+                            enabled: false
+                            component:
+                              - !<transform>
+                                id: 14487093125263767705
+                                type: 1
+                                enabled: true
+                                position: [0.0762, -0.4947, -0.1023]
+                                rotation: [-0, 0, -0]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 4079928071324602388
+                                name: crystalSpike_mesh_Part_1
+                                enabled: false
+                                component:
+                                  - !<transform>
+                                    id: 4109832573767734895
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [-0, 0, -0]
+                                    scale: [1, 1, 1]
+                                  - !<mesh_renderer>
+                                    id: 685566687721895959
+                                    type: 2
+                                    enabled: true
+                                    mesh_id: 10175395471774891078
+                                    navigable: false
+                                    visible: true
+                                    material_id: 5759363592208955763
+                                    tint_color: [1, 1, 1, 1]
+              - id: 2528707329956616962
+                name: crystalSpike_mesh_Part_2_$AssimpFbx$_RotationPivot
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 3998293691994872697
+                    type: 1
+                    enabled: true
+                    position: [0.0911, 0.2996, 0.0456]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 6921106748920245619
+                    name: crystalSpike_mesh_Part_2_$AssimpFbx$_RotationPivotInverse
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 2950457246988743021
+                        type: 1
+                        enabled: true
+                        position: [-0.0911, -0.2996, -0.0456]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 4730939114897259389
+                        name: crystalSpike_mesh_Part_2_$AssimpFbx$_ScalingPivot
+                        enabled: false
+                        component:
+                          - !<transform>
+                            id: 247919171949349061
+                            type: 1
+                            enabled: true
+                            position: [0.0911, 0.2996, 0.0456]
+                            rotation: [-0, 0, -0]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 11127971954566515073
+                            name: crystalSpike_mesh_Part_2_$AssimpFbx$_ScalingPivotInverse
+                            enabled: false
+                            component:
+                              - !<transform>
+                                id: 14838196687814387114
+                                type: 1
+                                enabled: true
+                                position: [-0.0911, -0.2996, -0.0456]
+                                rotation: [-0, 0, -0]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 11297291756481676458
+                                name: crystalSpike_mesh_Part_2
+                                enabled: false
+                                component:
+                                  - !<transform>
+                                    id: 1033850802306546155
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [-0, 0, -0]
+                                    scale: [1, 1, 1]
+                                  - !<mesh_renderer>
+                                    id: 7896614828362271044
+                                    type: 2
+                                    enabled: true
+                                    mesh_id: 6229385771345559983
+                                    navigable: false
+                                    visible: true
+                                    material_id: 5759363592208955763
+                                    tint_color: [1, 1, 1, 1]
+              - id: 906022760488441614
+                name: crystalSpike_mesh_Part_3_$AssimpFbx$_RotationPivot
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 12169826706316434808
+                    type: 1
+                    enabled: true
+                    position: [0.187, 0.4844, 0.0622]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 4276651778284643396
+                    name: crystalSpike_mesh_Part_3_$AssimpFbx$_RotationPivotInverse
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 4052244995419047981
+                        type: 1
+                        enabled: true
+                        position: [-0.187, -0.4844, -0.0622]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 562851283482730374
+                        name: crystalSpike_mesh_Part_3_$AssimpFbx$_ScalingPivot
+                        enabled: false
+                        component:
+                          - !<transform>
+                            id: 12552781236091849912
+                            type: 1
+                            enabled: true
+                            position: [0.187, 0.4844, 0.0622]
+                            rotation: [-0, 0, -0]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 6978235033316220395
+                            name: crystalSpike_mesh_Part_3_$AssimpFbx$_ScalingPivotInverse
+                            enabled: false
+                            component:
+                              - !<transform>
+                                id: 16787458993161759637
+                                type: 1
+                                enabled: true
+                                position: [-0.187, -0.4844, -0.0622]
+                                rotation: [-0, 0, -0]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 13545655605997604315
+                                name: crystalSpike_mesh_Part_3
+                                enabled: false
+                                component:
+                                  - !<transform>
+                                    id: 9938150985169514309
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [-0, 0, -0]
+                                    scale: [1, 1, 1]
+                                  - !<mesh_renderer>
+                                    id: 2380386087779234713
+                                    type: 2
+                                    enabled: true
+                                    mesh_id: 903393536084662082
+                                    navigable: false
+                                    visible: true
+                                    material_id: 5759363592208955763
+                                    tint_color: [1, 1, 1, 1]
+              - id: 2021843450443131790
+                name: crystalSpike_mesh_Part_4_$AssimpFbx$_RotationPivot
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 1496314954096882631
+                    type: 1
+                    enabled: true
+                    position: [0.1453, 0.2564, 0.2718]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 3851961086915710367
+                    name: crystalSpike_mesh_Part_4_$AssimpFbx$_RotationPivotInverse
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 16810867503507597459
+                        type: 1
+                        enabled: true
+                        position: [-0.1453, -0.2564, -0.2718]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 15858950384086489494
+                        name: crystalSpike_mesh_Part_4_$AssimpFbx$_ScalingPivot
+                        enabled: false
+                        component:
+                          - !<transform>
+                            id: 2545257114682837832
+                            type: 1
+                            enabled: true
+                            position: [0.1453, 0.2564, 0.2718]
+                            rotation: [-0, 0, -0]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 10117511774235329834
+                            name: crystalSpike_mesh_Part_4_$AssimpFbx$_ScalingPivotInverse
+                            enabled: false
+                            component:
+                              - !<transform>
+                                id: 6612319995243846804
+                                type: 1
+                                enabled: true
+                                position: [-0.1453, -0.2564, -0.2718]
+                                rotation: [-0, 0, -0]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 7130742295441609341
+                                name: crystalSpike_mesh_Part_4
+                                enabled: false
+                                component:
+                                  - !<transform>
+                                    id: 9785611881953629830
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [-0, 0, -0]
+                                    scale: [1, 1, 1]
+                                  - !<mesh_renderer>
+                                    id: 9312295243546205676
+                                    type: 2
+                                    enabled: true
+                                    mesh_id: 17479070581851126897
+                                    navigable: false
+                                    visible: true
+                                    material_id: 5759363592208955763
+                                    tint_color: [1, 1, 1, 1]
+          - id: 7300074737458185034
+            name: Bones
+            enabled: false
+            component:
+              - !<transform>
+                id: 14180359042284901137
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+            child:
+              - id: 2906799492733222758
+                name: Root
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 6882183649121895643
+                    type: 1
+                    enabled: true
+                    position: [-0.0003, 0, -0.0006]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 16567644543543407697
+                    name: Up
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 4880322606707306142
+                        type: 1
+                        enabled: true
+                        position: [-0.0759, 0.4947, 0.1029]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                  - id: 7104941428329785684
+                    name: Down
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 18219510960147795126
+                        type: 1
+                        enabled: true
+                        position: [0.0915, 0.2996, 0.0463]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                  - id: 10824461911187714593
+                    name: Middle
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 1766070899615379586
+                        type: 1
+                        enabled: true
+                        position: [0.1873, 0.4844, 0.0629]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                  - id: 8127117757437790372
+                    name: Down_two
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 1401348349749101927
+                        type: 1
+                        enabled: true
+                        position: [0.1457, 0.2564, 0.2724]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+          - id: 8779914444901754560
+            name: ExplosionIndicatorHelper
+            enabled: false
+            component:
+              - !<transform>
+                id: 11887699088778505003
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-0, 0, -0]
+                scale: [2, 0.07, 2]
+            child:
+              - id: 15508652563711413498
+                name: Cylinder001
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 17358884868491293016
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0]
+                    rotation: [-90, 0, 0]
+                    scale: [1, 1, 1]
+                  - !<mesh_renderer>
+                    id: 6526234278733455119
+                    type: 2
+                    enabled: true
+                    mesh_id: 10210867973034302559
+                    navigable: false
+                    visible: true
+                    material_id: 6462450398853139216
+                    tint_color: [1, 1, 1, 1]
+          - id: 14868162817066586212
+            name: ExplosionEffect
+            enabled: false
+            component:
+              - !<transform>
+                id: 11313818421923380921
+                type: 1
+                enabled: true
+                position: [0, 0.15, 0]
+                rotation: [-0, 7.901, -0]
+                scale: [1, 1, 1]
+            child:
+              - id: 3771814471335913233
+                name: InnerEffect
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 7973755876236736248
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                  - !<billboard>
+                    id: 14400248775779235180
+                    type: 21
+                    enabled: true
+                    play_on_awake: true
+                    texture_id: 15537058005441777461
+                    tiles: [1, 1]
+                    flip: [false, false]
+                    billboard_lifetime: 1
+                    properties: [1, 2, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                    animation_speed: 0
+                    total_tiles: 1
+                    animation_loop: false
+                    color_cycles: 0
+                    color_gradient: [[0.763, 0, 0, 0, 0]]
+                    animation_section: false
+                    color_section: true
+                    size_section: true
+                    size_over_time: [true, false, 0, [30, 5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    rotation_section: false
+                    rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_size: [true, true, 0, [0.5, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    blend_factor: 0
+                    projection: true
+              - id: 13408267486367672437
+                name: OuterEffect
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 9192326435583333159
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0]
+                    rotation: [-0, 0, -0]
+                    scale: [4.8, 4.8, 1]
+                  - !<billboard>
+                    id: 14485597358408026336
+                    type: 21
+                    enabled: true
+                    play_on_awake: true
+                    texture_id: 1822181409804484943
+                    tiles: [1, 1]
+                    flip: [false, false]
+                    billboard_lifetime: 1
+                    properties: [1, 2, 0, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                    animation_speed: 0
+                    total_tiles: 1
+                    animation_loop: false
+                    color_cycles: 1
+                    color_gradient: [[0, 0, 0, 0, 0], [1, 1, 1, 0, 1]]
+                    animation_section: false
+                    color_section: false
+                    size_section: false
+                    size_over_time: [true, false, 0, [0.5, 0.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    rotation_section: true
+                    rotation_over_time: [true, false, 0, [5, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_size: [true, true, 0, [0.5, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    blend_factor: 0
+                    projection: true
+      - id: 5644938561687520094
+        name: ExplodingCrystal
+        enabled: false
+        component:
+          - !<transform>
+            id: 2294579494421038175
+            type: 1
+            enabled: true
+            position: [-93.77, 3.31, -54.89]
+            rotation: [-0, 7.9, -0]
+            scale: [2.5, 2.5, 2.5]
+          - !<animation>
+            id: 13910381355495647259
+            type: 14
+            enabled: true
+            state_machine: 14686609166423751852
+          - !<script>
+            id: 12920599680166627961
+            type: 15
+            enabled: true
+            class_name: Stats
+            "'_attack_power@int'": 2
+            "'_attack_cd@float'": 2
+            "'_attack_range@float'": 3.5
+            "'_move_speed@float'": 0
+            "'_max_hp@int'": 1
+            "'_current_hp@int'": 3
+          - id: 4097582026415490557
+            type: 20
+            enabled: true
+          - !<script>
+            id: 8000800060096421084
+            type: 15
+            enabled: true
+            class_name: CrystalExplosion
+            "'_explosion_indicator_helper@GameObject*'": 3980802397921738496
+            "'_explosion_effect@GameObject*'": 3090555183509487307
+            "'_shake_intensity@float'": 0.2
+            "'_seconds_shaking@float'": 5
+            "'_crashing_index@unsigned'": 0
+            "'_detecting_radius@float'": 3
+            "'_explosion_radius@float'": 5
+            "'_timer_explosion@float'": 1
+            "'_explosive_crystal@bool'": true
+            "'_regen_time@float'": 5
+          - !<obstacle>
+            id: 5206449177016131574
+            type: 18
+            enabled: true
+            obstacle_type: 0
+            obstacle_size: [1, 1, 1]
+        child:
+          - id: 17418338300368255202
+            name: Geo
+            enabled: false
+            component:
+              - !<transform>
+                id: 9264251047124228395
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+            child:
+              - id: 5002658153798132166
+                name: crystalSpike_mesh_Part_1_$AssimpFbx$_RotationPivot
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 12700775313931153191
+                    type: 1
+                    enabled: true
+                    position: [-0.0762, 0.4947, 0.1023]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 8605820484934311524
+                    name: crystalSpike_mesh_Part_1_$AssimpFbx$_RotationPivotInverse
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 3033665654450294247
+                        type: 1
+                        enabled: true
+                        position: [0.0762, -0.4947, -0.1023]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 10941996290386666373
+                        name: crystalSpike_mesh_Part_1_$AssimpFbx$_ScalingPivot
+                        enabled: false
+                        component:
+                          - !<transform>
+                            id: 13058857161758323733
+                            type: 1
+                            enabled: true
+                            position: [-0.0762, 0.4947, 0.1023]
+                            rotation: [-0, 0, -0]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 11711154322215502333
+                            name: crystalSpike_mesh_Part_1_$AssimpFbx$_ScalingPivotInverse
+                            enabled: false
+                            component:
+                              - !<transform>
+                                id: 14519752100727204405
+                                type: 1
+                                enabled: true
+                                position: [0.0762, -0.4947, -0.1023]
+                                rotation: [-0, 0, -0]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 18149310135493754343
+                                name: crystalSpike_mesh_Part_1
+                                enabled: false
+                                component:
+                                  - !<transform>
+                                    id: 3699170744221332296
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [-0, 0, -0]
+                                    scale: [1, 1, 1]
+                                  - !<mesh_renderer>
+                                    id: 5452233616086945339
+                                    type: 2
+                                    enabled: true
+                                    mesh_id: 10175395471774891078
+                                    navigable: false
+                                    visible: true
+                                    material_id: 5759363592208955763
+                                    tint_color: [1, 1, 1, 1]
+              - id: 384298109570404411
+                name: crystalSpike_mesh_Part_2_$AssimpFbx$_RotationPivot
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 10518236995895761139
+                    type: 1
+                    enabled: true
+                    position: [0.0911, 0.2996, 0.0456]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 841566651191551461
+                    name: crystalSpike_mesh_Part_2_$AssimpFbx$_RotationPivotInverse
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 2877939393583685342
+                        type: 1
+                        enabled: true
+                        position: [-0.0911, -0.2996, -0.0456]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 3247598706415162967
+                        name: crystalSpike_mesh_Part_2_$AssimpFbx$_ScalingPivot
+                        enabled: false
+                        component:
+                          - !<transform>
+                            id: 15010095718424223633
+                            type: 1
+                            enabled: true
+                            position: [0.0911, 0.2996, 0.0456]
+                            rotation: [-0, 0, -0]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 4532451941080040050
+                            name: crystalSpike_mesh_Part_2_$AssimpFbx$_ScalingPivotInverse
+                            enabled: false
+                            component:
+                              - !<transform>
+                                id: 4492167743249995574
+                                type: 1
+                                enabled: true
+                                position: [-0.0911, -0.2996, -0.0456]
+                                rotation: [-0, 0, -0]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 8352492328663448716
+                                name: crystalSpike_mesh_Part_2
+                                enabled: false
+                                component:
+                                  - !<transform>
+                                    id: 11659795942460075656
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [-0, 0, -0]
+                                    scale: [1, 1, 1]
+                                  - !<mesh_renderer>
+                                    id: 2138567681090493976
+                                    type: 2
+                                    enabled: true
+                                    mesh_id: 6229385771345559983
+                                    navigable: false
+                                    visible: true
+                                    material_id: 5759363592208955763
+                                    tint_color: [1, 1, 1, 1]
+              - id: 6950063081218765320
+                name: crystalSpike_mesh_Part_3_$AssimpFbx$_RotationPivot
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 14588238138905261010
+                    type: 1
+                    enabled: true
+                    position: [0.187, 0.4844, 0.0622]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 7414459767683500129
+                    name: crystalSpike_mesh_Part_3_$AssimpFbx$_RotationPivotInverse
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 5240043208900738197
+                        type: 1
+                        enabled: true
+                        position: [-0.187, -0.4844, -0.0622]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 13426204140116720745
+                        name: crystalSpike_mesh_Part_3_$AssimpFbx$_ScalingPivot
+                        enabled: false
+                        component:
+                          - !<transform>
+                            id: 13161540059129682257
+                            type: 1
+                            enabled: true
+                            position: [0.187, 0.4844, 0.0622]
+                            rotation: [-0, 0, -0]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 11833615025237620697
+                            name: crystalSpike_mesh_Part_3_$AssimpFbx$_ScalingPivotInverse
+                            enabled: false
+                            component:
+                              - !<transform>
+                                id: 8323161596271689628
+                                type: 1
+                                enabled: true
+                                position: [-0.187, -0.4844, -0.0622]
+                                rotation: [-0, 0, -0]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 17619775520358185475
+                                name: crystalSpike_mesh_Part_3
+                                enabled: false
+                                component:
+                                  - !<transform>
+                                    id: 3828315151106945099
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [-0, 0, -0]
+                                    scale: [1, 1, 1]
+                                  - !<mesh_renderer>
+                                    id: 254828630739433248
+                                    type: 2
+                                    enabled: true
+                                    mesh_id: 903393536084662082
+                                    navigable: false
+                                    visible: true
+                                    material_id: 5759363592208955763
+                                    tint_color: [1, 1, 1, 1]
+              - id: 28522452331537790
+                name: crystalSpike_mesh_Part_4_$AssimpFbx$_RotationPivot
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 16641181881097730597
+                    type: 1
+                    enabled: true
+                    position: [0.1453, 0.2564, 0.2718]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 4360637513594504219
+                    name: crystalSpike_mesh_Part_4_$AssimpFbx$_RotationPivotInverse
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 9365842913533449287
+                        type: 1
+                        enabled: true
+                        position: [-0.1453, -0.2564, -0.2718]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 1540814334326782574
+                        name: crystalSpike_mesh_Part_4_$AssimpFbx$_ScalingPivot
+                        enabled: false
+                        component:
+                          - !<transform>
+                            id: 8403341481488602767
+                            type: 1
+                            enabled: true
+                            position: [0.1453, 0.2564, 0.2718]
+                            rotation: [-0, 0, -0]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 4712751598215270961
+                            name: crystalSpike_mesh_Part_4_$AssimpFbx$_ScalingPivotInverse
+                            enabled: false
+                            component:
+                              - !<transform>
+                                id: 1554778190296687584
+                                type: 1
+                                enabled: true
+                                position: [-0.1453, -0.2564, -0.2718]
+                                rotation: [-0, 0, -0]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 15549750193084507925
+                                name: crystalSpike_mesh_Part_4
+                                enabled: false
+                                component:
+                                  - !<transform>
+                                    id: 5354270832790082728
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [-0, 0, -0]
+                                    scale: [1, 1, 1]
+                                  - !<mesh_renderer>
+                                    id: 12941000881498398943
+                                    type: 2
+                                    enabled: true
+                                    mesh_id: 17479070581851126897
+                                    navigable: false
+                                    visible: true
+                                    material_id: 5759363592208955763
+                                    tint_color: [1, 1, 1, 1]
+          - id: 11149605988333706752
+            name: Bones
+            enabled: false
+            component:
+              - !<transform>
+                id: 14005094922254043497
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+            child:
+              - id: 1664573707690534142
+                name: Root
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 362339064400120201
+                    type: 1
+                    enabled: true
+                    position: [-0.0003, 0, -0.0006]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 16883650477378005314
+                    name: Up
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 14469983464915382059
+                        type: 1
+                        enabled: true
+                        position: [-0.0759, 0.4947, 0.1029]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                  - id: 7112168426337912873
+                    name: Down
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 10204281375228887604
+                        type: 1
+                        enabled: true
+                        position: [0.0915, 0.2996, 0.0463]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                  - id: 3814520270835640493
+                    name: Middle
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 10684788504946907784
+                        type: 1
+                        enabled: true
+                        position: [0.1873, 0.4844, 0.0629]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                  - id: 3186959227036404661
+                    name: Down_two
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 14025814293621763402
+                        type: 1
+                        enabled: true
+                        position: [0.1457, 0.2564, 0.2724]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+          - id: 3980802397921738496
+            name: ExplosionIndicatorHelper
+            enabled: false
+            component:
+              - !<transform>
+                id: 5368245443473689553
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-0, 0, -0]
+                scale: [2, 0.07, 2]
+            child:
+              - id: 10382173295403050383
+                name: Cylinder001
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 5269211675202371827
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0]
+                    rotation: [-90, 0, 0]
+                    scale: [1, 1, 1]
+                  - !<mesh_renderer>
+                    id: 17438029873615773524
+                    type: 2
+                    enabled: true
+                    mesh_id: 10210867973034302559
+                    navigable: false
+                    visible: true
+                    material_id: 6462450398853139216
+                    tint_color: [1, 1, 1, 1]
+          - id: 3090555183509487307
+            name: ExplosionEffect
+            enabled: false
+            component:
+              - !<transform>
+                id: 17731337097216214514
+                type: 1
+                enabled: true
+                position: [0, 0.15, 0]
+                rotation: [-0, 7.901, -0]
+                scale: [1, 1, 1]
+            child:
+              - id: 7238249318658357322
+                name: InnerEffect
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 2130735801505148182
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                  - !<billboard>
+                    id: 7944313955462433330
+                    type: 21
+                    enabled: true
+                    play_on_awake: true
+                    texture_id: 15537058005441777461
+                    tiles: [1, 1]
+                    flip: [false, false]
+                    billboard_lifetime: 1
+                    properties: [1, 2, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                    animation_speed: 0
+                    total_tiles: 1
+                    animation_loop: false
+                    color_cycles: 0
+                    color_gradient: [[0.763, 0, 0, 0, 0]]
+                    animation_section: false
+                    color_section: true
+                    size_section: true
+                    size_over_time: [true, false, 0, [30, 5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    rotation_section: false
+                    rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_size: [true, true, 0, [0.5, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    blend_factor: 0
+                    projection: true
+              - id: 16412159827929130509
+                name: OuterEffect
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 4786505584079192927
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0]
+                    rotation: [-0, 0, -0]
+                    scale: [4.8, 4.8, 1]
+                  - !<billboard>
+                    id: 16403124738268255638
+                    type: 21
+                    enabled: true
+                    play_on_awake: true
+                    texture_id: 1822181409804484943
+                    tiles: [1, 1]
+                    flip: [false, false]
+                    billboard_lifetime: 1
+                    properties: [1, 2, 0, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                    animation_speed: 0
+                    total_tiles: 1
+                    animation_loop: false
+                    color_cycles: 1
+                    color_gradient: [[0, 0, 0, 0, 0], [1, 1, 1, 0, 1]]
+                    animation_section: false
+                    color_section: false
+                    size_section: false
+                    size_over_time: [true, false, 0, [0.5, 0.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    rotation_section: true
+                    rotation_over_time: [true, false, 0, [5, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_size: [true, true, 0, [0.5, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    blend_factor: 0
+                    projection: true
+      - id: 6496717119156062027
+        name: ExplodingCrystal
+        enabled: false
+        component:
+          - !<transform>
+            id: 11122023944226107768
+            type: 1
+            enabled: true
+            position: [-93.77, 3.31, -54.89]
+            rotation: [-0, 7.9, -0]
+            scale: [2.5, 2.5, 2.5]
+          - !<animation>
+            id: 12018444603567576614
+            type: 14
+            enabled: true
+            state_machine: 14686609166423751852
+          - !<script>
+            id: 5157118685905380248
+            type: 15
+            enabled: true
+            class_name: Stats
+            "'_attack_power@int'": 2
+            "'_attack_cd@float'": 2
+            "'_attack_range@float'": 3.5
+            "'_move_speed@float'": 0
+            "'_max_hp@int'": 1
+            "'_current_hp@int'": 3
+          - id: 10005255169058305734
+            type: 20
+            enabled: true
+          - !<script>
+            id: 7296457483470665015
+            type: 15
+            enabled: true
+            class_name: CrystalExplosion
+            "'_explosion_indicator_helper@GameObject*'": 10873163059940767157
+            "'_explosion_effect@GameObject*'": 14056397594099440612
+            "'_shake_intensity@float'": 0.2
+            "'_seconds_shaking@float'": 5
+            "'_crashing_index@unsigned'": 0
+            "'_detecting_radius@float'": 3
+            "'_explosion_radius@float'": 5
+            "'_timer_explosion@float'": 1
+            "'_explosive_crystal@bool'": true
+            "'_regen_time@float'": 5
+          - !<obstacle>
+            id: 9186790552709249103
+            type: 18
+            enabled: true
+            obstacle_type: 0
+            obstacle_size: [1, 1, 1]
+        child:
+          - id: 13664867128783604179
+            name: Geo
+            enabled: false
+            component:
+              - !<transform>
+                id: 7128872511940050926
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+            child:
+              - id: 2227216267461577297
+                name: crystalSpike_mesh_Part_1_$AssimpFbx$_RotationPivot
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 8100754357324521567
+                    type: 1
+                    enabled: true
+                    position: [-0.0762, 0.4947, 0.1023]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 18193697765219773221
+                    name: crystalSpike_mesh_Part_1_$AssimpFbx$_RotationPivotInverse
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 4389041075929751349
+                        type: 1
+                        enabled: true
+                        position: [0.0762, -0.4947, -0.1023]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 4491030439970307377
+                        name: crystalSpike_mesh_Part_1_$AssimpFbx$_ScalingPivot
+                        enabled: false
+                        component:
+                          - !<transform>
+                            id: 3590906929808666384
+                            type: 1
+                            enabled: true
+                            position: [-0.0762, 0.4947, 0.1023]
+                            rotation: [-0, 0, -0]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 2631715216373918090
+                            name: crystalSpike_mesh_Part_1_$AssimpFbx$_ScalingPivotInverse
+                            enabled: false
+                            component:
+                              - !<transform>
+                                id: 17893785535172831864
+                                type: 1
+                                enabled: true
+                                position: [0.0762, -0.4947, -0.1023]
+                                rotation: [-0, 0, -0]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 8920737523063901162
+                                name: crystalSpike_mesh_Part_1
+                                enabled: false
+                                component:
+                                  - !<transform>
+                                    id: 5645099966583832342
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [-0, 0, -0]
+                                    scale: [1, 1, 1]
+                                  - !<mesh_renderer>
+                                    id: 4373602628091892093
+                                    type: 2
+                                    enabled: true
+                                    mesh_id: 10175395471774891078
+                                    navigable: false
+                                    visible: true
+                                    material_id: 5759363592208955763
+                                    tint_color: [1, 1, 1, 1]
+              - id: 3875543667760032652
+                name: crystalSpike_mesh_Part_2_$AssimpFbx$_RotationPivot
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 9271823037959106184
+                    type: 1
+                    enabled: true
+                    position: [0.0911, 0.2996, 0.0456]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 9297792442441218842
+                    name: crystalSpike_mesh_Part_2_$AssimpFbx$_RotationPivotInverse
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 4778346701440050819
+                        type: 1
+                        enabled: true
+                        position: [-0.0911, -0.2996, -0.0456]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 15013516099159066547
+                        name: crystalSpike_mesh_Part_2_$AssimpFbx$_ScalingPivot
+                        enabled: false
+                        component:
+                          - !<transform>
+                            id: 5996052620504384528
+                            type: 1
+                            enabled: true
+                            position: [0.0911, 0.2996, 0.0456]
+                            rotation: [-0, 0, -0]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 10806730930628282902
+                            name: crystalSpike_mesh_Part_2_$AssimpFbx$_ScalingPivotInverse
+                            enabled: false
+                            component:
+                              - !<transform>
+                                id: 16620049016288855003
+                                type: 1
+                                enabled: true
+                                position: [-0.0911, -0.2996, -0.0456]
+                                rotation: [-0, 0, -0]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 1444128816482336141
+                                name: crystalSpike_mesh_Part_2
+                                enabled: false
+                                component:
+                                  - !<transform>
+                                    id: 7970551339586586220
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [-0, 0, -0]
+                                    scale: [1, 1, 1]
+                                  - !<mesh_renderer>
+                                    id: 14969026471808741551
+                                    type: 2
+                                    enabled: true
+                                    mesh_id: 6229385771345559983
+                                    navigable: false
+                                    visible: true
+                                    material_id: 5759363592208955763
+                                    tint_color: [1, 1, 1, 1]
+              - id: 17072698492419198093
+                name: crystalSpike_mesh_Part_3_$AssimpFbx$_RotationPivot
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 15018918953526618508
+                    type: 1
+                    enabled: true
+                    position: [0.187, 0.4844, 0.0622]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 12682907723021098279
+                    name: crystalSpike_mesh_Part_3_$AssimpFbx$_RotationPivotInverse
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 10468482262048071712
+                        type: 1
+                        enabled: true
+                        position: [-0.187, -0.4844, -0.0622]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 2173662576851420585
+                        name: crystalSpike_mesh_Part_3_$AssimpFbx$_ScalingPivot
+                        enabled: false
+                        component:
+                          - !<transform>
+                            id: 7874639648164395586
+                            type: 1
+                            enabled: true
+                            position: [0.187, 0.4844, 0.0622]
+                            rotation: [-0, 0, -0]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 18365185759774964294
+                            name: crystalSpike_mesh_Part_3_$AssimpFbx$_ScalingPivotInverse
+                            enabled: false
+                            component:
+                              - !<transform>
+                                id: 12059504210737729297
+                                type: 1
+                                enabled: true
+                                position: [-0.187, -0.4844, -0.0622]
+                                rotation: [-0, 0, -0]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 6116074244056617461
+                                name: crystalSpike_mesh_Part_3
+                                enabled: false
+                                component:
+                                  - !<transform>
+                                    id: 3878078082057675893
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [-0, 0, -0]
+                                    scale: [1, 1, 1]
+                                  - !<mesh_renderer>
+                                    id: 12398161567069842791
+                                    type: 2
+                                    enabled: true
+                                    mesh_id: 903393536084662082
+                                    navigable: false
+                                    visible: true
+                                    material_id: 5759363592208955763
+                                    tint_color: [1, 1, 1, 1]
+              - id: 10748150787074771505
+                name: crystalSpike_mesh_Part_4_$AssimpFbx$_RotationPivot
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 1871957631063618081
+                    type: 1
+                    enabled: true
+                    position: [0.1453, 0.2564, 0.2718]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 15257647792604600022
+                    name: crystalSpike_mesh_Part_4_$AssimpFbx$_RotationPivotInverse
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 9452216413427009425
+                        type: 1
+                        enabled: true
+                        position: [-0.1453, -0.2564, -0.2718]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 9020341633081766521
+                        name: crystalSpike_mesh_Part_4_$AssimpFbx$_ScalingPivot
+                        enabled: false
+                        component:
+                          - !<transform>
+                            id: 14746049375781679779
+                            type: 1
+                            enabled: true
+                            position: [0.1453, 0.2564, 0.2718]
+                            rotation: [-0, 0, -0]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 2985817015512396978
+                            name: crystalSpike_mesh_Part_4_$AssimpFbx$_ScalingPivotInverse
+                            enabled: false
+                            component:
+                              - !<transform>
+                                id: 3273542578717316042
+                                type: 1
+                                enabled: true
+                                position: [-0.1453, -0.2564, -0.2718]
+                                rotation: [-0, 0, -0]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 7752938547073523634
+                                name: crystalSpike_mesh_Part_4
+                                enabled: false
+                                component:
+                                  - !<transform>
+                                    id: 5790342574264468917
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [-0, 0, -0]
+                                    scale: [1, 1, 1]
+                                  - !<mesh_renderer>
+                                    id: 15008965693717428207
+                                    type: 2
+                                    enabled: true
+                                    mesh_id: 17479070581851126897
+                                    navigable: false
+                                    visible: true
+                                    material_id: 5759363592208955763
+                                    tint_color: [1, 1, 1, 1]
+          - id: 5887637863107673750
+            name: Bones
+            enabled: false
+            component:
+              - !<transform>
+                id: 17335231224547067959
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+            child:
+              - id: 3462388731081818353
+                name: Root
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 218376510736272716
+                    type: 1
+                    enabled: true
+                    position: [-0.0003, 0, -0.0006]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 16350223612894882565
+                    name: Up
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 13823850506186852129
+                        type: 1
+                        enabled: true
+                        position: [-0.0759, 0.4947, 0.1029]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                  - id: 17012257882264319104
+                    name: Down
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 1858629640700963743
+                        type: 1
+                        enabled: true
+                        position: [0.0915, 0.2996, 0.0463]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                  - id: 5742040686664762195
+                    name: Middle
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 14062522389428783778
+                        type: 1
+                        enabled: true
+                        position: [0.1873, 0.4844, 0.0629]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                  - id: 1355273971588315088
+                    name: Down_two
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 6199513276215471204
+                        type: 1
+                        enabled: true
+                        position: [0.1457, 0.2564, 0.2724]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+          - id: 10873163059940767157
+            name: ExplosionIndicatorHelper
+            enabled: false
+            component:
+              - !<transform>
+                id: 1333142804212318681
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-0, 0, -0]
+                scale: [2, 0.07, 2]
+            child:
+              - id: 6898710345340575653
+                name: Cylinder001
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 7035246771288022768
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0]
+                    rotation: [-90, 0, 0]
+                    scale: [1, 1, 1]
+                  - !<mesh_renderer>
+                    id: 1755672909611850134
+                    type: 2
+                    enabled: true
+                    mesh_id: 10210867973034302559
+                    navigable: false
+                    visible: true
+                    material_id: 6462450398853139216
+                    tint_color: [1, 1, 1, 1]
+          - id: 14056397594099440612
+            name: ExplosionEffect
+            enabled: false
+            component:
+              - !<transform>
+                id: 16016015152573991750
+                type: 1
+                enabled: true
+                position: [0, 0.15, 0]
+                rotation: [-0, 7.901, -0]
+                scale: [1, 1, 1]
+            child:
+              - id: 16369794117667255902
+                name: InnerEffect
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 13965902977208876302
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                  - !<billboard>
+                    id: 10130746538964274998
+                    type: 21
+                    enabled: true
+                    play_on_awake: true
+                    texture_id: 15537058005441777461
+                    tiles: [1, 1]
+                    flip: [false, false]
+                    billboard_lifetime: 1
+                    properties: [1, 2, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                    animation_speed: 0
+                    total_tiles: 1
+                    animation_loop: false
+                    color_cycles: 0
+                    color_gradient: [[0.763, 0, 0, 0, 0]]
+                    animation_section: false
+                    color_section: true
+                    size_section: true
+                    size_over_time: [true, false, 0, [30, 5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    rotation_section: false
+                    rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_size: [true, true, 0, [0.5, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    blend_factor: 0
+                    projection: true
+              - id: 8629998080072726945
+                name: OuterEffect
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 2439533937469911159
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0]
+                    rotation: [-0, 0, -0]
+                    scale: [4.8, 4.8, 1]
+                  - !<billboard>
+                    id: 10587199268662063643
+                    type: 21
+                    enabled: true
+                    play_on_awake: true
+                    texture_id: 1822181409804484943
+                    tiles: [1, 1]
+                    flip: [false, false]
+                    billboard_lifetime: 1
+                    properties: [1, 2, 0, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                    animation_speed: 0
+                    total_tiles: 1
+                    animation_loop: false
+                    color_cycles: 1
+                    color_gradient: [[0, 0, 0, 0, 0], [1, 1, 1, 0, 1]]
+                    animation_section: false
+                    color_section: false
+                    size_section: false
+                    size_over_time: [true, false, 0, [0.5, 0.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    rotation_section: true
+                    rotation_over_time: [true, false, 0, [5, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_size: [true, true, 0, [0.5, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    blend_factor: 0
+                    projection: true

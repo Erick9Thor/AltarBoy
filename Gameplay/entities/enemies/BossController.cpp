@@ -9,6 +9,8 @@ Hachiko::Scripting::BossController::BossController(GameObject* game_object)
 	, state_value(0)
 	, hp_bar_go(nullptr)
 	, cocoon_placeholder_go(nullptr)
+	, _current_index_crystals(0)
+	, _explosive_crystals({})
 {
 	
 }
@@ -31,6 +33,14 @@ void Hachiko::Scripting::BossController::OnAwake()
 		cocoon_placeholder_go->SetActive(false);
 	}
 	gauntlet = gauntlet_go->GetComponent<GauntletManager>();
+
+	_explosive_crystals.clear();
+	_explosive_crystals.reserve(5);
+
+	for (ComponentTransform* crystal_go : crystal_pool->GetComponentsInDescendants<ComponentTransform>())
+	{
+		_explosive_crystals.push_back(crystal_go);
+	}
 }
 
 void Hachiko::Scripting::BossController::OnStart()
@@ -408,7 +418,8 @@ void Hachiko::Scripting::BossController::MeleeAttackController()
 
 	combat_manager->EnemyMeleeAttack(emitter, attack_stats);
 
-	combat_state = CombatState::IDLE;
+	//combat_state = CombatState::IDLE;
+	combat_state = CombatState::SPAWNING_CRYSTALS;
 }
 
 void Hachiko::Scripting::BossController::SpawnCrystals()
@@ -417,6 +428,30 @@ void Hachiko::Scripting::BossController::SpawnCrystals()
 
 void Hachiko::Scripting::BossController::SpawnCrystalsController()
 {
+	if (_explosive_crystals.size() <= 0)
+	{
+		return;
+	}
+
+	_current_index_crystals = _current_index_crystals % _explosive_crystals.size();
+
+	ComponentTransform* current_crystal_to_spawn = _explosive_crystals[_current_index_crystals];
+	
+	if (current_crystal_to_spawn == nullptr)
+	{
+		return;
+	}
+
+	float3 emitter_direction = transform->GetFront().Normalized();
+	float3 emitter_position = transform->GetGlobalPosition() + emitter_direction * (combat_stats->_attack_range / 2.f);
+	float4x4 emitter = float4x4::FromTRS(emitter_position, transform->GetGlobalRotation(), transform->GetGlobalScale());
+
+	current_crystal_to_spawn->GetGameObject()->SetActive(true);
+	current_crystal_to_spawn->SetGlobalPosition(emitter_position);
+
+	_current_index_crystals = (_current_index_crystals + 1) % _explosive_crystals.size();
+
+	combat_state = CombatState::IDLE;
 }
 
 void Hachiko::Scripting::BossController::ConsumeParasytes()
