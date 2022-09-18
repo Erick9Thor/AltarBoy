@@ -37,7 +37,7 @@ void Hachiko::Scripting::BossController::OnAwake()
 	_explosive_crystals.clear();
 	_explosive_crystals.reserve(5);
 
-	for (ComponentTransform* crystal_go : crystal_pool->GetComponentsInDescendants<ComponentTransform>())
+	for (ComponentAnimation* crystal_go : crystal_pool->GetComponentsInDescendants<ComponentAnimation>())
 	{
 		_explosive_crystals.push_back(crystal_go);
 	}
@@ -435,7 +435,7 @@ void Hachiko::Scripting::BossController::SpawnCrystalsController()
 
 	_current_index_crystals = _current_index_crystals % _explosive_crystals.size();
 
-	ComponentTransform* current_crystal_to_spawn = _explosive_crystals[_current_index_crystals];
+	ComponentAnimation* current_crystal_to_spawn = _explosive_crystals[_current_index_crystals];
 	
 	if (current_crystal_to_spawn == nullptr)
 	{
@@ -447,7 +447,7 @@ void Hachiko::Scripting::BossController::SpawnCrystalsController()
 	float4x4 emitter = float4x4::FromTRS(emitter_position, transform->GetGlobalRotation(), transform->GetGlobalScale());
 
 	current_crystal_to_spawn->GetGameObject()->SetActive(true);
-	current_crystal_to_spawn->SetGlobalPosition(emitter_position);
+	current_crystal_to_spawn->GetGameObject()->GetTransform()->SetGlobalPosition(emitter_position);
 
 	_current_index_crystals = (_current_index_crystals + 1) % _explosive_crystals.size();
 

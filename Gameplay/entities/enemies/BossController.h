@@ -108,7 +108,7 @@ namespace Hachiko
             SERIALIZE_FIELD(GameObject*, crystal_target_go);
             SERIALIZE_FIELD(GameObject*, cocoon_placeholder_go);
             SERIALIZE_FIELD(GameObject*, gauntlet_go);
-            std::vector<ComponentTransform*> _explosive_crystals;
+            std::vector<ComponentAnimation*> _explosive_crystals;
             SERIALIZE_FIELD(int, _current_index_crystals);
             SERIALIZE_FIELD(GameObject*, crystal_pool);
             SERIALIZE_FIELD(float, start_encounter_range);
