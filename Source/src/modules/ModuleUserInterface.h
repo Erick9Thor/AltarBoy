@@ -3,6 +3,8 @@
 
 namespace Hachiko
 {
+    class ComponentCanvas;
+
 class ModuleUserInterface : public Module
 {
 public:
@@ -16,6 +18,7 @@ public:
     void DrawUI(const Scene* scene) const;
 
     static void RecursiveDrawUI(
+        ComponentCanvas* canvas,
         GameObject* __restrict game_object, 
         Program* img_program, 
         Program* txt_program);

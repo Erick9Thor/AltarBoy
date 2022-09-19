@@ -376,3 +376,8 @@
 
 // Script
 #define SCRIPT_NAME "class_name"
+
+// Component Canvas Renderer
+#define SCALE_UI "scale_ui"
+#define ORIGINAL_SIZE_X "original"
+#define ORIGINAL_SIZE_Y "scale_ui"
