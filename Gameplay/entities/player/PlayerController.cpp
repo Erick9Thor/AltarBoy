@@ -1188,10 +1188,9 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 
 					// Make player invulnerable for a period of time:
 					_invulnerability_time_remaining = _invulnerability_time;
-					
 					if (_player_geometry != nullptr)
 					{
-						_player_geometry->ChangeEmissiveColor(float4(0.0f, 255.0f, 0.0f, 255.0f), 0.3f, true);
+						_player_geometry->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, 0.5f), true);
 					}
 
 					_combat_stats->Heal(1);
@@ -1200,6 +1199,11 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 					_heal_effect_particles_2->Restart();
 
 					UpdateHealthBar();
+
+					if (_player_geometry != nullptr)
+					{
+						_player_geometry->ChangeEmissiveColor(float4(0.0f, 255.0f, 0.0f, 255.0f), 0.3f, true);
+					}
 
 					// Select a random weapon:
 					ChangeWeapon(RandomUtil::RandomIntBetween(1, weapons.size() - 1));
