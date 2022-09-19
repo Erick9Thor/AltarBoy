@@ -212,5 +212,7 @@ namespace Hachiko
         GameObject* loading_game_object = nullptr;
         ComponentTransform2D* loading_transform2d = nullptr;
         ComponentImage* loading_image = nullptr;
+
+        unsigned noise_id = 0;
     };
 }

@@ -87,6 +87,27 @@ bool Hachiko::ModuleRender::Init()
         loading_image->Load(node);
     }
 
+    //
+    PerlinNoise pn;
+    float* result = pn.GeneratePerlinNoise2d(256, 256, 10);
+
+    for (int i = 0; i < 256 * 256; ++i)
+        HE_LOG("%f", result[i]);
+
+    glGenTextures(1, &noise_id);
+    glBindTexture(GL_TEXTURE_2D, noise_id);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+    glTexImage2D(GL_TEXTURE_2D, 0, 1, 256, 256, 0, GL_RED, GL_FLOAT, result);
+    //GL_RGBA
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    delete result; 
+    //
+
     return true;
 }
 
@@ -349,6 +370,12 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
 
     // Draw collected meshes with geometry pass rogram:
     program = App->program->GetDeferredGeometryProgram();
+
+
+    glActiveTexture(GL_TEXTURE5);
+    glBindTexture(GL_TEXTURE, noise_id);
+    program->BindUniformInt("noise", 5);
+
     program->Activate();
     batch_manager->DrawOpaqueBatches(program);
     Program::Deactivate();

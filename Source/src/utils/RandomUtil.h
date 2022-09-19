@@ -26,18 +26,21 @@ namespace Hachiko
         HACHIKO_API static float RandomBetween(const float2& values);
     };
 
-    class HACHIKO_API PerlinNoise1D
+    class HACHIKO_API PerlinNoise
     {
     public:
-        PerlinNoise1D();
-        PerlinNoise1D(unsigned int seed);
+        PerlinNoise();
+        PerlinNoise(unsigned int seed);
 
         float Random(float previous);
         float RandomRange(float previous, float min, float max);
         
+        float* GeneratePerlinNoise2d(int x, int y, int samples = 1);
+
     private:
         float Fade(float t);
         float Gradient(float value);
+        float2 Gradient(float2 value);
         void Initialize();
         
     private:
