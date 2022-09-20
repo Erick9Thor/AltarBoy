@@ -1,30 +1,12 @@
 #pragma once
 
 #include <scripting/Script.h>
+#include <entities/crystals/Stalagmite.h>
 
 namespace Hachiko
 {
 	namespace Scripting
 	{
-
-		enum class StalagmiteState
-		{
-			INVALID,
-			FALLING_AREA,
-			COLLAPSE,
-			SPAWN_CRYSTAL,
-		};
-
-		struct Stalagmite
-		{
-			StalagmiteState stalagmite_state = StalagmiteState::INVALID;
-			StalagmiteState _previous_state = StalagmiteState::INVALID;
-			unsigned damage = 1.f;
-			float knockback_distance = 0.f;
-			float width = 0.f;
-			float range = 0.f;
-		};
-
 		class StalagmiteManager : public Script
 		{
 			SERIALIZATION_METHODS(false)
@@ -38,25 +20,22 @@ namespace Hachiko
 
 			void UpdateStalagmiteState(Stalagmite* stalagmite);
 
+			void FallingStalagmite(Stalagmite* stalagmite);
 
 		private:
 			void GenerateStalagmites();
 
-
 		private:
-			// SPAWN control
-			Quat _spawn_rot;
 
-			math::float3 _player_pos;
-			math::float3 _target_pos;
-			math::float3 _current_pos;
+			float falling_elapsed = 0.0f;
+			float cooldown_elapsed = 0.0f;
 
-			SERIALIZE_FIELD(float, _spawn_cooldown);
+			SERIALIZE_FIELD(float, _falling_time);
+			SERIALIZE_FIELD(float, _falling_cooldown);
+
 
 			// STALAGMITE
-			SERIALIZE_FIELD(GameObject*, _go_stalagmite);
 			std::vector<Stalagmite*> _stalagmites{};
-
 		};
 	}
 }

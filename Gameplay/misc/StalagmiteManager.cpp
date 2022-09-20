@@ -4,8 +4,8 @@
 
 Hachiko::Scripting::StalagmiteManager::StalagmiteManager(GameObject* game_object)
 	: Script(game_object, "StalagmiteManager")
-	, _spawn_cooldown(5.0f)
-	, _go_stalagmite(nullptr)
+	, _falling_time(0.4f)
+	, _falling_cooldown(0.5f)
 {
 }
 
@@ -16,59 +16,76 @@ void Hachiko::Scripting::StalagmiteManager::OnStart()
 
 void Hachiko::Scripting::StalagmiteManager::GenerateStalagmites()
 {
+	std::vector<GameObject*> stalagmites_children = game_object->children;
+
+	for (int i = 0; i < stalagmites_children.size(); i++)
+	{
+		Stalagmite* stalagmite_one = stalagmites_children[i]->GetComponent<Stalagmite>();
+		_stalagmites.push_back(stalagmite_one);
+	}
 }
 
 void Hachiko::Scripting::StalagmiteManager::OnUpdate()
 {
-	for (Stalagmite* stalagmite : _stalagmites) {
-		if (stalagmite->stalagmite_state == StalagmiteState::INVALID)
+	for (unsigned i = 0; i < _stalagmites.size(); i++)
+	{
+		if (_stalagmites[i]->GetState() == StalagmiteState::INVALID)
 		{
-			// LOOK cooldown and active if an
+			cooldown_elapsed += Time::DeltaTime();
+			if (cooldown_elapsed >= _falling_cooldown)
+			{
+				_stalagmites[i]->SetNewState(StalagmiteState::FALLING);
+			}
 		}
 		else {
-			if (stalagmite->stalagmite_state == StalagmiteState::FALLING_AREA)
+			if (_stalagmites[i]->GetState() == StalagmiteState::FALLING)
 			{
-				
+				falling_elapsed += Time::DeltaTime();
+				if (falling_elapsed >= _falling_time)
+				{
+					_stalagmites[i]->SetNewState(StalagmiteState::SPAWN_CRYSTAL);
+				}
+
+				FallingStalagmite(_stalagmites[i]);
 			}
-			else if (stalagmite->stalagmite_state == StalagmiteState::COLLAPSE)
-			{
-				
-			}
-			else if (stalagmite->stalagmite_state == StalagmiteState::SPAWN_CRYSTAL)
+			else if (_stalagmites[i]->GetState() == StalagmiteState::SPAWN_CRYSTAL)
 			{
 
 			}
 
-			UpdateStalagmiteState(stalagmite);
+			UpdateStalagmiteState(_stalagmites[i]);
 		}
 	}
 }
 
 void Hachiko::Scripting::StalagmiteManager::UpdateStalagmiteState(Stalagmite* stalagmite)
 {
-	StalagmiteState platform_state = stalagmite->stalagmite_state;
-	bool state_changed = platform_state != stalagmite->_previous_state;
+	StalagmiteState platform_state = stalagmite->GetState();
+	bool state_changed = platform_state != stalagmite->GetPreviousState();
 
 	if (!state_changed)
 	{
 		return;
 	}
 
-	stalagmite->_previous_state = platform_state;
+	stalagmite->SetPreviousState(platform_state);
 
 	switch (platform_state)
 	{
 	case StalagmiteState::INVALID:
 		return;
-	case StalagmiteState::FALLING_AREA:
-		break;
-	case StalagmiteState::COLLAPSE:
+	case StalagmiteState::FALLING:
 		break;
 	case StalagmiteState::SPAWN_CRYSTAL:
 		break;
 	default:
 		break;
 	}
+}
+
+void Hachiko::Scripting::StalagmiteManager::FallingStalagmite(Stalagmite* stalagmite)
+{
+	stalagmite->Falling();
 }
 
 
