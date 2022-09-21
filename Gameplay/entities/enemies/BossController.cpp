@@ -447,6 +447,7 @@ void Hachiko::Scripting::BossController::SpawnCrystalsController()
 	float4x4 emitter = float4x4::FromTRS(emitter_position, transform->GetGlobalRotation(), transform->GetGlobalScale());
 
 	current_crystal_to_spawn->SetActive(true);
+	current_crystal_to_spawn->FindDescendantWithName("ExplosionIndicatorHelper")->SetActive(false);
 	current_crystal_to_spawn->GetTransform()->SetGlobalPosition(emitter_position);
 
 	_current_index_crystals = (_current_index_crystals + 1) % _explosive_crystals.size();
