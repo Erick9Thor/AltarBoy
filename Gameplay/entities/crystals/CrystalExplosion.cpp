@@ -24,6 +24,7 @@ Hachiko::Scripting::CrystalExplosion::CrystalExplosion(GameObject* game_object)
 	, _regen_time(5.f)
 	, _shake_intensity(0.1f)
 	, _seconds_shaking(0.8f)
+	, _should_regen(true)
 {
 }
 
@@ -236,6 +237,12 @@ void Hachiko::Scripting::CrystalExplosion::ResetCrystal()
 	if (cp_animation)
 	{
 		cp_animation->SendTrigger("isRegenerating");
+	}
+
+	if (!_should_regen)
+	{
+		// Is boss scene and crystal shouldn't regen
+		game_object->SetActive(false);
 	}
 }
 
