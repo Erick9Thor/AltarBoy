@@ -3997,6 +3997,7 @@ child:
             "'_timer_explosion@float'": 0
             "'_explosive_crystal@bool'": false
             "'_regen_time@float'": 10
+            "'_should_regen@bool'": true
           - !<script>
             id: 11224111609055920027
             type: 15
@@ -10542,6 +10543,7 @@ child:
             "'_timer_explosion@float'": 1
             "'_explosive_crystal@bool'": true
             "'_regen_time@float'": 5
+            "'_should_regen@bool'": false
           - !<obstacle>
             id: 14674822954761812630
             type: 18
@@ -11064,6 +11066,7 @@ child:
             "'_timer_explosion@float'": 1
             "'_explosive_crystal@bool'": true
             "'_regen_time@float'": 5
+            "'_should_regen@bool'": false
           - !<obstacle>
             id: 13755679723979275857
             type: 18
@@ -11586,6 +11589,7 @@ child:
             "'_timer_explosion@float'": 1
             "'_explosive_crystal@bool'": true
             "'_regen_time@float'": 5
+            "'_should_regen@bool'": false
           - !<obstacle>
             id: 1161333272699434239
             type: 18
@@ -12108,6 +12112,7 @@ child:
             "'_timer_explosion@float'": 1
             "'_explosive_crystal@bool'": true
             "'_regen_time@float'": 5
+            "'_should_regen@bool'": false
           - !<obstacle>
             id: 5206449177016131574
             type: 18
@@ -12630,6 +12635,7 @@ child:
             "'_timer_explosion@float'": 1
             "'_explosive_crystal@bool'": true
             "'_regen_time@float'": 5
+            "'_should_regen@bool'": false
           - !<obstacle>
             id: 9186790552709249103
             type: 18
