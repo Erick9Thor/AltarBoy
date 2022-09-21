@@ -3,9 +3,18 @@
 
 Hachiko::Scripting::Stalagmite::Stalagmite(GameObject* game_object)
 	: Script(game_object, "Stalagmite")
-	,  _explosion_indicator_helper(nullptr)
-	, _explosion_effect(nullptr)
 {
+}
+
+void Hachiko::Scripting::Stalagmite::ActiveStalagmite()
+{
+	game_object->SetActive(true);
+	crystal->SetActive(false);
+}
+
+void Hachiko::Scripting::Stalagmite::ActiveEffects()
+{
+	_explosion_effect->SetActive(true);
 }
 
 void Hachiko::Scripting::Stalagmite::Falling()
@@ -21,3 +30,11 @@ void Hachiko::Scripting::Stalagmite::Falling()
 	GEO->GetComponent<ComponentTransform>()
 		->SetGlobalPosition(_stalagmite_position);
 }
+
+void Hachiko::Scripting::Stalagmite::ActiveCrystal()
+{
+	_explosion_effect->SetActive(false);
+	GEO->SetActive(false);
+	crystal->SetActive(true);
+}
+

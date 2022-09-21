@@ -44,15 +44,25 @@ namespace Hachiko
 				return GEO;
 			}
 
+			void ActiveStalagmite();
+			void ActiveEffects();
 			void Falling();
+			void ActiveCrystal();
+
+			void SetCrystalParent(GameObject* crystal_parent)
+			{
+				crystal->SetNewParent(crystal_parent);
+				game_object->SetActive(false);
+			}
 
 		private:
 
 			StalagmiteState stalagmite_state = StalagmiteState::INVALID;
 			StalagmiteState _previous_state = StalagmiteState::INVALID;
 
-			SERIALIZE_FIELD(GameObject*, _explosion_indicator_helper);
 			SERIALIZE_FIELD(GameObject*, _explosion_effect);
+
+			SERIALIZE_FIELD(GameObject*, crystal);
 
 			SERIALIZE_FIELD(GameObject*, GEO);
 		};

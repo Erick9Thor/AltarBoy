@@ -2,6 +2,7 @@
 
 #include <scripting/Script.h>
 #include <entities/crystals/Stalagmite.h>
+#include <entities/player/PlayerCamera.h>
 
 namespace Hachiko
 {
@@ -15,6 +16,7 @@ namespace Hachiko
 			StalagmiteManager(GameObject* game_object);
 			~StalagmiteManager() override = default;
 	
+			void OnAwake() override;
 			void OnStart() override;
 			void OnUpdate() override;
 
@@ -29,10 +31,12 @@ namespace Hachiko
 
 			float falling_elapsed = 0.0f;
 			float cooldown_elapsed = 0.0f;
+			float _falling_time = 0.5f;
 
-			SERIALIZE_FIELD(float, _falling_time);
+			PlayerCamera* _player_camera = nullptr;
+
 			SERIALIZE_FIELD(float, _falling_cooldown);
-
+			SERIALIZE_FIELD(GameObject*, _crystal_parent);
 
 			// STALAGMITE
 			std::vector<Stalagmite*> _stalagmites{};

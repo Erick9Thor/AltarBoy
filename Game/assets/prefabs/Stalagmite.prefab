@@ -1,28 +1,28 @@
 prefab_name: Stalagmite
 name: Stalagmite
-enabled: true
+enabled: false
 component:
   - !<transform>
     type: 1
     enabled: true
-    position: [0, 0, 7.228]
+    position: [0, 1.2, 7.228]
     rotation: [-0, 0, -0]
     scale: [1, 1, 1]
   - !<script>
     type: 15
     enabled: true
     class_name: Stalagmite
-    "'_explosion_indicator_helper@GameObject*'": 116
     "'_explosion_effect@GameObject*'": 116
+    "'crystal@GameObject*'": 118
     "'GEO@GameObject*'": 2
 child:
   - name: GEO
-    enabled: true
+    enabled: false
     component:
       - !<transform>
         type: 1
         enabled: true
-        position: [-1.298, 8, 1.302]
+        position: [0.1, 8, 1.302]
         rotation: [-90, 0, 0]
         scale: [50, 50, 50]
       - !<animation>
@@ -31,7 +31,7 @@ child:
         state_machine: 0
     child:
       - name: trap_grp
-        enabled: true
+        enabled: false
         component:
           - !<transform>
             type: 1
@@ -41,7 +41,7 @@ child:
             scale: [1, 1, 1]
         child:
           - name: rock01_low_$AssimpFbx$_Translation
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 type: 1
@@ -51,7 +51,7 @@ child:
                 scale: [1, 1, 1]
             child:
               - name: rock01_low_$AssimpFbx$_RotationPivot
-                enabled: true
+                enabled: false
                 component:
                   - !<transform>
                     type: 1
@@ -61,7 +61,7 @@ child:
                     scale: [1, 1, 1]
                 child:
                   - name: rock01_low_$AssimpFbx$_Rotation
-                    enabled: true
+                    enabled: false
                     component:
                       - !<transform>
                         type: 1
@@ -71,7 +71,7 @@ child:
                         scale: [1, 1, 1]
                     child:
                       - name: rock01_low_$AssimpFbx$_RotationPivotInverse
-                        enabled: true
+                        enabled: false
                         component:
                           - !<transform>
                             type: 1
@@ -81,7 +81,7 @@ child:
                             scale: [1, 1, 1]
                         child:
                           - name: rock01_low_$AssimpFbx$_ScalingPivot
-                            enabled: true
+                            enabled: false
                             component:
                               - !<transform>
                                 type: 1
@@ -91,7 +91,7 @@ child:
                                 scale: [1, 1, 1]
                             child:
                               - name: rock01_low_$AssimpFbx$_ScalingPivotInverse
-                                enabled: true
+                                enabled: false
                                 component:
                                   - !<transform>
                                     type: 1
@@ -101,7 +101,7 @@ child:
                                     scale: [1, 1, 1]
                                 child:
                                   - name: rock01_low
-                                    enabled: true
+                                    enabled: false
                                     component:
                                       - !<transform>
                                         type: 1
@@ -118,7 +118,7 @@ child:
                                         material_id: 9974829148899559714
                                         tint_color: [1, 1, 1, 1]
           - name: rock02_low_$AssimpFbx$_RotationPivot
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 type: 1
@@ -128,7 +128,7 @@ child:
                 scale: [1, 1, 1]
             child:
               - name: rock02_low_$AssimpFbx$_Rotation
-                enabled: true
+                enabled: false
                 component:
                   - !<transform>
                     type: 1
@@ -138,7 +138,7 @@ child:
                     scale: [1, 1, 1]
                 child:
                   - name: rock02_low_$AssimpFbx$_RotationPivotInverse
-                    enabled: true
+                    enabled: false
                     component:
                       - !<transform>
                         type: 1
@@ -148,7 +148,7 @@ child:
                         scale: [1, 1, 1]
                     child:
                       - name: rock02_low_$AssimpFbx$_ScalingPivot
-                        enabled: true
+                        enabled: false
                         component:
                           - !<transform>
                             type: 1
@@ -158,7 +158,7 @@ child:
                             scale: [1, 1, 1]
                         child:
                           - name: rock02_low_$AssimpFbx$_ScalingPivotInverse
-                            enabled: true
+                            enabled: false
                             component:
                               - !<transform>
                                 type: 1
@@ -168,7 +168,7 @@ child:
                                 scale: [1, 1, 1]
                             child:
                               - name: rock02_low
-                                enabled: true
+                                enabled: false
                                 component:
                                   - !<transform>
                                     type: 1
@@ -185,7 +185,7 @@ child:
                                     material_id: 9974829148899559714
                                     tint_color: [1, 1, 1, 1]
           - name: rock03_low_$AssimpFbx$_RotationPivot
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 type: 1
@@ -195,7 +195,7 @@ child:
                 scale: [1, 1, 1]
             child:
               - name: rock03_low_$AssimpFbx$_Rotation
-                enabled: true
+                enabled: false
                 component:
                   - !<transform>
                     type: 1
@@ -205,7 +205,7 @@ child:
                     scale: [1, 1, 1]
                 child:
                   - name: rock03_low_$AssimpFbx$_RotationPivotInverse
-                    enabled: true
+                    enabled: false
                     component:
                       - !<transform>
                         type: 1
@@ -215,7 +215,7 @@ child:
                         scale: [1, 1, 1]
                     child:
                       - name: rock03_low_$AssimpFbx$_ScalingPivot
-                        enabled: true
+                        enabled: false
                         component:
                           - !<transform>
                             type: 1
@@ -225,7 +225,7 @@ child:
                             scale: [1, 1, 1]
                         child:
                           - name: rock03_low_$AssimpFbx$_ScalingPivotInverse
-                            enabled: true
+                            enabled: false
                             component:
                               - !<transform>
                                 type: 1
@@ -235,7 +235,7 @@ child:
                                 scale: [1, 1, 1]
                             child:
                               - name: rock03_low
-                                enabled: true
+                                enabled: false
                                 component:
                                   - !<transform>
                                     type: 1
@@ -252,7 +252,7 @@ child:
                                     material_id: 9974829148899559714
                                     tint_color: [1, 1, 1, 1]
           - name: rock04_low_$AssimpFbx$_RotationPivot
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 type: 1
@@ -262,7 +262,7 @@ child:
                 scale: [1, 1, 1]
             child:
               - name: rock04_low_$AssimpFbx$_Rotation
-                enabled: true
+                enabled: false
                 component:
                   - !<transform>
                     type: 1
@@ -272,7 +272,7 @@ child:
                     scale: [1, 1, 1]
                 child:
                   - name: rock04_low_$AssimpFbx$_RotationPivotInverse
-                    enabled: true
+                    enabled: false
                     component:
                       - !<transform>
                         type: 1
@@ -282,7 +282,7 @@ child:
                         scale: [1, 1, 1]
                     child:
                       - name: rock04_low_$AssimpFbx$_ScalingPivot
-                        enabled: true
+                        enabled: false
                         component:
                           - !<transform>
                             type: 1
@@ -292,7 +292,7 @@ child:
                             scale: [1, 1, 1]
                         child:
                           - name: rock04_low_$AssimpFbx$_ScalingPivotInverse
-                            enabled: true
+                            enabled: false
                             component:
                               - !<transform>
                                 type: 1
@@ -302,7 +302,7 @@ child:
                                 scale: [1, 1, 1]
                             child:
                               - name: rock04_low
-                                enabled: true
+                                enabled: false
                                 component:
                                   - !<transform>
                                     type: 1
@@ -319,7 +319,7 @@ child:
                                     material_id: 9974829148899559714
                                     tint_color: [1, 1, 1, 1]
           - name: rock05_low_$AssimpFbx$_Translation
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 type: 1
@@ -329,7 +329,7 @@ child:
                 scale: [1, 1, 1]
             child:
               - name: rock05_low_$AssimpFbx$_RotationOffset
-                enabled: true
+                enabled: false
                 component:
                   - !<transform>
                     type: 1
@@ -339,7 +339,7 @@ child:
                     scale: [1, 1, 1]
                 child:
                   - name: rock05_low_$AssimpFbx$_RotationPivot
-                    enabled: true
+                    enabled: false
                     component:
                       - !<transform>
                         type: 1
@@ -349,7 +349,7 @@ child:
                         scale: [1, 1, 1]
                     child:
                       - name: rock05_low_$AssimpFbx$_Rotation
-                        enabled: true
+                        enabled: false
                         component:
                           - !<transform>
                             type: 1
@@ -359,7 +359,7 @@ child:
                             scale: [1, 1, 1]
                         child:
                           - name: rock05_low_$AssimpFbx$_RotationPivotInverse
-                            enabled: true
+                            enabled: false
                             component:
                               - !<transform>
                                 type: 1
@@ -369,7 +369,7 @@ child:
                                 scale: [1, 1, 1]
                             child:
                               - name: rock05_low_$AssimpFbx$_ScalingPivot
-                                enabled: true
+                                enabled: false
                                 component:
                                   - !<transform>
                                     type: 1
@@ -379,7 +379,7 @@ child:
                                     scale: [1, 1, 1]
                                 child:
                                   - name: rock05_low_$AssimpFbx$_ScalingPivotInverse
-                                    enabled: true
+                                    enabled: false
                                     component:
                                       - !<transform>
                                         type: 1
@@ -389,7 +389,7 @@ child:
                                         scale: [1, 1, 1]
                                     child:
                                       - name: rock05_low
-                                        enabled: true
+                                        enabled: false
                                         component:
                                           - !<transform>
                                             type: 1
@@ -406,7 +406,7 @@ child:
                                             material_id: 9974829148899559714
                                             tint_color: [1, 1, 1, 1]
           - name: crystal01_low_$AssimpFbx$_Translation
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 type: 1
@@ -416,7 +416,7 @@ child:
                 scale: [1, 1, 1]
             child:
               - name: crystal01_low_$AssimpFbx$_RotationPivot
-                enabled: true
+                enabled: false
                 component:
                   - !<transform>
                     type: 1
@@ -426,7 +426,7 @@ child:
                     scale: [1, 1, 1]
                 child:
                   - name: crystal01_low_$AssimpFbx$_Rotation
-                    enabled: true
+                    enabled: false
                     component:
                       - !<transform>
                         type: 1
@@ -436,7 +436,7 @@ child:
                         scale: [1, 1, 1]
                     child:
                       - name: crystal01_low_$AssimpFbx$_RotationPivotInverse
-                        enabled: true
+                        enabled: false
                         component:
                           - !<transform>
                             type: 1
@@ -446,7 +446,7 @@ child:
                             scale: [1, 1, 1]
                         child:
                           - name: crystal01_low_$AssimpFbx$_ScalingPivot
-                            enabled: true
+                            enabled: false
                             component:
                               - !<transform>
                                 type: 1
@@ -456,7 +456,7 @@ child:
                                 scale: [1, 1, 1]
                             child:
                               - name: crystal01_low_$AssimpFbx$_ScalingPivotInverse
-                                enabled: true
+                                enabled: false
                                 component:
                                   - !<transform>
                                     type: 1
@@ -466,7 +466,7 @@ child:
                                     scale: [1, 1, 1]
                                 child:
                                   - name: crystal01_low
-                                    enabled: true
+                                    enabled: false
                                     component:
                                       - !<transform>
                                         type: 1
@@ -483,7 +483,7 @@ child:
                                         material_id: 9974829148899559714
                                         tint_color: [1, 1, 1, 1]
           - name: crystal02_low_$AssimpFbx$_Translation
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 type: 1
@@ -493,7 +493,7 @@ child:
                 scale: [1, 1, 1]
             child:
               - name: crystal02_low_$AssimpFbx$_RotationPivot
-                enabled: true
+                enabled: false
                 component:
                   - !<transform>
                     type: 1
@@ -503,7 +503,7 @@ child:
                     scale: [1, 1, 1]
                 child:
                   - name: crystal02_low_$AssimpFbx$_Rotation
-                    enabled: true
+                    enabled: false
                     component:
                       - !<transform>
                         type: 1
@@ -513,7 +513,7 @@ child:
                         scale: [1, 1, 1]
                     child:
                       - name: crystal02_low_$AssimpFbx$_RotationPivotInverse
-                        enabled: true
+                        enabled: false
                         component:
                           - !<transform>
                             type: 1
@@ -523,7 +523,7 @@ child:
                             scale: [1, 1, 1]
                         child:
                           - name: crystal02_low_$AssimpFbx$_ScalingPivot
-                            enabled: true
+                            enabled: false
                             component:
                               - !<transform>
                                 type: 1
@@ -533,7 +533,7 @@ child:
                                 scale: [1, 1, 1]
                             child:
                               - name: crystal02_low_$AssimpFbx$_ScalingPivotInverse
-                                enabled: true
+                                enabled: false
                                 component:
                                   - !<transform>
                                     type: 1
@@ -543,7 +543,7 @@ child:
                                     scale: [1, 1, 1]
                                 child:
                                   - name: crystal02_low
-                                    enabled: true
+                                    enabled: false
                                     component:
                                       - !<transform>
                                         type: 1
@@ -560,7 +560,7 @@ child:
                                         material_id: 9974829148899559714
                                         tint_color: [1, 1, 1, 1]
           - name: crystal03_low_$AssimpFbx$_Translation
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 type: 1
@@ -570,7 +570,7 @@ child:
                 scale: [1, 1, 1]
             child:
               - name: crystal03_low_$AssimpFbx$_RotationPivot
-                enabled: true
+                enabled: false
                 component:
                   - !<transform>
                     type: 1
@@ -580,7 +580,7 @@ child:
                     scale: [1, 1, 1]
                 child:
                   - name: crystal03_low_$AssimpFbx$_Rotation
-                    enabled: true
+                    enabled: false
                     component:
                       - !<transform>
                         type: 1
@@ -590,7 +590,7 @@ child:
                         scale: [1, 1, 1]
                     child:
                       - name: crystal03_low_$AssimpFbx$_RotationPivotInverse
-                        enabled: true
+                        enabled: false
                         component:
                           - !<transform>
                             type: 1
@@ -600,7 +600,7 @@ child:
                             scale: [1, 1, 1]
                         child:
                           - name: crystal03_low_$AssimpFbx$_ScalingPivot
-                            enabled: true
+                            enabled: false
                             component:
                               - !<transform>
                                 type: 1
@@ -610,7 +610,7 @@ child:
                                 scale: [1, 1, 1]
                             child:
                               - name: crystal03_low_$AssimpFbx$_ScalingPivotInverse
-                                enabled: true
+                                enabled: false
                                 component:
                                   - !<transform>
                                     type: 1
@@ -620,7 +620,7 @@ child:
                                     scale: [1, 1, 1]
                                 child:
                                   - name: crystal03_low
-                                    enabled: true
+                                    enabled: false
                                     component:
                                       - !<transform>
                                         type: 1
@@ -637,7 +637,7 @@ child:
                                         material_id: 9974829148899559714
                                         tint_color: [1, 1, 1, 1]
           - name: crystal04_low_$AssimpFbx$_Translation
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 type: 1
@@ -647,7 +647,7 @@ child:
                 scale: [1, 1, 1]
             child:
               - name: crystal04_low_$AssimpFbx$_RotationPivot
-                enabled: true
+                enabled: false
                 component:
                   - !<transform>
                     type: 1
@@ -657,7 +657,7 @@ child:
                     scale: [1, 1, 1]
                 child:
                   - name: crystal04_low_$AssimpFbx$_Rotation
-                    enabled: true
+                    enabled: false
                     component:
                       - !<transform>
                         type: 1
@@ -667,7 +667,7 @@ child:
                         scale: [1, 1, 1]
                     child:
                       - name: crystal04_low_$AssimpFbx$_RotationPivotInverse
-                        enabled: true
+                        enabled: false
                         component:
                           - !<transform>
                             type: 1
@@ -677,7 +677,7 @@ child:
                             scale: [1, 1, 1]
                         child:
                           - name: crystal04_low_$AssimpFbx$_ScalingPivot
-                            enabled: true
+                            enabled: false
                             component:
                               - !<transform>
                                 type: 1
@@ -687,7 +687,7 @@ child:
                                 scale: [1, 1, 1]
                             child:
                               - name: crystal04_low_$AssimpFbx$_ScalingPivotInverse
-                                enabled: true
+                                enabled: false
                                 component:
                                   - !<transform>
                                     type: 1
@@ -697,7 +697,7 @@ child:
                                     scale: [1, 1, 1]
                                 child:
                                   - name: crystal04_low
-                                    enabled: true
+                                    enabled: false
                                     component:
                                       - !<transform>
                                         type: 1
@@ -714,7 +714,7 @@ child:
                                         material_id: 9974829148899559714
                                         tint_color: [1, 1, 1, 1]
           - name: crystal05_low_$AssimpFbx$_Translation
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 type: 1
@@ -724,7 +724,7 @@ child:
                 scale: [1, 1, 1]
             child:
               - name: crystal05_low_$AssimpFbx$_RotationPivot
-                enabled: true
+                enabled: false
                 component:
                   - !<transform>
                     type: 1
@@ -734,7 +734,7 @@ child:
                     scale: [1, 1, 1]
                 child:
                   - name: crystal05_low_$AssimpFbx$_Rotation
-                    enabled: true
+                    enabled: false
                     component:
                       - !<transform>
                         type: 1
@@ -744,7 +744,7 @@ child:
                         scale: [1, 1, 1]
                     child:
                       - name: crystal05_low_$AssimpFbx$_RotationPivotInverse
-                        enabled: true
+                        enabled: false
                         component:
                           - !<transform>
                             type: 1
@@ -754,7 +754,7 @@ child:
                             scale: [1, 1, 1]
                         child:
                           - name: crystal05_low_$AssimpFbx$_ScalingPivot
-                            enabled: true
+                            enabled: false
                             component:
                               - !<transform>
                                 type: 1
@@ -764,7 +764,7 @@ child:
                                 scale: [1, 1, 1]
                             child:
                               - name: crystal05_low_$AssimpFbx$_ScalingPivotInverse
-                                enabled: true
+                                enabled: false
                                 component:
                                   - !<transform>
                                     type: 1
@@ -774,7 +774,7 @@ child:
                                     scale: [1, 1, 1]
                                 child:
                                   - name: crystal05_low
-                                    enabled: true
+                                    enabled: false
                                     component:
                                       - !<transform>
                                         type: 1
@@ -791,7 +791,7 @@ child:
                                         material_id: 9974829148899559714
                                         tint_color: [1, 1, 1, 1]
           - name: smallCrystal01_low_$AssimpFbx$_RotationPivot
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 type: 1
@@ -801,7 +801,7 @@ child:
                 scale: [1, 1, 1]
             child:
               - name: smallCrystal01_low_$AssimpFbx$_Rotation
-                enabled: true
+                enabled: false
                 component:
                   - !<transform>
                     type: 1
@@ -811,7 +811,7 @@ child:
                     scale: [1, 1, 1]
                 child:
                   - name: smallCrystal01_low_$AssimpFbx$_RotationPivotInverse
-                    enabled: true
+                    enabled: false
                     component:
                       - !<transform>
                         type: 1
@@ -821,7 +821,7 @@ child:
                         scale: [1, 1, 1]
                     child:
                       - name: smallCrystal01_low_$AssimpFbx$_ScalingPivot
-                        enabled: true
+                        enabled: false
                         component:
                           - !<transform>
                             type: 1
@@ -831,7 +831,7 @@ child:
                             scale: [1, 1, 1]
                         child:
                           - name: smallCrystal01_low_$AssimpFbx$_ScalingPivotInverse
-                            enabled: true
+                            enabled: false
                             component:
                               - !<transform>
                                 type: 1
@@ -841,7 +841,7 @@ child:
                                 scale: [1, 1, 1]
                             child:
                               - name: smallCrystal01_low
-                                enabled: true
+                                enabled: false
                                 component:
                                   - !<transform>
                                     type: 1
@@ -858,7 +858,7 @@ child:
                                     material_id: 9974829148899559714
                                     tint_color: [1, 1, 1, 1]
           - name: smallCrystal02_low_$AssimpFbx$_RotationPivot
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 type: 1
@@ -868,7 +868,7 @@ child:
                 scale: [1, 1, 1]
             child:
               - name: smallCrystal02_low_$AssimpFbx$_Rotation
-                enabled: true
+                enabled: false
                 component:
                   - !<transform>
                     type: 1
@@ -878,7 +878,7 @@ child:
                     scale: [1, 1, 1]
                 child:
                   - name: smallCrystal02_low_$AssimpFbx$_RotationPivotInverse
-                    enabled: true
+                    enabled: false
                     component:
                       - !<transform>
                         type: 1
@@ -888,7 +888,7 @@ child:
                         scale: [1, 1, 1]
                     child:
                       - name: smallCrystal02_low_$AssimpFbx$_ScalingPivot
-                        enabled: true
+                        enabled: false
                         component:
                           - !<transform>
                             type: 1
@@ -898,7 +898,7 @@ child:
                             scale: [1, 1, 1]
                         child:
                           - name: smallCrystal02_low_$AssimpFbx$_ScalingPivotInverse
-                            enabled: true
+                            enabled: false
                             component:
                               - !<transform>
                                 type: 1
@@ -908,7 +908,7 @@ child:
                                 scale: [1, 1, 1]
                             child:
                               - name: smallCrystal02_low
-                                enabled: true
+                                enabled: false
                                 component:
                                   - !<transform>
                                     type: 1
@@ -925,7 +925,7 @@ child:
                                     material_id: 9974829148899559714
                                     tint_color: [1, 1, 1, 1]
           - name: smallCrystal03_low_$AssimpFbx$_RotationPivot
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 type: 1
@@ -935,7 +935,7 @@ child:
                 scale: [1, 1, 1]
             child:
               - name: smallCrystal03_low_$AssimpFbx$_Rotation
-                enabled: true
+                enabled: false
                 component:
                   - !<transform>
                     type: 1
@@ -945,7 +945,7 @@ child:
                     scale: [1, 1, 1]
                 child:
                   - name: smallCrystal03_low_$AssimpFbx$_RotationPivotInverse
-                    enabled: true
+                    enabled: false
                     component:
                       - !<transform>
                         type: 1
@@ -955,7 +955,7 @@ child:
                         scale: [1, 1, 1]
                     child:
                       - name: smallCrystal03_low_$AssimpFbx$_ScalingPivot
-                        enabled: true
+                        enabled: false
                         component:
                           - !<transform>
                             type: 1
@@ -965,7 +965,7 @@ child:
                             scale: [1, 1, 1]
                         child:
                           - name: smallCrystal03_low_$AssimpFbx$_ScalingPivotInverse
-                            enabled: true
+                            enabled: false
                             component:
                               - !<transform>
                                 type: 1
@@ -975,7 +975,7 @@ child:
                                 scale: [1, 1, 1]
                             child:
                               - name: smallCrystal03_low
-                                enabled: true
+                                enabled: false
                                 component:
                                   - !<transform>
                                     type: 1
@@ -992,7 +992,7 @@ child:
                                     material_id: 9974829148899559714
                                     tint_color: [1, 1, 1, 1]
       - name: Bones
-        enabled: true
+        enabled: false
         component:
           - !<transform>
             type: 1
@@ -1002,7 +1002,7 @@ child:
             scale: [1, 1, 1]
         child:
           - name: Jnt_Rock_UP_C
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 type: 1
@@ -1011,7 +1011,7 @@ child:
                 rotation: [-0.3362, -9.752, 5.934]
                 scale: [1, 1, 1]
           - name: Jnt_Rock_UP_L
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 type: 1
@@ -1020,7 +1020,7 @@ child:
                 rotation: [1.303, -11.9, -3.391]
                 scale: [1, 1, 1]
           - name: Jnt_Rock_Down_L
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 type: 1
@@ -1029,7 +1029,7 @@ child:
                 rotation: [8.994, 2.335, 3.775]
                 scale: [1, 1, 1]
           - name: Jnt_Rock_Down_R
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 type: 1
@@ -1038,7 +1038,7 @@ child:
                 rotation: [3.238, -9.279, -6.286]
                 scale: [1, 1, 1]
           - name: Jnt_Rock_UP_R
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 type: 1
@@ -1047,7 +1047,7 @@ child:
                 rotation: [-5.638, -17.19, 2.139]
                 scale: [1, 1, 1]
           - name: Jnt_CrystalStar_One_$AssimpFbx$_Translation
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 type: 1
@@ -1057,7 +1057,7 @@ child:
                 scale: [1, 1, 1]
             child:
               - name: Jnt_CrystalStar_One_$AssimpFbx$_PreRotation
-                enabled: true
+                enabled: false
                 component:
                   - !<transform>
                     type: 1
@@ -1067,7 +1067,7 @@ child:
                     scale: [1, 1, 1]
                 child:
                   - name: Jnt_CrystalStar_One_$AssimpFbx$_Rotation
-                    enabled: true
+                    enabled: false
                     component:
                       - !<transform>
                         type: 1
@@ -1077,7 +1077,7 @@ child:
                         scale: [1, 1, 1]
                     child:
                       - name: Jnt_CrystalStar_One
-                        enabled: true
+                        enabled: false
                         component:
                           - !<transform>
                             type: 1
@@ -1086,7 +1086,7 @@ child:
                             rotation: [-0, 0, -0]
                             scale: [1, 1, 1]
           - name: Jnt_CrystalStar_two_$AssimpFbx$_Translation
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 type: 1
@@ -1096,7 +1096,7 @@ child:
                 scale: [1, 1, 1]
             child:
               - name: Jnt_CrystalStar_two_$AssimpFbx$_PreRotation
-                enabled: true
+                enabled: false
                 component:
                   - !<transform>
                     type: 1
@@ -1106,7 +1106,7 @@ child:
                     scale: [1, 1, 1]
                 child:
                   - name: Jnt_CrystalStar_two_$AssimpFbx$_Rotation
-                    enabled: true
+                    enabled: false
                     component:
                       - !<transform>
                         type: 1
@@ -1116,7 +1116,7 @@ child:
                         scale: [1, 1, 1]
                     child:
                       - name: Jnt_CrystalStar_two
-                        enabled: true
+                        enabled: false
                         component:
                           - !<transform>
                             type: 1
@@ -1125,7 +1125,7 @@ child:
                             rotation: [-0, 0, -0]
                             scale: [1, 1, 1]
           - name: Jnt_CrystalStar_trhee_$AssimpFbx$_Translation
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 type: 1
@@ -1135,7 +1135,7 @@ child:
                 scale: [1, 1, 1]
             child:
               - name: Jnt_CrystalStar_trhee_$AssimpFbx$_PreRotation
-                enabled: true
+                enabled: false
                 component:
                   - !<transform>
                     type: 1
@@ -1145,7 +1145,7 @@ child:
                     scale: [1, 1, 1]
                 child:
                   - name: Jnt_CrystalStar_trhee_$AssimpFbx$_Rotation
-                    enabled: true
+                    enabled: false
                     component:
                       - !<transform>
                         type: 1
@@ -1155,7 +1155,7 @@ child:
                         scale: [1, 1, 1]
                     child:
                       - name: Jnt_CrystalStar_trhee
-                        enabled: true
+                        enabled: false
                         component:
                           - !<transform>
                             type: 1
@@ -1164,7 +1164,7 @@ child:
                             rotation: [-0, 0, -0]
                             scale: [1, 1, 1]
           - name: Jnt_CrystalStar_Four_$AssimpFbx$_Translation
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 type: 1
@@ -1174,7 +1174,7 @@ child:
                 scale: [1, 1, 1]
             child:
               - name: Jnt_CrystalStar_Four_$AssimpFbx$_PreRotation
-                enabled: true
+                enabled: false
                 component:
                   - !<transform>
                     type: 1
@@ -1184,7 +1184,7 @@ child:
                     scale: [1, 1, 1]
                 child:
                   - name: Jnt_CrystalStar_Four_$AssimpFbx$_Rotation
-                    enabled: true
+                    enabled: false
                     component:
                       - !<transform>
                         type: 1
@@ -1194,7 +1194,7 @@ child:
                         scale: [1, 1, 1]
                     child:
                       - name: Jnt_CrystalStar_Four
-                        enabled: true
+                        enabled: false
                         component:
                           - !<transform>
                             type: 1
@@ -1203,7 +1203,7 @@ child:
                             rotation: [-0, 0, -0]
                             scale: [1, 1, 1]
           - name: Jnt_CrystalStar_Five_$AssimpFbx$_Translation
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 type: 1
@@ -1213,7 +1213,7 @@ child:
                 scale: [1, 1, 1]
             child:
               - name: Jnt_CrystalStar_Five_$AssimpFbx$_PreRotation
-                enabled: true
+                enabled: false
                 component:
                   - !<transform>
                     type: 1
@@ -1223,7 +1223,7 @@ child:
                     scale: [1, 1, 1]
                 child:
                   - name: Jnt_CrystalStar_Five_$AssimpFbx$_Rotation
-                    enabled: true
+                    enabled: false
                     component:
                       - !<transform>
                         type: 1
@@ -1233,7 +1233,7 @@ child:
                         scale: [1, 1, 1]
                     child:
                       - name: Jnt_CrystalStar_Five
-                        enabled: true
+                        enabled: false
                         component:
                           - !<transform>
                             type: 1
@@ -1242,17 +1242,17 @@ child:
                             rotation: [-0, 0, -0]
                             scale: [1, 1, 1]
   - name: ExplosionIndicatorHelper
-    enabled: true
+    enabled: false
     component:
       - !<transform>
         type: 1
         enabled: true
-        position: [0, -0.222, 0]
-        rotation: [-0, 0, -0]
-        scale: [8.927, 0.1785, 8.927]
+        position: [0, -1.3, 0]
+        rotation: [-0, 7.901, -0]
+        scale: [6, 0.1, 6]
     child:
       - name: Cylinder001
-        enabled: true
+        enabled: false
         component:
           - !<transform>
             type: 1
@@ -1268,18 +1268,53 @@ child:
             visible: true
             material_id: 6462450398853139216
             tint_color: [1, 1, 1, 1]
-  - name: ExplosionEffect
-    enabled: true
+  - name: StaticCrystal
+    enabled: false
     component:
       - !<transform>
         type: 1
         enabled: true
-        position: [0, 0, 0]
+        position: [0, -1.516, 0]
         rotation: [-0, 7.901, -0]
-        scale: [2.5, 2.5, 2.5]
-    child:
-      - name: InnerEffect
+        scale: [2.4, 2.4, 2.4]
+      - !<animation>
+        type: 14
         enabled: true
+        state_machine: 14686609166423751852
+      - !<script>
+        type: 15
+        enabled: true
+        class_name: Stats
+        "'_attack_power@int'": 2
+        "'_attack_cd@float'": 2
+        "'_attack_range@float'": 3.5
+        "'_move_speed@float'": 0
+        "'_max_hp@int'": 1
+        "'_current_hp@int'": 3
+      - type: 20
+        enabled: true
+      - !<script>
+        type: 15
+        enabled: true
+        class_name: CrystalExplosion
+        "'_explosion_indicator_helper@GameObject*'": 0
+        "'_explosion_effect@GameObject*'": 0
+        "'_shake_intensity@float'": 0.2
+        "'_seconds_shaking@float'": 5
+        "'_crashing_index@unsigned'": 0
+        "'_detecting_radius@float'": 2
+        "'_explosion_radius@float'": 5
+        "'_timer_explosion@float'": 0
+        "'_explosive_crystal@bool'": false
+        "'_regen_time@float'": 5
+      - !<obstacle>
+        type: 18
+        enabled: true
+        obstacle_type: 0
+        obstacle_size: [1, 1, 1]
+    child:
+      - name: Geo
+        enabled: false
         component:
           - !<transform>
             type: 1
@@ -1287,62 +1322,288 @@ child:
             position: [0, 0, 0]
             rotation: [-0, 0, -0]
             scale: [1, 1, 1]
-          - !<billboard>
-            type: 21
-            enabled: true
-            play_on_awake: true
-            texture_id: 15537058005441777461
-            tiles: [1, 1]
-            flip: [false, false]
-            billboard_lifetime: 1
-            properties: [1, 2, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 0
-            total_tiles: 1
-            animation_loop: false
-            color_cycles: 0
-            color_gradient: [[0.763, 0, 0, 0, 0]]
-            animation_section: false
-            color_section: true
-            size_section: true
-            size_over_time: [true, false, 0, [60, 5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            rotation_section: false
-            rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [0.5, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            blend_factor: 0
-            projection: true
-      - name: OuterEffect
-        enabled: true
+        child:
+          - name: crystalSpike_mesh_Part_1_$AssimpFbx$_RotationPivot
+            enabled: false
+            component:
+              - !<transform>
+                type: 1
+                enabled: true
+                position: [-0.0762, 0.4947, 0.1023]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+            child:
+              - name: crystalSpike_mesh_Part_1_$AssimpFbx$_RotationPivotInverse
+                enabled: false
+                component:
+                  - !<transform>
+                    type: 1
+                    enabled: true
+                    position: [0.0762, -0.4947, -0.1023]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                child:
+                  - name: crystalSpike_mesh_Part_1_$AssimpFbx$_ScalingPivot
+                    enabled: false
+                    component:
+                      - !<transform>
+                        type: 1
+                        enabled: true
+                        position: [-0.0762, 0.4947, 0.1023]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                    child:
+                      - name: crystalSpike_mesh_Part_1_$AssimpFbx$_ScalingPivotInverse
+                        enabled: false
+                        component:
+                          - !<transform>
+                            type: 1
+                            enabled: true
+                            position: [0.0762, -0.4947, -0.1023]
+                            rotation: [-0, 0, -0]
+                            scale: [1, 1, 1]
+                        child:
+                          - name: crystalSpike_mesh_Part_1
+                            enabled: false
+                            component:
+                              - !<transform>
+                                type: 1
+                                enabled: true
+                                position: [0, 0, 0]
+                                rotation: [-0, 0, -0]
+                                scale: [1, 1, 1]
+                              - !<mesh_renderer>
+                                type: 2
+                                enabled: true
+                                mesh_id: 10175395471774891078
+                                navigable: false
+                                visible: true
+                                material_id: 15711698613413314858
+                                tint_color: [1, 1, 1, 1]
+          - name: crystalSpike_mesh_Part_2_$AssimpFbx$_RotationPivot
+            enabled: false
+            component:
+              - !<transform>
+                type: 1
+                enabled: true
+                position: [0.0911, 0.2996, 0.0456]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+            child:
+              - name: crystalSpike_mesh_Part_2_$AssimpFbx$_RotationPivotInverse
+                enabled: false
+                component:
+                  - !<transform>
+                    type: 1
+                    enabled: true
+                    position: [-0.0911, -0.2996, -0.0456]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                child:
+                  - name: crystalSpike_mesh_Part_2_$AssimpFbx$_ScalingPivot
+                    enabled: false
+                    component:
+                      - !<transform>
+                        type: 1
+                        enabled: true
+                        position: [0.0911, 0.2996, 0.0456]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                    child:
+                      - name: crystalSpike_mesh_Part_2_$AssimpFbx$_ScalingPivotInverse
+                        enabled: false
+                        component:
+                          - !<transform>
+                            type: 1
+                            enabled: true
+                            position: [-0.0911, -0.2996, -0.0456]
+                            rotation: [-0, 0, -0]
+                            scale: [1, 1, 1]
+                        child:
+                          - name: crystalSpike_mesh_Part_2
+                            enabled: false
+                            component:
+                              - !<transform>
+                                type: 1
+                                enabled: true
+                                position: [0, 0, 0]
+                                rotation: [-0, 0, -0]
+                                scale: [1, 1, 1]
+                              - !<mesh_renderer>
+                                type: 2
+                                enabled: true
+                                mesh_id: 6229385771345559983
+                                navigable: false
+                                visible: true
+                                material_id: 15711698613413314858
+                                tint_color: [1, 1, 1, 1]
+          - name: crystalSpike_mesh_Part_3_$AssimpFbx$_RotationPivot
+            enabled: false
+            component:
+              - !<transform>
+                type: 1
+                enabled: true
+                position: [0.187, 0.4844, 0.0622]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+            child:
+              - name: crystalSpike_mesh_Part_3_$AssimpFbx$_RotationPivotInverse
+                enabled: false
+                component:
+                  - !<transform>
+                    type: 1
+                    enabled: true
+                    position: [-0.187, -0.4844, -0.0622]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                child:
+                  - name: crystalSpike_mesh_Part_3_$AssimpFbx$_ScalingPivot
+                    enabled: false
+                    component:
+                      - !<transform>
+                        type: 1
+                        enabled: true
+                        position: [0.187, 0.4844, 0.0622]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                    child:
+                      - name: crystalSpike_mesh_Part_3_$AssimpFbx$_ScalingPivotInverse
+                        enabled: false
+                        component:
+                          - !<transform>
+                            type: 1
+                            enabled: true
+                            position: [-0.187, -0.4844, -0.0622]
+                            rotation: [-0, 0, -0]
+                            scale: [1, 1, 1]
+                        child:
+                          - name: crystalSpike_mesh_Part_3
+                            enabled: false
+                            component:
+                              - !<transform>
+                                type: 1
+                                enabled: true
+                                position: [0, 0, 0]
+                                rotation: [-0, 0, -0]
+                                scale: [1, 1, 1]
+                              - !<mesh_renderer>
+                                type: 2
+                                enabled: true
+                                mesh_id: 903393536084662082
+                                navigable: false
+                                visible: true
+                                material_id: 15711698613413314858
+                                tint_color: [1, 1, 1, 1]
+          - name: crystalSpike_mesh_Part_4_$AssimpFbx$_RotationPivot
+            enabled: false
+            component:
+              - !<transform>
+                type: 1
+                enabled: true
+                position: [0.1453, 0.2564, 0.2718]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+            child:
+              - name: crystalSpike_mesh_Part_4_$AssimpFbx$_RotationPivotInverse
+                enabled: false
+                component:
+                  - !<transform>
+                    type: 1
+                    enabled: true
+                    position: [-0.1453, -0.2564, -0.2718]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                child:
+                  - name: crystalSpike_mesh_Part_4_$AssimpFbx$_ScalingPivot
+                    enabled: false
+                    component:
+                      - !<transform>
+                        type: 1
+                        enabled: true
+                        position: [0.1453, 0.2564, 0.2718]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                    child:
+                      - name: crystalSpike_mesh_Part_4_$AssimpFbx$_ScalingPivotInverse
+                        enabled: false
+                        component:
+                          - !<transform>
+                            type: 1
+                            enabled: true
+                            position: [-0.1453, -0.2564, -0.2718]
+                            rotation: [-0, 0, -0]
+                            scale: [1, 1, 1]
+                        child:
+                          - name: crystalSpike_mesh_Part_4
+                            enabled: false
+                            component:
+                              - !<transform>
+                                type: 1
+                                enabled: true
+                                position: [0, 0, 0]
+                                rotation: [-0, 0, -0]
+                                scale: [1, 1, 1]
+                              - !<mesh_renderer>
+                                type: 2
+                                enabled: true
+                                mesh_id: 17479070581851126897
+                                navigable: false
+                                visible: true
+                                material_id: 15711698613413314858
+                                tint_color: [1, 1, 1, 1]
+      - name: Bones
+        enabled: false
         component:
           - !<transform>
             type: 1
             enabled: true
             position: [0, 0, 0]
             rotation: [-0, 0, -0]
-            scale: [8.5, 8.5, 1]
-          - !<billboard>
-            type: 21
-            enabled: true
-            play_on_awake: true
-            texture_id: 1822181409804484943
-            tiles: [1, 1]
-            flip: [false, false]
-            billboard_lifetime: 1
-            properties: [1, 2, 0, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 0
-            total_tiles: 1
-            animation_loop: false
-            color_cycles: 1
-            color_gradient: [[0, 0, 0, 0, 0], [1, 1, 1, 0, 1]]
-            animation_section: false
-            color_section: false
-            size_section: false
-            size_over_time: [true, false, 0, [0.5, 0.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            rotation_section: true
-            rotation_over_time: [true, false, 0, [5, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [0.5, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            blend_factor: 0
-            projection: true
+            scale: [1, 1, 1]
+        child:
+          - name: Root
+            enabled: false
+            component:
+              - !<transform>
+                type: 1
+                enabled: true
+                position: [-0.0003, 0, -0.0006]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+            child:
+              - name: Up
+                enabled: false
+                component:
+                  - !<transform>
+                    type: 1
+                    enabled: true
+                    position: [-0.0759, 0.4947, 0.1029]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+              - name: Down
+                enabled: false
+                component:
+                  - !<transform>
+                    type: 1
+                    enabled: true
+                    position: [0.0915, 0.2996, 0.0463]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+              - name: Middle
+                enabled: false
+                component:
+                  - !<transform>
+                    type: 1
+                    enabled: true
+                    position: [0.1873, 0.4844, 0.0629]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+              - name: Down_two
+                enabled: false
+                component:
+                  - !<transform>
+                    type: 1
+                    enabled: true
+                    position: [0.1457, 0.2564, 0.2724]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]

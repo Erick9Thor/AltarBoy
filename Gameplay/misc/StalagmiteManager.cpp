@@ -1,12 +1,19 @@
 #include "scriptingUtil/gameplaypch.h"
+#include "constants/Scenes.h"
+
 #include "StalagmiteManager.h"
 
 
 Hachiko::Scripting::StalagmiteManager::StalagmiteManager(GameObject* game_object)
 	: Script(game_object, "StalagmiteManager")
 	, _falling_time(0.4f)
-	, _falling_cooldown(0.5f)
+	, _crystal_parent(nullptr)
 {
+}
+
+void Hachiko::Scripting::StalagmiteManager::OnAwake()
+{
+	_player_camera = Scenes::GetMainCamera()->GetComponent<PlayerCamera>();
 }
 
 void Hachiko::Scripting::StalagmiteManager::OnStart()
@@ -36,6 +43,7 @@ void Hachiko::Scripting::StalagmiteManager::OnUpdate()
 			{
 				_stalagmites[i]->SetNewState(StalagmiteState::FALLING);
 			}
+			_player_camera->Shake(0.5f, 0.8f);
 		}
 		else {
 			if (_stalagmites[i]->GetState() == StalagmiteState::FALLING)
@@ -47,10 +55,6 @@ void Hachiko::Scripting::StalagmiteManager::OnUpdate()
 				}
 
 				FallingStalagmite(_stalagmites[i]);
-			}
-			else if (_stalagmites[i]->GetState() == StalagmiteState::SPAWN_CRYSTAL)
-			{
-
 			}
 
 			UpdateStalagmiteState(_stalagmites[i]);
@@ -75,8 +79,12 @@ void Hachiko::Scripting::StalagmiteManager::UpdateStalagmiteState(Stalagmite* st
 	case StalagmiteState::INVALID:
 		return;
 	case StalagmiteState::FALLING:
+		stalagmite->ActiveStalagmite();
+		stalagmite->ActiveEffects();
 		break;
 	case StalagmiteState::SPAWN_CRYSTAL:
+		stalagmite->SetCrystalParent(_crystal_parent);
+		stalagmite->ActiveCrystal();
 		break;
 	default:
 		break;
