@@ -68,8 +68,8 @@ void Hachiko::Scripting::StalagmiteManager::OnUpdate()
 					CombatManager::AttackStats attack_stats;
 					attack_stats.damage = 3.f;
 					attack_stats.knockback_distance = 0.0f;
-					attack_stats.width = 2.f;
-					attack_stats.range = 2.5; // a bit bigger than its attack activation range
+					attack_stats.width = 3.5f;
+					attack_stats.range = 4.5; // a bit bigger than its attack activation range
 					attack_stats.type = CombatManager::AttackType::CIRCLE;
 					_combat_manager->EnemyMeleeAttack(_stalagmites[i]->GetExplosionArea()
 						->GetTransform()->GetGlobalMatrix(), attack_stats);
