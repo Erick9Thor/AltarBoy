@@ -44,6 +44,11 @@ namespace Hachiko
 				return GEO;
 			}
 
+			GameObject* GetExplosionArea()
+			{
+				return _explosion_effect;
+			}
+
 			void ActiveStalagmite();
 			void ActiveEffects();
 			void Falling();

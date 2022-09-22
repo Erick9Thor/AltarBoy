@@ -1,5 +1,7 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "constants/Scenes.h"
+#include "entities/player/PlayerController.h"
+#include "entities/player/PlayerCamera.h"
 
 #include "StalagmiteManager.h"
 
@@ -13,6 +15,9 @@ Hachiko::Scripting::StalagmiteManager::StalagmiteManager(GameObject* game_object
 
 void Hachiko::Scripting::StalagmiteManager::OnAwake()
 {
+	_player = Scenes::GetPlayer();
+	_player_controller = _player->GetComponent<PlayerController>();
+	_combat_manager = Scenes::GetCombatManager()->GetComponent<CombatManager>();
 	_player_camera = Scenes::GetMainCamera()->GetComponent<PlayerCamera>();
 }
 
@@ -34,6 +39,8 @@ void Hachiko::Scripting::StalagmiteManager::GenerateStalagmites()
 
 void Hachiko::Scripting::StalagmiteManager::OnUpdate()
 {
+	_player_pos = _player_controller->GetGameObject()->GetTransform()->GetGlobalPosition();
+
 	for (unsigned i = 0; i < _stalagmites.size(); i++)
 	{
 		if (_stalagmites[i]->GetState() == StalagmiteState::INVALID && CheckPreviousStalagmite(i))
@@ -57,6 +64,16 @@ void Hachiko::Scripting::StalagmiteManager::OnUpdate()
 				if (falling_elapsed >= _falling_time)
 				{
 					// AOE PLAYER DAMAGE
+					 
+					CombatManager::AttackStats attack_stats;
+					attack_stats.damage = 3.f;
+					attack_stats.knockback_distance = 0.0f;
+					attack_stats.width = 0.f;
+					attack_stats.range = 2.5; // a bit bigger than its attack activation range
+					attack_stats.type = CombatManager::AttackType::CIRCLE;
+					_combat_manager->EnemyMeleeAttack(_stalagmites[i]->GetExplosionArea()
+						->GetTransform()->GetGlobalMatrix(), attack_stats);
+					
 
 					_stalagmites[i]->SetNewState(StalagmiteState::SPAWN_CRYSTAL);
 					falling_elapsed = 0;
@@ -90,6 +107,9 @@ void Hachiko::Scripting::StalagmiteManager::UpdateStalagmiteState(Stalagmite* st
 	case StalagmiteState::INVALID:
 		return;
 	case StalagmiteState::FALLING:
+
+		/* BUG: CORRECT THE Y POSITION*/
+		stalagmite->GetGameObject()->GetTransform()->SetGlobalPosition(_player_pos);
 		stalagmite->ActiveStalagmite();
 		stalagmite->ActiveEffects();
 		break;
