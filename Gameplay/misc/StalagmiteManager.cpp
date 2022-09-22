@@ -68,7 +68,7 @@ void Hachiko::Scripting::StalagmiteManager::OnUpdate()
 					CombatManager::AttackStats attack_stats;
 					attack_stats.damage = 3.f;
 					attack_stats.knockback_distance = 0.0f;
-					attack_stats.width = 0.f;
+					attack_stats.width = 2.f;
 					attack_stats.range = 2.5; // a bit bigger than its attack activation range
 					attack_stats.type = CombatManager::AttackType::CIRCLE;
 					_combat_manager->EnemyMeleeAttack(_stalagmites[i]->GetExplosionArea()
@@ -107,8 +107,7 @@ void Hachiko::Scripting::StalagmiteManager::UpdateStalagmiteState(Stalagmite* st
 	case StalagmiteState::INVALID:
 		return;
 	case StalagmiteState::FALLING:
-
-		/* BUG: CORRECT THE Y POSITION*/
+		_player_pos.y += 1.2f; // PLAYER HEIGHT
 		stalagmite->GetGameObject()->GetTransform()->SetGlobalPosition(_player_pos);
 		stalagmite->ActiveStalagmite();
 		stalagmite->ActiveEffects();
