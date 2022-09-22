@@ -27,8 +27,8 @@ void Hachiko::Scripting::StalagmiteManager::GenerateStalagmites()
 
 	for (int i = 0; i < stalagmites_children.size(); i++)
 	{
-		Stalagmite* stalagmite_one = stalagmites_children[i]->GetComponent<Stalagmite>();
-		_stalagmites.push_back(stalagmite_one);
+		Stalagmite* stalagmite = stalagmites_children[i]->GetComponent<Stalagmite>();
+		_stalagmites.push_back(stalagmite);
 	}
 }
 
@@ -36,14 +36,19 @@ void Hachiko::Scripting::StalagmiteManager::OnUpdate()
 {
 	for (unsigned i = 0; i < _stalagmites.size(); i++)
 	{
-		if (_stalagmites[i]->GetState() == StalagmiteState::INVALID)
+		if (_stalagmites[i]->GetState() == StalagmiteState::INVALID && CheckPreviousStalagmite(i))
 		{
+			// MOVE STALAGMITE TO THE PLAYER
+
 			cooldown_elapsed += Time::DeltaTime();
 			if (cooldown_elapsed >= _falling_cooldown)
 			{
 				_stalagmites[i]->SetNewState(StalagmiteState::FALLING);
+				cooldown_elapsed = 0;
 			}
-			_player_camera->Shake(0.5f, 0.8f);
+			else {
+				_player_camera->Shake(0.3f, 0.2f);
+			}
 		}
 		else {
 			if (_stalagmites[i]->GetState() == StalagmiteState::FALLING)
@@ -51,10 +56,16 @@ void Hachiko::Scripting::StalagmiteManager::OnUpdate()
 				falling_elapsed += Time::DeltaTime();
 				if (falling_elapsed >= _falling_time)
 				{
+					// AOE PLAYER DAMAGE
+
 					_stalagmites[i]->SetNewState(StalagmiteState::SPAWN_CRYSTAL);
+					falling_elapsed = 0;
+				}
+				else
+				{
+					FallingStalagmite(_stalagmites[i]);
 				}
 
-				FallingStalagmite(_stalagmites[i]);
 			}
 
 			UpdateStalagmiteState(_stalagmites[i]);
@@ -95,5 +106,17 @@ void Hachiko::Scripting::StalagmiteManager::FallingStalagmite(Stalagmite* stalag
 {
 	stalagmite->Falling();
 }
+
+bool Hachiko::Scripting::StalagmiteManager::CheckPreviousStalagmite(int idx)
+{
+	if (idx == 0) // First stalagmite
+	{
+		return true;
+	}
+	else {
+		return _stalagmites[(int)idx - 1]->IsCrystalSpawned();
+	}
+}
+
 
 

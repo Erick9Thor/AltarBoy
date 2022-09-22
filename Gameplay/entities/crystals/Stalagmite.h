@@ -49,10 +49,15 @@ namespace Hachiko
 			void Falling();
 			void ActiveCrystal();
 
+			bool IsCrystalSpawned() {
+				return _crystal_spwaned;
+			}
+
 			void SetCrystalParent(GameObject* crystal_parent)
 			{
 				crystal->SetNewParent(crystal_parent);
 				game_object->SetActive(false);
+				_crystal_spwaned = true;
 			}
 
 		private:
@@ -65,6 +70,8 @@ namespace Hachiko
 			SERIALIZE_FIELD(GameObject*, crystal);
 
 			SERIALIZE_FIELD(GameObject*, GEO);
+
+			bool _crystal_spwaned = false;
 		};
 	}
 }
