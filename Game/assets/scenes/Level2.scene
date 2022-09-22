@@ -12651,7 +12651,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1250, 699]
+            size: [814, 472]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -12686,6 +12686,9 @@ child:
                 id: 11397657397759799615
                 type: 9
                 enabled: true
+                scale_ui: false
+                original_size_x: 0
+                original_size_y: 0
               - !<image>
                 id: 8848045623323409820
                 type: 11
@@ -12725,6 +12728,9 @@ child:
                 id: 15082156092452252990
                 type: 9
                 enabled: true
+                scale_ui: false
+                original_size_x: 0
+                original_size_y: 0
               - !<text>
                 id: 4708773645280568284
                 type: 16
@@ -32412,6 +32418,7 @@ child:
             "'_toggle_activation@bool'": true
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
+            "'_sparks@GameObject*'": 0
           - id: 17817942635228409429
             type: 20
             enabled: true
@@ -32485,6 +32492,7 @@ child:
             "'_toggle_activation@bool'": true
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
+            "'_sparks@GameObject*'": 0
           - id: 7855138358787914724
             type: 20
             enabled: true
@@ -32558,6 +32566,7 @@ child:
             "'_toggle_activation@bool'": false
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
+            "'_sparks@GameObject*'": 0
           - id: 1560203970384173830
             type: 20
             enabled: true
@@ -32631,6 +32640,7 @@ child:
             "'_toggle_activation@bool'": false
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
+            "'_sparks@GameObject*'": 0
           - id: 14695003231451741538
             type: 20
             enabled: true
@@ -32704,6 +32714,7 @@ child:
             "'_toggle_activation@bool'": false
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
+            "'_sparks@GameObject*'": 0
           - id: 18244783952425888498
             type: 20
             enabled: true
@@ -32777,6 +32788,7 @@ child:
             "'_toggle_activation@bool'": false
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
+            "'_sparks@GameObject*'": 0
           - id: 11606083925199337313
             type: 20
             enabled: true
@@ -32850,6 +32862,7 @@ child:
             "'_toggle_activation@bool'": false
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
+            "'_sparks@GameObject*'": 0
           - id: 12003283733495858845
             type: 20
             enabled: true
@@ -32923,6 +32936,7 @@ child:
             "'_toggle_activation@bool'": false
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
+            "'_sparks@GameObject*'": 0
           - id: 8302683609660054132
             type: 20
             enabled: true
@@ -32996,6 +33010,7 @@ child:
             "'_toggle_activation@bool'": true
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
+            "'_sparks@GameObject*'": 0
           - id: 10194373368110108326
             type: 20
             enabled: true
@@ -33069,6 +33084,7 @@ child:
             "'_toggle_activation@bool'": false
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
+            "'_sparks@GameObject*'": 2373261524069017800
           - id: 3348784641776943634
             type: 20
             enabled: true
@@ -33133,6 +33149,80 @@ child:
                 visible: true
                 material_id: 17731599994553605144
                 tint_color: [1, 1, 1, 1]
+          - id: 2373261524069017800
+            name: LaserSparks
+            enabled: true
+            component:
+              - !<transform>
+                id: 2640403187614480590
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [90, 0, -0]
+                scale: [1, 1, 1]
+              - !<particle_system>
+                id: 16981699794871581058
+                type: 22
+                enabled: true
+                sections:
+                  parameters: true
+                  emission: true
+                  shape: true
+                  lights: false
+                  renderer: true
+                parameters:
+                  duration: 0.5
+                  loop: false
+                  life: [true, true, 0, [0.25, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  speed: [true, true, 0, [30, 5], 0.5, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  size: [true, true, 0, [2, 1], 0.25, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  properties: [1, 0, 0, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                emission:
+                  rate: [true, true, 0, [50, 10], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  rate_burst: [true, true, 0, [10, 10], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  burst: false
+                emitter_shape:
+                  type: 0
+                  properties: [360, 0, [0, 0, 0], 0.1, 0, [0, 0, 0], [1, 1, 1], 10]
+                texture:
+                  texture_id: 3291545039621372658
+                  tiles: [2, 1]
+                  flip: [false, false]
+                  total_tiles: 2
+                modifiers:
+                  velocity:
+                    active: false
+                    speed: [true, true, 2, [0, 0], 0.001, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  size:
+                    active: false
+                    size: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  color:
+                    active: true
+                    color_gradient: [[1, 0, 0, 0, 0.88], [1, 1, 1, 0, 0.9477], [0, 0, 0, 0, 1]]
+                    color_cycles: 1
+                  force:
+                    active: false
+                    rotation: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    x_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    y_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    z_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  animation:
+                    active: false
+                    animation_speed: 0
+                    blend_factor: 0
+                    fit_to_lifetime: false
+                  noise:
+                    active: false
+                    separate_axes: false
+                    strength:
+                      x: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                      y: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                      z: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    position: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    rotation: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    scale: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
       - id: 7063746981893266895
         name: trigger_1
         enabled: true
@@ -33182,6 +33272,7 @@ child:
             "'_toggle_activation@bool'": false
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
+            "'_sparks@GameObject*'": 10419062081009056423
           - id: 14306024741120179351
             type: 20
             enabled: true
@@ -33246,6 +33337,80 @@ child:
                 visible: true
                 material_id: 17731599994553605144
                 tint_color: [1, 1, 1, 1]
+          - id: 10419062081009056423
+            name: LaserSparks
+            enabled: true
+            component:
+              - !<transform>
+                id: 6440365056627736595
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [90.01, -0.0044, 0]
+                scale: [1, 1, 1]
+              - !<particle_system>
+                id: 16428825905713493017
+                type: 22
+                enabled: true
+                sections:
+                  parameters: true
+                  emission: true
+                  shape: true
+                  lights: false
+                  renderer: true
+                parameters:
+                  duration: 0.5
+                  loop: false
+                  life: [true, true, 0, [0.25, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  speed: [true, true, 0, [30, 5], 0.5, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  size: [true, true, 0, [2, 1], 0.25, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  properties: [1, 0, 0, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                emission:
+                  rate: [true, true, 0, [50, 10], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  rate_burst: [true, true, 0, [25, 10], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  burst: false
+                emitter_shape:
+                  type: 0
+                  properties: [360, 0, [0, 0, 0], 0.1, 0, [0, 0, 0], [1, 1, 1], 10]
+                texture:
+                  texture_id: 3291545039621372658
+                  tiles: [2, 1]
+                  flip: [false, false]
+                  total_tiles: 2
+                modifiers:
+                  velocity:
+                    active: false
+                    speed: [true, true, 2, [0, 0], 0.001, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  size:
+                    active: false
+                    size: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  color:
+                    active: true
+                    color_gradient: [[1, 0, 0, 0, 0.88], [1, 1, 1, 0, 0.9477], [0, 0, 0, 0, 1]]
+                    color_cycles: 1
+                  force:
+                    active: false
+                    rotation: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    x_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    y_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    z_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  animation:
+                    active: false
+                    animation_speed: 0
+                    blend_factor: 0
+                    fit_to_lifetime: false
+                  noise:
+                    active: false
+                    separate_axes: false
+                    strength:
+                      x: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                      y: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                      z: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    position: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    rotation: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    scale: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
       - id: 1355001852095918690
         name: trigger_2
         enabled: true
@@ -33295,6 +33460,7 @@ child:
             "'_toggle_activation@bool'": false
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
+            "'_sparks@GameObject*'": 0
           - id: 17510398279683272903
             type: 20
             enabled: true
@@ -33388,6 +33554,7 @@ child:
             "'_toggle_activation@bool'": false
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
+            "'_sparks@GameObject*'": 0
           - id: 5762238692053394355
             type: 20
             enabled: true
@@ -33461,6 +33628,7 @@ child:
             "'_toggle_activation@bool'": false
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
+            "'_sparks@GameObject*'": 0
           - id: 12515943156503302189
             type: 20
             enabled: true
@@ -33540,6 +33708,7 @@ child:
             "'_toggle_activation@bool'": false
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
+            "'_sparks@GameObject*'": 0
           - id: 5626211156909438935
             type: 20
             enabled: true
@@ -39669,7 +39838,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1250, 699]
+            size: [814, 472]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -39704,6 +39873,9 @@ child:
                 id: 12576026150617367890
                 type: 9
                 enabled: true
+                scale_ui: false
+                original_size_x: 0
+                original_size_y: 0
               - !<image>
                 id: 16816766311950357391
                 type: 11
@@ -39744,6 +39916,9 @@ child:
                     id: 1413381847080425064
                     type: 9
                     enabled: true
+                    scale_ui: false
+                    original_size_x: 0
+                    original_size_y: 0
                   - !<image>
                     id: 6509863961870850098
                     type: 11
@@ -39783,6 +39958,9 @@ child:
                     id: 4331252706320057755
                     type: 9
                     enabled: true
+                    scale_ui: false
+                    original_size_x: 0
+                    original_size_y: 0
                   - !<image>
                     id: 13599729973803113995
                     type: 11
@@ -39823,6 +40001,9 @@ child:
                         id: 1555294188225905727
                         type: 9
                         enabled: true
+                        scale_ui: false
+                        original_size_x: 0
+                        original_size_y: 0
                       - !<image>
                         id: 11948098615230609316
                         type: 11
@@ -39863,6 +40044,9 @@ child:
                             id: 10201648136613205989
                             type: 9
                             enabled: true
+                            scale_ui: false
+                            original_size_x: 0
+                            original_size_y: 0
                           - !<image>
                             id: 2754990567270913447
                             type: 11
@@ -39902,6 +40086,9 @@ child:
                             id: 15007454816369225854
                             type: 9
                             enabled: true
+                            scale_ui: false
+                            original_size_x: 0
+                            original_size_y: 0
                           - !<image>
                             id: 15041264866225084631
                             type: 11
@@ -39941,6 +40128,9 @@ child:
                             id: 9299434002128268791
                             type: 9
                             enabled: true
+                            scale_ui: false
+                            original_size_x: 0
+                            original_size_y: 0
                           - !<image>
                             id: 502462729529152795
                             type: 11
@@ -39980,6 +40170,9 @@ child:
                             id: 12758674596321876656
                             type: 9
                             enabled: true
+                            scale_ui: false
+                            original_size_x: 0
+                            original_size_y: 0
                           - !<image>
                             id: 6646687882751948194
                             type: 11
@@ -40019,6 +40212,9 @@ child:
                         id: 13172879136410323276
                         type: 9
                         enabled: true
+                        scale_ui: false
+                        original_size_x: 0
+                        original_size_y: 0
                       - !<image>
                         id: 1570145678748948400
                         type: 11
@@ -40059,6 +40255,9 @@ child:
                             id: 18220978880903727097
                             type: 9
                             enabled: true
+                            scale_ui: false
+                            original_size_x: 0
+                            original_size_y: 0
                           - !<image>
                             id: 6818736938610792472
                             type: 11
@@ -40098,6 +40297,9 @@ child:
                             id: 6730060017232867703
                             type: 9
                             enabled: true
+                            scale_ui: false
+                            original_size_x: 0
+                            original_size_y: 0
                           - !<image>
                             id: 10890862178733015542
                             type: 11
@@ -40137,6 +40339,9 @@ child:
                             id: 9553066160576419886
                             type: 9
                             enabled: true
+                            scale_ui: false
+                            original_size_x: 0
+                            original_size_y: 0
                           - !<image>
                             id: 8212938689855662260
                             type: 11
@@ -40176,6 +40381,9 @@ child:
                             id: 9677246181805372799
                             type: 9
                             enabled: true
+                            scale_ui: false
+                            original_size_x: 0
+                            original_size_y: 0
                           - !<image>
                             id: 10582339774069541176
                             type: 11
@@ -40246,6 +40454,9 @@ child:
                             id: 17429038425900031037
                             type: 9
                             enabled: true
+                            scale_ui: false
+                            original_size_x: 0
+                            original_size_y: 0
                           - !<image>
                             id: 17550800534581444256
                             type: 11
@@ -40285,6 +40496,9 @@ child:
                             id: 4146978891031941895
                             type: 9
                             enabled: true
+                            scale_ui: false
+                            original_size_x: 0
+                            original_size_y: 0
                           - !<image>
                             id: 10679154939519175951
                             type: 11
@@ -40324,6 +40538,9 @@ child:
                     id: 6623498674480963847
                     type: 9
                     enabled: true
+                    scale_ui: false
+                    original_size_x: 0
+                    original_size_y: 0
                   - !<image>
                     id: 14844157488237000960
                     type: 11
@@ -40363,6 +40580,9 @@ child:
                     id: 8041075792047141510
                     type: 9
                     enabled: true
+                    scale_ui: false
+                    original_size_x: 0
+                    original_size_y: 0
                   - !<image>
                     id: 2592483194121998939
                     type: 11
