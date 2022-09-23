@@ -459,24 +459,32 @@ void Hachiko::Scripting::BossController::FocusCamera(bool focus_on_boss)
 void Hachiko::Scripting::BossController::SpawnEnemy()
 {
 	enemy_timer += Time::DeltaTime();
-	if (enemy_timer > time_between_enemies)
+	if (enemy_timer < time_between_enemies)
 	{
-		for (unsigned i = 0; i < enemies.size(); ++i) 
-		{
-			if (!enemies[i]->GetGameObject()->IsActive())
-			{
-				enemies[i]->GetGameObject()->SetActive(true);
-				ComponentAgent* agent = enemies[i]->GetGameObject()->GetComponent<ComponentAgent>();
-				if (agent)
-				{
-					agent->AddToCrowd();
-				}
-				break;
-			}
-		}
+            return;
+        }
 
-		enemy_timer = 0;
-	}
+        for (EnemyController* enemy_controller : enemies) 
+        {
+            GameObject* __restrict enemy = enemy_controller->GetGameObject();
+
+            if (enemy->IsActive())
+            {
+                continue;
+            }
+
+            enemy->SetActive(true);
+            ComponentAgent* __restrict agent = enemy->GetComponent<ComponentAgent>();
+        
+            if (agent)
+            {
+                agent->AddToCrowd();
+            }
+            
+            break;
+        }
+
+        enemy_timer = 0;
 }
 
 void Hachiko::Scripting::BossController::ResetEnemies()
