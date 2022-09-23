@@ -443,10 +443,9 @@ void Hachiko::Scripting::BossController::SpawnCrystalsController()
 	}
 
 	float3 emitter_direction = transform->GetFront().Normalized();
-	float3 emitter_position = transform->GetGlobalPosition() + emitter_direction * (combat_stats->_attack_range / 2.f);
-	float4x4 emitter = float4x4::FromTRS(emitter_position, transform->GetGlobalRotation(), transform->GetGlobalScale());
+	float random = float(rand() % 10);
+	float3 emitter_position = transform->GetGlobalPosition() + emitter_direction * random;
 
-	current_crystal_to_spawn->SetActive(true);
 	current_crystal_to_spawn->FindDescendantWithName("ExplosionIndicatorHelper")->SetActive(false);
 	current_crystal_to_spawn->GetTransform()->SetGlobalPosition(emitter_position);
 
