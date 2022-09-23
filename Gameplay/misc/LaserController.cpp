@@ -158,7 +158,7 @@ void Hachiko::Scripting::LaserController::AdjustLength()
 
 	if (_length != new_length || _state == ACTIVATING)
 	{
-		if (_sparks != nullptr && (_length - new_length) > 2.0f)
+		if (_sparks != nullptr && (_length - new_length) > 0.1f)
 		{
 			_sparks->GetTransform()->SetLocalPosition(float3(0.0f, 0.0f, - new_length));
 			_sparks_particles->Restart();
