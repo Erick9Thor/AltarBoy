@@ -37,9 +37,9 @@ void Hachiko::Scripting::BossController::OnAwake()
 	
 	if (enemy_pool)
 	{
-		for (int i = 0; i < enemy_pool->children.size(); ++i)
+		for (GameObject* enemy : enemy_pool)
 		{
-			enemies.push_back(enemy_pool->children[i]->GetComponent<EnemyController>());
+			enemies.push_back(enemy->GetComponent<EnemyController>());
 		}
 		ResetEnemies();
 	}
