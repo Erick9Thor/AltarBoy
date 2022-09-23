@@ -65,6 +65,8 @@ void Hachiko::Scripting::BossController::RegisterHit(int dmg)
 	{
 		combat_stats->_current_hp -= dmg;
 		UpdateHpBar();
+
+		game_object->ChangeEmissiveColor(float4(255, 255, 255, 255), 0.3f, true);
 	}
 }
 

@@ -476,7 +476,7 @@ void Hachiko::Scripting::EnemyController::BeetleAttackController()
 	float dist_to_player = _current_pos.Distance(_player_pos);
 
 	// If an enemy is from a gautlet, it will always follow the player
-	if (_is_from_gautlet || dist_to_player < _aggro_range || _enraged > 0.0f)
+	if ((_is_from_gautlet || dist_to_player < _aggro_range || _enraged > 0.0f) && _player_controller->IsAlive())
 	{
 		if (dist_to_player <= _attack_range)
 		{
