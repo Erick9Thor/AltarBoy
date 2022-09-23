@@ -1596,7 +1596,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 	// COMMON ATTACKS
 	case AttackType::COMMON_1:
 		// Make hit delay shorter than duration!
-		attack.hit_delay = 0.05f;
+		attack.hit_delay = 0.128f;
 		attack.duration = 0.5f; // 10 frames .45ms
 		attack.cooldown = 0.0f;
 		attack.dash_distance = 1.0f;
@@ -1609,8 +1609,8 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 		break;
 
 	case AttackType::COMMON_2:
-		attack.hit_delay = 0.1f;
-		attack.duration = 0.40f; // 9 frames .45ms
+		attack.hit_delay = 0.128f;
+		attack.duration = 0.40f; // 9 frames .45ms 0.016
 		attack.cooldown = 0.0f;
 		attack.dash_distance = 1.0f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
@@ -1622,7 +1622,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 		break;
 
 	case AttackType::COMMON_3:
-		attack.hit_delay = 0.2f;
+		attack.hit_delay = 0.128f;
 		attack.duration = 0.6f; // 12 frames
 		attack.cooldown = 0.4f;
 		attack.dash_distance = 1.3f;
@@ -1636,7 +1636,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 
 	// QUICK ATTACKS
 	case AttackType::QUICK_1:
-		attack.hit_delay = 0.05f;
+		attack.hit_delay = 0.128f;
 		attack.duration = 0.6f;
 		attack.cooldown = 0.0f;
 		attack.dash_distance = 0.3f;
@@ -1649,7 +1649,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 		break;
 
 	case AttackType::QUICK_2:
-		attack.hit_delay = 0.05f;
+		attack.hit_delay = 0.128f;
 		attack.duration = 0.6f;
 		attack.cooldown = 0.0f;
 		attack.dash_distance = 0.3f;
@@ -1663,7 +1663,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 
 	// HEAVY ATTACKS
 	case AttackType::HEAVY_1:
-		attack.hit_delay = 0.1f;
+		attack.hit_delay = 0.128f;
 		attack.duration = 0.8f;
 		attack.cooldown = 0.0f;
 		attack.dash_distance = 0.5f;
@@ -1676,7 +1676,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 		break;
 
 	case AttackType::HEAVY_2:
-		attack.hit_delay = 0.1f;
+		attack.hit_delay = 0.128f;
 		attack.duration = 0.8f;
 		attack.cooldown = 0.0f;
 		attack.dash_distance = 0.5f;
@@ -1689,7 +1689,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 		break;
 
 	case AttackType::HEAVY_3:
-		attack.hit_delay = 0.5f;
+		attack.hit_delay = 0.128f;
 		attack.duration = 1.0f;
 		attack.cooldown = 0.5f;
 		attack.dash_distance = 0.5f;
@@ -1703,7 +1703,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 
 	// HAMMER ATTACKS
 	case AttackType::HAMMER_1:
-		attack.hit_delay = 0.1f;
+		attack.hit_delay = 0.128f;
 		attack.duration = 0.5f;
 		attack.cooldown = 0.0f;
 		attack.dash_distance = 0.5f;
@@ -1716,7 +1716,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 		break;
 
 	case AttackType::HAMMER_2:
-		attack.hit_delay = 0.1f;
+		attack.hit_delay = 0.128f;
 		attack.duration = 0.5f;
 		attack.cooldown = 0.0f;
 		attack.dash_distance = 0.5f;
