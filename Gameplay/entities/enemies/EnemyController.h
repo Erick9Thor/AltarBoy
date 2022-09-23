@@ -120,6 +120,7 @@ namespace Hachiko
             SERIALIZE_FIELD(GameObject*, _attack_zone);
             SERIALIZE_FIELD(GameObject*, _inner_indicator);
             SERIALIZE_FIELD(GameObject*, _outer_indicator);
+            SERIALIZE_FIELD(GameObject*, _projectile_particles);
 
             
             SERIALIZE_FIELD(bool, _already_in_combat);
