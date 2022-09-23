@@ -489,19 +489,25 @@ void Hachiko::Scripting::BossController::SpawnEnemy()
 
 void Hachiko::Scripting::BossController::ResetEnemies()
 {
-	for (unsigned i = 0; i < enemies.size(); ++i)
+	for (EnemyController* enemy_controller : enemies)
 	{
-		ComponentAgent* agent = enemies[i]->GetGameObject()->GetComponent<ComponentAgent>();
-		if (agent)
+        GameObject* __restrict enemy = enemy_controller->GetGameObject();
+		ComponentAgent* __restrict agent = enemies[i]->GetGameObject()->GetComponent<ComponentAgent>();
+		
+        if (agent)
 		{
 			agent->RemoveFromCrowd();
 		}
-		if (enemies[i])
+		
+        if (enemy_controller)
 		{
-			enemies[i]->SetIsFromBoss(true);
-			enemies[i]->ResetEnemy();
-			enemies[i]->ResetEnemyPosition();
+            // Maybe pack these methods into a method of EnemyController for
+            // ease of extensibility.
+			enemy_controller->SetIsFromBoss(true);
+			enemy_controller->ResetEnemy();
+			enemy_controller->ResetEnemyPosition();
 		}
-		enemies[i]->GetGameObject()->SetActive(false);
+		
+        enemy->SetActive(false);
 	}
 }
