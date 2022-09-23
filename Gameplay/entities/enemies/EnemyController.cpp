@@ -667,7 +667,6 @@ void Hachiko::Scripting::EnemyController::DestroyEntity()
 	}
 
 	game_object->SetActive(false);
-	//SceneManagement::Destroy(game_object);
 }
 
 void Hachiko::Scripting::EnemyController::DropParasite()
