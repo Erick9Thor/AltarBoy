@@ -10,6 +10,7 @@
 #include "modules/ModuleEvent.h"
 #include "modules/ModuleWindow.h"
 
+#include "components/ComponentCanvas.h"
 #include "components/ComponentCanvasRenderer.h"
 #include "components/ComponentCamera.h"
 #include "components/ComponentTransform2D.h"
@@ -76,27 +77,37 @@ void Hachiko::ModuleUserInterface::DrawUI(const Scene* scene) const
         static_cast<float>(height));
 
     App->program->UpdateCamera(camera_data);
-    RecursiveDrawUI(scene->GetRoot(), img_program, txt_program);
+    RecursiveDrawUI(nullptr, scene->GetRoot(), img_program, txt_program);
     UnbindSquare();
     glDepthFunc(GL_LESS);
 }
 
 void Hachiko::ModuleUserInterface::RecursiveDrawUI(
+    ComponentCanvas* canvas,
     GameObject* __restrict game_object, 
     Program* img_program, 
     Program* txt_program)
 {
-    const ComponentCanvasRenderer* renderer = 
-        game_object->GetComponent<ComponentCanvasRenderer>();
-
-    if (renderer && game_object->IsActive() && renderer->IsActive())
+    ComponentCanvas* new_canvas = game_object->GetComponent<ComponentCanvas>();
+    if (new_canvas)
     {
-        renderer->Render(img_program, txt_program);
+        canvas = new_canvas;
+    }
+    
+    if (canvas)
+    {
+        const ComponentCanvasRenderer* renderer = 
+            game_object->GetComponent<ComponentCanvasRenderer>();
+
+        if (renderer && game_object->IsActive() && renderer->IsActive())
+        {
+            renderer->Render(canvas, img_program, txt_program);
+        }
     }
 
     for (GameObject* child : game_object->children)
     {
-        RecursiveDrawUI(child, img_program, txt_program);
+        RecursiveDrawUI(canvas, child, img_program, txt_program);
     }
 }
 
