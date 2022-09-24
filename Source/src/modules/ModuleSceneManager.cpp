@@ -138,8 +138,8 @@ void Hachiko::ModuleSceneManager::CheckSceneLoading()
 
     loading_scene_worker.join();
 
-    tmp_loading_scene->GetSkybox()->Reload();
     App->resources->PostLoadSceneResources();
+    tmp_loading_scene->GetSkybox()->Reload();
 
     PostLoadScene();
 
