@@ -78,7 +78,6 @@ void Hachiko::Scripting::PlayerSoundManager::OnUpdate()
 		if (state_changed)
 		{
 			_audio_source->PostEvent(Sounds::GAME_OVER);
-			_audio_source->PostEvent(Sounds::STOP_COMBAT);
 			_audio_source->PostEvent(Sounds::STOP_PEBBLE);
 			_audio_source->PostEvent(Sounds::STOP_WIND);
 		}

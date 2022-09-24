@@ -19,10 +19,12 @@ void Hachiko::Scripting::AudioManager::OnAwake()
 {
 	enemy_pool = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
 	_audio_source = game_object->GetComponent<ComponentAudioSource>();
+	PlayNavigationMusic();
 }
 
 void Hachiko::Scripting::AudioManager::OnStart()
 {
+	PlayNavigationMusic();
 	_audio_source->PostEvent(Sounds::PLAY_NAVIGATION);
 	_audio_source->PostEvent(Sounds::PLAY_WIND);
 	_audio_source->PostEvent(Sounds::PLAY_PEBBLE);
@@ -61,7 +63,6 @@ void Hachiko::Scripting::AudioManager::RegisterCombat()
 		_in_combat = true;
 		updated = false;
 	}
-
 }
 
 void Hachiko::Scripting::AudioManager::UnregisterCombat()
@@ -91,19 +92,16 @@ void Hachiko::Scripting::AudioManager::UnregisterGaunlet()
 
 void Hachiko::Scripting::AudioManager::PlayCombatMusic()
 {
-	StopMusic();
-	_audio_source->PostEvent(Sounds::PLAY_COMBAT);
+	_audio_source->SetRTPCValue(L"EnemyAware", 100);
 }
 
 void Hachiko::Scripting::AudioManager::PlayNavigationMusic()
 {
-	StopMusic();
-	_audio_source->PostEvent(Sounds::PLAY_NAVIGATION);
+	_audio_source->SetRTPCValue(L"EnemyAware", 0);
 }
 
 void Hachiko::Scripting::AudioManager::StopMusic()
 {
-	_audio_source->PostEvent(Sounds::STOP_COMBAT);
-	_audio_source->PostEvent(Sounds::STOP_NAVIGATION);
-
+	//_audio_source->PostEvent(Sounds::STOP_COMBAT);
+	//_audio_source->PostEvent(Sounds::STOP_NAVIGATION);
 }
