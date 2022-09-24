@@ -270,7 +270,6 @@ void Hachiko::Scripting::EnemyController::SetStats()
 	_combat_stats->_current_hp = _combat_stats->_max_hp;
 	_stun_time = 0.0f;
 	_is_stunned = false;
-	_attack_delay = 0.3f;
 	switch (_enemy_type)
 	{
 	case EnemyType::BEETLE:
@@ -629,6 +628,7 @@ void Hachiko::Scripting::EnemyController::WormAttackController()
 	if (_previous_state == EnemyState::IDLE && _state != EnemyState::ATTACKING && !_attack_landing && dist_to_player <= _attack_range)
 	{
 		_state = EnemyState::ATTACKING;
+		_attack_current_delay = _attack_delay;
 		return;
 	}
 
@@ -639,11 +639,18 @@ void Hachiko::Scripting::EnemyController::WormSpit()
 {
 	if (_state == EnemyState::ATTACKING && animation->IsAnimationStopped())
 	{
-		// We create the attack zone once the firing animation is done
+		_state = EnemyState::IDLE;
+	}
+
+	_attack_current_delay -= Time::DeltaTimeScaled();
+	_attack_current_delay <= 0.0f ? _attack_current_delay = 0 : _attack_current_delay = _attack_current_delay;
+
+	if (!_attack_landing && _attack_current_delay <= 0.0f)
+	{
+		// We create the attack zone after the delay
 		_state = EnemyState::IDLE;
 		_attack_zone->GetTransform()->SetGlobalPosition(_player_pos);
 		_attack_landing = true;
-		_attack_current_delay = 1.0f;
 		_inner_indicator_billboard->Play();
 		_outer_indicator_billboard->Play();
 		_attack_animation_timer = 0.0f;
