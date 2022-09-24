@@ -121,6 +121,7 @@ namespace Hachiko
             SERIALIZE_FIELD(GameObject*, _inner_indicator);
             SERIALIZE_FIELD(GameObject*, _outer_indicator);
             SERIALIZE_FIELD(GameObject*, _projectile_particles);
+            SERIALIZE_FIELD(GameObject*, _explosion_particles);
 
             
             SERIALIZE_FIELD(bool, _already_in_combat);
@@ -143,6 +144,8 @@ namespace Hachiko
             ComponentParticleSystem* _big_dust_particles = nullptr;
             ComponentBillboard* _inner_indicator_billboard = nullptr;
             ComponentBillboard* _outer_indicator_billboard = nullptr;
+            ComponentParticleSystem* _projectile_particles_comp = nullptr;
+            ComponentParticleSystem* _explosion_particles_comp = nullptr;
 
             Quat _spawn_rot;
 
