@@ -28,8 +28,6 @@ namespace Hachiko
 			void BlockActions();
 			void UnblockActions();
 
-			//SERIALIZE_FIELD(GameObject*, _player_tutorial);
-			//SERIALIZE_FIELD(GameObject*, _parasite_tutorial);
 			SERIALIZE_FIELD(GameObject*, _first_enemy);
 
 			TimeManager* _time_manager;
