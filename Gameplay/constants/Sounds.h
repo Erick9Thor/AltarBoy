@@ -1,6 +1,7 @@
 
 namespace Hachiko::Sounds
 {
+	// Wwise Events
 	// Player
 	constexpr const wchar_t* FOOTSTEP = L"Play_Footstep";
 	constexpr const wchar_t* MELEE_ATTACK = L"Play_MeleeAttack";
@@ -37,4 +38,7 @@ namespace Hachiko::Sounds
 	constexpr const wchar_t* CLICK = L"Play_UIClick";
 	constexpr const wchar_t* HOVER = L"Play_UIHover";
 
+	// Wwise RTPC
+	// Enemy
+	constexpr const wchar_t* ENEMY_AWARE = L"EnemyAware";
 } // namespace Hachiko::Sounds
