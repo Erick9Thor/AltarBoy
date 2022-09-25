@@ -41,12 +41,6 @@ void Hachiko::Scripting::Tutorial::OnStart()
 
 void Hachiko::Scripting::Tutorial::OnUpdate()
 {
-	if (Input::IsKeyDown(Input::KeyCode::KEY_T))
-	{
-		_player_tutorial->SetActive(true);
-		BlockActions();
-	}
-
 	if (Input::IsKeyDown(Input::KeyCode::KEY_Y))
 	{
 		_player_tutorial->SetActive(false);
