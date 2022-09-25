@@ -11,7 +11,8 @@ namespace Hachiko
 	namespace Scripting
 	{
 		class PlayerController;
-		
+		class AudioManager;
+
 		class LevelManager : public Script
 		{
 			SERIALIZATION_METHODS(false)
@@ -52,11 +53,13 @@ namespace Hachiko
 			SERIALIZE_FIELD(float3, _respawn_position);
 			SERIALIZE_FIELD(GameObject*, _gauntlet_ui_go);
 			SERIALIZE_FIELD(GameObject*, _gauntlet_counter_go);
+			SERIALIZE_FIELD(GameObject*, _audio_manager_go);
 
 
 		private:
 			GauntletManager* _last_gauntlet = nullptr;
 			ComponentText* _enemy_counter = nullptr;
+			AudioManager* _audio_manager = nullptr;
 			bool _inputs_blocked = false;
 		};
 	}

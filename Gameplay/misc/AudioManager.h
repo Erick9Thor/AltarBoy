@@ -29,6 +29,7 @@ namespace Hachiko
 			void RegisterGaunlet();
 			void UnregisterGaunlet();
 
+			void Restart();
 		private:
 			SERIALIZE_FIELD(int, _enemies_in_combat);
 			SERIALIZE_FIELD(bool, _in_combat);
@@ -41,8 +42,8 @@ namespace Hachiko
 
 			void StopMusic();
 			void UpdateState();
-			void PlayCombatMusic();
-			void PlayNavigationMusic();
+			void SetCombat();
+			void SetNavigation();
 		};
 	} // namespace Scripting
 } // namespace Hachiko
