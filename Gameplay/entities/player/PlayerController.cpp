@@ -323,8 +323,14 @@ math::float3 Hachiko::Scripting::PlayerController::GetRaycastPosition(
 	return plane.ClosestPoint(ray);
 }
 
-float3 Hachiko::Scripting::PlayerController::GetCorrectedPosition(const float3& target_pos) const
+float3 Hachiko::Scripting::PlayerController::GetCorrectedPosition(const float3& target_pos, bool fps_relative) const
 {
+	if (fps_relative) 
+	{
+		const float correction_distance = Time::DeltaTime() * _combat_stats->_move_speed + 0.05;
+		const float y_correction_distance = Time::DeltaTime() * fall_speed + 0.2;
+		return Navigation::GetCorrectedPosition(target_pos, float3(correction_distance, y_correction_distance, correction_distance));
+	}
 	return Navigation::GetCorrectedPosition(target_pos, float3(0.5f, 0.5f, 0.5f));
 }
 
@@ -875,7 +881,6 @@ void Hachiko::Scripting::PlayerController::MovementController()
 
 	if (IsFalling())
 	{
-		constexpr float fall_speed = 25.f;
 		_player_position.y -= fall_speed * Time::DeltaTime();
 
 		if (_start_fall_pos.y - _player_position.y > _falling_distance)
@@ -923,16 +928,25 @@ void Hachiko::Scripting::PlayerController::MovementController()
 		}
 	}
 
-	float3 corrected_position = GetCorrectedPosition(_player_position);
-	if (Distance(corrected_position, _player_position) < 1.0f)
-	{
-		_player_position = corrected_position;
-		if (IsFalling())
+	float3 corrected_position = GetCorrectedPosition(_player_position, true);
+	// Valid corrected position
+	if (corrected_position.x < FLT_MAX)
+	{ 
+		if (IsFalling()) 
 		{
-			// Stopped falling
-			_state = PlayerState::IDLE;
-			if (_falling_dust_particles)
-				_falling_dust_particles->Restart();
+			if (corrected_position.y > _player_position.y)
+			{
+				_player_position = corrected_position;
+
+				// Stopped falling
+				_state = PlayerState::IDLE;
+				if (_falling_dust_particles)
+					_falling_dust_particles->Restart();
+			}
+		}
+		else 
+		{
+			_player_position = corrected_position;
 		}
 	}
 	else if (!IsDashing())

@@ -138,7 +138,7 @@ namespace Hachiko
 		private:
 			math::float3 GetRaycastPosition(
 				const math::float3& current_position) const;
-			float3 GetCorrectedPosition(const float3& target_pos) const;
+			float3 GetCorrectedPosition(const float3& target_pos, bool fps_relative = false) const;
 
 			PlayerAttack GetAttackType(AttackType attack_type);
 
@@ -214,6 +214,8 @@ namespace Hachiko
 			bool _god_mode_trigger = false;
 
 		private:
+			const float fall_speed = 25.f;
+
 			SERIALIZE_FIELD(GameObject*, _attack_indicator);
 			SERIALIZE_FIELD(GameObject*, _bullet_emitter);
 			SERIALIZE_FIELD(GameObject*, _goal);
