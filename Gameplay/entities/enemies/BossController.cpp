@@ -37,7 +37,7 @@ void Hachiko::Scripting::BossController::OnAwake()
 	
 	if (enemy_pool)
 	{
-		for (GameObject* enemy : enemy_pool)
+		for (GameObject* enemy : enemy_pool->children)
 		{
 			enemies.push_back(enemy->GetComponent<EnemyController>());
 		}
@@ -461,38 +461,38 @@ void Hachiko::Scripting::BossController::SpawnEnemy()
 	enemy_timer += Time::DeltaTime();
 	if (enemy_timer < time_between_enemies)
 	{
-            return;
-        }
+        return;
+    }
 
-        for (EnemyController* enemy_controller : enemies) 
+    for (EnemyController* enemy_controller : enemies) 
+    {
+        GameObject* enemy = enemy_controller->GetGameObject();
+
+        if (enemy->IsActive())
         {
-            GameObject* __restrict enemy = enemy_controller->GetGameObject();
-
-            if (enemy->IsActive())
-            {
-                continue;
-            }
-
-            enemy->SetActive(true);
-            ComponentAgent* __restrict agent = enemy->GetComponent<ComponentAgent>();
-        
-            if (agent)
-            {
-                agent->AddToCrowd();
-            }
-            
-            break;
+            continue;
         }
 
-        enemy_timer = 0;
+        enemy->SetActive(true);
+        ComponentAgent* agent = enemy->GetComponent<ComponentAgent>();
+        
+        if (agent)
+        {
+            agent->AddToCrowd();
+        }
+            
+        break;
+    }
+
+    enemy_timer = 0;
 }
 
 void Hachiko::Scripting::BossController::ResetEnemies()
 {
 	for (EnemyController* enemy_controller : enemies)
 	{
-        GameObject* __restrict enemy = enemy_controller->GetGameObject();
-		ComponentAgent* __restrict agent = enemies[i]->GetGameObject()->GetComponent<ComponentAgent>();
+        GameObject* enemy = enemy_controller->GetGameObject();
+		ComponentAgent* agent = enemy_controller->GetGameObject()->GetComponent<ComponentAgent>();
 		
         if (agent)
 		{
