@@ -6,7 +6,7 @@ component:
     type: 1
     enabled: true
     position: [0, 0, 0]
-    rotation: [-0, 0, -0]
+    rotation: [0, 0, 0, 1]
     scale: [1, 1, 1]
 child:
   - name: Plane273
@@ -16,7 +16,7 @@ child:
         type: 1
         enabled: true
         position: [-3.457, -10.34, -63.25]
-        rotation: [-90, 0, 50.48]
+        rotation: [-0.6396, 0.3015, 0.3015, 0.6396]
         scale: [0.5341, 0.5341, 0.603]
       - !<mesh_renderer>
         type: 2

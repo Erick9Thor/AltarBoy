@@ -6,7 +6,7 @@ component:
     type: 1
     enabled: true
     position: [0, 0, 0]
-    rotation: [-0, 0, -0]
+    rotation: [0, 0, 0, 1]
     scale: [1, 1, 1]
 child:
   - name: crystalSpike_mesh
@@ -16,7 +16,7 @@ child:
         type: 1
         enabled: true
         position: [1.203, 0.5688, -1.089]
-        rotation: [-90, 0, 50]
+        rotation: [-0.6409, 0.2988, 0.2988, 0.6409]
         scale: [1, 1, 1]
       - !<mesh_renderer>
         type: 2

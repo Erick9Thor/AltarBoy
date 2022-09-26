@@ -4,7 +4,6 @@
 #include "TriggerAnim.h"
 #include "entities/Stats.h"
 #include "entities/crystals/CrystalExplosion.h"
-#include "entities/enemies/BossController.h"
 #include "entities/enemies/BugAnimationManager.h"
 #include "entities/enemies/EnemyController.h"
 #include "entities/player/CombatManager.h"
@@ -14,10 +13,8 @@
 #include "entities/player/PlayerController.h"
 #include "entities/player/PlayerSoundManager.h"
 #include "entities/player/RoomTeleporter.h"
-#include "misc/AssetsObstacle.h"
 #include "misc/AudioManager.h"
 #include "misc/BlinkingLight.h"
-#include "misc/BossLaserController.h"
 #include "misc/CameraPosChange.h"
 #include "misc/CrystalPlatform.h"
 #include "misc/DoorController.h"
@@ -28,7 +25,6 @@
 #include "misc/LevelManager.h"
 #include "misc/PillarCheckpoint.h"
 #include "misc/Spawner.h"
-#include "misc/TimeManager.h"
 #include "ui/BackToMainMenu.h"
 #include "ui/DebugManager.h"
 #include "ui/MainMenuManager.h"
@@ -93,6 +89,24 @@ void Hachiko::Scripting::Stats::OnLoad()
 
 void Hachiko::Scripting::CrystalExplosion::OnSave(YAML::Node& node) const
 {
+	if (_explosion_crystal != nullptr)
+	{
+		node["'_explosion_crystal@GameObject*'"] = _explosion_crystal->GetID();
+	}
+	else
+	{
+		node["'_explosion_crystal@GameObject*'"] = 0;
+	}
+
+	if (_static_crystal != nullptr)
+	{
+		node["'_static_crystal@GameObject*'"] = _static_crystal->GetID();
+	}
+	else
+	{
+		node["'_static_crystal@GameObject*'"] = 0;
+	}
+
 	if (_explosion_indicator_helper != nullptr)
 	{
 		node["'_explosion_indicator_helper@GameObject*'"] = _explosion_indicator_helper->GetID();
@@ -111,10 +125,6 @@ void Hachiko::Scripting::CrystalExplosion::OnSave(YAML::Node& node) const
 		node["'_explosion_effect@GameObject*'"] = 0;
 	}
 
-	node["'_shake_intensity@float'"] = _shake_intensity;
-
-	node["'_seconds_shaking@float'"] = _seconds_shaking;
-
 	node["'_crashing_index@unsigned'"] = _crashing_index;
 
 	node["'_detecting_radius@float'"] = _detecting_radius;
@@ -130,6 +140,16 @@ void Hachiko::Scripting::CrystalExplosion::OnSave(YAML::Node& node) const
 
 void Hachiko::Scripting::CrystalExplosion::OnLoad()
 {
+	if (load_node["'_explosion_crystal@GameObject*'"].IsDefined())
+	{
+		_explosion_crystal = SceneManagement::FindInCurrentScene(load_node["'_explosion_crystal@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_static_crystal@GameObject*'"].IsDefined())
+	{
+		_static_crystal = SceneManagement::FindInCurrentScene(load_node["'_static_crystal@GameObject*'"].as<unsigned long long>());
+	}
+
 	if (load_node["'_explosion_indicator_helper@GameObject*'"].IsDefined())
 	{
 		_explosion_indicator_helper = SceneManagement::FindInCurrentScene(load_node["'_explosion_indicator_helper@GameObject*'"].as<unsigned long long>());
@@ -138,16 +158,6 @@ void Hachiko::Scripting::CrystalExplosion::OnLoad()
 	if (load_node["'_explosion_effect@GameObject*'"].IsDefined())
 	{
 		_explosion_effect = SceneManagement::FindInCurrentScene(load_node["'_explosion_effect@GameObject*'"].as<unsigned long long>());
-	}
-
-	if (load_node["'_shake_intensity@float'"].IsDefined())
-	{
-		_shake_intensity = load_node["'_shake_intensity@float'"].as<float>();
-	}
-
-	if (load_node["'_seconds_shaking@float'"].IsDefined())
-	{
-		_seconds_shaking = load_node["'_seconds_shaking@float'"].as<float>();
 	}
 
 	if (load_node["'_crashing_index@unsigned'"].IsDefined())
@@ -178,82 +188,6 @@ void Hachiko::Scripting::CrystalExplosion::OnLoad()
 	if (load_node["'_regen_time@float'"].IsDefined())
 	{
 		_regen_time = load_node["'_regen_time@float'"].as<float>();
-	}
-}
-
-void Hachiko::Scripting::BossController::OnSave(YAML::Node& node) const
-{
-	node["'state_value@int'"] = state_value;
-
-	if (hp_bar_go != nullptr)
-	{
-		node["'hp_bar_go@GameObject*'"] = hp_bar_go->GetID();
-	}
-	else
-	{
-		node["'hp_bar_go@GameObject*'"] = 0;
-	}
-
-	if (crystal_target_go != nullptr)
-	{
-		node["'crystal_target_go@GameObject*'"] = crystal_target_go->GetID();
-	}
-	else
-	{
-		node["'crystal_target_go@GameObject*'"] = 0;
-	}
-
-	if (cocoon_placeholder_go != nullptr)
-	{
-		node["'cocoon_placeholder_go@GameObject*'"] = cocoon_placeholder_go->GetID();
-	}
-	else
-	{
-		node["'cocoon_placeholder_go@GameObject*'"] = 0;
-	}
-
-	if (gauntlet_go != nullptr)
-	{
-		node["'gauntlet_go@GameObject*'"] = gauntlet_go->GetID();
-	}
-	else
-	{
-		node["'gauntlet_go@GameObject*'"] = 0;
-	}
-
-	node["'start_encounter_range@float'"] = start_encounter_range;
-}
-
-void Hachiko::Scripting::BossController::OnLoad()
-{
-	if (load_node["'state_value@int'"].IsDefined())
-	{
-		state_value = load_node["'state_value@int'"].as<int>();
-	}
-
-	if (load_node["'hp_bar_go@GameObject*'"].IsDefined())
-	{
-		hp_bar_go = SceneManagement::FindInCurrentScene(load_node["'hp_bar_go@GameObject*'"].as<unsigned long long>());
-	}
-
-	if (load_node["'crystal_target_go@GameObject*'"].IsDefined())
-	{
-		crystal_target_go = SceneManagement::FindInCurrentScene(load_node["'crystal_target_go@GameObject*'"].as<unsigned long long>());
-	}
-
-	if (load_node["'cocoon_placeholder_go@GameObject*'"].IsDefined())
-	{
-		cocoon_placeholder_go = SceneManagement::FindInCurrentScene(load_node["'cocoon_placeholder_go@GameObject*'"].as<unsigned long long>());
-	}
-
-	if (load_node["'gauntlet_go@GameObject*'"].IsDefined())
-	{
-		gauntlet_go = SceneManagement::FindInCurrentScene(load_node["'gauntlet_go@GameObject*'"].as<unsigned long long>());
-	}
-
-	if (load_node["'start_encounter_range@float'"].IsDefined())
-	{
-		start_encounter_range = load_node["'start_encounter_range@float'"].as<float>();
 	}
 }
 
@@ -688,15 +622,6 @@ void Hachiko::Scripting::PlayerController::OnSave(YAML::Node& node) const
 		node["'_claw_weapon@GameObject*'"] = 0;
 	}
 
-	if (_hammer_weapon != nullptr)
-	{
-		node["'_hammer_weapon@GameObject*'"] = _hammer_weapon->GetID();
-	}
-	else
-	{
-		node["'_hammer_weapon@GameObject*'"] = 0;
-	}
-
 	if (_attack_indicator != nullptr)
 	{
 		node["'_attack_indicator@GameObject*'"] = _attack_indicator->GetID();
@@ -781,15 +706,6 @@ void Hachiko::Scripting::PlayerController::OnSave(YAML::Node& node) const
 	else
 	{
 		node["'_heal_effect@GameObject*'"] = 0;
-	}
-
-	if (_damage_effect != nullptr)
-	{
-		node["'_damage_effect@GameObject*'"] = _damage_effect->GetID();
-	}
-	else
-	{
-		node["'_damage_effect@GameObject*'"] = 0;
 	}
 
 	node["'_rotation_duration@float'"] = _rotation_duration;
@@ -948,11 +864,6 @@ void Hachiko::Scripting::PlayerController::OnLoad()
 		_claw_weapon = SceneManagement::FindInCurrentScene(load_node["'_claw_weapon@GameObject*'"].as<unsigned long long>());
 	}
 
-	if (load_node["'_hammer_weapon@GameObject*'"].IsDefined())
-	{
-		_hammer_weapon = SceneManagement::FindInCurrentScene(load_node["'_hammer_weapon@GameObject*'"].as<unsigned long long>());
-	}
-
 	if (load_node["'_attack_indicator@GameObject*'"].IsDefined())
 	{
 		_attack_indicator = SceneManagement::FindInCurrentScene(load_node["'_attack_indicator@GameObject*'"].as<unsigned long long>());
@@ -1026,11 +937,6 @@ void Hachiko::Scripting::PlayerController::OnLoad()
 	if (load_node["'_heal_effect@GameObject*'"].IsDefined())
 	{
 		_heal_effect = SceneManagement::FindInCurrentScene(load_node["'_heal_effect@GameObject*'"].as<unsigned long long>());
-	}
-
-	if (load_node["'_damage_effect@GameObject*'"].IsDefined())
-	{
-		_damage_effect = SceneManagement::FindInCurrentScene(load_node["'_damage_effect@GameObject*'"].as<unsigned long long>());
 	}
 
 	if (load_node["'_rotation_duration@float'"].IsDefined())
@@ -1253,14 +1159,6 @@ void Hachiko::Scripting::RoomTeleporter::OnLoad()
 	}
 }
 
-void Hachiko::Scripting::AssetsObstacle::OnSave(YAML::Node& node) const
-{
-}
-
-void Hachiko::Scripting::AssetsObstacle::OnLoad()
-{
-}
-
 void Hachiko::Scripting::AudioManager::OnSave(YAML::Node& node) const
 {
 	node["'_enemies_in_combat@int'"] = _enemies_in_combat;
@@ -1417,89 +1315,6 @@ void Hachiko::Scripting::BlinkingLight::OnLoad()
 	if (load_node["'_next_radius@float'"].IsDefined())
 	{
 		_next_radius = load_node["'_next_radius@float'"].as<float>();
-	}
-}
-
-void Hachiko::Scripting::BossLaserController::OnSave(YAML::Node& node) const
-{
-	if (_laser != nullptr)
-	{
-		node["'_laser@GameObject*'"] = _laser->GetID();
-	}
-	else
-	{
-		node["'_laser@GameObject*'"] = 0;
-	}
-
-	node["'_max_length@float'"] = _max_length;
-
-	node["'_max_scale@float'"] = _max_scale;
-
-	node["'_activation_time@float'"] = _activation_time;
-
-	node["'_damage@float'"] = _damage;
-
-	node["'_track_if_active@bool'"] = _track_if_active;
-
-	node["'_tracking_speed@float'"] = _tracking_speed;
-
-	node["'_toggle_activation@bool'"] = _toggle_activation;
-
-	node["'_toggle_active_time@float'"] = _toggle_active_time;
-
-	node["'_toggle_inactive_time@float'"] = _toggle_inactive_time;
-}
-
-void Hachiko::Scripting::BossLaserController::OnLoad()
-{
-	if (load_node["'_laser@GameObject*'"].IsDefined())
-	{
-		_laser = SceneManagement::FindInCurrentScene(load_node["'_laser@GameObject*'"].as<unsigned long long>());
-	}
-
-	if (load_node["'_max_length@float'"].IsDefined())
-	{
-		_max_length = load_node["'_max_length@float'"].as<float>();
-	}
-
-	if (load_node["'_max_scale@float'"].IsDefined())
-	{
-		_max_scale = load_node["'_max_scale@float'"].as<float>();
-	}
-
-	if (load_node["'_activation_time@float'"].IsDefined())
-	{
-		_activation_time = load_node["'_activation_time@float'"].as<float>();
-	}
-
-	if (load_node["'_damage@float'"].IsDefined())
-	{
-		_damage = load_node["'_damage@float'"].as<float>();
-	}
-
-	if (load_node["'_track_if_active@bool'"].IsDefined())
-	{
-		_track_if_active = load_node["'_track_if_active@bool'"].as<bool>();
-	}
-
-	if (load_node["'_tracking_speed@float'"].IsDefined())
-	{
-		_tracking_speed = load_node["'_tracking_speed@float'"].as<float>();
-	}
-
-	if (load_node["'_toggle_activation@bool'"].IsDefined())
-	{
-		_toggle_activation = load_node["'_toggle_activation@bool'"].as<bool>();
-	}
-
-	if (load_node["'_toggle_active_time@float'"].IsDefined())
-	{
-		_toggle_active_time = load_node["'_toggle_active_time@float'"].as<float>();
-	}
-
-	if (load_node["'_toggle_inactive_time@float'"].IsDefined())
-	{
-		_toggle_inactive_time = load_node["'_toggle_inactive_time@float'"].as<float>();
 	}
 }
 
@@ -1990,14 +1805,6 @@ void Hachiko::Scripting::Spawner::OnLoad()
 	}
 }
 
-void Hachiko::Scripting::TimeManager::OnSave(YAML::Node& node) const
-{
-}
-
-void Hachiko::Scripting::TimeManager::OnLoad()
-{
-}
-
 void Hachiko::Scripting::BackToMainMenu::OnSave(YAML::Node& node) const
 {
 	if (_button_back != nullptr && _button_back->GetGameObject() != nullptr)
@@ -2087,6 +1894,24 @@ void Hachiko::Scripting::DebugManager::OnSave(YAML::Node& node) const
 		node["'_remove_health@ComponentButton*'"] = 0;
 	}
 
+	if (_increase_max_hp != nullptr && _increase_max_hp->GetGameObject() != nullptr)
+	{
+		node["'_increase_max_hp@ComponentButton*'"] = _increase_max_hp->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_increase_max_hp@ComponentButton*'"] = 0;
+	}
+
+	if (_decrease_max_hp != nullptr && _decrease_max_hp->GetGameObject() != nullptr)
+	{
+		node["'_decrease_max_hp@ComponentButton*'"] = _decrease_max_hp->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_decrease_max_hp@ComponentButton*'"] = 0;
+	}
+
 	if (_increase_move_speed != nullptr && _increase_move_speed->GetGameObject() != nullptr)
 	{
 		node["'_increase_move_speed@ComponentButton*'"] = _increase_move_speed->GetGameObject()->GetID();
@@ -2103,6 +1928,24 @@ void Hachiko::Scripting::DebugManager::OnSave(YAML::Node& node) const
 	else
 	{
 		node["'_decrease_move_speed@ComponentButton*'"] = 0;
+	}
+
+	if (_increase_attack_cd != nullptr && _increase_attack_cd->GetGameObject() != nullptr)
+	{
+		node["'_increase_attack_cd@ComponentButton*'"] = _increase_attack_cd->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_increase_attack_cd@ComponentButton*'"] = 0;
+	}
+
+	if (_decrease_attack_cd != nullptr && _decrease_attack_cd->GetGameObject() != nullptr)
+	{
+		node["'_decrease_attack_cd@ComponentButton*'"] = _decrease_attack_cd->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_decrease_attack_cd@ComponentButton*'"] = 0;
 	}
 
 	if (_increase_attack_power != nullptr && _increase_attack_power->GetGameObject() != nullptr)
@@ -2141,31 +1984,13 @@ void Hachiko::Scripting::DebugManager::OnSave(YAML::Node& node) const
 		node["'_spawn_enemy@ComponentButton*'"] = 0;
 	}
 
-	if (_weapon_claws != nullptr && _weapon_claws->GetGameObject() != nullptr)
+	if (_unlock_skills != nullptr && _unlock_skills->GetGameObject() != nullptr)
 	{
-		node["'_weapon_claws@ComponentButton*'"] = _weapon_claws->GetGameObject()->GetID();
+		node["'_unlock_skills@ComponentButton*'"] = _unlock_skills->GetGameObject()->GetID();
 	}
 	else
 	{
-		node["'_weapon_claws@ComponentButton*'"] = 0;
-	}
-
-	if (_weapon_sword != nullptr && _weapon_sword->GetGameObject() != nullptr)
-	{
-		node["'_weapon_sword@ComponentButton*'"] = _weapon_sword->GetGameObject()->GetID();
-	}
-	else
-	{
-		node["'_weapon_sword@ComponentButton*'"] = 0;
-	}
-
-	if (_weapon_hammer != nullptr && _weapon_hammer->GetGameObject() != nullptr)
-	{
-		node["'_weapon_hammer@ComponentButton*'"] = _weapon_hammer->GetGameObject()->GetID();
-	}
-	else
-	{
-		node["'_weapon_hammer@ComponentButton*'"] = 0;
+		node["'_unlock_skills@ComponentButton*'"] = 0;
 	}
 
 	if (_toggle_performance_output != nullptr && _toggle_performance_output->GetGameObject() != nullptr)
@@ -2329,6 +2154,24 @@ void Hachiko::Scripting::DebugManager::OnLoad()
 		}
 	}
 
+	if (load_node["'_increase_max_hp@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _increase_max_hp_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_increase_max_hp@ComponentButton*'"].as<unsigned long long>());
+		if (_increase_max_hp_owner__temp != nullptr)
+		{
+			_increase_max_hp = _increase_max_hp_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_decrease_max_hp@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _decrease_max_hp_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_decrease_max_hp@ComponentButton*'"].as<unsigned long long>());
+		if (_decrease_max_hp_owner__temp != nullptr)
+		{
+			_decrease_max_hp = _decrease_max_hp_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
 	if (load_node["'_increase_move_speed@ComponentButton*'"].IsDefined())
 	{
 		GameObject* _increase_move_speed_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_increase_move_speed@ComponentButton*'"].as<unsigned long long>());
@@ -2344,6 +2187,24 @@ void Hachiko::Scripting::DebugManager::OnLoad()
 		if (_decrease_move_speed_owner__temp != nullptr)
 		{
 			_decrease_move_speed = _decrease_move_speed_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_increase_attack_cd@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _increase_attack_cd_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_increase_attack_cd@ComponentButton*'"].as<unsigned long long>());
+		if (_increase_attack_cd_owner__temp != nullptr)
+		{
+			_increase_attack_cd = _increase_attack_cd_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_decrease_attack_cd@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _decrease_attack_cd_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_decrease_attack_cd@ComponentButton*'"].as<unsigned long long>());
+		if (_decrease_attack_cd_owner__temp != nullptr)
+		{
+			_decrease_attack_cd = _decrease_attack_cd_owner__temp->GetComponent<ComponentButton>();
 		}
 	}
 
@@ -2383,30 +2244,12 @@ void Hachiko::Scripting::DebugManager::OnLoad()
 		}
 	}
 
-	if (load_node["'_weapon_claws@ComponentButton*'"].IsDefined())
+	if (load_node["'_unlock_skills@ComponentButton*'"].IsDefined())
 	{
-		GameObject* _weapon_claws_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_weapon_claws@ComponentButton*'"].as<unsigned long long>());
-		if (_weapon_claws_owner__temp != nullptr)
+		GameObject* _unlock_skills_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_unlock_skills@ComponentButton*'"].as<unsigned long long>());
+		if (_unlock_skills_owner__temp != nullptr)
 		{
-			_weapon_claws = _weapon_claws_owner__temp->GetComponent<ComponentButton>();
-		}
-	}
-
-	if (load_node["'_weapon_sword@ComponentButton*'"].IsDefined())
-	{
-		GameObject* _weapon_sword_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_weapon_sword@ComponentButton*'"].as<unsigned long long>());
-		if (_weapon_sword_owner__temp != nullptr)
-		{
-			_weapon_sword = _weapon_sword_owner__temp->GetComponent<ComponentButton>();
-		}
-	}
-
-	if (load_node["'_weapon_hammer@ComponentButton*'"].IsDefined())
-	{
-		GameObject* _weapon_hammer_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_weapon_hammer@ComponentButton*'"].as<unsigned long long>());
-		if (_weapon_hammer_owner__temp != nullptr)
-		{
-			_weapon_hammer = _weapon_hammer_owner__temp->GetComponent<ComponentButton>();
+			_unlock_skills = _unlock_skills_owner__temp->GetComponent<ComponentButton>();
 		}
 	}
 
