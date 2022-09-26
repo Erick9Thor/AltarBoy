@@ -190,6 +190,8 @@ void Hachiko::ComponentMeshRenderer::DrawGui()
         if (ImGui::TreeNodeEx((void*)&material, flags, "Material"))
         {
             Widgets::ColorEdit4("Tint color", tint_color);
+            ImGui::DragFloat("Dissolve progress", &dissolve_progress, 0.01f, 0.0f, 1.0f);
+
             ChangeMaterial();
             if (material != nullptr)
             {

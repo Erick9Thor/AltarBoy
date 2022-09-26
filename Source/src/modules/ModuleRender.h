@@ -168,6 +168,8 @@ namespace Hachiko
         void GenerateFullScreenQuad();
         void FreeFullScreenQuad() const;
 
+        void CreateNoiseTexture();
+
         void* context{};
 
         RenderList render_list;
