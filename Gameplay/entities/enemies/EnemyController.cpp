@@ -556,15 +556,23 @@ void Hachiko::Scripting::EnemyController::ChasePlayer()
 
 	_state = EnemyState::MOVING;
 
+	ComponentAgent* agc = game_object->GetComponent<ComponentAgent>();
+	_speed = _combat_stats->_move_speed;
+	agc->SetMaxSpeed(_speed);
+
 	float3 corrected_pos = Navigation::GetCorrectedPosition(_player_pos, math::float3(10.0f, 10.0f, 10.0f));
 	if (corrected_pos.x < FLT_MAX)
 	{
 		_target_pos = corrected_pos;
 		transform->LookAtTarget(_target_pos);
-		_speed = _combat_stats->_move_speed;
-		ComponentAgent* agc = game_object->GetComponent<ComponentAgent>();
-		agc->SetMaxSpeed(_speed);
 		MoveInNavmesh();
+
+		/*if (!agc->CanReachTarget())
+		{
+			_target_pos = _spawn_pos;
+			transform->LookAtTarget(_target_pos);
+			MoveInNavmesh();
+		}*/
 	}
 }
 
