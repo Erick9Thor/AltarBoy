@@ -643,7 +643,10 @@ void Hachiko::Scripting::EnemyController::WormSpit()
 	}
 
 	_attack_current_delay -= Time::DeltaTimeScaled();
-	_attack_current_delay <= 0.0f ? _attack_current_delay = 0 : _attack_current_delay = _attack_current_delay;
+	if (_attack_current_delay <= 0.0f)
+	{
+		_attack_current_delay = 0;
+	}
 
 	if (!_attack_landing && _attack_current_delay <= 0.0f)
 	{
