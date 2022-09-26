@@ -2,6 +2,7 @@
 #include "TriggerAnim.h"
 #include "entities/Stats.h"
 #include "entities/crystals/CrystalExplosion.h"
+#include "entities/enemies/BossController.h"
 #include "entities/enemies/BugAnimationManager.h"
 #include "entities/enemies/EnemyController.h"
 #include "entities/player/CombatManager.h"
@@ -11,8 +12,10 @@
 #include "entities/player/PlayerController.h"
 #include "entities/player/PlayerSoundManager.h"
 #include "entities/player/RoomTeleporter.h"
+#include "misc/AssetsObstacle.h"
 #include "misc/AudioManager.h"
 #include "misc/BlinkingLight.h"
+#include "misc/BossLaserController.h"
 #include "misc/CameraPosChange.h"
 #include "misc/CrystalPlatform.h"
 #include "misc/DoorController.h"
@@ -23,6 +26,7 @@
 #include "misc/LevelManager.h"
 #include "misc/PillarCheckpoint.h"
 #include "misc/Spawner.h"
+#include "misc/TimeManager.h"
 #include "ui/BackToMainMenu.h"
 #include "ui/DebugManager.h"
 #include "ui/MainMenuManager.h"
@@ -44,16 +48,26 @@ void Hachiko::Scripting::Stats::OnEditor()
 
 void Hachiko::Scripting::CrystalExplosion::OnEditor()
 {
-	Editor::Show("Explosion Crystal", _explosion_crystal);
-	Editor::Show("Static Crystal", _static_crystal);
 	Editor::Show("Explosion Indicator Helper", _explosion_indicator_helper);
 	Editor::Show("Explosion Effect", _explosion_effect);
+	Editor::Show("Shake Intensity", _shake_intensity);
+	Editor::Show("Seconds Shaking", _seconds_shaking);
 	Editor::Show("Crashing Index", _crashing_index);
 	Editor::Show("Detecting Radius", _detecting_radius);
 	Editor::Show("Explosion Radius", _explosion_radius);
 	Editor::Show("Timer Explosion", _timer_explosion);
 	Editor::Show("Explosive Crystal", _explosive_crystal);
 	Editor::Show("Regen Time", _regen_time);
+}
+
+void Hachiko::Scripting::BossController::OnEditor()
+{
+	Editor::Show("State Value", state_value);
+	Editor::Show("Hp Bar Go", hp_bar_go);
+	Editor::Show("Crystal Target Go", crystal_target_go);
+	Editor::Show("Cocoon Placeholder Go", cocoon_placeholder_go);
+	Editor::Show("Gauntlet Go", gauntlet_go);
+	Editor::Show("Start Encounter Range", start_encounter_range);
 }
 
 void Hachiko::Scripting::BugAnimationManager::OnEditor()
@@ -123,6 +137,7 @@ void Hachiko::Scripting::PlayerController::OnEditor()
 	Editor::Show("Sword Weapon", _sword_weapon);
 	Editor::Show("Sword Upper", _sword_upper);
 	Editor::Show("Claw Weapon", _claw_weapon);
+	Editor::Show("Hammer Weapon", _hammer_weapon);
 	Editor::Show("Attack Indicator", _attack_indicator);
 	Editor::Show("Bullet Emitter", _bullet_emitter);
 	Editor::Show("Goal", _goal);
@@ -138,6 +153,7 @@ void Hachiko::Scripting::PlayerController::OnEditor()
 	Editor::Show("Falling Dust", _falling_dust);
 	Editor::Show("Walking Dust", _walking_dust);
 	Editor::Show("Heal Effect", _heal_effect);
+	Editor::Show("Damage Effect", _damage_effect);
 	Editor::Show("Rotation Duration", _rotation_duration);
 	Editor::Show("Death Screen", _death_screen);
 	Editor::Show("Hp Cell 1", _hp_cell_1);
@@ -176,6 +192,10 @@ void Hachiko::Scripting::RoomTeleporter::OnEditor()
 	Editor::Show("Blackout Duration", _blackout_duration);
 }
 
+void Hachiko::Scripting::AssetsObstacle::OnEditor()
+{
+}
+
 void Hachiko::Scripting::AudioManager::OnEditor()
 {
 	Editor::Show("Enemies In Combat", _enemies_in_combat);
@@ -203,6 +223,20 @@ void Hachiko::Scripting::BlinkingLight::OnEditor()
 	Editor::Show("Next Duration", _next_duration);
 	Editor::Show("Next Intensity", _next_intensity);
 	Editor::Show("Next Radius", _next_radius);
+}
+
+void Hachiko::Scripting::BossLaserController::OnEditor()
+{
+	Editor::Show("Laser", _laser);
+	Editor::Show("Max Length", _max_length);
+	Editor::Show("Max Scale", _max_scale);
+	Editor::Show("Activation Time", _activation_time);
+	Editor::Show("Damage", _damage);
+	Editor::Show("Track If Active", _track_if_active);
+	Editor::Show("Tracking Speed", _tracking_speed);
+	Editor::Show("Toggle Activation", _toggle_activation);
+	Editor::Show("Toggle Active Time", _toggle_active_time);
+	Editor::Show("Toggle Inactive Time", _toggle_inactive_time);
 }
 
 void Hachiko::Scripting::CameraPosChange::OnEditor()
@@ -290,6 +324,10 @@ void Hachiko::Scripting::Spawner::OnEditor()
 	Editor::Show("Enemy Pack", _enemy_pack);
 }
 
+void Hachiko::Scripting::TimeManager::OnEditor()
+{
+}
+
 void Hachiko::Scripting::BackToMainMenu::OnEditor()
 {
 	Editor::Show<ComponentButton>("Button Back", "ComponentButton*", _button_back);
@@ -304,17 +342,15 @@ void Hachiko::Scripting::DebugManager::OnEditor()
 	Editor::Show<ComponentButton>("Teleport Add Pos", "ComponentButton*", _teleport_add_pos);
 	Editor::Show<ComponentButton>("Add Health", "ComponentButton*", _add_health);
 	Editor::Show<ComponentButton>("Remove Health", "ComponentButton*", _remove_health);
-	Editor::Show<ComponentButton>("Increase Max Hp", "ComponentButton*", _increase_max_hp);
-	Editor::Show<ComponentButton>("Decrease Max Hp", "ComponentButton*", _decrease_max_hp);
 	Editor::Show<ComponentButton>("Increase Move Speed", "ComponentButton*", _increase_move_speed);
 	Editor::Show<ComponentButton>("Decrease Move Speed", "ComponentButton*", _decrease_move_speed);
-	Editor::Show<ComponentButton>("Increase Attack Cd", "ComponentButton*", _increase_attack_cd);
-	Editor::Show<ComponentButton>("Decrease Attack Cd", "ComponentButton*", _decrease_attack_cd);
 	Editor::Show<ComponentButton>("Increase Attack Power", "ComponentButton*", _increase_attack_power);
 	Editor::Show<ComponentButton>("Decrease Attack Power", "ComponentButton*", _decrease_attack_power);
 	Editor::Show<ComponentButton>("God Mode", "ComponentButton*", _god_mode);
 	Editor::Show<ComponentButton>("Spawn Enemy", "ComponentButton*", _spawn_enemy);
-	Editor::Show<ComponentButton>("Unlock Skills", "ComponentButton*", _unlock_skills);
+	Editor::Show<ComponentButton>("Weapon Claws", "ComponentButton*", _weapon_claws);
+	Editor::Show<ComponentButton>("Weapon Sword", "ComponentButton*", _weapon_sword);
+	Editor::Show<ComponentButton>("Weapon Hammer", "ComponentButton*", _weapon_hammer);
 	Editor::Show<ComponentButton>("Toggle Performance Output", "ComponentButton*", _toggle_performance_output);
 	Editor::Show<ComponentButton>("Toggle Vsync", "ComponentButton*", _toggle_vsync);
 	Editor::Show<ComponentButton>("Toggle Wireframe", "ComponentButton*", _toggle_wireframe);

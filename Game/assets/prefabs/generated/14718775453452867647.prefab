@@ -6,7 +6,7 @@ component:
     type: 1
     enabled: true
     position: [0, 0, 0]
-    rotation: [0, 0, 0, 1]
+    rotation: [-0, 0, -0]
     scale: [1, 1, 1]
   - !<animation>
     type: 14
@@ -20,7 +20,7 @@ child:
         type: 1
         enabled: true
         position: [0, 0, 0]
-        rotation: [0, 0, 0, 1]
+        rotation: [-0, 0, -0]
         scale: [1, 1, 1]
     child:
       - name: rock01_low_$AssimpFbx$_Translation
@@ -30,7 +30,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0.0018, 0]
-            rotation: [0, 0, 0, 1]
+            rotation: [-0, 0, -0]
             scale: [1, 1, 1]
         child:
           - name: rock01_low_$AssimpFbx$_RotationPivot
@@ -40,7 +40,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-0.0011, 0.044, -0.0142]
-                rotation: [0, 0, 0, 1]
+                rotation: [-0, 0, -0]
                 scale: [1, 1, 1]
             child:
               - name: rock01_low_$AssimpFbx$_Rotation
@@ -50,7 +50,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [-0.0514, -0.0007, -0.0133, 0.9986]
+                    rotation: [-5.891, -0, -1.531]
                     scale: [1, 1, 1]
                 child:
                   - name: rock01_low_$AssimpFbx$_RotationPivotInverse
@@ -60,7 +60,7 @@ child:
                         type: 1
                         enabled: true
                         position: [0.0011, -0.044, 0.0142]
-                        rotation: [0, 0, 0, 1]
+                        rotation: [-0, 0, -0]
                         scale: [1, 1, 1]
                     child:
                       - name: rock01_low_$AssimpFbx$_ScalingPivot
@@ -70,7 +70,7 @@ child:
                             type: 1
                             enabled: true
                             position: [-0.0011, 0.044, -0.0142]
-                            rotation: [0, 0, 0, 1]
+                            rotation: [-0, 0, -0]
                             scale: [1, 1, 1]
                         child:
                           - name: rock01_low_$AssimpFbx$_ScalingPivotInverse
@@ -80,7 +80,7 @@ child:
                                 type: 1
                                 enabled: true
                                 position: [0.0011, -0.044, 0.0142]
-                                rotation: [0, 0, 0, 1]
+                                rotation: [-0, 0, -0]
                                 scale: [1, 1, 1]
                             child:
                               - name: rock01_low
@@ -90,7 +90,7 @@ child:
                                     type: 1
                                     enabled: true
                                     position: [0, 0, 0]
-                                    rotation: [0, 0, 0, 1]
+                                    rotation: [-0, 0, -0]
                                     scale: [1, 1, 1]
                                   - !<mesh_renderer>
                                     type: 2
@@ -107,7 +107,7 @@ child:
             type: 1
             enabled: true
             position: [-0.0182, 0.0253, -0.0123]
-            rotation: [0, 0, 0, 1]
+            rotation: [-0, 0, -0]
             scale: [1, 1, 1]
         child:
           - name: rock02_low_$AssimpFbx$_Rotation
@@ -117,7 +117,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0, 0, 0]
-                rotation: [0, 0, -0.0134, 0.9999]
+                rotation: [0, 0, -1.531]
                 scale: [1, 1, 1]
             child:
               - name: rock02_low_$AssimpFbx$_RotationPivotInverse
@@ -127,7 +127,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0.0182, -0.0253, 0.0123]
-                    rotation: [0, 0, 0, 1]
+                    rotation: [-0, 0, -0]
                     scale: [1, 1, 1]
                 child:
                   - name: rock02_low_$AssimpFbx$_ScalingPivot
@@ -137,7 +137,7 @@ child:
                         type: 1
                         enabled: true
                         position: [-0.0182, 0.0253, -0.0123]
-                        rotation: [0, 0, 0, 1]
+                        rotation: [-0, 0, -0]
                         scale: [1, 1, 1]
                     child:
                       - name: rock02_low_$AssimpFbx$_ScalingPivotInverse
@@ -147,7 +147,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0.0182, -0.0253, 0.0123]
-                            rotation: [0, 0, 0, 1]
+                            rotation: [-0, 0, -0]
                             scale: [1, 1, 1]
                         child:
                           - name: rock02_low
@@ -157,7 +157,7 @@ child:
                                 type: 1
                                 enabled: true
                                 position: [0, 0, 0]
-                                rotation: [0, 0, 0, 1]
+                                rotation: [-0, 0, -0]
                                 scale: [1, 1, 1]
                               - !<mesh_renderer>
                                 type: 2
@@ -174,7 +174,7 @@ child:
             type: 1
             enabled: true
             position: [-0.0087, 0.0103, -0.0152]
-            rotation: [0, 0, 0, 1]
+            rotation: [-0, 0, -0]
             scale: [1, 1, 1]
         child:
           - name: rock03_low_$AssimpFbx$_Rotation
@@ -184,7 +184,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0, 0, 0]
-                rotation: [0, 0, -0.0134, 0.9999]
+                rotation: [0, 0, -1.531]
                 scale: [1, 1, 1]
             child:
               - name: rock03_low_$AssimpFbx$_RotationPivotInverse
@@ -194,7 +194,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0.0087, -0.0103, 0.0152]
-                    rotation: [0, 0, 0, 1]
+                    rotation: [-0, 0, -0]
                     scale: [1, 1, 1]
                 child:
                   - name: rock03_low_$AssimpFbx$_ScalingPivot
@@ -204,7 +204,7 @@ child:
                         type: 1
                         enabled: true
                         position: [-0.0087, 0.0103, -0.0152]
-                        rotation: [0, 0, 0, 1]
+                        rotation: [-0, 0, -0]
                         scale: [1, 1, 1]
                     child:
                       - name: rock03_low_$AssimpFbx$_ScalingPivotInverse
@@ -214,7 +214,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0.0087, -0.0103, 0.0152]
-                            rotation: [0, 0, 0, 1]
+                            rotation: [-0, 0, -0]
                             scale: [1, 1, 1]
                         child:
                           - name: rock03_low
@@ -224,7 +224,7 @@ child:
                                 type: 1
                                 enabled: true
                                 position: [0, 0, 0]
-                                rotation: [0, 0, 0, 1]
+                                rotation: [-0, 0, -0]
                                 scale: [1, 1, 1]
                               - !<mesh_renderer>
                                 type: 2
@@ -241,7 +241,7 @@ child:
             type: 1
             enabled: true
             position: [0.0119, 0.0114, -0.0144]
-            rotation: [0, 0, 0, 1]
+            rotation: [-0, 0, -0]
             scale: [1, 1, 1]
         child:
           - name: rock04_low_$AssimpFbx$_Rotation
@@ -251,7 +251,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0, 0, 0]
-                rotation: [0, 0, -0.0134, 0.9999]
+                rotation: [0, 0, -1.531]
                 scale: [1, 1, 1]
             child:
               - name: rock04_low_$AssimpFbx$_RotationPivotInverse
@@ -261,7 +261,7 @@ child:
                     type: 1
                     enabled: true
                     position: [-0.0119, -0.0114, 0.0144]
-                    rotation: [0, 0, 0, 1]
+                    rotation: [-0, 0, -0]
                     scale: [1, 1, 1]
                 child:
                   - name: rock04_low_$AssimpFbx$_ScalingPivot
@@ -271,7 +271,7 @@ child:
                         type: 1
                         enabled: true
                         position: [0.0119, 0.0114, -0.0144]
-                        rotation: [0, 0, 0, 1]
+                        rotation: [-0, 0, -0]
                         scale: [1, 1, 1]
                     child:
                       - name: rock04_low_$AssimpFbx$_ScalingPivotInverse
@@ -281,7 +281,7 @@ child:
                             type: 1
                             enabled: true
                             position: [-0.0119, -0.0114, 0.0144]
-                            rotation: [0, 0, 0, 1]
+                            rotation: [-0, 0, -0]
                             scale: [1, 1, 1]
                         child:
                           - name: rock04_low
@@ -291,7 +291,7 @@ child:
                                 type: 1
                                 enabled: true
                                 position: [0, 0, 0]
-                                rotation: [0, 0, 0, 1]
+                                rotation: [-0, 0, -0]
                                 scale: [1, 1, 1]
                               - !<mesh_renderer>
                                 type: 2
@@ -308,7 +308,7 @@ child:
             type: 1
             enabled: true
             position: [0.0005, 0.0006, -0.0003]
-            rotation: [0, 0, 0, 1]
+            rotation: [-0, 0, -0]
             scale: [1, 1, 1]
         child:
           - name: rock05_low_$AssimpFbx$_RotationOffset
@@ -318,7 +318,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-0, 0, -0.0001]
-                rotation: [0, 0, 0, 1]
+                rotation: [-0, 0, -0]
                 scale: [1, 1, 1]
             child:
               - name: rock05_low_$AssimpFbx$_RotationPivot
@@ -328,7 +328,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0.0193, 0.0331, -0.019]
-                    rotation: [0, 0, 0, 1]
+                    rotation: [-0, 0, -0]
                     scale: [1, 1, 1]
                 child:
                   - name: rock05_low_$AssimpFbx$_Rotation
@@ -338,7 +338,7 @@ child:
                         type: 1
                         enabled: true
                         position: [0, 0, 0]
-                        rotation: [-0.0014, 0.1023, -0.0133, 0.9947]
+                        rotation: [0, 11.74, -1.531]
                         scale: [1, 1, 1]
                     child:
                       - name: rock05_low_$AssimpFbx$_RotationPivotInverse
@@ -348,7 +348,7 @@ child:
                             type: 1
                             enabled: true
                             position: [-0.0193, -0.0331, 0.019]
-                            rotation: [0, 0, 0, 1]
+                            rotation: [-0, 0, -0]
                             scale: [1, 1, 1]
                         child:
                           - name: rock05_low_$AssimpFbx$_ScalingPivot
@@ -358,7 +358,7 @@ child:
                                 type: 1
                                 enabled: true
                                 position: [0.0193, 0.0331, -0.019]
-                                rotation: [0, 0, 0, 1]
+                                rotation: [-0, 0, -0]
                                 scale: [1, 1, 1]
                             child:
                               - name: rock05_low_$AssimpFbx$_ScalingPivotInverse
@@ -368,7 +368,7 @@ child:
                                     type: 1
                                     enabled: true
                                     position: [-0.0193, -0.0331, 0.019]
-                                    rotation: [0, 0, 0, 1]
+                                    rotation: [-0, 0, -0]
                                     scale: [1, 1, 1]
                                 child:
                                   - name: rock05_low
@@ -378,7 +378,7 @@ child:
                                         type: 1
                                         enabled: true
                                         position: [0, 0, 0]
-                                        rotation: [0, 0, 0, 1]
+                                        rotation: [-0, 0, -0]
                                         scale: [1, 1, 1]
                                       - !<mesh_renderer>
                                         type: 2
@@ -395,7 +395,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, -0.0016]
-            rotation: [0, 0, 0, 1]
+            rotation: [-0, 0, -0]
             scale: [1, 1, 1]
         child:
           - name: crystal01_low_$AssimpFbx$_RotationPivot
@@ -405,7 +405,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-0.0161, 0.0224, 0.0197]
-                rotation: [0, 0, 0, 1]
+                rotation: [-0, 0, -0]
                 scale: [1, 1, 1]
             child:
               - name: crystal01_low_$AssimpFbx$_Rotation
@@ -415,7 +415,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [0, 0, -0.0134, 0.9999]
+                    rotation: [0, 0, -1.531]
                     scale: [1, 1, 1]
                 child:
                   - name: crystal01_low_$AssimpFbx$_RotationPivotInverse
@@ -425,7 +425,7 @@ child:
                         type: 1
                         enabled: true
                         position: [0.0161, -0.0224, -0.0197]
-                        rotation: [0, 0, 0, 1]
+                        rotation: [-0, 0, -0]
                         scale: [1, 1, 1]
                     child:
                       - name: crystal01_low_$AssimpFbx$_ScalingPivot
@@ -435,7 +435,7 @@ child:
                             type: 1
                             enabled: true
                             position: [-0.0161, 0.0224, 0.0197]
-                            rotation: [0, 0, 0, 1]
+                            rotation: [-0, 0, -0]
                             scale: [1, 1, 1]
                         child:
                           - name: crystal01_low_$AssimpFbx$_ScalingPivotInverse
@@ -445,7 +445,7 @@ child:
                                 type: 1
                                 enabled: true
                                 position: [0.0161, -0.0224, -0.0197]
-                                rotation: [0, 0, 0, 1]
+                                rotation: [-0, 0, -0]
                                 scale: [1, 1, 1]
                             child:
                               - name: crystal01_low
@@ -455,7 +455,7 @@ child:
                                     type: 1
                                     enabled: true
                                     position: [0, 0, 0]
-                                    rotation: [0, 0, 0, 1]
+                                    rotation: [-0, 0, -0]
                                     scale: [1, 1, 1]
                                   - !<mesh_renderer>
                                     type: 2
@@ -472,7 +472,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, -0.0016]
-            rotation: [0, 0, 0, 1]
+            rotation: [-0, 0, -0]
             scale: [1, 1, 1]
         child:
           - name: crystal02_low_$AssimpFbx$_RotationPivot
@@ -482,7 +482,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-0.0084, 0.0236, 0.0228]
-                rotation: [0, 0, 0, 1]
+                rotation: [-0, 0, -0]
                 scale: [1, 1, 1]
             child:
               - name: crystal02_low_$AssimpFbx$_Rotation
@@ -492,7 +492,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [0, 0, -0.0134, 0.9999]
+                    rotation: [0, 0, -1.531]
                     scale: [1, 1, 1]
                 child:
                   - name: crystal02_low_$AssimpFbx$_RotationPivotInverse
@@ -502,7 +502,7 @@ child:
                         type: 1
                         enabled: true
                         position: [0.0084, -0.0236, -0.0228]
-                        rotation: [0, 0, 0, 1]
+                        rotation: [-0, 0, -0]
                         scale: [1, 1, 1]
                     child:
                       - name: crystal02_low_$AssimpFbx$_ScalingPivot
@@ -512,7 +512,7 @@ child:
                             type: 1
                             enabled: true
                             position: [-0.0084, 0.0236, 0.0228]
-                            rotation: [0, 0, 0, 1]
+                            rotation: [-0, 0, -0]
                             scale: [1, 1, 1]
                         child:
                           - name: crystal02_low_$AssimpFbx$_ScalingPivotInverse
@@ -522,7 +522,7 @@ child:
                                 type: 1
                                 enabled: true
                                 position: [0.0084, -0.0236, -0.0228]
-                                rotation: [0, 0, 0, 1]
+                                rotation: [-0, 0, -0]
                                 scale: [1, 1, 1]
                             child:
                               - name: crystal02_low
@@ -532,7 +532,7 @@ child:
                                     type: 1
                                     enabled: true
                                     position: [0, 0, 0]
-                                    rotation: [0, 0, 0, 1]
+                                    rotation: [-0, 0, -0]
                                     scale: [1, 1, 1]
                                   - !<mesh_renderer>
                                     type: 2
@@ -549,7 +549,7 @@ child:
             type: 1
             enabled: true
             position: [0, -0.0002, -0.0016]
-            rotation: [0, 0, 0, 1]
+            rotation: [-0, 0, -0]
             scale: [1, 1, 1]
         child:
           - name: crystal03_low_$AssimpFbx$_RotationPivot
@@ -559,7 +559,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0.0014, 0.0238, 0.0199]
-                rotation: [0, 0, 0, 1]
+                rotation: [-0, 0, -0]
                 scale: [1, 1, 1]
             child:
               - name: crystal03_low_$AssimpFbx$_Rotation
@@ -569,7 +569,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [0, 0, -0.0134, 0.9999]
+                    rotation: [0, 0, -1.531]
                     scale: [1, 1, 1]
                 child:
                   - name: crystal03_low_$AssimpFbx$_RotationPivotInverse
@@ -579,7 +579,7 @@ child:
                         type: 1
                         enabled: true
                         position: [-0.0014, -0.0238, -0.0199]
-                        rotation: [0, 0, 0, 1]
+                        rotation: [-0, 0, -0]
                         scale: [1, 1, 1]
                     child:
                       - name: crystal03_low_$AssimpFbx$_ScalingPivot
@@ -589,7 +589,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0.0014, 0.0238, 0.0199]
-                            rotation: [0, 0, 0, 1]
+                            rotation: [-0, 0, -0]
                             scale: [1, 1, 1]
                         child:
                           - name: crystal03_low_$AssimpFbx$_ScalingPivotInverse
@@ -599,7 +599,7 @@ child:
                                 type: 1
                                 enabled: true
                                 position: [-0.0014, -0.0238, -0.0199]
-                                rotation: [0, 0, 0, 1]
+                                rotation: [-0, 0, -0]
                                 scale: [1, 1, 1]
                             child:
                               - name: crystal03_low
@@ -609,7 +609,7 @@ child:
                                     type: 1
                                     enabled: true
                                     position: [0, 0, 0]
-                                    rotation: [0, 0, 0, 1]
+                                    rotation: [-0, 0, -0]
                                     scale: [1, 1, 1]
                                   - !<mesh_renderer>
                                     type: 2
@@ -626,7 +626,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, -0.0016]
-            rotation: [0, 0, 0, 1]
+            rotation: [-0, 0, -0]
             scale: [1, 1, 1]
         child:
           - name: crystal04_low_$AssimpFbx$_RotationPivot
@@ -636,7 +636,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0.009, 0.0238, 0.0215]
-                rotation: [0, 0, 0, 1]
+                rotation: [-0, 0, -0]
                 scale: [1, 1, 1]
             child:
               - name: crystal04_low_$AssimpFbx$_Rotation
@@ -646,7 +646,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [0, 0, -0.0134, 0.9999]
+                    rotation: [0, 0, -1.531]
                     scale: [1, 1, 1]
                 child:
                   - name: crystal04_low_$AssimpFbx$_RotationPivotInverse
@@ -656,7 +656,7 @@ child:
                         type: 1
                         enabled: true
                         position: [-0.009, -0.0238, -0.0215]
-                        rotation: [0, 0, 0, 1]
+                        rotation: [-0, 0, -0]
                         scale: [1, 1, 1]
                     child:
                       - name: crystal04_low_$AssimpFbx$_ScalingPivot
@@ -666,7 +666,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0.009, 0.0238, 0.0215]
-                            rotation: [0, 0, 0, 1]
+                            rotation: [-0, 0, -0]
                             scale: [1, 1, 1]
                         child:
                           - name: crystal04_low_$AssimpFbx$_ScalingPivotInverse
@@ -676,7 +676,7 @@ child:
                                 type: 1
                                 enabled: true
                                 position: [-0.009, -0.0238, -0.0215]
-                                rotation: [0, 0, 0, 1]
+                                rotation: [-0, 0, -0]
                                 scale: [1, 1, 1]
                             child:
                               - name: crystal04_low
@@ -686,7 +686,7 @@ child:
                                     type: 1
                                     enabled: true
                                     position: [0, 0, 0]
-                                    rotation: [0, 0, 0, 1]
+                                    rotation: [-0, 0, -0]
                                     scale: [1, 1, 1]
                                   - !<mesh_renderer>
                                     type: 2
@@ -703,7 +703,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, -0.0016]
-            rotation: [0, 0, 0, 1]
+            rotation: [-0, 0, -0]
             scale: [1, 1, 1]
         child:
           - name: crystal05_low_$AssimpFbx$_RotationPivot
@@ -713,7 +713,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0.0162, 0.0229, 0.0161]
-                rotation: [0, 0, 0, 1]
+                rotation: [-0, 0, -0]
                 scale: [1, 1, 1]
             child:
               - name: crystal05_low_$AssimpFbx$_Rotation
@@ -723,7 +723,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [0, 0, -0.0134, 0.9999]
+                    rotation: [0, 0, -1.531]
                     scale: [1, 1, 1]
                 child:
                   - name: crystal05_low_$AssimpFbx$_RotationPivotInverse
@@ -733,7 +733,7 @@ child:
                         type: 1
                         enabled: true
                         position: [-0.0162, -0.0229, -0.0161]
-                        rotation: [0, 0, 0, 1]
+                        rotation: [-0, 0, -0]
                         scale: [1, 1, 1]
                     child:
                       - name: crystal05_low_$AssimpFbx$_ScalingPivot
@@ -743,7 +743,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0.0162, 0.0229, 0.0161]
-                            rotation: [0, 0, 0, 1]
+                            rotation: [-0, 0, -0]
                             scale: [1, 1, 1]
                         child:
                           - name: crystal05_low_$AssimpFbx$_ScalingPivotInverse
@@ -753,7 +753,7 @@ child:
                                 type: 1
                                 enabled: true
                                 position: [-0.0162, -0.0229, -0.0161]
-                                rotation: [0, 0, 0, 1]
+                                rotation: [-0, 0, -0]
                                 scale: [1, 1, 1]
                             child:
                               - name: crystal05_low
@@ -763,7 +763,7 @@ child:
                                     type: 1
                                     enabled: true
                                     position: [0, 0, 0]
-                                    rotation: [0, 0, 0, 1]
+                                    rotation: [-0, 0, -0]
                                     scale: [1, 1, 1]
                                   - !<mesh_renderer>
                                     type: 2
@@ -780,7 +780,7 @@ child:
             type: 1
             enabled: true
             position: [0.0068, 0.0302, 0.0006]
-            rotation: [0, 0, 0, 1]
+            rotation: [-0, 0, -0]
             scale: [1, 1, 1]
         child:
           - name: smallCrystal01_low_$AssimpFbx$_Rotation
@@ -790,7 +790,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0, 0, 0]
-                rotation: [0, 0, -0.0134, 0.9999]
+                rotation: [0, 0, -1.531]
                 scale: [1, 1, 1]
             child:
               - name: smallCrystal01_low_$AssimpFbx$_RotationPivotInverse
@@ -800,7 +800,7 @@ child:
                     type: 1
                     enabled: true
                     position: [-0.0068, -0.0302, -0.0006]
-                    rotation: [0, 0, 0, 1]
+                    rotation: [-0, 0, -0]
                     scale: [1, 1, 1]
                 child:
                   - name: smallCrystal01_low_$AssimpFbx$_ScalingPivot
@@ -810,7 +810,7 @@ child:
                         type: 1
                         enabled: true
                         position: [0.0068, 0.0302, 0.0006]
-                        rotation: [0, 0, 0, 1]
+                        rotation: [-0, 0, -0]
                         scale: [1, 1, 1]
                     child:
                       - name: smallCrystal01_low_$AssimpFbx$_ScalingPivotInverse
@@ -820,7 +820,7 @@ child:
                             type: 1
                             enabled: true
                             position: [-0.0068, -0.0302, -0.0006]
-                            rotation: [0, 0, 0, 1]
+                            rotation: [-0, 0, -0]
                             scale: [1, 1, 1]
                         child:
                           - name: smallCrystal01_low
@@ -830,7 +830,7 @@ child:
                                 type: 1
                                 enabled: true
                                 position: [0, 0, 0]
-                                rotation: [0, 0, 0, 1]
+                                rotation: [-0, 0, -0]
                                 scale: [1, 1, 1]
                               - !<mesh_renderer>
                                 type: 2
@@ -847,7 +847,7 @@ child:
             type: 1
             enabled: true
             position: [-0.0042, 0.0282, -0.0017]
-            rotation: [0, 0, 0, 1]
+            rotation: [-0, 0, -0]
             scale: [1, 1, 1]
         child:
           - name: smallCrystal02_low_$AssimpFbx$_Rotation
@@ -857,7 +857,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0, 0, 0]
-                rotation: [0, 0, -0.0134, 0.9999]
+                rotation: [0, 0, -1.531]
                 scale: [1, 1, 1]
             child:
               - name: smallCrystal02_low_$AssimpFbx$_RotationPivotInverse
@@ -867,7 +867,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0.0042, -0.0282, 0.0017]
-                    rotation: [0, 0, 0, 1]
+                    rotation: [-0, 0, -0]
                     scale: [1, 1, 1]
                 child:
                   - name: smallCrystal02_low_$AssimpFbx$_ScalingPivot
@@ -877,7 +877,7 @@ child:
                         type: 1
                         enabled: true
                         position: [-0.0042, 0.0282, -0.0017]
-                        rotation: [0, 0, 0, 1]
+                        rotation: [-0, 0, -0]
                         scale: [1, 1, 1]
                     child:
                       - name: smallCrystal02_low_$AssimpFbx$_ScalingPivotInverse
@@ -887,7 +887,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0.0042, -0.0282, 0.0017]
-                            rotation: [0, 0, 0, 1]
+                            rotation: [-0, 0, -0]
                             scale: [1, 1, 1]
                         child:
                           - name: smallCrystal02_low
@@ -897,7 +897,7 @@ child:
                                 type: 1
                                 enabled: true
                                 position: [0, 0, 0]
-                                rotation: [0, 0, 0, 1]
+                                rotation: [-0, 0, -0]
                                 scale: [1, 1, 1]
                               - !<mesh_renderer>
                                 type: 2
@@ -914,7 +914,7 @@ child:
             type: 1
             enabled: true
             position: [0.0014, 0.0175, -0.0029]
-            rotation: [0, 0, 0, 1]
+            rotation: [-0, 0, -0]
             scale: [1, 1, 1]
         child:
           - name: smallCrystal03_low_$AssimpFbx$_Rotation
@@ -924,7 +924,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0, 0, 0]
-                rotation: [0, 0, -0.0134, 0.9999]
+                rotation: [0, 0, -1.531]
                 scale: [1, 1, 1]
             child:
               - name: smallCrystal03_low_$AssimpFbx$_RotationPivotInverse
@@ -934,7 +934,7 @@ child:
                     type: 1
                     enabled: true
                     position: [-0.0014, -0.0175, 0.0029]
-                    rotation: [0, 0, 0, 1]
+                    rotation: [-0, 0, -0]
                     scale: [1, 1, 1]
                 child:
                   - name: smallCrystal03_low_$AssimpFbx$_ScalingPivot
@@ -944,7 +944,7 @@ child:
                         type: 1
                         enabled: true
                         position: [0.0014, 0.0175, -0.0029]
-                        rotation: [0, 0, 0, 1]
+                        rotation: [-0, 0, -0]
                         scale: [1, 1, 1]
                     child:
                       - name: smallCrystal03_low_$AssimpFbx$_ScalingPivotInverse
@@ -954,7 +954,7 @@ child:
                             type: 1
                             enabled: true
                             position: [-0.0014, -0.0175, 0.0029]
-                            rotation: [0, 0, 0, 1]
+                            rotation: [-0, 0, -0]
                             scale: [1, 1, 1]
                         child:
                           - name: smallCrystal03_low
@@ -964,7 +964,7 @@ child:
                                 type: 1
                                 enabled: true
                                 position: [0, 0, 0]
-                                rotation: [0, 0, 0, 1]
+                                rotation: [-0, 0, -0]
                                 scale: [1, 1, 1]
                               - !<mesh_renderer>
                                 type: 2
@@ -981,7 +981,7 @@ child:
         type: 1
         enabled: true
         position: [0, 0, 0]
-        rotation: [0, 0, 0, 1]
+        rotation: [-0, 0, -0]
         scale: [1, 1, 1]
     child:
       - name: Jnt_Rock_UP_C
@@ -991,7 +991,7 @@ child:
             type: 1
             enabled: true
             position: [-0.0007, 0.0476, -0.0171]
-            rotation: [-0.0073, -0.0847, 0.0518, 0.995]
+            rotation: [-0.3362, -9.752, 5.934]
             scale: [1, 1, 1]
       - name: Jnt_Rock_UP_L
         enabled: true
@@ -1000,7 +1000,7 @@ child:
             type: 1
             enabled: true
             position: [0.0217, 0.0345, -0.0158]
-            rotation: [0.0144, -0.1032, -0.0306, 0.9941]
+            rotation: [1.303, -11.9, -3.391]
             scale: [1, 1, 1]
       - name: Jnt_Rock_Down_L
         enabled: true
@@ -1009,7 +1009,7 @@ child:
             type: 1
             enabled: true
             position: [0.0137, 0.012, -0.0146]
-            rotation: [0.079, 0.0177, 0.0344, 0.9961]
+            rotation: [8.994, 2.335, 3.775]
             scale: [1, 1, 1]
       - name: Jnt_Rock_Down_R
         enabled: true
@@ -1018,7 +1018,7 @@ child:
             type: 1
             enabled: true
             position: [-0.0065, 0.0094, -0.0126]
-            rotation: [0.0326, -0.0792, -0.0569, 0.9947]
+            rotation: [3.238, -9.279, -6.286]
             scale: [1, 1, 1]
       - name: Jnt_Rock_UP_R
         enabled: true
@@ -1027,7 +1027,7 @@ child:
             type: 1
             enabled: true
             position: [-0.0196, 0.0296, -0.0131]
-            rotation: [-0.0514, -0.1483, 0.0258, 0.9873]
+            rotation: [-5.638, -17.19, 2.139]
             scale: [1, 1, 1]
       - name: Jnt_CrystalStar_One_$AssimpFbx$_Translation
         enabled: true
@@ -1036,7 +1036,7 @@ child:
             type: 1
             enabled: true
             position: [-0.0059, 0.0147, -0.0513]
-            rotation: [0, 0, 0, 1]
+            rotation: [-0, 0, -0]
             scale: [1, 1, 1]
         child:
           - name: Jnt_CrystalStar_One_$AssimpFbx$_PreRotation
@@ -1046,7 +1046,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0, 0, 0]
-                rotation: [-0.0077, -0.7506, 0.0068, 0.6607]
+                rotation: [-180, -82.71, -178.8]
                 scale: [1, 1, 1]
             child:
               - name: Jnt_CrystalStar_One_$AssimpFbx$_Rotation
@@ -1056,7 +1056,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [0.0232, 0.0535, 0.0385, 0.9976]
+                    rotation: [2.43, 6.229, 4.29]
                     scale: [1, 1, 1]
                 child:
                   - name: Jnt_CrystalStar_One
@@ -1066,7 +1066,7 @@ child:
                         type: 1
                         enabled: true
                         position: [0, 0, 0]
-                        rotation: [0, 0, 0, 1]
+                        rotation: [-0, 0, -0]
                         scale: [1, 1, 1]
       - name: Jnt_CrystalStar_two_$AssimpFbx$_Translation
         enabled: true
@@ -1075,7 +1075,7 @@ child:
             type: 1
             enabled: true
             position: [-0.0065, 0.0231, -0.048]
-            rotation: [0, 0, 0, 1]
+            rotation: [-0, 0, -0]
             scale: [1, 1, 1]
         child:
           - name: Jnt_CrystalStar_two_$AssimpFbx$_PreRotation
@@ -1085,7 +1085,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0, 0, 0]
-                rotation: [0, -0.7262, 0, 0.6875]
+                rotation: [180, -86.87, 180]
                 scale: [1, 1, 1]
             child:
               - name: Jnt_CrystalStar_two_$AssimpFbx$_Rotation
@@ -1095,7 +1095,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [0, 0, 0, 1]
+                    rotation: [-0, 0, -0]
                     scale: [1, 1, 1]
                 child:
                   - name: Jnt_CrystalStar_two
@@ -1105,7 +1105,7 @@ child:
                         type: 1
                         enabled: true
                         position: [0, 0, 0]
-                        rotation: [0, 0, 0, 1]
+                        rotation: [-0, 0, -0]
                         scale: [1, 1, 1]
       - name: Jnt_CrystalStar_trhee_$AssimpFbx$_Translation
         enabled: true
@@ -1114,7 +1114,7 @@ child:
             type: 1
             enabled: true
             position: [0.0006, 0.0231, -0.0536]
-            rotation: [0, 0, 0, 1]
+            rotation: [-0, 0, -0]
             scale: [1, 1, 1]
         child:
           - name: Jnt_CrystalStar_trhee_$AssimpFbx$_PreRotation
@@ -1124,7 +1124,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0, 0, 0]
-                rotation: [0, -0.7071, 0, 0.7071]
+                rotation: [0, -89.98, 0]
                 scale: [1, 1, 1]
             child:
               - name: Jnt_CrystalStar_trhee_$AssimpFbx$_Rotation
@@ -1134,7 +1134,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [0, 0, 0, 1]
+                    rotation: [-0, 0, -0]
                     scale: [1, 1, 1]
                 child:
                   - name: Jnt_CrystalStar_trhee
@@ -1144,7 +1144,7 @@ child:
                         type: 1
                         enabled: true
                         position: [0, 0, 0]
-                        rotation: [0, 0, 0, 1]
+                        rotation: [-0, 0, -0]
                         scale: [1, 1, 1]
       - name: Jnt_CrystalStar_Four_$AssimpFbx$_Translation
         enabled: true
@@ -1153,7 +1153,7 @@ child:
             type: 1
             enabled: true
             position: [0.0035, 0.024, -0.0477]
-            rotation: [0, 0, 0, 1]
+            rotation: [-0, 0, -0]
             scale: [1, 1, 1]
         child:
           - name: Jnt_CrystalStar_Four_$AssimpFbx$_PreRotation
@@ -1163,7 +1163,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0, 0, 0]
-                rotation: [0, -0.6538, 0, 0.7566]
+                rotation: [0, -81.66, 0]
                 scale: [1, 1, 1]
             child:
               - name: Jnt_CrystalStar_Four_$AssimpFbx$_Rotation
@@ -1173,7 +1173,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [0, 0, 0, 1]
+                    rotation: [-0, 0, -0]
                     scale: [1, 1, 1]
                 child:
                   - name: Jnt_CrystalStar_Four
@@ -1183,7 +1183,7 @@ child:
                         type: 1
                         enabled: true
                         position: [0, 0, 0]
-                        rotation: [0, 0, 0, 1]
+                        rotation: [-0, 0, -0]
                         scale: [1, 1, 1]
       - name: Jnt_CrystalStar_Five_$AssimpFbx$_Translation
         enabled: true
@@ -1192,7 +1192,7 @@ child:
             type: 1
             enabled: true
             position: [0.0041, 0.0205, -0.0533]
-            rotation: [0, 0, 0, 1]
+            rotation: [-0, 0, -0]
             scale: [1, 1, 1]
         child:
           - name: Jnt_CrystalStar_Five_$AssimpFbx$_PreRotation
@@ -1202,7 +1202,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0, 0, 0]
-                rotation: [0, -0.6229, 0, 0.7823]
+                rotation: [0, -77.06, 0]
                 scale: [1, 1, 1]
             child:
               - name: Jnt_CrystalStar_Five_$AssimpFbx$_Rotation
@@ -1212,7 +1212,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [0, -0.0057, 0, 1]
+                    rotation: [0, -0.6576, 0]
                     scale: [1, 1, 1]
                 child:
                   - name: Jnt_CrystalStar_Five
@@ -1222,5 +1222,5 @@ child:
                         type: 1
                         enabled: true
                         position: [0, 0, 0]
-                        rotation: [0, 0, 0, 1]
+                        rotation: [-0, 0, -0]
                         scale: [1, 1, 1]

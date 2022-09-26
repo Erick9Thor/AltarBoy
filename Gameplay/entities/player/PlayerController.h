@@ -123,6 +123,8 @@ namespace Hachiko
 				return _attack_idx;
 			}
 
+			void ChangeWeapon(unsigned weapon_idx);
+
 			WeaponUsed GetCurrentWeaponType() const
 			{
 				return static_cast<WeaponUsed>(_current_weapon);
@@ -175,7 +177,7 @@ namespace Hachiko
 			void StoreDashOrigin(const float3& dash_origin);
 			float3 GetLastValidDashOrigin();
 			void MeleeAttack();
-			void ChangeWeapon(unsigned weapon_idx);
+			
 			void RangedAttack();
 			void ReleaseAttack();
 			void CancelAttack();
