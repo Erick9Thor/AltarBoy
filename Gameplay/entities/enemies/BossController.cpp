@@ -1,6 +1,7 @@
 #include "scriptingUtil/gameplaypch.h"
 
 #include "entities/enemies/BossController.h"
+#include "entities/enemies/EnemyController.h"
 #include "entities/Stats.h"
 #include "constants/Scenes.h"
 
@@ -9,6 +10,8 @@ Hachiko::Scripting::BossController::BossController(GameObject* game_object)
 	, state_value(0)
 	, hp_bar_go(nullptr)
 	, cocoon_placeholder_go(nullptr)
+	, enemy_pool(nullptr)
+	, time_between_enemies(5.0)
 {
 	
 }
@@ -31,6 +34,15 @@ void Hachiko::Scripting::BossController::OnAwake()
 		cocoon_placeholder_go->SetActive(false);
 	}
 	gauntlet = gauntlet_go->GetComponent<GauntletManager>();
+	
+	if (enemy_pool)
+	{
+		for (GameObject* enemy : enemy_pool->children)
+		{
+			enemies.push_back(enemy->GetComponent<EnemyController>());
+		}
+		ResetEnemies();
+	}
 }
 
 void Hachiko::Scripting::BossController::OnStart()
@@ -170,6 +182,8 @@ void Hachiko::Scripting::BossController::CombatController()
 		return;
 	}
 	
+	SpawnEnemy();
+
 	CombatTransitionController();
 
 	switch (combat_state)
@@ -441,5 +455,61 @@ void Hachiko::Scripting::BossController::FocusCamera(bool focus_on_boss)
 	{
 		level_manager->BlockInputs(false);
 		player_camera->SetObjective(player);
+	}
+}
+
+void Hachiko::Scripting::BossController::SpawnEnemy()
+{
+	enemy_timer += Time::DeltaTime();
+	if (enemy_timer < time_between_enemies)
+	{
+        return;
+    }
+
+    for (EnemyController* enemy_controller : enemies) 
+    {
+        GameObject* enemy = enemy_controller->GetGameObject();
+
+        if (enemy->IsActive())
+        {
+            continue;
+        }
+
+        enemy->SetActive(true);
+        ComponentAgent* agent = enemy->GetComponent<ComponentAgent>();
+        
+        if (agent)
+        {
+            agent->AddToCrowd();
+        }
+            
+        break;
+    }
+
+    enemy_timer = 0;
+}
+
+void Hachiko::Scripting::BossController::ResetEnemies()
+{
+	for (EnemyController* enemy_controller : enemies)
+	{
+        GameObject* enemy = enemy_controller->GetGameObject();
+		ComponentAgent* agent = enemy_controller->GetGameObject()->GetComponent<ComponentAgent>();
+		
+        if (agent)
+		{
+			agent->RemoveFromCrowd();
+		}
+		
+        if (enemy_controller)
+		{
+            // Maybe pack these methods into a method of EnemyController for
+            // ease of extensibility.
+			enemy_controller->SetIsFromBoss(true);
+			enemy_controller->ResetEnemy();
+			enemy_controller->ResetEnemyPosition();
+		}
+		
+        enemy->SetActive(false);
 	}
 }
