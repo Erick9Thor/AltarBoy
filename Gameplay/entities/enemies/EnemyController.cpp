@@ -33,6 +33,7 @@ Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 	, _audio_manager(nullptr)
 	, _already_in_combat(false)
 	, _is_from_gautlet(false)
+	, _is_from_boss(false)
 	, _combat_visual_effects_pool(nullptr)
 	, _worm(false)
 	, _small_dust(nullptr)
@@ -653,8 +654,19 @@ void Hachiko::Scripting::EnemyController::WormSpit()
 
 void Hachiko::Scripting::EnemyController::DestroyEntity()
 {
+	if (_is_from_boss)
+	{
+		ResetEnemy();
+		ResetEnemyPosition();
+
+		ComponentAgent* agent = game_object->GetComponent<ComponentAgent>();
+		if (agent)
+		{
+			agent->RemoveFromCrowd();
+		}
+	}
+
 	game_object->SetActive(false);
-	//SceneManagement::Destroy(game_object);
 }
 
 void Hachiko::Scripting::EnemyController::DropParasite()

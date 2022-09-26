@@ -59,6 +59,7 @@ namespace Hachiko
 
             bool IsAlive() { return _combat_stats->IsAlive(); };
             void SetIsFromGauntlet(bool v) { _is_from_gautlet = v; }
+            void SetIsFromBoss(bool v) { _is_from_boss = v; }
             void RegisterHit(int player_atk, math::float3 direction, float knockback, bool is_from_player, bool is_ranged);
             void GetParasite();
             void Spawn();
@@ -125,6 +126,7 @@ namespace Hachiko
             SERIALIZE_FIELD(bool, _already_in_combat);
 
             SERIALIZE_FIELD(bool, _is_from_gautlet);
+            SERIALIZE_FIELD(bool, _is_from_boss);
 
             SERIALIZE_FIELD(bool, _will_die);
 
