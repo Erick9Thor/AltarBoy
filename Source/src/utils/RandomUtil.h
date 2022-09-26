@@ -35,7 +35,7 @@ namespace Hachiko
         float Random(float previous);
         float RandomRange(float previous, float min, float max);
         
-        float* GeneratePerlinNoise2d(int x, int y, int samples = 1);
+        [[deprecated]] float* GeneratePerlinNoise2d(int x, int y, int samples = 1); // not working right
 
     private:
         float Fade(float t);
