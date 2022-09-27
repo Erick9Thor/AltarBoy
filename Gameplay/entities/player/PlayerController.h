@@ -122,6 +122,11 @@ namespace Hachiko
 			{
 				return _attack_idx;
 			}
+			
+			void SetLockTime(float lock_time)
+			{
+				_lock_time = lock_time;
+			}
 
 			WeaponUsed GetCurrentWeaponType() const
 			{
