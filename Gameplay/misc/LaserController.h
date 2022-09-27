@@ -49,7 +49,8 @@ namespace Hachiko
             SERIALIZE_FIELD(bool, _toggle_activation);
             SERIALIZE_FIELD(float, _toggle_active_time);
             SERIALIZE_FIELD(float, _toggle_inactive_time);
-
+            SERIALIZE_FIELD(GameObject* , _sparks);
+            
         private:
             State _state = ACTIVE;
             float _elapsed_time = 0.0f;
@@ -63,6 +64,7 @@ namespace Hachiko
             GameObject* _terrain = nullptr;
             GameObject* _player = nullptr;
             ComponentAudioSource* _audio_source;
+            ComponentParticleSystem* _sparks_particles = nullptr;
         };
     }
 }
