@@ -78,14 +78,13 @@ void Hachiko::Scripting::PlayerCamera::SetLookAhead()
 
 void Hachiko::Scripting::PlayerCamera::MoveCamera()
 {
-	void Hachiko::Scripting::PlayerCamera::MoveCamera()
-{
 	math::float3 movement(0.0f);
 
 	if (Input::IsGamepadModeOn())
 	{
 		const float2 gamepad_normalized_position =
-			math::float2(Input::GetAxisNormalized(Input::GameControllerAxis::CONTROLLER_AXIS_RIGHTX), Input::GetAxisNormalized(Input::GameControllerAxis::CONTROLLER_AXIS_RIGHTY));
+			math::float2(Input::GetAxisNormalized(Input::GameControllerAxis::CONTROLLER_AXIS_RIGHTX), 
+			Input::GetAxisNormalized(Input::GameControllerAxis::CONTROLLER_AXIS_RIGHTY));
 		movement = float3(gamepad_normalized_position.x * 4.0f, 0.0f, gamepad_normalized_position.y * 4.0f);
 	}
 	else
@@ -95,9 +94,8 @@ void Hachiko::Scripting::PlayerCamera::MoveCamera()
 
 		// We only trigger this on mouse mode as it's not gonna be used with
 		// game pad:
-	    ScrollWheelZoom(&_relative_position_to_player);
+		ScrollWheelZoom(&_relative_position_to_player);
 	}
-
 
 	const float3 final_position = _current_objective->GetTransform()->GetGlobalPosition()
 		+ _look_ahead + movement + _relative_position_to_player;
@@ -114,55 +112,6 @@ void Hachiko::Scripting::PlayerCamera::MoveCamera()
 	const float3 shake_offset = Shake();
 
 	transform->SetGlobalPosition(current_position + shake_offset);
-}
-	{
-		const math::float2 gamepad_normalized_position =
-			math::float2(Input::GetAxisNormalized(Input::GameControllerAxis::CONTROLLER_AXIS_RIGHTX), Input::GetAxisNormalized(Input::GameControllerAxis::CONTROLLER_AXIS_RIGHTY));
-		const math::float3 controller_movement = float3(gamepad_normalized_position.x * 4.0f, 0.0f, gamepad_normalized_position.y * 4.0f);
-		ScrollWheelZoom(&_relative_position_to_player);
-
-		const math::float3 final_position = _current_objective->GetTransform()->GetGlobalPosition()
-			+ _look_ahead + controller_movement + _relative_position_to_player;
-		ComponentTransform* transform = game_object->GetTransform();
-		math::float3 current_position = transform->GetGlobalPosition();
-
-		float delayed_time = _is_in_position ? Time::DeltaTime() / _follow_delay : _reposition_progress;
-		Clamp<float>(delayed_time, 0.0f, 1.0f);
-
-		// Lerp to the position to the player with a delay: 
-		current_position = math::float3::Lerp(current_position, final_position,
-			delayed_time);
-
-		float3 shake_offset = float3::zero;
-
-		shake_offset = Shake();
-
-		transform->SetGlobalPosition(current_position + shake_offset);
-	}
-	else
-	{
-		const math::float2 mouse_movement_x_z = MoveCameraWithMouse();
-		const math::float3 mouse_movement = float3(mouse_movement_x_z.x, 0.0f, mouse_movement_x_z.y);
-		ScrollWheelZoom(&_relative_position_to_player);
-
-		const math::float3 final_position = _current_objective->GetTransform()->GetGlobalPosition()
-			+ _look_ahead + mouse_movement + _relative_position_to_player;
-		ComponentTransform* transform = game_object->GetTransform();
-		math::float3 current_position = transform->GetGlobalPosition();
-
-		float delayed_time = _is_in_position ? Time::DeltaTime() / _follow_delay : _reposition_progress;
-		Clamp<float>(delayed_time, 0.0f, 1.0f);
-
-		// Lerp to the position to the player with a delay: 
-		current_position = math::float3::Lerp(current_position, final_position,
-			delayed_time);
-
-		float3 shake_offset = float3::zero;
-
-		shake_offset = Shake();
-
-		transform->SetGlobalPosition(current_position + shake_offset);
-	}
 }
 
 float2 Hachiko::Scripting::PlayerCamera::MoveCameraWithMouse()
