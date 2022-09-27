@@ -46,7 +46,6 @@ namespace Hachiko
 			math::float3 _player_pos;
 
 			SERIALIZE_FIELD(float, _falling_cooldown);
-			SERIALIZE_FIELD(GameObject*, _crystal_parent);
 
 			// STALAGMITE
 			std::vector<Stalagmite*> _stalagmites{};

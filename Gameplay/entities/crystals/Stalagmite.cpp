@@ -9,7 +9,6 @@ Hachiko::Scripting::Stalagmite::Stalagmite(GameObject* game_object)
 void Hachiko::Scripting::Stalagmite::ActiveStalagmite()
 {
 	game_object->SetActive(true);
-	crystal->SetActive(false);
 }
 
 void Hachiko::Scripting::Stalagmite::ActiveEffects()
@@ -31,10 +30,5 @@ void Hachiko::Scripting::Stalagmite::Falling()
 		->SetGlobalPosition(_stalagmite_position);
 }
 
-void Hachiko::Scripting::Stalagmite::ActiveCrystal()
-{
-	_explosion_effect->SetActive(false);
-	GEO->SetActive(false);
-	crystal->SetActive(true);
-}
+
 

@@ -11,7 +11,7 @@ namespace Hachiko
 		{
 			INVALID,
 			FALLING,
-			SPAWN_CRYSTAL,
+			COLLAPSED,
 		};
 
 		class Stalagmite : public Script
@@ -52,17 +52,15 @@ namespace Hachiko
 			void ActiveStalagmite();
 			void ActiveEffects();
 			void Falling();
-			void ActiveCrystal();
 
-			bool IsCrystalSpawned() {
-				return _crystal_spwaned;
+			bool IsStalagmiteCollapsed() {
+				return _stalagmite_collapsed;
 			}
 
-			void SetCrystalParent(GameObject* crystal_parent)
+			void SetStalagmiteOnGround()
 			{
-				crystal->SetNewParent(crystal_parent);
 				game_object->SetActive(false);
-				_crystal_spwaned = true;
+				_stalagmite_collapsed = true;
 			}
 
 		private:
@@ -71,12 +69,9 @@ namespace Hachiko
 			StalagmiteState _previous_state = StalagmiteState::INVALID;
 
 			SERIALIZE_FIELD(GameObject*, _explosion_effect);
-
-			SERIALIZE_FIELD(GameObject*, crystal);
-
 			SERIALIZE_FIELD(GameObject*, GEO);
 
-			bool _crystal_spwaned = false;
+			bool _stalagmite_collapsed = false;
 		};
 	}
 }

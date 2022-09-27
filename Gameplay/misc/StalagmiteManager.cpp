@@ -9,7 +9,6 @@
 Hachiko::Scripting::StalagmiteManager::StalagmiteManager(GameObject* game_object)
 	: Script(game_object, "StalagmiteManager")
 	, _falling_time(0.4f)
-	, _crystal_parent(nullptr)
 {
 }
 
@@ -75,7 +74,7 @@ void Hachiko::Scripting::StalagmiteManager::OnUpdate()
 						->GetTransform()->GetGlobalMatrix(), attack_stats);
 					
 
-					_stalagmites[i]->SetNewState(StalagmiteState::SPAWN_CRYSTAL);
+					_stalagmites[i]->SetNewState(StalagmiteState::COLLAPSED);
 					falling_elapsed = 0;
 				}
 				else
@@ -112,9 +111,8 @@ void Hachiko::Scripting::StalagmiteManager::UpdateStalagmiteState(Stalagmite* st
 		stalagmite->ActiveStalagmite();
 		stalagmite->ActiveEffects();
 		break;
-	case StalagmiteState::SPAWN_CRYSTAL:
-		stalagmite->SetCrystalParent(_crystal_parent);
-		stalagmite->ActiveCrystal();
+	case StalagmiteState::COLLAPSED:
+		stalagmite->SetStalagmiteOnGround();
 		break;
 	default:
 		break;
@@ -133,7 +131,7 @@ bool Hachiko::Scripting::StalagmiteManager::CheckPreviousStalagmite(int idx)
 		return true;
 	}
 	else {
-		return _stalagmites[(int)idx - 1]->IsCrystalSpawned();
+		return _stalagmites[(int)idx - 1]->IsStalagmiteCollapsed();
 	}
 }
 
