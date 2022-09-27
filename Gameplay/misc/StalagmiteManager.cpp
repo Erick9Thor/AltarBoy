@@ -66,7 +66,7 @@ void Hachiko::Scripting::StalagmiteManager::OnUpdate()
 					// AOE PLAYER DAMAGE
 					 
 					CombatManager::AttackStats attack_stats;
-					attack_stats.damage = 3.f;
+					attack_stats.damage = 1;
 					attack_stats.knockback_distance = 0.0f;
 					attack_stats.width = 3.5f;
 					attack_stats.range = 4.5; // a bit bigger than its attack activation range
