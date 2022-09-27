@@ -122,6 +122,11 @@ namespace Hachiko
 			{
 				return _attack_idx;
 			}
+			
+			void SetLockTime(float lock_time)
+			{
+				_lock_time = lock_time;
+			}
 
 			void ChangeWeapon(unsigned weapon_idx);
 			void ReloadAmmo(unsigned ammo);
