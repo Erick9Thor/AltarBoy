@@ -45,8 +45,6 @@ namespace Hachiko
 			CRYSTAL_JUMP,
 		};
 
-
-
 		class BossController : public Script
 		{
 			SERIALIZATION_METHODS(false)
@@ -69,18 +67,9 @@ namespace Hachiko
 
 			enum class AttackType
 			{
-				COMMON_1 = 0,
-				COMMON_2,
-				COMMON_3,
-				QUICK_1,
-				QUICK_2,
-				QUICK_3,
-				HEAVY_1,
-				HEAVY_2,
-				HEAVY_3,
-				HAMMER_1,
-				HAMMER_2,
-				HAMMER_3,
+				MELEE_CLAW = 0,
+				SWORD,
+				HAMMER,
 			};
 
 			struct Weapon

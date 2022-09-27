@@ -16,37 +16,24 @@ Hachiko::Scripting::BossController::BossController(GameObject* game_object)
 void Hachiko::Scripting::BossController::CreateBossWeapons()
 {
 	Weapon melee;
-	melee.name = "Melee";
+	melee.name = "Claw";
 	melee.color = float4(255.0f, 0.0f, 0.0f, 255.0f);
 	melee.unlimited = true;
-	melee.attacks.push_back(GetAttackType(AttackType::COMMON_1));
-
-	Weapon claw;
-	claw.name = "Claw";
-	claw.color = float4(0.0f, 0.0f, 255.0f, 255.0f);
-	claw.unlimited = false;
-	claw.charges = 5;
-	claw.attacks.push_back(GetAttackType(AttackType::QUICK_1));
-	claw.attacks.push_back(GetAttackType(AttackType::QUICK_2));
+	melee.attacks.push_back(GetAttackType(AttackType::MELEE_CLAW));
 
 	Weapon sword;
 	sword.name = "Sword";
 	sword.color = float4(0.0f, 255.0f, 0.0f, 255.0f);
-	sword.unlimited = false;
-	sword.charges = 5;
-	sword.attacks.push_back(GetAttackType(AttackType::HEAVY_1));
-	sword.attacks.push_back(GetAttackType(AttackType::HEAVY_2));
+	sword.unlimited = true;
+	sword.attacks.push_back(GetAttackType(AttackType::SWORD));
 
 	Weapon hammer;
 	hammer.name = "Hammer";
 	hammer.color = float4(0.0f, 255.0f, 255.0f, 0.0f);
-	hammer.unlimited = false;
-	hammer.charges = 5;
-	hammer.attacks.push_back(GetAttackType(AttackType::HAMMER_1));
-	hammer.attacks.push_back(GetAttackType(AttackType::HAMMER_2));
+	hammer.unlimited = true;
+	hammer.attacks.push_back(GetAttackType(AttackType::HAMMER));
 
 	weapons.push_back(melee);
-	weapons.push_back(claw);
 	weapons.push_back(sword);
 	weapons.push_back(hammer);
 }
@@ -436,12 +423,16 @@ void Hachiko::Scripting::BossController::ChaseController()
 
 void Hachiko::Scripting::BossController::MeleeAttack()
 {
+	/*
+	*
+	* For testing switching weapons
+	*
 	Weapon& weapon = GetCurrentWeapon();
 	
 	if (!weapon.unlimited && _attack_charges)
 	{
 		_attack_charges--;
-	}
+	}*/
 }
 
 void Hachiko::Scripting::BossController::MeleeAttackController()
@@ -454,10 +445,15 @@ void Hachiko::Scripting::BossController::MeleeAttackController()
 
 	combat_state = CombatState::IDLE;
 
+	/*
+	* 
+	* For testing switching weapons
+	* 
 	if (_attack_charges == 0)
 	{
 		ChangeWeapon(RandomUtil::RandomIntBetween(1, weapons.size() - 1));
 	}
+	*/
 }
 
 void Hachiko::Scripting::BossController::SpawnCrystals()
@@ -498,7 +494,7 @@ Hachiko::Scripting::BossController::BossAttack Hachiko::Scripting::BossControlle
 	switch (attack_type)
 	{
 		// COMMON ATTACKS
-	case AttackType::COMMON_1:
+	case AttackType::MELEE_CLAW:
 		// Make hit delay shorter than duration!
 		attack.hit_delay = 0.05f;
 		attack.duration = 1.5f; // 10 frames .45ms
@@ -511,33 +507,8 @@ Hachiko::Scripting::BossController::BossAttack Hachiko::Scripting::BossControlle
 		attack.stats.range = 2.5f;
 		break;
 
-		// QUICK ATTACKS
-	case AttackType::QUICK_1:
-		attack.hit_delay = 0.05f;
-		attack.duration = 1.5f;
-		attack.cooldown = 0.0f;
-		attack.stats.type = CombatManager::AttackType::RECTANGLE;
-		attack.stats.damage = 1;
-		attack.stats.knockback_distance = 0.f;
-		// If its cone use degrees on width
-		attack.stats.width = 2.5f;
-		attack.stats.range = 2.5f;
-		break;
-
-	case AttackType::QUICK_2:
-		attack.hit_delay = 0.05f;
-		attack.duration = 1.5f;
-		attack.cooldown = 0.0f;
-		attack.stats.type = CombatManager::AttackType::RECTANGLE;
-		attack.stats.damage = 1;
-		attack.stats.knockback_distance = 0.f;
-		// If its cone use degrees on width
-		attack.stats.width = 2.5f;
-		attack.stats.range = 2.5f;
-		break;
-
 		// HEAVY ATTACKS
-	case AttackType::HEAVY_1:
+	case AttackType::SWORD:
 		attack.hit_delay = 0.1f;
 		attack.duration = 2.f;
 		attack.cooldown = 0.0f;
@@ -549,31 +520,7 @@ Hachiko::Scripting::BossController::BossAttack Hachiko::Scripting::BossControlle
 		attack.stats.range = 3.f;
 		break;
 
-	case AttackType::HEAVY_2:
-		attack.hit_delay = 0.1f;
-		attack.duration = 2.5f;
-		attack.cooldown = 0.0f;
-		attack.stats.type = CombatManager::AttackType::RECTANGLE;
-		attack.stats.damage = 1;
-		attack.stats.knockback_distance = 1.f;
-		// If its cone use degrees on width
-		attack.stats.width = 5.f;
-		attack.stats.range = 3.f;
-		break;
-
-	case AttackType::HAMMER_1:
-		attack.hit_delay = 0.1f;
-		attack.duration = 3.f;
-		attack.cooldown = 0.0f;
-		attack.stats.type = CombatManager::AttackType::RECTANGLE;
-		attack.stats.damage = 1;
-		attack.stats.knockback_distance = 1.f;
-		// If its cone use degrees on width
-		attack.stats.width = 5.f;
-		attack.stats.range = 3.f;
-		break;
-
-	case AttackType::HAMMER_2:
+	case AttackType::HAMMER:
 		attack.hit_delay = 0.1f;
 		attack.duration = 3.f;
 		attack.cooldown = 0.0f;
@@ -614,18 +561,16 @@ void Hachiko::Scripting::BossController::ChangeWeapon(unsigned weapon_idx)
 		_current_weapon = 0;
 	}
 
-	_attack_charges = GetCurrentWeapon().charges;
-
 	if (_current_weapon == 0)
 	{
-		_claw_weapon->SetActive(false);
+		_claw_weapon->SetActive(true);
 		_sword_weapon->SetActive(false);
 		_hammer_weapon->SetActive(false);
 	}
 	else if (_current_weapon == 1)
 	{
-		_claw_weapon->SetActive(true);
-		_sword_weapon->SetActive(false);
+		_claw_weapon->SetActive(false);
+		_sword_weapon->SetActive(true);
 		_hammer_weapon->SetActive(false);
 	}
 	else if (_current_weapon == 2)
