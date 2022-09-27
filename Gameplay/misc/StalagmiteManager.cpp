@@ -27,13 +27,21 @@ void Hachiko::Scripting::StalagmiteManager::OnStart()
 
 void Hachiko::Scripting::StalagmiteManager::GenerateStalagmites()
 {
-	std::vector<GameObject*> stalagmites_children = game_object->children;
+    std::vector<GameObject*>& stalagmites_children = game_object->children;
+    _stalagmites.clear();
+    _stalagmites.reserve(stalagmites_children.size());
 
-	for (int i = 0; i < stalagmites_children.size(); i++)
-	{
-		Stalagmite* stalagmite = stalagmites_children[i]->GetComponent<Stalagmite>();
-		_stalagmites.push_back(stalagmite);
-	}
+    for (GameObject* child : stalagmites_children)
+    {
+        Stalagmite* stalagmite = child->GetComponent<Stalagmite>();
+
+        if (!stalagmite)
+        {
+            continue;
+        }
+
+        _stalagmites.push_back(stalagmite);
+    }
 }
 
 void Hachiko::Scripting::StalagmiteManager::OnUpdate()
@@ -126,13 +134,7 @@ void Hachiko::Scripting::StalagmiteManager::FallingStalagmite(Stalagmite* stalag
 
 bool Hachiko::Scripting::StalagmiteManager::CheckPreviousStalagmite(int idx)
 {
-	if (idx == 0) // First stalagmite
-	{
-		return true;
-	}
-	else {
-		return _stalagmites[(int)idx - 1]->IsStalagmiteCollapsed();
-	}
+    return (idx == 0) ? true : _stalagmites[static_cast<size_t>(idx - 1)]->IsStalagmiteCollapsed();
 }
 
 

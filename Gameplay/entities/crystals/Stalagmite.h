@@ -22,11 +22,13 @@ namespace Hachiko
 			Stalagmite(GameObject* game_object);
 			~Stalagmite() override = default;
 
-			StalagmiteState GetState() {
+			StalagmiteState GetState() 
+			{
 				return stalagmite_state;
 			}
 
-			StalagmiteState GetPreviousState() {
+			StalagmiteState GetPreviousState() 
+			{
 				return _previous_state;
 			}
 
@@ -40,7 +42,8 @@ namespace Hachiko
 				_previous_state = state;
 			}
 
-			GameObject* GetGEO() {
+			GameObject* GetGEO() 
+			{
 				return GEO;
 			}
 
@@ -53,7 +56,8 @@ namespace Hachiko
 			void ActiveEffects();
 			void Falling();
 
-			bool IsStalagmiteCollapsed() {
+			bool IsStalagmiteCollapsed() 
+			{
 				return _stalagmite_collapsed;
 			}
 
