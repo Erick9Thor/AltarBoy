@@ -21,6 +21,7 @@ void Hachiko::Scripting::LevelManager::OnAwake()
 	if (_audio_manager_go != nullptr)
 	{
 		_audio_manager = _audio_manager_go->GetComponent<AudioManager>();
+		_audio_manager->SetLevel(_level);
 	}
 
 	_gauntlet_ui_go->SetActive(false);

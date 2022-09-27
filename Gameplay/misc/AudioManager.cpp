@@ -17,7 +17,6 @@ Hachiko::Scripting::AudioManager::AudioManager(GameObject* game_object)
 
 void Hachiko::Scripting::AudioManager::OnAwake()
 {
-	enemy_pool = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
 	_audio_source = game_object->GetComponent<ComponentAudioSource>();
 	SetNavigation();
 }
@@ -25,18 +24,13 @@ void Hachiko::Scripting::AudioManager::OnAwake()
 void Hachiko::Scripting::AudioManager::OnStart()
 {
 	SetNavigation();
-	_audio_source->PostEvent(Sounds::PLAY_NAVIGATION);
+	_audio_source->PostEvent(GetPlayMusicEventName(_level));
 	_audio_source->PostEvent(Sounds::PLAY_WIND);
 	_audio_source->PostEvent(Sounds::PLAY_PEBBLE);
 	updated = true;
 }
 
 void Hachiko::Scripting::AudioManager::OnUpdate()
-{
-	UpdateState();
-}
-
-void Hachiko::Scripting::AudioManager::UpdateState()
 {
 	if (updated)
 	{
@@ -95,6 +89,11 @@ void Hachiko::Scripting::AudioManager::Restart()
 	OnStart();
 }
 
+void Hachiko::Scripting::AudioManager::SetLevel(unsigned level)
+{
+	_level = level;
+}
+
 void Hachiko::Scripting::AudioManager::SetCombat()
 {
 	_audio_source->SetRTPCValue(Sounds::ENEMY_AWARE, 100);
@@ -105,8 +104,43 @@ void Hachiko::Scripting::AudioManager::SetNavigation()
 	_audio_source->SetRTPCValue(Sounds::ENEMY_AWARE, 0);
 }
 
+const wchar_t* Hachiko::Scripting::AudioManager::GetPlayMusicEventName(unsigned level)
+{
+	switch (level)
+	{
+	case 1:
+		return Sounds::PLAY_BACKGROUND_MUSIC_LVL1;
+
+	case 2:
+		return Sounds::PLAY_BACKGROUND_MUSIC_LVL2;
+
+	case 3:
+		return Sounds::PLAY_BACKGROUND_MUSIC_BOSS;
+
+	default:
+		return Sounds::PLAY_BACKGROUND_MUSIC_LVL1;
+	}
+}
+
+const wchar_t* Hachiko::Scripting::AudioManager::GetStopMusicEventName(unsigned level)
+{
+	switch (level)
+	{
+	case 1:
+		return Sounds::STOP_BACKGROUND_MUSIC_LVL1;
+
+	case 2:
+		return Sounds::STOP_BACKGROUND_MUSIC_LVL2;
+
+	case 3:
+		return Sounds::STOP_BACKGROUND_MUSIC_BOSS;
+
+	default:
+		return Sounds::STOP_BACKGROUND_MUSIC_LVL1;
+	}
+}
+
 void Hachiko::Scripting::AudioManager::StopMusic()
 {
-	//_audio_source->PostEvent(Sounds::STOP_COMBAT);
-	//_audio_source->PostEvent(Sounds::STOP_NAVIGATION);
+	_audio_source->PostEvent(GetStopMusicEventName(_level));
 }

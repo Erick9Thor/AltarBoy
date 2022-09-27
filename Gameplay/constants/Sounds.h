@@ -27,12 +27,17 @@ namespace Hachiko::Sounds
 	constexpr const wchar_t* PLAY_LASER_HIT = L"Play_Laser_Hit";
 
 	// Background Music
-	constexpr const wchar_t* BACKGROUNDMUSIC = L"Play_BackgroundMusic";
-	constexpr const wchar_t* PLAY_NAVIGATION = L"Play_Navigation";
-	constexpr const wchar_t* STOP_NAVIGATION = L"Stop_Navigation";
-	constexpr const wchar_t* PLAY_COMBAT = L"Play_Combat";
-	constexpr const wchar_t* STOP_COMBAT = L"Stop_Combat";
-	constexpr const wchar_t* GAME_OVER = L"Play_GameOver";
+	// TODO: Rename this events in wwise
+	constexpr const wchar_t* PLAY_BACKGROUND_MUSIC_LVL1 = L"Play_Navigation";
+	constexpr const wchar_t* PLAY_BACKGROUND_MUSIC_LVL2 = L"Play_Navigation";
+	constexpr const wchar_t* PLAY_BACKGROUND_MUSIC_BOSS = L"Play_Navigation";
+	constexpr const wchar_t* STOP_BACKGROUND_MUSIC_LVL1 = L"Stop_Navigation";
+	constexpr const wchar_t* STOP_BACKGROUND_MUSIC_LVL2 = L"Stop_Navigation";
+	constexpr const wchar_t* STOP_BACKGROUND_MUSIC_BOSS = L"Stop_Navigation";
+	constexpr const wchar_t* PLAY_DEAD_MUSIC = L"Play_GameOver";
+
+	constexpr const wchar_t* PLAY_COMBAT_MUSIC = L"Play_Combat"; // Deprecated
+	constexpr const wchar_t* STOP_COMBAT_MUSIC = L"Stop_Combat"; // Deprecated
 
 	//UI
 	constexpr const wchar_t* CLICK = L"Play_UIClick";
