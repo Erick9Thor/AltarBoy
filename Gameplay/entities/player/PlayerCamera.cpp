@@ -82,7 +82,7 @@ void Hachiko::Scripting::PlayerCamera::MoveCamera()
 	{
 		const math::float2 gamepad_normalized_position =
 			math::float2(Input::GetAxisNormalized(Input::GameControllerAxis::CONTROLLER_AXIS_RIGHTX), Input::GetAxisNormalized(Input::GameControllerAxis::CONTROLLER_AXIS_RIGHTY));
-		const math::float3 controller_movement = float3(gamepad_normalized_position.x, 0.0f, gamepad_normalized_position.y);
+		const math::float3 controller_movement = float3(gamepad_normalized_position.x * 4.0f, 0.0f, gamepad_normalized_position.y * 4.0f);
 		ScrollWheelZoom(&_relative_position_to_player);
 
 		const math::float3 final_position = _current_objective->GetTransform()->GetGlobalPosition()
