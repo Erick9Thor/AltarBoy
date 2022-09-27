@@ -8,7 +8,7 @@ fog:
   color: [0.4228, 0.4228, 0.4228]
   global_density: 0.009
   height_falloff: 0.077
-ibl: false
+ibl: true
 skybox:
   right_cube_id: 0
   left_cube_id: 0
