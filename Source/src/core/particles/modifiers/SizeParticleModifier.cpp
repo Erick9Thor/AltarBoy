@@ -6,7 +6,7 @@
 Hachiko::SizeParticleModifier::SizeParticleModifier(const std::string& name):
     ParticleModifier(name, false)
 {
-    cfg.min = 0.0f;
+    cfg.min = -100.0f;
     cfg.speed = 0.1f;
     cfg.format = "%.2f";
 }

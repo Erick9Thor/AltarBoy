@@ -43,6 +43,8 @@ Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 	, _attack_zone(nullptr)
 	, _inner_indicator(nullptr)
 	, _outer_indicator(nullptr)
+	, _projectile_particles(nullptr)
+	, _explosion_particles(nullptr)
 {
 	// Push attack
 	push_attack.damage = 0;
@@ -269,7 +271,6 @@ void Hachiko::Scripting::EnemyController::SetStats()
 	_combat_stats->_current_hp = _combat_stats->_max_hp;
 	_stun_time = 0.0f;
 	_is_stunned = false;
-	_attack_delay = 0.3f;
 	switch (_enemy_type)
 	{
 	case EnemyType::BEETLE:
@@ -326,6 +327,22 @@ void Hachiko::Scripting::EnemyController::SetUpWormVfx()
 		if (_outer_indicator_billboard)
 		{
 			_outer_indicator_billboard->Stop();
+		}
+	}
+	if (_projectile_particles)
+	{
+		_projectile_particles_comp = _projectile_particles->GetComponent<ComponentParticleSystem>();
+		if (_projectile_particles_comp)
+		{
+			_projectile_particles_comp->Stop();
+		}
+	}
+	if (_explosion_particles)
+	{
+		_explosion_particles_comp = _explosion_particles->GetComponent<ComponentParticleSystem>();
+		if (_explosion_particles_comp)
+		{
+			_explosion_particles_comp->Stop();
 		}
 	}
 }
@@ -612,6 +629,7 @@ void Hachiko::Scripting::EnemyController::WormAttackController()
 	if (_previous_state == EnemyState::IDLE && _state != EnemyState::ATTACKING && !_attack_landing && dist_to_player <= _attack_range)
 	{
 		_state = EnemyState::ATTACKING;
+		_attack_current_delay = _attack_delay;
 		return;
 	}
 
@@ -622,15 +640,25 @@ void Hachiko::Scripting::EnemyController::WormSpit()
 {
 	if (_state == EnemyState::ATTACKING && animation->IsAnimationStopped())
 	{
-		// We create the attack zone once the firing animation is done
+		_state = EnemyState::IDLE;
+	}
+
+	_attack_current_delay -= Time::DeltaTimeScaled();
+	if (_attack_current_delay <= 0.0f)
+	{
+		_attack_current_delay = 0;
+	}
+
+	if (!_attack_landing && _attack_current_delay <= 0.0f)
+	{
+		// We create the attack zone after the delay
 		_state = EnemyState::IDLE;
 		_attack_zone->GetTransform()->SetGlobalPosition(_player_pos);
 		_attack_landing = true;
-		_attack_current_delay = 1.0f;
 		_inner_indicator_billboard->Play();
 		_outer_indicator_billboard->Play();
 		_attack_animation_timer = 0.0f;
-
+		_projectile_particles_comp->Play();
 		return;
 	}
 
@@ -648,6 +676,23 @@ void Hachiko::Scripting::EnemyController::WormSpit()
 			_combat_manager->EnemyMeleeAttack(_attack_zone->GetTransform()->GetGlobalMatrix(), attack_stats);
 			_attack_landing = false;
 			_attack_cooldown = _combat_stats->_attack_cd;
+
+			_explosion_particles->GetTransform()->SetGlobalPosition(_attack_zone->GetTransform()->GetGlobalPosition());
+			_explosion_particles_comp->Play();
+
+			_projectile_particles_comp->Stop();
+		}
+		else if (_attack_animation_timer >= .5f)
+		{
+			float3 offset_attack_pos = _attack_zone->GetTransform()->GetGlobalPosition();
+			offset_attack_pos.y += 50;
+			_projectile_particles->GetTransform()->SetGlobalPosition(math::float3::Lerp(offset_attack_pos, _attack_zone->GetTransform()->GetGlobalPosition(), _attack_animation_timer));
+		}
+		else
+		{
+			float3 offset_worm_pos = transform->GetGlobalPosition();
+			offset_worm_pos.y += 50;
+			_projectile_particles->GetTransform()->SetGlobalPosition(math::float3::Lerp(transform->GetGlobalPosition(), offset_worm_pos, _attack_animation_timer));
 		}
 	}
 }
@@ -886,6 +931,16 @@ void Hachiko::Scripting::EnemyController::ResetEnemy()
 	if (_small_dust_particles != nullptr)
 	{
 		_small_dust_particles->Stop();
+	}
+
+	if (_explosion_particles_comp != nullptr)
+	{
+		_explosion_particles_comp->Stop();
+	}
+
+	if (_projectile_particles_comp != nullptr)
+	{
+		_projectile_particles_comp->Stop();
 	}
 }
 
