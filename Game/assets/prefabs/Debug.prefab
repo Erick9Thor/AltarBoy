@@ -12,7 +12,7 @@ component:
     type: 10
     enabled: true
     position: [0, 0, 0]
-    size: [1133, 630]
+    size: [1130, 630]
     scale: [1, 1]
     rotation: [0, 0, 0, 1]
     pivot: [0.5, 0.5]
@@ -50,6 +50,7 @@ child:
         "'_weapon_claws@ComponentButton*'": 0
         "'_weapon_sword@ComponentButton*'": 0
         "'_weapon_hammer@ComponentButton*'": 0
+        "'_reload_ammo@ComponentButton*'": 0
         "'_toggle_performance_output@ComponentButton*'": 0
         "'_toggle_vsync@ComponentButton*'": 0
         "'_toggle_wireframe@ComponentButton*'": 0
@@ -57,15 +58,18 @@ child:
         "'_exit_debug@ComponentButton*'": 0
         "'_text_fps@ComponentText*'": 0
         "'_text_ms@ComponentText*'": 0
+        "'_text_atck@ComponentText*'": 0
+        "'_text_mvspd@ComponentText*'": 0
         "'_tp_pos1@GameObject*'": 3
         "'_tp_pos2@GameObject*'": 4
         "'_tp_pos3@GameObject*'": 5
-        "'_performance_menu@GameObject*'": 27
+        "'_performance_menu@GameObject*'": 28
+        "'_player_stats@GameObject*'": 34
       - !<transform_2d>
         type: 10
         enabled: true
         position: [700, -50, 0]
-        size: [1133, 630]
+        size: [1130, 630]
         scale: [1, 1]
         rotation: [0, 0, 0, 1]
         pivot: [0.5, 0.5]
@@ -935,6 +939,46 @@ child:
             image_y_tiles: 1
             image_tiles_per_second: 1
             fill_window: false
+      - name: Ammo
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+          - !<transform_2d>
+            type: 10
+            enabled: true
+            position: [340, -200, 0]
+            size: [100, 30]
+            scale: [1, 1]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [0, 1]
+          - !<canvas_renderer>
+            type: 9
+            enabled: true
+            scale_ui: false
+            original_size_x: 0
+            original_size_y: 0
+          - !<button>
+            type: 12
+            enabled: true
+          - !<image>
+            type: 11
+            enabled: true
+            image_id: 10254007074535024824
+            hover_image_id: 0
+            image_color: [1, 1, 1, 1]
+            hover_image_color: [1, 1, 1, 1]
+            image_is_tiled: false
+            image_randomize_initial_frame: false
+            image_x_tiles: 1
+            image_y_tiles: 1
+            image_tiles_per_second: 1
+            fill_window: false
   - name: PerformanceMenu
     enabled: true
     component:
@@ -948,7 +992,7 @@ child:
         type: 10
         enabled: true
         position: [0, 0, 0]
-        size: [1133, 630]
+        size: [1130, 630]
         scale: [1, 1]
         rotation: [0, 0, 0, 1]
         pivot: [0.5, 0.5]
@@ -1121,3 +1165,186 @@ child:
           - !<button>
             type: 12
             enabled: true
+  - name: PlayerStats
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [-0, 0, -0]
+        scale: [1, 1, 1]
+      - !<transform_2d>
+        type: 10
+        enabled: true
+        position: [0, 0, 0]
+        size: [1130, 630]
+        scale: [1, 1]
+        rotation: [0, 0, 0, 1]
+        pivot: [0.5, 0.5]
+        anchor: [0.5, 0.5]
+      - !<canvas>
+        type: 8
+        enabled: true
+    child:
+      - name: Background
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+          - !<transform_2d>
+            type: 10
+            enabled: true
+            position: [-105, 105, 0]
+            size: [200, 80]
+            scale: [1, 1]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [1, 0]
+          - !<canvas_renderer>
+            type: 9
+            enabled: true
+            scale_ui: false
+            original_size_x: 0
+            original_size_y: 0
+          - !<image>
+            type: 11
+            enabled: true
+            image_id: 3234820330620030812
+            hover_image_id: 0
+            image_color: [1, 1, 1, 1]
+            hover_image_color: [1, 1, 1, 1]
+            image_is_tiled: false
+            image_randomize_initial_frame: false
+            image_x_tiles: 1
+            image_y_tiles: 1
+            image_tiles_per_second: 1
+            fill_window: false
+      - name: AttackLabel
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+          - !<transform_2d>
+            type: 10
+            enabled: true
+            position: [-135, -10, 0]
+            size: [100, 100]
+            scale: [1, 1]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [1, 0.8]
+          - !<canvas_renderer>
+            type: 9
+            enabled: true
+            scale_ui: false
+            original_size_x: 0
+            original_size_y: 0
+          - !<text>
+            type: 16
+            enabled: true
+            font_id: 13446434311746485888
+            color: [1, 1, 1, 1]
+            size: 14
+            label_text: "Attack Power:"
+      - name: AttackText
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+          - !<transform_2d>
+            type: 10
+            enabled: true
+            position: [-35, -12.5, 0]
+            size: [25, 25]
+            scale: [1, 1]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [1, 0.8]
+          - !<canvas_renderer>
+            type: 9
+            enabled: true
+            scale_ui: false
+            original_size_x: 0
+            original_size_y: 0
+          - !<text>
+            type: 16
+            enabled: true
+            font_id: 13446434311746485888
+            color: [0.3922, 1, 0, 1]
+            size: 16
+            label_text: 999
+      - name: MovSpeedLabel
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+          - !<transform_2d>
+            type: 10
+            enabled: true
+            position: [-127, 15, 0]
+            size: [125, 25]
+            scale: [1, 1]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [1, 0.8]
+          - !<canvas_renderer>
+            type: 9
+            enabled: true
+            scale_ui: false
+            original_size_x: 0
+            original_size_y: 0
+          - !<text>
+            type: 16
+            enabled: true
+            font_id: 13446434311746485888
+            color: [1, 1, 1, 1]
+            size: 14
+            label_text: "Movement Speed:"
+      - name: MovSpeedText
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+          - !<transform_2d>
+            type: 10
+            enabled: true
+            position: [-35, 12.5, 0]
+            size: [25, 25]
+            scale: [1, 1]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [1, 0.8]
+          - !<canvas_renderer>
+            type: 9
+            enabled: true
+            scale_ui: false
+            original_size_x: 0
+            original_size_y: 0
+          - !<text>
+            type: 16
+            enabled: true
+            font_id: 13446434311746485888
+            color: [0.3922, 1, 0, 1]
+            size: 16
+            label_text: 999

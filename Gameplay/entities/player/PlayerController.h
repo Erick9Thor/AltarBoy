@@ -124,7 +124,7 @@ namespace Hachiko
 			}
 
 			void ChangeWeapon(unsigned weapon_idx);
-
+			void ReloadAmmo(unsigned ammo);
 			WeaponUsed GetCurrentWeaponType() const
 			{
 				return static_cast<WeaponUsed>(_current_weapon);
