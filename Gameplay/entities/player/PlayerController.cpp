@@ -705,6 +705,16 @@ void Hachiko::Scripting::PlayerController::ChangeWeapon(unsigned weapon_idx)
 	}
 }
 
+void Hachiko::Scripting::PlayerController::ReloadAmmo(unsigned ammo)
+{
+	_ammo_count += ammo;
+	if (_ammo_count > MAX_AMMO)
+	{
+		_ammo_count = MAX_AMMO;
+	}
+	UpdateAmmoUI();
+}
+
 bool Hachiko::Scripting::PlayerController::IsAttacking() const
 {
 	return _state == PlayerState::MELEE_ATTACKING || _state == PlayerState::RANGED_ATTACKING || _state == PlayerState::RANGED_CHARGING;
