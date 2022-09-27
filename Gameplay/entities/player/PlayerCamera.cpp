@@ -83,8 +83,8 @@ void Hachiko::Scripting::PlayerCamera::MoveCamera()
 	if (Input::IsGamepadModeOn())
 	{
 		const float2 gamepad_normalized_position =
-			math::float2(Input::GetAxisNormalized(Input::GameControllerAxis::CONTROLLER_AXIS_RIGHTX), 
-			Input::GetAxisNormalized(Input::GameControllerAxis::CONTROLLER_AXIS_RIGHTY));
+			math::float2(Input::GetAxisNormalized(Input::GameControllerAxis::CONTROLLER_AXIS_RIGHTX),
+				Input::GetAxisNormalized(Input::GameControllerAxis::CONTROLLER_AXIS_RIGHTY));
 		movement = float3(gamepad_normalized_position.x * 4.0f, 0.0f, gamepad_normalized_position.y * 4.0f);
 	}
 	else
