@@ -41,7 +41,7 @@ void Hachiko::Scripting::Tutorial::OnStart()
 
 void Hachiko::Scripting::Tutorial::OnUpdate()
 {
-	if (Input::IsKeyDown(Input::KeyCode::KEY_Y))
+	if (Input::IsKeyDown(Input::KeyCode::KEY_Y) || Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_Y))
 	{
 		_player_tutorial->SetActive(false);
 		_parasite_tutorial->SetActive(false);
