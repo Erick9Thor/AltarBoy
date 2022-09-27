@@ -707,14 +707,12 @@ void Hachiko::Scripting::PlayerController::ChangeWeapon(unsigned weapon_idx)
 
 void Hachiko::Scripting::PlayerController::ReloadAmmo(unsigned ammo)
 {
-	if (0 < ammo && ammo <= MAX_AMMO) 
+	_ammo_count += ammo;
+	if (_ammo_count > MAX_AMMO)
 	{
-		_ammo_count = ammo;
-		UpdateAmmoUI();
+		_ammo_count = MAX_AMMO;
 	}
-	else {
-		HE_LOG("ReloadAmmo: Incorrect AMMO value");
-	}
+	UpdateAmmoUI();
 }
 
 bool Hachiko::Scripting::PlayerController::IsAttacking() const

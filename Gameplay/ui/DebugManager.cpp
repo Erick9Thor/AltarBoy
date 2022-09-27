@@ -202,13 +202,10 @@ void Hachiko::Scripting::DebugManager::HandleButtonInteraction()
 		_player_controller->_combat_stats->_move_speed += 1.0f;
 		HE_LOG("Move speed now %f", _player_controller->_combat_stats->_move_speed);
 	}
-	if (_decrease_move_speed->IsSelected())
+	if (_decrease_move_speed->IsSelected() && _player_controller->_combat_stats->_move_speed > 1)
 	{
-		if (_player_controller->_combat_stats->_move_speed > 1)
-		{
-			_player_controller->_combat_stats->_move_speed -= 1.0f;
-			HE_LOG("Move speed now %f", _player_controller->_combat_stats->_move_speed);
-		}
+		_player_controller->_combat_stats->_move_speed -= 1.0f;
+		HE_LOG("Move speed now %f", _player_controller->_combat_stats->_move_speed);
 	}
 
 	if (_increase_attack_power->IsSelected())
@@ -216,14 +213,10 @@ void Hachiko::Scripting::DebugManager::HandleButtonInteraction()
 		_player_controller->_combat_stats->_attack_power += 1;
 		HE_LOG("Attack power now %d", _player_controller->_combat_stats->_attack_power);
 	}
-	if (_decrease_attack_power->IsSelected())
+	if (_decrease_attack_power->IsSelected() && _player_controller->_combat_stats->_attack_power > 1)
 	{
-		if (_player_controller->_combat_stats->_attack_power > 1)
-		{
-			_player_controller->_combat_stats->_attack_power -= 1;
-			HE_LOG("Attack power now %d", _player_controller->_combat_stats->_attack_power);
-		}
-
+		_player_controller->_combat_stats->_attack_power -= 1;
+		HE_LOG("Attack power now %d", _player_controller->_combat_stats->_attack_power);
 	}
 
 	if (_reload_ammo->IsSelected())
