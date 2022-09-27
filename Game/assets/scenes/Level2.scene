@@ -12431,6 +12431,11 @@ child:
         class_name: CombatManager
         "'_charge_vfx@GameObject*'": 14418816646198739956
         "'_shot_vfx@GameObject*'": 1607849946815238449
+      - !<script>
+        id: 17846535524449313398
+        type: 15
+        enabled: true
+        class_name: TimeManager
     child:
       - id: 3560572155553616187
         name: Bullet
