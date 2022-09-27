@@ -5,12 +5,32 @@
 #include "constants/Scenes.h"
 
 Hachiko::Scripting::BossController::BossController(GameObject* game_object)
-	: Script(game_object, "BossController")
-	, state_value(0)
-	, hp_bar_go(nullptr)
-	, cocoon_placeholder_go(nullptr)
+    : Script(game_object, "BossController")
+    , state_value(0)
+    , hp_bar_go(nullptr)
+    , crystal_target_go(nullptr)
+    , cocoon_placeholder_go(nullptr)
+    , gauntlet_go(nullptr)
+    , start_encounter_range(0.0f)
+    , _jump_start_delay(0.0f)
+	, _jump_ascending_duration(0.0f)
+	, _jump_post_ascending_delay(0.0f)
+	, _jump_on_highest_point_duration(0.0f)
+	, _jump_post_on_highest_point_delay(0.0f)
+	, _jump_descending_duration(0.0f)
+	, _jump_post_descending_delay(0.0f)
+	, _jump_getting_up_duration(0.0f)
+	, _jump_skill_delay(0.0f)
+    , _jump_skill_duration(0.0f)
+	, _jump_post_on_land_aoe_duration(0.0f)
+    , _jump_height(0.0f)
+	, _jump_offset(0.0f)
+	, _jumping_state(JumpingState::NOT_TRIGGERED)
+    , _jumping_timer(0.0f)
+    , _jump_pattern_index(0)
+	, _boss_state_text_ui(nullptr)
+	, attack_current_cd(0.0f)
 {
-	
 }
 
 void Hachiko::Scripting::BossController::OnAwake()
@@ -24,7 +44,7 @@ void Hachiko::Scripting::BossController::OnAwake()
 	agent = game_object->GetComponent<ComponentAgent>();
 	agent->SetMaxSpeed(combat_stats->_move_speed);
 	SetUpHpBar();
-	// Hp bar starts hidden untill encounter starts
+	// Hp bar starts hidden until encounter starts
 	SetHpBarActive(false);
 	if (cocoon_placeholder_go)
 	{
@@ -186,22 +206,29 @@ void Hachiko::Scripting::BossController::CombatController()
 	case CombatState::CONSUMING_PARASYTES:
 		ConsumeParasytesController();
 		break;
-	case CombatState::CRYSTAL_JUMP:
-		// Do not implement for now
+	case CombatState::JUMPING:
+		ExecuteJumpingState();
 		break;
 	}
 }
 
 void Hachiko::Scripting::BossController::CombatTransitionController()
 {
+	// TODO: Actually trigger jumping by the new state machine for combat.
+	if (Input::IsKeyDown(Input::KeyCode::KEY_J))
+	{
+		combat_state = CombatState::JUMPING;
+		prev_combat_state = CombatState::CHASING;
+	}
+
 	bool state_changed = combat_state != prev_combat_state;
 
 	if (!state_changed)
 	{
 		return;
 	}
-
-	switch (combat_state)
+	
+    switch (combat_state)
 	{
 	case CombatState::IDLE:
 		Chase();
@@ -217,8 +244,7 @@ void Hachiko::Scripting::BossController::CombatTransitionController()
 	case CombatState::CONSUMING_PARASYTES:
 		ConsumeParasytes();
 		break;
-	case CombatState::CRYSTAL_JUMP:
-		// Do not implement for now
+	case CombatState::JUMPING:
 		break;
 	}
 
@@ -229,7 +255,7 @@ float Hachiko::Scripting::BossController::GetPlayerDistance()
 {
 	const float3& player_position = player->GetTransform()->GetGlobalPosition();
 
-	// If player is very cloose change to attack mode
+	// If player is very close change to attack mode
 	return transform->GetGlobalPosition().Distance(player_position);
 }
 
@@ -250,16 +276,16 @@ void Hachiko::Scripting::BossController::StartEncounter()
 
 void Hachiko::Scripting::BossController::StartEncounterController()
 {
-	// If there is any start sequence manage it here and hold state untill it ends
-	// For now it goes to next state instantly
+	// If there is any start sequence manage it here and hold state until it
+	// ends. For now it goes to next state instantly:
 	state = BossState::COMBAT_FORM;
 }
 
 void Hachiko::Scripting::BossController::ResetCombatState()
 {
-	// Reset combat related variables to prevent bugs
+	// Reset combat related variables to prevent bugs:
 	combat_state = CombatState::IDLE;
-	prev_combat_state = CombatState::CRYSTAL_JUMP;
+	prev_combat_state = CombatState::JUMPING;
 }
 
 void Hachiko::Scripting::BossController::Die()
@@ -334,6 +360,7 @@ void Hachiko::Scripting::BossController::FinishCacoon()
 
 void Hachiko::Scripting::BossController::Chase()
 {
+	ChangeStateText("Chasing player.");
 	combat_state = CombatState::CHASING;
 }
 
@@ -376,7 +403,9 @@ void Hachiko::Scripting::BossController::ChaseController()
 		agent->SetMaxSpeed(combat_stats->_move_speed);
 	}
 
-	float3 corrected_position = Navigation::GetCorrectedPosition(moving_position, math::float3(10.0f, 10.0f, 10.0f));
+	float3 corrected_position = Navigation::GetCorrectedPosition(
+		moving_position, 
+		math::float3(10.0f));
 	if (corrected_position.x < FLT_MAX)
 	{
 		target_position = corrected_position;
@@ -388,6 +417,7 @@ void Hachiko::Scripting::BossController::ChaseController()
 
 void Hachiko::Scripting::BossController::MeleeAttack()
 {
+	ChangeStateText("Melee attacking.");
 }
 
 void Hachiko::Scripting::BossController::MeleeAttackController()
@@ -413,6 +443,7 @@ void Hachiko::Scripting::BossController::MeleeAttackController()
 
 void Hachiko::Scripting::BossController::SpawnCrystals()
 {
+	ChangeStateText("Spawning crystals.");
 }
 
 void Hachiko::Scripting::BossController::SpawnCrystalsController()
@@ -421,6 +452,7 @@ void Hachiko::Scripting::BossController::SpawnCrystalsController()
 
 void Hachiko::Scripting::BossController::ConsumeParasytes()
 {
+	ChangeStateText("Consuming parasites.");
 }
 
 void Hachiko::Scripting::BossController::ConsumeParasytesController()
@@ -440,4 +472,354 @@ void Hachiko::Scripting::BossController::FocusCamera(bool focus_on_boss)
 		level_manager->BlockInputs(false);
 		player_camera->SetObjective(player);
 	}
+}
+
+void Hachiko::Scripting::BossController::TriggerJumpingState()
+{
+	combat_state = CombatState::JUMPING;
+
+	ResetJumpingState();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/// Jumping State Related Methods:
+
+void Hachiko::Scripting::BossController::ResetJumpingState()
+{
+	_jumping_state = JumpingState::NOT_TRIGGERED;
+	_jumping_timer = 0.0f;
+}
+
+void Hachiko::Scripting::BossController::ExecuteJumpingState()
+{
+	
+	if (_jumping_state == JumpingState::NOT_TRIGGERED)
+	{
+		_jumping_state = JumpingState::WAITING_TO_JUMP;
+		_jumping_timer = 0.0f;
+
+		ChangeStateText("Waiting to jump.");
+
+		// TODO: Trigger getting ready for jump animation here.
+
+		// Disable the agent component, gets enabled back when boss lands back:
+		agent->RemoveFromCrowd();
+		agent->Disable();
+	}
+
+	_jumping_timer += Time::DeltaTime();
+
+	switch (_jumping_state)
+	{
+	case JumpingState::WAITING_TO_JUMP:
+	{
+
+		if (_jumping_timer < _jump_start_delay)
+		{
+			// Boss is waiting for jump here:
+			break;
+		}
+
+		// Boss starts jumping here:
+		_jumping_state = JumpingState::ASCENDING;
+		_jumping_timer = 0.0f;
+
+		// Set the start & end positions for the jump:
+		_jump_start_position = game_object->GetTransform()->GetGlobalPosition();
+		_jump_end_position = player->GetTransform()->GetGlobalPosition();
+		
+		// Apply offset to the end position, if the offset is zero, the end
+		// position of the jump will be basically equal to the player position:
+		const float3 jump_direction(
+			(_jump_start_position - _jump_end_position).Normalized());
+		_jump_end_position = _jump_end_position + jump_direction * _jump_offset;
+		_jump_end_position.y = _jump_start_position.y;
+
+		ChangeStateText("Ascending.");
+
+		// TODO: Trigger Jumping animation here.
+	}
+	break;
+
+	case JumpingState::ASCENDING:
+	{
+		if (_jumping_timer < _jump_ascending_duration)
+		{
+			// Boss is ascending here:
+			UpdateAscendingPosition();
+			break;
+		}
+
+		// Boss starts waiting on the highest point of jump here:
+		_jumping_state = JumpingState::POST_ASCENDING_DELAY;
+		_jumping_timer = 0.0f;	
+
+
+		ChangeStateText("Waiting for the delay before highest point.");
+	}
+	break;
+
+	case JumpingState::POST_ASCENDING_DELAY:
+	{
+		if (_jumping_timer < _jump_post_ascending_delay)
+		{
+			// Boss waiting on the highest point here:
+			break;
+		}
+
+		// Boss starts playing the highest point animation here:
+		_jumping_state = JumpingState::ON_HIGHEST_POINT;
+		_jumping_timer = 0.0f;
+
+        // TODO: Trigger highest point animation here.
+
+		ChangeStateText("On the highest point of the jump.");
+	}
+	break;
+
+	case JumpingState::ON_HIGHEST_POINT:
+	{
+		if (_jumping_timer < _jump_on_highest_point_duration)
+		{
+			// Boss is on the highest point here:
+			break;
+		}
+
+		// Boss starts waiting after the highest point animation here:
+		_jumping_state = JumpingState::POST_ON_HIGHEST_POINT;
+		_jumping_timer = 0.0f;
+
+
+		ChangeStateText("Waiting before descending.");
+	}
+	break;
+
+	case JumpingState::POST_ON_HIGHEST_POINT:
+	{
+		if (_jumping_timer < _jump_post_on_highest_point_delay)
+		{
+			// Boss is waiting before descending here:
+			break;
+		}
+
+		// Boss starts descending animation here:
+		_jumping_state = JumpingState::DESCENDING;
+		_jumping_timer = 0.0f;
+
+
+		ChangeStateText("Descending.");
+	}
+	break;
+
+
+	case JumpingState::DESCENDING:
+	{
+		UpdateDescendingPosition();
+
+	    if (_jumping_timer < _jump_descending_duration)
+		{
+			// Boss is only descending here, the update continues:
+			break;
+		}
+
+		// Boss lands to the ground here:
+		_jumping_state = JumpingState::POST_DESCENDING_DELAY;
+		_jumping_timer = 0.0f;
+
+		ChangeStateText("Landed & waiting.");
+	}
+	break;
+
+	case JumpingState::POST_DESCENDING_DELAY:
+	{
+		if (_jumping_timer < _jump_post_descending_delay)
+		{
+			// Boss is waiting to get up here:
+			break;
+		}
+
+		// Boss starts getting up here:
+		_jumping_state = JumpingState::GETTING_UP;
+		_jumping_timer = 0.0f;
+
+		// TODO: Trigger boss getting up from ground animation here.
+
+		ChangeStateText("Getting up.");
+	}
+	break;
+
+	case JumpingState::GETTING_UP:
+	{
+		if (_jumping_timer < _jump_getting_up_duration)
+		{
+			// Boss is getting up here:
+			break;
+		}
+
+		// Boss starts waiting for the skill here:
+		_jumping_state = JumpingState::WAITING_FOR_SKILL;
+		_jumping_timer = 0.0f;
+
+		// Reset jump start and end positions to ensure correct & clean state:
+		_jump_end_position = float3::zero;
+		_jump_start_position = float3::zero;
+
+		// Enable the agent component, it was disabled when the jumping was
+		// started:
+		agent->Enable();
+		agent->AddToCrowd();
+
+		ChangeStateText("Waiting to cast skill.");
+
+		// TODO: Trigger Getting ready for skill animation here.
+	}
+	break;
+
+	
+	case JumpingState::WAITING_FOR_SKILL:
+	
+		if (_jumping_timer < _jump_skill_delay)
+		{
+			// Boss is waiting to cast skill here:
+			break;
+		}
+
+		// Boss starts casting skill here:
+		_jumping_state = JumpingState::CASTING_SKILL;
+		_jumping_timer = 0.0f;
+
+		// TODO: Trigger skill casting animation here.
+
+		ChangeStateText("Casting Skill.");
+		
+	break;
+
+	case JumpingState::CASTING_SKILL:
+
+		if (_jumping_timer < _jump_skill_duration)
+		{
+			// Boss is casting skill here:
+			break;
+		}
+
+		// Boss deals the aoe damage here:
+		_jumping_state = JumpingState::POST_CAST_SKILL;
+		_jumping_timer = 0.0f;
+
+		// TODO: Deal skill damage here.
+		// TODO: Trigger post skill stuff here.
+
+		ChangeStateText("Casted Skill.");
+		
+	break;
+
+	case JumpingState::POST_CAST_SKILL:
+
+		if (_jumping_timer < _jump_post_on_land_aoe_duration)
+		{
+			// Boss is doing whatever it's supposed to do after it casts aoe:
+			break;
+		}
+
+		// Boss finishes jump&aoe business here:
+		_jumping_state = JumpingState::NOT_TRIGGERED;
+		_jumping_timer = 0.0f;
+
+		// Turn back to chasing state:
+		Chase();
+	break;
+	}
+}
+
+void Hachiko::Scripting::BossController::InterpolatePositionWhileJumping(
+	const float position_step,
+	const float height_step) const
+{
+	float3 position = math::Lerp(
+		_jump_start_position, 
+		_jump_end_position, 
+		position_step);
+
+	position.y = math::Lerp(
+		_jump_start_position.y, 
+		_jump_height, 
+		height_step);
+
+	game_object->GetTransform()->SetGlobalPosition(position);
+}
+
+inline float CalculateAscendingHeightStep(const float position_step)
+{
+	return 1.0f - powf(position_step - 1.0f, 2.0f);
+}
+
+void Hachiko::Scripting::BossController::UpdateAscendingPosition() const
+{
+	// TODO: Take zero into account.
+
+	// Get the step i.e percentage of ascending for x & z position:
+	const float position_step = std::min(
+	    1.0f, 
+		_jumping_timer / _jump_ascending_duration);
+	// Get the step of y position. We want it to be a parabolic jump, which
+	// looks like a gravity is applied:
+	const float height_step = CalculateAscendingHeightStep(position_step);
+
+	float3 position = math::Lerp(
+		_jump_start_position,
+		(_jump_start_position + _jump_end_position) * 0.5f,
+		position_step);
+
+	position.y = math::Lerp(
+		_jump_start_position.y,
+		_jump_height,
+		height_step);
+
+	game_object->GetTransform()->SetGlobalPosition(position);
+}
+
+inline float CalculateDescendingHeightStep(const float position_step)
+{
+	return 1.0f - (position_step * position_step);
+}
+
+void Hachiko::Scripting::BossController::UpdateDescendingPosition() const
+{
+	// TODO: Take zero into account.
+
+	// Get the step i.e percentage of descending for x & z position:
+	const float position_step = std::min(
+		1.0f, 
+		_jumping_timer / _jump_descending_duration);
+	// Get the step of y position. We want it to be a parabolic jump, which
+	// looks like a gravity is applied:
+	const float height_step = CalculateDescendingHeightStep(position_step);
+
+	float3 position = math::Lerp(
+		(_jump_start_position + _jump_end_position) * 0.5f,
+		_jump_end_position,
+		position_step);
+
+	position.y = math::Lerp(
+		_jump_start_position.y,
+		_jump_height,
+		height_step);
+
+	game_object->GetTransform()->SetGlobalPosition(position);
+
+	//InterpolatePositionWhileJumping(position_step, height_step);
+}
+
+///
+///////////////////////////////////////////////////////////////////////////////
+
+void Hachiko::Scripting::BossController::ChangeStateText(
+	const char* state_string) const
+{
+	if (!_boss_state_text_ui)
+	{
+		return;
+	}
+
+	_boss_state_text_ui->SetText(state_string);
 }

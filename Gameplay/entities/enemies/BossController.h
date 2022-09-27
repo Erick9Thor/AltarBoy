@@ -42,7 +42,42 @@ namespace Hachiko
             ATTACKING,
             SPAWNING_CRYSTALS,
             CONSUMING_PARASYTES,
-            CRYSTAL_JUMP,
+            JUMPING,
+        };
+
+        // States while the boss is in CombatState::JUMPING
+        enum class JumpingState
+        {
+            NOT_TRIGGERED,
+            WAITING_TO_JUMP,
+
+            ASCENDING,
+            POST_ASCENDING_DELAY,
+
+            ON_HIGHEST_POINT,
+            POST_ON_HIGHEST_POINT,
+
+            DESCENDING,
+            POST_DESCENDING_DELAY,
+
+            GETTING_UP,
+
+            //AIRBORNE,
+
+            WAITING_FOR_SKILL,
+            CASTING_SKILL,
+            POST_CAST_SKILL,
+            COUNT
+        };
+
+        // The follow up action for jump:
+        enum class JumpingMode
+        {
+            MELEE,
+            WEAPON_CHANGE,
+            STALAGMITE,
+            CRYSTAL,
+            DETERMINED_BY_PATTERN
         };
 
         class BossController : public Script
@@ -102,6 +137,17 @@ namespace Hachiko
 
             void FocusCamera(bool focus_on_boss);
 
+            void TriggerJumpingState();
+            void ResetJumpingState();
+            void ExecuteJumpingState();
+            void InterpolatePositionWhileJumping(
+                float position_step, 
+                float height_step) const;
+            void UpdateAscendingPosition() const;
+            void UpdateDescendingPosition() const;
+
+            void ChangeStateText(const char* state_string) const;
+
         private:
             SERIALIZE_FIELD(int, state_value);
             SERIALIZE_FIELD(GameObject*, hp_bar_go);
@@ -123,8 +169,48 @@ namespace Hachiko
             CombatState combat_state = CombatState::IDLE;
             CombatState prev_combat_state = combat_state;
             bool hitable = true;
-            std::vector<float> gauntlet_thresholds_percent{0.3, 0.7};
+            std::vector<float> gauntlet_thresholds_percent{0.3f, 0.7f};
             float3 target_position = float3::zero;
+
+            // Jumping state related fields:
+            SERIALIZE_FIELD(float, _jump_start_delay);
+
+            SERIALIZE_FIELD(float, _jump_ascending_duration);
+            SERIALIZE_FIELD(float, _jump_post_ascending_delay);
+            SERIALIZE_FIELD(float, _jump_on_highest_point_duration);
+            SERIALIZE_FIELD(float, _jump_post_on_highest_point_delay);
+            SERIALIZE_FIELD(float, _jump_descending_duration);
+            SERIALIZE_FIELD(float, _jump_post_descending_delay);
+            SERIALIZE_FIELD(float, _jump_getting_up_duration);
+            SERIALIZE_FIELD(float, _jump_skill_delay);
+            SERIALIZE_FIELD(float, _jump_skill_duration);
+            SERIALIZE_FIELD(float, _jump_post_on_land_aoe_duration);
+            // Height which the boss reaches highest during the jump:
+            SERIALIZE_FIELD(float, _jump_height);
+            // The offset relative to the player position where the boss should
+            // land:
+            SERIALIZE_FIELD(float, _jump_offset);
+            JumpingState _jumping_state;
+            float3 _jump_start_position;
+            float3 _jump_end_position;
+            // Timer that is used to interpolate to the next state of the
+            // jumping action carried out by boss. Final value is dependent on
+            // _jumping_state and the corresponding delay/duration.
+            float _jumping_timer;
+            // Jump pattern when the Jumping mode was set to
+            // JumpingMode::DETERMINED_BY_PATTERN:
+            const float _jump_pattern_size = 5;
+            float _jump_pattern_index;
+            JumpingMode _special_jump_pattern[5] = {
+                JumpingMode::STALAGMITE,
+                JumpingMode::WEAPON_CHANGE,
+                JumpingMode::WEAPON_CHANGE,
+                JumpingMode::STALAGMITE,
+                JumpingMode::WEAPON_CHANGE,
+            };
+
+            // Debug variables:
+            SERIALIZE_FIELD(ComponentText*, _boss_state_text_ui);
 
             float attack_current_cd;
 
@@ -132,4 +218,4 @@ namespace Hachiko
             float time_elapse = 0.0;
         };
     } // namespace Scripting
-} // namespace Hachiko*/
+} // namespace Hachiko
