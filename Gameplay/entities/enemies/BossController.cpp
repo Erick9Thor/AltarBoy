@@ -9,6 +9,7 @@ Hachiko::Scripting::BossController::BossController(GameObject* game_object)
 	: Script(game_object, "BossController")
 	, state_value(0)
 	, combat_state_value(0)
+	, second_phase(false)
 	, hp_bar_go(nullptr)
 	, cocoon_placeholder_go(nullptr)
 	, enemy_pool(nullptr)
@@ -362,11 +363,8 @@ bool Hachiko::Scripting::BossController::CacoonTrigger()
 
 void Hachiko::Scripting::BossController::FinishCacoon()
 {
-	if (state != BossState::CACOON_FORM)
-	{
-		return;
-	}
 	hitable = true;
+	second_phase = true;
 	if (cocoon_placeholder_go)
 	{
 		cocoon_placeholder_go->SetActive(false);

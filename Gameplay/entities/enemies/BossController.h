@@ -112,6 +112,7 @@ namespace Hachiko
         private:
             SERIALIZE_FIELD(int, state_value);
             SERIALIZE_FIELD(int, combat_state_value);
+            SERIALIZE_FIELD(bool, second_phase);
             SERIALIZE_FIELD(GameObject*, hp_bar_go);
             SERIALIZE_FIELD(GameObject*, crystal_target_go);
             SERIALIZE_FIELD(GameObject*, cocoon_placeholder_go);
