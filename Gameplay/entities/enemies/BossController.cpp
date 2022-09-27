@@ -338,6 +338,9 @@ bool Hachiko::Scripting::BossController::CacoonTrigger()
 	{
 		gauntlet_thresholds_percent.pop_back();
 		gauntlet->StartGauntlet();
+
+		ChangeStateText("In Cocoon.");
+
 		return true;
 	}
 	return false;
@@ -355,6 +358,9 @@ void Hachiko::Scripting::BossController::FinishCacoon()
 		cocoon_placeholder_go->SetActive(false);
 	}
 	gauntlet->ResetGauntlet();
+
+	ChangeStateText("Finished Cocoon.");
+
 	state = BossState::COMBAT_FORM;
 }
 
@@ -731,23 +737,6 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
 	}
 }
 
-void Hachiko::Scripting::BossController::InterpolatePositionWhileJumping(
-	const float position_step,
-	const float height_step) const
-{
-	float3 position = math::Lerp(
-		_jump_start_position, 
-		_jump_end_position, 
-		position_step);
-
-	position.y = math::Lerp(
-		_jump_start_position.y, 
-		_jump_height, 
-		height_step);
-
-	game_object->GetTransform()->SetGlobalPosition(position);
-}
-
 inline float CalculateAscendingHeightStep(const float position_step)
 {
 	return 1.0f - powf(position_step - 1.0f, 2.0f);
@@ -787,6 +776,11 @@ void Hachiko::Scripting::BossController::UpdateDescendingPosition() const
 {
 	// TODO: Take zero into account.
 
+	if (_jump_descending_duration <= 0.0f)
+	{
+		return;
+	}
+
 	// Get the step i.e percentage of descending for x & z position:
 	const float position_step = std::min(
 		1.0f, 
@@ -806,8 +800,16 @@ void Hachiko::Scripting::BossController::UpdateDescendingPosition() const
 		height_step);
 
 	game_object->GetTransform()->SetGlobalPosition(position);
+}
 
-	//InterpolatePositionWhileJumping(position_step, height_step);
+void Hachiko::Scripting::BossController::DetermineSpecialJumpingMode()
+{
+	_jump_pattern_index = (_jump_pattern_index + 1) % JumpUtil::SPECIAL_JUMP_PATTERN_SIZE;
+}
+
+Hachiko::Scripting::JumpingMode Hachiko::Scripting::BossController::GetSpecialJumpingMode() const
+{
+	return _special_jump_pattern[_jump_pattern_index];
 }
 
 ///

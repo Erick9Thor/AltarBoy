@@ -80,6 +80,11 @@ namespace Hachiko
             DETERMINED_BY_PATTERN
         };
 
+        namespace JumpUtil
+        {
+            constexpr int SPECIAL_JUMP_PATTERN_SIZE = 5;
+        }
+
         class BossController : public Script
         {
             SERIALIZATION_METHODS(false)
@@ -140,11 +145,10 @@ namespace Hachiko
             void TriggerJumpingState();
             void ResetJumpingState();
             void ExecuteJumpingState();
-            void InterpolatePositionWhileJumping(
-                float position_step, 
-                float height_step) const;
             void UpdateAscendingPosition() const;
             void UpdateDescendingPosition() const;
+            void DetermineSpecialJumpingMode();
+            JumpingMode GetSpecialJumpingMode() const;
 
             void ChangeStateText(const char* state_string) const;
 
@@ -199,14 +203,14 @@ namespace Hachiko
             float _jumping_timer;
             // Jump pattern when the Jumping mode was set to
             // JumpingMode::DETERMINED_BY_PATTERN:
-            const float _jump_pattern_size = 5;
-            float _jump_pattern_index;
-            JumpingMode _special_jump_pattern[5] = {
+            int _jump_pattern_index;
+            JumpingMode _special_jump_pattern[
+                JumpUtil::SPECIAL_JUMP_PATTERN_SIZE] = {
                 JumpingMode::STALAGMITE,
                 JumpingMode::WEAPON_CHANGE,
                 JumpingMode::WEAPON_CHANGE,
                 JumpingMode::STALAGMITE,
-                JumpingMode::WEAPON_CHANGE,
+                JumpingMode::WEAPON_CHANGE
             };
 
             // Debug variables:
