@@ -199,17 +199,25 @@ void Hachiko::ComponentText::RefreshLabel(ComponentTransform2D* transform)
 {
     if (dirty)
     {
-        unsigned windowWidth, windowHeight;
-        App->camera->GetRenderingCamera()->GetResolution(windowWidth, windowHeight);
-        label->setWindowSize(windowWidth, windowHeight);
-        const float2& size = transform->GetSize();
+        try
+        {
+            unsigned windowWidth, windowHeight;
+            App->camera->GetRenderingCamera()->GetResolution(windowWidth, windowHeight);
+            label->setWindowSize(windowWidth, windowHeight);
+            const float2& size = transform->GetSize();
 
-        const float4x4& trf = transform->GetGlobalTransform();
-        const float3& pos = trf.TranslatePart();
-        label->scale(trf.scaleX, trf.scaleY, trf.scaleZ);
-        label->setSize(size.x, size.y);
-        label->setPosition(pos.x + (windowWidth / 2), pos.y + (windowHeight / 2));
-        dirty = false;
+            const float4x4& trf = transform->GetGlobalTransform();
+            const float3& pos = trf.TranslatePart();
+            label->scale(trf.scaleX, trf.scaleY, trf.scaleZ);
+            label->setSize(size.x, size.y);
+            label->setPosition(pos.x + (windowWidth / 2), pos.y + (windowHeight / 2));
+            dirty = false;
+        }
+        catch (std::exception& e)
+        {
+            // Catch exception and return unloaded font if fails
+            HE_LOG("Failed to RefreshLabel");
+        }
     }
 }
 

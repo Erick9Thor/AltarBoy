@@ -1,6 +1,7 @@
 #include "scriptingUtil/gameplaypch.h"
 
 #include "entities/enemies/BossController.h"
+#include "entities/enemies/EnemyController.h"
 #include "entities/Stats.h"
 #include "constants/Scenes.h"
 
@@ -9,6 +10,10 @@ Hachiko::Scripting::BossController::BossController(GameObject* game_object)
 	, state_value(0)
 	, hp_bar_go(nullptr)
 	, cocoon_placeholder_go(nullptr)
+	, enemy_pool(nullptr)
+	, time_between_enemies(5.0)
+	, _current_index_crystals(0)
+	, _explosive_crystals({})
 {
 	CreateBossWeapons();
 }
@@ -58,6 +63,23 @@ void Hachiko::Scripting::BossController::OnAwake()
 	gauntlet = gauntlet_go->GetComponent<GauntletManager>();
 
 	ChangeWeapon(0);
+	
+	if (enemy_pool)
+	{
+		for (GameObject* enemy : enemy_pool->children)
+		{
+			enemies.push_back(enemy->GetComponent<EnemyController>());
+		}
+		ResetEnemies();
+	}
+
+	_explosive_crystals.clear();
+	_explosive_crystals.reserve(5);
+
+	for (GameObject* crystal_go : crystal_pool->children)
+	{
+		_explosive_crystals.push_back(crystal_go);
+	}
 }
 
 void Hachiko::Scripting::BossController::OnStart()
@@ -92,6 +114,8 @@ void Hachiko::Scripting::BossController::RegisterHit(int dmg)
 	{
 		combat_stats->_current_hp -= dmg;
 		UpdateHpBar();
+
+		game_object->ChangeEmissiveColor(float4(255, 255, 255, 255), 0.3f, true);
 	}
 }
 
@@ -194,6 +218,8 @@ void Hachiko::Scripting::BossController::CombatController()
 		return;
 	}
 	
+	SpawnEnemy();
+
 	CombatTransitionController();
 
 	switch (combat_state)
@@ -443,7 +469,6 @@ void Hachiko::Scripting::BossController::MeleeAttackController()
 	Debug::DebugDraw(combat_manager->CreateAttackHitbox(GetMeleeAttackOrigin(boss_attack.stats.range), boss_attack.stats), weapon.color.Float3Part());
 	combat_manager->EnemyMeleeAttack(GetMeleeAttackOrigin(boss_attack.stats.range), boss_attack.stats);
 
-	combat_state = CombatState::IDLE;
 
 	/*
 	* 
@@ -454,6 +479,8 @@ void Hachiko::Scripting::BossController::MeleeAttackController()
 		ChangeWeapon(RandomUtil::RandomIntBetween(1, weapons.size() - 1));
 	}
 	*/
+	//combat_state = CombatState::IDLE;
+	combat_state = CombatState::SPAWNING_CRYSTALS;
 }
 
 void Hachiko::Scripting::BossController::SpawnCrystals()
@@ -462,6 +489,29 @@ void Hachiko::Scripting::BossController::SpawnCrystals()
 
 void Hachiko::Scripting::BossController::SpawnCrystalsController()
 {
+	if (_explosive_crystals.size() <= 0)
+	{
+		return;
+	}
+
+	_current_index_crystals = _current_index_crystals % _explosive_crystals.size();
+
+	GameObject* current_crystal_to_spawn = _explosive_crystals[_current_index_crystals];
+	
+	if (current_crystal_to_spawn == nullptr)
+	{
+		return;
+	}
+
+	float3 emitter_direction = transform->GetFront().Normalized();
+	float3 emitter_position = transform->GetGlobalPosition() + emitter_direction * (combat_stats->_attack_range + 5.0f);
+
+	current_crystal_to_spawn->FindDescendantWithName("ExplosionIndicatorHelper")->SetActive(false);
+	current_crystal_to_spawn->GetTransform()->SetGlobalPosition(emitter_position);
+
+	_current_index_crystals = (_current_index_crystals + 1) % _explosive_crystals.size();
+
+	combat_state = CombatState::IDLE;
 }
 
 void Hachiko::Scripting::BossController::ConsumeParasytes()
@@ -578,5 +628,60 @@ void Hachiko::Scripting::BossController::ChangeWeapon(unsigned weapon_idx)
 		_claw_weapon->SetActive(false);
 		_sword_weapon->SetActive(false);
 		_hammer_weapon->SetActive(true);
+	}
+}
+void Hachiko::Scripting::BossController::SpawnEnemy()
+{
+	enemy_timer += Time::DeltaTime();
+	if (enemy_timer < time_between_enemies)
+	{
+        return;
+    }
+
+    for (EnemyController* enemy_controller : enemies) 
+    {
+        GameObject* enemy = enemy_controller->GetGameObject();
+
+        if (enemy->IsActive())
+        {
+            continue;
+        }
+
+        enemy->SetActive(true);
+        ComponentAgent* agent = enemy->GetComponent<ComponentAgent>();
+        
+        if (agent)
+        {
+            agent->AddToCrowd();
+        }
+            
+        break;
+    }
+
+    enemy_timer = 0;
+}
+
+void Hachiko::Scripting::BossController::ResetEnemies()
+{
+	for (EnemyController* enemy_controller : enemies)
+	{
+        GameObject* enemy = enemy_controller->GetGameObject();
+		ComponentAgent* agent = enemy_controller->GetGameObject()->GetComponent<ComponentAgent>();
+		
+        if (agent)
+		{
+			agent->RemoveFromCrowd();
+		}
+		
+        if (enemy_controller)
+		{
+            // Maybe pack these methods into a method of EnemyController for
+            // ease of extensibility.
+			enemy_controller->SetIsFromBoss(true);
+			enemy_controller->ResetEnemy();
+			enemy_controller->ResetEnemyPosition();
+		}
+		
+        enemy->SetActive(false);
 	}
 }

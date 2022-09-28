@@ -21,8 +21,8 @@ namespace Hachiko
 	{
 		class AudioManager;
 		class PlayerController;
-		class CombatVisualEffectsPool;
-
+        class EnemyController;
+        class CombatVisualEffectsPool;
 		class PlayerCamera;
 
 		enum class BossState
@@ -140,43 +140,40 @@ namespace Hachiko
 			void MeleeAttack();
 			void MeleeAttackController();
 
+            void SpawnEnemy();
+            void ResetEnemies();
+
+        private:
+            SERIALIZE_FIELD(int, state_value);
+            SERIALIZE_FIELD(GameObject*, hp_bar_go);
+            SERIALIZE_FIELD(GameObject*, crystal_target_go);
+            SERIALIZE_FIELD(GameObject*, cocoon_placeholder_go);
+            SERIALIZE_FIELD(GameObject*, gauntlet_go);
+            std::vector<GameObject*> _explosive_crystals;
+            SERIALIZE_FIELD(int, _current_index_crystals);
+            SERIALIZE_FIELD(GameObject*, crystal_pool);
+            SERIALIZE_FIELD(float, start_encounter_range);
+            GameObject* player = nullptr; // It's found on scene based on name
+            LevelManager* level_manager = nullptr; // It's found on scene based on name
+            PlayerCamera* player_camera = nullptr; // It's found on scene based on name
+            ComponentTransform* transform = nullptr;
+            ComponentProgressBar* hp_bar = nullptr;
+            ComponentAgent* agent = nullptr;
+            GauntletManager* gauntlet = nullptr;
+            CombatManager* combat_manager = nullptr;
+            Stats* combat_stats = nullptr;
+            BossState state = BossState::WAITING_ENCOUNTER;
+            BossState prev_state = state;
+            CombatState combat_state = CombatState::IDLE;
+            CombatState prev_combat_state = combat_state;
+            bool hitable = true;
+            std::vector<float> gauntlet_thresholds_percent{0.3, 0.7};
+            float3 target_position = float3::zero;
+
 			void SpawnCrystals();
 			void SpawnCrystalsController();
 			void ConsumeParasytes();
 			void ConsumeParasytesController();
-
-			void FocusCamera(bool focus_on_boss);
-
-			BossAttack GetAttackType(AttackType attack_type);
-
-		private:
-			SERIALIZE_FIELD(int, state_value);
-			SERIALIZE_FIELD(GameObject*, hp_bar_go);
-			SERIALIZE_FIELD(GameObject*, crystal_target_go);
-			SERIALIZE_FIELD(GameObject*, cocoon_placeholder_go);
-			SERIALIZE_FIELD(GameObject*, gauntlet_go);
-			SERIALIZE_FIELD(float, start_encounter_range);
-			GameObject* player = nullptr; // It's found on scene based on name
-			LevelManager* level_manager = nullptr; // It's found on scene based on name
-			PlayerCamera* player_camera = nullptr; // It's found on scene based on name
-			ComponentTransform* transform = nullptr;
-			ComponentProgressBar* hp_bar = nullptr;
-			ComponentAgent* agent = nullptr;
-			GauntletManager* gauntlet = nullptr;
-			CombatManager* combat_manager = nullptr;
-			Stats* combat_stats = nullptr;
-			BossState state = BossState::WAITING_ENCOUNTER;
-			BossState prev_state = state;
-			CombatState combat_state = CombatState::IDLE;
-			CombatState prev_combat_state = combat_state;
-			bool hitable = true;
-			std::vector<float> gauntlet_thresholds_percent{ 0.3, 0.7 };
-			float3 target_position = float3::zero;
-
-			float attack_current_cd;
-
-			bool camera_focus_on_boss = false;
-			float time_elapse = 0.0;
 
 			std::vector<Weapon> weapons{};
 			unsigned _current_weapon = 0;
@@ -186,6 +183,14 @@ namespace Hachiko
 			SERIALIZE_FIELD(GameObject*, _sword_weapon);
 			SERIALIZE_FIELD(GameObject*, _claw_weapon);
 			SERIALIZE_FIELD(GameObject*, _hammer_weapon);
-		};
-	} // namespace Scripting
+
+            bool camera_focus_on_boss = false;
+            float time_elapse = 0.0;
+
+            SERIALIZE_FIELD(float, time_between_enemies);
+            SERIALIZE_FIELD(GameObject*, enemy_pool);
+            std::vector<EnemyController*> enemies;
+            float enemy_timer = 0.0;
+        };
+    } // namespace Scripting
 } // namespace Hachiko*/
