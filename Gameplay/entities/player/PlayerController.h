@@ -41,10 +41,10 @@ namespace Hachiko
 
 			enum class WeaponUsed
 			{
-				RED = 0,
-				GREEN,
-				BLUE,
-				YELLOW,
+				MELEE = 0,
+				CLAW,
+				SWORD,
+				HAMMER,
 				SIZE
 			};
 

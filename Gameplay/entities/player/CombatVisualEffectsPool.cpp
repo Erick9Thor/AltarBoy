@@ -46,26 +46,39 @@ void Hachiko::Scripting::CombatVisualEffectsPool::PlayPlayerAttackEffect(PlayerC
 
 	switch (weapon_type)
 	{
-	case PlayerController::WeaponUsed::RED:
+	case PlayerController::WeaponUsed::MELEE:
 	{
+		std::string texture_file_name = FileUtility::GetWorkingDirectory() + "/assets/textures/weapons/VFX/VFX_Melee_Hit.png";
+
+		current_attack_billboard->GetTextureProperties().SetTexture(texture_file_name);
+		current_attack_billboard->GetTextureProperties().SetTiles(float2(1.0f, 1.0f));
+
+		break;
+	}
+	case PlayerController::WeaponUsed::CLAW:
+	{
+		std::string texture_file_name = FileUtility::GetWorkingDirectory() + "/assets/textures/weapons/VFX/VFX_Claw_Slash.png";
+
+		current_attack_billboard->GetTextureProperties().SetTexture(texture_file_name);
+		current_attack_billboard->GetTextureProperties().SetTiles(float2(1.0f, 1.0f));
 		
 		break;
 	}
-	case PlayerController::WeaponUsed::BLUE:
+	case PlayerController::WeaponUsed::SWORD:
 	{
-		std::string texture_file_name = FileUtility::GetWorkingDirectory() + "/assets/textures/vfx/slash_sprite.png";
+		std::string texture_file_name = FileUtility::GetWorkingDirectory() + "/assets/textures/weapons/VFX/VFX_Sword_Hit.png";
 
 		current_attack_billboard->GetTextureProperties().SetTexture(texture_file_name);
-		current_attack_billboard->GetTextureProperties().SetTiles(float2(3.0f, 4.0f));
-		
+		current_attack_billboard->GetTextureProperties().SetTiles(float2(1.0f, 1.0f));
+
 		break;
 	}
-	case PlayerController::WeaponUsed::GREEN:
+	case PlayerController::WeaponUsed::HAMMER:
 	{
-		std::string texture_file_name = FileUtility::GetWorkingDirectory() + "/assets/textures/vfx/slash_vfx.png";
+		std::string texture_file_name = FileUtility::GetWorkingDirectory() + "/assets/textures/weapons/VFX/VFX_Hammer_Hit.png";
 
 		current_attack_billboard->GetTextureProperties().SetTexture(texture_file_name);
-		current_attack_billboard->GetTextureProperties().SetTiles(float2(5.0f, 2.0f));
+		current_attack_billboard->GetTextureProperties().SetTiles(float2(1.0f, 1.0f));
 
 		break;
 	}
