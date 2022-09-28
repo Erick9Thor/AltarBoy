@@ -551,6 +551,8 @@ void Hachiko::Scripting::EnemyController::BeetleAttack()
 
 	_combat_manager->EnemyMeleeAttack(GetMeleeAttackOrigin(attack_stats.range), attack_stats);
 
+	_attack_alt = !_attack_alt;
+
 	transform->LookAtTarget(_player_pos);
 	StopMoving();
 }
@@ -854,7 +856,14 @@ void Hachiko::Scripting::EnemyController::CheckState()
 		break;
 	case EnemyState::ATTACKING:
 		_audio_source->PostEvent(Sounds::ENEMY_ATTACK);
-		animation->SendTrigger("isAttacking");
+		if (!_attack_alt)
+		{
+			animation->SendTrigger("isAttacking");
+		}
+		else
+		{
+			animation->SendTrigger("isAttackingAlt");
+		}
 		break;
 	case EnemyState::DEAD:
 		_audio_source->PostEvent(Sounds::ENEMY_DIE);
