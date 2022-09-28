@@ -190,15 +190,15 @@ void Hachiko::Scripting::EnemyController::SpawnController()
 
 void Hachiko::Scripting::EnemyController::DeathController()
 {
-	float alpha_transition;
+	float transition;
 	switch (_state)
 	{
 	case EnemyState::PARASITE:
 
 		_enemy_body->SetActive(false);
 		_parasite_dissolving_time_progress += Time::DeltaTimeScaled();
-		alpha_transition = math::Sqrt(_parasite_dissolve_time - _parasite_dissolving_time_progress) * _parasite_dissolving;
-		_parasite->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, alpha_transition), true);
+		transition = math::Sqrt(_parasite_dissolve_time - _parasite_dissolving_time_progress) * _parasite_dissolving;
+		_parasite->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, transition), true);
 
 		if (_parasite_dissolving_time_progress >= _parasite_dissolve_time)
 		{
@@ -214,14 +214,15 @@ void Hachiko::Scripting::EnemyController::DeathController()
 	case EnemyState::DEAD:
 		if (animation->IsAnimationStopped())
 		{
+			_enemy_dissolving_time_progress += Time::DeltaTimeScaled();
 			if (_enemy_dissolve_time >= _enemy_dissolving_time_progress)
 			{
-				_enemy_dissolving_time_progress += Time::DeltaTimeScaled();
-				alpha_transition = math::Sqrt(_enemy_dissolve_time - _enemy_dissolving_time_progress) * _enemy_dissolving;
-				_enemy_body->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, alpha_transition), true);
+				transition = math::Sqrt(_enemy_dissolve_time - _enemy_dissolving_time_progress) * _enemy_dissolving;
+				_enemy_body->ChangeDissolveProgress(transition, true);
 			}
 			else
 			{
+				_enemy_body->SetActive(false);
 				DropParasite();
 			}
 		}
@@ -908,7 +909,8 @@ void Hachiko::Scripting::EnemyController::ResetEnemy()
 
 	if (_enemy_body)
 	{
-		_enemy_body->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, 1.0f), true);
+		_enemy_body->SetActive(true);
+		_enemy_body->ChangeDissolveProgress(1.0f, true);
 	}
 	
 	if (_parasite)

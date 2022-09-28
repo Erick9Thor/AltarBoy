@@ -168,6 +168,9 @@ namespace Hachiko
         void GenerateFullScreenQuad();
         void FreeFullScreenQuad() const;
 
+        void CreateNoiseTexture();
+        void BindNoiseTexture(Program* program);
+
         void* context{};
 
         RenderList render_list;
@@ -212,5 +215,7 @@ namespace Hachiko
         GameObject* loading_game_object = nullptr;
         ComponentTransform2D* loading_transform2d = nullptr;
         ComponentImage* loading_image = nullptr;
+
+        unsigned noise_id = 0;
     };
 }

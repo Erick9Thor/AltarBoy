@@ -58,8 +58,8 @@ bool Hachiko::ModuleUserInterface::CleanUp()
 
 void Hachiko::ModuleUserInterface::DrawUI(const Scene* scene) const
 {
-    Program* img_program = App->program->GetUserInterfaceImageProgram();
-    Program* txt_program = App->program->GetUserInterfaceTextProgram();
+    Program* img_program = App->program->GetProgram(Program::PROGRAMS::UI_IMAGE);
+    Program* txt_program = App->program->GetProgram(Program::PROGRAMS::UI_TEXT);
 
     glDepthFunc(GL_ALWAYS);
 
