@@ -13,23 +13,27 @@ Hachiko::Scripting::BossController::BossController(GameObject* game_object)
     , gauntlet_go(nullptr)
     , start_encounter_range(0.0f)
     , _jump_start_delay(0.0f)
-	, _jump_ascending_duration(0.0f)
-	, _jump_post_ascending_delay(0.0f)
-	, _jump_on_highest_point_duration(0.0f)
-	, _jump_post_on_highest_point_delay(0.0f)
-	, _jump_descending_duration(0.0f)
-	, _jump_post_descending_delay(0.0f)
-	, _jump_getting_up_duration(0.0f)
-	, _jump_skill_delay(0.0f)
+    , _jump_ascending_duration(0.0f)
+    , _jump_post_ascending_delay(0.0f)
+    , _jump_on_highest_point_duration(0.0f)
+    , _jump_post_on_highest_point_delay(0.0f)
+    , _jump_descending_duration(0.0f)
+    , _jump_post_descending_delay(0.0f)
+    , _jump_getting_up_duration(0.0f)
+    , _jump_skill_delay(0.0f)
     , _jump_skill_duration(0.0f)
-	, _jump_post_on_land_aoe_duration(0.0f)
+    , _jump_post_on_land_aoe_duration(0.0f)
     , _jump_height(0.0f)
-	, _jump_offset(0.0f)
-	, _jumping_state(JumpingState::NOT_TRIGGERED)
+    , _jump_offset(0.0f)
+    , _jumping_state(JumpingState::NOT_TRIGGERED)
+    , _jump_start_position(float3::zero)
+    , _jump_end_position(float3::zero)
+    , _crystal_jump_position(float3::zero)
     , _jumping_timer(0.0f)
     , _jump_pattern_index(0)
-	, _boss_state_text_ui(nullptr)
-	, attack_current_cd(0.0f)
+    , _current_jumping_mode(JumpingMode::BASIC_ATTACK)
+    , _boss_state_text_ui(nullptr)
+    , attack_current_cd(0.0f)
 {
 }
 
@@ -217,7 +221,7 @@ void Hachiko::Scripting::BossController::CombatTransitionController()
 	// TODO: Actually trigger jumping by the new state machine for combat.
 	if (Input::IsKeyDown(Input::KeyCode::KEY_J))
 	{
-		combat_state = CombatState::JUMPING;
+		TriggerJumpingState(JumpingMode::DETERMINED_BY_PATTERN);
 		prev_combat_state = CombatState::CHASING;
 	}
 
@@ -480,11 +484,20 @@ void Hachiko::Scripting::BossController::FocusCamera(bool focus_on_boss)
 	}
 }
 
-void Hachiko::Scripting::BossController::TriggerJumpingState()
+void Hachiko::Scripting::BossController::TriggerJumpingState(
+	JumpingMode jumping_mode)
 {
 	combat_state = CombatState::JUMPING;
 
 	ResetJumpingState();
+
+	_current_jumping_mode = jumping_mode;
+
+	if (_current_jumping_mode == JumpingMode::DETERMINED_BY_PATTERN)
+	{
+		DetermineSpecialJumpingMode();
+		_current_jumping_mode = GetSpecialJumpingMode();
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -496,9 +509,15 @@ void Hachiko::Scripting::BossController::ResetJumpingState()
 	_jumping_timer = 0.0f;
 }
 
+inline bool ShouldDealBasicAOE(Hachiko::Scripting::JumpingMode mode)
+{
+	return (mode == Hachiko::Scripting::JumpingMode::WEAPON_CHANGE ||
+		    mode == Hachiko::Scripting::JumpingMode::STALAGMITE ||
+		    mode == Hachiko::Scripting::JumpingMode::BASIC_ATTACK);
+}
+
 void Hachiko::Scripting::BossController::ExecuteJumpingState()
 {
-	
 	if (_jumping_state == JumpingState::NOT_TRIGGERED)
 	{
 		_jumping_state = JumpingState::WAITING_TO_JUMP;
@@ -511,8 +530,14 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
 		// Disable the agent component, gets enabled back when boss lands back:
 		agent->RemoveFromCrowd();
 		agent->Disable();
+
+		// TODO: Maybe calculate start, mid and end positions here instead.
+		// TODO: Maybe trigger rotating the boss to the jump direction here.
 	}
 
+	// It's important that we do the increment here, by this, if the duration
+	// of current state is set to < 0.0f, we don't need to have check for
+	// zero or negative conditions:
 	_jumping_timer += Time::DeltaTime();
 
 	switch (_jumping_state)
@@ -526,20 +551,35 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
 			break;
 		}
 
-		// Boss starts jumping here:
+		// Boss starts ascending here:
 		_jumping_state = JumpingState::ASCENDING;
 		_jumping_timer = 0.0f;
 
 		// Set the start & end positions for the jump:
 		_jump_start_position = game_object->GetTransform()->GetGlobalPosition();
-		_jump_end_position = player->GetTransform()->GetGlobalPosition();
-		
-		// Apply offset to the end position, if the offset is zero, the end
-		// position of the jump will be basically equal to the player position:
-		const float3 jump_direction(
-			(_jump_start_position - _jump_end_position).Normalized());
-		_jump_end_position = _jump_end_position + jump_direction * _jump_offset;
-		_jump_end_position.y = _jump_start_position.y;
+
+        if (_current_jumping_mode == JumpingMode::CRYSTAL)
+        {
+			_jump_end_position = _crystal_jump_position;
+        }
+		else
+		{
+			_jump_end_position = player->GetTransform()->GetGlobalPosition();
+
+			// Apply offset to the end position, if the offset is zero, the end
+			// position of the jump will be basically equal to the player
+			// position:
+			const float3 jump_direction(
+				(_jump_start_position - _jump_end_position).Normalized());
+			_jump_end_position = 
+				_jump_end_position + jump_direction * _jump_offset;
+			_jump_end_position.y = _jump_start_position.y;
+	    }	
+
+		// Calculate mid position (only x and z is significant, z is ignored as
+		// height is calculated separately), to avoid recalculation each frame
+		// during the position lerping:
+		_jump_mid_position = (_jump_start_position + _jump_end_position) * 0.5f;
 
 		ChangeStateText("Ascending.");
 
@@ -632,7 +672,6 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
 		_jumping_state = JumpingState::POST_DESCENDING_DELAY;
 		_jumping_timer = 0.0f;
 
-		ChangeStateText("Landed & waiting.");
 	}
 	break;
 
@@ -648,7 +687,17 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
 		_jumping_state = JumpingState::GETTING_UP;
 		_jumping_timer = 0.0f;
 
-		// TODO: Trigger boss getting up from ground animation here.
+
+		if (_current_jumping_mode == JumpingMode::STALAGMITE)
+		{
+			// TODO: Trigger special landing & getting up animation here.
+			ChangeStateText("Landed (STALAGMITE) & waiting.");
+		}
+		else
+		{
+			// TODO: Trigger normal landing & getting up animation here.
+			ChangeStateText("Landed & waiting.");
+		}
 
 		ChangeStateText("Getting up.");
 	}
@@ -659,7 +708,13 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
 		if (_jumping_timer < _jump_getting_up_duration)
 		{
 			// Boss is getting up here:
-			break;
+
+		    if (ShouldDealBasicAOE(_current_jumping_mode))
+			{
+				// TODO: Update basic attack AOE indicator & stuff here.
+			}
+
+		    break;
 		}
 
 		// Boss starts waiting for the skill here:
@@ -695,6 +750,19 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
 		_jumping_timer = 0.0f;
 
 		// TODO: Trigger skill casting animation here.
+
+		if (_current_jumping_mode == JumpingMode::STALAGMITE)
+		{
+		    // TODO: Trigger stalagmites here.
+		}
+		else if (_current_jumping_mode == JumpingMode::WEAPON_CHANGE)
+		{
+		    // TODO: Trigger weapon changing animation here.
+		}
+		else if (_current_jumping_mode == JumpingMode::CRYSTAL)
+		{
+		    // TODO: Trigger cocoon animation here.
+		}
 
 		ChangeStateText("Casting Skill.");
 		
@@ -744,8 +812,6 @@ inline float CalculateAscendingHeightStep(const float position_step)
 
 void Hachiko::Scripting::BossController::UpdateAscendingPosition() const
 {
-	// TODO: Take zero into account.
-
 	// Get the step i.e percentage of ascending for x & z position:
 	const float position_step = std::min(
 	    1.0f, 
@@ -756,7 +822,7 @@ void Hachiko::Scripting::BossController::UpdateAscendingPosition() const
 
 	float3 position = math::Lerp(
 		_jump_start_position,
-		(_jump_start_position + _jump_end_position) * 0.5f,
+		_jump_mid_position,
 		position_step);
 
 	position.y = math::Lerp(
@@ -774,13 +840,6 @@ inline float CalculateDescendingHeightStep(const float position_step)
 
 void Hachiko::Scripting::BossController::UpdateDescendingPosition() const
 {
-	// TODO: Take zero into account.
-
-	if (_jump_descending_duration <= 0.0f)
-	{
-		return;
-	}
-
 	// Get the step i.e percentage of descending for x & z position:
 	const float position_step = std::min(
 		1.0f, 
@@ -790,7 +849,7 @@ void Hachiko::Scripting::BossController::UpdateDescendingPosition() const
 	const float height_step = CalculateDescendingHeightStep(position_step);
 
 	float3 position = math::Lerp(
-		(_jump_start_position + _jump_end_position) * 0.5f,
+		_jump_mid_position,
 		_jump_end_position,
 		position_step);
 

@@ -50,20 +50,13 @@ namespace Hachiko
         {
             NOT_TRIGGERED,
             WAITING_TO_JUMP,
-
             ASCENDING,
             POST_ASCENDING_DELAY,
-
             ON_HIGHEST_POINT,
             POST_ON_HIGHEST_POINT,
-
             DESCENDING,
             POST_DESCENDING_DELAY,
-
             GETTING_UP,
-
-            //AIRBORNE,
-
             WAITING_FOR_SKILL,
             CASTING_SKILL,
             POST_CAST_SKILL,
@@ -73,7 +66,7 @@ namespace Hachiko
         // The follow up action for jump:
         enum class JumpingMode
         {
-            MELEE,
+            BASIC_ATTACK,
             WEAPON_CHANGE,
             STALAGMITE,
             CRYSTAL,
@@ -142,7 +135,7 @@ namespace Hachiko
 
             void FocusCamera(bool focus_on_boss);
 
-            void TriggerJumpingState();
+            void TriggerJumpingState(JumpingMode jumping_mode);
             void ResetJumpingState();
             void ExecuteJumpingState();
             void UpdateAscendingPosition() const;
@@ -178,7 +171,6 @@ namespace Hachiko
 
             // Jumping state related fields:
             SERIALIZE_FIELD(float, _jump_start_delay);
-
             SERIALIZE_FIELD(float, _jump_ascending_duration);
             SERIALIZE_FIELD(float, _jump_post_ascending_delay);
             SERIALIZE_FIELD(float, _jump_on_highest_point_duration);
@@ -196,7 +188,9 @@ namespace Hachiko
             SERIALIZE_FIELD(float, _jump_offset);
             JumpingState _jumping_state;
             float3 _jump_start_position;
+            float3 _jump_mid_position;
             float3 _jump_end_position;
+            SERIALIZE_FIELD(float3, _crystal_jump_position);
             // Timer that is used to interpolate to the next state of the
             // jumping action carried out by boss. Final value is dependent on
             // _jumping_state and the corresponding delay/duration.
@@ -212,6 +206,7 @@ namespace Hachiko
                 JumpingMode::STALAGMITE,
                 JumpingMode::WEAPON_CHANGE
             };
+            JumpingMode _current_jumping_mode;
 
             // Debug variables:
             SERIALIZE_FIELD(ComponentText*, _boss_state_text_ui);
