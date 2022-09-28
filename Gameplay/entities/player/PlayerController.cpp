@@ -1208,6 +1208,7 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 
 					_state = PlayerState::PICK_UP;
 
+					DeactivateTooltip();
 					enemy_controller->GetParasite();
 
 					// Make player invulnerable for a period of time:

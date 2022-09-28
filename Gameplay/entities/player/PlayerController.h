@@ -142,6 +142,16 @@ namespace Hachiko
 				return ret_value;
 			}
 
+			void ActivateTooltip()
+			{
+				_tooltip_display->SetActive(true);
+			}
+
+			void DeactivateTooltip()
+			{
+				_tooltip_display->SetActive(false);
+			}
+
 		private:
 			math::float3 GetRaycastPosition(
 				const math::float3& current_position) const;
@@ -267,6 +277,8 @@ namespace Hachiko
 
 			SERIALIZE_FIELD(GameObject*, _weapon_charge_bar_go);
 			ComponentProgressBar* _weapon_charge_bar = nullptr;
+
+			SERIALIZE_FIELD(GameObject*, _tooltip_display);
 
 			SERIALIZE_FIELD(GameObject*, _camera);
 			SERIALIZE_FIELD(GameObject*, _ui_damage);
