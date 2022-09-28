@@ -551,6 +551,8 @@ void Hachiko::Scripting::EnemyController::BeetleAttack()
 
 	_combat_manager->EnemyMeleeAttack(GetMeleeAttackOrigin(attack_stats.range), attack_stats);
 
+	_attack_alt = !_attack_alt;
+
 	transform->LookAtTarget(_player_pos);
 	StopMoving();
 }
@@ -652,7 +654,6 @@ void Hachiko::Scripting::EnemyController::WormSpit()
 	if (!_attack_landing && _attack_current_delay <= 0.0f)
 	{
 		// We create the attack zone after the delay
-		_state = EnemyState::IDLE;
 		_attack_zone->GetTransform()->SetGlobalPosition(_player_pos);
 		_attack_landing = true;
 		_inner_indicator_billboard->Play();
@@ -740,9 +741,10 @@ void Hachiko::Scripting::EnemyController::RegisterHit(int damage, float3 directi
 		break;
 	case EnemyType::WORM:
 		_knockback_pos = transform->GetGlobalPosition();
-		_state = EnemyState::HIT;
 		break;
 	}
+
+	_state = EnemyState::HIT;
 
 	if (is_from_player)
 	{
@@ -854,7 +856,14 @@ void Hachiko::Scripting::EnemyController::CheckState()
 		break;
 	case EnemyState::ATTACKING:
 		_audio_source->PostEvent(Sounds::ENEMY_ATTACK);
-		animation->SendTrigger("isAttacking");
+		if (!_attack_alt)
+		{
+			animation->SendTrigger("isAttacking");
+		}
+		else
+		{
+			animation->SendTrigger("isAttackingAlt");
+		}
 		break;
 	case EnemyState::DEAD:
 		_audio_source->PostEvent(Sounds::ENEMY_DIE);
