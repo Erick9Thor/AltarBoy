@@ -169,6 +169,7 @@ namespace Hachiko
         void FreeFullScreenQuad() const;
 
         void CreateNoiseTexture();
+        void BindNoiseTexture(Program* program);
 
         void* context{};
 

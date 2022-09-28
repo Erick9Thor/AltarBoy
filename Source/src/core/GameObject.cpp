@@ -813,9 +813,9 @@ void Hachiko::GameObject::ChangeTintColor(float4 color, bool include_children)
 void Hachiko::GameObject::ChangeDissolveProgress(float progress, bool include_children) 
 {
     std::vector<ComponentMeshRenderer*> v_mesh_renderer = GetComponents<ComponentMeshRenderer>();
-    for (int i = 0; i < v_mesh_renderer.size(); ++i)
+    for (ComponentMeshRenderer* component_mesh : v_mesh_renderer)
     {
-        v_mesh_renderer[i]->SetDissolveProgress(progress);
+        component_mesh->SetDissolveProgress(progress);
     }
 
     if (!include_children)

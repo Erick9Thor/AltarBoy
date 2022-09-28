@@ -18,7 +18,7 @@ layout (location = 4) out vec4 g_emissive;
 in VertexData fragment;
 in flat uint instance;
 
-layout (binding = 25) uniform sampler2D noise;
+layout (binding = 10) uniform sampler2D noise;
 uniform float noise_progress;
 
 void main()
@@ -27,7 +27,7 @@ void main()
 
     // Disolving check
     bool modify_emisive = false;
-    if (noise_progress != 1.0)
+    if (noise_progress < 1.0)
     {
         float noise_value = texture(noise, fragment.tex_coord).r;
         if (noise_value >= material.dissolve_progress)
@@ -70,9 +70,6 @@ void main()
     // Store diffuse color in rgb channels of g buffer texture for diffuse: 
     g_diffuse.rgb = diffuse.rgb;
     g_diffuse.a = 1.0f;
-
-    // TEST
-    //g_diffuse.rgb = vec3(texture(noise, fragment.tex_coord).r, 0, 0);
 
     // Store specular color in rgb channels of g buffer texture for specular and smoothness:
     g_specular_smoothness.rgb = specular;

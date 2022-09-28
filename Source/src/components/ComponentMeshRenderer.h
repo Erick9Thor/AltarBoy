@@ -113,7 +113,7 @@ namespace Hachiko
             dissolve_progress = progress;
         }
 
-        [[nodiscard]] const float GetDissolveProgress() const
+        [[nodiscard]] float GetDissolveProgress() const
         {
             return dissolve_progress;
         }
