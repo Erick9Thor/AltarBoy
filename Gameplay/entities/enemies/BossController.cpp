@@ -420,6 +420,8 @@ void Hachiko::Scripting::BossController::ChaseController()
 
 	transform->LookAtTarget(player_position);
 
+	transform->LookAtTarget(player_position);
+
 	// If player is very cloose change to attack mode
 	float player_distance = transform->GetGlobalPosition().Distance(player_position);
 
