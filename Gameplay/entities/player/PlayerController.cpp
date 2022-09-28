@@ -267,6 +267,11 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		{
 			_state = PlayerState::DIE;
 
+			// Camera gets set back to player when it dies
+			_camera->GetComponent<PlayerCamera>()->SwitchRelativePosition(_cam_positions[0], .2f);
+			_camera->GetComponent<PlayerCamera>()->RotateCameraTo(_cam_rotations[0], .2f);
+			_camera->GetComponent<PlayerCamera>()->SetObjective(game_object);
+
 			// Some basic resets as disabling the dash and restarting the particles
 			_dash_trail->SetActive(false);
 			StopParticles();

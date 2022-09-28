@@ -13,6 +13,7 @@ namespace Hachiko
 		class LevelManager;
 		class CombatManager;
 		class AudioManager;
+		class PlayerCamera;
 
 		class GauntletManager : public Script
 		{
@@ -43,6 +44,9 @@ namespace Hachiko
 			SERIALIZE_FIELD(GameObject*, _pack_2);
 			SERIALIZE_FIELD(GameObject*, _pack_3);		
 
+			SERIALIZE_FIELD(GameObject*, _camera_anchor);
+			SERIALIZE_FIELD(float3, _relative_position);
+
 		private:
 			
 			void CheckRoundStatus();
@@ -60,7 +64,8 @@ namespace Hachiko
 			AudioManager* _audio_manager = nullptr;
 			std::vector<GameObject*> _enemy_packs{};
 			std::vector<DoorController*> _doors{};
-
+			// Camera change values
+			PlayerCamera* _main_camera = nullptr;
 		};
 	}
 

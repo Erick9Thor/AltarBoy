@@ -4,6 +4,7 @@
 
 #include "misc/LevelManager.h"
 #include "misc/AudioManager.h"
+#include "entities/player/PlayerCamera.h"
 #include "constants/Scenes.h"
 
 // TODO: Delete this include:
@@ -20,6 +21,8 @@ Hachiko::Scripting::GauntletManager::GauntletManager(GameObject* game_object)
 	, _pack_1(nullptr)
 	, _pack_2(nullptr)
 	, _pack_3(nullptr)
+	, _camera_anchor(nullptr)
+	, _relative_position(float3::zero)
 {}
 
 void Hachiko::Scripting::GauntletManager::OnAwake()
@@ -44,6 +47,7 @@ void Hachiko::Scripting::GauntletManager::OnAwake()
 void Hachiko::Scripting::GauntletManager::OnStart()
 {
 	_level_manager = Scenes::GetLevelManager()->GetComponent<LevelManager>();
+	_main_camera = Scenes::GetMainCamera()->GetComponent<PlayerCamera>();
 	game_object->SetVisible(false, false);
 
 	ResetGauntlet();
@@ -92,6 +96,13 @@ void Hachiko::Scripting::GauntletManager::StartGauntlet()
 
 	// Notify audio manager
 	_audio_manager->RegisterGaunlet();
+
+	// Set the camera to its position if there is an anchor set
+	if (_camera_anchor)
+	{
+		_main_camera->ChangeRelativePosition(_relative_position, false, .2f, 0.0f);
+		_main_camera->SetObjective(_camera_anchor);
+	}
 }
 
 bool Hachiko::Scripting::GauntletManager::IsFinished() const
@@ -105,6 +116,8 @@ void Hachiko::Scripting::GauntletManager::CheckRoundStatus()
 		completed = true;
 		OpenDoors();
 		_audio_manager->UnregisterGaunlet();
+		_main_camera->RevertRelativePosition(.2f);
+		_main_camera->SetObjective(Scenes::GetPlayer());
 		return;
 	}
 
