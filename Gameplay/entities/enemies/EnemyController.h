@@ -178,6 +178,8 @@ namespace Hachiko
             float3 _knockback_pos = float3::zero;
             float _attack_current_delay = 0.f;
             SERIALIZE_FIELD(float, _current_spawning_time);
+            float spawn_progress = 0.0f;
+            const float spawn_rate = 1 / math::Sqrt(_spawning_time);
             //float _current_spawning_time = 0.f;
             bool _has_spawned = false;
 

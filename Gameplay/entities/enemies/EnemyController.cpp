@@ -118,6 +118,14 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 
 	if (_current_spawning_time > 0.0f || _state == EnemyState::SPAWNING)
 	{
+		spawn_progress += spawn_rate * Time::DeltaTime();
+
+
+		if (spawn_progress <= 1.0f) {
+			_enemy_body->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, spawn_progress), true);
+		}
+		
+
 		SpawnController();
 		return;
 	}
@@ -786,7 +794,7 @@ void Hachiko::Scripting::EnemyController::Spawn()
 		if (_enemy_body)
 		{
 			_enemy_body->SetActive(true);
-			_enemy_body->ChangeEmissiveColor(float4(0.3f, 0.5f, 1.0f, 1.0f), _spawning_time, true);
+			//_enemy_body->ChangeEmissiveColor(float4(0.3f, 0.5f, 1.0f, 1.0f), _spawning_time, true);
 		}
 		if (_parasite)
 		{
