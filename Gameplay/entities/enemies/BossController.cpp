@@ -2,6 +2,7 @@
 
 #include "entities/enemies/BossController.h"
 #include "entities/enemies/EnemyController.h"
+#include "misc/StalagmiteManager.h"
 #include "entities/Stats.h"
 #include "constants/Scenes.h"
 
@@ -106,6 +107,12 @@ void Hachiko::Scripting::BossController::OnAwake()
 	for (GameObject* crystal_go : crystal_pool->children)
 	{
 		_explosive_crystals.push_back(crystal_go);
+	}
+
+	if (_stalagmite_manager_go)
+	{
+	    _stalagmite_manager = 
+			_stalagmite_manager_go->GetComponent<StalagmiteManager>();
 	}
 }
 
@@ -836,11 +843,18 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
 
 		if (_current_jumping_mode == JumpingMode::STALAGMITE)
 		{
-		    // TODO: Trigger stalagmites here.
+		    if (_stalagmite_manager)
+		    {
+				_stalagmite_manager->TriggerStalagmites();
+		    }
 		}
 		else if (_current_jumping_mode == JumpingMode::WEAPON_CHANGE)
 		{
 		    // TODO: Trigger weapon changing animation here.
+
+			// TODO: Fit this into a pattern.
+			const unsigned new_weapon = (_current_weapon + 1) % 3;
+		    ChangeWeapon(new_weapon);
 		}
 		else if (_current_jumping_mode == JumpingMode::CRYSTAL)
 		{

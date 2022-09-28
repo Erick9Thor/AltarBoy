@@ -19,7 +19,8 @@ namespace Hachiko
 
 	namespace Scripting
 	{
-		class AudioManager;
+        class StalagmiteManager;
+        class AudioManager;
 		class PlayerController;
         class EnemyController;
         class CombatVisualEffectsPool;
@@ -274,6 +275,9 @@ namespace Hachiko
 				JumpingMode::WEAPON_CHANGE
 			};
             JumpingMode _current_jumping_mode;
+
+			SERIALIZE_FIELD(GameObject*, _stalagmite_manager_go);
+			StalagmiteManager* _stalagmite_manager;
 
             // Debug variables:
             SERIALIZE_FIELD(ComponentText*, _boss_state_text_ui);
