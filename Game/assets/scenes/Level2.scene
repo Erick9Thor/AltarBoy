@@ -13152,6 +13152,8 @@ child:
                 "'_attack_zone@GameObject*'": 0
                 "'_inner_indicator@GameObject*'": 0
                 "'_outer_indicator@GameObject*'": 0
+                "'_projectile_particles@GameObject*'": 0
+                "'_explosion_particles@GameObject*'": 0
                 "'_already_in_combat@bool'": false
                 "'_is_from_gautlet@bool'": false
                 "'_is_from_boss@bool'": false
@@ -14435,6 +14437,8 @@ child:
                 "'_attack_zone@GameObject*'": 0
                 "'_inner_indicator@GameObject*'": 0
                 "'_outer_indicator@GameObject*'": 0
+                "'_projectile_particles@GameObject*'": 0
+                "'_explosion_particles@GameObject*'": 0
                 "'_already_in_combat@bool'": false
                 "'_is_from_gautlet@bool'": false
                 "'_is_from_boss@bool'": false
@@ -15730,6 +15734,8 @@ child:
                 "'_attack_zone@GameObject*'": 0
                 "'_inner_indicator@GameObject*'": 0
                 "'_outer_indicator@GameObject*'": 0
+                "'_projectile_particles@GameObject*'": 0
+                "'_explosion_particles@GameObject*'": 0
                 "'_already_in_combat@bool'": false
                 "'_is_from_gautlet@bool'": false
                 "'_is_from_boss@bool'": false
@@ -17013,6 +17019,8 @@ child:
                 "'_attack_zone@GameObject*'": 0
                 "'_inner_indicator@GameObject*'": 0
                 "'_outer_indicator@GameObject*'": 0
+                "'_projectile_particles@GameObject*'": 0
+                "'_explosion_particles@GameObject*'": 0
                 "'_already_in_combat@bool'": false
                 "'_is_from_gautlet@bool'": false
                 "'_is_from_boss@bool'": false
@@ -18296,6 +18304,8 @@ child:
                 "'_attack_zone@GameObject*'": 0
                 "'_inner_indicator@GameObject*'": 0
                 "'_outer_indicator@GameObject*'": 0
+                "'_projectile_particles@GameObject*'": 0
+                "'_explosion_particles@GameObject*'": 0
                 "'_already_in_combat@bool'": false
                 "'_is_from_gautlet@bool'": false
                 "'_is_from_boss@bool'": false
@@ -19579,6 +19589,8 @@ child:
                 "'_attack_zone@GameObject*'": 0
                 "'_inner_indicator@GameObject*'": 0
                 "'_outer_indicator@GameObject*'": 0
+                "'_projectile_particles@GameObject*'": 0
+                "'_explosion_particles@GameObject*'": 0
                 "'_already_in_combat@bool'": false
                 "'_is_from_gautlet@bool'": false
                 "'_is_from_boss@bool'": false
@@ -20874,6 +20886,8 @@ child:
                 "'_attack_zone@GameObject*'": 0
                 "'_inner_indicator@GameObject*'": 0
                 "'_outer_indicator@GameObject*'": 0
+                "'_projectile_particles@GameObject*'": 0
+                "'_explosion_particles@GameObject*'": 0
                 "'_already_in_combat@bool'": false
                 "'_is_from_gautlet@bool'": false
                 "'_is_from_boss@bool'": false
@@ -22157,6 +22171,8 @@ child:
                 "'_attack_zone@GameObject*'": 0
                 "'_inner_indicator@GameObject*'": 0
                 "'_outer_indicator@GameObject*'": 0
+                "'_projectile_particles@GameObject*'": 0
+                "'_explosion_particles@GameObject*'": 0
                 "'_already_in_combat@bool'": false
                 "'_is_from_gautlet@bool'": false
                 "'_is_from_boss@bool'": false
@@ -23440,6 +23456,8 @@ child:
                 "'_attack_zone@GameObject*'": 0
                 "'_inner_indicator@GameObject*'": 0
                 "'_outer_indicator@GameObject*'": 0
+                "'_projectile_particles@GameObject*'": 0
+                "'_explosion_particles@GameObject*'": 0
                 "'_already_in_combat@bool'": false
                 "'_is_from_gautlet@bool'": false
                 "'_is_from_boss@bool'": false
@@ -24735,6 +24753,8 @@ child:
                 "'_attack_zone@GameObject*'": 0
                 "'_inner_indicator@GameObject*'": 0
                 "'_outer_indicator@GameObject*'": 0
+                "'_projectile_particles@GameObject*'": 0
+                "'_explosion_particles@GameObject*'": 0
                 "'_already_in_combat@bool'": false
                 "'_is_from_gautlet@bool'": false
                 "'_is_from_boss@bool'": false
@@ -26018,6 +26038,8 @@ child:
                 "'_attack_zone@GameObject*'": 0
                 "'_inner_indicator@GameObject*'": 0
                 "'_outer_indicator@GameObject*'": 0
+                "'_projectile_particles@GameObject*'": 0
+                "'_explosion_particles@GameObject*'": 0
                 "'_already_in_combat@bool'": false
                 "'_is_from_gautlet@bool'": false
                 "'_is_from_boss@bool'": false
@@ -27301,6 +27323,8 @@ child:
                 "'_attack_zone@GameObject*'": 0
                 "'_inner_indicator@GameObject*'": 0
                 "'_outer_indicator@GameObject*'": 0
+                "'_projectile_particles@GameObject*'": 0
+                "'_explosion_particles@GameObject*'": 0
                 "'_already_in_combat@bool'": false
                 "'_is_from_gautlet@bool'": false
                 "'_is_from_boss@bool'": false
@@ -28584,6 +28608,8 @@ child:
                 "'_attack_zone@GameObject*'": 0
                 "'_inner_indicator@GameObject*'": 0
                 "'_outer_indicator@GameObject*'": 0
+                "'_projectile_particles@GameObject*'": 0
+                "'_explosion_particles@GameObject*'": 0
                 "'_already_in_combat@bool'": false
                 "'_is_from_gautlet@bool'": false
                 "'_is_from_boss@bool'": false
@@ -29867,6 +29893,8 @@ child:
                 "'_attack_zone@GameObject*'": 0
                 "'_inner_indicator@GameObject*'": 0
                 "'_outer_indicator@GameObject*'": 0
+                "'_projectile_particles@GameObject*'": 0
+                "'_explosion_particles@GameObject*'": 0
                 "'_already_in_combat@bool'": false
                 "'_is_from_gautlet@bool'": false
                 "'_is_from_boss@bool'": false
@@ -31162,6 +31190,8 @@ child:
                 "'_attack_zone@GameObject*'": 0
                 "'_inner_indicator@GameObject*'": 0
                 "'_outer_indicator@GameObject*'": 0
+                "'_projectile_particles@GameObject*'": 0
+                "'_explosion_particles@GameObject*'": 0
                 "'_already_in_combat@bool'": false
                 "'_is_from_gautlet@bool'": false
                 "'_is_from_boss@bool'": false
@@ -32439,7 +32469,6 @@ child:
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
             "'_sparks@GameObject*'": 0
-            "'_actlenght@float'": 0
           - id: 17817942635228409429
             type: 20
             enabled: true
@@ -32514,7 +32543,6 @@ child:
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
             "'_sparks@GameObject*'": 0
-            "'_actlenght@float'": 0
           - id: 7855138358787914724
             type: 20
             enabled: true
@@ -32589,7 +32617,6 @@ child:
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
             "'_sparks@GameObject*'": 0
-            "'_actlenght@float'": 0
           - id: 1560203970384173830
             type: 20
             enabled: true
@@ -32664,7 +32691,6 @@ child:
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
             "'_sparks@GameObject*'": 0
-            "'_actlenght@float'": 0
           - id: 14695003231451741538
             type: 20
             enabled: true
@@ -32739,7 +32765,6 @@ child:
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
             "'_sparks@GameObject*'": 0
-            "'_actlenght@float'": 0
           - id: 18244783952425888498
             type: 20
             enabled: true
@@ -32814,7 +32839,6 @@ child:
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
             "'_sparks@GameObject*'": 0
-            "'_actlenght@float'": 0
           - id: 11606083925199337313
             type: 20
             enabled: true
@@ -32889,7 +32913,6 @@ child:
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
             "'_sparks@GameObject*'": 0
-            "'_actlenght@float'": 0
           - id: 12003283733495858845
             type: 20
             enabled: true
@@ -32964,7 +32987,6 @@ child:
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
             "'_sparks@GameObject*'": 0
-            "'_actlenght@float'": 0
           - id: 8302683609660054132
             type: 20
             enabled: true
@@ -33039,7 +33061,6 @@ child:
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
             "'_sparks@GameObject*'": 0
-            "'_actlenght@float'": 0
           - id: 10194373368110108326
             type: 20
             enabled: true
@@ -33114,7 +33135,6 @@ child:
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
             "'_sparks@GameObject*'": 2373261524069017800
-            "'_actlenght@float'": 0
           - id: 3348784641776943634
             type: 20
             enabled: true
@@ -33303,7 +33323,6 @@ child:
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
             "'_sparks@GameObject*'": 10419062081009056423
-            "'_actlenght@float'": 0
           - id: 14306024741120179351
             type: 20
             enabled: true
@@ -33492,7 +33511,6 @@ child:
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
             "'_sparks@GameObject*'": 1656843390739561150
-            "'_actlenght@float'": 0
           - id: 17510398279683272903
             type: 20
             enabled: true
@@ -33661,7 +33679,6 @@ child:
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
             "'_sparks@GameObject*'": 25346659490403541
-            "'_actlenght@float'": 0
           - id: 5762238692053394355
             type: 20
             enabled: true
@@ -33810,7 +33827,6 @@ child:
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
             "'_sparks@GameObject*'": 0
-            "'_actlenght@float'": 0
           - id: 12515943156503302189
             type: 20
             enabled: true
@@ -33891,7 +33907,6 @@ child:
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
             "'_sparks@GameObject*'": 0
-            "'_actlenght@float'": 0
           - id: 5626211156909438935
             type: 20
             enabled: true
@@ -37150,6 +37165,7 @@ child:
         "'_claw_weapon@GameObject*'": 1534251611474452766
         "'_hammer_weapon@GameObject*'": 285427991433661750
         "'_attack_indicator@GameObject*'": 12979555437547914043
+        "'_aim_indicator@GameObject*'": 8299832450742224666
         "'_bullet_emitter@GameObject*'": 18163054640865901727
         "'_goal@GameObject*'": 7246002532049242297
         "'_player_geometry@GameObject*'": 590437234288956844
@@ -41036,6 +41052,43 @@ child:
                     image_y_tiles: 1
                     image_tiles_per_second: 1
                     fill_window: false
+      - id: 8299832450742224666
+        name: AimIndicator
+        enabled: true
+        component:
+          - !<transform>
+            id: 132038032494114736
+            type: 1
+            enabled: true
+            position: [0, 0, 7]
+            rotation: [-180, 89.98, -180]
+            scale: [2.273, 2.222, 2.273]
+          - !<billboard>
+            id: 3373546604408312954
+            type: 21
+            enabled: true
+            play_on_awake: false
+            texture_id: 11589188989502843529
+            tiles: [1, 1]
+            flip: [false, true]
+            billboard_lifetime: 5
+            properties: [1, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 0
+            total_tiles: 1
+            animation_loop: true
+            color_cycles: 1
+            color_gradient: [[0, 0, 0, 0, 0], [1, 1, 1, 0, 1]]
+            animation_section: false
+            color_section: false
+            size_section: false
+            size_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [1, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 0
+            projection: true
   - id: 13566858757207607272
     name: Debug
     enabled: true
@@ -41052,7 +41105,7 @@ child:
         type: 10
         enabled: true
         position: [0, 0, 0]
-        size: [1130, 630]
+        size: [814, 472]
         scale: [1, 1]
         rotation: [0, 0, 0, 1]
         pivot: [0.5, 0.5]
@@ -41114,7 +41167,7 @@ child:
             type: 10
             enabled: true
             position: [700, -50, 0]
-            size: [1130, 630]
+            size: [814, 472]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -42177,7 +42230,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1130, 630]
+            size: [814, 472]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -42393,7 +42446,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1130, 630]
+            size: [814, 472]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]

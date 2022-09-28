@@ -224,6 +224,7 @@ namespace Hachiko
 			const float fall_speed = 25.f;
 
 			SERIALIZE_FIELD(GameObject*, _attack_indicator);
+			SERIALIZE_FIELD(GameObject*, _aim_indicator);
 			SERIALIZE_FIELD(GameObject*, _bullet_emitter);
 			SERIALIZE_FIELD(GameObject*, _goal);
 			SERIALIZE_FIELD(GameObject*, _player_geometry);
@@ -278,6 +279,7 @@ namespace Hachiko
 			ComponentParticleSystem* _heal_effect_particles_1 = nullptr;
 			ComponentParticleSystem* _heal_effect_particles_2 = nullptr;
 			ComponentBillboard* _damage_effect_billboard = nullptr;
+			ComponentBillboard* _aim_indicator_billboard = nullptr;
 
 			std::vector<Weapon> weapons{};
 
