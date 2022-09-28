@@ -652,7 +652,6 @@ void Hachiko::Scripting::EnemyController::WormSpit()
 	if (!_attack_landing && _attack_current_delay <= 0.0f)
 	{
 		// We create the attack zone after the delay
-		_state = EnemyState::IDLE;
 		_attack_zone->GetTransform()->SetGlobalPosition(_player_pos);
 		_attack_landing = true;
 		_inner_indicator_billboard->Play();
@@ -740,9 +739,10 @@ void Hachiko::Scripting::EnemyController::RegisterHit(int damage, float3 directi
 		break;
 	case EnemyType::WORM:
 		_knockback_pos = transform->GetGlobalPosition();
-		_state = EnemyState::HIT;
 		break;
 	}
+
+	_state = EnemyState::HIT;
 
 	if (is_from_player)
 	{
