@@ -17,6 +17,32 @@ Hachiko::Scripting::BossController::BossController(GameObject* game_object)
 	, _current_index_crystals(0)
 	, _explosive_crystals({})
 {
+	CreateBossWeapons();
+}
+
+void Hachiko::Scripting::BossController::CreateBossWeapons()
+{
+	Weapon melee;
+	melee.name = "Claw";
+	melee.color = float4(255.0f, 0.0f, 0.0f, 255.0f);
+	melee.unlimited = true;
+	melee.attacks.push_back(GetAttackType(AttackType::MELEE_CLAW));
+
+	Weapon sword;
+	sword.name = "Sword";
+	sword.color = float4(0.0f, 255.0f, 0.0f, 255.0f);
+	sword.unlimited = true;
+	sword.attacks.push_back(GetAttackType(AttackType::SWORD));
+
+	Weapon hammer;
+	hammer.name = "Hammer";
+	hammer.color = float4(0.0f, 255.0f, 255.0f, 0.0f);
+	hammer.unlimited = true;
+	hammer.attacks.push_back(GetAttackType(AttackType::HAMMER));
+
+	weapons.push_back(melee);
+	weapons.push_back(sword);
+	weapons.push_back(hammer);
 }
 
 void Hachiko::Scripting::BossController::OnAwake()
@@ -37,7 +63,9 @@ void Hachiko::Scripting::BossController::OnAwake()
 		cocoon_placeholder_go->SetActive(false);
 	}
 	gauntlet = gauntlet_go->GetComponent<GauntletManager>();
-	
+
+	ChangeWeapon(0);
+
 	if (enemy_pool)
 	{
 		for (GameObject* enemy : enemy_pool->children)
@@ -96,7 +124,6 @@ void Hachiko::Scripting::BossController::UpdateHpBar()
 		hp_bar->SetFilledValue(combat_stats->_current_hp);
 	}
 }
-
 
 void Hachiko::Scripting::BossController::SetUpHpBar()
 {
@@ -188,7 +215,7 @@ void Hachiko::Scripting::BossController::CombatController()
 		state = BossState::DEAD;
 		return;
 	}
-	
+
 	SpawnEnemy();
 
 	CombatTransitionController();
@@ -315,6 +342,14 @@ void Hachiko::Scripting::BossController::DieController()
 {
 }
 
+float4x4 Hachiko::Scripting::BossController::GetMeleeAttackOrigin(float attack_range) const
+{
+	float3 emitter_direction = transform->GetFront().Normalized();
+	float3 emitter_position = transform->GetGlobalPosition() + emitter_direction * (attack_range / 2.f);
+	float4x4 emitter = float4x4::FromTRS(emitter_position, transform->GetGlobalRotation(), transform->GetGlobalScale());
+	return emitter;
+}
+
 void Hachiko::Scripting::BossController::StartCacoon()
 {
 	hitable = false;
@@ -381,13 +416,16 @@ void Hachiko::Scripting::BossController::Chase()
 void Hachiko::Scripting::BossController::ChaseController()
 {
 	const float3& player_position = player->GetTransform()->GetGlobalPosition();
+	const BossAttack& boss_attack = GetCurrentAttack();
+
+	transform->LookAtTarget(player_position);
 
 	transform->LookAtTarget(player_position);
 
 	// If player is very cloose change to attack mode
 	float player_distance = transform->GetGlobalPosition().Distance(player_position);
 
-	if (player_distance <= combat_stats->_attack_range) {
+	if (player_distance <= boss_attack.stats.range) {
 		// We expect transition to attack to start the attack
 		combat_state = CombatState::ATTACKING;
 		return;
@@ -425,23 +463,12 @@ void Hachiko::Scripting::BossController::MeleeAttackController()
 
 	if (!attacked)
 	{
-		// Enemy like attacks for alpha testing, this should be changed
-		// It deals no damage also
-		CombatManager::AttackStats attack_stats;
-		attack_stats.damage = 0;
-		attack_stats.knockback_distance = 0.0f;
-		attack_stats.width = 4.f;
-		attack_stats.range = combat_stats->_attack_range * 1.3f;
-		attack_stats.type = CombatManager::AttackType::RECTANGLE;
+		const Weapon& weapon = GetCurrentWeapon();
+		const BossAttack& boss_attack = GetCurrentAttack();
 
-		float3 emitter_direction = transform->GetFront().Normalized();
-		float3 emitter_position = transform->GetGlobalPosition() + emitter_direction * (combat_stats->_attack_range / 2.f);
-		float4x4 emitter = float4x4::FromTRS(emitter_position, transform->GetGlobalRotation(), transform->GetGlobalScale());
-		Debug::DebugDraw(combat_manager->CreateAttackHitbox(emitter, attack_stats), float3(1.0f, 1.0f, 0.0f));
-
-		combat_manager->EnemyMeleeAttack(emitter, attack_stats);
+		// Debug::DebugDraw(combat_manager->CreateAttackHitbox(GetMeleeAttackOrigin(boss_attack.stats.range), boss_attack.stats), weapon.color.Float3Part());
+		combat_manager->EnemyMeleeAttack(GetMeleeAttackOrigin(boss_attack.stats.range), boss_attack.stats);
 		attacked = true;
-		return;
 	}
 
 	after_attack_wait_timer += Time::DeltaTime();
@@ -452,7 +479,6 @@ void Hachiko::Scripting::BossController::MeleeAttackController()
 	}
 
 	combat_state = CombatState::BASIC_JUMP;
-
 }
 
 void Hachiko::Scripting::BossController::SpawnCrystals()
@@ -469,7 +495,7 @@ void Hachiko::Scripting::BossController::SpawnCrystalsController()
 	_current_index_crystals = _current_index_crystals % _explosive_crystals.size();
 
 	GameObject* current_crystal_to_spawn = _explosive_crystals[_current_index_crystals];
-	
+
 	if (current_crystal_to_spawn == nullptr)
 	{
 		return;
@@ -518,9 +544,9 @@ void Hachiko::Scripting::BossController::FakeJumpController()
 	}
 
 	// TODO? : Add weak wait period after jump is done
-	
+
 	// All jumps end up on crystal spawn unless it was a normal jump that caused a special jump
-	combat_state = CombatState::SPAWNING_CRYSTALS;	
+	combat_state = CombatState::SPAWNING_CRYSTALS;
 }
 
 void Hachiko::Scripting::BossController::FocusCamera(bool focus_on_boss)
@@ -538,58 +564,151 @@ void Hachiko::Scripting::BossController::FocusCamera(bool focus_on_boss)
 	}
 }
 
+Hachiko::Scripting::BossController::BossAttack Hachiko::Scripting::BossController::GetAttackType(AttackType attack_type)
+{
+	BossAttack attack;
+	switch (attack_type)
+	{
+		// COMMON ATTACKS
+	case AttackType::MELEE_CLAW:
+		// Make hit delay shorter than duration!
+		attack.hit_delay = 0.05f;
+		attack.duration = 1.5f; // 10 frames .45ms
+		attack.cooldown = 0.0f;
+		attack.stats.type = CombatManager::AttackType::RECTANGLE;
+		attack.stats.damage = 1;
+		attack.stats.knockback_distance = 0.3f;
+		// If its cone use degrees on width
+		attack.stats.width = 3.f;
+		attack.stats.range = 2.5f;
+		break;
+
+		// HEAVY ATTACKS
+	case AttackType::SWORD:
+		attack.hit_delay = 0.1f;
+		attack.duration = 2.f;
+		attack.cooldown = 0.0f;
+		attack.stats.type = CombatManager::AttackType::RECTANGLE;
+		attack.stats.damage = 1;
+		attack.stats.knockback_distance = 1.f;
+		// If its cone use degrees on width
+		attack.stats.width = 5.f;
+		attack.stats.range = 3.f;
+		break;
+
+	case AttackType::HAMMER:
+		attack.hit_delay = 0.1f;
+		attack.duration = 3.f;
+		attack.cooldown = 0.0f;
+		attack.stats.type = CombatManager::AttackType::RECTANGLE;
+		attack.stats.damage = 1;
+		attack.stats.knockback_distance = 1.f;
+		// If its cone use degrees on width
+		attack.stats.width = 5.f;
+		attack.stats.range = 3.f;
+		break;
+	}
+	return attack;
+}
+
+Hachiko::Scripting::BossController::Weapon& Hachiko::Scripting::BossController::GetCurrentWeapon()
+{
+	return weapons[_current_weapon];
+}
+
+const Hachiko::Scripting::BossController::BossAttack& Hachiko::Scripting::BossController::GetNextAttack()
+{
+	// TODO: Avoid magic next attack changes
+
+	return GetCurrentAttack();
+}
+
+const Hachiko::Scripting::BossController::BossAttack& Hachiko::Scripting::BossController::GetCurrentAttack()
+{
+	return GetCurrentWeapon().attacks[_attack_idx];
+}
+
+void Hachiko::Scripting::BossController::ChangeWeapon(unsigned weapon_idx)
+{
+	_current_weapon = weapon_idx;
+
+	if (weapon_idx >= weapons.size())
+	{
+		_current_weapon = 0;
+	}
+
+	if (_current_weapon == 0)
+	{
+		_claw_weapon->SetActive(true);
+		_sword_weapon->SetActive(false);
+		_hammer_weapon->SetActive(false);
+	}
+	else if (_current_weapon == 1)
+	{
+		_claw_weapon->SetActive(false);
+		_sword_weapon->SetActive(true);
+		_hammer_weapon->SetActive(false);
+	}
+	else if (_current_weapon == 2)
+	{
+		_claw_weapon->SetActive(false);
+		_sword_weapon->SetActive(false);
+		_hammer_weapon->SetActive(true);
+	}
+}
+
 void Hachiko::Scripting::BossController::SpawnEnemy()
 {
 	enemy_timer += Time::DeltaTime();
 	if (enemy_timer < time_between_enemies)
 	{
-        return;
-    }
+		return;
+	}
 
-    for (EnemyController* enemy_controller : enemies) 
-    {
-        GameObject* enemy = enemy_controller->GetGameObject();
+	for (EnemyController* enemy_controller : enemies)
+	{
+		GameObject* enemy = enemy_controller->GetGameObject();
 
-        if (enemy->IsActive())
-        {
-            continue;
-        }
+		if (enemy->IsActive())
+		{
+			continue;
+		}
 
-        enemy->SetActive(true);
-        ComponentAgent* agent = enemy->GetComponent<ComponentAgent>();
-        
-        if (agent)
-        {
-            agent->AddToCrowd();
-        }
-            
-        break;
-    }
+		enemy->SetActive(true);
+		ComponentAgent* agent = enemy->GetComponent<ComponentAgent>();
 
-    enemy_timer = 0;
+		if (agent)
+		{
+			agent->AddToCrowd();
+		}
+
+		break;
+	}
+
+	enemy_timer = 0;
 }
 
 void Hachiko::Scripting::BossController::ResetEnemies()
 {
 	for (EnemyController* enemy_controller : enemies)
 	{
-        GameObject* enemy = enemy_controller->GetGameObject();
+		GameObject* enemy = enemy_controller->GetGameObject();
 		ComponentAgent* agent = enemy_controller->GetGameObject()->GetComponent<ComponentAgent>();
-		
-        if (agent)
+
+		if (agent)
 		{
 			agent->RemoveFromCrowd();
 		}
-		
-        if (enemy_controller)
+
+		if (enemy_controller)
 		{
-            // Maybe pack these methods into a method of EnemyController for
-            // ease of extensibility.
+			// Maybe pack these methods into a method of EnemyController for
+			// ease of extensibility.
 			enemy_controller->SetIsFromBoss(true);
 			enemy_controller->ResetEnemy();
 			enemy_controller->ResetEnemyPosition();
 		}
-		
-        enemy->SetActive(false);
+
+		enemy->SetActive(false);
 	}
 }

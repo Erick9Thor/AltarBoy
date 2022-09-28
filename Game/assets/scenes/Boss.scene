@@ -13559,7 +13559,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [814, 472]
+            size: [1298, 731]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -14299,6 +14299,9 @@ child:
         "'start_encounter_range@float'": 5
         "'attack_delay@float'": 0.5
         "'after_attack_wait@float'": 1
+        "'_sword_weapon@GameObject*'": 16754641684491217472
+        "'_claw_weapon@GameObject*'": 12369283348870072657
+        "'_hammer_weapon@GameObject*'": 16397596031605413153
         "'time_between_enemies@float'": 5
         "'enemy_pool@GameObject*'": 2648566823339321148
       - !<script>
@@ -14329,7 +14332,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [814, 472]
+            size: [1298, 731]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -14531,6 +14534,51 @@ child:
                 visible: true
                 material_id: 6750369022920963075
                 tint_color: [1, 1, 1, 1]
+      - id: 8847909615947034233
+        name: Weapons
+        enabled: true
+        component:
+          - !<transform>
+            id: 7313446559364720815
+            type: 1
+            enabled: true
+            position: [78.62, -1.312, 64.42]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+        child:
+          - id: 12369283348870072657
+            name: Clawn
+            enabled: true
+            component:
+              - !<transform>
+                id: 17138625972123843394
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+          - id: 16754641684491217472
+            name: Sword
+            enabled: false
+            component:
+              - !<transform>
+                id: 16656619759002568365
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+          - id: 16397596031605413153
+            name: Hammer
+            enabled: false
+            component:
+              - !<transform>
+                id: 4844911178911747912
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
   - id: 9402334634687152371
     name: ExplosiveCrystalsPool
     enabled: true
