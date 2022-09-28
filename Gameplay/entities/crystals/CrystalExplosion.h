@@ -59,6 +59,7 @@ namespace Hachiko
 			SERIALIZE_FIELD(float, _timer_explosion);
 			SERIALIZE_FIELD(bool, _explosive_crystal);
 			SERIALIZE_FIELD(float, _regen_time);
+			SERIALIZE_FIELD(bool, _should_regen);
 
 			ComponentAudioSource* _audio_source;
 			bool _is_destroyed = false;

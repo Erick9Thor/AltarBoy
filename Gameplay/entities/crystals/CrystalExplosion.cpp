@@ -24,6 +24,7 @@ Hachiko::Scripting::CrystalExplosion::CrystalExplosion(GameObject* game_object)
 	, _regen_time(5.f)
 	, _shake_intensity(0.1f)
 	, _seconds_shaking(0.8f)
+	, _should_regen(true)
 {
 }
 
@@ -164,7 +165,11 @@ void Hachiko::Scripting::CrystalExplosion::ShakeCrystal()
 
 	shake_offset = GetShakeOffset();
 
-	transform->SetGlobalPosition(_initial_transform.Col3(3) + shake_offset);
+	if (_should_regen)
+	{
+		// We are not doing this on Boss level because it causes moving the crystal to strange positions
+		transform->SetGlobalPosition(_initial_transform.Col3(3) + shake_offset);
+	}
 }
 
 float3 Hachiko::Scripting::CrystalExplosion::GetShakeOffset()
@@ -236,6 +241,14 @@ void Hachiko::Scripting::CrystalExplosion::ResetCrystal()
 	if (cp_animation)
 	{
 		cp_animation->SendTrigger("isRegenerating");
+	}
+
+	if (!_should_regen)
+	{
+		// Is boss scene and crystal shouldn't regen so we move it far away
+		float3 front = _transform->GetFront().Normalized();
+		float3 move_away = _transform->GetGlobalPosition() + front * 50;
+		_transform->SetGlobalPosition(move_away);
 	}
 }
 

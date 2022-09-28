@@ -85,7 +85,7 @@
       <PrecompiledHeaderFile>scriptingUtil/gameplaypch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)src;$(SolutionDir)vendors\SDL\include;$(SolutionDir)vendors\glew-2.1.0\include\GL;$(SolutionDir)vendors\imgui;$(SolutionDir)vendors\MathGeoLib;$(SolutionDir)vendors\DevIL\include\IL;$(SolutionDir)vendors\DebugDraw;$(SolutionDir)vendors\assimp\include;$(SolutionDir)vendors\ImGuiFileDialog-0.6.3;$(SolutionDir)vendors\ImGuizmo;$(SolutionDir)vendors\rapidjson\include;$(SolutionDir)vendors\optick\include;$(SolutionDir)vendors\PhysicsFS;$(SolutionDir)vendors\yaml-cpp\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalOptions>/FS %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Fs %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -332,6 +332,9 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClInclude Include="misc\PillarCheckpoint.h" />
     <ClInclude Include="entities\player\CombatVisualEffectsPool.h" />
     <ClInclude Include="misc\TimeManager.h" />
+    <ClInclude Include="misc\StalagmiteManager.h" />
+    <ClInclude Include="entities\crystals\Stalagmite.h" />
+    <ClInclude Include="misc\Tutorial.h" />
     <ClInclude Include="TriggerAnim.h" />
     <ClInclude Include="ui\BackToMainMenu.h" />
     <ClInclude Include="entities\player\CombatManager.h" />
@@ -755,6 +758,9 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClCompile Include="misc\PillarCheckpoint.cpp" />
     <ClCompile Include="entities\player\CombatVisualEffectsPool.cpp" />
     <ClCompile Include="misc\TimeManager.cpp" />
+    <ClCompile Include="misc\StalagmiteManager.cpp" />
+    <ClCompile Include="entities\crystals\Stalagmite.cpp" />
+    <ClCompile Include="misc\Tutorial.cpp" />
     <ClCompile Include="TriggerAnim.cpp" />
     <ClCompile Include="ui\BackToMainMenu.cpp" />
     <ClCompile Include="entities\player\CombatManager.cpp" />
