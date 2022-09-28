@@ -10421,6 +10421,7 @@ child:
         "'_claw_weapon@GameObject*'": 11452597198549402105
         "'_hammer_weapon@GameObject*'": 10537964288692734985
         "'_attack_indicator@GameObject*'": 11650371022511337214
+        "'_aim_indicator@GameObject*'": 16744711593634271272
         "'_bullet_emitter@GameObject*'": 8459539939456400839
         "'_goal@GameObject*'": 18251543931208160398
         "'_player_geometry@GameObject*'": 13055154213429600865
@@ -14224,6 +14225,43 @@ child:
                     image_y_tiles: 1
                     image_tiles_per_second: 1
                     fill_window: false
+      - id: 16744711593634271272
+        name: AimIndicator
+        enabled: true
+        component:
+          - !<transform>
+            id: 8526461407770622014
+            type: 1
+            enabled: true
+            position: [0, 0, 7]
+            rotation: [0, 90, 0]
+            scale: [2.5, 2.5, 2.5]
+          - !<billboard>
+            id: 12691712513651242410
+            type: 21
+            enabled: true
+            play_on_awake: false
+            texture_id: 11589188989502843529
+            tiles: [1, 1]
+            flip: [false, true]
+            billboard_lifetime: 5
+            properties: [1, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 0
+            total_tiles: 1
+            animation_loop: true
+            color_cycles: 1
+            color_gradient: [[0, 0, 0, 0, 0], [1, 1, 1, 0, 1]]
+            animation_section: false
+            color_section: false
+            size_section: false
+            size_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [1, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 0
+            projection: true
   - id: 4089779087202767202
     name: Boss
     enabled: true
