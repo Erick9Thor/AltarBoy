@@ -24,6 +24,7 @@ namespace Hachiko
             BEETLE,
             WORM,
         };
+
         enum class EnemyState
         {
             INVALID,

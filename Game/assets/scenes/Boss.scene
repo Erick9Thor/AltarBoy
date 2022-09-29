@@ -27,7 +27,7 @@ child:
         type: 1
         enabled: true
         position: [-85.36, 20.2, -48.15]
-        rotation: [125, 0, -180]
+        rotation: [125, 0, 180]
         scale: [1, 1, 1]
       - !<camera>
         id: 1219616210356617501
@@ -39,7 +39,7 @@ child:
           fov: 65
           position: [-85.36, 20.2, -48.15]
           front: [0, -0.8192, -0.5736]
-          up: [0, 0.5736, -0.8192]
+          up: [-0, 0.5736, -0.8192]
           pinned_camera: [0, 0, 0]
       - id: 13408884615593672014
         type: 19
@@ -660,7 +660,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [-180, 3.615, 14.16]
+                                                                                        rotation: [180, 3.615, 14.16]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 17083926916287189837
@@ -872,7 +872,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [-180, 0, 85.39]
+                                                                                        rotation: [180, 0, 85.39]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 16673762793204240827
@@ -1179,7 +1179,7 @@ child:
                                                                                                                         type: 1
                                                                                                                         enabled: true
                                                                                                                         position: [0, 0, 0]
-                                                                                                                        rotation: [-180, -89.98, -180]
+                                                                                                                        rotation: [180, -89.98, 180]
                                                                                                                         scale: [1, 1, 1]
                                                                                                               - id: 17824814368355884472
                                                                                                                 name: Wing_Middle_R
@@ -1945,7 +1945,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [-180, 3.615, 14.16]
+                                                                                        rotation: [180, 3.615, 14.16]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 7166805286709657581
@@ -2157,7 +2157,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [-180, 0, 85.39]
+                                                                                        rotation: [180, 0, 85.39]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 2831410405136228984
@@ -2464,7 +2464,7 @@ child:
                                                                                                                         type: 1
                                                                                                                         enabled: true
                                                                                                                         position: [0, 0, 0]
-                                                                                                                        rotation: [-180, -89.98, -180]
+                                                                                                                        rotation: [180, -89.98, 180]
                                                                                                                         scale: [1, 1, 1]
                                                                                                               - id: 18073054745000376799
                                                                                                                 name: Wing_Middle_R
@@ -3230,7 +3230,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [-180, 3.615, 14.16]
+                                                                                        rotation: [180, 3.615, 14.16]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 16660911846559829495
@@ -3442,7 +3442,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [-180, 0, 85.39]
+                                                                                        rotation: [180, 0, 85.39]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 5305186554916170386
@@ -3749,7 +3749,7 @@ child:
                                                                                                                         type: 1
                                                                                                                         enabled: true
                                                                                                                         position: [0, 0, 0]
-                                                                                                                        rotation: [-180, -89.98, -180]
+                                                                                                                        rotation: [180, -89.98, 180]
                                                                                                                         scale: [1, 1, 1]
                                                                                                               - id: 5762468314855338250
                                                                                                                 name: Wing_Middle_R
@@ -4527,7 +4527,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [-180, 3.615, 14.16]
+                                                                                        rotation: [180, 3.615, 14.16]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 2375049026776240409
@@ -4739,7 +4739,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [-180, 0, 85.39]
+                                                                                        rotation: [180, 0, 85.39]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 2545767677094883520
@@ -5046,7 +5046,7 @@ child:
                                                                                                                         type: 1
                                                                                                                         enabled: true
                                                                                                                         position: [0, 0, 0]
-                                                                                                                        rotation: [-180, -89.98, -180]
+                                                                                                                        rotation: [180, -89.98, 180]
                                                                                                                         scale: [1, 1, 1]
                                                                                                               - id: 6188514512839603856
                                                                                                                 name: Wing_Middle_R
@@ -5812,7 +5812,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [-180, 3.615, 14.16]
+                                                                                        rotation: [180, 3.615, 14.16]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 15556414505888023057
@@ -6024,7 +6024,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [-180, 0, 85.39]
+                                                                                        rotation: [180, 0, 85.39]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 16037035974818211267
@@ -6331,7 +6331,7 @@ child:
                                                                                                                         type: 1
                                                                                                                         enabled: true
                                                                                                                         position: [0, 0, 0]
-                                                                                                                        rotation: [-180, -89.98, -180]
+                                                                                                                        rotation: [180, -89.98, 180]
                                                                                                                         scale: [1, 1, 1]
                                                                                                               - id: 17287654595624956106
                                                                                                                 name: Wing_Middle_R
@@ -7097,7 +7097,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [-180, 3.615, 14.16]
+                                                                                        rotation: [180, 3.615, 14.16]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 10059902737588998568
@@ -7309,7 +7309,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [-180, 0, 85.39]
+                                                                                        rotation: [180, 0, 85.39]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 5366420881040033485
@@ -7485,7 +7485,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [44.55, 89.97, 43.25]
+                                                                                        rotation: [44.54, 89.96, 43.26]
                                                                                         scale: [0.9999, 0.9999, 0.9999]
                                                                                     child:
                                                                                       - id: 9651845316979825327
@@ -7616,7 +7616,7 @@ child:
                                                                                                                         type: 1
                                                                                                                         enabled: true
                                                                                                                         position: [0, 0, 0]
-                                                                                                                        rotation: [-180, -89.98, -180]
+                                                                                                                        rotation: [180, -89.98, 180]
                                                                                                                         scale: [1, 1, 1]
                                                                                                               - id: 11361860213490135861
                                                                                                                 name: Wing_Middle_R
@@ -9739,616 +9739,6 @@ child:
             visible: true
             material_id: 6750369022920963075
             tint_color: [1, 1, 1, 1]
-  - id: 11750502083813652546
-    name: CombatVisualEffectsPool
-    enabled: true
-    component:
-      - !<transform>
-        id: 1903396632292485938
-        type: 1
-        enabled: true
-        position: [0, 0, 0]
-        rotation: [-0, 0, -0]
-        scale: [1, 1, 1]
-      - !<script>
-        id: 15224920765918736093
-        type: 15
-        enabled: true
-        class_name: CombatVisualEffectsPool
-        "'_current_billboard_index@int'": 0
-    child:
-      - id: 11872421666161533815
-        name: CombatVisualEffectBillboard
-        enabled: true
-        component:
-          - !<transform>
-            id: 8972795936797807808
-            type: 1
-            enabled: true
-            position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
-            scale: [1, 1, 1]
-          - !<billboard>
-            id: 12889461639337803192
-            type: 21
-            enabled: true
-            play_on_awake: false
-            texture_id: 5430073307092224641
-            tiles: [5, 2]
-            flip: [false, false]
-            billboard_lifetime: 1
-            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 10
-            animation_loop: false
-            color_cycles: 1
-            color_gradient: [[0, 1, 0.9827, 0, 0], [1, 1, 1, 0, 1]]
-            animation_section: true
-            color_section: false
-            size_section: true
-            size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            rotation_section: false
-            rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 1, [1.5, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            blend_factor: 1
-            projection: true
-      - id: 9797115141302717256
-        name: CombatVisualEffectBillboard
-        enabled: true
-        component:
-          - !<transform>
-            id: 2877187491285828407
-            type: 1
-            enabled: true
-            position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
-            scale: [1, 1, 1]
-          - !<billboard>
-            id: 14736787411296405982
-            type: 21
-            enabled: true
-            play_on_awake: false
-            texture_id: 5430073307092224641
-            tiles: [5, 2]
-            flip: [false, false]
-            billboard_lifetime: 1
-            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 10
-            animation_loop: false
-            color_cycles: 1
-            color_gradient: [[0, 1, 0.9827, 0, 0], [1, 1, 1, 0, 1]]
-            animation_section: true
-            color_section: false
-            size_section: true
-            size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            rotation_section: false
-            rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 1, [1.5, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            blend_factor: 1
-            projection: true
-      - id: 10360689309086431205
-        name: CombatVisualEffectBillboard
-        enabled: true
-        component:
-          - !<transform>
-            id: 2266700321140374748
-            type: 1
-            enabled: true
-            position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
-            scale: [1, 1, 1]
-          - !<billboard>
-            id: 14937148646190322431
-            type: 21
-            enabled: true
-            play_on_awake: false
-            texture_id: 5430073307092224641
-            tiles: [5, 2]
-            flip: [false, false]
-            billboard_lifetime: 1
-            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 10
-            animation_loop: false
-            color_cycles: 1
-            color_gradient: [[0, 1, 0.9827, 0, 0], [1, 1, 1, 0, 1]]
-            animation_section: true
-            color_section: false
-            size_section: true
-            size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            rotation_section: false
-            rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 1, [1.5, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            blend_factor: 1
-            projection: true
-      - id: 3203495106128240907
-        name: CombatVisualEffectBillboard
-        enabled: true
-        component:
-          - !<transform>
-            id: 15883136856924162129
-            type: 1
-            enabled: true
-            position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
-            scale: [1, 1, 1]
-          - !<billboard>
-            id: 456925069211856210
-            type: 21
-            enabled: true
-            play_on_awake: false
-            texture_id: 5430073307092224641
-            tiles: [5, 2]
-            flip: [false, false]
-            billboard_lifetime: 1
-            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 10
-            animation_loop: false
-            color_cycles: 1
-            color_gradient: [[0, 1, 0.9827, 0, 0], [1, 1, 1, 0, 1]]
-            animation_section: true
-            color_section: false
-            size_section: true
-            size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            rotation_section: false
-            rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 1, [1.5, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            blend_factor: 1
-            projection: true
-      - id: 7429810818022347029
-        name: CombatVisualEffectBillboard
-        enabled: true
-        component:
-          - !<transform>
-            id: 14190477906529219030
-            type: 1
-            enabled: true
-            position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
-            scale: [1, 1, 1]
-          - !<billboard>
-            id: 4475872000172640966
-            type: 21
-            enabled: true
-            play_on_awake: false
-            texture_id: 5430073307092224641
-            tiles: [5, 2]
-            flip: [false, false]
-            billboard_lifetime: 1
-            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 10
-            animation_loop: false
-            color_cycles: 1
-            color_gradient: [[0, 1, 0.9827, 0, 0], [1, 1, 1, 0, 1]]
-            animation_section: true
-            color_section: false
-            size_section: true
-            size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            rotation_section: false
-            rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 1, [1.5, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            blend_factor: 1
-            projection: true
-      - id: 827300777996761336
-        name: CombatVisualEffectBillboard
-        enabled: true
-        component:
-          - !<transform>
-            id: 8467414734912719047
-            type: 1
-            enabled: true
-            position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
-            scale: [1, 1, 1]
-          - !<billboard>
-            id: 11154005963557986023
-            type: 21
-            enabled: true
-            play_on_awake: false
-            texture_id: 5430073307092224641
-            tiles: [5, 2]
-            flip: [false, false]
-            billboard_lifetime: 1
-            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 10
-            animation_loop: false
-            color_cycles: 1
-            color_gradient: [[0, 1, 0.9827, 0, 0], [1, 1, 1, 0, 1]]
-            animation_section: true
-            color_section: false
-            size_section: true
-            size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            rotation_section: false
-            rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 1, [1.5, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            blend_factor: 1
-            projection: true
-      - id: 10441789785038404849
-        name: CombatVisualEffectBillboard
-        enabled: true
-        component:
-          - !<transform>
-            id: 424179181160606620
-            type: 1
-            enabled: true
-            position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
-            scale: [1, 1, 1]
-          - !<billboard>
-            id: 14758447714715447945
-            type: 21
-            enabled: true
-            play_on_awake: false
-            texture_id: 5430073307092224641
-            tiles: [5, 2]
-            flip: [false, false]
-            billboard_lifetime: 1
-            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 10
-            animation_loop: false
-            color_cycles: 1
-            color_gradient: [[0, 1, 0.9827, 0, 0], [1, 1, 1, 0, 1]]
-            animation_section: true
-            color_section: false
-            size_section: true
-            size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            rotation_section: false
-            rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 1, [1.5, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            blend_factor: 1
-            projection: true
-      - id: 16267353430218422517
-        name: CombatVisualEffectBillboard
-        enabled: true
-        component:
-          - !<transform>
-            id: 4233712173822668089
-            type: 1
-            enabled: true
-            position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
-            scale: [1, 1, 1]
-          - !<billboard>
-            id: 12868313748317823359
-            type: 21
-            enabled: true
-            play_on_awake: false
-            texture_id: 5430073307092224641
-            tiles: [5, 2]
-            flip: [false, false]
-            billboard_lifetime: 1
-            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 10
-            animation_loop: false
-            color_cycles: 1
-            color_gradient: [[0, 1, 0.9827, 0, 0], [1, 1, 1, 0, 1]]
-            animation_section: true
-            color_section: false
-            size_section: true
-            size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            rotation_section: false
-            rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 1, [1.5, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            blend_factor: 1
-            projection: true
-      - id: 12351178750125543387
-        name: CombatVisualEffectBillboard
-        enabled: true
-        component:
-          - !<transform>
-            id: 10551200579968065570
-            type: 1
-            enabled: true
-            position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
-            scale: [1, 1, 1]
-          - !<billboard>
-            id: 17195496535314961828
-            type: 21
-            enabled: true
-            play_on_awake: false
-            texture_id: 5430073307092224641
-            tiles: [5, 2]
-            flip: [false, false]
-            billboard_lifetime: 1
-            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 10
-            animation_loop: false
-            color_cycles: 1
-            color_gradient: [[0, 1, 0.9827, 0, 0], [1, 1, 1, 0, 1]]
-            animation_section: true
-            color_section: false
-            size_section: true
-            size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            rotation_section: false
-            rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 1, [1.5, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            blend_factor: 1
-            projection: true
-      - id: 14681452733450636694
-        name: CombatVisualEffectBillboard
-        enabled: true
-        component:
-          - !<transform>
-            id: 11722060938354085280
-            type: 1
-            enabled: true
-            position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
-            scale: [1, 1, 1]
-          - !<billboard>
-            id: 14203543102255133385
-            type: 21
-            enabled: true
-            play_on_awake: false
-            texture_id: 5430073307092224641
-            tiles: [5, 2]
-            flip: [false, false]
-            billboard_lifetime: 1
-            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 10
-            animation_loop: false
-            color_cycles: 1
-            color_gradient: [[0, 1, 0.9827, 0, 0], [1, 1, 1, 0, 1]]
-            animation_section: true
-            color_section: false
-            size_section: true
-            size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            rotation_section: false
-            rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 1, [1.5, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            blend_factor: 1
-            projection: true
-      - id: 3178312236587298509
-        name: CombatVisualEffectBillboard
-        enabled: true
-        component:
-          - !<transform>
-            id: 5841261638683637589
-            type: 1
-            enabled: true
-            position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
-            scale: [1, 1, 1]
-          - !<billboard>
-            id: 399231848902593822
-            type: 21
-            enabled: true
-            play_on_awake: false
-            texture_id: 5430073307092224641
-            tiles: [5, 2]
-            flip: [false, false]
-            billboard_lifetime: 1
-            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 10
-            animation_loop: false
-            color_cycles: 1
-            color_gradient: [[0, 1, 0.9827, 0, 0], [1, 1, 1, 0, 1]]
-            animation_section: true
-            color_section: false
-            size_section: true
-            size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            rotation_section: false
-            rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 1, [1.5, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            blend_factor: 1
-            projection: true
-      - id: 11609746567350572977
-        name: CombatVisualEffectBillboard
-        enabled: true
-        component:
-          - !<transform>
-            id: 4225226667375273967
-            type: 1
-            enabled: true
-            position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
-            scale: [1, 1, 1]
-          - !<billboard>
-            id: 1197752568775973123
-            type: 21
-            enabled: true
-            play_on_awake: false
-            texture_id: 5430073307092224641
-            tiles: [5, 2]
-            flip: [false, false]
-            billboard_lifetime: 1
-            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 10
-            animation_loop: false
-            color_cycles: 1
-            color_gradient: [[0, 1, 0.9827, 0, 0], [1, 1, 1, 0, 1]]
-            animation_section: true
-            color_section: false
-            size_section: true
-            size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            rotation_section: false
-            rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 1, [1.5, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            blend_factor: 1
-            projection: true
-      - id: 1690622059073835129
-        name: CombatVisualEffectBillboard
-        enabled: true
-        component:
-          - !<transform>
-            id: 3488412034303970535
-            type: 1
-            enabled: true
-            position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
-            scale: [1, 1, 1]
-          - !<billboard>
-            id: 16536424788855733966
-            type: 21
-            enabled: true
-            play_on_awake: false
-            texture_id: 5430073307092224641
-            tiles: [5, 2]
-            flip: [false, false]
-            billboard_lifetime: 1
-            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 10
-            animation_loop: false
-            color_cycles: 1
-            color_gradient: [[0, 1, 0.9827, 0, 0], [1, 1, 1, 0, 1]]
-            animation_section: true
-            color_section: false
-            size_section: true
-            size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            rotation_section: false
-            rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 1, [1.5, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            blend_factor: 1
-            projection: true
-      - id: 1216609899455846553
-        name: CombatVisualEffectBillboard
-        enabled: true
-        component:
-          - !<transform>
-            id: 8649584313275320036
-            type: 1
-            enabled: true
-            position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
-            scale: [1, 1, 1]
-          - !<billboard>
-            id: 8313537000882696950
-            type: 21
-            enabled: true
-            play_on_awake: false
-            texture_id: 5430073307092224641
-            tiles: [5, 2]
-            flip: [false, false]
-            billboard_lifetime: 1
-            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 10
-            animation_loop: false
-            color_cycles: 1
-            color_gradient: [[0, 1, 0.9827, 0, 0], [1, 1, 1, 0, 1]]
-            animation_section: true
-            color_section: false
-            size_section: true
-            size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            rotation_section: false
-            rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 1, [1.5, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            blend_factor: 1
-            projection: true
-      - id: 15779442144437760656
-        name: CombatVisualEffectBillboard
-        enabled: true
-        component:
-          - !<transform>
-            id: 9634803133431479549
-            type: 1
-            enabled: true
-            position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
-            scale: [1, 1, 1]
-          - !<billboard>
-            id: 6989503182835933532
-            type: 21
-            enabled: true
-            play_on_awake: false
-            texture_id: 5430073307092224641
-            tiles: [5, 2]
-            flip: [false, false]
-            billboard_lifetime: 1
-            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 10
-            animation_loop: false
-            color_cycles: 1
-            color_gradient: [[0, 1, 0.9827, 0, 0], [1, 1, 1, 0, 1]]
-            animation_section: true
-            color_section: false
-            size_section: true
-            size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            rotation_section: false
-            rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 1, [1.5, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            blend_factor: 1
-            projection: true
-      - id: 13726101003798509061
-        name: CombatVisualEffectBillboard
-        enabled: true
-        component:
-          - !<transform>
-            id: 4701669154531869496
-            type: 1
-            enabled: true
-            position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
-            scale: [1, 1, 1]
-          - !<billboard>
-            id: 17719009998243824733
-            type: 21
-            enabled: true
-            play_on_awake: false
-            texture_id: 13013756780837160747
-            tiles: [5, 2]
-            flip: [false, false]
-            billboard_lifetime: 1
-            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 10
-            animation_loop: false
-            color_cycles: 1
-            color_gradient: [[0, 1, 0.9827, 0, 0], [1, 1, 1, 0, 1]]
-            animation_section: true
-            color_section: false
-            size_section: true
-            size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            rotation_section: false
-            rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 1, [1.5, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            blend_factor: 1
-            projection: true
   - id: 14228725243833130829
     name: Level
     enabled: true
@@ -10577,7 +9967,7 @@ child:
                                         type: 1
                                         enabled: true
                                         position: [0, 1.081, -1.753]
-                                        rotation: [-180, 0, -0]
+                                        rotation: [180, 0, -0]
                                         scale: [2.54, 2.54, 2.54]
                                     child:
                                       - id: 9253628311517691346
@@ -12011,7 +11401,7 @@ child:
                                                                                                                             type: 1
                                                                                                                             enabled: true
                                                                                                                             position: [0, 0, 0]
-                                                                                                                            rotation: [180, 0, -0]
+                                                                                                                            rotation: [-180, 0, -0]
                                                                                                                             scale: [1, 1, 1]
                                                                                                                         child:
                                                                                                                           - id: 2983305070747123574
@@ -12070,7 +11460,7 @@ child:
                                                                                                                             type: 1
                                                                                                                             enabled: true
                                                                                                                             position: [0, 0, 0]
-                                                                                                                            rotation: [180, 0, -0]
+                                                                                                                            rotation: [-180, 0, -0]
                                                                                                                             scale: [1, 1, 1]
                                                                                                                         child:
                                                                                                                           - id: 7066723275852593375
@@ -12117,7 +11507,7 @@ child:
                                                                                                                             type: 1
                                                                                                                             enabled: true
                                                                                                                             position: [0, 0, 0]
-                                                                                                                            rotation: [180, 0, -0]
+                                                                                                                            rotation: [-180, 0, -0]
                                                                                                                             scale: [1, 1, 1]
                                                                                                                         child:
                                                                                                                           - id: 162512179504047294
@@ -12153,7 +11543,7 @@ child:
                                                                                                                                         type: 1
                                                                                                                                         enabled: true
                                                                                                                                         position: [0, 0, 0]
-                                                                                                                                        rotation: [180, 1.356, 180]
+                                                                                                                                        rotation: [-180, 1.356, -180]
                                                                                                                                         scale: [1, 1, 1]
                                                                                                                                     child:
                                                                                                                                       - id: 7378100646301905207
@@ -12189,7 +11579,7 @@ child:
                                                                                                                                                     type: 1
                                                                                                                                                     enabled: true
                                                                                                                                                     position: [0, 0, 0]
-                                                                                                                                                    rotation: [180, -1.356, 180]
+                                                                                                                                                    rotation: [-180, -1.356, -180]
                                                                                                                                                     scale: [1, 1, 1]
                                                                                                                                                 child:
                                                                                                                                                   - id: 8252445221293630384
@@ -12225,7 +11615,7 @@ child:
                                                                                                                                                                 type: 1
                                                                                                                                                                 enabled: true
                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                rotation: [-180, -85.75, -180]
+                                                                                                                                                                rotation: [180, -85.75, 180]
                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                             child:
                                                                                                                                                               - id: 2947997736083328444
@@ -12273,7 +11663,7 @@ child:
                                                                                                                                                                                 type: 1
                                                                                                                                                                                 enabled: true
                                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                                rotation: [-180, -85.64, -180]
+                                                                                                                                                                                rotation: [180, -85.64, 180]
                                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                                             child:
                                                                                                                                                                               - id: 1763020957479063615
@@ -12357,7 +11747,7 @@ child:
                                                                                                                                                                                                             type: 1
                                                                                                                                                                                                             enabled: true
                                                                                                                                                                                                             position: [0, 0, 0]
-                                                                                                                                                                                                            rotation: [180, -11.85, 180]
+                                                                                                                                                                                                            rotation: [-180, -11.85, -180]
                                                                                                                                                                                                             scale: [1, 1, 1]
                                                                                                                                                                                                         child:
                                                                                                                                                                                                           - id: 5138853394069507134
@@ -12404,7 +11794,7 @@ child:
                                                                                                                                                                 type: 1
                                                                                                                                                                 enabled: true
                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                rotation: [180, -6.71, 180]
+                                                                                                                                                                rotation: [-180, -6.71, -180]
                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                             child:
                                                                                                                                                               - id: 4775966870435545810
@@ -12452,7 +11842,7 @@ child:
                                                                                                                                                                                 type: 1
                                                                                                                                                                                 enabled: true
                                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                                rotation: [180, 6.71, 180]
+                                                                                                                                                                                rotation: [-180, 6.71, -180]
                                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                                             child:
                                                                                                                                                                               - id: 1743634718709042819
@@ -12499,7 +11889,7 @@ child:
                                                                                                                                                                 type: 1
                                                                                                                                                                 enabled: true
                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                rotation: [180, 7.352, 180]
+                                                                                                                                                                rotation: [-180, 7.352, -180]
                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                             child:
                                                                                                                                                               - id: 9861219265221988646
@@ -12547,7 +11937,7 @@ child:
                                                                                                                                                                                 type: 1
                                                                                                                                                                                 enabled: true
                                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                                rotation: [180, -7.352, 180]
+                                                                                                                                                                                rotation: [-180, -7.352, -180]
                                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                                             child:
                                                                                                                                                                               - id: 17760169468963757363
@@ -12594,7 +11984,7 @@ child:
                                                                                                                                                                 type: 1
                                                                                                                                                                 enabled: true
                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                rotation: [180, 37.69, 180]
+                                                                                                                                                                rotation: [-180, 37.69, -180]
                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                             child:
                                                                                                                                                               - id: 15315101104890206880
@@ -12642,7 +12032,7 @@ child:
                                                                                                                                                                                 type: 1
                                                                                                                                                                                 enabled: true
                                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                                rotation: [180, -37.69, 180]
+                                                                                                                                                                                rotation: [-180, -37.69, -180]
                                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                                             child:
                                                                                                                                                                               - id: 11459015822330793963
@@ -12689,7 +12079,7 @@ child:
                                                                                                                                         type: 1
                                                                                                                                         enabled: true
                                                                                                                                         position: [0, 0, 0]
-                                                                                                                                        rotation: [180, -0.4737, 180]
+                                                                                                                                        rotation: [-180, -0.4737, -180]
                                                                                                                                         scale: [1, 1, 1]
                                                                                                                                     child:
                                                                                                                                       - id: 15987344257245938791
@@ -12725,7 +12115,7 @@ child:
                                                                                                                                                     type: 1
                                                                                                                                                     enabled: true
                                                                                                                                                     position: [0, 0, 0]
-                                                                                                                                                    rotation: [180, 0.4737, 180]
+                                                                                                                                                    rotation: [-180, 0.4737, -180]
                                                                                                                                                     scale: [1, 1, 1]
                                                                                                                                                 child:
                                                                                                                                                   - id: 13223711270451322188
@@ -13055,7 +12445,7 @@ child:
             type: 1
             enabled: true
             position: [59.39, -15.02, -164.5]
-            rotation: [180, -55.25, 180]
+            rotation: [-180, -55.25, -180]
             scale: [1.079, 1.1, 1.079]
       - id: 11650371022511337214
         name: AttackIndicator
@@ -13077,7 +12467,7 @@ child:
             type: 1
             enabled: true
             position: [0, 3.815, -0.75]
-            rotation: [-0, 90, 0]
+            rotation: [-180, 89.98, -180]
             scale: [2, 0.4164, 2.178]
         child:
           - id: 14414538786768405220
@@ -13479,7 +12869,7 @@ child:
             type: 1
             enabled: true
             position: [-0.84, 2.16, 3.18]
-            rotation: [-90, 0, 180]
+            rotation: [-90, -0, -180]
             scale: [2, 2, 2]
           - !<particle_system>
             id: 14783160612015305116
@@ -13559,7 +12949,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1298, 731]
+            size: [1340, 652]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -14234,7 +13624,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 7]
-            rotation: [0, 90, 0]
+            rotation: [-180, 89.98, -180]
             scale: [2.5, 2.5, 2.5]
           - !<billboard>
             id: 12691712513651242410
@@ -14332,7 +13722,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1298, 731]
+            size: [1340, 652]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -17206,3 +16596,765 @@ child:
                     start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                     blend_factor: 0
                     projection: true
+  - id: 8366409158638688628
+    name: CombatVisualEffectsPool
+    enabled: true
+    component:
+      - !<transform>
+        id: 18040147621353632768
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [-0, 0, -0]
+        scale: [1, 1, 1]
+      - !<script>
+        id: 10632208635977870634
+        type: 15
+        enabled: true
+        class_name: CombatVisualEffectsPool
+        "'_current_billboard_index@int'": 0
+        "'_melee_vfx@GameObject*'": 14668407649711661679
+        "'_claw_vfx@GameObject*'": 7474408430673079919
+        "'_sword_vfx@GameObject*'": 17949227922898733672
+        "'_hammer_vfx@GameObject*'": 2688694444662721876
+    child:
+      - id: 12735713934192255617
+        name: CombatVisualEffectBillboard
+        enabled: true
+        component:
+          - !<transform>
+            id: 15617381041626743752
+            type: 1
+            enabled: true
+            position: [-79.6, 9.48, -56.25]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+          - !<billboard>
+            id: 16556649828022244000
+            type: 21
+            enabled: true
+            play_on_awake: false
+            texture_id: 5430073307092224641
+            tiles: [5, 2]
+            flip: [false, false]
+            billboard_lifetime: 1
+            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 1
+            total_tiles: 10
+            animation_loop: false
+            color_cycles: 1
+            color_gradient: [[0, 1, 0.9827, 0, 0], [1, 1, 1, 0, 1]]
+            animation_section: true
+            color_section: false
+            size_section: false
+            size_over_time: [true, false, 0, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 1
+            projection: true
+      - id: 17602174285976831750
+        name: CombatVisualEffectBillboard
+        enabled: true
+        component:
+          - !<transform>
+            id: 10788446847473230906
+            type: 1
+            enabled: true
+            position: [-79.6, 9.48, -56.25]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+          - !<billboard>
+            id: 17542598394988768791
+            type: 21
+            enabled: true
+            play_on_awake: false
+            texture_id: 5430073307092224641
+            tiles: [5, 2]
+            flip: [false, false]
+            billboard_lifetime: 1
+            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 1
+            total_tiles: 10
+            animation_loop: false
+            color_cycles: 1
+            color_gradient: [[0, 1, 0.9827, 0, 0], [1, 1, 1, 0, 1]]
+            animation_section: true
+            color_section: false
+            size_section: false
+            size_over_time: [true, false, 0, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 1
+            projection: true
+      - id: 10471522914287895378
+        name: CombatVisualEffectBillboard
+        enabled: true
+        component:
+          - !<transform>
+            id: 4753887454700354230
+            type: 1
+            enabled: true
+            position: [-79.6, 9.48, -56.25]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+          - !<billboard>
+            id: 13225731939148820554
+            type: 21
+            enabled: true
+            play_on_awake: false
+            texture_id: 5430073307092224641
+            tiles: [5, 2]
+            flip: [false, false]
+            billboard_lifetime: 1
+            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 1
+            total_tiles: 10
+            animation_loop: false
+            color_cycles: 1
+            color_gradient: [[0, 1, 0.9827, 0, 0], [1, 1, 1, 0, 1]]
+            animation_section: true
+            color_section: false
+            size_section: false
+            size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 1
+            projection: true
+      - id: 7491271074758853526
+        name: CombatVisualEffectBillboard
+        enabled: true
+        component:
+          - !<transform>
+            id: 5593409693443765982
+            type: 1
+            enabled: true
+            position: [-79.6, 9.48, -56.25]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+          - !<billboard>
+            id: 1296169091130969129
+            type: 21
+            enabled: true
+            play_on_awake: false
+            texture_id: 5430073307092224641
+            tiles: [5, 2]
+            flip: [false, false]
+            billboard_lifetime: 1
+            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 1
+            total_tiles: 10
+            animation_loop: false
+            color_cycles: 1
+            color_gradient: [[0, 1, 0.9827, 0, 0], [1, 1, 1, 0, 1]]
+            animation_section: true
+            color_section: false
+            size_section: false
+            size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 1
+            projection: true
+      - id: 5357131867414595621
+        name: CombatVisualEffectBillboard
+        enabled: true
+        component:
+          - !<transform>
+            id: 8593729895713641589
+            type: 1
+            enabled: true
+            position: [-79.6, 9.48, -56.25]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+          - !<billboard>
+            id: 12553474554948964454
+            type: 21
+            enabled: true
+            play_on_awake: false
+            texture_id: 5430073307092224641
+            tiles: [5, 2]
+            flip: [false, false]
+            billboard_lifetime: 1
+            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 1
+            total_tiles: 10
+            animation_loop: false
+            color_cycles: 1
+            color_gradient: [[0, 1, 0.9827, 0, 0], [1, 1, 1, 0, 1]]
+            animation_section: true
+            color_section: false
+            size_section: false
+            size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 1
+            projection: true
+      - id: 2334027244012562708
+        name: CombatVisualEffectBillboard
+        enabled: true
+        component:
+          - !<transform>
+            id: 3902161986387576859
+            type: 1
+            enabled: true
+            position: [-79.6, 9.48, -56.25]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+          - !<billboard>
+            id: 15302973843219939415
+            type: 21
+            enabled: true
+            play_on_awake: false
+            texture_id: 5430073307092224641
+            tiles: [5, 2]
+            flip: [false, false]
+            billboard_lifetime: 1
+            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 1
+            total_tiles: 10
+            animation_loop: false
+            color_cycles: 1
+            color_gradient: [[0, 1, 0.9827, 0, 0], [1, 1, 1, 0, 1]]
+            animation_section: true
+            color_section: false
+            size_section: false
+            size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 1
+            projection: true
+      - id: 10342857409706740748
+        name: CombatVisualEffectBillboard
+        enabled: true
+        component:
+          - !<transform>
+            id: 9085020966564541594
+            type: 1
+            enabled: true
+            position: [-79.6, 9.48, -56.25]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+          - !<billboard>
+            id: 9405143617446858243
+            type: 21
+            enabled: true
+            play_on_awake: false
+            texture_id: 5430073307092224641
+            tiles: [5, 2]
+            flip: [false, false]
+            billboard_lifetime: 1
+            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 1
+            total_tiles: 10
+            animation_loop: false
+            color_cycles: 1
+            color_gradient: [[0, 1, 0.9827, 0, 0], [1, 1, 1, 0, 1]]
+            animation_section: true
+            color_section: false
+            size_section: false
+            size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 1
+            projection: true
+      - id: 6063189564928464739
+        name: CombatVisualEffectBillboard
+        enabled: true
+        component:
+          - !<transform>
+            id: 14680115045245032709
+            type: 1
+            enabled: true
+            position: [-79.6, 9.48, -56.25]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+          - !<billboard>
+            id: 11716762686568653370
+            type: 21
+            enabled: true
+            play_on_awake: false
+            texture_id: 5430073307092224641
+            tiles: [5, 2]
+            flip: [false, false]
+            billboard_lifetime: 1
+            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 1
+            total_tiles: 10
+            animation_loop: false
+            color_cycles: 1
+            color_gradient: [[0, 1, 0.9827, 0, 0], [1, 1, 1, 0, 1]]
+            animation_section: true
+            color_section: false
+            size_section: false
+            size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 1
+            projection: true
+      - id: 1136899123322365209
+        name: CombatVisualEffectBillboard
+        enabled: true
+        component:
+          - !<transform>
+            id: 9668335205282924266
+            type: 1
+            enabled: true
+            position: [-79.6, 9.48, -56.25]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+          - !<billboard>
+            id: 1626398716987678835
+            type: 21
+            enabled: true
+            play_on_awake: false
+            texture_id: 5430073307092224641
+            tiles: [5, 2]
+            flip: [false, false]
+            billboard_lifetime: 1
+            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 1
+            total_tiles: 10
+            animation_loop: false
+            color_cycles: 1
+            color_gradient: [[0, 1, 0.9827, 0, 0], [1, 1, 1, 0, 1]]
+            animation_section: true
+            color_section: false
+            size_section: false
+            size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 1
+            projection: true
+      - id: 4866490085702824643
+        name: CombatVisualEffectBillboard
+        enabled: true
+        component:
+          - !<transform>
+            id: 17280070684463454989
+            type: 1
+            enabled: true
+            position: [-79.6, 9.48, -56.25]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+          - !<billboard>
+            id: 18132693232956207053
+            type: 21
+            enabled: true
+            play_on_awake: false
+            texture_id: 5430073307092224641
+            tiles: [5, 2]
+            flip: [false, false]
+            billboard_lifetime: 1
+            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 1
+            total_tiles: 10
+            animation_loop: false
+            color_cycles: 1
+            color_gradient: [[0, 1, 0.9827, 0, 0], [1, 1, 1, 0, 1]]
+            animation_section: true
+            color_section: false
+            size_section: false
+            size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 1
+            projection: true
+      - id: 10242593559411811960
+        name: CombatVisualEffectBillboard
+        enabled: true
+        component:
+          - !<transform>
+            id: 4003773095420551687
+            type: 1
+            enabled: true
+            position: [-79.6, 9.48, -56.25]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+          - !<billboard>
+            id: 15356200431645225167
+            type: 21
+            enabled: true
+            play_on_awake: false
+            texture_id: 5430073307092224641
+            tiles: [5, 2]
+            flip: [false, false]
+            billboard_lifetime: 1
+            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 1
+            total_tiles: 10
+            animation_loop: false
+            color_cycles: 1
+            color_gradient: [[0, 1, 0.9827, 0, 0], [1, 1, 1, 0, 1]]
+            animation_section: true
+            color_section: false
+            size_section: true
+            size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 1
+            projection: true
+      - id: 18369436357900365375
+        name: CombatVisualEffectBillboard
+        enabled: true
+        component:
+          - !<transform>
+            id: 9655734024206484788
+            type: 1
+            enabled: true
+            position: [-79.6, 9.48, -56.25]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+          - !<billboard>
+            id: 9411488559788361485
+            type: 21
+            enabled: true
+            play_on_awake: false
+            texture_id: 5430073307092224641
+            tiles: [5, 2]
+            flip: [false, false]
+            billboard_lifetime: 1
+            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 1
+            total_tiles: 10
+            animation_loop: false
+            color_cycles: 1
+            color_gradient: [[0, 1, 0.9827, 0, 0], [1, 1, 1, 0, 1]]
+            animation_section: true
+            color_section: false
+            size_section: false
+            size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 1
+            projection: true
+      - id: 4127389851404901406
+        name: CombatVisualEffectBillboard
+        enabled: true
+        component:
+          - !<transform>
+            id: 2613635356035031796
+            type: 1
+            enabled: true
+            position: [-79.6, 9.48, -56.25]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+          - !<billboard>
+            id: 17908109261330917391
+            type: 21
+            enabled: true
+            play_on_awake: false
+            texture_id: 5430073307092224641
+            tiles: [5, 2]
+            flip: [false, false]
+            billboard_lifetime: 1
+            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 1
+            total_tiles: 10
+            animation_loop: false
+            color_cycles: 1
+            color_gradient: [[0, 1, 0.9827, 0, 0], [1, 1, 1, 0, 1]]
+            animation_section: true
+            color_section: false
+            size_section: false
+            size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 1
+            projection: true
+      - id: 8197605918312613420
+        name: CombatVisualEffectBillboard
+        enabled: true
+        component:
+          - !<transform>
+            id: 11163084808913187394
+            type: 1
+            enabled: true
+            position: [-79.6, 9.48, -56.25]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+          - !<billboard>
+            id: 6837124032705656804
+            type: 21
+            enabled: true
+            play_on_awake: false
+            texture_id: 5430073307092224641
+            tiles: [5, 2]
+            flip: [false, false]
+            billboard_lifetime: 1
+            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 1
+            total_tiles: 10
+            animation_loop: false
+            color_cycles: 1
+            color_gradient: [[0, 1, 0.9827, 0, 0], [1, 1, 1, 0, 1]]
+            animation_section: true
+            color_section: false
+            size_section: false
+            size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 1
+            projection: true
+      - id: 4751276702022363615
+        name: CombatVisualEffectBillboard
+        enabled: true
+        component:
+          - !<transform>
+            id: 16781967230446948593
+            type: 1
+            enabled: true
+            position: [-79.6, 9.48, -56.25]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+          - !<billboard>
+            id: 6661588716398350679
+            type: 21
+            enabled: true
+            play_on_awake: false
+            texture_id: 5430073307092224641
+            tiles: [5, 2]
+            flip: [false, false]
+            billboard_lifetime: 1
+            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 1
+            total_tiles: 10
+            animation_loop: false
+            color_cycles: 1
+            color_gradient: [[0, 1, 0.9827, 0, 0], [1, 1, 1, 0, 1]]
+            animation_section: true
+            color_section: false
+            size_section: true
+            size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 1
+            projection: true
+      - id: 5661383398717913476
+        name: CombatVisualEffectBillboard
+        enabled: true
+        component:
+          - !<transform>
+            id: 14547717929950010223
+            type: 1
+            enabled: true
+            position: [-79.6, 9.48, -56.25]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+          - !<billboard>
+            id: 10733802993214817322
+            type: 21
+            enabled: true
+            play_on_awake: false
+            texture_id: 13013756780837160747
+            tiles: [5, 2]
+            flip: [false, false]
+            billboard_lifetime: 1
+            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 1
+            total_tiles: 10
+            animation_loop: false
+            color_cycles: 1
+            color_gradient: [[0, 1, 0.9827, 0, 0], [1, 1, 1, 0, 1]]
+            animation_section: true
+            color_section: false
+            size_section: false
+            size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 1
+            projection: true
+      - id: 14668407649711661679
+        name: Melee_VFX
+        enabled: true
+        component:
+          - !<transform>
+            id: 8515333295817224192
+            type: 1
+            enabled: true
+            position: [-79.6, 9.48, -56.25]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+          - !<billboard>
+            id: 747011092975363746
+            type: 21
+            enabled: true
+            play_on_awake: false
+            texture_id: 9492710251713022701
+            tiles: [1, 1]
+            flip: [false, false]
+            billboard_lifetime: 1
+            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 1
+            total_tiles: 1
+            animation_loop: false
+            color_cycles: 1
+            color_gradient: [[0, 1, 0.9827, 0, 0], [1, 1, 1, 0, 1]]
+            animation_section: true
+            color_section: false
+            size_section: false
+            size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 1, [1.5, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 1
+            projection: true
+      - id: 7474408430673079919
+        name: Claw_VFX
+        enabled: true
+        component:
+          - !<transform>
+            id: 4936331802447920622
+            type: 1
+            enabled: true
+            position: [-79.6, 9.48, -56.25]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+          - !<billboard>
+            id: 6243673116397925893
+            type: 21
+            enabled: true
+            play_on_awake: false
+            texture_id: 5157746751376209347
+            tiles: [1, 1]
+            flip: [false, false]
+            billboard_lifetime: 1
+            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 1
+            total_tiles: 1
+            animation_loop: false
+            color_cycles: 1
+            color_gradient: [[0, 1, 0.9827, 0, 0], [1, 1, 1, 0, 1]]
+            animation_section: true
+            color_section: false
+            size_section: false
+            size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 1, [1.5, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 1
+            projection: true
+      - id: 17949227922898733672
+        name: Sword_VFX
+        enabled: true
+        component:
+          - !<transform>
+            id: 12295120930956955637
+            type: 1
+            enabled: true
+            position: [-79.6, 9.48, -56.25]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+          - !<billboard>
+            id: 13881399522785769096
+            type: 21
+            enabled: true
+            play_on_awake: false
+            texture_id: 2191468291253132004
+            tiles: [1, 1]
+            flip: [false, false]
+            billboard_lifetime: 1
+            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 1
+            total_tiles: 1
+            animation_loop: false
+            color_cycles: 1
+            color_gradient: [[0, 1, 0.9827, 0, 0], [1, 1, 1, 0, 1]]
+            animation_section: true
+            color_section: false
+            size_section: false
+            size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 1, [1.5, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 1
+            projection: true
+      - id: 2688694444662721876
+        name: Hammer_VFX
+        enabled: true
+        component:
+          - !<transform>
+            id: 11625074457857940060
+            type: 1
+            enabled: true
+            position: [-79.6, 9.48, -56.25]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+          - !<billboard>
+            id: 190540521619854437
+            type: 21
+            enabled: true
+            play_on_awake: false
+            texture_id: 3019880384832892068
+            tiles: [1, 1]
+            flip: [false, false]
+            billboard_lifetime: 1
+            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 1
+            total_tiles: 1
+            animation_loop: false
+            color_cycles: 1
+            color_gradient: [[0, 1, 0.9827, 0, 0], [1, 1, 1, 0, 1]]
+            animation_section: true
+            color_section: false
+            size_section: false
+            size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 1, [1.5, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 1
+            projection: true

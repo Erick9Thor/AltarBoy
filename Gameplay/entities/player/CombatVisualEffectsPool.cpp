@@ -26,6 +26,43 @@ void Hachiko::Scripting::CombatVisualEffectsPool::OnUpdate()
 
 void Hachiko::Scripting::CombatVisualEffectsPool::PlayPlayerAttackEffect(PlayerController::WeaponUsed weapon_type, int attack_index, float3 position)
 {
+	ComponentBillboard* current_attack_billboard = nullptr;
+
+	switch (weapon_type)
+	{
+	case PlayerController::WeaponUsed::MELEE:
+	{
+		current_attack_billboard = _melee_vfx->GetComponent<ComponentBillboard>();
+		break;
+	}
+	case PlayerController::WeaponUsed::CLAW:
+	{
+		current_attack_billboard = _claw_vfx->GetComponent<ComponentBillboard>();
+		break;
+	}
+	case PlayerController::WeaponUsed::SWORD:
+	{
+		current_attack_billboard = _sword_vfx->GetComponent<ComponentBillboard>();
+		break;
+	}
+	case PlayerController::WeaponUsed::HAMMER:
+	{
+		current_attack_billboard = _hammer_vfx->GetComponent<ComponentBillboard>();
+		break;
+	}
+	default:
+		break;
+	}
+
+	float3 main_camera_direction = (Scenes::GetMainCamera()->GetTransform()->GetGlobalPosition() - position).Normalized() * 1.5f;
+
+	current_attack_billboard->GetGameObject()->GetTransform()->SetGlobalPosition(main_camera_direction + position + float3::unitY * 1.5f);
+
+	current_attack_billboard->Restart();
+}
+
+void Hachiko::Scripting::CombatVisualEffectsPool::PlayEnemyAttackEffect(EnemyType _enemy_type, float3 position)
+{
 	if (_billboards.size() <= 0)
 	{
 		return;
@@ -44,75 +81,22 @@ void Hachiko::Scripting::CombatVisualEffectsPool::PlayPlayerAttackEffect(PlayerC
 
 	current_attack_billboard->GetGameObject()->GetTransform()->SetGlobalPosition(main_camera_direction + position + float3::unitY * 1.5f);
 
-	switch (weapon_type)
+	/*switch (_enemy_type)
 	{
-	case PlayerController::WeaponUsed::MELEE:
+	case EnemyType::BEETLE:
 	{
-		std::string texture_file_name = FileUtility::GetWorkingDirectory() + "/assets/textures/weapons/VFX/VFX_Melee_Hit.png";
-
-		current_attack_billboard->GetTextureProperties().SetTexture(texture_file_name);
-		current_attack_billboard->GetTextureProperties().SetTiles(float2(1.0f, 1.0f));
-
 		break;
 	}
-	case PlayerController::WeaponUsed::CLAW:
+	case EnemyType::WORM:
 	{
-		std::string texture_file_name = FileUtility::GetWorkingDirectory() + "/assets/textures/weapons/VFX/VFX_Claw_Slash.png";
-
-		current_attack_billboard->GetTextureProperties().SetTexture(texture_file_name);
-		current_attack_billboard->GetTextureProperties().SetTiles(float2(1.0f, 1.0f));
-		
-		break;
-	}
-	case PlayerController::WeaponUsed::SWORD:
-	{
-		std::string texture_file_name = FileUtility::GetWorkingDirectory() + "/assets/textures/weapons/VFX/VFX_Sword_Hit.png";
-
-		current_attack_billboard->GetTextureProperties().SetTexture(texture_file_name);
-		current_attack_billboard->GetTextureProperties().SetTiles(float2(1.0f, 1.0f));
-
-		break;
-	}
-	case PlayerController::WeaponUsed::HAMMER:
-	{
-		std::string texture_file_name = FileUtility::GetWorkingDirectory() + "/assets/textures/weapons/VFX/VFX_Hammer_Hit.png";
-
-		current_attack_billboard->GetTextureProperties().SetTexture(texture_file_name);
-		current_attack_billboard->GetTextureProperties().SetTiles(float2(1.0f, 1.0f));
-
 		break;
 	}
 	default:
 		break;
-	}
+	}*/
 
-	switch (attack_index)
-	{
-	case 0:
-	{
-		current_attack_billboard->GetTextureProperties().SetFlip(Hachiko::bool2(false, true));
-
-		break;
-	}
-
-	case 1:
-	{
-		current_attack_billboard->GetTextureProperties().SetFlip(Hachiko::bool2(true, false));
-
-		break;
-	}
-
-	case 2:
-	{
-		current_attack_billboard->GetTextureProperties().SetFlip(Hachiko::bool2(false, false));
-
-		break;
-	}
-
-	default:
-		break;
-	}
-
+	// current_attack_billboard->GetTextureProperties().SetFlip(Hachiko::bool2(false, true));
+	
 	current_attack_billboard->Restart();
 
 	_current_billboard_index = (_current_billboard_index + 1) % _billboards.size();
