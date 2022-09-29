@@ -21,6 +21,11 @@ Hachiko::ComponentVideo::~ComponentVideo()
     glDeleteTextures(1, &frame_texture);
     DetachFromScene();
     RemoveVideoResource();
+
+    if (preloaded_frame_textures != nullptr)
+    {
+        delete preloaded_frame_textures;
+    }
 }
 
 void Hachiko::ComponentVideo::Start()
@@ -163,9 +168,11 @@ void Hachiko::ComponentVideo::Load(const YAML::Node& node)
     fps = node[VIDEO_FPS].IsDefined() ? node[VIDEO_FPS].as<float>() : fps;
 }
 
-void Hachiko::ComponentVideo::Preload() 
+void Hachiko::ComponentVideo::Preload(unsigned frame_amount)
 {
     preloaded = true;
+    preloaded_frames = frame_amount;
+    preloaded_frame_textures = new unsigned[frame_amount];
 
     for (int i = 0; i < preloaded_frames; ++i)
     {

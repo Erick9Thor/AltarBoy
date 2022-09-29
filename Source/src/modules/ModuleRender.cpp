@@ -100,7 +100,7 @@ bool Hachiko::ModuleRender::Init()
         loading_video->Load(node_video);
         loading_video->SetAsInScene();
         loading_video->Start();
-        loading_video->Preload();
+        loading_video->Preload(24 * 7);
         loading_video->Play();
     }
 

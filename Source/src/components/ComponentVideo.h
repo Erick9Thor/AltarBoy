@@ -34,7 +34,7 @@ namespace Hachiko
         void Save(YAML::Node& node) const override;
         void Load(const YAML::Node& node) override;
 
-        void Preload();
+        void Preload(unsigned frame_amount);
         void SetAsInScene() 
         {
             in_scene = true;
@@ -56,10 +56,10 @@ namespace Hachiko
         double time = 0.0f;
         float fps = 1.0f;
 
-        static const unsigned preloaded_frames = 24 * 7;
         bool preloaded = false;
+        unsigned preloaded_frames = 0;
         unsigned preloaded_frame_idx = 0;
-        unsigned preloaded_frame_textures[preloaded_frames];
+        unsigned* preloaded_frame_textures = nullptr;
 
         VideoState state = VideoState::PAUSED;
         ResourceVideo* video = nullptr;
