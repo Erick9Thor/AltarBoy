@@ -1013,7 +1013,7 @@ void Hachiko::ModuleRender::CreateNoiseTexture()
     {
         for (int j = 0; j < height; ++j)
         {
-            result[i * height + j] = (os.noise2_XBeforeY(i * delta, j * delta) + 1) * 127;
+            result[i * height + j] = (os.noise2_XBeforeY((float)i * delta, (float)j * delta) + 1) * 127.0f;
         }
     }
 
