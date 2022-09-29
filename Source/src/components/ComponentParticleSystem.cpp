@@ -62,7 +62,7 @@ void Hachiko::ComponentParticleSystem::Start()
     };
     App->event->Subscribe(Event::Type::CURVE_EDITOR, edit_curve, GetID());
 
-    std::function selection_changed = [&](Event& evt) {
+    /* std::function selection_changed = [&](Event& evt) {
         const auto data = evt.GetEventData<SelectionChangedEventPayload>();
         if (!data.GetSelected() || data.GetSelected() != GetGameObject())
         {
@@ -73,7 +73,7 @@ void Hachiko::ComponentParticleSystem::Start()
             Play();
         }
     };
-    App->event->Subscribe(Event::Type::SELECTION_CHANGED, selection_changed, GetID());
+    App->event->Subscribe(Event::Type::SELECTION_CHANGED, selection_changed, GetID());*/
     emitter_state = ParticleSystem::Emitter::State::PLAYING;
 }
 

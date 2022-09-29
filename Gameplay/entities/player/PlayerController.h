@@ -122,7 +122,14 @@ namespace Hachiko
 			{
 				return _attack_idx;
 			}
+			
+			void SetLockTime(float lock_time)
+			{
+				_lock_time = lock_time;
+			}
 
+			void ChangeWeapon(unsigned weapon_idx);
+			void ReloadAmmo(unsigned ammo);
 			WeaponUsed GetCurrentWeaponType() const
 			{
 				return static_cast<WeaponUsed>(_current_weapon);
@@ -138,7 +145,7 @@ namespace Hachiko
 		private:
 			math::float3 GetRaycastPosition(
 				const math::float3& current_position) const;
-			float3 GetCorrectedPosition(const float3& target_pos) const;
+			float3 GetCorrectedPosition(const float3& target_pos, bool fps_relative = false) const;
 
 			PlayerAttack GetAttackType(AttackType attack_type);
 
@@ -175,7 +182,7 @@ namespace Hachiko
 			void StoreDashOrigin(const float3& dash_origin);
 			float3 GetLastValidDashOrigin();
 			void MeleeAttack();
-			void ChangeWeapon(unsigned weapon_idx);
+			
 			void RangedAttack();
 			void ReleaseAttack();
 			void CancelAttack();
@@ -214,7 +221,10 @@ namespace Hachiko
 			bool _god_mode_trigger = false;
 
 		private:
+			const float fall_speed = 25.f;
+
 			SERIALIZE_FIELD(GameObject*, _attack_indicator);
+			SERIALIZE_FIELD(GameObject*, _aim_indicator);
 			SERIALIZE_FIELD(GameObject*, _bullet_emitter);
 			SERIALIZE_FIELD(GameObject*, _goal);
 			SERIALIZE_FIELD(GameObject*, _player_geometry);
@@ -269,6 +279,7 @@ namespace Hachiko
 			ComponentParticleSystem* _heal_effect_particles_1 = nullptr;
 			ComponentParticleSystem* _heal_effect_particles_2 = nullptr;
 			ComponentBillboard* _damage_effect_billboard = nullptr;
+			ComponentBillboard* _aim_indicator_billboard = nullptr;
 
 			std::vector<Weapon> weapons{};
 

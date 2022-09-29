@@ -1,0 +1,54 @@
+asset_hash: 1727214899865739796
+model_name: wormAnim
+meshes:
+  - 9395177634321906240
+materials:
+  - 9460093468938292877
+animations:
+  - 16531889629956398916
+  - 3966510320490830405
+  - 2535985176348364669
+  - 8993890339808213028
+  - 11357119701620102185
+  - 16013622314551373261
+  - 16062836668583228668
+animation_names:
+  - Appear
+  - Iddle
+  - Melee_Attack
+  - Range_Attack
+  - Hit
+  - Hide
+  - Dead
+prefab_id: 3698170257506192023
+resources:
+  - resource_id: 9395177634321906240
+    resource_type: 3
+    resource_hash: 9924488376371495001
+  - resource_id: 9460093468938292877
+    resource_type: 1
+    resource_hash: 272969940194603915
+  - resource_id: 16531889629956398916
+    resource_type: 7
+    resource_hash: 4488862110275780641
+  - resource_id: 3966510320490830405
+    resource_type: 7
+    resource_hash: 9216414696984672805
+  - resource_id: 2535985176348364669
+    resource_type: 7
+    resource_hash: 17609339986279580404
+  - resource_id: 8993890339808213028
+    resource_type: 7
+    resource_hash: 11668657380354955885
+  - resource_id: 11357119701620102185
+    resource_type: 7
+    resource_hash: 7279170830659743305
+  - resource_id: 16013622314551373261
+    resource_type: 7
+    resource_hash: 10886253436177608904
+  - resource_id: 16062836668583228668
+    resource_type: 7
+    resource_hash: 7808367595997029812
+  - resource_id: 3698170257506192023
+    resource_type: 13
+    resource_hash: 12673380980647470784

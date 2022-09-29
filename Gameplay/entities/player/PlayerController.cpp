@@ -125,6 +125,11 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	{
 		_damage_effect_billboard = _damage_effect->GetComponent<ComponentBillboard>();
 	}
+	
+	if (_aim_indicator != nullptr)
+	{
+		_aim_indicator_billboard = _aim_indicator->GetComponent<ComponentBillboard>();
+	}
 
 	_combat_stats = game_object->GetComponent<Stats>();
 	// Player doesnt use all combat stats since some depend on weapon
@@ -194,6 +199,8 @@ void Hachiko::Scripting::PlayerController::OnStart()
 		_trail_end_scale = _dash_trail->GetTransform()->GetLocalScale();
 		_trail_end_scale = math::float3(_trail_end_scale.x * _trail_enlarger, _trail_end_scale.y, _trail_end_scale.z);
 	}
+
+	_aim_indicator_billboard->Stop();
 }
 
 void Hachiko::Scripting::PlayerController::OnUpdate()
@@ -323,8 +330,14 @@ math::float3 Hachiko::Scripting::PlayerController::GetRaycastPosition(
 	return plane.ClosestPoint(ray);
 }
 
-float3 Hachiko::Scripting::PlayerController::GetCorrectedPosition(const float3& target_pos) const
+float3 Hachiko::Scripting::PlayerController::GetCorrectedPosition(const float3& target_pos, bool fps_relative) const
 {
+	if (fps_relative) 
+	{
+		const float correction_distance = Time::DeltaTime() * _combat_stats->_move_speed + 0.05;
+		const float y_correction_distance = Time::DeltaTime() * fall_speed + 0.2;
+		return Navigation::GetCorrectedPosition(target_pos, float3(correction_distance, y_correction_distance, correction_distance));
+	}
 	return Navigation::GetCorrectedPosition(target_pos, float3(0.5f, 0.5f, 0.5f));
 }
 
@@ -699,6 +712,16 @@ void Hachiko::Scripting::PlayerController::ChangeWeapon(unsigned weapon_idx)
 	}
 }
 
+void Hachiko::Scripting::PlayerController::ReloadAmmo(unsigned ammo)
+{
+	_ammo_count += ammo;
+	if (_ammo_count > MAX_AMMO)
+	{
+		_ammo_count = MAX_AMMO;
+	}
+	UpdateAmmoUI();
+}
+
 bool Hachiko::Scripting::PlayerController::IsAttacking() const
 {
 	return _state == PlayerState::MELEE_ATTACKING || _state == PlayerState::RANGED_ATTACKING || _state == PlayerState::RANGED_CHARGING;
@@ -801,6 +824,8 @@ void Hachiko::Scripting::PlayerController::RangedAttack()
 			_state = PlayerState::RANGED_CHARGING;
 		}
 	}
+
+	_aim_indicator_billboard->Restart();
 }
 
 void Hachiko::Scripting::PlayerController::ReleaseAttack()
@@ -819,6 +844,8 @@ void Hachiko::Scripting::PlayerController::ReleaseAttack()
 		{
 			math::Clamp(++_ammo_count, 0, MAX_AMMO);
 		}
+
+		_aim_indicator_billboard->Stop();
 	}
 }
 
@@ -833,6 +860,8 @@ void Hachiko::Scripting::PlayerController::CancelAttack()
 		CombatManager* bullet_controller = _bullet_emitter->GetComponent<CombatManager>();
 		bullet_controller->StopBullet(_current_bullet);
 		math::Clamp(++_ammo_count, 0, MAX_AMMO);
+
+		_aim_indicator_billboard->Stop();
 	}
 }
 
@@ -875,7 +904,6 @@ void Hachiko::Scripting::PlayerController::MovementController()
 
 	if (IsFalling())
 	{
-		constexpr float fall_speed = 25.f;
 		_player_position.y -= fall_speed * Time::DeltaTime();
 
 		if (_start_fall_pos.y - _player_position.y > _falling_distance)
@@ -923,16 +951,25 @@ void Hachiko::Scripting::PlayerController::MovementController()
 		}
 	}
 
-	float3 corrected_position = GetCorrectedPosition(_player_position);
-	if (Distance(corrected_position, _player_position) < 1.0f)
-	{
-		_player_position = corrected_position;
-		if (IsFalling())
+	float3 corrected_position = GetCorrectedPosition(_player_position, true);
+	// Valid corrected position
+	if (corrected_position.x < FLT_MAX)
+	{ 
+		if (IsFalling()) 
 		{
-			// Stopped falling
-			_state = PlayerState::IDLE;
-			if (_falling_dust_particles)
-				_falling_dust_particles->Restart();
+			if (corrected_position.y > _player_position.y)
+			{
+				_player_position = corrected_position;
+
+				// Stopped falling
+				_state = PlayerState::IDLE;
+				if (_falling_dust_particles)
+					_falling_dust_particles->Restart();
+			}
+		}
+		else 
+		{
+			_player_position = corrected_position;
 		}
 	}
 	else if (!IsDashing())
