@@ -15,6 +15,7 @@ namespace Hachiko
     class ComponentCamera;
     class ComponentTransform2D;
     class ComponentImage;
+    class ComponentVideo;
     class Scene;
     class StandaloneGLTexture;
 
@@ -212,9 +213,11 @@ namespace Hachiko
         float current_ms = 0.0f;
 
         // Loading screen
+        bool using_image = false;
         GameObject* loading_game_object = nullptr;
         ComponentTransform2D* loading_transform2d = nullptr;
         ComponentImage* loading_image = nullptr;
+        ComponentVideo* loading_video = nullptr;
 
         unsigned noise_id = 0;
     };
