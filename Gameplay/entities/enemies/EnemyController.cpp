@@ -190,15 +190,15 @@ void Hachiko::Scripting::EnemyController::SpawnController()
 
 void Hachiko::Scripting::EnemyController::DeathController()
 {
-	float alpha_transition;
+	float transition;
 	switch (_state)
 	{
 	case EnemyState::PARASITE:
 
 		_enemy_body->SetActive(false);
 		_parasite_dissolving_time_progress += Time::DeltaTimeScaled();
-		alpha_transition = math::Sqrt(_parasite_dissolve_time - _parasite_dissolving_time_progress) * _parasite_dissolving;
-		_parasite->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, alpha_transition), true);
+		transition = math::Sqrt(_parasite_dissolve_time - _parasite_dissolving_time_progress) * _parasite_dissolving;
+		_parasite->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, transition), true);
 
 		if (_parasite_dissolving_time_progress >= _parasite_dissolve_time)
 		{
@@ -214,14 +214,15 @@ void Hachiko::Scripting::EnemyController::DeathController()
 	case EnemyState::DEAD:
 		if (animation->IsAnimationStopped())
 		{
+			_enemy_dissolving_time_progress += Time::DeltaTimeScaled();
 			if (_enemy_dissolve_time >= _enemy_dissolving_time_progress)
 			{
-				_enemy_dissolving_time_progress += Time::DeltaTimeScaled();
-				alpha_transition = math::Sqrt(_enemy_dissolve_time - _enemy_dissolving_time_progress) * _enemy_dissolving;
-				_enemy_body->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, alpha_transition), true);
+				transition = math::Sqrt(_enemy_dissolve_time - _enemy_dissolving_time_progress) * _enemy_dissolving;
+				_enemy_body->ChangeDissolveProgress(transition, true);
 			}
 			else
 			{
+				_enemy_body->SetActive(false);
 				DropParasite();
 			}
 		}
@@ -551,6 +552,8 @@ void Hachiko::Scripting::EnemyController::BeetleAttack()
 
 	_combat_manager->EnemyMeleeAttack(GetMeleeAttackOrigin(attack_stats.range), attack_stats);
 
+	_attack_alt = !_attack_alt;
+
 	transform->LookAtTarget(_player_pos);
 	StopMoving();
 }
@@ -652,7 +655,6 @@ void Hachiko::Scripting::EnemyController::WormSpit()
 	if (!_attack_landing && _attack_current_delay <= 0.0f)
 	{
 		// We create the attack zone after the delay
-		_state = EnemyState::IDLE;
 		_attack_zone->GetTransform()->SetGlobalPosition(_player_pos);
 		_attack_landing = true;
 		_inner_indicator_billboard->Play();
@@ -740,9 +742,10 @@ void Hachiko::Scripting::EnemyController::RegisterHit(int damage, float3 directi
 		break;
 	case EnemyType::WORM:
 		_knockback_pos = transform->GetGlobalPosition();
-		_state = EnemyState::HIT;
 		break;
 	}
+
+	_state = EnemyState::HIT;
 
 	if (is_from_player)
 	{
@@ -854,7 +857,14 @@ void Hachiko::Scripting::EnemyController::CheckState()
 		break;
 	case EnemyState::ATTACKING:
 		_audio_source->PostEvent(Sounds::ENEMY_ATTACK);
-		animation->SendTrigger("isAttacking");
+		if (!_attack_alt)
+		{
+			animation->SendTrigger("isAttacking");
+		}
+		else
+		{
+			animation->SendTrigger("isAttackingAlt");
+		}
 		break;
 	case EnemyState::DEAD:
 		_audio_source->PostEvent(Sounds::ENEMY_DIE);
@@ -899,7 +909,8 @@ void Hachiko::Scripting::EnemyController::ResetEnemy()
 
 	if (_enemy_body)
 	{
-		_enemy_body->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, 1.0f), true);
+		_enemy_body->SetActive(true);
+		_enemy_body->ChangeDissolveProgress(1.0f, true);
 	}
 	
 	if (_parasite)
