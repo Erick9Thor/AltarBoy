@@ -37,7 +37,7 @@ void Hachiko::Scripting::AudioManager::OnUpdate()
 		return;
 	}
 
-	if (_in_gaunlet || _in_combat)
+	if (_in_gaunlet)
 	{
 		SetCombat();
 	}
