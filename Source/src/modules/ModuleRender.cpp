@@ -1004,7 +1004,7 @@ void Hachiko::ModuleRender::CreateNoiseTexture()
 {
     const unsigned width = 128;
     const unsigned height = 128;
-    const float delta = 0.01f;
+    const double delta = 0.01f;
 
     OpenSimplex2S os;
     byte* result = new byte[width * height];
@@ -1013,7 +1013,7 @@ void Hachiko::ModuleRender::CreateNoiseTexture()
     {
         for (int j = 0; j < height; ++j)
         {
-            result[i * height + j] = (os.noise2_XBeforeY((float)i * delta, (float)j * delta) + 1) * 127.0f;
+            result[i * height + j] = static_cast<byte>((os.noise2_XBeforeY((double)i * delta, (double)j * delta) + 1) * 127.0f);
         }
     }
 
