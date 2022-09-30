@@ -224,6 +224,7 @@ namespace Hachiko
 			const float fall_speed = 25.f;
 
 			SERIALIZE_FIELD(GameObject*, _attack_indicator);
+			SERIALIZE_FIELD(GameObject*, _aim_indicator);
 			SERIALIZE_FIELD(GameObject*, _bullet_emitter);
 			SERIALIZE_FIELD(GameObject*, _goal);
 			SERIALIZE_FIELD(GameObject*, _player_geometry);
@@ -289,21 +290,10 @@ namespace Hachiko
 			ComponentParticleSystem* _heal_effect_particles_2 = nullptr;
 			ComponentBillboard* _damage_effect_billboard = nullptr;
 			ComponentBillboard* _parasite_pickup_billboard = nullptr;
-
-			// WEAPON TRAILS
 			ComponentBillboard* _weapon_trails_billboard_right[static_cast<int>(WeaponUsed::SIZE)];
 			ComponentBillboard* _weapon_trails_billboard_left[static_cast<int>(WeaponUsed::SIZE)];
-			/*
-			ComponentBillboard* _parasite_trail_billboard_right = nullptr;
-			ComponentBillboard* _parasite_trail_billboard_left = nullptr;
-			ComponentBillboard* _claws_trail_billboard_right = nullptr;
-			ComponentBillboard* _claws_trail_billboard_left = nullptr;
-			ComponentBillboard* _sword_trail_billboard_right = nullptr;
-			ComponentBillboard* _sword_trail_billboard_left = nullptr;
-			ComponentBillboard* _hammer_trail_billboard_right = nullptr;
-			ComponentBillboard* _hammer_trail_billboard_left = nullptr;
-			*/
 
+			ComponentBillboard* _aim_indicator_billboard = nullptr;
 
 			std::vector<Weapon> weapons{};
 

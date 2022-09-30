@@ -87,6 +87,9 @@ bool Hachiko::ModuleRender::Init()
         loading_image->Load(node);
     }
 
+    // Create noise texture for general use (dissolve effect)
+    CreateNoiseTexture();
+
     return true;
 }
 
@@ -348,8 +351,13 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
     }
 
     // Draw collected meshes with geometry pass rogram:
-    program = App->program->GetDeferredGeometryProgram();
+    program = App->program->GetProgram(Program::PROGRAMS::DEFERRED_GEOMETRY);
+
     program->Activate();
+
+    // Binding the noise texture
+    BindNoiseTexture(program);
+
     batch_manager->DrawOpaqueBatches(program);
     Program::Deactivate();
 
@@ -362,7 +370,7 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Use Deferred rendering lighting pass program:
-    program = App->program->GetDeferredLightingProgram();
+    program = App->program->GetProgram(Program::PROGRAMS::DEFERRED_LIGHTING);
     program->Activate();
 
     // Bind shadow specific necessary uniforms for lighting pass:
@@ -425,7 +433,7 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
             }
 
             // Forward rendering pass for transparent game objects:
-            program = App->program->GetForwardProgram();
+            program = App->program->GetProgram(Program::PROGRAMS::FORWARD);
             program->Activate();
 
             EnableBlending();
@@ -434,7 +442,7 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
 
             g_buffer.BindForDrawing();
             // Forward depth (Used for fog)
-            program = App->program->GetTransparentDepthProgram();
+            program = App->program->GetProgram(Program::PROGRAMS::TRANSPARENT_DEPTH);
             program->Activate();
 
             batch_manager->DrawTransparentBatches(program);
@@ -452,7 +460,7 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
         g_buffer.BindForReading();
         g_buffer.BindFogTextures();
 
-        program = App->program->GetFogProgram();
+        program = App->program->GetProgram(Program::PROGRAMS::FOG_PROGRAM);
         program->Activate();
 
         EnableBlending();
@@ -475,7 +483,7 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
 
 void Hachiko::ModuleRender::DrawForward(Scene* scene, BatchManager* batch_manager)
 {
-    Program* program = App->program->GetForwardProgram();
+    Program* program = App->program->GetProgram(Program::PROGRAMS::FORWARD);
     program->Activate();
 
     // Bind ImageBasedLighting uniforms
@@ -520,7 +528,7 @@ void Hachiko::ModuleRender::DrawPreForwardPass(Scene* scene, ComponentCamera* ca
     const auto& scene_particles = scene->GetSceneParticles();
     if (!scene_particles.empty())
     {
-        Program* particle_program = App->program->GetParticleProgram();
+        Program* particle_program = App->program->GetProgram(Program::PROGRAMS::PARTICLE);
         particle_program->Activate();
         for (auto particle : scene_particles)
         {
@@ -566,7 +574,7 @@ bool Hachiko::ModuleRender::DrawToShadowMap(Scene* scene,
     render_list.Update(shadow_manager.GetDirectionalLightFrustum(), scene->GetQuadtree());
 
     // Draw collected meshes with shadow mapping program:
-    Program* program = App->program->GetShadowMappingProgram();
+    Program* program = App->program->GetProgram(Program::PROGRAMS::SHADOW_MAPPING);
     program->Activate();
 
     // Bind shadow map generation specific necessary uniforms:
@@ -608,7 +616,7 @@ bool Hachiko::ModuleRender::DrawToShadowMap(Scene* scene,
     Program::Deactivate();
 
     // Smoothen the shadow map by applying gaussian filtering:
-    shadow_manager.ApplyGaussianBlur(App->program->GetGaussianFilteringProgram());
+    shadow_manager.ApplyGaussianBlur(App->program->GetProgram(Program::PROGRAMS::GAUSSIAN_FILTERING));
 
     return true;
 }
@@ -992,6 +1000,40 @@ void Hachiko::ModuleRender::FreeFullScreenQuad() const
     glBindVertexArray(0);
 }
 
+void Hachiko::ModuleRender::CreateNoiseTexture() 
+{
+    const unsigned width = 256;
+    const unsigned height = 256;
+    const float delta = 0.01f;
+
+    OpenSimplex2S os;
+    byte* result = new byte[width * height];
+
+    float2 p = float2::zero;
+    for (int i = 0; i < width; ++i)
+    {
+        p.x += delta;
+        p.y = 0;
+        for (int j = 0; j < height; ++j)
+        {
+            p.y += delta;
+            result[i * height + j] = (os.noise2(i, j) + 1) * 127;
+        }
+    }
+
+    glGenTextures(1, &noise_id);
+    glBindTexture(GL_TEXTURE_2D, noise_id);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, width, height, 0, GL_RED, GL_UNSIGNED_BYTE, result);
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    delete result;
+}
+
 bool Hachiko::ModuleRender::CleanUp()
 {
     FreeFullScreenQuad();
@@ -1014,7 +1056,7 @@ void Hachiko::ModuleRender::DrawLoadingScreen(const float delta)
 {
     OPTICK_CATEGORY("DrawLoadingScreen", Optick::Category::Rendering);
 
-    Program* img_program = App->program->GetUserInterfaceImageProgram();
+    Program* img_program = App->program->GetProgram(Program::PROGRAMS::UI_IMAGE);
 
     glDepthFunc(GL_ALWAYS);
 
@@ -1050,4 +1092,12 @@ void Hachiko::ModuleRender::DrawLoadingScreen(const float delta)
     glBindFramebuffer(GL_READ_FRAMEBUFFER, frame_buffer);
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
     glBlitFramebuffer(0, 0, fb_width, fb_height, 0, 0, fb_width, fb_height, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+}
+
+void Hachiko::ModuleRender::BindNoiseTexture(Program* program)
+{
+    // Binding the noise texture
+    glActiveTexture(GL_TEXTURE10);
+    glBindTexture(GL_TEXTURE_2D, noise_id);
+    program->BindUniformInt("noise", 10);
 }

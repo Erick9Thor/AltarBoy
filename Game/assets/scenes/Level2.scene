@@ -37240,6 +37240,7 @@ child:
         "'_claw_weapon@GameObject*'": 1534251611474452766
         "'_hammer_weapon@GameObject*'": 285427991433661750
         "'_attack_indicator@GameObject*'": 12979555437547914043
+        "'_aim_indicator@GameObject*'": 8299832450742224666
         "'_bullet_emitter@GameObject*'": 18163054640865901727
         "'_goal@GameObject*'": 7246002532049242297
         "'_player_geometry@GameObject*'": 590437234288956844

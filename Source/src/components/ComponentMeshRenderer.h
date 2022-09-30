@@ -108,6 +108,16 @@ namespace Hachiko
             return tint_color;
         }
 
+        void SetDissolveProgress(const float progress)
+        {
+            dissolve_progress = progress;
+        }
+
+        [[nodiscard]] float GetDissolveProgress() const
+        {
+            return dissolve_progress;
+        }
+
         void DrawGui() override;
 
         void Save(YAML::Node& node) const override;
@@ -157,6 +167,7 @@ namespace Hachiko
         ResourceMesh* mesh = nullptr;
         ResourceMaterial* material = nullptr;
         float4 tint_color = float4::one;
+        float dissolve_progress = 1.0f; // Not stored (min 0, max 1)
 
         // Scripting
         bool override_material = false;
