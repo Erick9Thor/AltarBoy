@@ -1,0 +1,323 @@
+prefab_name: WeaponTrails
+name: WeaponTrails
+enabled: true
+component:
+  - !<transform>
+    type: 1
+    enabled: true
+    position: [0, 0, 0]
+    rotation: [0, -45, 0]
+    scale: [1, 1, 1]
+child:
+  - name: ParasiteTrail
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [192.6, -2.689, -24.02]
+        rotation: [-0, 0, -0]
+        scale: [2.273, 2.222, 2.273]
+    child:
+      - name: ParasiteTrailRight
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [-85, 2.3, 13]
+            rotation: [-0, 65, -0]
+            scale: [1, 0.9999, 1]
+          - !<billboard>
+            type: 21
+            enabled: true
+            play_on_awake: false
+            texture_id: 12793745184163139006
+            tiles: [3, 3]
+            flip: [false, false]
+            billboard_lifetime: 0.35
+            properties: [0.5, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 0.05
+            total_tiles: 9
+            animation_loop: false
+            color_cycles: 1
+            color_gradient: [[1, 0, 0, 0, 1]]
+            animation_section: true
+            color_section: true
+            size_section: false
+            size_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [1.7, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 0.1
+            projection: true
+      - name: ParasiteTrailLeft
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [-83, 2.3, 12]
+            rotation: [0, -40, 0]
+            scale: [1, 0.9999, 1]
+          - !<billboard>
+            type: 21
+            enabled: true
+            play_on_awake: false
+            texture_id: 12793745184163139006
+            tiles: [3, 3]
+            flip: [false, true]
+            billboard_lifetime: 0.35
+            properties: [0.5, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 0.05
+            total_tiles: 9
+            animation_loop: false
+            color_cycles: 1
+            color_gradient: [[1, 0, 0, 0, 0.9712]]
+            animation_section: true
+            color_section: true
+            size_section: false
+            size_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [1.7, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 0.1
+            projection: true
+  - name: ClawsTrail
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [192.6, -2.689, -24.02]
+        rotation: [-0, 0, -0]
+        scale: [2.273, 2.222, 2.273]
+    child:
+      - name: ClawsTrailR
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [-85, 2.3, 14]
+            rotation: [-0, 65, -0]
+            scale: [1, 0.9999, 1]
+          - !<billboard>
+            type: 21
+            enabled: true
+            play_on_awake: false
+            texture_id: 12793745184163139006
+            tiles: [3, 3]
+            flip: [false, false]
+            billboard_lifetime: 0.35
+            properties: [0.5, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 0.05
+            total_tiles: 9
+            animation_loop: false
+            color_cycles: 1
+            color_gradient: [[0.3931, 1, 0.3931, 0, 1]]
+            animation_section: true
+            color_section: true
+            size_section: false
+            size_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [1.7, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 0.1
+            projection: true
+      - name: ClawsTrailL
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [-83, 2.3, 12]
+            rotation: [0, -40, 0]
+            scale: [1, 0.9999, 1]
+          - !<billboard>
+            type: 21
+            enabled: true
+            play_on_awake: false
+            texture_id: 12793745184163139006
+            tiles: [3, 3]
+            flip: [false, true]
+            billboard_lifetime: 0.35
+            properties: [0.5, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 0.05
+            total_tiles: 9
+            animation_loop: false
+            color_cycles: 1
+            color_gradient: [[0.3922, 1, 0.3922, 0, 1]]
+            animation_section: true
+            color_section: true
+            size_section: false
+            size_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [1.7, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 0.1
+            projection: true
+  - name: SwordTrail
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [192.6, -2.69, -24.02]
+        rotation: [-0, 0, -0]
+        scale: [2.27, 2.22, 2.27]
+    child:
+      - name: SwordTrailR
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [-85, 2.3, 14]
+            rotation: [-0, 65, -0]
+            scale: [1, 0.9999, 1]
+          - !<billboard>
+            type: 21
+            enabled: true
+            play_on_awake: false
+            texture_id: 12793745184163139006
+            tiles: [3, 3]
+            flip: [false, false]
+            billboard_lifetime: 0.35
+            properties: [0.5, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 0.05
+            total_tiles: 9
+            animation_loop: false
+            color_cycles: 1
+            color_gradient: [[0, 1, 1, 0, 1]]
+            animation_section: true
+            color_section: true
+            size_section: false
+            size_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [1.7, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 0.1
+            projection: true
+      - name: SwordTrailL
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [-83, 2.3, 13]
+            rotation: [0, -40, 0]
+            scale: [1, 0.9999, 1]
+          - !<billboard>
+            type: 21
+            enabled: true
+            play_on_awake: false
+            texture_id: 12793745184163139006
+            tiles: [3, 3]
+            flip: [false, true]
+            billboard_lifetime: 0.35
+            properties: [0.5, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 0.05
+            total_tiles: 9
+            animation_loop: false
+            color_cycles: 1
+            color_gradient: [[0, 1, 1, 0, 1]]
+            animation_section: true
+            color_section: true
+            size_section: false
+            size_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [1.7, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 0.1
+            projection: true
+  - name: HammerTrail
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [192.6, -2.69, -24.02]
+        rotation: [-0, 0, -0]
+        scale: [2.27, 2.22, 2.27]
+    child:
+      - name: HammerTrailR
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [-85.11, 2.29, 13.49]
+            rotation: [-0, 64.9, -0]
+            scale: [1, 0.9999, 1]
+          - !<billboard>
+            type: 21
+            enabled: true
+            play_on_awake: false
+            texture_id: 12793745184163139006
+            tiles: [3, 3]
+            flip: [false, false]
+            billboard_lifetime: 0.35
+            properties: [0.5, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 0.05
+            total_tiles: 9
+            animation_loop: false
+            color_cycles: 1
+            color_gradient: [[1, 1, 0, 0, 1]]
+            animation_section: true
+            color_section: true
+            size_section: false
+            size_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [1.95, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 0.1
+            projection: true
+      - name: HammerTrailL
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [-82.97, 2.29, 12.22]
+            rotation: [0, -39.4, 0]
+            scale: [1, 0.9999, 1]
+          - !<billboard>
+            type: 21
+            enabled: true
+            play_on_awake: false
+            texture_id: 12793745184163139006
+            tiles: [3, 3]
+            flip: [false, true]
+            billboard_lifetime: 0.35
+            properties: [0.5, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 0.05
+            total_tiles: 9
+            animation_loop: false
+            color_cycles: 1
+            color_gradient: [[0.9942, 0.9942, 0, 0, 1]]
+            animation_section: true
+            color_section: true
+            size_section: false
+            size_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 0.1
+            projection: true

@@ -46,12 +46,12 @@ void Hachiko::Scripting::CombatVisualEffectsPool::PlayPlayerAttackEffect(PlayerC
 
 	switch (weapon_type)
 	{
-	case PlayerController::WeaponUsed::RED:
+	case PlayerController::WeaponUsed::PARASITE:
 	{
 		
 		break;
 	}
-	case PlayerController::WeaponUsed::BLUE:
+	case PlayerController::WeaponUsed::SWORD:
 	{
 		std::string texture_file_name = FileUtility::GetWorkingDirectory() + "/assets/textures/vfx/slash_sprite.png";
 
@@ -60,12 +60,17 @@ void Hachiko::Scripting::CombatVisualEffectsPool::PlayPlayerAttackEffect(PlayerC
 		
 		break;
 	}
-	case PlayerController::WeaponUsed::GREEN:
+	case PlayerController::WeaponUsed::CLAWS:
 	{
 		std::string texture_file_name = FileUtility::GetWorkingDirectory() + "/assets/textures/vfx/slash_vfx.png";
 
 		current_attack_billboard->GetTextureProperties().SetTexture(texture_file_name);
 		current_attack_billboard->GetTextureProperties().SetTiles(float2(5.0f, 2.0f));
+
+		break;
+	}
+	case PlayerController::WeaponUsed::HAMMER:
+	{
 
 		break;
 	}
