@@ -85,6 +85,7 @@
       <PrecompiledHeaderFile>scriptingUtil/gameplaypch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)src;$(SolutionDir)vendors\SDL\include;$(SolutionDir)vendors\glew-2.1.0\include\GL;$(SolutionDir)vendors\imgui;$(SolutionDir)vendors\MathGeoLib;$(SolutionDir)vendors\DevIL\include\IL;$(SolutionDir)vendors\DebugDraw;$(SolutionDir)vendors\assimp\include;$(SolutionDir)vendors\ImGuiFileDialog-0.6.3;$(SolutionDir)vendors\ImGuizmo;$(SolutionDir)vendors\rapidjson\include;$(SolutionDir)vendors\optick\include;$(SolutionDir)vendors\PhysicsFS;$(SolutionDir)vendors\yaml-cpp\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalOptions>/FS %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -116,6 +117,7 @@ RD /S /Q "$(TargetDir)"</Command>
       <PrecompiledHeaderFile>scriptingUtil/gameplaypch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)src;$(SolutionDir)vendors\SDL\include;$(SolutionDir)vendors\glew-2.1.0\include\GL;$(SolutionDir)vendors\imgui;$(SolutionDir)vendors\MathGeoLib;$(SolutionDir)vendors\DevIL\include\IL;$(SolutionDir)vendors\DebugDraw;$(SolutionDir)vendors\assimp\include;$(SolutionDir)vendors\ImGuiFileDialog-0.6.3;$(SolutionDir)vendors\ImGuizmo;$(SolutionDir)vendors\rapidjson\include;$(SolutionDir)vendors\optick\include;$(SolutionDir)vendors\PhysicsFS;$(SolutionDir)vendors\yaml-cpp\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalOptions>/FS %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -149,6 +151,7 @@ RD /S /Q "$(TargetDir)"</Command>
       <PrecompiledHeaderFile>scriptingUtil/gameplaypch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)src;$(SolutionDir)vendors\SDL\include;$(SolutionDir)vendors\glew-2.1.0\include\GL;$(SolutionDir)vendors\imgui;$(SolutionDir)vendors\MathGeoLib;$(SolutionDir)vendors\DevIL\include\IL;$(SolutionDir)vendors\DebugDraw;$(SolutionDir)vendors\assimp\include;$(SolutionDir)vendors\ImGuiFileDialog-0.6.3;$(SolutionDir)vendors\ImGuizmo;$(SolutionDir)vendors\rapidjson\include;$(SolutionDir)vendors\optick\include;$(SolutionDir)vendors\PhysicsFS;$(SolutionDir)vendors\yaml-cpp\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalOptions>/FS %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
