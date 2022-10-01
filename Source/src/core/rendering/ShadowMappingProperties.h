@@ -38,10 +38,10 @@ public:
     void SetExponent(float value);
     void SetGaussianBlurSize(BlurPixelSize::Type value);
     void SetGaussianBlurSigma(float value);
-    void SetLightFrustumBoundingBoxScale(float value);
+    void SetLightFrustumBoundingBoxPadding(float value);
     bool DrawEditorContent();
 
-    [[nodiscard]] float GetLightFrustumBoundingBoxScale() const;
+    [[nodiscard]] float GetLightFrustumBoundingBoxPadding() const;
     [[nodiscard]] float GetGaussianFilterBlurAmount() const;
     [[nodiscard]] float GetMinVariance() const;
     [[nodiscard]] float GetLightBleedingReductionAmount() const;
@@ -54,7 +54,7 @@ private:
     void BindCommon(const Program* program) const;
 
 private:
-    float _light_frustum_bounding_box_scale = 0.0f;
+    float _light_frustum_bounding_box_padding = 0.0f;
     float _gaussian_filter_blur_amount = 0.0f;
     float _min_variance = 0.0f;
     float _light_bleeding_reduction_amount = 0.0f;

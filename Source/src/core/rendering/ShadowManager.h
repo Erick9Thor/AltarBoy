@@ -23,6 +23,7 @@ public:
     void GenerateShadowMap();
     void FreeShadowMap() const;
     void BindShadowMapTexture(unsigned location) const; 
+    void LazyCalculateLightFrustum();
     void CalculateLightFrustum();
     void BindShadowMapGenerationPassUniforms(const Program* program) const;
     void BindLightingPassUniforms(const Program* program) const;
@@ -34,6 +35,7 @@ public:
 
     [[nodiscard]] const Frustum& GetDirectionalLightFrustum() const;
     [[nodiscard]] bool IsGaussianBlurringEnabled() const;
+    [[nodiscard]] const AABB& GetLightFrustumBoundingBox() const;
 
 private:
     [[nodiscard]] static const ComponentDirLight* GetDirectionalLight();
@@ -59,7 +61,7 @@ private:
     bool _camera_exists = false;
     bool _light_exists = false;
     bool _gaussian_blurring_enabled = true;
-    float _light_frustum_bounding_box_scale = 0.0f;
+    float _light_frustum_bounding_box_padding = 0.0f;
     
     // Shadow map texture related:
     unsigned _shadow_map_fbo = 0;

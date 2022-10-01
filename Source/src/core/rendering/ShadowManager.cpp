@@ -127,7 +127,7 @@ void Hachiko::ShadowManager::BindShadowMapTexture(
     glBindTexture(GL_TEXTURE_2D, _shadow_map_texture);
 }
 
-void Hachiko::ShadowManager::CalculateLightFrustum() 
+void Hachiko::ShadowManager::LazyCalculateLightFrustum() 
 {
     const bool is_camera_out_of_bounds = CheckCameraAgainstBoundingRegion();
     const bool light_changed = DetectLightChanges();
@@ -137,36 +137,28 @@ void Hachiko::ShadowManager::CalculateLightFrustum()
         return;
     }
 
-    ComponentCamera* camera = App->camera->GetRenderingCamera();
+   CalculateLightFrustum();
+}
+
+void Hachiko::ShadowManager::CalculateLightFrustum()
+{
+     ComponentCamera* camera = App->camera->GetRenderingCamera();
 
     if (camera == nullptr)
     {
         return;
     }
 
-    constexpr size_t NUM_CORNERS = 8;
-    constexpr float NUM_CORNERS_INV = 1.0f / NUM_CORNERS;
-    float3 camera_frustum_corners[NUM_CORNERS];
-    camera->GetFrustum().GetCornerPoints(camera_frustum_corners);
-
+    const Sphere camera_sphere = 
+        camera->GetFrustum().MinimalEnclosingAABB().MinimalEnclosingSphere();
+    
     // Calculate sphere center:
-    float3 camera_frustum_sphere_center = float3::zero;
-    for (const float3& camera_frustum_corner : camera_frustum_corners)
-    {
-        camera_frustum_sphere_center += camera_frustum_corner;
-    }
-    camera_frustum_sphere_center = 
-        camera_frustum_sphere_center * NUM_CORNERS_INV;
+    const float3 camera_frustum_sphere_center = camera_sphere.pos;
 
     // Calculate the sphere radius, it's the maximum of distances between
-    // center and frustum corners:
-    float camera_frustum_sphere_radius = 0.0f;
-    for (const float3& camera_frustum_corner : camera_frustum_corners)
-    {
-        camera_frustum_sphere_radius = std::max(
-            camera_frustum_sphere_center.Distance(camera_frustum_corner), 
-            camera_frustum_sphere_radius);
-    }
+    // center and frustum corners + added padding:
+    const float camera_frustum_sphere_radius = 
+        camera_sphere.r + _light_frustum_bounding_box_padding;
 
     // Set frustum kind:
     _directional_light_frustum.SetKind(FrustumSpaceGL, FrustumRightHanded);
@@ -176,10 +168,11 @@ void Hachiko::ShadowManager::CalculateLightFrustum()
     // calculated when camera moves, instead it will be recalculated when the
     // camera has gone out of the light frustum's bounding box:
     const float orthographic_size = 
-        camera_frustum_sphere_radius * _light_frustum_bounding_box_scale;
+        camera_frustum_sphere_radius * 2.0f;
     _directional_light_frustum.SetOrthographic(
         orthographic_size, 
         orthographic_size);
+
     // Set far plane to be same with orthographic width and height, and set
     // near to be 0:
     _directional_light_frustum.SetViewPlaneDistances(0.0f, orthographic_size);
@@ -198,8 +191,10 @@ void Hachiko::ShadowManager::CalculateLightFrustum()
         _directional_light_frustum.ComputeProjectionMatrix();
     _directional_light_view = _directional_light_frustum.ComputeViewMatrix();
 
-    _light_frustum_bounding_box = AABB();
-    _light_frustum_bounding_box.Enclose(_directional_light_frustum);
+    // Set the bounding box of light frustum to include the set padding:
+    _light_frustum_bounding_box = AABB::FromCenterAndSize(
+        camera_frustum_sphere_center, 
+        float3(orthographic_size));
 }
 
 void Hachiko::ShadowManager::BindShadowMapGenerationPassUniforms(
@@ -287,6 +282,11 @@ bool Hachiko::ShadowManager::IsGaussianBlurringEnabled() const
     return _gaussian_blurring_enabled;
 }
 
+const AABB& Hachiko::ShadowManager::GetLightFrustumBoundingBox() const
+{
+    return _light_frustum_bounding_box;
+}
+
 const Hachiko::ComponentDirLight* Hachiko::ShadowManager::GetDirectionalLight()
 {
     if (App->scene_manager->GetActiveScene()->dir_lights.empty())
@@ -323,7 +323,7 @@ bool Hachiko::ShadowManager::DetectLightChanges()
         }
 
         _directional_light_direction = float3::zero;
-        _light_frustum_bounding_box_scale = 1.0f;
+        _light_frustum_bounding_box_padding = 1.0f;
         _light_exists = false;
 
         return changed;
@@ -337,13 +337,17 @@ bool Hachiko::ShadowManager::DetectLightChanges()
         _directional_light_direction = light->GetDirection();
     }
 
-    const float new_bounding_box_scale = 
-        light->GetShadowProperties().GetLightFrustumBoundingBoxScale();
+    const float new_bounding_box_padding = 
+        light->GetShadowProperties().GetLightFrustumBoundingBoxPadding();
+    const float difference = 
+        fabsf(new_bounding_box_padding - _light_frustum_bounding_box_padding);
 
-    if (fabsf(new_bounding_box_scale - _light_frustum_bounding_box_scale) > FLT_EPSILON)
+    if (difference > FLT_EPSILON)
     {
         changed = true;
-        _light_frustum_bounding_box_scale = new_bounding_box_scale;
+
+        _light_frustum_bounding_box_padding = new_bounding_box_padding;
+
         HE_LOG("Light frustum will be recalculated. (LIGHT)");
     }
 
@@ -361,18 +365,13 @@ bool Hachiko::ShadowManager::CheckCameraAgainstBoundingRegion()
 
     _camera_exists = true;
 
-    constexpr size_t NUM_CORNERS = 8;
-    float3 camera_frustum_corners[NUM_CORNERS];
-    camera->GetFrustum().GetCornerPoints(camera_frustum_corners);
+    const bool value = 
+        !_light_frustum_bounding_box.Contains(camera->GetFrustum());
 
-    for (const float3& camera_frustum_corner : camera_frustum_corners)
+    if (value == true)
     {
-        if (!_light_frustum_bounding_box.Contains(camera_frustum_corner))
-        {
-            HE_LOG("Light frustum will be recalculated. (CAMERA)");
-            return true;
-        }
+        HE_LOG("Light frustum will be recalculated. (CAMERA)");
     }
 
-    return false;
+    return value;
 }

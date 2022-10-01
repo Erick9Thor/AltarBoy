@@ -568,7 +568,7 @@ bool Hachiko::ModuleRender::DrawToShadowMap(
     }
 
     // Update directional light frustum if there are any changes:
-    shadow_manager.CalculateLightFrustum();
+    shadow_manager.LazyCalculateLightFrustum();
 
     // Cull the scene with directional light frustum:
     render_list.Update(
