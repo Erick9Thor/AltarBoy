@@ -629,7 +629,7 @@ void Hachiko::Scripting::EnemyController::WormAttackController()
 
 	float dist_to_player = _current_pos.Distance(_player_pos);
 
-	if (_previous_state == EnemyState::IDLE && _state != EnemyState::ATTACKING && !_attack_landing && dist_to_player <= _attack_range)
+	if (_previous_state == EnemyState::IDLE && _state != EnemyState::ATTACKING && !_attack_landing && dist_to_player <= _attack_range && _player_controller->IsAlive())
 	{
 		_state = EnemyState::ATTACKING;
 		_attack_current_delay = _attack_delay;
@@ -721,7 +721,8 @@ void Hachiko::Scripting::EnemyController::DropParasite()
 	StopMoving();
 	_state = EnemyState::PARASITE;
 	//TODO: Check if in scene there's already a parasite? Maybe?
-	if (_parasite) {
+	if (_parasite) 
+	{
 		_parasite->SetActive(true);
 	}
 
