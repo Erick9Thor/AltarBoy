@@ -95,12 +95,12 @@ bool Hachiko::ModuleRender::Init()
         node_video[VIDEO_PROJECTED] = false;
         node_video[VIDEO_LOOP] = true;
         node_video[VIDEO_FLIP] = false;
-        node_video[VIDEO_FPS] = 24;
+        node_video[VIDEO_FPS] = 12;
         
         loading_video->Load(node_video);
         loading_video->SetAsInScene();
         loading_video->Start();
-        loading_video->Preload(24 * 7);
+        loading_video->Preload(12 * 4);
         loading_video->Play();
     }
 
