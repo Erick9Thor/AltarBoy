@@ -488,7 +488,8 @@ void Hachiko::Scripting::EnemyController::BeetleAttackController()
 			_current_idle_cooldown = _idle_cooldown;
 		}
 	}
-	else {
+	else 
+	{
 		_state = EnemyState::IDLE;
 	}
 
@@ -497,7 +498,7 @@ void Hachiko::Scripting::EnemyController::BeetleAttackController()
 	// If an enemy is from a gautlet, it will always follow the player
 	if ((_is_from_gautlet || dist_to_player < _aggro_range || _enraged > 0.0f) && _player_controller->IsAlive())
 	{
-		if (dist_to_player <= _attack_range)
+		if (dist_to_player <= _attack_range || IsAttacking())
 		{
 			BeetleAttack();
 		}
