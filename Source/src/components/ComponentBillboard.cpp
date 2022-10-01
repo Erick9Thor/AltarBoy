@@ -407,6 +407,7 @@ inline void Hachiko::ComponentBillboard::Stop()
 
 inline void Hachiko::ComponentBillboard::Reset()
 {
+    delayed = true;
     elapsed_time = 0.0f;
     current_frame = 0.0f;
     animation_index = {0.0f, 0.0f};
