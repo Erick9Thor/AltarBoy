@@ -116,7 +116,7 @@ void Hachiko::ShadowMappingProperties::SetMinVariance(const float value)
     _min_variance = value;
 
     std::clamp(_min_variance, 0.0f, 1.0f);
-}
+} 
 
 void Hachiko::ShadowMappingProperties::SetLightBleedingReductionAmount(const float value) 
 {
