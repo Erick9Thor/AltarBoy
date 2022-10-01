@@ -22,8 +22,12 @@ Hachiko::ComponentVideo::~ComponentVideo()
     DetachFromScene();
     RemoveVideoResource();
 
-    if (preloaded_frame_textures != nullptr)
+    if (preloaded_frames > 0)
     {
+        for (int i = 0; i < preloaded_frames; ++i)
+        {
+            glDeleteTextures(1, &preloaded_frame_textures[i]);
+        }
         delete preloaded_frame_textures;
     }
 }
