@@ -1273,11 +1273,6 @@ bool Hachiko::Scripting::PlayerController::RegisterHit(int damage_received, floa
 			_player_geometry->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, 0.5f), true);
 		}
 
-
-		_combat_visual_effects_pool->PlayEnemyAttackEffect(
-			EnemyType::BEETLE,
-			game_object->GetTransform()->GetGlobalPosition());
-
 		_combat_stats->ReceiveDamage(damage_received);
 		UpdateHealthBar();
 		Input::GoBrr(0.3f, 500);

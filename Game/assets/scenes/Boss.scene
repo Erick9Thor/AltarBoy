@@ -27,7 +27,7 @@ child:
         type: 1
         enabled: true
         position: [-85.36, 20.2, -48.15]
-        rotation: [125, 0, 180]
+        rotation: [125, 0, -180]
         scale: [1, 1, 1]
       - !<camera>
         id: 1219616210356617501
@@ -39,7 +39,7 @@ child:
           fov: 65
           position: [-85.36, 20.2, -48.15]
           front: [0, -0.8192, -0.5736]
-          up: [-0, 0.5736, -0.8192]
+          up: [0, 0.5736, -0.8192]
           pinned_camera: [0, 0, 0]
       - id: 13408884615593672014
         type: 19
@@ -660,7 +660,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [180, 3.615, 14.16]
+                                                                                        rotation: [-180, 3.615, 14.16]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 17083926916287189837
@@ -872,7 +872,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [180, 0, 85.39]
+                                                                                        rotation: [-180, 0, 85.39]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 16673762793204240827
@@ -1179,7 +1179,7 @@ child:
                                                                                                                         type: 1
                                                                                                                         enabled: true
                                                                                                                         position: [0, 0, 0]
-                                                                                                                        rotation: [180, -89.98, 180]
+                                                                                                                        rotation: [-180, -89.98, -180]
                                                                                                                         scale: [1, 1, 1]
                                                                                                               - id: 17824814368355884472
                                                                                                                 name: Wing_Middle_R
@@ -1945,7 +1945,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [180, 3.615, 14.16]
+                                                                                        rotation: [-180, 3.615, 14.16]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 7166805286709657581
@@ -2157,7 +2157,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [180, 0, 85.39]
+                                                                                        rotation: [-180, 0, 85.39]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 2831410405136228984
@@ -2464,7 +2464,7 @@ child:
                                                                                                                         type: 1
                                                                                                                         enabled: true
                                                                                                                         position: [0, 0, 0]
-                                                                                                                        rotation: [180, -89.98, 180]
+                                                                                                                        rotation: [-180, -89.98, -180]
                                                                                                                         scale: [1, 1, 1]
                                                                                                               - id: 18073054745000376799
                                                                                                                 name: Wing_Middle_R
@@ -3230,7 +3230,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [180, 3.615, 14.16]
+                                                                                        rotation: [-180, 3.615, 14.16]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 16660911846559829495
@@ -3442,7 +3442,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [180, 0, 85.39]
+                                                                                        rotation: [-180, 0, 85.39]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 5305186554916170386
@@ -3749,7 +3749,7 @@ child:
                                                                                                                         type: 1
                                                                                                                         enabled: true
                                                                                                                         position: [0, 0, 0]
-                                                                                                                        rotation: [180, -89.98, 180]
+                                                                                                                        rotation: [-180, -89.98, -180]
                                                                                                                         scale: [1, 1, 1]
                                                                                                               - id: 5762468314855338250
                                                                                                                 name: Wing_Middle_R
@@ -4527,7 +4527,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [180, 3.615, 14.16]
+                                                                                        rotation: [-180, 3.615, 14.16]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 2375049026776240409
@@ -4739,7 +4739,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [180, 0, 85.39]
+                                                                                        rotation: [-180, 0, 85.39]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 2545767677094883520
@@ -5046,7 +5046,7 @@ child:
                                                                                                                         type: 1
                                                                                                                         enabled: true
                                                                                                                         position: [0, 0, 0]
-                                                                                                                        rotation: [180, -89.98, 180]
+                                                                                                                        rotation: [-180, -89.98, -180]
                                                                                                                         scale: [1, 1, 1]
                                                                                                               - id: 6188514512839603856
                                                                                                                 name: Wing_Middle_R
@@ -5812,7 +5812,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [180, 3.615, 14.16]
+                                                                                        rotation: [-180, 3.615, 14.16]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 15556414505888023057
@@ -6024,7 +6024,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [180, 0, 85.39]
+                                                                                        rotation: [-180, 0, 85.39]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 16037035974818211267
@@ -6331,7 +6331,7 @@ child:
                                                                                                                         type: 1
                                                                                                                         enabled: true
                                                                                                                         position: [0, 0, 0]
-                                                                                                                        rotation: [180, -89.98, 180]
+                                                                                                                        rotation: [-180, -89.98, -180]
                                                                                                                         scale: [1, 1, 1]
                                                                                                               - id: 17287654595624956106
                                                                                                                 name: Wing_Middle_R
@@ -7097,7 +7097,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [180, 3.615, 14.16]
+                                                                                        rotation: [-180, 3.615, 14.16]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 10059902737588998568
@@ -7309,7 +7309,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [180, 0, 85.39]
+                                                                                        rotation: [-180, 0, 85.39]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 5366420881040033485
@@ -7616,7 +7616,7 @@ child:
                                                                                                                         type: 1
                                                                                                                         enabled: true
                                                                                                                         position: [0, 0, 0]
-                                                                                                                        rotation: [180, -89.98, 180]
+                                                                                                                        rotation: [-180, -89.98, -180]
                                                                                                                         scale: [1, 1, 1]
                                                                                                               - id: 11361860213490135861
                                                                                                                 name: Wing_Middle_R
@@ -9967,7 +9967,7 @@ child:
                                         type: 1
                                         enabled: true
                                         position: [0, 1.081, -1.753]
-                                        rotation: [180, 0, -0]
+                                        rotation: [-180, 0, -0]
                                         scale: [2.54, 2.54, 2.54]
                                     child:
                                       - id: 9253628311517691346
@@ -11401,7 +11401,7 @@ child:
                                                                                                                             type: 1
                                                                                                                             enabled: true
                                                                                                                             position: [0, 0, 0]
-                                                                                                                            rotation: [-180, 0, -0]
+                                                                                                                            rotation: [180, 0, -0]
                                                                                                                             scale: [1, 1, 1]
                                                                                                                         child:
                                                                                                                           - id: 2983305070747123574
@@ -11460,7 +11460,7 @@ child:
                                                                                                                             type: 1
                                                                                                                             enabled: true
                                                                                                                             position: [0, 0, 0]
-                                                                                                                            rotation: [-180, 0, -0]
+                                                                                                                            rotation: [180, 0, -0]
                                                                                                                             scale: [1, 1, 1]
                                                                                                                         child:
                                                                                                                           - id: 7066723275852593375
@@ -11507,7 +11507,7 @@ child:
                                                                                                                             type: 1
                                                                                                                             enabled: true
                                                                                                                             position: [0, 0, 0]
-                                                                                                                            rotation: [-180, 0, -0]
+                                                                                                                            rotation: [180, 0, -0]
                                                                                                                             scale: [1, 1, 1]
                                                                                                                         child:
                                                                                                                           - id: 162512179504047294
@@ -11543,7 +11543,7 @@ child:
                                                                                                                                         type: 1
                                                                                                                                         enabled: true
                                                                                                                                         position: [0, 0, 0]
-                                                                                                                                        rotation: [-180, 1.356, -180]
+                                                                                                                                        rotation: [180, 1.356, 180]
                                                                                                                                         scale: [1, 1, 1]
                                                                                                                                     child:
                                                                                                                                       - id: 7378100646301905207
@@ -11579,7 +11579,7 @@ child:
                                                                                                                                                     type: 1
                                                                                                                                                     enabled: true
                                                                                                                                                     position: [0, 0, 0]
-                                                                                                                                                    rotation: [-180, -1.356, -180]
+                                                                                                                                                    rotation: [180, -1.356, 180]
                                                                                                                                                     scale: [1, 1, 1]
                                                                                                                                                 child:
                                                                                                                                                   - id: 8252445221293630384
@@ -11615,7 +11615,7 @@ child:
                                                                                                                                                                 type: 1
                                                                                                                                                                 enabled: true
                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                rotation: [180, -85.75, 180]
+                                                                                                                                                                rotation: [-180, -85.75, -180]
                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                             child:
                                                                                                                                                               - id: 2947997736083328444
@@ -11663,7 +11663,7 @@ child:
                                                                                                                                                                                 type: 1
                                                                                                                                                                                 enabled: true
                                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                                rotation: [180, -85.64, 180]
+                                                                                                                                                                                rotation: [-180, -85.64, -180]
                                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                                             child:
                                                                                                                                                                               - id: 1763020957479063615
@@ -11747,7 +11747,7 @@ child:
                                                                                                                                                                                                             type: 1
                                                                                                                                                                                                             enabled: true
                                                                                                                                                                                                             position: [0, 0, 0]
-                                                                                                                                                                                                            rotation: [-180, -11.85, -180]
+                                                                                                                                                                                                            rotation: [180, -11.85, 180]
                                                                                                                                                                                                             scale: [1, 1, 1]
                                                                                                                                                                                                         child:
                                                                                                                                                                                                           - id: 5138853394069507134
@@ -11794,7 +11794,7 @@ child:
                                                                                                                                                                 type: 1
                                                                                                                                                                 enabled: true
                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                rotation: [-180, -6.71, -180]
+                                                                                                                                                                rotation: [180, -6.71, 180]
                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                             child:
                                                                                                                                                               - id: 4775966870435545810
@@ -11842,7 +11842,7 @@ child:
                                                                                                                                                                                 type: 1
                                                                                                                                                                                 enabled: true
                                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                                rotation: [-180, 6.71, -180]
+                                                                                                                                                                                rotation: [180, 6.71, 180]
                                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                                             child:
                                                                                                                                                                               - id: 1743634718709042819
@@ -11889,7 +11889,7 @@ child:
                                                                                                                                                                 type: 1
                                                                                                                                                                 enabled: true
                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                rotation: [-180, 7.352, -180]
+                                                                                                                                                                rotation: [180, 7.352, 180]
                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                             child:
                                                                                                                                                               - id: 9861219265221988646
@@ -11937,7 +11937,7 @@ child:
                                                                                                                                                                                 type: 1
                                                                                                                                                                                 enabled: true
                                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                                rotation: [-180, -7.352, -180]
+                                                                                                                                                                                rotation: [180, -7.352, 180]
                                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                                             child:
                                                                                                                                                                               - id: 17760169468963757363
@@ -11984,7 +11984,7 @@ child:
                                                                                                                                                                 type: 1
                                                                                                                                                                 enabled: true
                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                rotation: [-180, 37.69, -180]
+                                                                                                                                                                rotation: [180, 37.69, 180]
                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                             child:
                                                                                                                                                               - id: 15315101104890206880
@@ -12032,7 +12032,7 @@ child:
                                                                                                                                                                                 type: 1
                                                                                                                                                                                 enabled: true
                                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                                rotation: [-180, -37.69, -180]
+                                                                                                                                                                                rotation: [180, -37.69, 180]
                                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                                             child:
                                                                                                                                                                               - id: 11459015822330793963
@@ -12079,7 +12079,7 @@ child:
                                                                                                                                         type: 1
                                                                                                                                         enabled: true
                                                                                                                                         position: [0, 0, 0]
-                                                                                                                                        rotation: [-180, -0.4737, -180]
+                                                                                                                                        rotation: [180, -0.4737, 180]
                                                                                                                                         scale: [1, 1, 1]
                                                                                                                                     child:
                                                                                                                                       - id: 15987344257245938791
@@ -12115,7 +12115,7 @@ child:
                                                                                                                                                     type: 1
                                                                                                                                                     enabled: true
                                                                                                                                                     position: [0, 0, 0]
-                                                                                                                                                    rotation: [-180, 0.4737, -180]
+                                                                                                                                                    rotation: [180, 0.4737, 180]
                                                                                                                                                     scale: [1, 1, 1]
                                                                                                                                                 child:
                                                                                                                                                   - id: 13223711270451322188
@@ -12445,7 +12445,7 @@ child:
             type: 1
             enabled: true
             position: [59.39, -15.02, -164.5]
-            rotation: [-180, -55.25, -180]
+            rotation: [180, -55.25, 180]
             scale: [1.079, 1.1, 1.079]
       - id: 11650371022511337214
         name: AttackIndicator
@@ -12467,7 +12467,7 @@ child:
             type: 1
             enabled: true
             position: [0, 3.815, -0.75]
-            rotation: [-180, 89.98, -180]
+            rotation: [-0, 90, 0]
             scale: [2, 0.4164, 2.178]
         child:
           - id: 14414538786768405220
@@ -12869,7 +12869,7 @@ child:
             type: 1
             enabled: true
             position: [-0.84, 2.16, 3.18]
-            rotation: [-90, -0, -180]
+            rotation: [-90, 0, 180]
             scale: [2, 2, 2]
           - !<particle_system>
             id: 14783160612015305116
@@ -12949,7 +12949,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1931, 1187]
+            size: [1340, 652]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -13624,7 +13624,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 7]
-            rotation: [-180, 89.98, -180]
+            rotation: [180, 89.98, 180]
             scale: [2.5, 2.5, 2.5]
           - !<billboard>
             id: 12691712513651242410
@@ -13738,7 +13738,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1931, 1187]
+            size: [1340, 652]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -17938,7 +17938,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0, 0, 0]
-                            rotation: [180, -82.71, -178.8]
+                            rotation: [-180, -82.71, -178.8]
                             scale: [1, 1, 1]
                         child:
                           - id: 7528231635659626325
@@ -17985,7 +17985,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0, 0, 0]
-                            rotation: [-180, -86.87, -180]
+                            rotation: [180, -86.87, 180]
                             scale: [1, 1, 1]
                         child:
                           - id: 16282965796465958809
@@ -19456,7 +19456,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0, 0, 0]
-                            rotation: [180, -82.71, -178.8]
+                            rotation: [-180, -82.71, -178.8]
                             scale: [1, 1, 1]
                         child:
                           - id: 9099175317089368136
@@ -19503,7 +19503,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0, 0, 0]
-                            rotation: [-180, -86.87, -180]
+                            rotation: [180, -86.87, 180]
                             scale: [1, 1, 1]
                         child:
                           - id: 8915223915001220277
@@ -20974,7 +20974,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0, 0, 0]
-                            rotation: [180, -82.71, -178.8]
+                            rotation: [-180, -82.71, -178.8]
                             scale: [1, 1, 1]
                         child:
                           - id: 12932932958051372062
@@ -21021,7 +21021,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0, 0, 0]
-                            rotation: [-180, -86.87, -180]
+                            rotation: [180, -86.87, 180]
                             scale: [1, 1, 1]
                         child:
                           - id: 12571270047636935796
@@ -22492,7 +22492,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0, 0, 0]
-                            rotation: [180, -82.71, -178.8]
+                            rotation: [-180, -82.71, -178.8]
                             scale: [1, 1, 1]
                         child:
                           - id: 5362970284039626118
@@ -22539,7 +22539,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0, 0, 0]
-                            rotation: [-180, -86.87, -180]
+                            rotation: [180, -86.87, 180]
                             scale: [1, 1, 1]
                         child:
                           - id: 15088282022863175382
@@ -22738,3 +22738,2312 @@ child:
                     visible: true
                     material_id: 6462450398853139216
                     tint_color: [1, 1, 1, 1]
+  - id: 10436984043354293773
+    name: CombatVisualEffectsPool
+    enabled: true
+    component:
+      - !<transform>
+        id: 4475112732269183746
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [-0, 0, -0]
+        scale: [1, 1, 1]
+      - !<script>
+        id: 17848125923925511981
+        type: 15
+        enabled: true
+        class_name: CombatVisualEffectsPool
+    child:
+      - id: 12214417457368074219
+        name: Claw
+        enabled: true
+        component:
+          - !<transform>
+            id: 17663038227914798636
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+        child:
+          - id: 4428748984810008861
+            name: Claw_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 7813567039114927891
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 12448318059758819593
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 8394830547045082758
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 0.5
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7355], [0, 0, 0, 0, 0.9773]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 18247609385923254408
+            name: Claw_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 11193258172447935970
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 14041633422238192051
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 8394830547045082758
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 0.5
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7355], [0, 0, 0, 0, 0.9773]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 4704220588666711592
+            name: Claw_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 716564729182596150
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 15406429077224264439
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 8394830547045082758
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 0.5
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7355], [0, 0, 0, 0, 0.9773]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 2670215602473339275
+            name: Claw_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 15498146891684788722
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 12801493873386540058
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 8394830547045082758
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 0.5
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7355], [0, 0, 0, 0, 0.9773]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 10699315207488966308
+            name: Claw_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 5699120177889015657
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 2539652697163973896
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 8394830547045082758
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 0.5
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7355], [0, 0, 0, 0, 0.9773]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 14992936283810186050
+            name: Claw_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 6182230977326913653
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 4133193952719474932
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 8394830547045082758
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 0.5
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7355], [0, 0, 0, 0, 0.9773]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 15539065952451574079
+            name: Claw_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 7269178055237847757
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 9414355246877003939
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 8394830547045082758
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 0.5
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7355], [0, 0, 0, 0, 0.9773]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 15261853602007061805
+            name: Claw_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 6330226841472865054
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 9797355816786879904
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 8394830547045082758
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 0.5
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7355], [0, 0, 0, 0, 0.9773]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 14802631451930153197
+            name: Claw_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 17056313973547296655
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 7070023424086163685
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 8394830547045082758
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 0.5
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7355], [0, 0, 0, 0, 0.9773]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 12854868972407231395
+            name: Claw_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 13034530341681986996
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 7058650018947205973
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 8394830547045082758
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 0.5
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7355], [0, 0, 0, 0, 0.9773]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+      - id: 6807755227059349740
+        name: Sword
+        enabled: true
+        component:
+          - !<transform>
+            id: 5592206400807437194
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+        child:
+          - id: 6134314759057470403
+            name: Sword_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 17530209504961053110
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 2346142953011332536
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 2191468291253132004
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9653, 0.9653, 0.9653, 0, 0.7645], [0, 0, 0, 0, 0.9483]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 18258483711612055507
+            name: Sword_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 2516487998722505891
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 12983127089028809103
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 2191468291253132004
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9653, 0.9653, 0.9653, 0, 0.7645], [0, 0, 0, 0, 0.9483]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 1168739700556510833
+            name: Sword_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 10545402966814449278
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 16000823011187025231
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 2191468291253132004
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9653, 0.9653, 0.9653, 0, 0.7645], [0, 0, 0, 0, 0.9483]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 3616717875652982418
+            name: Sword_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 1563389210821772717
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 5401148853416739315
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 2191468291253132004
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9653, 0.9653, 0.9653, 0, 0.7645], [0, 0, 0, 0, 0.9483]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 13468826605639711724
+            name: Sword_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 2634939548066298353
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 16659400462073533786
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 2191468291253132004
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9653, 0.9653, 0.9653, 0, 0.7645], [0, 0, 0, 0, 0.9483]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 12200729104589916664
+            name: Sword_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 7706045745216831473
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 3588386708860373575
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 2191468291253132004
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9653, 0.9653, 0.9653, 0, 0.7645], [0, 0, 0, 0, 0.9483]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 5281822526382259283
+            name: Sword_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 4007941465802199075
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 17040464799464217864
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 2191468291253132004
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9653, 0.9653, 0.9653, 0, 0.7645], [0, 0, 0, 0, 0.9483]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 9423075685125089666
+            name: Sword_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 625332099512428547
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 5169767971738986500
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 2191468291253132004
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9653, 0.9653, 0.9653, 0, 0.7645], [0, 0, 0, 0, 0.9483]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 15894609946408489352
+            name: Sword_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 17467045604330321319
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 11623429525611137129
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 2191468291253132004
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9653, 0.9653, 0.9653, 0, 0.7645], [0, 0, 0, 0, 0.9483]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 16121935366168327958
+            name: Sword_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 18412914674152159020
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 14273307396395245808
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 2191468291253132004
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9653, 0.9653, 0.9653, 0, 0.7645], [0, 0, 0, 0, 0.9483]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+      - id: 4104551087024316538
+        name: Melee
+        enabled: true
+        component:
+          - !<transform>
+            id: 2537882110881590191
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+        child:
+          - id: 7247305023419580095
+            name: Melee_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 6410259900868445960
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 7815148053687549964
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 9492710251713022701
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 0.4
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[1, 1, 1, 0, 0.6426], [0, 0, 0, 0, 0.8905]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 18085139550332867243
+            name: Melee_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 4673836426287084755
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 17200065490177025545
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 9492710251713022701
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 0.4
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[1, 1, 1, 0, 0.6426], [0, 0, 0, 0, 0.8905]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 18311780985481916821
+            name: Melee_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 4163357513601965032
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 4622381912121853825
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 9492710251713022701
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 0.4
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[1, 1, 1, 0, 0.6426], [0, 0, 0, 0, 0.8905]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 11041275492474918236
+            name: Melee_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 722830400358119515
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 5730793845593631067
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 9492710251713022701
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 0.4
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[1, 1, 1, 0, 0.6426], [0, 0, 0, 0, 0.8905]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 7988150840289239259
+            name: Melee_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 11058809856688854060
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 9084202982975062836
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 9492710251713022701
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 0.4
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[1, 1, 1, 0, 0.6426], [0, 0, 0, 0, 0.8905]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 1159713495378009585
+            name: Melee_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 8379758782988139670
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 18400171330115574720
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 9492710251713022701
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 0.4
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[1, 1, 1, 0, 0.6426], [0, 0, 0, 0, 0.8905]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 13879279301511007394
+            name: Melee_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 307532494889009400
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 1540933881127644738
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 9492710251713022701
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 0.4
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[1, 1, 1, 0, 0.6426], [0, 0, 0, 0, 0.8905]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 7547928945771099987
+            name: Melee_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 7264937833518054639
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 12018962867191428407
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 9492710251713022701
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 0.4
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[1, 1, 1, 0, 0.6426], [0, 0, 0, 0, 0.8905]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 17076457900034705596
+            name: Melee_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 11712757601636519518
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 3861720100180099606
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 9492710251713022701
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 0.4
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[1, 1, 1, 0, 0.6426], [0, 0, 0, 0, 0.8905]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 13066333930052701014
+            name: Melee_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 14774530157279122502
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 17269354185854154558
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 9492710251713022701
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 0.4
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[1, 1, 1, 0, 0.6426], [0, 0, 0, 0, 0.8905]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+      - id: 17656864306953816762
+        name: Hammer
+        enabled: true
+        component:
+          - !<transform>
+            id: 11826115729862141810
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+        child:
+          - id: 10548371233138689514
+            name: Hammer_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 14630500272394452748
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 8062089831227493611
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 3019880384832892068
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 1626548458577388454
+            name: Hammer_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 118188606140938951
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 2491104695046749028
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 3019880384832892068
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 5316265394795957743
+            name: Hammer_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 16560512054165553138
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 2476442798996492364
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 3019880384832892068
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 11041549033304259781
+            name: Hammer_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 1235482827759026232
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 399741024362110780
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 3019880384832892068
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 14145523167056584580
+            name: Hammer_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 711737950402342751
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 18012435424490278148
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 3019880384832892068
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 4290623890484930037
+            name: Hammer_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 3873609903871577962
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 2159081059434007838
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 3019880384832892068
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 2610851614875825253
+            name: Hammer_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 15128336122625480750
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 3332230430497472105
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 3019880384832892068
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 9562817321799419931
+            name: Hammer_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 15587033112984952161
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 664405590611316249
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 3019880384832892068
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 13461171561445961551
+            name: Hammer_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 3973089464866788579
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 13078905514925188626
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 3019880384832892068
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 4349617027385490113
+            name: Hammer_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 2934656325564991940
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 18210865613426487737
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 3019880384832892068
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+      - id: 18088640359817242139
+        name: Worm
+        enabled: true
+        component:
+          - !<transform>
+            id: 11032770255567644001
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+        child:
+          - id: 891538997245411201
+            name: Worm_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 12412889968947792119
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 11778348198779493011
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 7806051487783154749
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 12143472734749854179
+            name: Worm_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 933270606352595985
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 17714041870420935268
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 7806051487783154749
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 5488958017064649902
+            name: Worm_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 17554909250923657514
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 14609080212326754535
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 7806051487783154749
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 17912828925666949205
+            name: Worm_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 8313909792295901125
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 14941311139572223828
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 7806051487783154749
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 450140942967180012
+            name: Worm_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 11914333514653406880
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 9487957810513399271
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 7806051487783154749
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 11664083113679020959
+            name: Worm_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 1163757092788569628
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 6838426316529874282
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 7806051487783154749
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 12279152647704072335
+            name: Worm_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 6374770142114931324
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 16234630459479361204
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 7806051487783154749
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 670777812926619295
+            name: Worm_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 8298712805181932140
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 16193583115152749046
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 7806051487783154749
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 15700480808465509169
+            name: Worm_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 13758188701652182491
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 9538317307934317248
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 7806051487783154749
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 14583799894113582818
+            name: Worm_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 2087955580535460592
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 8660100706149030745
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 7806051487783154749
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+      - id: 10168244569972232464
+        name: Beetle
+        enabled: true
+        component:
+          - !<transform>
+            id: 14681164317266920348
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+        child:
+          - id: 9451303812478564776
+            name: Beetle_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 17029425872523067578
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 3337159280027989306
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 8665573601895073415
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 8253244400167040951
+            name: Beetle_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 4031249806447992689
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 2812355236988130305
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 8665573601895073415
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 14148537410721272480
+            name: Beetle_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 8361805464392937099
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 15509315062665028121
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 8665573601895073415
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 9744905766690011030
+            name: Beetle_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 11323774505858423015
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 16594480822229170506
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 8665573601895073415
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 9667068084614430808
+            name: Beetle_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 15726000648573619817
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 17531850046631998647
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 8665573601895073415
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 13592448560620887430
+            name: Beetle_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 14657197821677289198
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 6175399946940840411
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 8665573601895073415
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 17929936220989070315
+            name: Beetle_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 13457290038962493166
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 9727887682075548035
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 8665573601895073415
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 10537115689203312808
+            name: Beetle_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 13172073289721014871
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 17061862659064613149
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 8665573601895073415
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 9141988274517940994
+            name: Beetle_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 15201471048454727990
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 8920266180952845690
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 8665573601895073415
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true
+          - id: 16231950603077298111
+            name: Beetle_VFX
+            enabled: true
+            component:
+              - !<transform>
+                id: 6767748466266087523
+                type: 1
+                enabled: true
+                position: [-79.6, 9.48, -56.25]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 12946128653667321092
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 8665573601895073415
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 1
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 1, [-1, -2.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 1
+                projection: true

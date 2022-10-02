@@ -109,6 +109,11 @@ void Hachiko::Scripting::CombatVisualEffectsPool::PlayEnemyAttackEffect(EnemyTyp
 		break;
 	}
 
+	if (current_attack_billboard == nullptr)
+	{
+		return;
+	}
+
 	float3 main_camera_direction = (Scenes::GetMainCamera()->GetTransform()->GetGlobalPosition() - position).Normalized() * 1.5f;
 
 	current_attack_billboard->GetGameObject()->GetTransform()->SetGlobalPosition(main_camera_direction + position + float3::unitY * 1.5f);
