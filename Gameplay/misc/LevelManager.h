@@ -53,11 +53,14 @@ namespace Hachiko
 			SERIALIZE_FIELD(GameObject*, _gauntlet_ui_go);
 			SERIALIZE_FIELD(GameObject*, _gauntlet_counter_go);
 
+			SERIALIZE_FIELD(GameObject*, _pause_menu);
+			SERIALIZE_FIELD(GameObject*, _player_hud);
 
 		private:
 			GauntletManager* _last_gauntlet = nullptr;
 			ComponentText* _enemy_counter = nullptr;
 			bool _inputs_blocked = false;
+			bool _game_paused = false;
 		};
 	}
 
