@@ -183,7 +183,7 @@ namespace Hachiko
             float _attack_current_delay = 0.f;
             // Spawning times
             float _current_spawning_time = 2.0f;
-            SERIALIZE_FIELD(float, spawn_progress);
+            float spawn_progress = 0.0f;
             const float spawn_rate = 0.5f;
             bool _has_spawned = false;
 
