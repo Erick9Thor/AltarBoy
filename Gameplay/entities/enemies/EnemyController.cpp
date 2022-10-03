@@ -45,6 +45,7 @@ Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 	, _outer_indicator(nullptr)
 	, _projectile_particles(nullptr)
 	, _explosion_particles(nullptr)
+	, spawn_progress(0.0f)
 {
 	// Push attack
 	push_attack.damage = 0;
@@ -84,6 +85,8 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 		animation->StartAnimating();
 	}
 
+	_enemy_body->ChangeDissolveProgress(0.0f, true);
+
 	srand((unsigned)time(NULL));
 }
 
@@ -118,14 +121,9 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 
 	if (_current_spawning_time > 0.0f || _state == EnemyState::SPAWNING)
 	{
-		spawn_progress += spawn_rate * Time::DeltaTime();
-
-		if (spawn_progress <= 1.0f) {
-			_enemy_body->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, spawn_progress), true);
-		}
-		else {
-			_enemy_body->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, 1.0f), true);
-		}
+		spawn_progress += spawn_rate * Time::DeltaTimeScaled();
+		
+		_enemy_body->ChangeDissolveProgress(spawn_progress, true);
 
 		SpawnController();
 		return;
@@ -794,16 +792,15 @@ void Hachiko::Scripting::EnemyController::Spawn()
 	switch (_enemy_type)
 	{
 	case EnemyType::BEETLE:
-		_current_spawning_time = _spawning_time;
 		if (_enemy_body)
 		{
 			_enemy_body->SetActive(true);
-			_enemy_body->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, 0.0f), true);
 		}
 		if (_parasite)
 		{
 			_parasite->SetActive(false);
 		}
+		_current_spawning_time = _spawning_time;
 		_has_spawned = true;
 		_state = EnemyState::SPAWNING;
 		break;
@@ -919,7 +916,6 @@ void Hachiko::Scripting::EnemyController::ResetEnemy()
 	if (_enemy_body)
 	{
 		_enemy_body->SetActive(true);
-		_enemy_body->ChangeDissolveProgress(1.0f, true);
 	}
 	
 	if (_parasite)
