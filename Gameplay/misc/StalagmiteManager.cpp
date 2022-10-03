@@ -8,7 +8,7 @@
 
 Hachiko::Scripting::StalagmiteManager::StalagmiteManager(GameObject* game_object)
 	: Script(game_object, "StalagmiteManager")
-	, _falling_time(0.4f)
+	, _falling_cooldown(0.4f)
 {
 }
 
@@ -22,7 +22,7 @@ void Hachiko::Scripting::StalagmiteManager::OnAwake()
 
 void Hachiko::Scripting::StalagmiteManager::OnStart()
 {
-	//GenerateStalagmites();
+	GenerateStalagmites();
 }
 
 void Hachiko::Scripting::StalagmiteManager::GenerateStalagmites()
@@ -46,17 +46,40 @@ void Hachiko::Scripting::StalagmiteManager::GenerateStalagmites()
 
 void Hachiko::Scripting::StalagmiteManager::OnUpdate()
 {
-	if (!_should_fall_stalagmites)
+	if (!_should_update_stalagmites)
 	{
 		return;
 	}
 
 	_player_pos = _player_controller->GetGameObject()->GetTransform()->GetGlobalPosition();
 
-	size_t fallen_stalagmites_count = 0;
+	size_t updated_stalagmites_count = 0;
 
 	for (unsigned i = 0; i < _stalagmites.size(); i++)
 	{
+		if (!_should_fall_stalagmites)
+		{
+			if (_stalagmites[i]->GetState() == StalagmiteState::DISSOLVING)
+			{
+				_stalagmites[i]->_dissolving_time -= Time::DeltaTime();
+				_stalagmites[i]->GetGameObject()->ChangeDissolveProgress(_stalagmites[i]->_dissolving_time, true);
+				if (_stalagmites[i]->_dissolving_time <= 0.0f)
+				{
+					_stalagmites[i]->SetNewState(StalagmiteState::INVALID);
+					_stalagmites[i]->Dissolved();
+					++updated_stalagmites_count;
+				}
+			}
+			if (updated_stalagmites_count >= _stalagmites.size())
+			{
+				_should_update_stalagmites = false;
+				return;
+			}
+
+			continue;
+		}
+
+
 		if (_stalagmites[i]->GetState() == StalagmiteState::INVALID && CheckPreviousStalagmite(i))
 		{
 			// MOVE STALAGMITE TO THE PLAYER
@@ -77,27 +100,31 @@ void Hachiko::Scripting::StalagmiteManager::OnUpdate()
 				falling_elapsed += Time::DeltaTime();
 				if (falling_elapsed >= _falling_time)
 				{
+					FallingStalagmite(_stalagmites[i], 1.0f);
+
 					// AOE PLAYER DAMAGE
 					 
 					CombatManager::AttackStats attack_stats;
 					attack_stats.damage = 1;
-					attack_stats.knockback_distance = 0.0f;
+					attack_stats.knockback_distance = 1.0f;
 					attack_stats.width = 3.5f;
-					attack_stats.range = 4.5; // a bit bigger than its attack activation range
+					attack_stats.range = 3.5;
 					attack_stats.type = CombatManager::AttackType::CIRCLE;
 					_combat_manager->EnemyMeleeAttack(_stalagmites[i]->GetExplosionArea()
 						->GetTransform()->GetGlobalMatrix(), attack_stats);
 					
+					_stalagmites[i]->SetBlockInPlace();
 
 					_stalagmites[i]->SetNewState(StalagmiteState::COLLAPSED);
 
-				    ++fallen_stalagmites_count;
+				    ++updated_stalagmites_count;
 
 				    falling_elapsed = 0;
 				}
 				else
 				{
-					FallingStalagmite(_stalagmites[i]);
+					float fall_progress = falling_elapsed / _falling_time;
+					FallingStalagmite(_stalagmites[i], fall_progress);
 				}
 
 			}
@@ -106,9 +133,10 @@ void Hachiko::Scripting::StalagmiteManager::OnUpdate()
 		}
 	}
 
-	if (fallen_stalagmites_count >= _stalagmites.size())
+	if (updated_stalagmites_count >= _stalagmites.size())
 	{
 		_should_fall_stalagmites = false;
+		_should_update_stalagmites = true;
 	}
 }
 
@@ -137,20 +165,23 @@ void Hachiko::Scripting::StalagmiteManager::UpdateStalagmiteState(Stalagmite* st
 	case StalagmiteState::COLLAPSED:
 		stalagmite->SetStalagmiteOnGround();
 		break;
+	case StalagmiteState::DISSOLVING:
+		break;
 	default:
 		break;
 	}
 }
 
-void Hachiko::Scripting::StalagmiteManager::FallingStalagmite(Stalagmite* stalagmite)
+void Hachiko::Scripting::StalagmiteManager::FallingStalagmite(Stalagmite* stalagmite, float fall_progress)
 {
-	stalagmite->Falling();
+	stalagmite->Falling(fall_progress);
 }
 
 void Hachiko::Scripting::StalagmiteManager::TriggerStalagmites()
 {
 	_should_fall_stalagmites = true;
-	GenerateStalagmites();
+	_should_update_stalagmites = true;
+	//GenerateStalagmites();
 }
 
 bool Hachiko::Scripting::StalagmiteManager::CheckPreviousStalagmite(int idx)
@@ -158,5 +189,17 @@ bool Hachiko::Scripting::StalagmiteManager::CheckPreviousStalagmite(int idx)
     return (idx == 0) ? true : _stalagmites[static_cast<size_t>(idx - 1)]->IsStalagmiteCollapsed();
 }
 
-
+void Hachiko::Scripting::StalagmiteManager::DestroyAllStalagmites()
+{
+	_should_fall_stalagmites = false;
+	for (unsigned i = 0; i < _stalagmites.size(); i++)
+	{
+		if (_stalagmites[i]->GetState() != StalagmiteState::COLLAPSED)
+		{
+			return;
+		}
+		_stalagmites[i]->SetNewState(StalagmiteState::DISSOLVING);
+		_stalagmites[i]->_dissolving_time = _total_dissolving_time;
+	}
+}
 

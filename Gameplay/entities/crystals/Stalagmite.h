@@ -12,6 +12,7 @@ namespace Hachiko
 			INVALID,
 			FALLING,
 			COLLAPSED,
+			DISSOLVING
 		};
 
 		class Stalagmite : public Script
@@ -52,9 +53,14 @@ namespace Hachiko
 				return _explosion_effect;
 			}
 
+			GameObject* GetBlock()
+			{
+				return _blocking_object;
+			}
+
 			void ActiveStalagmite();
 			void ActiveEffects();
-			void Falling();
+			void Falling(float fall_progress);
 
 			bool IsStalagmiteCollapsed() 
 			{
@@ -63,9 +69,15 @@ namespace Hachiko
 
 			void SetStalagmiteOnGround()
 			{
-				game_object->SetActive(false);
+				_explosion_effect->SetActive(false);
 				_stalagmite_collapsed = true;
 			}
+
+			void SetBlockInPlace();
+
+			void Dissolved();
+
+			float _dissolving_time = 0.0f;
 
 		private:
 
@@ -74,6 +86,7 @@ namespace Hachiko
 
 			SERIALIZE_FIELD(GameObject*, _explosion_effect);
 			SERIALIZE_FIELD(GameObject*, GEO);
+			SERIALIZE_FIELD(GameObject*, _blocking_object);
 
 			bool _stalagmite_collapsed = false;
 		};

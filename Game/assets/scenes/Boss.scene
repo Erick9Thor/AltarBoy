@@ -10360,6 +10360,135 @@ child:
         position: [0, 0, 0]
         rotation: [-0, 0, -0]
         scale: [1, 1, 1]
+    child:
+      - id: 1174290033128970853
+        name: StalactiteBlock
+        enabled: true
+        component:
+          - !<transform>
+            id: 6472983667966641559
+            type: 1
+            enabled: true
+            position: [-95.47, 0, -53.32]
+            rotation: [-0, 0, -0]
+            scale: [3, 3, 3]
+        child:
+          - id: 14383466581903873761
+            name: Box001
+            enabled: true
+            component:
+              - !<transform>
+                id: 17153927791345909129
+                type: 1
+                enabled: true
+                position: [0, 0.7935, -0.5]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<mesh_renderer>
+                id: 698920371498471538
+                type: 2
+                enabled: true
+                mesh_id: 1654487118907036717
+                navigable: false
+                visible: false
+                material_id: 6750369022920963075
+                tint_color: [1, 1, 1, 1]
+      - id: 13790610659311076507
+        name: StalactiteBlock
+        enabled: true
+        component:
+          - !<transform>
+            id: 11647561117905437304
+            type: 1
+            enabled: true
+            position: [-95.47, 1.082, -53.32]
+            rotation: [-0, 0, -0]
+            scale: [3, 3, 3]
+        child:
+          - id: 1155786743973453559
+            name: Box001
+            enabled: true
+            component:
+              - !<transform>
+                id: 15022736316112600413
+                type: 1
+                enabled: true
+                position: [0, 0, -0.5]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<mesh_renderer>
+                id: 16092233002745487205
+                type: 2
+                enabled: true
+                mesh_id: 1654487118907036717
+                navigable: false
+                visible: true
+                material_id: 6750369022920963075
+                tint_color: [1, 1, 1, 1]
+      - id: 17613249223470864174
+        name: StalactiteBlock
+        enabled: true
+        component:
+          - !<transform>
+            id: 12438390811774163323
+            type: 1
+            enabled: true
+            position: [-95.47, 1.082, -53.32]
+            rotation: [-0, 0, -0]
+            scale: [3, 3, 3]
+        child:
+          - id: 14132374464124097406
+            name: Box001
+            enabled: true
+            component:
+              - !<transform>
+                id: 14976925670699458038
+                type: 1
+                enabled: true
+                position: [0, 0, -0.5]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<mesh_renderer>
+                id: 9941100293967516540
+                type: 2
+                enabled: true
+                mesh_id: 1654487118907036717
+                navigable: false
+                visible: false
+                material_id: 6750369022920963075
+                tint_color: [1, 1, 1, 1]
+      - id: 14588050494364176234
+        name: StalactiteBlock
+        enabled: true
+        component:
+          - !<transform>
+            id: 14697826047181136966
+            type: 1
+            enabled: true
+            position: [-95.47, 1.082, -53.32]
+            rotation: [-0, 0, -0]
+            scale: [3, 3, 3]
+        child:
+          - id: 16905815435618723929
+            name: Box001
+            enabled: true
+            component:
+              - !<transform>
+                id: 10955779201480436932
+                type: 1
+                enabled: true
+                position: [0, 0, -0.5]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<mesh_renderer>
+                id: 10121474061133594323
+                type: 2
+                enabled: true
+                mesh_id: 1654487118907036717
+                navigable: false
+                visible: true
+                material_id: 6750369022920963075
+                tint_color: [1, 1, 1, 1]
   - id: 2654467777031218770
     name: cube
     enabled: true
@@ -10411,6 +10540,15 @@ child:
       - id: 7723776890765649593
         type: 20
         enabled: true
+      - !<agent>
+        id: 10901062200173272134
+        type: 17
+        enabled: true
+        max_speed: 5
+        max_acceleration: 2
+        avoid_obstacles: false
+        radius: 0.5
+        is_player: true
       - !<script>
         id: 10107396043628383126
         type: 15
@@ -10474,15 +10612,6 @@ child:
         "'_move_speed@float'": 7
         "'_max_hp@int'": 4
         "'_current_hp@int'": 4
-      - !<agent>
-        id: 10901062200173272134
-        type: 17
-        enabled: true
-        max_speed: 5
-        max_acceleration: 2
-        avoid_obstacles: false
-        radius: 0.5
-        is_player: true
     child:
       - id: 12129063890851041933
         name: GEO_$AssimpFbx$_RotationOffset
@@ -13559,7 +13688,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1931, 1187]
+            size: [1055, 644]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -14234,7 +14363,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 7]
-            rotation: [0, 90, 0]
+            rotation: [180, 89.98, 180]
             scale: [2.5, 2.5, 2.5]
           - !<billboard>
             id: 12691712513651242410
@@ -14348,7 +14477,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1931, 1187]
+            size: [1055, 644]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -14659,6 +14788,15 @@ child:
             type: 14
             enabled: true
             state_machine: 14686609166423751852
+          - id: 9726623039426975355
+            type: 20
+            enabled: true
+          - !<obstacle>
+            id: 12044197510119382728
+            type: 18
+            enabled: true
+            obstacle_type: 0
+            obstacle_size: [1, 1, 1]
           - !<script>
             id: 3599054301215079572
             type: 15
@@ -14670,9 +14808,6 @@ child:
             "'_move_speed@float'": 0
             "'_max_hp@int'": 1
             "'_current_hp@int'": 3
-          - id: 9726623039426975355
-            type: 20
-            enabled: true
           - !<script>
             id: 7099202438566082956
             type: 15
@@ -14689,12 +14824,6 @@ child:
             "'_explosive_crystal@bool'": true
             "'_regen_time@float'": 5
             "'_should_regen@bool'": false
-          - !<obstacle>
-            id: 12044197510119382728
-            type: 18
-            enabled: true
-            obstacle_type: 0
-            obstacle_size: [1, 1, 1]
         child:
           - id: 6386321046719328876
             name: Geo
@@ -15182,6 +15311,15 @@ child:
             type: 14
             enabled: true
             state_machine: 14686609166423751852
+          - id: 16891073625632538523
+            type: 20
+            enabled: true
+          - !<obstacle>
+            id: 1740759623538547053
+            type: 18
+            enabled: true
+            obstacle_type: 0
+            obstacle_size: [1, 1, 1]
           - !<script>
             id: 895337124186801459
             type: 15
@@ -15193,9 +15331,6 @@ child:
             "'_move_speed@float'": 0
             "'_max_hp@int'": 1
             "'_current_hp@int'": 3
-          - id: 16891073625632538523
-            type: 20
-            enabled: true
           - !<script>
             id: 17423829428028466011
             type: 15
@@ -15212,12 +15347,6 @@ child:
             "'_explosive_crystal@bool'": true
             "'_regen_time@float'": 5
             "'_should_regen@bool'": false
-          - !<obstacle>
-            id: 1740759623538547053
-            type: 18
-            enabled: true
-            obstacle_type: 0
-            obstacle_size: [1, 1, 1]
         child:
           - id: 13447924608606654100
             name: Geo
@@ -15705,6 +15834,15 @@ child:
             type: 14
             enabled: true
             state_machine: 14686609166423751852
+          - id: 16142387433771406025
+            type: 20
+            enabled: true
+          - !<obstacle>
+            id: 8003731813396118874
+            type: 18
+            enabled: true
+            obstacle_type: 0
+            obstacle_size: [1, 1, 1]
           - !<script>
             id: 6244490764350963312
             type: 15
@@ -15716,9 +15854,6 @@ child:
             "'_move_speed@float'": 0
             "'_max_hp@int'": 1
             "'_current_hp@int'": 3
-          - id: 16142387433771406025
-            type: 20
-            enabled: true
           - !<script>
             id: 12746795632007925563
             type: 15
@@ -15735,12 +15870,6 @@ child:
             "'_explosive_crystal@bool'": true
             "'_regen_time@float'": 5
             "'_should_regen@bool'": false
-          - !<obstacle>
-            id: 8003731813396118874
-            type: 18
-            enabled: true
-            obstacle_type: 0
-            obstacle_size: [1, 1, 1]
         child:
           - id: 6142871526608893870
             name: Geo
@@ -16228,6 +16357,15 @@ child:
             type: 14
             enabled: true
             state_machine: 14686609166423751852
+          - id: 10736517961272359313
+            type: 20
+            enabled: true
+          - !<obstacle>
+            id: 14450317113975898177
+            type: 18
+            enabled: true
+            obstacle_type: 0
+            obstacle_size: [1, 1, 1]
           - !<script>
             id: 9898177994101078511
             type: 15
@@ -16239,9 +16377,6 @@ child:
             "'_move_speed@float'": 0
             "'_max_hp@int'": 1
             "'_current_hp@int'": 3
-          - id: 10736517961272359313
-            type: 20
-            enabled: true
           - !<script>
             id: 3494728538005272533
             type: 15
@@ -16258,12 +16393,6 @@ child:
             "'_explosive_crystal@bool'": true
             "'_regen_time@float'": 5
             "'_should_regen@bool'": false
-          - !<obstacle>
-            id: 14450317113975898177
-            type: 18
-            enabled: true
-            obstacle_type: 0
-            obstacle_size: [1, 1, 1]
         child:
           - id: 5794249401786367637
             name: Geo
@@ -16751,6 +16880,15 @@ child:
             type: 14
             enabled: true
             state_machine: 14686609166423751852
+          - id: 18069061226882641900
+            type: 20
+            enabled: true
+          - !<obstacle>
+            id: 14874670807055275858
+            type: 18
+            enabled: true
+            obstacle_type: 0
+            obstacle_size: [1, 1, 1]
           - !<script>
             id: 7116401103176963667
             type: 15
@@ -16762,9 +16900,6 @@ child:
             "'_move_speed@float'": 0
             "'_max_hp@int'": 1
             "'_current_hp@int'": 3
-          - id: 18069061226882641900
-            type: 20
-            enabled: true
           - !<script>
             id: 13786243019482848842
             type: 15
@@ -16781,12 +16916,6 @@ child:
             "'_explosive_crystal@bool'": true
             "'_regen_time@float'": 5
             "'_should_regen@bool'": false
-          - !<obstacle>
-            id: 14874670807055275858
-            type: 18
-            enabled: true
-            obstacle_type: 0
-            obstacle_size: [1, 1, 1]
         child:
           - id: 4145210944842869034
             name: Geo
@@ -17294,6 +17423,7 @@ child:
             class_name: Stalagmite
             "'_explosion_effect@GameObject*'": 3421348619965502414
             "'GEO@GameObject*'": 1595183910588936924
+            "'_blocking_object@GameObject*'": 1174290033128970853
         child:
           - id: 1595183910588936924
             name: GEO
@@ -18812,6 +18942,7 @@ child:
             class_name: Stalagmite
             "'_explosion_effect@GameObject*'": 15147460649301959835
             "'GEO@GameObject*'": 14998726566986447237
+            "'_blocking_object@GameObject*'": 13790610659311076507
         child:
           - id: 14998726566986447237
             name: GEO
@@ -20330,6 +20461,7 @@ child:
             class_name: Stalagmite
             "'_explosion_effect@GameObject*'": 4746688373838826807
             "'GEO@GameObject*'": 12839499806535598514
+            "'_blocking_object@GameObject*'": 17613249223470864174
         child:
           - id: 12839499806535598514
             name: GEO
@@ -21848,6 +21980,7 @@ child:
             class_name: Stalagmite
             "'_explosion_effect@GameObject*'": 16899680708686865601
             "'GEO@GameObject*'": 4963840294499294150
+            "'_blocking_object@GameObject*'": 14588050494364176234
         child:
           - id: 4963840294499294150
             name: GEO
@@ -23348,3 +23481,687 @@ child:
                     visible: true
                     material_id: 6462450398853139216
                     tint_color: [1, 1, 1, 1]
+  - id: 973405611815327481
+    name: Lasers
+    enabled: true
+    component:
+      - !<transform>
+        id: 8684603000103290927
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [-0, 0, -0]
+        scale: [1, 1, 1]
+    child:
+      - id: 428415703515281272
+        name: Laser
+        enabled: true
+        component:
+          - !<transform>
+            id: 18215149525007300290
+            type: 1
+            enabled: true
+            position: [-102.7, 1.846, -47.45]
+            rotation: [179.9, -89.98, -180]
+            scale: [1, 1, 1]
+          - id: 17146060212709042690
+            type: 20
+            enabled: true
+          - !<script>
+            id: 12251176708937282535
+            type: 15
+            enabled: true
+            class_name: LaserController
+            "'_laser@GameObject*'": 3644990291431121546
+            "'_max_length@float'": 50
+            "'_max_scale@float'": 0.6
+            "'_activation_time@float'": 1
+            "'_damage@float'": 1
+            "'_spin_movement@bool'": false
+            "'_spin_speed@float'": 20
+            "'_horizonal_movement@bool'": true
+            "'_movement_speed@float'": 0.5
+            "'_movement_target@GameObject*'": 0
+            "'_toggle_activation@bool'": true
+            "'_toggle_active_time@float'": 1
+            "'_toggle_inactive_time@float'": 1
+            "'_sparks@GameObject*'": 1822806795974911518
+        child:
+          - id: 3680733732307552553
+            name: Box
+            enabled: false
+            component:
+              - !<transform>
+                id: 10308465463274547732
+                type: 1
+                enabled: true
+                position: [0, -0.033, 0.0839]
+                rotation: [-90, 0, 0]
+                scale: [1, 1, 1]
+              - !<mesh_renderer>
+                id: 18143774656214085727
+                type: 2
+                enabled: true
+                mesh_id: 1654487118907036717
+                navigable: false
+                visible: true
+                material_id: 6750369022920963075
+                tint_color: [1, 1, 1, 1]
+          - id: 3644990291431121546
+            name: Cylinder
+            enabled: true
+            component:
+              - !<transform>
+                id: 10166438089644154136
+                type: 1
+                enabled: true
+                position: [0, 0.5, -0.5]
+                rotation: [180, 0, -0]
+                scale: [0.2, 0.2, 3.492]
+              - !<mesh_renderer>
+                id: 5977474862780665575
+                type: 2
+                enabled: true
+                mesh_id: 10210867973034302559
+                navigable: false
+                visible: true
+                material_id: 5638565975614595118
+                tint_color: [1, 1, 1, 1]
+          - id: 13624665419812458138
+            name: laser_mesh003
+            enabled: true
+            component:
+              - !<transform>
+                id: 17531350077050315262
+                type: 1
+                enabled: true
+                position: [-0.104, -0.9799, -0.5081]
+                rotation: [90.07, 89.97, -90.07]
+                scale: [0.0082, 0.0082, 0.0082]
+              - !<mesh_renderer>
+                id: 10862557252832403681
+                type: 2
+                enabled: true
+                mesh_id: 15952062884272764606
+                navigable: false
+                visible: true
+                material_id: 17731599994553605144
+                tint_color: [1, 1, 1, 1]
+          - id: 1822806795974911518
+            name: LaserSparks
+            enabled: true
+            component:
+              - !<transform>
+                id: 9120757207055821502
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [90, 0, -0]
+                scale: [1, 1, 1]
+              - !<particle_system>
+                id: 567349221650411773
+                type: 22
+                enabled: true
+                sections:
+                  parameters: true
+                  emission: true
+                  shape: true
+                  lights: false
+                  renderer: true
+                parameters:
+                  duration: 0.5
+                  loop: false
+                  life: [true, true, 0, [0.25, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  speed: [true, true, 0, [30, 5], 0.5, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  size: [true, true, 0, [2, 1], 0.25, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  properties: [1, 0, 0, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                emission:
+                  rate: [true, true, 0, [50, 10], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  rate_burst: [true, true, 0, [10, 10], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  burst: false
+                emitter_shape:
+                  type: 0
+                  properties: [360, 0, [0, 0, 0], 0.1, 0, [0, 0, 0], [1, 1, 1], 10]
+                texture:
+                  texture_id: 3291545039621372658
+                  tiles: [2, 1]
+                  flip: [false, false]
+                  total_tiles: 2
+                modifiers:
+                  velocity:
+                    active: false
+                    speed: [true, true, 2, [0, 0], 0.001, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  size:
+                    active: false
+                    size: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  color:
+                    active: true
+                    color_gradient: [[1, 0, 0, 0, 0.88], [1, 1, 1, 0, 0.9477], [0, 0, 0, 0, 1]]
+                    color_cycles: 1
+                  force:
+                    active: false
+                    rotation: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    x_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    y_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    z_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  animation:
+                    active: false
+                    animation_speed: 0
+                    blend_factor: 0
+                    fit_to_lifetime: false
+                  noise:
+                    active: false
+                    separate_axes: false
+                    strength:
+                      x: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                      y: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                      z: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    position: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    rotation: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    scale: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+      - id: 11619970073425345217
+        name: Laser
+        enabled: true
+        component:
+          - !<transform>
+            id: 3826514210155681876
+            type: 1
+            enabled: true
+            position: [-101.5, 1.846, -46.02]
+            rotation: [-180, -89.98, -180]
+            scale: [1, 1, 1]
+          - id: 7646368997417732842
+            type: 20
+            enabled: true
+          - !<script>
+            id: 8906591280214183552
+            type: 15
+            enabled: true
+            class_name: LaserController
+            "'_laser@GameObject*'": 901418454591988461
+            "'_max_length@float'": 50
+            "'_max_scale@float'": 0.6
+            "'_activation_time@float'": 1
+            "'_damage@float'": 1
+            "'_spin_movement@bool'": false
+            "'_spin_speed@float'": 20
+            "'_horizonal_movement@bool'": true
+            "'_movement_speed@float'": 0.5
+            "'_movement_target@GameObject*'": 0
+            "'_toggle_activation@bool'": true
+            "'_toggle_active_time@float'": 1
+            "'_toggle_inactive_time@float'": 1
+            "'_sparks@GameObject*'": 9776763036210138520
+        child:
+          - id: 8982443265783914845
+            name: Box
+            enabled: false
+            component:
+              - !<transform>
+                id: 1426676662900248999
+                type: 1
+                enabled: true
+                position: [0, -0.033, 0.0839]
+                rotation: [-90, 0, 0]
+                scale: [1, 1, 1]
+              - !<mesh_renderer>
+                id: 16982011556770962101
+                type: 2
+                enabled: true
+                mesh_id: 1654487118907036717
+                navigable: false
+                visible: true
+                material_id: 6750369022920963075
+                tint_color: [1, 1, 1, 1]
+          - id: 901418454591988461
+            name: Cylinder
+            enabled: true
+            component:
+              - !<transform>
+                id: 5075749676081974800
+                type: 1
+                enabled: true
+                position: [0, 0.5, -0.5]
+                rotation: [-180, 0, -0]
+                scale: [0.2, 0.2, 3.492]
+              - !<mesh_renderer>
+                id: 15738646885537646877
+                type: 2
+                enabled: true
+                mesh_id: 10210867973034302559
+                navigable: false
+                visible: true
+                material_id: 5638565975614595118
+                tint_color: [1, 1, 1, 1]
+          - id: 12051149069275464410
+            name: laser_mesh003
+            enabled: true
+            component:
+              - !<transform>
+                id: 6053153794338872310
+                type: 1
+                enabled: true
+                position: [-0.104, -0.9799, -0.5081]
+                rotation: [90.07, 89.97, -90.07]
+                scale: [0.0082, 0.0082, 0.0082]
+              - !<mesh_renderer>
+                id: 6900037643849585391
+                type: 2
+                enabled: true
+                mesh_id: 15952062884272764606
+                navigable: false
+                visible: true
+                material_id: 17731599994553605144
+                tint_color: [1, 1, 1, 1]
+          - id: 9776763036210138520
+            name: LaserSparks
+            enabled: true
+            component:
+              - !<transform>
+                id: 12436123539703778788
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [90, 0, -0]
+                scale: [1, 1, 1]
+              - !<particle_system>
+                id: 6169789291664364380
+                type: 22
+                enabled: true
+                sections:
+                  parameters: true
+                  emission: true
+                  shape: true
+                  lights: false
+                  renderer: true
+                parameters:
+                  duration: 0.5
+                  loop: false
+                  life: [true, true, 0, [0.25, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  speed: [true, true, 0, [30, 5], 0.5, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  size: [true, true, 0, [2, 1], 0.25, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  properties: [1, 0, 0, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                emission:
+                  rate: [true, true, 0, [50, 10], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  rate_burst: [true, true, 0, [10, 10], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  burst: false
+                emitter_shape:
+                  type: 0
+                  properties: [360, 0, [0, 0, 0], 0.1, 0, [0, 0, 0], [1, 1, 1], 10]
+                texture:
+                  texture_id: 3291545039621372658
+                  tiles: [2, 1]
+                  flip: [false, false]
+                  total_tiles: 2
+                modifiers:
+                  velocity:
+                    active: false
+                    speed: [true, true, 2, [0, 0], 0.001, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  size:
+                    active: false
+                    size: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  color:
+                    active: true
+                    color_gradient: [[1, 0, 0, 0, 0.88], [1, 1, 1, 0, 0.9477], [0, 0, 0, 0, 1]]
+                    color_cycles: 1
+                  force:
+                    active: false
+                    rotation: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    x_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    y_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    z_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  animation:
+                    active: false
+                    animation_speed: 0
+                    blend_factor: 0
+                    fit_to_lifetime: false
+                  noise:
+                    active: false
+                    separate_axes: false
+                    strength:
+                      x: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                      y: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                      z: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    position: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    rotation: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    scale: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+      - id: 10332504126153769886
+        name: Laser
+        enabled: true
+        component:
+          - !<transform>
+            id: 17003432343228774160
+            type: 1
+            enabled: true
+            position: [-102.7, 1.846, -44.74]
+            rotation: [-180, -89.98, -180]
+            scale: [1, 1, 1]
+          - id: 10959298474108395037
+            type: 20
+            enabled: true
+          - !<script>
+            id: 8640307054798634406
+            type: 15
+            enabled: true
+            class_name: LaserController
+            "'_laser@GameObject*'": 2866970681549883700
+            "'_max_length@float'": 50
+            "'_max_scale@float'": 0.6
+            "'_activation_time@float'": 1
+            "'_damage@float'": 1
+            "'_spin_movement@bool'": false
+            "'_spin_speed@float'": 20
+            "'_horizonal_movement@bool'": true
+            "'_movement_speed@float'": 0.5
+            "'_movement_target@GameObject*'": 0
+            "'_toggle_activation@bool'": true
+            "'_toggle_active_time@float'": 1
+            "'_toggle_inactive_time@float'": 1
+            "'_sparks@GameObject*'": 2873891587171611228
+        child:
+          - id: 4218954752190060830
+            name: Box
+            enabled: false
+            component:
+              - !<transform>
+                id: 5322817313971169782
+                type: 1
+                enabled: true
+                position: [0, -0.033, 0.0839]
+                rotation: [-90, 0, 0]
+                scale: [1, 1, 1]
+              - !<mesh_renderer>
+                id: 5835981984504718027
+                type: 2
+                enabled: true
+                mesh_id: 1654487118907036717
+                navigable: false
+                visible: true
+                material_id: 6750369022920963075
+                tint_color: [1, 1, 1, 1]
+          - id: 2866970681549883700
+            name: Cylinder
+            enabled: true
+            component:
+              - !<transform>
+                id: 7480674410331255859
+                type: 1
+                enabled: true
+                position: [0, 0.5, -0.5]
+                rotation: [-180, 0, -0]
+                scale: [0.2, 0.2, 3.492]
+              - !<mesh_renderer>
+                id: 7601892101880690809
+                type: 2
+                enabled: true
+                mesh_id: 10210867973034302559
+                navigable: false
+                visible: true
+                material_id: 5638565975614595118
+                tint_color: [1, 1, 1, 1]
+          - id: 18260058909066991265
+            name: laser_mesh003
+            enabled: true
+            component:
+              - !<transform>
+                id: 11220327174625587081
+                type: 1
+                enabled: true
+                position: [-0.104, -0.9799, -0.5081]
+                rotation: [90.07, 89.97, -90.07]
+                scale: [0.0082, 0.0082, 0.0082]
+              - !<mesh_renderer>
+                id: 3692517330730638884
+                type: 2
+                enabled: true
+                mesh_id: 15952062884272764606
+                navigable: false
+                visible: true
+                material_id: 17731599994553605144
+                tint_color: [1, 1, 1, 1]
+          - id: 2873891587171611228
+            name: LaserSparks
+            enabled: true
+            component:
+              - !<transform>
+                id: 4489558031533052953
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [90, 0, -0]
+                scale: [1, 1, 1]
+              - !<particle_system>
+                id: 10006030659603967734
+                type: 22
+                enabled: true
+                sections:
+                  parameters: true
+                  emission: true
+                  shape: true
+                  lights: false
+                  renderer: true
+                parameters:
+                  duration: 0.5
+                  loop: false
+                  life: [true, true, 0, [0.25, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  speed: [true, true, 0, [30, 5], 0.5, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  size: [true, true, 0, [2, 1], 0.25, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  properties: [1, 0, 0, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                emission:
+                  rate: [true, true, 0, [50, 10], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  rate_burst: [true, true, 0, [10, 10], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  burst: false
+                emitter_shape:
+                  type: 0
+                  properties: [360, 0, [0, 0, 0], 0.1, 0, [0, 0, 0], [1, 1, 1], 10]
+                texture:
+                  texture_id: 3291545039621372658
+                  tiles: [2, 1]
+                  flip: [false, false]
+                  total_tiles: 2
+                modifiers:
+                  velocity:
+                    active: false
+                    speed: [true, true, 2, [0, 0], 0.001, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  size:
+                    active: false
+                    size: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  color:
+                    active: true
+                    color_gradient: [[1, 0, 0, 0, 0.88], [1, 1, 1, 0, 0.9477], [0, 0, 0, 0, 1]]
+                    color_cycles: 1
+                  force:
+                    active: false
+                    rotation: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    x_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    y_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    z_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  animation:
+                    active: false
+                    animation_speed: 0
+                    blend_factor: 0
+                    fit_to_lifetime: false
+                  noise:
+                    active: false
+                    separate_axes: false
+                    strength:
+                      x: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                      y: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                      z: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    position: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    rotation: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    scale: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+      - id: 14582677534020241607
+        name: Laser
+        enabled: true
+        component:
+          - !<transform>
+            id: 12539972433448872501
+            type: 1
+            enabled: true
+            position: [-101.5, 1.846, -43.1]
+            rotation: [-180, -89.98, -180]
+            scale: [1, 1, 1]
+          - id: 15110293740082260240
+            type: 20
+            enabled: true
+          - !<script>
+            id: 7003635075789767671
+            type: 15
+            enabled: true
+            class_name: LaserController
+            "'_laser@GameObject*'": 6886785966180346459
+            "'_max_length@float'": 50
+            "'_max_scale@float'": 0.6
+            "'_activation_time@float'": 1
+            "'_damage@float'": 1
+            "'_spin_movement@bool'": false
+            "'_spin_speed@float'": 20
+            "'_horizonal_movement@bool'": true
+            "'_movement_speed@float'": 0.5
+            "'_movement_target@GameObject*'": 0
+            "'_toggle_activation@bool'": true
+            "'_toggle_active_time@float'": 1
+            "'_toggle_inactive_time@float'": 1
+            "'_sparks@GameObject*'": 484282634117053623
+        child:
+          - id: 12365926679964093103
+            name: Box
+            enabled: false
+            component:
+              - !<transform>
+                id: 16989806941955481422
+                type: 1
+                enabled: true
+                position: [0, -0.033, 0.0839]
+                rotation: [-90, 0, 0]
+                scale: [1, 1, 1]
+              - !<mesh_renderer>
+                id: 18344714987046809354
+                type: 2
+                enabled: true
+                mesh_id: 1654487118907036717
+                navigable: false
+                visible: true
+                material_id: 6750369022920963075
+                tint_color: [1, 1, 1, 1]
+          - id: 6886785966180346459
+            name: Cylinder
+            enabled: true
+            component:
+              - !<transform>
+                id: 15307796486612611200
+                type: 1
+                enabled: true
+                position: [0, 0.5, -0.5]
+                rotation: [-180, 0, -0]
+                scale: [0.2, 0.2, 3.492]
+              - !<mesh_renderer>
+                id: 12315263024066334390
+                type: 2
+                enabled: true
+                mesh_id: 10210867973034302559
+                navigable: false
+                visible: true
+                material_id: 5638565975614595118
+                tint_color: [1, 1, 1, 1]
+          - id: 17066865342941027221
+            name: laser_mesh003
+            enabled: true
+            component:
+              - !<transform>
+                id: 3904585381929427888
+                type: 1
+                enabled: true
+                position: [-0.104, -0.9799, -0.5081]
+                rotation: [90.07, 89.97, -90.07]
+                scale: [0.0082, 0.0082, 0.0082]
+              - !<mesh_renderer>
+                id: 10849948976181776109
+                type: 2
+                enabled: true
+                mesh_id: 15952062884272764606
+                navigable: false
+                visible: true
+                material_id: 17731599994553605144
+                tint_color: [1, 1, 1, 1]
+          - id: 484282634117053623
+            name: LaserSparks
+            enabled: true
+            component:
+              - !<transform>
+                id: 5623744350054910829
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [90, 0, -0]
+                scale: [1, 1, 1]
+              - !<particle_system>
+                id: 8490207005564542390
+                type: 22
+                enabled: true
+                sections:
+                  parameters: true
+                  emission: true
+                  shape: true
+                  lights: false
+                  renderer: true
+                parameters:
+                  duration: 0.5
+                  loop: false
+                  life: [true, true, 0, [0.25, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  speed: [true, true, 0, [30, 5], 0.5, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  size: [true, true, 0, [2, 1], 0.25, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  properties: [1, 0, 0, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                emission:
+                  rate: [true, true, 0, [50, 10], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  rate_burst: [true, true, 0, [10, 10], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  burst: false
+                emitter_shape:
+                  type: 0
+                  properties: [360, 0, [0, 0, 0], 0.1, 0, [0, 0, 0], [1, 1, 1], 10]
+                texture:
+                  texture_id: 3291545039621372658
+                  tiles: [2, 1]
+                  flip: [false, false]
+                  total_tiles: 2
+                modifiers:
+                  velocity:
+                    active: false
+                    speed: [true, true, 2, [0, 0], 0.001, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  size:
+                    active: false
+                    size: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  color:
+                    active: true
+                    color_gradient: [[1, 0, 0, 0, 0.88], [1, 1, 1, 0, 0.9477], [0, 0, 0, 0, 1]]
+                    color_cycles: 1
+                  force:
+                    active: false
+                    rotation: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    x_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    y_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    z_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  animation:
+                    active: false
+                    animation_speed: 0
+                    blend_factor: 0
+                    fit_to_lifetime: false
+                  noise:
+                    active: false
+                    separate_axes: false
+                    strength:
+                      x: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                      y: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                      z: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    position: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    rotation: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    scale: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]

@@ -366,6 +366,7 @@ void Hachiko::Scripting::BossController::StartCocoon()
     {
         cocoon_placeholder_go->SetActive(true);
     }
+    _stalagmite_manager->DestroyAllStalagmites();
     FocusCamera(true);
 }
 
@@ -861,6 +862,9 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
             // TODO: Fit this into a pattern.
             const unsigned new_weapon = (_current_weapon + 1) % 3;
             ChangeWeapon(new_weapon);
+
+            // Stalactites get destroyed on weapon change
+            _stalagmite_manager->DestroyAllStalagmites();
         }
         else if (_current_jumping_mode == JumpingMode::CRYSTAL)
         {
