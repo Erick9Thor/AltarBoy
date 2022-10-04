@@ -308,6 +308,7 @@
 #define SHAPE_SECTION "shape"
 #define LIGHTS_SECTION "lights"
 #define RENDERER_SECTION "renderer"
+#define TEXTURE_SECTION "texture"
 //particle config
 #define PARTICLE_PARAMETERS "parameters"
 #define PARTICLES_DURATION "duration"

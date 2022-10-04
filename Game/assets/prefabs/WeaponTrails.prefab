@@ -6,7 +6,7 @@ component:
     type: 1
     enabled: true
     position: [0, 0, 0]
-    rotation: [0, -45, 0]
+    rotation: [0, 0, 0]
     scale: [1, 1, 1]
 child:
   - name: ParasiteTrail
@@ -15,9 +15,9 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [192.6, -2.689, -24.02]
+        position: [0, 0, 0]
         rotation: [-0, 0, -0]
-        scale: [2.273, 2.222, 2.273]
+        scale: [1, 1, 1]
     child:
       - name: ParasiteTrailRight
         enabled: true
@@ -25,14 +25,14 @@ child:
           - !<transform>
             type: 1
             enabled: true
-            position: [-85, 2.3, 13]
-            rotation: [-0, 65, -0]
+            position: [-2.788, 2.3, 2.145]
+            rotation: [-0, 13.9, -0]
             scale: [1, 0.9999, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
-            texture_id: 12793745184163139006
+            texture_id: 15300208463688155448
             tiles: [3, 3]
             flip: [false, false]
             billboard_lifetime: 0.35
@@ -49,7 +49,7 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1.7, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [3, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 0.1
             projection: true
@@ -59,17 +59,17 @@ child:
           - !<transform>
             type: 1
             enabled: true
-            position: [-83, 2.3, 12]
-            rotation: [0, -40, 0]
+            position: [1.134, 2.3, 4.076]
+            rotation: [0, -80, 0]
             scale: [1, 0.9999, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
-            texture_id: 12793745184163139006
+            texture_id: 15300208463688155448
             tiles: [3, 3]
             flip: [false, true]
-            billboard_lifetime: 0.35
+            billboard_lifetime: 0.55
             properties: [0.5, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
             animation_speed: 0.05
             total_tiles: 9
@@ -82,8 +82,8 @@ child:
             size_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             rotation_section: false
             rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1.7, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0.2, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [3, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 0.1
             projection: true
@@ -93,9 +93,9 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [192.6, -2.689, -24.02]
+        position: [0, 0, 0]
         rotation: [-0, 0, -0]
-        scale: [2.273, 2.222, 2.273]
+        scale: [1, 1, 1]
     child:
       - name: ClawsTrailR
         enabled: true
@@ -103,14 +103,14 @@ child:
           - !<transform>
             type: 1
             enabled: true
-            position: [-85, 2.3, 14]
-            rotation: [-0, 65, -0]
+            position: [-2.277, 2.3, 2.329]
+            rotation: [-0, 20, -0]
             scale: [1, 0.9999, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
-            texture_id: 12793745184163139006
+            texture_id: 15300208463688155448
             tiles: [3, 3]
             flip: [false, false]
             billboard_lifetime: 0.35
@@ -127,7 +127,7 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1.7, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [3, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 0.1
             projection: true
@@ -137,14 +137,14 @@ child:
           - !<transform>
             type: 1
             enabled: true
-            position: [-83, 2.3, 12]
-            rotation: [0, -40, 0]
+            position: [0.293, 2.3, 4.746]
+            rotation: [0, -81.4, 0]
             scale: [1, 0.9999, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
-            texture_id: 12793745184163139006
+            texture_id: 15300208463688155448
             tiles: [3, 3]
             flip: [false, true]
             billboard_lifetime: 0.35
@@ -161,7 +161,7 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1.7, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [3, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 0.1
             projection: true
@@ -171,9 +171,9 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [192.6, -2.69, -24.02]
+        position: [0, 0, 0]
         rotation: [-0, 0, -0]
-        scale: [2.27, 2.22, 2.27]
+        scale: [1, 1, 1]
     child:
       - name: SwordTrailR
         enabled: true
@@ -181,17 +181,17 @@ child:
           - !<transform>
             type: 1
             enabled: true
-            position: [-85, 2.3, 14]
-            rotation: [-0, 65, -0]
+            position: [-3.605, 2.3, 2.471]
+            rotation: [-0, 15, -0]
             scale: [1, 0.9999, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
-            texture_id: 12793745184163139006
+            texture_id: 15300208463688155448
             tiles: [3, 3]
             flip: [false, false]
-            billboard_lifetime: 0.35
+            billboard_lifetime: 0.5
             properties: [0.5, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
             animation_speed: 0.05
             total_tiles: 9
@@ -204,8 +204,8 @@ child:
             size_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             rotation_section: false
             rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1.7, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0.15, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [3.5, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 0.1
             projection: true
@@ -215,17 +215,17 @@ child:
           - !<transform>
             type: 1
             enabled: true
-            position: [-83, 2.3, 13]
-            rotation: [0, -40, 0]
+            position: [-1.428, 2.3, 5.03]
+            rotation: [0, -88.6, 0]
             scale: [1, 0.9999, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
-            texture_id: 12793745184163139006
+            texture_id: 15300208463688155448
             tiles: [3, 3]
             flip: [false, true]
-            billboard_lifetime: 0.35
+            billboard_lifetime: 0.65
             properties: [0.5, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
             animation_speed: 0.05
             total_tiles: 9
@@ -238,8 +238,8 @@ child:
             size_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             rotation_section: false
             rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1.7, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0.3, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [3.5, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 0.1
             projection: true
@@ -249,9 +249,9 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [192.6, -2.69, -24.02]
+        position: [0, 0, 0]
         rotation: [-0, 0, -0]
-        scale: [2.27, 2.22, 2.27]
+        scale: [1, 1, 1]
     child:
       - name: HammerTrailR
         enabled: true
@@ -259,17 +259,17 @@ child:
           - !<transform>
             type: 1
             enabled: true
-            position: [-85.11, 2.29, 13.49]
-            rotation: [-0, 64.9, -0]
+            position: [-3.442, 2.3, 2.703]
+            rotation: [-0, 23.2, -0]
             scale: [1, 0.9999, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
-            texture_id: 12793745184163139006
+            texture_id: 15300208463688155448
             tiles: [3, 3]
             flip: [false, false]
-            billboard_lifetime: 0.35
+            billboard_lifetime: 0.4
             properties: [0.5, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
             animation_speed: 0.05
             total_tiles: 9
@@ -282,8 +282,8 @@ child:
             size_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             rotation_section: false
             rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1.95, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0.05, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [3.5, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 0.1
             projection: true
@@ -293,17 +293,17 @@ child:
           - !<transform>
             type: 1
             enabled: true
-            position: [-82.97, 2.29, 12.22]
-            rotation: [0, -39.4, 0]
+            position: [0.9854, 2.3, 4.502]
+            rotation: [0, -58.5, 0]
             scale: [1, 0.9999, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
-            texture_id: 12793745184163139006
+            texture_id: 15300208463688155448
             tiles: [3, 3]
             flip: [false, true]
-            billboard_lifetime: 0.35
+            billboard_lifetime: 0.55
             properties: [0.5, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
             animation_speed: 0.05
             total_tiles: 9
@@ -316,8 +316,8 @@ child:
             size_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             rotation_section: false
             rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [2, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0.2, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [3.5, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 0.1
             projection: true
