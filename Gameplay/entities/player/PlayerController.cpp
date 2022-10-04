@@ -28,7 +28,6 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _dash_scaler(3)
 	, _max_dash_charges(0)
 	, _dash_trail(nullptr)
-	, _dash_trail_vfx(nullptr)
 	, _trail_enlarger(10.0f)
 	, _rotation_duration(0.0f)
 	, _death_screen(nullptr)
@@ -994,7 +993,7 @@ void Hachiko::Scripting::PlayerController::DashController()
 
 	if (!IsDashing() && _state != PlayerState::MELEE_ATTACKING)
 	{
-		DashTrailManager();
+		DashTrailManager(_dash_progress);
 		return;
 	}
 
@@ -1007,10 +1006,8 @@ void Hachiko::Scripting::PlayerController::DashController()
 	_player_position = math::float3::Lerp(_dash_start, _dash_end,
 		acceleration);
 
-	DashTrailManager();
 
 	DashTrailManager(_dash_progress);
-
 	// Attack status is stopped in attack controller
 	if (_dash_progress >= 1.0f && IsDashing())
 	{
@@ -1036,13 +1033,11 @@ void Hachiko::Scripting::PlayerController::DashChargesManager()
 		{
 			_dash_charges += 1;
 		}
-
 	}
 }
 
-void Hachiko::Scripting::PlayerController::DashTrailManager()
+void Hachiko::Scripting::PlayerController::DashTrailManager(float dash_progress)
 {
-
 	_show_dashtrail = _state == PlayerState::DASHING;
 	_dash_trail->SetActive(_show_dashtrail);
 
@@ -1050,12 +1045,10 @@ void Hachiko::Scripting::PlayerController::DashTrailManager()
 	{
 		return;
 	}
-
 	_dash_trail->GetTransform()->SetLocalPosition(math::float3::Lerp(_trail_start_pos, _trail_end_pos,
 		_dash_progress));
 	_dash_trail->GetTransform()->SetLocalScale(math::float3::Lerp(_trail_start_scale, _trail_end_scale,
 		_dash_progress));
-
 }
 
 void Hachiko::Scripting::PlayerController::WalkingOrientationController()
@@ -1476,6 +1469,7 @@ void Hachiko::Scripting::PlayerController::ResetPlayer(float3 spawn_pos)
 
 	// Dash
 	_dash_trail->SetActive(false);
+	_show_dashtrail = false;
 
 	// Attack management
 	_attack_current_cd = 0.0f;
