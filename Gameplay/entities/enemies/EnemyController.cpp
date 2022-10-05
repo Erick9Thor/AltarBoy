@@ -637,11 +637,6 @@ void Hachiko::Scripting::EnemyController::WormAttackController()
 		return;
 	}
 
-	WormSpit();
-}
-
-void Hachiko::Scripting::EnemyController::WormSpit()
-{
 	if (_state == EnemyState::ATTACKING && animation->IsAnimationStopped())
 	{
 		_state = EnemyState::IDLE;
@@ -653,7 +648,7 @@ void Hachiko::Scripting::EnemyController::WormSpit()
 		_attack_current_delay = 0;
 	}
 
-	if (!_attack_landing && _attack_current_delay <= 0.0f)
+	if (!_attack_landing && _attack_current_delay <= 0.0f && dist_to_player <= _attack_range && _player_controller->IsAlive())
 	{
 		// We create the attack zone after the delay
 		_attack_zone->GetTransform()->SetGlobalPosition(_player_pos);
