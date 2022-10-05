@@ -11,6 +11,8 @@
 #include "modules/ModuleSceneManager.h"
 #include "modules/ModuleCamera.h"
 
+#define SHADOW_VERBOSE 0
+
 Hachiko::ShadowManager::ShadowManager() = default;
 
 Hachiko::ShadowManager::~ShadowManager() 
@@ -348,7 +350,9 @@ bool Hachiko::ShadowManager::DetectLightChanges()
 
         _light_frustum_bounding_box_padding = new_bounding_box_padding;
 
+#if SHADOW_VERBOSE == 1
         HE_LOG("Light frustum will be recalculated. (LIGHT)");
+#endif
     }
 
     return changed;
@@ -368,10 +372,14 @@ bool Hachiko::ShadowManager::CheckCameraAgainstBoundingRegion()
     const bool value = 
         !_light_frustum_bounding_box.Contains(camera->GetFrustum());
 
+#if SHADOW_VERBOSE == 1
     if (value == true)
     {
         HE_LOG("Light frustum will be recalculated. (CAMERA)");
     }
 
     return value;
+#else
+    return value;
+#endif
 }
