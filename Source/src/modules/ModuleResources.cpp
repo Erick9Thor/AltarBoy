@@ -54,6 +54,8 @@ bool ModuleResources::Init()
     App->event->Subscribe(Event::Type::FILE_ADDED, handleAddedFile);
 #endif
 
+    App->renderer->LoadLoadingScreen();
+
     return true;
 }
 

@@ -65,45 +65,6 @@ bool Hachiko::ModuleRender::Init()
     shadow_manager.SetGaussianBlurringEnabled(
         App->preferences->GetEditorPreference()->GetShadowMapGaussianBlurringEnabled());
 
-    loading_game_object = new GameObject(nullptr, float4x4::identity, "Loading");
-    loading_transform2d = static_cast<ComponentTransform2D*>(loading_game_object->CreateComponent(Component::Type::TRANSFORM_2D));
-    loading_image = static_cast<ComponentImage*>(loading_game_object->CreateComponent(Component::Type::IMAGE));
-    loading_video = static_cast<ComponentVideo*>(loading_game_object->CreateComponent(Component::Type::VIDEO));
-
-    // For now the loading screen configuration will be hardcoded:
-    {
-        //Image
-        YAML::Node node_image;
-        node_image.SetTag("image");
-        node_image[IMAGE_IMAGE_ID] = 9856915381281154687;
-        node_image[IMAGE_HOVER_IMAGE_ID] = 0;
-        node_image[IMAGE_COLOR] = float4::one;
-        node_image[IMAGE_HOVER_COLOR] = float4::one;
-        node_image[IMAGE_TILED] = true;
-        node_image[IMAGE_RANDOMIZE_INITIAL_FRAME] = false;
-        node_image[IMAGE_X_TILES] = 2;
-        node_image[IMAGE_Y_TILES] = 2;
-        node_image[IMAGE_TILES_PER_SEC] = 2;
-        node_image[IMAGE_FILL_WINDOW] = true;
-
-        loading_image->Load(node_image);
-
-        //Video
-        YAML::Node node_video;
-        node_video.SetTag("video");
-        node_video[VIDEO_ID] = 12654021748852338787;
-        node_video[VIDEO_PROJECTED] = false;
-        node_video[VIDEO_LOOP] = true;
-        node_video[VIDEO_FLIP] = false;
-        node_video[VIDEO_FPS] = 12;
-        
-        loading_video->Load(node_video);
-        loading_video->SetAsInScene();
-        loading_video->Start();
-        loading_video->Preload(12 * 4);
-        loading_video->Play();
-    }
-
     // Create noise texture for general use (dissolve effect)
     CreateNoiseTexture();
 
@@ -1071,6 +1032,48 @@ bool Hachiko::ModuleRender::CleanUp()
     delete loading_game_object;
 
     return true;
+}
+
+void Hachiko::ModuleRender::LoadLoadingScreen() 
+{
+    loading_game_object = new GameObject(nullptr, float4x4::identity, "Loading");
+    loading_transform2d = static_cast<ComponentTransform2D*>(loading_game_object->CreateComponent(Component::Type::TRANSFORM_2D));
+    loading_image = static_cast<ComponentImage*>(loading_game_object->CreateComponent(Component::Type::IMAGE));
+    loading_video = static_cast<ComponentVideo*>(loading_game_object->CreateComponent(Component::Type::VIDEO));
+
+    // For now the loading screen configuration will be hardcoded:
+    {
+        //Image
+        YAML::Node node_image;
+        node_image.SetTag("image");
+        node_image[IMAGE_IMAGE_ID] = 9856915381281154687;
+        node_image[IMAGE_HOVER_IMAGE_ID] = 0;
+        node_image[IMAGE_COLOR] = float4::one;
+        node_image[IMAGE_HOVER_COLOR] = float4::one;
+        node_image[IMAGE_TILED] = true;
+        node_image[IMAGE_RANDOMIZE_INITIAL_FRAME] = false;
+        node_image[IMAGE_X_TILES] = 2;
+        node_image[IMAGE_Y_TILES] = 2;
+        node_image[IMAGE_TILES_PER_SEC] = 2;
+        node_image[IMAGE_FILL_WINDOW] = true;
+
+        loading_image->Load(node_image);
+
+        //Video
+        YAML::Node node_video;
+        node_video.SetTag("video");
+        node_video[VIDEO_ID] = 12654021748852338787;
+        node_video[VIDEO_PROJECTED] = false;
+        node_video[VIDEO_LOOP] = true;
+        node_video[VIDEO_FLIP] = false;
+        node_video[VIDEO_FPS] = 12;
+
+        loading_video->Load(node_video);
+        loading_video->SetAsInScene();
+        loading_video->Start();
+        loading_video->Preload(12 * 4);
+        loading_video->Play();
+    }
 }
 
 void Hachiko::ModuleRender::DrawLoadingScreen(const float delta)

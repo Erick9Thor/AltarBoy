@@ -147,6 +147,7 @@ namespace Hachiko
             return bloom_manager;
         };
     
+        void LoadLoadingScreen();
         void DrawLoadingScreen(const float delta);
 
     private:
