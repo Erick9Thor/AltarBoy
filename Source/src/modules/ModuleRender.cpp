@@ -1017,22 +1017,18 @@ void Hachiko::ModuleRender::FreeFullScreenQuad() const
 
 void Hachiko::ModuleRender::CreateNoiseTexture() 
 {
-    const unsigned width = 256;
-    const unsigned height = 256;
-    const float delta = 0.01f;
+    const unsigned width = 128;
+    const unsigned height = 128;
+    const double delta = 0.01f;
 
     OpenSimplex2S os;
     byte* result = new byte[width * height];
 
-    float2 p = float2::zero;
     for (int i = 0; i < width; ++i)
     {
-        p.x += delta;
-        p.y = 0;
         for (int j = 0; j < height; ++j)
         {
-            p.y += delta;
-            result[i * height + j] = (os.noise2(i, j) + 1) * 127;
+            result[i * height + j] = static_cast<byte>((os.noise2_XBeforeY((double)i * delta, (double)j * delta) + 1) * 127.0f);
         }
     }
 
