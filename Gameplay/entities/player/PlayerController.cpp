@@ -1515,6 +1515,8 @@ void Hachiko::Scripting::PlayerController::ResetPlayer(float3 spawn_pos)
 	// State
 	_state = PlayerState::IDLE;
 
+	_aim_indicator_billboard->Stop();
+
 	ChangeWeapon(_current_weapon);
 	UpdateHealthBar();
 	UpdateAmmoUI();
