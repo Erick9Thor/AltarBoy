@@ -174,6 +174,8 @@ void Hachiko::ComponentVideo::Load(const YAML::Node& node)
 
 void Hachiko::ComponentVideo::Preload(unsigned frame_amount)
 {
+    OpenVideo();
+
     preloaded = true;
     preloaded_frames = frame_amount;
     preloaded_frame_textures = new unsigned[frame_amount];
