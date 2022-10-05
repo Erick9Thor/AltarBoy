@@ -6,6 +6,7 @@
 
 #include "Gameplay.h"
 #include "constants/Scenes.h"
+#include "AudioManager.h"
 
 Hachiko::Scripting::LevelManager::LevelManager(GameObject* game_object)
 	: Script(game_object, "LevelManager")
@@ -17,6 +18,12 @@ Hachiko::Scripting::LevelManager::LevelManager(GameObject* game_object)
 void Hachiko::Scripting::LevelManager::OnAwake()
 {
 	_enemy_counter = _gauntlet_counter_go->GetComponent<ComponentText>();
+	if (_audio_manager_go != nullptr)
+	{
+		_audio_manager = _audio_manager_go->GetComponent<AudioManager>();
+		_audio_manager->SetLevel(_level);
+	}
+
 	_gauntlet_ui_go->SetActive(false);
 }
 
@@ -41,6 +48,11 @@ float3 Hachiko::Scripting::LevelManager::Respawn()
 	if (_last_gauntlet != nullptr && !_last_gauntlet->IsCompleted())
 	{
 		_last_gauntlet->ResetGauntlet();
+	}
+
+	if (_audio_manager != nullptr)
+	{
+		_audio_manager->Restart();
 	}
 
 	return GetRespawnPosition();
