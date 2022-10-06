@@ -70,7 +70,7 @@ private:
 	float _remaining_waiting_time_for_quit;
 	bool _started_to_quit;
 
-	SERIALIZE_FIELD(int, _option_selected);
+	int _option_selected;
 	std::vector<ComponentButton*> _buttons_gamepad;
 
 };
