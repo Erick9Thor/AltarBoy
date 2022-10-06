@@ -1029,8 +1029,6 @@ bool Hachiko::ModuleRender::CleanUp()
     App->preferences->GetEditorPreference()->SetDrawSkybox(draw_skybox);
     App->preferences->GetEditorPreference()->SetDrawNavmesh(draw_navmesh);
 
-    delete loading_game_object;
-
     return true;
 }
 
@@ -1074,6 +1072,11 @@ void Hachiko::ModuleRender::LoadLoadingScreen()
         loading_video->Preload(12 * 4);
         loading_video->Play();
     }
+}
+
+void Hachiko::ModuleRender::DeleteLoadingScreen() 
+{
+    delete loading_game_object;
 }
 
 void Hachiko::ModuleRender::DrawLoadingScreen(const float delta)

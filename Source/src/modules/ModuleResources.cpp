@@ -61,6 +61,8 @@ bool ModuleResources::Init()
 
 bool ModuleResources::CleanUp()
 {
+    App->renderer->DeleteLoadingScreen();
+
     for (auto& it : loaded_resources)
     {
         HE_LOG("Removing unreleased resources %llu %i", it.first, it.second.n_users);

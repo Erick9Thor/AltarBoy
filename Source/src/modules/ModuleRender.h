@@ -148,6 +148,7 @@ namespace Hachiko
         };
     
         void LoadLoadingScreen();
+        void DeleteLoadingScreen(); 
         void DrawLoadingScreen(const float delta);
 
     private:
