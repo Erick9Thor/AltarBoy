@@ -131,7 +131,7 @@ void Hachiko::ShadowManager::BindShadowMapTexture(
 
 void Hachiko::ShadowManager::LazyCalculateLightFrustum() 
 {
-    const bool is_camera_out_of_bounds = CheckCameraAgainstBoundingRegion();
+    const bool is_camera_out_of_bounds = CheckCameraAndBoundingRegionChanges();
     const bool light_changed = DetectLightChanges();
 
     if (!is_camera_out_of_bounds && !light_changed)
@@ -358,7 +358,7 @@ bool Hachiko::ShadowManager::DetectLightChanges()
     return changed;
 }
 
-bool Hachiko::ShadowManager::CheckCameraAgainstBoundingRegion()
+bool Hachiko::ShadowManager::CheckCameraAndBoundingRegionChanges()
 {
     ComponentCamera* camera = App->camera->GetRenderingCamera();
 
@@ -369,17 +369,23 @@ bool Hachiko::ShadowManager::CheckCameraAgainstBoundingRegion()
 
     _camera_exists = true;
 
-    const bool value = 
+    const UID new_camera_uid = camera->GetID();
+    const bool camera_changed = _camera_uid != new_camera_uid;
+
+    _camera_uid = new_camera_uid;
+
+    const bool there_are_changes = 
+        camera_changed ||
         !_light_frustum_bounding_box.Contains(camera->GetFrustum());
 
 #if SHADOW_VERBOSE == 1
-    if (value == true)
+    if (there_are_changes == true)
     {
         HE_LOG("Light frustum will be recalculated. (CAMERA)");
     }
 
-    return value;
+    return there_are_changes;
 #else
-    return value;
+    return there_are_changes;
 #endif
 }

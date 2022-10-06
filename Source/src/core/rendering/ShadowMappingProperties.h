@@ -4,14 +4,14 @@
 
 namespace Hachiko::ShadowMappingDefaults
 {
-    constexpr float GAUSSIAN_FILTER_BLUR_AMOUNT = 0.62f;
+    constexpr float BIAS = 0.0003f;
+    constexpr float LIGHT_BLEEDING_REDUCTION_AMOUNT = 0.5f;
     constexpr float MIN_VARIANCE = 0.001f;
-    constexpr float LIGHT_BLEEDING_REDUCTION_AMOUNT = 0.35f;
-    constexpr float BIAS = 0.00001f;
-    constexpr float EXPONENT = 14.37f;
-    constexpr float SIGMA = 3.5f;
-    constexpr BlurPixelSize::Type BLUR_SIZE = BlurPixelSize::Type::Gaussian11x11;
-    constexpr const float LIGHT_FRUSTUM_BOUNDING_BOX_SCALE = 3.0f;
+    constexpr float EXPONENT = 7.0f;
+    constexpr float GAUSSIAN_FILTER_BLUR_AMOUNT = 0.85f;
+    constexpr BlurPixelSize::Type BLUR_SIZE = BlurPixelSize::Type::Gaussian5x5;
+    constexpr float SIGMA = 1.45f; // #sigmagrindset
+    constexpr float LIGHT_FRUSTUM_BOUNDING_BOX_PADDING = 3.0f;
 } // namespace Hachiko::ShadowMappingDefaults
 
 namespace Hachiko

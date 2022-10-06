@@ -94,14 +94,17 @@ void Hachiko::ShadowMappingProperties::Load(const YAML::Node& node)
 
 void Hachiko::ShadowMappingProperties::ResetToDefaults() 
 {
-    _gaussian_filter_blur_amount = ShadowMappingDefaults::GAUSSIAN_FILTER_BLUR_AMOUNT;
+    _gaussian_filter_blur_amount = 
+        ShadowMappingDefaults::GAUSSIAN_FILTER_BLUR_AMOUNT;
     _min_variance = ShadowMappingDefaults::MIN_VARIANCE;
-    _light_bleeding_reduction_amount = ShadowMappingDefaults::LIGHT_BLEEDING_REDUCTION_AMOUNT;
+    _light_bleeding_reduction_amount = 
+        ShadowMappingDefaults::LIGHT_BLEEDING_REDUCTION_AMOUNT;
     _bias = ShadowMappingDefaults::BIAS;
     _exponent = ShadowMappingDefaults::EXPONENT;
     _gaussian_blur_sigma = ShadowMappingDefaults::SIGMA;
     _gaussian_blur_size = ShadowMappingDefaults::BLUR_SIZE;
-    _light_frustum_bounding_box_padding = ShadowMappingDefaults::LIGHT_FRUSTUM_BOUNDING_BOX_SCALE;
+    _light_frustum_bounding_box_padding = 
+        ShadowMappingDefaults::LIGHT_FRUSTUM_BOUNDING_BOX_PADDING;
 }
 
 void Hachiko::ShadowMappingProperties::SetGaussianFilterBlurAmount(const float value)

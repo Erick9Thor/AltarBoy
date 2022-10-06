@@ -41,7 +41,7 @@ private:
     [[nodiscard]] static const ComponentDirLight* GetDirectionalLight();
     void BindCommonUniforms(const Program* program) const;
     bool DetectLightChanges();
-    bool CheckCameraAgainstBoundingRegion();
+    bool CheckCameraAndBoundingRegionChanges();
 
 
 private:
@@ -61,6 +61,7 @@ private:
     bool _camera_exists = false;
     bool _light_exists = false;
     bool _gaussian_blurring_enabled = true;
+    UID _camera_uid = 0;
     float _light_frustum_bounding_box_padding = 0.0f;
     
     // Shadow map texture related:
