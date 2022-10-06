@@ -1096,10 +1096,10 @@ void Hachiko::ModuleRender::DrawLoadingScreen(const float delta)
     if (res_x != fb_width || res_y != fb_height)
     {
         ResizeFrameBuffer(res_x, res_y);
-        glViewport(0, 0, res_x, res_y);
         fb_width = res_x;
         fb_height = res_y;
     }
+    glViewport(0, 0, fb_width, fb_height);
 
     if (using_image)
     {
