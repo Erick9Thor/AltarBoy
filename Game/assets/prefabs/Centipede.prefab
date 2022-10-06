@@ -25,6 +25,8 @@ component:
     avoid_obstacles: false
     radius: 2
     is_player: false
+  - type: 20
+    enabled: true
 child:
   - name: Geo
     enabled: true
