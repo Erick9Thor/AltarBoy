@@ -316,6 +316,7 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\stlemitter.h" />
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\traits.h" />
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\yaml.h" />
+    <ClInclude Include="misc\Centipedes.h" />
     <ClInclude Include="entities\enemies\BossController.h" />
     <ClInclude Include="misc\AssetsObstacle.h" />
     <ClInclude Include="misc\BossLaserController.h" />
@@ -743,6 +744,7 @@ RD /S /Q "$(TargetDir)"</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Play|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="misc\Centipedes.cpp" />
     <ClCompile Include="entities\enemies\BossController.cpp" />
     <ClCompile Include="misc\AssetsObstacle.cpp" />
     <ClCompile Include="misc\BossLaserController.cpp" />
