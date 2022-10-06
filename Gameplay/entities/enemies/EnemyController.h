@@ -97,7 +97,6 @@ namespace Hachiko
             void StopMoving();
             void MoveInNavmesh();
             void WormAttackController();
-            void WormSpit();
             
             void DropParasite();
             void DestroyEntity();
