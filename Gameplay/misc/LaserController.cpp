@@ -34,6 +34,11 @@ void Hachiko::Scripting::LaserController::OnAwake()
 	_initial_position = game_object->GetTransform()->GetGlobalPosition();
 	_audio_source = game_object->GetComponent<ComponentAudioSource>();
 	_audio_source->PostEvent(Hachiko::Sounds::PLAY_LASER);
+
+	if (_sparks != nullptr)
+	{
+		_sparks_particles = _sparks->GetComponent<ComponentParticleSystem>();
+	}
 }
 
 void Hachiko::Scripting::LaserController::OnUpdate()
@@ -153,6 +158,12 @@ void Hachiko::Scripting::LaserController::AdjustLength()
 
 	if (_length != new_length || _state == ACTIVATING)
 	{
+		if (_sparks != nullptr && (_length - new_length) > 0.1f)
+		{
+			_sparks->GetTransform()->SetLocalPosition(float3(0.0f, 0.0f, - new_length));
+			_sparks_particles->Restart();
+		}
+
 		_length = new_length;
 		_laser->GetTransform()->SetLocalScale(float3(_scale, _scale, _length * 0.5f));
 	}

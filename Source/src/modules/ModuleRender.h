@@ -129,7 +129,10 @@ namespace Hachiko
 
         void RenderFullScreenQuad() const;
             
-        static void EnableBlending(GLenum blend_func_sfactor = GL_SRC_ALPHA, GLenum blend_func_dfactor = GL_ONE_MINUS_SRC_ALPHA, GLenum blend_equation = GL_FUNC_ADD) 
+        static void EnableBlending(
+            GLenum blend_func_sfactor = GL_SRC_ALPHA, 
+            GLenum blend_func_dfactor = GL_ONE_MINUS_SRC_ALPHA, 
+            GLenum blend_equation = GL_FUNC_ADD) 
         {
             glEnable(GL_BLEND);
             glBlendFunc(blend_func_sfactor, blend_func_dfactor);
@@ -156,7 +159,7 @@ namespace Hachiko
         void DrawDeferred(Scene* scene, ComponentCamera* camera, BatchManager* batch_manager);
         void DrawForward(Scene* scene, BatchManager* batch_manager);
         void DrawPreForwardPass(Scene* scene, ComponentCamera* camera) const;
-        bool DrawToShadowMap(Scene* scene, ComponentCamera* camera, BatchManager* batch_manager, DrawConfig draw_config);
+        bool DrawToShadowMap(Scene* scene, BatchManager* batch_manager, DrawConfig draw_config);
 
         void SetRenderMode(bool is_deferred);
 
@@ -167,6 +170,9 @@ namespace Hachiko
 
         void GenerateFullScreenQuad();
         void FreeFullScreenQuad() const;
+
+        void CreateNoiseTexture();
+        void BindNoiseTexture(Program* program);
 
         void* context{};
 
@@ -212,5 +218,7 @@ namespace Hachiko
         GameObject* loading_game_object = nullptr;
         ComponentTransform2D* loading_transform2d = nullptr;
         ComponentImage* loading_image = nullptr;
+
+        unsigned noise_id = 0;
     };
 }

@@ -125,6 +125,11 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	{
 		_damage_effect_billboard = _damage_effect->GetComponent<ComponentBillboard>();
 	}
+	
+	if (_aim_indicator != nullptr)
+	{
+		_aim_indicator_billboard = _aim_indicator->GetComponent<ComponentBillboard>();
+	}
 
 	_combat_stats = game_object->GetComponent<Stats>();
 	// Player doesnt use all combat stats since some depend on weapon
@@ -194,6 +199,8 @@ void Hachiko::Scripting::PlayerController::OnStart()
 		_trail_end_scale = _dash_trail->GetTransform()->GetLocalScale();
 		_trail_end_scale = math::float3(_trail_end_scale.x * _trail_enlarger, _trail_end_scale.y, _trail_end_scale.z);
 	}
+
+	_aim_indicator_billboard->Stop();
 }
 
 void Hachiko::Scripting::PlayerController::OnUpdate()
@@ -705,6 +712,16 @@ void Hachiko::Scripting::PlayerController::ChangeWeapon(unsigned weapon_idx)
 	}
 }
 
+void Hachiko::Scripting::PlayerController::ReloadAmmo(unsigned ammo)
+{
+	_ammo_count += ammo;
+	if (_ammo_count > MAX_AMMO)
+	{
+		_ammo_count = MAX_AMMO;
+	}
+	UpdateAmmoUI();
+}
+
 bool Hachiko::Scripting::PlayerController::IsAttacking() const
 {
 	return _state == PlayerState::MELEE_ATTACKING || _state == PlayerState::RANGED_ATTACKING || _state == PlayerState::RANGED_CHARGING;
@@ -807,6 +824,8 @@ void Hachiko::Scripting::PlayerController::RangedAttack()
 			_state = PlayerState::RANGED_CHARGING;
 		}
 	}
+
+	_aim_indicator_billboard->Restart();
 }
 
 void Hachiko::Scripting::PlayerController::ReleaseAttack()
@@ -825,6 +844,8 @@ void Hachiko::Scripting::PlayerController::ReleaseAttack()
 		{
 			math::Clamp(++_ammo_count, 0, MAX_AMMO);
 		}
+
+		_aim_indicator_billboard->Stop();
 	}
 }
 
@@ -839,6 +860,8 @@ void Hachiko::Scripting::PlayerController::CancelAttack()
 		CombatManager* bullet_controller = _bullet_emitter->GetComponent<CombatManager>();
 		bullet_controller->StopBullet(_current_bullet);
 		math::Clamp(++_ammo_count, 0, MAX_AMMO);
+
+		_aim_indicator_billboard->Stop();
 	}
 }
 
@@ -1491,6 +1514,8 @@ void Hachiko::Scripting::PlayerController::ResetPlayer(float3 spawn_pos)
 
 	// State
 	_state = PlayerState::IDLE;
+
+	_aim_indicator_billboard->Stop();
 
 	ChangeWeapon(_current_weapon);
 	UpdateHealthBar();
