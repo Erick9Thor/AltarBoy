@@ -1,5 +1,6 @@
 #pragma once
 
+#include "constants/Sounds.h"
 #include <scripting/Script.h>
 
 namespace Hachiko
@@ -48,6 +49,7 @@ namespace Hachiko
 			ComponentTransform* player_transform = nullptr;
 			ComponentAgent* agent = nullptr;
 			ComponentAnimation* animation = nullptr;
+			ComponentAudioSource* audio_source = nullptr;
 
 			SERIALIZE_FIELD(GameObject*, _damage_effect);
 			ComponentBillboard* _splash_effect_billboard = nullptr;

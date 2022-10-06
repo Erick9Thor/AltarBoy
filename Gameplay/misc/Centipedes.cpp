@@ -15,6 +15,7 @@ void Hachiko::Scripting::Centipedes::OnAwake()
 	agent = game_object->GetComponent<ComponentAgent>();
 	animation = game_object->GetComponent<ComponentAnimation>();
 	_splash_effect_billboard = _damage_effect->GetComponent<ComponentBillboard>();
+	audio_source = game_object->GetComponent<ComponentAudioSource>();
 
 	animation->StartAnimating();
 }
@@ -36,7 +37,8 @@ void Hachiko::Scripting::Centipedes::OnUpdate()
 
 	float distance_sq = player_to_centipide.LengthSq();
 
-	if (distance_sq < stepped_on_range) { // DEAD
+	if (distance_sq < stepped_on_range && _state != CentipedeState::DIE) // DEAD
+	{ 
 		SteppedOn();
 	}
 
@@ -70,6 +72,7 @@ void Hachiko::Scripting::Centipedes::OnUpdate()
 
 void Hachiko::Scripting::Centipedes::SteppedOn()
 {
+	audio_source->PostEvent(Sounds::PLAY_SPLASH);
 	agent->Stop();
 	_state = CentipedeState::DIE;
 	_damage_effect->SetActive(true);
