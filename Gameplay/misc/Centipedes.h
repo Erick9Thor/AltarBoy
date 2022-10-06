@@ -32,7 +32,6 @@ namespace Hachiko
 		private:
 
 			void UpdateCentipedeState();
-			void OnRespawn();
 			void SteppedOn();
 
 			CentipedeState _state = CentipedeState::IDLE;

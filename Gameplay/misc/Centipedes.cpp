@@ -20,12 +20,10 @@ void Hachiko::Scripting::Centipedes::OnAwake()
 
 void Hachiko::Scripting::Centipedes::OnUpdate()
 {
-	/*if (respawn_timer > time_to_respawn) {
-		OnRespawn();
+	if (_state == CentipedeState::DIE && animation->IsAnimationStopped())
+	{
+		game_object->SetActive(false);
 	}
-	else {
-		respawn_timer += Time::DeltaTime();
-	}*/
 
 	float3 position = game_object->GetTransform()->GetGlobalPosition();
 	float3 player_position = player_transform->GetGlobalPosition();
@@ -65,7 +63,6 @@ void Hachiko::Scripting::Centipedes::OnUpdate()
 
 void Hachiko::Scripting::Centipedes::SteppedOn()
 {
-	
 	respawn_timer = 0.0f;
 	_state = CentipedeState::DIE;
 }
@@ -97,10 +94,4 @@ void Hachiko::Scripting::Centipedes::UpdateCentipedeState()
 		break;
 	}
 }
-
-void Hachiko::Scripting::Centipedes::OnRespawn()
-{
-	game_object->SetActive(true);
-}
-
 
