@@ -324,7 +324,7 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
     if (shadow_pass_enabled)
     {
         // Generate shadow map from the scene:
-        DrawToShadowMap(scene, camera, batch_manager, DRAW_CONFIG_OPAQUE | DRAW_CONFIG_TRANSPARENT);
+        DrawToShadowMap(scene, batch_manager, DRAW_CONFIG_OPAQUE | DRAW_CONFIG_TRANSPARENT);
     }
 
     render_list.Update(scene->GetCullingCamera()->GetFrustum(), scene->GetQuadtree());
@@ -557,24 +557,27 @@ void Hachiko::ModuleRender::DrawPreForwardPass(Scene* scene, ComponentCamera* ca
     }*/
 }
 
-bool Hachiko::ModuleRender::DrawToShadowMap(Scene* scene,
-                                            ComponentCamera* camera,
-                                            BatchManager* batch_manager,
-                                            DrawConfig draw_config)
+bool Hachiko::ModuleRender::DrawToShadowMap(
+    Scene* scene,
+    BatchManager* batch_manager,
+    DrawConfig draw_config)
 {
-    if (scene->dir_lights.size() < 0)
+    if (scene->dir_lights.empty())
     {
         return false;
     }
 
     // Update directional light frustum if there are any changes:
-    shadow_manager.CalculateLightFrustum();
+    shadow_manager.LazyCalculateLightFrustum();
 
     // Cull the scene with directional light frustum:
-    render_list.Update(shadow_manager.GetDirectionalLightFrustum(), scene->GetQuadtree());
+    render_list.Update(
+        shadow_manager.GetDirectionalLightFrustum(), 
+        scene->GetQuadtree());
 
     // Draw collected meshes with shadow mapping program:
-    Program* program = App->program->GetProgram(Program::PROGRAMS::SHADOW_MAPPING);
+    const Program* program = 
+        App->program->GetProgram(Program::PROGRAMS::SHADOW_MAPPING);
     program->Activate();
 
     // Bind shadow map generation specific necessary uniforms:
@@ -590,6 +593,11 @@ bool Hachiko::ModuleRender::DrawToShadowMap(Scene* scene,
 
         for (const RenderTarget& target : render_list.GetOpaqueTargets())
         {
+            if (!target.mesh_renderer->IsCastingShadow())
+            {
+                continue;
+            }
+
             batch_manager->AddDrawComponent(target.mesh_renderer);
         }
 
@@ -604,6 +612,11 @@ bool Hachiko::ModuleRender::DrawToShadowMap(Scene* scene,
 
         for (const RenderTarget& target : render_list.GetTransparentTargets())
         {
+            if (!target.mesh_renderer->IsCastingShadow())
+            {
+                continue;
+            }
+
             batch_manager->AddDrawComponent(target.mesh_renderer);
         }
 
@@ -611,26 +624,28 @@ bool Hachiko::ModuleRender::DrawToShadowMap(Scene* scene,
     }
 
     // Unbind shadow map fbo:
-    shadow_manager.UnbindBuffer();
+    ShadowManager::UnbindBuffer();
 
     Program::Deactivate();
 
-    // Smoothen the shadow map by applying gaussian filtering:
-    shadow_manager.ApplyGaussianBlur(App->program->GetProgram(Program::PROGRAMS::GAUSSIAN_FILTERING));
+    // Smooth out the shadow map by applying gaussian filtering:
+    shadow_manager.ApplyGaussianBlur(
+        App->program->GetProgram(Program::PROGRAMS::GAUSSIAN_FILTERING));
 
     return true;
 }
 
-void Hachiko::ModuleRender::ApplyGaussianFilter(unsigned source_fbo,
-                                                unsigned source_texture,
-                                                unsigned temp_fbo,
-                                                unsigned temp_texture,
-                                                float blur_scale_amount,
-                                                float blur_sigma,
-                                                int blur_size,
-                                                unsigned width,
-                                                unsigned height,
-                                                const Program* program) const
+void Hachiko::ModuleRender::ApplyGaussianFilter(
+    unsigned source_fbo,
+    unsigned source_texture,
+    unsigned temp_fbo,
+    unsigned temp_texture,
+    float blur_scale_amount,
+    float blur_sigma,
+    int blur_size,
+    unsigned width,
+    unsigned height,
+    const Program* program) const
 {
     // Calculate blur scales:
     float blur_scale_x = blur_scale_amount / static_cast<float>(width);
