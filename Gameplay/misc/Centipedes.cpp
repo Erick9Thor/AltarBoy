@@ -14,6 +14,7 @@ void Hachiko::Scripting::Centipedes::OnAwake()
 	player_transform = _player->GetComponent<ComponentTransform>();
 	agent = game_object->GetComponent<ComponentAgent>();
 	animation = game_object->GetComponent<ComponentAnimation>();
+	_splash_effect_billboard = _damage_effect->GetComponent<ComponentBillboard>();
 
 	animation->StartAnimating();
 }
@@ -22,7 +23,11 @@ void Hachiko::Scripting::Centipedes::OnUpdate()
 {
 	if (_state == CentipedeState::DIE && animation->IsAnimationStopped())
 	{
-		game_object->SetActive(false);
+		before_disapear += Time::DeltaTime();
+		if (before_disapear >= time_to_disapear)
+		{
+			game_object->SetActive(false);
+		}
 	}
 
 	float3 position = game_object->GetTransform()->GetGlobalPosition();
@@ -44,15 +49,15 @@ void Hachiko::Scripting::Centipedes::OnUpdate()
 	else if (_state == CentipedeState::RUN)
 	{
 		if (distance_sq > centipide_aggro) {
-		_state = CentipedeState::IDLE;
-
+			_state = CentipedeState::IDLE;
 			agent->SetTargetPosition(game_object->GetComponent<ComponentTransform>()->GetGlobalPosition());
-		} else 
+		}
+		else
 		{
 			float3 new_destination = player_position + player_to_centipide.Normalized() * player_range;
 			Quat target_rotation = Quat::LookAt(float3(-1, 0, 0), player_transform->GetFront(), float3(0, 1, 0), float3(0, 1, 0));
 			Quat rotation = Quat::Slerp(game_object->GetTransform()->GetGlobalRotation(), target_rotation, Min(Time::DeltaTime() / Max(rotation_smoothness, 0.000001f), 1.0f));
-			
+
 			game_object->GetTransform()->SetGlobalRotation(rotation);
 			agent->SetTargetPosition(new_destination);
 		}
@@ -65,8 +70,10 @@ void Hachiko::Scripting::Centipedes::OnUpdate()
 
 void Hachiko::Scripting::Centipedes::SteppedOn()
 {
-	respawn_timer = 0.0f;
+	agent->Stop();
 	_state = CentipedeState::DIE;
+	_damage_effect->SetActive(true);
+	_splash_effect_billboard->Play();
 }
 
 void Hachiko::Scripting::Centipedes::UpdateCentipedeState()
