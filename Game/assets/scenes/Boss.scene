@@ -27,7 +27,7 @@ child:
         type: 1
         enabled: true
         position: [-85.36, 20.2, -48.15]
-        rotation: [125, 0, -180]
+        rotation: [125, 0, 180]
         scale: [1, 1, 1]
       - !<camera>
         id: 1219616210356617501
@@ -35,11 +35,11 @@ child:
         enabled: true
         frustum:
           near_distance: 1
-          far_distance: 100
+          far_distance: 35
           fov: 65
           position: [-85.36, 20.2, -48.15]
           front: [0, -0.8192, -0.5736]
-          up: [0, 0.5736, -0.8192]
+          up: [-0, 0.5736, -0.8192]
           pinned_camera: [0, 0, 0]
       - id: 13408884615593672014
         type: 19
@@ -73,13 +73,14 @@ child:
         color: [1, 1, 1, 1]
         intensity: 1
         draw_direction: false
-        light_bleeding_reduction_amount: 0.25
-        shadow_bias: 0
+        light_bleeding_reduction_amount: 0.5
+        shadow_bias: 0.0003
         min_variance: 0.001
-        exponent: 14.37
-        blur_scale: 0.62
-        blur_pixels: 11
-        blur_sigma: 3.5
+        exponent: 7
+        blur_scale: 0.85
+        blur_pixels: 5
+        blur_sigma: 1.45
+        light_frustum_bounding_box_padding: 3
   - id: 12601977737872435204
     name: Enemies
     enabled: true
@@ -660,7 +661,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [-180, 3.615, 14.16]
+                                                                                        rotation: [180, 3.615, 14.16]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 17083926916287189837
@@ -872,7 +873,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [-180, 0, 85.39]
+                                                                                        rotation: [180, 0, 85.39]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 16673762793204240827
@@ -1179,7 +1180,7 @@ child:
                                                                                                                         type: 1
                                                                                                                         enabled: true
                                                                                                                         position: [0, 0, 0]
-                                                                                                                        rotation: [-180, -89.98, -180]
+                                                                                                                        rotation: [180, -89.98, 180]
                                                                                                                         scale: [1, 1, 1]
                                                                                                               - id: 17824814368355884472
                                                                                                                 name: Wing_Middle_R
@@ -1281,6 +1282,7 @@ child:
                                         mesh_id: 8384284510830641750
                                         navigable: false
                                         visible: true
+                                        casting_shadow: true
                                         material_id: 16615586293878050055
                                         tint_color: [1, 1, 1, 1]
               - id: 4784366738528838534
@@ -1313,6 +1315,7 @@ child:
                         mesh_id: 8953689370358422284
                         navigable: false
                         visible: true
+                        casting_shadow: true
                         material_id: 3003390711770185065
                         tint_color: [1, 1, 1, 1]
               - id: 18418551199523093346
@@ -1945,7 +1948,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [-180, 3.615, 14.16]
+                                                                                        rotation: [180, 3.615, 14.16]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 7166805286709657581
@@ -2157,7 +2160,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [-180, 0, 85.39]
+                                                                                        rotation: [180, 0, 85.39]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 2831410405136228984
@@ -2464,7 +2467,7 @@ child:
                                                                                                                         type: 1
                                                                                                                         enabled: true
                                                                                                                         position: [0, 0, 0]
-                                                                                                                        rotation: [-180, -89.98, -180]
+                                                                                                                        rotation: [180, -89.98, 180]
                                                                                                                         scale: [1, 1, 1]
                                                                                                               - id: 18073054745000376799
                                                                                                                 name: Wing_Middle_R
@@ -2566,6 +2569,7 @@ child:
                                         mesh_id: 8384284510830641750
                                         navigable: false
                                         visible: true
+                                        casting_shadow: true
                                         material_id: 16615586293878050055
                                         tint_color: [1, 1, 1, 1]
               - id: 6731362233376716606
@@ -2598,6 +2602,7 @@ child:
                         mesh_id: 8953689370358422284
                         navigable: false
                         visible: true
+                        casting_shadow: true
                         material_id: 3003390711770185065
                         tint_color: [1, 1, 1, 1]
               - id: 12392562315848717697
@@ -3230,7 +3235,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [-180, 3.615, 14.16]
+                                                                                        rotation: [180, 3.615, 14.16]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 16660911846559829495
@@ -3442,7 +3447,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [-180, 0, 85.39]
+                                                                                        rotation: [180, 0, 85.39]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 5305186554916170386
@@ -3749,7 +3754,7 @@ child:
                                                                                                                         type: 1
                                                                                                                         enabled: true
                                                                                                                         position: [0, 0, 0]
-                                                                                                                        rotation: [-180, -89.98, -180]
+                                                                                                                        rotation: [180, -89.98, 180]
                                                                                                                         scale: [1, 1, 1]
                                                                                                               - id: 5762468314855338250
                                                                                                                 name: Wing_Middle_R
@@ -3851,6 +3856,7 @@ child:
                                         mesh_id: 8384284510830641750
                                         navigable: false
                                         visible: true
+                                        casting_shadow: true
                                         material_id: 16615586293878050055
                                         tint_color: [1, 1, 1, 1]
               - id: 13963663924966011826
@@ -3883,6 +3889,7 @@ child:
                         mesh_id: 8953689370358422284
                         navigable: false
                         visible: true
+                        casting_shadow: true
                         material_id: 3003390711770185065
                         tint_color: [1, 1, 1, 1]
               - id: 934820171149749532
@@ -4527,7 +4534,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [-180, 3.615, 14.16]
+                                                                                        rotation: [180, 3.615, 14.16]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 2375049026776240409
@@ -4739,7 +4746,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [-180, 0, 85.39]
+                                                                                        rotation: [180, 0, 85.39]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 2545767677094883520
@@ -5046,7 +5053,7 @@ child:
                                                                                                                         type: 1
                                                                                                                         enabled: true
                                                                                                                         position: [0, 0, 0]
-                                                                                                                        rotation: [-180, -89.98, -180]
+                                                                                                                        rotation: [180, -89.98, 180]
                                                                                                                         scale: [1, 1, 1]
                                                                                                               - id: 6188514512839603856
                                                                                                                 name: Wing_Middle_R
@@ -5148,6 +5155,7 @@ child:
                                         mesh_id: 8384284510830641750
                                         navigable: false
                                         visible: true
+                                        casting_shadow: true
                                         material_id: 16615586293878050055
                                         tint_color: [1, 1, 1, 1]
               - id: 17696143801390516007
@@ -5180,6 +5188,7 @@ child:
                         mesh_id: 8953689370358422284
                         navigable: false
                         visible: true
+                        casting_shadow: true
                         material_id: 3003390711770185065
                         tint_color: [1, 1, 1, 1]
               - id: 8344868299161427875
@@ -5812,7 +5821,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [-180, 3.615, 14.16]
+                                                                                        rotation: [180, 3.615, 14.16]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 15556414505888023057
@@ -6024,7 +6033,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [-180, 0, 85.39]
+                                                                                        rotation: [180, 0, 85.39]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 16037035974818211267
@@ -6331,7 +6340,7 @@ child:
                                                                                                                         type: 1
                                                                                                                         enabled: true
                                                                                                                         position: [0, 0, 0]
-                                                                                                                        rotation: [-180, -89.98, -180]
+                                                                                                                        rotation: [180, -89.98, 180]
                                                                                                                         scale: [1, 1, 1]
                                                                                                               - id: 17287654595624956106
                                                                                                                 name: Wing_Middle_R
@@ -6433,6 +6442,7 @@ child:
                                         mesh_id: 8384284510830641750
                                         navigable: false
                                         visible: true
+                                        casting_shadow: true
                                         material_id: 16615586293878050055
                                         tint_color: [1, 1, 1, 1]
               - id: 16930995750060952610
@@ -6465,6 +6475,7 @@ child:
                         mesh_id: 8953689370358422284
                         navigable: false
                         visible: true
+                        casting_shadow: true
                         material_id: 3003390711770185065
                         tint_color: [1, 1, 1, 1]
               - id: 9714815611737545512
@@ -7097,7 +7108,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [-180, 3.615, 14.16]
+                                                                                        rotation: [180, 3.615, 14.16]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 10059902737588998568
@@ -7309,7 +7320,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [-180, 0, 85.39]
+                                                                                        rotation: [180, 0, 85.39]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 5366420881040033485
@@ -7616,7 +7627,7 @@ child:
                                                                                                                         type: 1
                                                                                                                         enabled: true
                                                                                                                         position: [0, 0, 0]
-                                                                                                                        rotation: [-180, -89.98, -180]
+                                                                                                                        rotation: [180, -89.98, 180]
                                                                                                                         scale: [1, 1, 1]
                                                                                                               - id: 11361860213490135861
                                                                                                                 name: Wing_Middle_R
@@ -7718,6 +7729,7 @@ child:
                                         mesh_id: 8384284510830641750
                                         navigable: false
                                         visible: true
+                                        casting_shadow: true
                                         material_id: 16615586293878050055
                                         tint_color: [1, 1, 1, 1]
               - id: 13010364427315076271
@@ -7750,6 +7762,7 @@ child:
                         mesh_id: 8953689370358422284
                         navigable: false
                         visible: true
+                        casting_shadow: true
                         material_id: 3003390711770185065
                         tint_color: [1, 1, 1, 1]
               - id: 13180703293361920924
@@ -7916,6 +7929,7 @@ child:
                     mesh_id: 12493242938431995642
                     navigable: false
                     visible: true
+                    casting_shadow: true
                     material_id: 15711698613413314858
                     tint_color: [1, 1, 1, 1]
           - id: 186483731231135853
@@ -7965,6 +7979,7 @@ child:
                         mesh_id: 2367252208710808329
                         navigable: false
                         visible: true
+                        casting_shadow: true
                         material_id: 15711698613413314858
                         tint_color: [1, 1, 1, 1]
                   - id: 4426685882320274910
@@ -7985,6 +8000,7 @@ child:
                         mesh_id: 11783699103939193595
                         navigable: false
                         visible: true
+                        casting_shadow: true
                         material_id: 15711698613413314858
                         tint_color: [1, 1, 1, 1]
                   - id: 7807628682193679573
@@ -8005,6 +8021,7 @@ child:
                         mesh_id: 10088262584487287873
                         navigable: false
                         visible: true
+                        casting_shadow: true
                         material_id: 15711698613413314858
                         tint_color: [1, 1, 1, 1]
                   - id: 1560450266873232053
@@ -8025,6 +8042,7 @@ child:
                         mesh_id: 10784035645120420919
                         navigable: false
                         visible: true
+                        casting_shadow: true
                         material_id: 15711698613413314858
                         tint_color: [1, 1, 1, 1]
               - id: 630500816932703804
@@ -8102,9 +8120,6 @@ child:
         type: 15
         enabled: true
         class_name: AudioManager
-        "'_enemies_in_combat@int'": 0
-        "'_in_combat@bool'": false
-        "'_in_gaunlet@bool'": false
   - id: 11392694371135083901
     name: Debug
     enabled: false
@@ -9491,6 +9506,11 @@ child:
         "'_respawn_position@float3'": [-84.74, 3.466, -56.32]
         "'_gauntlet_ui_go@GameObject*'": 11815393408956331148
         "'_gauntlet_counter_go@GameObject*'": 290730714737929416
+        "'_modify_fog@bool'": false
+        "'_fog_frequency@float'": 0.1
+        "'_fog_max_density@float'": 0.015
+        "'_fog_min_density@float'": 0.005
+        "'_audio_manager_go@GameObject*'": 0
     child:
       - id: 18237002791232467726
         name: Goal
@@ -9534,6 +9554,7 @@ child:
                     mesh_id: 1654487118907036717
                     navigable: false
                     visible: true
+                    casting_shadow: true
                     material_id: 6750369022920963075
                     tint_color: [1, 1, 1, 1]
       - id: 11815393408956331148
@@ -9717,6 +9738,7 @@ child:
                 mesh_id: 5306447057776503981
                 navigable: false
                 visible: true
+                casting_shadow: true
                 material_id: 7555422350562069233
                 tint_color: [1, 1, 1, 1]
       - id: 314563168739567085
@@ -9737,6 +9759,7 @@ child:
             mesh_id: 10210867973034302559
             navigable: false
             visible: true
+            casting_shadow: true
             material_id: 6750369022920963075
             tint_color: [1, 1, 1, 1]
   - id: 11750502083813652546
@@ -10390,6 +10413,7 @@ child:
             mesh_id: 1654487118907036717
             navigable: true
             visible: true
+            casting_shadow: true
             material_id: 6750369022920963075
             tint_color: [1, 1, 1, 1]
   - id: 18228802010358417349
@@ -10577,7 +10601,7 @@ child:
                                         type: 1
                                         enabled: true
                                         position: [0, 1.081, -1.753]
-                                        rotation: [-180, 0, -0]
+                                        rotation: [180, 0, -0]
                                         scale: [2.54, 2.54, 2.54]
                                     child:
                                       - id: 9253628311517691346
@@ -10646,6 +10670,7 @@ child:
                                                             mesh_id: 3810281298859645857
                                                             navigable: false
                                                             visible: true
+                                                            casting_shadow: true
                                                             material_id: 8839885697372629645
                                                             tint_color: [1, 1, 1, 1]
                                       - id: 6920808040675579611
@@ -10666,6 +10691,7 @@ child:
                                             mesh_id: 4607210186816358407
                                             navigable: false
                                             visible: true
+                                            casting_shadow: true
                                             material_id: 8839885697372629645
                                             tint_color: [1, 1, 1, 1]
                                       - id: 1256500471457202127
@@ -10734,6 +10760,7 @@ child:
                                                             mesh_id: 5299496849775009183
                                                             navigable: false
                                                             visible: true
+                                                            casting_shadow: true
                                                             material_id: 4368630260450623331
                                                             tint_color: [1, 1, 1, 1]
                                       - id: 3380546929070490812
@@ -10802,6 +10829,7 @@ child:
                                                             mesh_id: 13449830118504550705
                                                             navigable: false
                                                             visible: true
+                                                            casting_shadow: true
                                                             material_id: 12761246385826254194
                                                             tint_color: [1, 1, 1, 1]
                                       - id: 8631366822891431403
@@ -10870,6 +10898,7 @@ child:
                                                             mesh_id: 14850331255219236933
                                                             navigable: false
                                                             visible: true
+                                                            casting_shadow: true
                                                             material_id: 12761246385826254194
                                                             tint_color: [1, 1, 1, 1]
                                       - id: 5683558826121388712
@@ -10938,6 +10967,7 @@ child:
                                                             mesh_id: 1490909087019993744
                                                             navigable: false
                                                             visible: true
+                                                            casting_shadow: true
                                                             material_id: 11512221628697873738
                                                             tint_color: [1, 1, 1, 1]
       - id: 11541537990179499720
@@ -12011,7 +12041,7 @@ child:
                                                                                                                             type: 1
                                                                                                                             enabled: true
                                                                                                                             position: [0, 0, 0]
-                                                                                                                            rotation: [180, 0, -0]
+                                                                                                                            rotation: [-180, 0, -0]
                                                                                                                             scale: [1, 1, 1]
                                                                                                                         child:
                                                                                                                           - id: 2983305070747123574
@@ -12070,7 +12100,7 @@ child:
                                                                                                                             type: 1
                                                                                                                             enabled: true
                                                                                                                             position: [0, 0, 0]
-                                                                                                                            rotation: [180, 0, -0]
+                                                                                                                            rotation: [-180, 0, -0]
                                                                                                                             scale: [1, 1, 1]
                                                                                                                         child:
                                                                                                                           - id: 7066723275852593375
@@ -12117,7 +12147,7 @@ child:
                                                                                                                             type: 1
                                                                                                                             enabled: true
                                                                                                                             position: [0, 0, 0]
-                                                                                                                            rotation: [180, 0, -0]
+                                                                                                                            rotation: [-180, 0, -0]
                                                                                                                             scale: [1, 1, 1]
                                                                                                                         child:
                                                                                                                           - id: 162512179504047294
@@ -12153,7 +12183,7 @@ child:
                                                                                                                                         type: 1
                                                                                                                                         enabled: true
                                                                                                                                         position: [0, 0, 0]
-                                                                                                                                        rotation: [180, 1.356, 180]
+                                                                                                                                        rotation: [-180, 1.356, -180]
                                                                                                                                         scale: [1, 1, 1]
                                                                                                                                     child:
                                                                                                                                       - id: 7378100646301905207
@@ -12189,7 +12219,7 @@ child:
                                                                                                                                                     type: 1
                                                                                                                                                     enabled: true
                                                                                                                                                     position: [0, 0, 0]
-                                                                                                                                                    rotation: [180, -1.356, 180]
+                                                                                                                                                    rotation: [-180, -1.356, -180]
                                                                                                                                                     scale: [1, 1, 1]
                                                                                                                                                 child:
                                                                                                                                                   - id: 8252445221293630384
@@ -12225,7 +12255,7 @@ child:
                                                                                                                                                                 type: 1
                                                                                                                                                                 enabled: true
                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                rotation: [-180, -85.75, -180]
+                                                                                                                                                                rotation: [180, -85.75, 180]
                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                             child:
                                                                                                                                                               - id: 2947997736083328444
@@ -12273,7 +12303,7 @@ child:
                                                                                                                                                                                 type: 1
                                                                                                                                                                                 enabled: true
                                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                                rotation: [-180, -85.64, -180]
+                                                                                                                                                                                rotation: [180, -85.64, 180]
                                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                                             child:
                                                                                                                                                                               - id: 1763020957479063615
@@ -12357,7 +12387,7 @@ child:
                                                                                                                                                                                                             type: 1
                                                                                                                                                                                                             enabled: true
                                                                                                                                                                                                             position: [0, 0, 0]
-                                                                                                                                                                                                            rotation: [180, -11.85, 180]
+                                                                                                                                                                                                            rotation: [-180, -11.85, -180]
                                                                                                                                                                                                             scale: [1, 1, 1]
                                                                                                                                                                                                         child:
                                                                                                                                                                                                           - id: 5138853394069507134
@@ -12404,7 +12434,7 @@ child:
                                                                                                                                                                 type: 1
                                                                                                                                                                 enabled: true
                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                rotation: [180, -6.71, 180]
+                                                                                                                                                                rotation: [-180, -6.71, -180]
                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                             child:
                                                                                                                                                               - id: 4775966870435545810
@@ -12452,7 +12482,7 @@ child:
                                                                                                                                                                                 type: 1
                                                                                                                                                                                 enabled: true
                                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                                rotation: [180, 6.71, 180]
+                                                                                                                                                                                rotation: [-180, 6.71, -180]
                                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                                             child:
                                                                                                                                                                               - id: 1743634718709042819
@@ -12499,7 +12529,7 @@ child:
                                                                                                                                                                 type: 1
                                                                                                                                                                 enabled: true
                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                rotation: [180, 7.352, 180]
+                                                                                                                                                                rotation: [-180, 7.352, -180]
                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                             child:
                                                                                                                                                               - id: 9861219265221988646
@@ -12547,7 +12577,7 @@ child:
                                                                                                                                                                                 type: 1
                                                                                                                                                                                 enabled: true
                                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                                rotation: [180, -7.352, 180]
+                                                                                                                                                                                rotation: [-180, -7.352, -180]
                                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                                             child:
                                                                                                                                                                               - id: 17760169468963757363
@@ -12594,7 +12624,7 @@ child:
                                                                                                                                                                 type: 1
                                                                                                                                                                 enabled: true
                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                rotation: [180, 37.69, 180]
+                                                                                                                                                                rotation: [-180, 37.69, -180]
                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                             child:
                                                                                                                                                               - id: 15315101104890206880
@@ -12642,7 +12672,7 @@ child:
                                                                                                                                                                                 type: 1
                                                                                                                                                                                 enabled: true
                                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                                rotation: [180, -37.69, 180]
+                                                                                                                                                                                rotation: [-180, -37.69, -180]
                                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                                             child:
                                                                                                                                                                               - id: 11459015822330793963
@@ -12689,7 +12719,7 @@ child:
                                                                                                                                         type: 1
                                                                                                                                         enabled: true
                                                                                                                                         position: [0, 0, 0]
-                                                                                                                                        rotation: [180, -0.4737, 180]
+                                                                                                                                        rotation: [-180, -0.4737, -180]
                                                                                                                                         scale: [1, 1, 1]
                                                                                                                                     child:
                                                                                                                                       - id: 15987344257245938791
@@ -12725,7 +12755,7 @@ child:
                                                                                                                                                     type: 1
                                                                                                                                                     enabled: true
                                                                                                                                                     position: [0, 0, 0]
-                                                                                                                                                    rotation: [180, 0.4737, 180]
+                                                                                                                                                    rotation: [-180, 0.4737, -180]
                                                                                                                                                     scale: [1, 1, 1]
                                                                                                                                                 child:
                                                                                                                                                   - id: 13223711270451322188
@@ -13055,7 +13085,7 @@ child:
             type: 1
             enabled: true
             position: [59.39, -15.02, -164.5]
-            rotation: [180, -55.25, 180]
+            rotation: [-180, -55.25, -180]
             scale: [1.079, 1.1, 1.079]
       - id: 11650371022511337214
         name: AttackIndicator
@@ -13077,7 +13107,7 @@ child:
             type: 1
             enabled: true
             position: [0, 3.815, -0.75]
-            rotation: [-0, 90, 0]
+            rotation: [-180, 89.98, -180]
             scale: [2, 0.4164, 2.178]
         child:
           - id: 14414538786768405220
@@ -13098,6 +13128,7 @@ child:
                 mesh_id: 4601319148081155683
                 navigable: false
                 visible: true
+                casting_shadow: false
                 material_id: 13674522304467685866
                 tint_color: [1, 1, 1, 1]
       - id: 2597224758076185153
@@ -13479,7 +13510,7 @@ child:
             type: 1
             enabled: true
             position: [-0.84, 2.16, 3.18]
-            rotation: [-90, 0, 180]
+            rotation: [-90, -0, -180]
             scale: [2, 2, 2]
           - !<particle_system>
             id: 14783160612015305116
@@ -13559,7 +13590,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1931, 1187]
+            size: [1935, 1174]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -14234,7 +14265,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 7]
-            rotation: [0, 90, 0]
+            rotation: [-180, 89.98, -180]
             scale: [2.5, 2.5, 2.5]
           - !<billboard>
             id: 12691712513651242410
@@ -14348,7 +14379,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1931, 1187]
+            size: [1935, 1174]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -14527,6 +14558,7 @@ child:
             mesh_id: 1654487118907036717
             navigable: false
             visible: true
+            casting_shadow: true
             material_id: 6750369022920963075
             tint_color: [1, 1, 1, 1]
       - id: 18385462906160147608
@@ -14584,6 +14616,7 @@ child:
                 mesh_id: 1309944288732959230
                 navigable: false
                 visible: true
+                casting_shadow: true
                 material_id: 6750369022920963075
                 tint_color: [1, 1, 1, 1]
       - id: 8847909615947034233
@@ -14774,6 +14807,7 @@ child:
                                     mesh_id: 10175395471774891078
                                     navigable: false
                                     visible: true
+                                    casting_shadow: true
                                     material_id: 5759363592208955763
                                     tint_color: [1, 1, 1, 1]
               - id: 299205543039437389
@@ -14842,6 +14876,7 @@ child:
                                     mesh_id: 6229385771345559983
                                     navigable: false
                                     visible: true
+                                    casting_shadow: true
                                     material_id: 5759363592208955763
                                     tint_color: [1, 1, 1, 1]
               - id: 17321965404370646323
@@ -14910,6 +14945,7 @@ child:
                                     mesh_id: 903393536084662082
                                     navigable: false
                                     visible: true
+                                    casting_shadow: true
                                     material_id: 5759363592208955763
                                     tint_color: [1, 1, 1, 1]
               - id: 9428003680081047390
@@ -14978,6 +15014,7 @@ child:
                                     mesh_id: 17479070581851126897
                                     navigable: false
                                     visible: true
+                                    casting_shadow: true
                                     material_id: 5759363592208955763
                                     tint_color: [1, 1, 1, 1]
           - id: 12198230753896956617
@@ -15078,6 +15115,7 @@ child:
                     mesh_id: 10210867973034302559
                     navigable: false
                     visible: true
+                    casting_shadow: true
                     material_id: 6462450398853139216
                     tint_color: [1, 1, 1, 1]
           - id: 6914375917543105381
@@ -15297,6 +15335,7 @@ child:
                                     mesh_id: 10175395471774891078
                                     navigable: false
                                     visible: true
+                                    casting_shadow: true
                                     material_id: 5759363592208955763
                                     tint_color: [1, 1, 1, 1]
               - id: 5454337776919310832
@@ -15365,6 +15404,7 @@ child:
                                     mesh_id: 6229385771345559983
                                     navigable: false
                                     visible: true
+                                    casting_shadow: true
                                     material_id: 5759363592208955763
                                     tint_color: [1, 1, 1, 1]
               - id: 7971616149221357792
@@ -15433,6 +15473,7 @@ child:
                                     mesh_id: 903393536084662082
                                     navigable: false
                                     visible: true
+                                    casting_shadow: true
                                     material_id: 5759363592208955763
                                     tint_color: [1, 1, 1, 1]
               - id: 9965804227085726058
@@ -15501,6 +15542,7 @@ child:
                                     mesh_id: 17479070581851126897
                                     navigable: false
                                     visible: true
+                                    casting_shadow: true
                                     material_id: 5759363592208955763
                                     tint_color: [1, 1, 1, 1]
           - id: 4973404028743671860
@@ -15601,6 +15643,7 @@ child:
                     mesh_id: 10210867973034302559
                     navigable: false
                     visible: true
+                    casting_shadow: true
                     material_id: 6462450398853139216
                     tint_color: [1, 1, 1, 1]
           - id: 12315641692032984796
@@ -15820,6 +15863,7 @@ child:
                                     mesh_id: 10175395471774891078
                                     navigable: false
                                     visible: true
+                                    casting_shadow: true
                                     material_id: 5759363592208955763
                                     tint_color: [1, 1, 1, 1]
               - id: 4291262673494841267
@@ -15888,6 +15932,7 @@ child:
                                     mesh_id: 6229385771345559983
                                     navigable: false
                                     visible: true
+                                    casting_shadow: true
                                     material_id: 5759363592208955763
                                     tint_color: [1, 1, 1, 1]
               - id: 12686143897327429703
@@ -15956,6 +16001,7 @@ child:
                                     mesh_id: 903393536084662082
                                     navigable: false
                                     visible: true
+                                    casting_shadow: true
                                     material_id: 5759363592208955763
                                     tint_color: [1, 1, 1, 1]
               - id: 13396094484526540028
@@ -16024,6 +16070,7 @@ child:
                                     mesh_id: 17479070581851126897
                                     navigable: false
                                     visible: true
+                                    casting_shadow: true
                                     material_id: 5759363592208955763
                                     tint_color: [1, 1, 1, 1]
           - id: 9713019161644840695
@@ -16124,6 +16171,7 @@ child:
                     mesh_id: 10210867973034302559
                     navigable: false
                     visible: true
+                    casting_shadow: true
                     material_id: 6462450398853139216
                     tint_color: [1, 1, 1, 1]
           - id: 14637631407858973769
@@ -16343,6 +16391,7 @@ child:
                                     mesh_id: 10175395471774891078
                                     navigable: false
                                     visible: true
+                                    casting_shadow: true
                                     material_id: 5759363592208955763
                                     tint_color: [1, 1, 1, 1]
               - id: 6343599644324597265
@@ -16411,6 +16460,7 @@ child:
                                     mesh_id: 6229385771345559983
                                     navigable: false
                                     visible: true
+                                    casting_shadow: true
                                     material_id: 5759363592208955763
                                     tint_color: [1, 1, 1, 1]
               - id: 4034021362585899316
@@ -16479,6 +16529,7 @@ child:
                                     mesh_id: 903393536084662082
                                     navigable: false
                                     visible: true
+                                    casting_shadow: true
                                     material_id: 5759363592208955763
                                     tint_color: [1, 1, 1, 1]
               - id: 11823870304176874312
@@ -16547,6 +16598,7 @@ child:
                                     mesh_id: 17479070581851126897
                                     navigable: false
                                     visible: true
+                                    casting_shadow: true
                                     material_id: 5759363592208955763
                                     tint_color: [1, 1, 1, 1]
           - id: 17799504098918429344
@@ -16647,6 +16699,7 @@ child:
                     mesh_id: 10210867973034302559
                     navigable: false
                     visible: true
+                    casting_shadow: true
                     material_id: 6462450398853139216
                     tint_color: [1, 1, 1, 1]
           - id: 4211619609436505027
@@ -16866,6 +16919,7 @@ child:
                                     mesh_id: 10175395471774891078
                                     navigable: false
                                     visible: true
+                                    casting_shadow: true
                                     material_id: 5759363592208955763
                                     tint_color: [1, 1, 1, 1]
               - id: 16819984193218181318
@@ -16934,6 +16988,7 @@ child:
                                     mesh_id: 6229385771345559983
                                     navigable: false
                                     visible: true
+                                    casting_shadow: true
                                     material_id: 5759363592208955763
                                     tint_color: [1, 1, 1, 1]
               - id: 5098572436258417180
@@ -17002,6 +17057,7 @@ child:
                                     mesh_id: 903393536084662082
                                     navigable: false
                                     visible: true
+                                    casting_shadow: true
                                     material_id: 5759363592208955763
                                     tint_color: [1, 1, 1, 1]
               - id: 766315164698244683
@@ -17070,6 +17126,7 @@ child:
                                     mesh_id: 17479070581851126897
                                     navigable: false
                                     visible: true
+                                    casting_shadow: true
                                     material_id: 5759363592208955763
                                     tint_color: [1, 1, 1, 1]
           - id: 4507713610724815326
@@ -17170,6 +17227,7 @@ child:
                     mesh_id: 10210867973034302559
                     navigable: false
                     visible: true
+                    casting_shadow: true
                     material_id: 6462450398853139216
                     tint_color: [1, 1, 1, 1]
           - id: 9246858334661810244
@@ -17414,6 +17472,7 @@ child:
                                                 mesh_id: 13434050870169230919
                                                 navigable: false
                                                 visible: true
+                                                casting_shadow: true
                                                 material_id: 9974829148899559714
                                                 tint_color: [1, 1, 1, 1]
                   - id: 11337749087723923437
@@ -17494,6 +17553,7 @@ child:
                                             mesh_id: 16030000354885348442
                                             navigable: false
                                             visible: true
+                                            casting_shadow: true
                                             material_id: 9974829148899559714
                                             tint_color: [1, 1, 1, 1]
                   - id: 2771253500467504683
@@ -17574,6 +17634,7 @@ child:
                                             mesh_id: 16164888999783144343
                                             navigable: false
                                             visible: true
+                                            casting_shadow: true
                                             material_id: 9974829148899559714
                                             tint_color: [1, 1, 1, 1]
                   - id: 2056261427561718818
@@ -17654,6 +17715,7 @@ child:
                                             mesh_id: 14936141520177162225
                                             navigable: false
                                             visible: true
+                                            casting_shadow: true
                                             material_id: 9974829148899559714
                                             tint_color: [1, 1, 1, 1]
                   - id: 8167812737176889666
@@ -17758,6 +17820,7 @@ child:
                                                     mesh_id: 4858675622764737760
                                                     navigable: false
                                                     visible: true
+                                                    casting_shadow: true
                                                     material_id: 9974829148899559714
                                                     tint_color: [1, 1, 1, 1]
                   - id: 17171793491974863207
@@ -17850,6 +17913,7 @@ child:
                                                 mesh_id: 14952432210322649156
                                                 navigable: false
                                                 visible: true
+                                                casting_shadow: true
                                                 material_id: 9974829148899559714
                                                 tint_color: [1, 1, 1, 1]
                   - id: 11193097453268881153
@@ -17942,6 +18006,7 @@ child:
                                                 mesh_id: 17519819917701071020
                                                 navigable: false
                                                 visible: true
+                                                casting_shadow: true
                                                 material_id: 9974829148899559714
                                                 tint_color: [1, 1, 1, 1]
                   - id: 9375955605365204644
@@ -18034,6 +18099,7 @@ child:
                                                 mesh_id: 3696838520256396605
                                                 navigable: false
                                                 visible: true
+                                                casting_shadow: true
                                                 material_id: 9974829148899559714
                                                 tint_color: [1, 1, 1, 1]
                   - id: 14151295459372868347
@@ -18126,6 +18192,7 @@ child:
                                                 mesh_id: 14308025199256811240
                                                 navigable: false
                                                 visible: true
+                                                casting_shadow: true
                                                 material_id: 9974829148899559714
                                                 tint_color: [1, 1, 1, 1]
                   - id: 12941601279549947851
@@ -18218,6 +18285,7 @@ child:
                                                 mesh_id: 11433934268384651109
                                                 navigable: false
                                                 visible: true
+                                                casting_shadow: true
                                                 material_id: 9974829148899559714
                                                 tint_color: [1, 1, 1, 1]
                   - id: 9140846063358848705
@@ -18298,6 +18366,7 @@ child:
                                             mesh_id: 18214586828646648376
                                             navigable: false
                                             visible: true
+                                            casting_shadow: true
                                             material_id: 9974829148899559714
                                             tint_color: [1, 1, 1, 1]
                   - id: 5265911447704730010
@@ -18378,6 +18447,7 @@ child:
                                             mesh_id: 17116452875566361327
                                             navigable: false
                                             visible: true
+                                            casting_shadow: true
                                             material_id: 9974829148899559714
                                             tint_color: [1, 1, 1, 1]
                   - id: 1195689553730597632
@@ -18458,6 +18528,7 @@ child:
                                             mesh_id: 1895153958403280301
                                             navigable: false
                                             visible: true
+                                            casting_shadow: true
                                             material_id: 9974829148899559714
                                             tint_color: [1, 1, 1, 1]
               - id: 13374320941029257340
@@ -18548,7 +18619,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0, 0, 0]
-                            rotation: [180, -82.71, -178.8]
+                            rotation: [-180, -82.71, -178.8]
                             scale: [1, 1, 1]
                         child:
                           - id: 7528231635659626325
@@ -18595,7 +18666,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0, 0, 0]
-                            rotation: [-180, -86.87, -180]
+                            rotation: [180, -86.87, 180]
                             scale: [1, 1, 1]
                         child:
                           - id: 16282965796465958809
@@ -18792,6 +18863,7 @@ child:
                     mesh_id: 10210867973034302559
                     navigable: false
                     visible: true
+                    casting_shadow: true
                     material_id: 6462450398853139216
                     tint_color: [1, 1, 1, 1]
       - id: 5802428331447569894
@@ -18932,6 +19004,7 @@ child:
                                                 mesh_id: 13434050870169230919
                                                 navigable: false
                                                 visible: true
+                                                casting_shadow: true
                                                 material_id: 9974829148899559714
                                                 tint_color: [1, 1, 1, 1]
                   - id: 15186461656110065417
@@ -19012,6 +19085,7 @@ child:
                                             mesh_id: 16030000354885348442
                                             navigable: false
                                             visible: true
+                                            casting_shadow: true
                                             material_id: 9974829148899559714
                                             tint_color: [1, 1, 1, 1]
                   - id: 7684351016402901797
@@ -19092,6 +19166,7 @@ child:
                                             mesh_id: 16164888999783144343
                                             navigable: false
                                             visible: true
+                                            casting_shadow: true
                                             material_id: 9974829148899559714
                                             tint_color: [1, 1, 1, 1]
                   - id: 12037210991259109562
@@ -19172,6 +19247,7 @@ child:
                                             mesh_id: 14936141520177162225
                                             navigable: false
                                             visible: true
+                                            casting_shadow: true
                                             material_id: 9974829148899559714
                                             tint_color: [1, 1, 1, 1]
                   - id: 3071912693826514593
@@ -19276,6 +19352,7 @@ child:
                                                     mesh_id: 4858675622764737760
                                                     navigable: false
                                                     visible: true
+                                                    casting_shadow: true
                                                     material_id: 9974829148899559714
                                                     tint_color: [1, 1, 1, 1]
                   - id: 12300389829403921667
@@ -19368,6 +19445,7 @@ child:
                                                 mesh_id: 14952432210322649156
                                                 navigable: false
                                                 visible: true
+                                                casting_shadow: true
                                                 material_id: 9974829148899559714
                                                 tint_color: [1, 1, 1, 1]
                   - id: 2148166750662769908
@@ -19460,6 +19538,7 @@ child:
                                                 mesh_id: 17519819917701071020
                                                 navigable: false
                                                 visible: true
+                                                casting_shadow: true
                                                 material_id: 9974829148899559714
                                                 tint_color: [1, 1, 1, 1]
                   - id: 11844390618972081174
@@ -19552,6 +19631,7 @@ child:
                                                 mesh_id: 3696838520256396605
                                                 navigable: false
                                                 visible: true
+                                                casting_shadow: true
                                                 material_id: 9974829148899559714
                                                 tint_color: [1, 1, 1, 1]
                   - id: 803492562798335658
@@ -19644,6 +19724,7 @@ child:
                                                 mesh_id: 14308025199256811240
                                                 navigable: false
                                                 visible: true
+                                                casting_shadow: true
                                                 material_id: 9974829148899559714
                                                 tint_color: [1, 1, 1, 1]
                   - id: 7053293259238210179
@@ -19736,6 +19817,7 @@ child:
                                                 mesh_id: 11433934268384651109
                                                 navigable: false
                                                 visible: true
+                                                casting_shadow: true
                                                 material_id: 9974829148899559714
                                                 tint_color: [1, 1, 1, 1]
                   - id: 3781151304223824815
@@ -19816,6 +19898,7 @@ child:
                                             mesh_id: 18214586828646648376
                                             navigable: false
                                             visible: true
+                                            casting_shadow: true
                                             material_id: 9974829148899559714
                                             tint_color: [1, 1, 1, 1]
                   - id: 9778042374255303287
@@ -19896,6 +19979,7 @@ child:
                                             mesh_id: 17116452875566361327
                                             navigable: false
                                             visible: true
+                                            casting_shadow: true
                                             material_id: 9974829148899559714
                                             tint_color: [1, 1, 1, 1]
                   - id: 10583226082753211517
@@ -19976,6 +20060,7 @@ child:
                                             mesh_id: 1895153958403280301
                                             navigable: false
                                             visible: true
+                                            casting_shadow: true
                                             material_id: 9974829148899559714
                                             tint_color: [1, 1, 1, 1]
               - id: 1622823121313010346
@@ -20066,7 +20151,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0, 0, 0]
-                            rotation: [180, -82.71, -178.8]
+                            rotation: [-180, -82.71, -178.8]
                             scale: [1, 1, 1]
                         child:
                           - id: 9099175317089368136
@@ -20113,7 +20198,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0, 0, 0]
-                            rotation: [-180, -86.87, -180]
+                            rotation: [180, -86.87, 180]
                             scale: [1, 1, 1]
                         child:
                           - id: 8915223915001220277
@@ -20310,6 +20395,7 @@ child:
                     mesh_id: 10210867973034302559
                     navigable: false
                     visible: true
+                    casting_shadow: true
                     material_id: 6462450398853139216
                     tint_color: [1, 1, 1, 1]
       - id: 10307201078330513703
@@ -20450,6 +20536,7 @@ child:
                                                 mesh_id: 13434050870169230919
                                                 navigable: false
                                                 visible: true
+                                                casting_shadow: true
                                                 material_id: 9974829148899559714
                                                 tint_color: [1, 1, 1, 1]
                   - id: 3247472226981791025
@@ -20530,6 +20617,7 @@ child:
                                             mesh_id: 16030000354885348442
                                             navigable: false
                                             visible: true
+                                            casting_shadow: true
                                             material_id: 9974829148899559714
                                             tint_color: [1, 1, 1, 1]
                   - id: 4842331004206755015
@@ -20610,6 +20698,7 @@ child:
                                             mesh_id: 16164888999783144343
                                             navigable: false
                                             visible: true
+                                            casting_shadow: true
                                             material_id: 9974829148899559714
                                             tint_color: [1, 1, 1, 1]
                   - id: 7278738245618021001
@@ -20690,6 +20779,7 @@ child:
                                             mesh_id: 14936141520177162225
                                             navigable: false
                                             visible: true
+                                            casting_shadow: true
                                             material_id: 9974829148899559714
                                             tint_color: [1, 1, 1, 1]
                   - id: 10141557883369138981
@@ -20794,6 +20884,7 @@ child:
                                                     mesh_id: 4858675622764737760
                                                     navigable: false
                                                     visible: true
+                                                    casting_shadow: true
                                                     material_id: 9974829148899559714
                                                     tint_color: [1, 1, 1, 1]
                   - id: 6523076788135757040
@@ -20886,6 +20977,7 @@ child:
                                                 mesh_id: 14952432210322649156
                                                 navigable: false
                                                 visible: true
+                                                casting_shadow: true
                                                 material_id: 9974829148899559714
                                                 tint_color: [1, 1, 1, 1]
                   - id: 3672057148151942738
@@ -20978,6 +21070,7 @@ child:
                                                 mesh_id: 17519819917701071020
                                                 navigable: false
                                                 visible: true
+                                                casting_shadow: true
                                                 material_id: 9974829148899559714
                                                 tint_color: [1, 1, 1, 1]
                   - id: 9241769473331826419
@@ -21070,6 +21163,7 @@ child:
                                                 mesh_id: 3696838520256396605
                                                 navigable: false
                                                 visible: true
+                                                casting_shadow: true
                                                 material_id: 9974829148899559714
                                                 tint_color: [1, 1, 1, 1]
                   - id: 13124568788465084527
@@ -21162,6 +21256,7 @@ child:
                                                 mesh_id: 14308025199256811240
                                                 navigable: false
                                                 visible: true
+                                                casting_shadow: true
                                                 material_id: 9974829148899559714
                                                 tint_color: [1, 1, 1, 1]
                   - id: 18048159908320279558
@@ -21254,6 +21349,7 @@ child:
                                                 mesh_id: 11433934268384651109
                                                 navigable: false
                                                 visible: true
+                                                casting_shadow: true
                                                 material_id: 9974829148899559714
                                                 tint_color: [1, 1, 1, 1]
                   - id: 17675260804326419995
@@ -21334,6 +21430,7 @@ child:
                                             mesh_id: 18214586828646648376
                                             navigable: false
                                             visible: true
+                                            casting_shadow: true
                                             material_id: 9974829148899559714
                                             tint_color: [1, 1, 1, 1]
                   - id: 14940649092897236180
@@ -21414,6 +21511,7 @@ child:
                                             mesh_id: 17116452875566361327
                                             navigable: false
                                             visible: true
+                                            casting_shadow: true
                                             material_id: 9974829148899559714
                                             tint_color: [1, 1, 1, 1]
                   - id: 1671825892556166946
@@ -21494,6 +21592,7 @@ child:
                                             mesh_id: 1895153958403280301
                                             navigable: false
                                             visible: true
+                                            casting_shadow: true
                                             material_id: 9974829148899559714
                                             tint_color: [1, 1, 1, 1]
               - id: 8073121661921503169
@@ -21584,7 +21683,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0, 0, 0]
-                            rotation: [180, -82.71, -178.8]
+                            rotation: [-180, -82.71, -178.8]
                             scale: [1, 1, 1]
                         child:
                           - id: 12932932958051372062
@@ -21631,7 +21730,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0, 0, 0]
-                            rotation: [-180, -86.87, -180]
+                            rotation: [180, -86.87, 180]
                             scale: [1, 1, 1]
                         child:
                           - id: 12571270047636935796
@@ -21828,6 +21927,7 @@ child:
                     mesh_id: 10210867973034302559
                     navigable: false
                     visible: true
+                    casting_shadow: true
                     material_id: 6462450398853139216
                     tint_color: [1, 1, 1, 1]
       - id: 4048299047731919794
@@ -21968,6 +22068,7 @@ child:
                                                 mesh_id: 13434050870169230919
                                                 navigable: false
                                                 visible: true
+                                                casting_shadow: true
                                                 material_id: 9974829148899559714
                                                 tint_color: [1, 1, 1, 1]
                   - id: 679846368365272842
@@ -22048,6 +22149,7 @@ child:
                                             mesh_id: 16030000354885348442
                                             navigable: false
                                             visible: true
+                                            casting_shadow: true
                                             material_id: 9974829148899559714
                                             tint_color: [1, 1, 1, 1]
                   - id: 5169277026249629295
@@ -22128,6 +22230,7 @@ child:
                                             mesh_id: 16164888999783144343
                                             navigable: false
                                             visible: true
+                                            casting_shadow: true
                                             material_id: 9974829148899559714
                                             tint_color: [1, 1, 1, 1]
                   - id: 4146855381060956695
@@ -22208,6 +22311,7 @@ child:
                                             mesh_id: 14936141520177162225
                                             navigable: false
                                             visible: true
+                                            casting_shadow: true
                                             material_id: 9974829148899559714
                                             tint_color: [1, 1, 1, 1]
                   - id: 15741395289947282020
@@ -22312,6 +22416,7 @@ child:
                                                     mesh_id: 4858675622764737760
                                                     navigable: false
                                                     visible: true
+                                                    casting_shadow: true
                                                     material_id: 9974829148899559714
                                                     tint_color: [1, 1, 1, 1]
                   - id: 7391529975103965675
@@ -22404,6 +22509,7 @@ child:
                                                 mesh_id: 14952432210322649156
                                                 navigable: false
                                                 visible: true
+                                                casting_shadow: true
                                                 material_id: 9974829148899559714
                                                 tint_color: [1, 1, 1, 1]
                   - id: 9769637708602578144
@@ -22496,6 +22602,7 @@ child:
                                                 mesh_id: 17519819917701071020
                                                 navigable: false
                                                 visible: true
+                                                casting_shadow: true
                                                 material_id: 9974829148899559714
                                                 tint_color: [1, 1, 1, 1]
                   - id: 160691873494941362
@@ -22588,6 +22695,7 @@ child:
                                                 mesh_id: 3696838520256396605
                                                 navigable: false
                                                 visible: true
+                                                casting_shadow: true
                                                 material_id: 9974829148899559714
                                                 tint_color: [1, 1, 1, 1]
                   - id: 16423475415131111706
@@ -22680,6 +22788,7 @@ child:
                                                 mesh_id: 14308025199256811240
                                                 navigable: false
                                                 visible: true
+                                                casting_shadow: true
                                                 material_id: 9974829148899559714
                                                 tint_color: [1, 1, 1, 1]
                   - id: 4745090113912276701
@@ -22772,6 +22881,7 @@ child:
                                                 mesh_id: 11433934268384651109
                                                 navigable: false
                                                 visible: true
+                                                casting_shadow: true
                                                 material_id: 9974829148899559714
                                                 tint_color: [1, 1, 1, 1]
                   - id: 3815886212052987572
@@ -22852,6 +22962,7 @@ child:
                                             mesh_id: 18214586828646648376
                                             navigable: false
                                             visible: true
+                                            casting_shadow: true
                                             material_id: 9974829148899559714
                                             tint_color: [1, 1, 1, 1]
                   - id: 11585019895636103777
@@ -22932,6 +23043,7 @@ child:
                                             mesh_id: 17116452875566361327
                                             navigable: false
                                             visible: true
+                                            casting_shadow: true
                                             material_id: 9974829148899559714
                                             tint_color: [1, 1, 1, 1]
                   - id: 14592018245429894553
@@ -23012,6 +23124,7 @@ child:
                                             mesh_id: 1895153958403280301
                                             navigable: false
                                             visible: true
+                                            casting_shadow: true
                                             material_id: 9974829148899559714
                                             tint_color: [1, 1, 1, 1]
               - id: 11703535946491317327
@@ -23102,7 +23215,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0, 0, 0]
-                            rotation: [180, -82.71, -178.8]
+                            rotation: [-180, -82.71, -178.8]
                             scale: [1, 1, 1]
                         child:
                           - id: 5362970284039626118
@@ -23149,7 +23262,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0, 0, 0]
-                            rotation: [-180, -86.87, -180]
+                            rotation: [180, -86.87, 180]
                             scale: [1, 1, 1]
                         child:
                           - id: 15088282022863175382
@@ -23346,5 +23459,6 @@ child:
                     mesh_id: 10210867973034302559
                     navigable: false
                     visible: true
+                    casting_shadow: true
                     material_id: 6462450398853139216
                     tint_color: [1, 1, 1, 1]
