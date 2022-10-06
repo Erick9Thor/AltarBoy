@@ -35,24 +35,26 @@ void Hachiko::Scripting::Centipedes::OnUpdate()
 		SteppedOn();
 	}
 
-	if (_state == CentipedeState::IDLE) 
+	if (_state == CentipedeState::IDLE)
 	{
-		if (distance_sq < player_range) {
+		if (distance_sq < centipide_aggro) {
 			_state = CentipedeState::RUN;
-			float3 new_destination = player_position + player_to_centipide.Normalized() * player_range;
-			agent->SetTargetPosition(new_destination);
 		}
 	}
-
-	if (_state == CentipedeState::RUN)
+	else if (_state == CentipedeState::RUN)
 	{
-		if (distance_sq > player_range) {
-			_state = CentipedeState::IDLE;
-		}
-		else { 
+		if (distance_sq > centipide_aggro) {
+		_state = CentipedeState::IDLE;
+
+			agent->SetTargetPosition(game_object->GetComponent<ComponentTransform>()->GetGlobalPosition());
+		} else 
+		{
+			float3 new_destination = player_position + player_to_centipide.Normalized() * player_range;
 			Quat target_rotation = Quat::LookAt(float3(-1, 0, 0), player_transform->GetFront(), float3(0, 1, 0), float3(0, 1, 0));
 			Quat rotation = Quat::Slerp(game_object->GetTransform()->GetGlobalRotation(), target_rotation, Min(Time::DeltaTime() / Max(rotation_smoothness, 0.000001f), 1.0f));
+			
 			game_object->GetTransform()->SetGlobalRotation(rotation);
+			agent->SetTargetPosition(new_destination);
 		}
 	}
 

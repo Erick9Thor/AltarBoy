@@ -42,6 +42,8 @@ namespace Hachiko
 			float rotation_smoothness = 0.2f;
 			float time_to_respawn = 10.0f;
 
+			float centipide_aggro = 40.0f;
+
 			float respawn_timer = 0.0f;
 
 			GameObject* _player = nullptr;
