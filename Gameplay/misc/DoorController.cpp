@@ -60,8 +60,10 @@ void Hachiko::Scripting::DoorController::UpdateDoorState()
 		break;
 	case State::OPENNING:
 		door_obstacle->RemoveObstacle();
+		_door_prefab->SetActive(false);
 		// Small hack to keep things simple, even if the parent is inactive it will still render
 		_open_door_mesh->SetActive(true);
+		_closed_door_mesh->SetActive(true);
 		break;
 	case State::OPEN:
 		_closed_door_mesh->SetActive(false);
