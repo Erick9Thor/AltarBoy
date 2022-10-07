@@ -37,9 +37,14 @@ void Hachiko::Scripting::Centipedes::OnUpdate()
 
 	float distance_sq = player_to_centipide.LengthSq();
 
-	if (distance_sq < stepped_on_range && _state != CentipedeState::DIE) // DEAD
+	if (distance_sq < stepped_on_range) // DEAD
 	{ 
-		SteppedOn();
+		_damage_effect->SetActive(true);
+		_splash_effect_billboard->Play();
+		if (_state != CentipedeState::DIE)
+		{
+			SteppedOn();
+		}
 	}
 
 	if (_state == CentipedeState::IDLE)
@@ -75,8 +80,7 @@ void Hachiko::Scripting::Centipedes::SteppedOn()
 	audio_source->PostEvent(Sounds::PLAY_SPLASH);
 	agent->Stop();
 	_state = CentipedeState::DIE;
-	_damage_effect->SetActive(true);
-	_splash_effect_billboard->Play();
+
 }
 
 void Hachiko::Scripting::Centipedes::UpdateCentipedeState()

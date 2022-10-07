@@ -5,7 +5,7 @@ component:
   - !<transform>
     type: 1
     enabled: true
-    position: [0, 0, 0]
+    position: [-56.11, 3.447, -86.28]
     rotation: [-0, 0, -0]
     scale: [1.5, 1.5, 1.5]
   - !<animation>
@@ -455,7 +455,7 @@ child:
                                                                                                                                                     rotation: [-0, 0, -0]
                                                                                                                                                     scale: [1, 1, 1]
   - name: Death_VFX
-    enabled: true
+    enabled: false
     component:
       - !<transform>
         type: 1
@@ -466,7 +466,7 @@ child:
       - !<billboard>
         type: 21
         enabled: true
-        play_on_awake: true
+        play_on_awake: false
         texture_id: 15790324598721314436
         tiles: [2, 2]
         flip: [false, false]
@@ -488,3 +488,4 @@ child:
         start_rotation: [true, true, 1, [1.5, 4], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
         blend_factor: 1
         projection: true
+        randomize_tiles: false
