@@ -406,6 +406,7 @@ inline void Hachiko::ComponentBillboard::Reset()
     current_frame = 0.0f;
     animation_index = randomize_tiles ? GetRandomTile() : float2{0.0f, 0.0f};
     size = start_size.GetValue();
+    rotation = start_rotation.GetValue();
 }
 
 void Hachiko::ComponentBillboard::Save(YAML::Node& node) const
