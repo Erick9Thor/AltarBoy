@@ -811,7 +811,6 @@ void Hachiko::Scripting::EnemyController::Spawn()
 		if (_enemy_body)
 		{
 			_enemy_body->SetActive(true);
-			_enemy_body->ChangeEmissiveColor(float4(0.3f, 0.5f, 1.0f, 1.0f), _spawning_time, true);
 		}
 		if (_parasite)
 		{
