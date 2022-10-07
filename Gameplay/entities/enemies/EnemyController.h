@@ -181,12 +181,15 @@ namespace Hachiko
             // Combat info
             float3 _knockback_pos = float3::zero;
             float _attack_current_delay = 0.f;
+            // Spawning times
+            float _current_spawning_time = 2.0f;
+            float spawn_progress = 0.0f;
+            const float spawn_rate = 0.5f;
+            bool _has_spawned = false;
+
             bool _immune = false;
             bool _attack_landing = false;
             bool _attack_alt = false;
-            // Spawn times
-            SERIALIZE_FIELD(float, _current_spawning_time);
-            bool _has_spawned = false;
 
 
             EnemyType _enemy_type = EnemyType::BEETLE;
