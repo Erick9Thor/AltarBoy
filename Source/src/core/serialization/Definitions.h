@@ -295,6 +295,7 @@
 #define START_ROTATION "start_rotation"
 #define BILLBOARD_PROPERTIES "properties"
 #define BILLBOARD_PROJECTION "projection"
+#define RANDOMIZE_TILE "randomize_tiles"
 
 #define COLOR_CYCLES "color_cycles"
 #define COLOR_GRADIENT "color_gradient"

@@ -2735,7 +2735,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1695, 862]
+            size: [1679, 1011]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -2974,6 +2974,7 @@ child:
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 0
             projection: true
+            randomize_tiles: false
       - id: 3090574280302983108
         name: VFX_CI_W_SpitBall
         enabled: false
@@ -3011,6 +3012,7 @@ child:
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 0
             projection: true
+            randomize_tiles: false
       - id: 12602719405314281526
         name: VFX_CI_W_SpitBall
         enabled: false
@@ -3048,6 +3050,7 @@ child:
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 0
             projection: true
+            randomize_tiles: false
       - id: 12900140593389837100
         name: VFX_CI_W_SpitBall
         enabled: false
@@ -3085,6 +3088,7 @@ child:
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 0
             projection: true
+            randomize_tiles: false
       - id: 15291510201808257648
         name: VFX_CI_W_SpitBall
         enabled: false
@@ -3122,6 +3126,7 @@ child:
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 0
             projection: true
+            randomize_tiles: false
   - id: 13722226791976009516
     name: CrystalPlatform
     enabled: true
@@ -6359,6 +6364,7 @@ child:
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - id: 15011794113538609379
         name: CombatVisualEffectBillboard
         enabled: true
@@ -6396,6 +6402,7 @@ child:
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - id: 12674064656555387949
         name: CombatVisualEffectBillboard
         enabled: true
@@ -6433,6 +6440,7 @@ child:
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - id: 15245174471253758000
         name: CombatVisualEffectBillboard
         enabled: true
@@ -6470,6 +6478,7 @@ child:
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - id: 3740975402811696813
         name: CombatVisualEffectBillboard
         enabled: true
@@ -6507,6 +6516,7 @@ child:
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - id: 15420226434783905999
         name: CombatVisualEffectBillboard
         enabled: true
@@ -6544,6 +6554,7 @@ child:
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - id: 3784611382151987060
         name: CombatVisualEffectBillboard
         enabled: true
@@ -6581,6 +6592,7 @@ child:
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - id: 16539591746569045799
         name: CombatVisualEffectBillboard
         enabled: true
@@ -6618,6 +6630,7 @@ child:
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - id: 17235672944703477110
         name: CombatVisualEffectBillboard
         enabled: true
@@ -6655,6 +6668,7 @@ child:
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - id: 5854048724306782022
         name: CombatVisualEffectBillboard
         enabled: true
@@ -6692,6 +6706,7 @@ child:
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - id: 16139300979442275466
         name: CombatVisualEffectBillboard
         enabled: true
@@ -6729,6 +6744,7 @@ child:
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - id: 6378777301602978350
         name: CombatVisualEffectBillboard
         enabled: true
@@ -6766,6 +6782,7 @@ child:
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - id: 16969111624086632449
         name: CombatVisualEffectBillboard
         enabled: true
@@ -6803,6 +6820,7 @@ child:
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - id: 12348738791650574736
         name: CombatVisualEffectBillboard
         enabled: true
@@ -6840,6 +6858,7 @@ child:
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - id: 7215262210588331136
         name: CombatVisualEffectBillboard
         enabled: true
@@ -6877,6 +6896,7 @@ child:
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - id: 15406944604617034778
         name: CombatVisualEffectBillboard
         enabled: true
@@ -6914,6 +6934,7 @@ child:
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
   - id: 16667466026841173250
     name: Goal
     enabled: true
@@ -16182,7 +16203,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1695, 862]
+            size: [1679, 1011]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -16885,6 +16906,7 @@ child:
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 0
             projection: true
+            randomize_tiles: false
   - id: 14664350594673818352
     name: LevelManager
     enabled: true
@@ -16971,7 +16993,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1695, 862]
+            size: [1679, 1011]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -17642,3 +17664,4 @@ child:
             start_rotation: [true, true, 1, [1.5, 4], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: true
