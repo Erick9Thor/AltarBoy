@@ -1002,7 +1002,7 @@ void Hachiko::Scripting::PlayerController::DashController()
 		return;
 	}
 
-	if (_dash_particles != nullptr)
+	if (_dash_particles != nullptr && IsDashing())
 	{
 		_dash_particles->Play();
 	}
@@ -1293,6 +1293,11 @@ bool Hachiko::Scripting::PlayerController::RegisterHit(int damage_received, floa
 		if (_ui_damage && _combat_stats->_current_hp / _combat_stats->_max_hp < 0.25f)
 		{
 			_ui_damage->SetActive(true);
+		}
+
+		if (_damage_effect_billboard != nullptr)
+		{
+			_damage_effect_billboard->Play();
 		}
 	}
 
