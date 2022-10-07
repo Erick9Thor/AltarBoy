@@ -43,6 +43,7 @@ void Hachiko::Scripting::LaserController::OnAwake()
 
 void Hachiko::Scripting::LaserController::OnUpdate()
 {
+
 	if (_spin_movement)
 	{
 		float3 euler_rotation = game_object->GetTransform()->GetLocalRotationEuler();
@@ -71,6 +72,7 @@ void Hachiko::Scripting::LaserController::OnUpdate()
 			float3::Lerp(_initial_position, _movement_target->GetTransform()->GetGlobalPosition(),
 				_movement_position * _movement_position * (3 - 2 * _movement_position))
 		);
+
 	}
 
 	switch (_state)
@@ -123,6 +125,7 @@ void Hachiko::Scripting::LaserController::ChangeState(State new_state)
 	case ACTIVE:
 		_elapsed_time = 0.0f;
 		_scale = _max_scale;
+		_laser->ChangeEmissiveColor(float4(1.0f, 0.0f, 0.0f, 0.2f), true);
 		break;
 
 	case State::ACTIVATING:
@@ -130,13 +133,15 @@ void Hachiko::Scripting::LaserController::ChangeState(State new_state)
 		_elapsed_time = 0.0f;
 		_scale = 0.0f;
 		AdjustLength();
-		_laser->ChangeEmissiveColor(float4(1.0f, 1.0f, 1.0f, 0.2f), _activation_time, true);
+		_laser->ChangeEmissiveColor(float4(1.0f, 1.0f, 1.0f, 0.2f), true);
 		break;
 
 	case State::INACTIVE:
 		_audio_source->PostEvent(Hachiko::Sounds::STOP_LASER);
 		_elapsed_time = 0.0f;
+		_laser->ChangeEmissiveColor(float4(1.0f, 1.0f, 1.0f, 0.0f), true);
 		_laser->SetActive(false);
+
 		break;
 	}
 	_state = new_state;

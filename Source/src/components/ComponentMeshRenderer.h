@@ -143,7 +143,8 @@ namespace Hachiko
             return override_material;
         }
 
-        HACHIKO_API void OverrideEmissive(const float4& color, float time);
+        void OverrideEmissive(const float4& color);
+        void LiftOverrideEmissive();
 
         HACHIKO_API [[nodiscard]] const float4& GetOverrideEmissiveColor() const
         {

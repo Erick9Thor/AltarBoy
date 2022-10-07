@@ -43,17 +43,6 @@ void Hachiko::ComponentMeshRenderer::Update()
         return;
     }
 
-    // Material override
-    if (override_material)
-    {
-        override_timer -= GameTimer::delta_time;
-        if (override_timer <= 0)
-        {
-            override_material = false;
-            override_timer = 0;
-        }
-    }
-
     if (palette.empty())
     {
         palette.resize(mesh->num_bones);
@@ -374,11 +363,14 @@ void Hachiko::ComponentMeshRenderer::ChangeMaterial()
     }
 }
 
-void Hachiko::ComponentMeshRenderer::OverrideEmissive(const float4& color, float time)
+void Hachiko::ComponentMeshRenderer::OverrideEmissive(const float4& color)
 {
-    override_material = true;
-    override_timer = time;
     override_emissive = color;
+    override_material = true;
+}
+void Hachiko::ComponentMeshRenderer::LiftOverrideEmissive() {
+    override_emissive = float4::zero;
+    override_material = false;
 }
 
 void Hachiko::ComponentMeshRenderer::UpdateBoundingBoxes()

@@ -188,6 +188,9 @@ namespace Hachiko
             SERIALIZE_FIELD(float, _current_spawning_time);
             bool _has_spawned = false;
 
+            float damage_effect_duration = 1.0f;
+            float damage_effect_progress = 0.0f;
+
 
             EnemyType _enemy_type = EnemyType::BEETLE;
 

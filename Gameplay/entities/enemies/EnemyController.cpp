@@ -122,6 +122,12 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 		return;
 	}
 
+	if (damage_effect_progress >= 0.0f)
+	{
+		damage_effect_progress -= Time::DeltaTime() / damage_effect_duration;
+		_enemy_body->ChangeEmissiveColor(float4(1.0f, 1.0f, 1.0f, damage_effect_progress), true);
+	}
+
 	if (!_combat_stats->IsAlive())
 	{
 		DeathController();
@@ -785,7 +791,7 @@ void Hachiko::Scripting::EnemyController::RegisterHit(int damage, float3 directi
 	}
 
 	_combat_stats->ReceiveDamage(damage);
-	game_object->ChangeEmissiveColor(float4(255, 255, 255, 255), 0.3f, true);
+	damage_effect_progress = damage_effect_duration;
 	// Knockback
 	_is_stunned = true;
 	_stun_time = 0.8f; // Once we have weapons stun duration might be moved to each weapon stat
