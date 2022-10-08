@@ -35,6 +35,8 @@ namespace Hachiko
 		private:
 			void GenerateStalagmites();
 
+			void KnockbackOnEnemies(float3 position);
+
 		private:
 
 			float falling_elapsed = 0.0f;

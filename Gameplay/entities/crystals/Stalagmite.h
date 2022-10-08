@@ -53,11 +53,6 @@ namespace Hachiko
 				return _explosion_effect;
 			}
 
-			GameObject* GetBlock()
-			{
-				return _blocking_object;
-			}
-
 			void ActiveStalagmite();
 			void ActiveEffects();
 			void Falling(float fall_progress);
@@ -73,8 +68,6 @@ namespace Hachiko
 				_stalagmite_collapsed = true;
 			}
 
-			void SetBlockInPlace();
-
 			void Dissolved();
 
 			float _dissolving_time = 0.0f;
@@ -86,7 +79,9 @@ namespace Hachiko
 
 			SERIALIZE_FIELD(GameObject*, _explosion_effect);
 			SERIALIZE_FIELD(GameObject*, GEO);
-			SERIALIZE_FIELD(GameObject*, _blocking_object);
+			SERIALIZE_FIELD(GameObject*, _obstacle);
+
+			ComponentObstacle* _obstacle_comp = nullptr;
 
 			bool _stalagmite_collapsed = false;
 		};

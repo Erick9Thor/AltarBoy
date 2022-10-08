@@ -2,13 +2,14 @@
 #include "constants/Scenes.h"
 #include "entities/player/PlayerController.h"
 #include "entities/player/PlayerCamera.h"
+#include "entities/enemies/EnemyController.h"
 
 #include "StalagmiteManager.h"
 
 
 Hachiko::Scripting::StalagmiteManager::StalagmiteManager(GameObject* game_object)
 	: Script(game_object, "StalagmiteManager")
-	, _falling_cooldown(0.4f)
+	, _falling_cooldown(1.5f)
 {
 }
 
@@ -42,6 +43,8 @@ void Hachiko::Scripting::StalagmiteManager::GenerateStalagmites()
 
         _stalagmites.push_back(stalagmite);
     }
+
+	cooldown_elapsed = 0.f;
 }
 
 void Hachiko::Scripting::StalagmiteManager::OnUpdate()
@@ -88,7 +91,7 @@ void Hachiko::Scripting::StalagmiteManager::OnUpdate()
 			if (cooldown_elapsed >= _falling_cooldown)
 			{
 				_stalagmites[i]->SetNewState(StalagmiteState::FALLING);
-				cooldown_elapsed = 0;
+				cooldown_elapsed = 0.f;
 			}
 			else {
 				_player_camera->Shake(0.3f, 0.2f);
@@ -106,14 +109,15 @@ void Hachiko::Scripting::StalagmiteManager::OnUpdate()
 					 
 					CombatManager::AttackStats attack_stats;
 					attack_stats.damage = 1;
-					attack_stats.knockback_distance = 1.0f;
+					attack_stats.knockback_distance = 2.0f;
 					attack_stats.width = 3.5f;
 					attack_stats.range = 3.5;
 					attack_stats.type = CombatManager::AttackType::CIRCLE;
 					_combat_manager->EnemyMeleeAttack(_stalagmites[i]->GetExplosionArea()
 						->GetTransform()->GetGlobalMatrix(), attack_stats);
-					
-					_stalagmites[i]->SetBlockInPlace();
+
+					KnockbackOnEnemies(_stalagmites[i]->GetExplosionArea()
+						->GetTransform()->GetGlobalPosition());
 
 					_stalagmites[i]->SetNewState(StalagmiteState::COLLAPSED);
 
@@ -181,7 +185,7 @@ void Hachiko::Scripting::StalagmiteManager::TriggerStalagmites()
 {
 	_should_fall_stalagmites = true;
 	_should_update_stalagmites = true;
-	//GenerateStalagmites();
+	GenerateStalagmites();
 }
 
 bool Hachiko::Scripting::StalagmiteManager::CheckPreviousStalagmite(int idx)
@@ -202,4 +206,46 @@ void Hachiko::Scripting::StalagmiteManager::DestroyAllStalagmites()
 		_stalagmites[i]->_dissolving_time = _total_dissolving_time;
 	}
 }
+
+void Hachiko::Scripting::StalagmiteManager::KnockbackOnEnemies(float3 position)
+{
+	std::vector<GameObject*> check_hit = {};
+	float explosion_radius = 3.5f;
+
+	GameObject* enemies = Scenes::GetEnemiesContainer();
+
+	// Get all the enemies
+	if (enemies != nullptr)
+	{
+		for (GameObject* enemy_pack : enemies->children)
+		{
+			check_hit.insert(check_hit.end(), enemy_pack->children.begin(), enemy_pack->children.end());
+		}
+	}
+
+	std::vector<GameObject*> elements_hit = {};
+
+	//Check if the enemeis are hit
+	for (int i = 0; i < check_hit.size(); ++i)
+	{
+		if (check_hit[i]->active &&
+			explosion_radius >= position.Distance(check_hit[i]->GetTransform()->GetGlobalPosition()))
+		{
+			elements_hit.push_back(check_hit[i]);
+		}
+	}
+
+	for (Hachiko::GameObject* element : elements_hit)
+	{
+		EnemyController* enemy_controller = element->GetComponent<EnemyController>();
+
+		float3 relative_dir = element->GetTransform()->GetGlobalPosition() - position;
+		relative_dir.y = 0.0f;
+
+		if (enemy_controller != nullptr)
+		{
+			enemy_controller->RegisterHit(0, relative_dir.Normalized(), 2.0f, false, false);
+		}
+	}
+};
 
