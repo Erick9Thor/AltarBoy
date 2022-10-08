@@ -299,7 +299,6 @@ namespace Hachiko
             std::vector<EnemyController*> enemies;
             float enemy_timer = 0.0;
 
-
             // It needs to start as true so the first normal jump sets it to false
             bool double_jump_toggle = true;
 

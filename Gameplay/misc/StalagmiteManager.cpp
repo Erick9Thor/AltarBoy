@@ -58,6 +58,15 @@ void Hachiko::Scripting::StalagmiteManager::OnUpdate()
 
 	size_t updated_stalagmites_count = 0;
 
+	if (_stalactites_timer < 0.0f)
+	{
+		DestroyAllStalagmites();
+	}
+	else
+	{
+		_stalactites_timer -= Time::DeltaTime();
+	}
+
 	for (unsigned i = 0; i < _stalagmites.size(); i++)
 	{
 		if (!_should_fall_stalagmites)
@@ -65,7 +74,7 @@ void Hachiko::Scripting::StalagmiteManager::OnUpdate()
 			if (_stalagmites[i]->GetState() == StalagmiteState::DISSOLVING)
 			{
 				_stalagmites[i]->_dissolving_time -= Time::DeltaTime();
-				_stalagmites[i]->GetGameObject()->ChangeDissolveProgress(_stalagmites[i]->_dissolving_time, true);
+				_stalagmites[i]->GetGameObject()->ChangeDissolveProgress(_stalagmites[i]->_dissolving_time/_total_dissolving_time, true);
 				if (_stalagmites[i]->_dissolving_time <= 0.0f)
 				{
 					_stalagmites[i]->SetNewState(StalagmiteState::INVALID);
@@ -185,6 +194,9 @@ void Hachiko::Scripting::StalagmiteManager::TriggerStalagmites()
 {
 	_should_fall_stalagmites = true;
 	_should_update_stalagmites = true;
+
+	_stalactites_timer = _stalactites_life;
+
 	GenerateStalagmites();
 }
 

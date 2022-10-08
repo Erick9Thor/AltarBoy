@@ -57,6 +57,10 @@ namespace Hachiko
 			//SERIALIZE_FIELD(bool, _should_update_stalagmites);
 			SERIALIZE_FIELD(float, _falling_cooldown);
 
+
+			float _stalactites_life = 15.0f;
+			float _stalactites_timer = 0.0f;
+
 			// STALAGMITE
 			std::vector<Stalagmite*> _stalagmites{};
 
