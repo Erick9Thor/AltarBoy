@@ -22,6 +22,7 @@ Hachiko::Scripting::LaserController::LaserController(GameObject* game_object)
 	, _toggle_activation(false)
 	, _toggle_active_time(1.0f)
 	, _toggle_inactive_time(1.0f)
+	, _dissolving_time(0.2f)
 	, _audio_source(nullptr)
 {
 }
@@ -84,8 +85,7 @@ void Hachiko::Scripting::LaserController::OnUpdate()
 			_elapsed_time += Time::DeltaTime();
 			if (_elapsed_time >= _toggle_active_time)
 			{
-				ChangeState(INACTIVE);
-				_sparks_particles->Stop();
+				ChangeState(DISSOLVING);
 			}
 		}
 		break;
@@ -115,6 +115,15 @@ void Hachiko::Scripting::LaserController::OnUpdate()
 			}
 		}
 		break;
+	case DISSOLVING:
+		_elapsed_time += Time::DeltaTime();
+		const float dissolve_progress = (_dissolving_time - _elapsed_time) / _dissolving_time;
+		_laser->ChangeDissolveProgress(dissolve_progress, true);
+		if (_elapsed_time >= _dissolving_time)
+		{
+			ChangeState(INACTIVE);
+		}
+		break;
 	}
 }
 
@@ -136,9 +145,14 @@ void Hachiko::Scripting::LaserController::ChangeState(State new_state)
 		break;
 
 	case State::INACTIVE:
-		_audio_source->PostEvent(Hachiko::Sounds::STOP_LASER);
 		_elapsed_time = 0.0f;
 		_laser->SetActive(false);
+		_laser->ChangeDissolveProgress(1.0, true);
+		break;
+	case State::DISSOLVING:
+		_audio_source->PostEvent(Hachiko::Sounds::STOP_LASER);
+		_elapsed_time = 0.0f;
+		_sparks_particles->Stop();
 		break;
 	}
 	_state = new_state;
