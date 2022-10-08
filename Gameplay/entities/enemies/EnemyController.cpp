@@ -39,6 +39,7 @@ Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 	, _small_dust(nullptr)
 	, _big_dust(nullptr)
 	, _spawning_time(2.0f)
+	, _chase_cooldown(2.0f)
 	, _will_die(true)
 	, _attack_zone(nullptr)
 	, _inner_indicator(nullptr)
@@ -444,6 +445,11 @@ void Hachiko::Scripting::EnemyController::WormMovementController()
 
 void Hachiko::Scripting::EnemyController::BeetleMovementController()
 {
+	if (_chase_remaining_cooldown > 0)
+	{
+		_chase_remaining_cooldown -= Time::DeltaTime();
+	}
+	
 	if (_state == EnemyState::ATTACKING && animation->IsAnimationStopped())
 	{
 		_state = EnemyState::IDLE;
@@ -601,16 +607,7 @@ void Hachiko::Scripting::EnemyController::ChasePlayer()
 	float3 corrected_pos = Navigation::GetCorrectedPosition(_player_pos, math::float3(10.0f, 10.0f, 10.0f));
 	if (corrected_pos.x < FLT_MAX)
 	{
-		_target_pos = corrected_pos;
-		transform->LookAtTarget(_target_pos);
-		MoveInNavmesh();
-
-		/*if (!agc->CanReachTarget())
-		{
-			_target_pos = _spawn_pos;
-			transform->LookAtTarget(_target_pos);
-			MoveInNavmesh();
-		}*/
+		MoveInNavmesh(corrected_pos);
 	}
 }
 
@@ -625,25 +622,36 @@ void Hachiko::Scripting::EnemyController::PatrolMovement()
 	float3 corrected_pos = Navigation::GetCorrectedPosition(_new_pos, math::float3(10.0f, 10.0f, 10.0f));
 	if (corrected_pos.x < FLT_MAX)
 	{
-		_target_pos = corrected_pos;
-		transform->LookAtTarget(_target_pos);
 		_speed = 3.0f;
 		ComponentAgent* agc = game_object->GetComponent<ComponentAgent>();
 		agc->SetMaxSpeed(_speed);
-		MoveInNavmesh();
+		MoveInNavmesh(corrected_pos);
 	}
 }
 
 void Hachiko::Scripting::EnemyController::StopMoving()
 {
-	_target_pos = transform->GetGlobalPosition();
-	MoveInNavmesh();
+	MoveInNavmesh(transform->GetGlobalPosition());
 }
 
-void Hachiko::Scripting::EnemyController::MoveInNavmesh()
+void Hachiko::Scripting::EnemyController::MoveInNavmesh(const float3& target_pos)
 {
+	if (_chase_remaining_cooldown > 0)
+	{
+		return;
+	}
+
+	_target_pos = target_pos;
 	ComponentAgent* agc = game_object->GetComponent<ComponentAgent>();
+	
 	agc->SetTargetPosition(_target_pos);
+	if (!agc->CanReachTarget())
+	{
+		_target_pos = _spawn_pos;
+		_chase_remaining_cooldown = _chase_cooldown;
+		agc->SetTargetPosition(_target_pos);
+	}
+	transform->LookAtTarget(_target_pos);
 }
 
 void Hachiko::Scripting::EnemyController::WormAttackController()

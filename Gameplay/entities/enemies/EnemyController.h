@@ -95,7 +95,7 @@ namespace Hachiko
             void ChasePlayer();
             void PatrolMovement();
             void StopMoving();
-            void MoveInNavmesh();
+            void MoveInNavmesh(const float3& target_pos);
             void WormAttackController();
             
             void DropParasite();
@@ -111,6 +111,8 @@ namespace Hachiko
             SERIALIZE_FIELD(float, _attack_delay);
             SERIALIZE_FIELD(float, _idle_cooldown);
             SERIALIZE_FIELD(float, _spawning_time);
+            SERIALIZE_FIELD(float, _chase_cooldown);
+            float _chase_remaining_cooldown;
             SERIALIZE_FIELD(float3, _spawn_pos);
             
             SERIALIZE_FIELD(GameObject*, _enemy_body);
