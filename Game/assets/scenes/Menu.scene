@@ -38,7 +38,7 @@ child:
           far_distance: 1000
           fov: 65
           position: [0, 0, 0]
-          front: [0, 0, 1]
+          front: [-0, -0, 1]
           up: [0, 1, 0]
           pinned_camera: [0, 0, 0]
       - id: 4941240349392024818
@@ -82,7 +82,7 @@ child:
         "'_button_settings@ComponentButton*'": 5517220911348165701
         "'_button_credits@ComponentButton*'": 5507085151890769082
         "'_game_title@GameObject*'": 3619082081880393002
-        "'_settings@GameObject*'": 5517220911348165701
+        "'_settings@GameObject*'": 831669987700788447
         "'_credits@GameObject*'": 15157299374494226041
         "'_button_back@ComponentButton*'": 7162107976364272364
       - id: 2073226486703277877
@@ -331,7 +331,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1517, 1056]
+            size: [1842, 1042]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -347,19 +347,19 @@ child:
             id: 3288816736132035746
             type: 11
             enabled: true
-            image_id: 9470256371827250406
+            image_id: 11218389582422756760
             hover_image_id: 0
             image_color: [1, 1, 1, 1]
             hover_image_color: [1, 1, 1, 1]
-            image_is_tiled: false
+            image_is_tiled: true
             image_randomize_initial_frame: false
-            image_x_tiles: 1
-            image_y_tiles: 1
-            image_tiles_per_second: 1
-            fill_window: false
+            image_x_tiles: 4
+            image_y_tiles: 2
+            image_tiles_per_second: 10
+            fill_window: true
       - id: 7162107976364272364
         name: button_back
-        enabled: true
+        enabled: false
         component:
           - !<transform>
             id: 15717323362502186912
@@ -447,7 +447,7 @@ child:
             fill_window: true
       - id: 3619082081880393002
         name: title
-        enabled: false
+        enabled: true
         component:
           - !<transform>
             id: 13253625731246732947
@@ -473,20 +473,6 @@ child:
             scale_ui: false
             original_size_x: 0
             original_size_y: 0
-          - !<image>
-            id: 2939800161397744075
-            type: 11
-            enabled: true
-            image_id: 14716769391895676594
-            hover_image_id: 0
-            image_color: [1, 1, 1, 1]
-            hover_image_color: [1, 1, 1, 1]
-            image_is_tiled: false
-            image_randomize_initial_frame: false
-            image_x_tiles: 1
-            image_y_tiles: 1
-            image_tiles_per_second: 1
-            fill_window: false
       - id: 2929381977610906746
         name: GameObject
         enabled: false
