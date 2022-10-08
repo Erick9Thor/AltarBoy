@@ -11,7 +11,7 @@ Hachiko::Scripting::BlinkingLight::BlinkingLight(Hachiko::GameObject* game_objec
     , _max_duration(0.5f)
     , _duration_amplitude(1.0f)
     , _min_intensity(50.0f)
-    , _max_intensity(200.0f)
+    , _max_intensity(400.0f)
     , _intensity_amplitude(1.0f)
     , _starting_intensity(0.0f)
     , _starting_radius(0.0f)
@@ -22,7 +22,7 @@ Hachiko::Scripting::BlinkingLight::BlinkingLight(Hachiko::GameObject* game_objec
     , _next_intensity(0.0f)
     , _next_radius(0.0f)
     , _point_light(nullptr)
-	, _perlin_noise(PerlinNoise1D())
+	, _perlin_noise(PerlinNoise())
 {
 }
 

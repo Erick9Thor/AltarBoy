@@ -532,6 +532,12 @@
     <ClInclude Include="misc\AssetsObstacle.h" />
     <ClInclude Include="misc\BossLaserController.h" />
     <ClInclude Include="misc\TimeManager.h" />
+    <ClInclude Include="misc\StalagmiteManager.h" />
+    <ClInclude Include="entities\crystals\Stalagmite.h" />
+    <ClInclude Include="misc\Tutorial.h" />
+    <ClInclude Include="effects\HoverEffect.h" />
+    <ClInclude Include="effects\RotationEffect.h" />
+    <ClInclude Include="effects\BounceEffect.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scriptingUtil\gameplaypch.cpp">
@@ -814,6 +820,12 @@
     <ClCompile Include="misc\AssetsObstacle.cpp" />
     <ClCompile Include="misc\BossLaserController.cpp" />
     <ClCompile Include="misc\TimeManager.cpp" />
+    <ClCompile Include="misc\StalagmiteManager.cpp" />
+    <ClCompile Include="entities\crystals\Stalagmite.cpp" />
+    <ClCompile Include="misc\Tutorial.cpp" />
+    <ClCompile Include="effects\HoverEffect.cpp" />
+    <ClCompile Include="effects\RotationEffect.cpp" />
+    <ClCompile Include="effects\BounceEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Source\vendors\MathGeoLib\Math\float2.inl">
