@@ -38,6 +38,7 @@ void Hachiko::Scripting::LaserController::OnAwake()
 	if (_sparks != nullptr)
 	{
 		_sparks_particles = _sparks->GetComponent<ComponentParticleSystem>();
+		_sparks_particles->Stop();
 	}
 }
 
@@ -84,6 +85,7 @@ void Hachiko::Scripting::LaserController::OnUpdate()
 			if (_elapsed_time >= _toggle_active_time)
 			{
 				ChangeState(INACTIVE);
+				_sparks_particles->Stop();
 			}
 		}
 		break;
@@ -156,17 +158,25 @@ void Hachiko::Scripting::LaserController::AdjustLength()
 		new_length = std::min(start.Distance(collision_point), _max_length);
 	}
 
-	if (_length != new_length || _state == ACTIVATING)
+	if (_length != new_length || _state == ACTIVATING || _state == ACTIVE)
 	{
-		if (_sparks != nullptr && (_length - new_length) > 0.1f)
-		{
-			_sparks->GetTransform()->SetLocalPosition(float3(0.0f, 0.0f, - new_length));
-			_sparks_particles->Restart();
-		}
-
 		_length = new_length;
 		_laser->GetTransform()->SetLocalScale(float3(_scale, _scale, _length * 0.5f));
 	}
+
+	if (_sparks != nullptr)
+	{
+		if (new_length != _max_length && _state == ACTIVE)
+		{
+			_sparks->GetTransform()->SetLocalPosition(float3(0.0f, 0.0f, -new_length));
+			_sparks_particles->Play();
+		}
+		else
+		{
+			_sparks_particles->Stop();
+		}
+	}
+
 }
 
 void Hachiko::Scripting::LaserController::CheckPlayerCollision() const
