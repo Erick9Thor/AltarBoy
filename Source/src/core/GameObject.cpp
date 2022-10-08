@@ -261,7 +261,7 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
 
     return new_component;
 }
-void Hachiko::GameObject::SetActive(bool set_active)
+void Hachiko::GameObject::SetActiveNonRecursive(bool set_active)
 {
     if (!active && set_active)
     {
@@ -277,7 +277,7 @@ void Hachiko::GameObject::SetActive(bool set_active)
     active = set_active;
 }
 
-void Hachiko::GameObject::SetActiveRecursive(bool set_active)
+void Hachiko::GameObject::SetActive(bool set_active)
     {
     for (GameObject* child : children)
     {

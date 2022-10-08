@@ -4,9 +4,9 @@ ambient_light:
   intensity: 0.05
   color: [1, 1, 1, 1]
 fog:
-  fog: false
-  color: [0.4228, 0.4228, 0.4228]
-  global_density: 0.009
+  fog: true
+  color: [0.8049, 0.8905, 1]
+  global_density: 0.002
   height_falloff: 0.077
 ibl: false
 skybox:
@@ -12656,7 +12656,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [814, 472]
+            size: [1313, 506]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -13152,6 +13152,8 @@ child:
                 "'_attack_zone@GameObject*'": 0
                 "'_inner_indicator@GameObject*'": 0
                 "'_outer_indicator@GameObject*'": 0
+                "'_projectile_particles@GameObject*'": 0
+                "'_explosion_particles@GameObject*'": 0
                 "'_already_in_combat@bool'": false
                 "'_is_from_gautlet@bool'": false
                 "'_is_from_boss@bool'": false
@@ -14435,6 +14437,8 @@ child:
                 "'_attack_zone@GameObject*'": 0
                 "'_inner_indicator@GameObject*'": 0
                 "'_outer_indicator@GameObject*'": 0
+                "'_projectile_particles@GameObject*'": 0
+                "'_explosion_particles@GameObject*'": 0
                 "'_already_in_combat@bool'": false
                 "'_is_from_gautlet@bool'": false
                 "'_is_from_boss@bool'": false
@@ -15730,6 +15734,8 @@ child:
                 "'_attack_zone@GameObject*'": 0
                 "'_inner_indicator@GameObject*'": 0
                 "'_outer_indicator@GameObject*'": 0
+                "'_projectile_particles@GameObject*'": 0
+                "'_explosion_particles@GameObject*'": 0
                 "'_already_in_combat@bool'": false
                 "'_is_from_gautlet@bool'": false
                 "'_is_from_boss@bool'": false
@@ -17013,6 +17019,8 @@ child:
                 "'_attack_zone@GameObject*'": 0
                 "'_inner_indicator@GameObject*'": 0
                 "'_outer_indicator@GameObject*'": 0
+                "'_projectile_particles@GameObject*'": 0
+                "'_explosion_particles@GameObject*'": 0
                 "'_already_in_combat@bool'": false
                 "'_is_from_gautlet@bool'": false
                 "'_is_from_boss@bool'": false
@@ -18296,6 +18304,8 @@ child:
                 "'_attack_zone@GameObject*'": 0
                 "'_inner_indicator@GameObject*'": 0
                 "'_outer_indicator@GameObject*'": 0
+                "'_projectile_particles@GameObject*'": 0
+                "'_explosion_particles@GameObject*'": 0
                 "'_already_in_combat@bool'": false
                 "'_is_from_gautlet@bool'": false
                 "'_is_from_boss@bool'": false
@@ -19579,6 +19589,8 @@ child:
                 "'_attack_zone@GameObject*'": 0
                 "'_inner_indicator@GameObject*'": 0
                 "'_outer_indicator@GameObject*'": 0
+                "'_projectile_particles@GameObject*'": 0
+                "'_explosion_particles@GameObject*'": 0
                 "'_already_in_combat@bool'": false
                 "'_is_from_gautlet@bool'": false
                 "'_is_from_boss@bool'": false
@@ -20874,6 +20886,8 @@ child:
                 "'_attack_zone@GameObject*'": 0
                 "'_inner_indicator@GameObject*'": 0
                 "'_outer_indicator@GameObject*'": 0
+                "'_projectile_particles@GameObject*'": 0
+                "'_explosion_particles@GameObject*'": 0
                 "'_already_in_combat@bool'": false
                 "'_is_from_gautlet@bool'": false
                 "'_is_from_boss@bool'": false
@@ -22157,6 +22171,8 @@ child:
                 "'_attack_zone@GameObject*'": 0
                 "'_inner_indicator@GameObject*'": 0
                 "'_outer_indicator@GameObject*'": 0
+                "'_projectile_particles@GameObject*'": 0
+                "'_explosion_particles@GameObject*'": 0
                 "'_already_in_combat@bool'": false
                 "'_is_from_gautlet@bool'": false
                 "'_is_from_boss@bool'": false
@@ -23440,6 +23456,8 @@ child:
                 "'_attack_zone@GameObject*'": 0
                 "'_inner_indicator@GameObject*'": 0
                 "'_outer_indicator@GameObject*'": 0
+                "'_projectile_particles@GameObject*'": 0
+                "'_explosion_particles@GameObject*'": 0
                 "'_already_in_combat@bool'": false
                 "'_is_from_gautlet@bool'": false
                 "'_is_from_boss@bool'": false
@@ -24735,6 +24753,8 @@ child:
                 "'_attack_zone@GameObject*'": 0
                 "'_inner_indicator@GameObject*'": 0
                 "'_outer_indicator@GameObject*'": 0
+                "'_projectile_particles@GameObject*'": 0
+                "'_explosion_particles@GameObject*'": 0
                 "'_already_in_combat@bool'": false
                 "'_is_from_gautlet@bool'": false
                 "'_is_from_boss@bool'": false
@@ -26018,6 +26038,8 @@ child:
                 "'_attack_zone@GameObject*'": 0
                 "'_inner_indicator@GameObject*'": 0
                 "'_outer_indicator@GameObject*'": 0
+                "'_projectile_particles@GameObject*'": 0
+                "'_explosion_particles@GameObject*'": 0
                 "'_already_in_combat@bool'": false
                 "'_is_from_gautlet@bool'": false
                 "'_is_from_boss@bool'": false
@@ -27301,6 +27323,8 @@ child:
                 "'_attack_zone@GameObject*'": 0
                 "'_inner_indicator@GameObject*'": 0
                 "'_outer_indicator@GameObject*'": 0
+                "'_projectile_particles@GameObject*'": 0
+                "'_explosion_particles@GameObject*'": 0
                 "'_already_in_combat@bool'": false
                 "'_is_from_gautlet@bool'": false
                 "'_is_from_boss@bool'": false
@@ -28584,6 +28608,8 @@ child:
                 "'_attack_zone@GameObject*'": 0
                 "'_inner_indicator@GameObject*'": 0
                 "'_outer_indicator@GameObject*'": 0
+                "'_projectile_particles@GameObject*'": 0
+                "'_explosion_particles@GameObject*'": 0
                 "'_already_in_combat@bool'": false
                 "'_is_from_gautlet@bool'": false
                 "'_is_from_boss@bool'": false
@@ -29867,6 +29893,8 @@ child:
                 "'_attack_zone@GameObject*'": 0
                 "'_inner_indicator@GameObject*'": 0
                 "'_outer_indicator@GameObject*'": 0
+                "'_projectile_particles@GameObject*'": 0
+                "'_explosion_particles@GameObject*'": 0
                 "'_already_in_combat@bool'": false
                 "'_is_from_gautlet@bool'": false
                 "'_is_from_boss@bool'": false
@@ -31162,6 +31190,8 @@ child:
                 "'_attack_zone@GameObject*'": 0
                 "'_inner_indicator@GameObject*'": 0
                 "'_outer_indicator@GameObject*'": 0
+                "'_projectile_particles@GameObject*'": 0
+                "'_explosion_particles@GameObject*'": 0
                 "'_already_in_combat@bool'": false
                 "'_is_from_gautlet@bool'": false
                 "'_is_from_boss@bool'": false
@@ -32439,7 +32469,6 @@ child:
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
             "'_sparks@GameObject*'": 0
-            "'_actlenght@float'": 0
           - id: 17817942635228409429
             type: 20
             enabled: true
@@ -32514,7 +32543,6 @@ child:
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
             "'_sparks@GameObject*'": 0
-            "'_actlenght@float'": 0
           - id: 7855138358787914724
             type: 20
             enabled: true
@@ -32589,7 +32617,6 @@ child:
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
             "'_sparks@GameObject*'": 0
-            "'_actlenght@float'": 0
           - id: 1560203970384173830
             type: 20
             enabled: true
@@ -32664,7 +32691,6 @@ child:
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
             "'_sparks@GameObject*'": 0
-            "'_actlenght@float'": 0
           - id: 14695003231451741538
             type: 20
             enabled: true
@@ -32739,7 +32765,6 @@ child:
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
             "'_sparks@GameObject*'": 0
-            "'_actlenght@float'": 0
           - id: 18244783952425888498
             type: 20
             enabled: true
@@ -32814,7 +32839,6 @@ child:
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
             "'_sparks@GameObject*'": 0
-            "'_actlenght@float'": 0
           - id: 11606083925199337313
             type: 20
             enabled: true
@@ -32889,7 +32913,6 @@ child:
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
             "'_sparks@GameObject*'": 0
-            "'_actlenght@float'": 0
           - id: 12003283733495858845
             type: 20
             enabled: true
@@ -32964,7 +32987,6 @@ child:
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
             "'_sparks@GameObject*'": 0
-            "'_actlenght@float'": 0
           - id: 8302683609660054132
             type: 20
             enabled: true
@@ -33039,7 +33061,6 @@ child:
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
             "'_sparks@GameObject*'": 0
-            "'_actlenght@float'": 0
           - id: 10194373368110108326
             type: 20
             enabled: true
@@ -33114,7 +33135,6 @@ child:
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
             "'_sparks@GameObject*'": 2373261524069017800
-            "'_actlenght@float'": 0
           - id: 3348784641776943634
             type: 20
             enabled: true
@@ -33303,7 +33323,6 @@ child:
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
             "'_sparks@GameObject*'": 10419062081009056423
-            "'_actlenght@float'": 0
           - id: 14306024741120179351
             type: 20
             enabled: true
@@ -33492,7 +33511,6 @@ child:
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
             "'_sparks@GameObject*'": 1656843390739561150
-            "'_actlenght@float'": 0
           - id: 17510398279683272903
             type: 20
             enabled: true
@@ -33661,7 +33679,6 @@ child:
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
             "'_sparks@GameObject*'": 25346659490403541
-            "'_actlenght@float'": 0
           - id: 5762238692053394355
             type: 20
             enabled: true
@@ -33810,7 +33827,6 @@ child:
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
             "'_sparks@GameObject*'": 0
-            "'_actlenght@float'": 0
           - id: 12515943156503302189
             type: 20
             enabled: true
@@ -33891,7 +33907,6 @@ child:
             "'_toggle_active_time@float'": 1
             "'_toggle_inactive_time@float'": 1
             "'_sparks@GameObject*'": 0
-            "'_actlenght@float'": 0
           - id: 5626211156909438935
             type: 20
             enabled: true
@@ -40277,7 +40292,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [814, 472]
+            size: [1313, 506]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -41038,7 +41053,7 @@ child:
                     fill_window: false
   - id: 13566858757207607272
     name: Debug
-    enabled: true
+    enabled: false
     component:
       - !<transform>
         id: 14417464271496134743
@@ -41052,7 +41067,7 @@ child:
         type: 10
         enabled: true
         position: [0, 0, 0]
-        size: [1130, 630]
+        size: [1313, 837]
         scale: [1, 1]
         rotation: [0, 0, 0, 1]
         pivot: [0.5, 0.5]
@@ -41064,7 +41079,7 @@ child:
     child:
       - id: 90953796205015107
         name: DebugWindow
-        enabled: true
+        enabled: false
         component:
           - !<transform>
             id: 12208964417073325352
@@ -41114,7 +41129,7 @@ child:
             type: 10
             enabled: true
             position: [700, -50, 0]
-            size: [1130, 630]
+            size: [1313, 837]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -41126,7 +41141,7 @@ child:
         child:
           - id: 10962218193100065257
             name: tpPos1
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 4334324995864181972
@@ -41137,7 +41152,7 @@ child:
                 scale: [1, 1, 1]
           - id: 11999983550563289996
             name: tpPos2
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 6399703541289254953
@@ -41148,7 +41163,7 @@ child:
                 scale: [1, 1, 1]
           - id: 9180706678475284919
             name: tpPos3
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 121189717805569088
@@ -41159,7 +41174,7 @@ child:
                 scale: [1, 1, 1]
           - id: 15296842728461779982
             name: Background
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 18028117237624623572
@@ -41201,7 +41216,7 @@ child:
                 fill_window: false
           - id: 9817620429074086703
             name: DebugTittle
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 12643144619541092956
@@ -41243,7 +41258,7 @@ child:
                 fill_window: false
           - id: 13094610499383933048
             name: Exit
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 15516768638717039296
@@ -41289,7 +41304,7 @@ child:
                 enabled: true
           - id: 8035942569094662927
             name: tp_add
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 6298135446256926975
@@ -41335,7 +41350,7 @@ child:
                 enabled: true
           - id: 8516727655440798108
             name: tp_prev
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 11650698952719419627
@@ -41381,7 +41396,7 @@ child:
                 enabled: true
           - id: 12989252121299276350
             name: tp_next
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 2192002372280987585
@@ -41427,7 +41442,7 @@ child:
                 enabled: true
           - id: 17878239515323248445
             name: BackMainMenu
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 1736077542890281048
@@ -41473,7 +41488,7 @@ child:
                 enabled: true
           - id: 15160187826546176769
             name: ToggleWireframe
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 17238874606642465134
@@ -41519,7 +41534,7 @@ child:
                 enabled: true
           - id: 3634047426027613902
             name: SpawnEnemy
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 11572833345292278224
@@ -41565,7 +41580,7 @@ child:
                 enabled: true
           - id: 16660337354031794529
             name: Performance
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 15056841118389206543
@@ -41611,7 +41626,7 @@ child:
                 enabled: true
           - id: 2164017668102347868
             name: IncMovSpeed
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 13438510812195122186
@@ -41657,7 +41672,7 @@ child:
                 enabled: true
           - id: 10977642451110540383
             name: DecMovSpeed
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 16761088207706426992
@@ -41703,7 +41718,7 @@ child:
                 enabled: true
           - id: 8333063195261757316
             name: IncCurrentHealth
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 12382965569746034522
@@ -41749,7 +41764,7 @@ child:
                 enabled: true
           - id: 3333253071175514648
             name: DecCurrentHealth
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 5735568458232867963
@@ -41795,7 +41810,7 @@ child:
                 enabled: true
           - id: 1980494091162476107
             name: GodMode
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 3688521399800212098
@@ -41841,7 +41856,7 @@ child:
                 enabled: true
           - id: 6858342439470926464
             name: IncAttackP
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 9316580645387646725
@@ -41887,7 +41902,7 @@ child:
                 enabled: true
           - id: 10743771327651168105
             name: DecAttackP
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 13413386158268568948
@@ -41933,7 +41948,7 @@ child:
                 enabled: true
           - id: 14360458434401498263
             name: ToggleCollider
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 228875717063728716
@@ -41979,7 +41994,7 @@ child:
                 enabled: true
           - id: 15366481059303116252
             name: Sword
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 160841712819978487
@@ -42025,7 +42040,7 @@ child:
                 fill_window: false
           - id: 13123245971403502611
             name: Hammer
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 12726181536306750632
@@ -42071,7 +42086,7 @@ child:
                 fill_window: false
           - id: 3943908684961705756
             name: Claws
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 15340562452304717239
@@ -42117,7 +42132,7 @@ child:
                 fill_window: false
           - id: 6111622155673454748
             name: Ammo
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 2074360380016825634
@@ -42163,7 +42178,7 @@ child:
                 fill_window: false
       - id: 2973030457377878803
         name: PerformanceMenu
-        enabled: true
+        enabled: false
         component:
           - !<transform>
             id: 9520608393291142031
@@ -42177,7 +42192,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1130, 630]
+            size: [1313, 837]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -42189,7 +42204,7 @@ child:
         child:
           - id: 9407315702409432358
             name: FpsText
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 15875638502990010606
@@ -42225,7 +42240,7 @@ child:
                 label_text: 999
           - id: 10706191800111983138
             name: MsText
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 7390807545023311299
@@ -42261,7 +42276,7 @@ child:
                 label_text: 999
           - id: 73274945409075294
             name: FpsLabel
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 13599536051459299155
@@ -42297,7 +42312,7 @@ child:
                 label_text: "FPS: "
           - id: 6472894808879953988
             name: MsLabel
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 5081316340293360482
@@ -42333,7 +42348,7 @@ child:
                 label_text: "Ms: "
           - id: 9620146935578090824
             name: Vsync
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 6794376472393426859
@@ -42379,7 +42394,7 @@ child:
                 enabled: true
       - id: 1455912666973820417
         name: PlayerStats
-        enabled: true
+        enabled: false
         component:
           - !<transform>
             id: 8101985163030511784
@@ -42393,7 +42408,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1130, 630]
+            size: [1313, 837]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -42405,7 +42420,7 @@ child:
         child:
           - id: 8468975639512733605
             name: Background
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 9779101443258623371
@@ -42447,7 +42462,7 @@ child:
                 fill_window: false
           - id: 2901268211896550354
             name: AttackLabel
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 3465245367325431451
@@ -42483,7 +42498,7 @@ child:
                 label_text: "Attack Power:"
           - id: 14352612792997679563
             name: AttackText
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 9420077627892987064
@@ -42519,7 +42534,7 @@ child:
                 label_text: 999
           - id: 9591649764265759454
             name: MovSpeedLabel
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 14849936019162909619
@@ -42555,7 +42570,7 @@ child:
                 label_text: "Movement Speed:"
           - id: 16570037583854816279
             name: MovSpeedText
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 11342171216786343394

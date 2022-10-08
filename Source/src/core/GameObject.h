@@ -78,7 +78,7 @@ namespace Hachiko
         void DrawStencil(ComponentCamera* camera, Program* program);
 
         void SetActive(bool set_active);
-        void SetActiveRecursive(bool set_active);
+        void SetActiveNonRecursive(bool set_active);
 
         [[nodiscard]] GameObject* Find(UID id) const;
 

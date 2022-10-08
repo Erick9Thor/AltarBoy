@@ -666,9 +666,9 @@ void Hachiko::Scripting::PlayerController::ChangeWeapon(unsigned weapon_idx)
 		_sword_weapon->SetActive(false);
 		_hammer_weapon->SetActive(false);
 
-		_sword_ui_addon->SetActive(false);
-		_claw_ui_addon->SetActive(false);
-		_maze_ui_addon->SetActive(false);
+		_sword_ui_addon->GetComponent(Component::Type::IMAGE)->Disable();
+		_claw_ui_addon->GetComponent(Component::Type::IMAGE)->Disable();
+		_maze_ui_addon->GetComponent(Component::Type::IMAGE)->Disable();
 	}
 	else if (_current_weapon == 1) // CLAW
 	{
@@ -677,9 +677,9 @@ void Hachiko::Scripting::PlayerController::ChangeWeapon(unsigned weapon_idx)
 		_sword_weapon->SetActive(false);
 		_hammer_weapon->SetActive(false);
 
-		_sword_ui_addon->SetActive(false);
-		_claw_ui_addon->SetActive(true);
-		_maze_ui_addon->SetActive(false);
+		_sword_ui_addon->GetComponent(Component::Type::IMAGE)->Disable();
+		_claw_ui_addon->GetComponent(Component::Type::IMAGE)->Enable();
+		_maze_ui_addon->GetComponent(Component::Type::IMAGE)->Disable();
 	}
 	else if (_current_weapon == 2) // SWORD
 	{
@@ -688,9 +688,9 @@ void Hachiko::Scripting::PlayerController::ChangeWeapon(unsigned weapon_idx)
 		_sword_weapon->SetActive(true);
 		_hammer_weapon->SetActive(false);
 
-		_sword_ui_addon->SetActive(true);
-		_claw_ui_addon->SetActive(false);
-		_maze_ui_addon->SetActive(false);
+		_sword_ui_addon->GetComponent(Component::Type::IMAGE)->Enable();
+		_claw_ui_addon->GetComponent(Component::Type::IMAGE)->Disable();
+		_maze_ui_addon->GetComponent(Component::Type::IMAGE)->Disable();
 	}
 	else if (_current_weapon == 3) // HAMMER
 	{
@@ -699,9 +699,9 @@ void Hachiko::Scripting::PlayerController::ChangeWeapon(unsigned weapon_idx)
 		_sword_weapon->SetActive(false);
 		_hammer_weapon->SetActive(true);
 
-		_sword_ui_addon->SetActive(false);
-		_claw_ui_addon->SetActive(false);
-		_maze_ui_addon->SetActive(true);
+		_sword_ui_addon->GetComponent(Component::Type::IMAGE)->Disable();
+		_claw_ui_addon->GetComponent(Component::Type::IMAGE)->Disable();
+		_maze_ui_addon->GetComponent(Component::Type::IMAGE)->Enable();
 	}
 }
 
@@ -1577,9 +1577,11 @@ void Hachiko::Scripting::PlayerController::UpdateWeaponChargeUI()
 	if (weapon.unlimited)
 	{
 		_weapon_charge_bar_go->SetActive(false);
+		_weapon_charge_bar->Disable();
 		return;
 	}
 	_weapon_charge_bar_go->SetActive(true);
+	_weapon_charge_bar->Enable();
 	_weapon_charge_bar->SetFilledValue(_attack_charges);
 }
 
