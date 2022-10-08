@@ -23,7 +23,7 @@ void Hachiko::Scripting::Stalagmite::Falling(float fall_progress)
 	float3 _stalagmite_position = GEO
 		->GetComponent<ComponentTransform>()->GetLocalPosition();
 
-	_stalagmite_position.y = Lerp(25.f, 0.f, fall_progress);
+	_stalagmite_position.y = Lerp(50.f, 0.f, fall_progress);
 
 
 	GEO->GetComponent<ComponentTransform>()
@@ -47,7 +47,7 @@ void Hachiko::Scripting::Stalagmite::Dissolved()
 	float3 _stalagmite_position = GEO
 		->GetComponent<ComponentTransform>()->GetLocalPosition();
 
-	_stalagmite_position.y = 25.f;
+	_stalagmite_position.y = 50.f;
 
 	GEO->GetComponent<ComponentTransform>()
 		->SetLocalPosition(_stalagmite_position);
