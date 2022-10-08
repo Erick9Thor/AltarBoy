@@ -129,21 +129,21 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	{
 		_damage_effect_billboard = _damage_effect->GetComponent<ComponentBillboard>();
 	}
-	if (_parasite_trail_right != nullptr)
+	if (_melee_trail_right != nullptr)
 	{
-		_weapon_trails_billboard_right[static_cast<int>(WeaponUsed::PARASITE)] = _parasite_trail_right->GetComponent<ComponentBillboard>();
+		_weapon_trails_billboard_right[static_cast<int>(WeaponUsed::MELEE)] = _melee_trail_right->GetComponent<ComponentBillboard>();
 	}
-	if (_parasite_trail_left != nullptr)
+	if (_melee_trail_left != nullptr)
 	{
-		_weapon_trails_billboard_left[static_cast<int>(WeaponUsed::PARASITE)] = _parasite_trail_left->GetComponent<ComponentBillboard>();
+		_weapon_trails_billboard_left[static_cast<int>(WeaponUsed::MELEE)] = _melee_trail_left->GetComponent<ComponentBillboard>();
 	}
 	if (_claws_trail_right != nullptr)
 	{
-		_weapon_trails_billboard_right[static_cast<int>(WeaponUsed::CLAWS)] = _claws_trail_right->GetComponent<ComponentBillboard>();
+		_weapon_trails_billboard_right[static_cast<int>(WeaponUsed::CLAW)] = _claws_trail_right->GetComponent<ComponentBillboard>();
 	}
 	if (_claws_trail_left != nullptr)
 	{
-		_weapon_trails_billboard_left[static_cast<int>(WeaponUsed::CLAWS)] = _claws_trail_left->GetComponent<ComponentBillboard>();
+		_weapon_trails_billboard_left[static_cast<int>(WeaponUsed::CLAW)] = _claws_trail_left->GetComponent<ComponentBillboard>();
 	}
 	if (_sword_trail_right != nullptr)
 	{

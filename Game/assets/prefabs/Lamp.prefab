@@ -20,7 +20,7 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [0, 1.04, -0.0725]
+        position: [0, 0.9989, -0.0725]
         rotation: [-0, 0, -0]
         scale: [1, 1, 1]
     child:
@@ -39,6 +39,7 @@ child:
             mesh_id: 9697926766399336822
             navigable: false
             visible: true
+            casting_shadow: true
             material_id: 18249348712515306135
             tint_color: [1, 1, 1, 1]
   - name: Crystal_lamp_01
@@ -66,6 +67,7 @@ child:
             mesh_id: 3996608725693908784
             navigable: false
             visible: true
+            casting_shadow: true
             material_id: 13838716584693807781
             tint_color: [1, 1, 1, 1]
   - name: Crystal_lamp_02
@@ -93,6 +95,7 @@ child:
             mesh_id: 12261142078418812676
             navigable: false
             visible: true
+            casting_shadow: true
             material_id: 4891175381920237845
             tint_color: [1, 1, 1, 1]
   - name: Light
@@ -158,5 +161,6 @@ child:
             mesh_id: 3996608725693908784
             navigable: false
             visible: true
+            casting_shadow: true
             material_id: 13838716584693807781
             tint_color: [1, 1, 1, 1]

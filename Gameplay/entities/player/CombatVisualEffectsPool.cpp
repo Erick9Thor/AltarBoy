@@ -73,11 +73,6 @@ void Hachiko::Scripting::CombatVisualEffectsPool::PlayPlayerAttackEffect(PlayerC
 		current_attack_billboard = GetCurrentHammerVfx();
 		break;
 	}
-	case PlayerController::WeaponUsed::HAMMER:
-	{
-
-		break;
-	}
 	default:
 		break;
 	}

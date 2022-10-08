@@ -244,8 +244,8 @@ namespace Hachiko
 			SERIALIZE_FIELD(GameObject*, _heal_effect);
 			SERIALIZE_FIELD(GameObject*, _damage_effect);
 			SERIALIZE_FIELD(GameObject*, _parasite_pickup_effect);
-			SERIALIZE_FIELD(GameObject*, _parasite_trail_right);
-			SERIALIZE_FIELD(GameObject*, _parasite_trail_left);
+			SERIALIZE_FIELD(GameObject*, _melee_trail_right);
+			SERIALIZE_FIELD(GameObject*, _melee_trail_left);
 			SERIALIZE_FIELD(GameObject*, _claws_trail_right);
 			SERIALIZE_FIELD(GameObject*, _claws_trail_left);
 			SERIALIZE_FIELD(GameObject*, _sword_trail_right);
