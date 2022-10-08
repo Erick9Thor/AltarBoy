@@ -24,21 +24,6 @@ void Hachiko::Scripting::LevelManager::OnUpdate()
 {
 	if (!_last_gauntlet) return;
 	_gauntlet_ui_go->SetActive(_last_gauntlet && !_last_gauntlet->IsCompleted());
-
-	if (!_player_hud || !_pause_menu) return;
-	if (Input::IsKeyPressed(Input::KeyCode::KEY_ESCAPE) || Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_START)) {
-		_game_paused = !_game_paused;
-		if (_game_paused)
-		{
-			_player_hud->SetActive(false);
-			Time::SetTimeScale(0.0f);
-		}
-		else
-		{
-			_player_hud->SetActive(true);
-			Time::SetTimeScale(1.0f);
-		}
-	}
 }	
 
 void Hachiko::Scripting::LevelManager::SetGauntlet(GauntletManager* last_gauntlet)

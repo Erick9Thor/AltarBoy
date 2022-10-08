@@ -261,9 +261,24 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
 
     return new_component;
 }
-
 void Hachiko::GameObject::SetActive(bool set_active)
 {
+    if (!active && set_active)
+    {
+        Start();
+    }
+    else if (active && !set_active)
+    {
+        for (Component* component : components)
+        {
+            component->OnDisable();
+        }
+    }
+    active = set_active;
+}
+
+void Hachiko::GameObject::SetActiveRecursive(bool set_active)
+    {
     for (GameObject* child : children)
     {
         child->SetActive(set_active);
@@ -330,6 +345,8 @@ void Hachiko::GameObject::Stop()
 
 void Hachiko::GameObject::Update()
 {
+    if (!active || (parent != nullptr && !parent->active))   return;
+
     if (transform->HasChanged())
     {
         OnTransformUpdated();

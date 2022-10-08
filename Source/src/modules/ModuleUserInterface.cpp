@@ -88,6 +88,7 @@ void Hachiko::ModuleUserInterface::RecursiveDrawUI(
     Program* img_program, 
     Program* txt_program)
 {
+    if (!game_object->IsActive())   return;
     ComponentCanvas* new_canvas = game_object->GetComponent<ComponentCanvas>();
     if (new_canvas)
     {
