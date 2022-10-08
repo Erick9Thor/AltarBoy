@@ -212,6 +212,7 @@ namespace Hachiko
             ComponentTransform* transform = nullptr;
             ComponentProgressBar* hp_bar = nullptr;
             ComponentAgent* agent = nullptr;
+            ComponentAnimation* animation = nullptr;
             GauntletManager* gauntlet = nullptr;
             CombatManager* combat_manager = nullptr;
             Stats* combat_stats = nullptr;

@@ -81,6 +81,9 @@ void Hachiko::Scripting::BossController::OnAwake()
     combat_stats = game_object->GetComponent<Stats>();
     agent = game_object->GetComponent<ComponentAgent>();
     agent->SetMaxSpeed(combat_stats->_move_speed);
+
+    animation = game_object->GetComponent<ComponentAnimation>();
+
     SetUpHpBar();
     // Hp bar starts hidden until encounter starts
     SetHpBarActive(false);
@@ -118,6 +121,7 @@ void Hachiko::Scripting::BossController::OnAwake()
 
 void Hachiko::Scripting::BossController::OnStart()
 {
+    animation->StartAnimating();
 }
 
 void Hachiko::Scripting::BossController::OnUpdate()
@@ -255,6 +259,7 @@ void Hachiko::Scripting::BossController::CombatController()
     switch (combat_state)
     {
     case CombatState::IDLE:
+        animation->SendTrigger("isIdle");
         break;
     case CombatState::CHASING:
         ChaseController();
@@ -618,7 +623,7 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
 
         ChangeStateText((jump_type + "Waiting to jump.").c_str());
 
-        // TODO: Trigger getting ready for jump animation here.
+        animation->SendTrigger("isPreJump");
 
         // Disable the agent component, gets enabled back when boss lands back:
         agent->RemoveFromCrowd();
@@ -675,7 +680,7 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
 
         ChangeStateText((jump_type + "Ascending").c_str());
 
-        // TODO: Trigger Jumping animation here.
+        animation->SendTrigger("isJumpAir");
 
         break;
     }
@@ -709,8 +714,6 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
         // Boss starts playing the highest point animation here:
         _jumping_state = JumpingState::ON_HIGHEST_POINT;
         _jumping_timer = 0.0f;
-
-        // TODO: Trigger highest point animation here.
 
         ChangeStateText((jump_type + "On the highest point of the jump.").c_str());
 
@@ -753,6 +756,7 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
 
     case JumpingState::DESCENDING:
     {
+
         UpdateDescendingPosition();
 
         if (_jumping_timer < _jump_descending_duration)
@@ -793,6 +797,8 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
             // TODO: Trigger normal landing & getting up animation here.
         }
 
+        animation->SendTrigger("isLanding");
+
         ChangeStateText((jump_type + "Landed & waiting").c_str());
 
         break;
@@ -800,6 +806,8 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
 
     case JumpingState::GETTING_UP:
     {
+        animation->SendTrigger("isIdle");
+
         if (_jumping_timer < _jump_getting_up_duration)
         {
             // Boss is getting up here:
