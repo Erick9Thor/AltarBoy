@@ -220,7 +220,7 @@ namespace Hachiko
             CombatState combat_state = CombatState::IDLE;
             CombatState prev_combat_state = combat_state;
             bool hitable = true;
-            std::vector<float> gauntlet_thresholds_percent{0.3f, 0.7f};
+            std::vector<float> gauntlet_thresholds_percent{0.5f};
             float3 target_position = float3::zero;
 
             // Jumping state related fields:
