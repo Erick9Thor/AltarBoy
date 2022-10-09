@@ -9,7 +9,7 @@
 
 Hachiko::Scripting::StalagmiteManager::StalagmiteManager(GameObject* game_object)
 	: Script(game_object, "StalagmiteManager")
-	, _falling_cooldown(1.5f)
+	, _falling_cooldown(1.0f)
 {
 }
 
@@ -237,7 +237,7 @@ void Hachiko::Scripting::StalagmiteManager::KnockbackOnEnemies(float3 position)
 
 	std::vector<GameObject*> elements_hit = {};
 
-	//Check if the enemeis are hit
+	//Check if the enemies are hit
 	for (int i = 0; i < check_hit.size(); ++i)
 	{
 		if (check_hit[i]->active &&
@@ -253,6 +253,12 @@ void Hachiko::Scripting::StalagmiteManager::KnockbackOnEnemies(float3 position)
 
 		float3 relative_dir = element->GetTransform()->GetGlobalPosition() - position;
 		relative_dir.y = 0.0f;
+
+		// If it hits an enemy perfectly in the center displace it to positive Z
+		if (relative_dir.Equals(float3::zero))
+		{
+			relative_dir = float3(0.0f, 0.0f, 1.0f);
+		}
 
 		if (enemy_controller != nullptr)
 		{
