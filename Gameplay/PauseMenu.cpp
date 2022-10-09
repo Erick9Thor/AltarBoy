@@ -52,6 +52,7 @@ void Hachiko::Scripting::PauseMenu::HandleButtonInteractions()
 	if (_quit_button->IsSelected())
 	{
 		_level_manager->BlockInputs(false);
+		Time::SetTimeScale(1.0f);
 		SceneManagement::SwitchScene(Scenes::MAIN_MENU);
 	}
 }

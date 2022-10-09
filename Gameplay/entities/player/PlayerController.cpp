@@ -202,7 +202,7 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	_player_position = _player_transform->GetGlobalPosition();
 	_movement_direction = float3::zero;
 
-	_lock_time -= Time::DeltaTime();
+	_lock_time -= Time::DeltaTimeScaled();
 	if (_lock_time < 0.0f)
 	{
 		_lock_time = 0.0f;
@@ -210,7 +210,7 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	
 	if (_invulnerability_time_remaining > 0.0f)
 	{
-		_invulnerability_time_remaining -= Time::DeltaTime();
+		_invulnerability_time_remaining -= Time::DeltaTimeScaled();
 		if (_invulnerability_time_remaining <= 0.0f && _player_geometry != nullptr)
 		{
 			_player_geometry->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, 1.0f), true);
@@ -888,7 +888,7 @@ void Hachiko::Scripting::PlayerController::MovementController()
 
 	if (IsFalling())
 	{
-		_player_position.y -= fall_speed * Time::DeltaTime();
+		_player_position.y -= fall_speed * Time::DeltaTimeScaled();
 
 		if (_start_fall_pos.y - _player_position.y > _falling_distance)
 		{
@@ -918,7 +918,7 @@ void Hachiko::Scripting::PlayerController::MovementController()
 	{
 		if(_stun_time > 0.0f)
 		{
-			_stun_time -= Time::DeltaTime();
+			_stun_time -= Time::DeltaTimeScaled();
 			float stun_completion = (_stun_duration - _stun_time) * (1.0 / _stun_duration);
 			_player_position = math::float3::Lerp(_knock_start, _knock_end,
 				stun_completion);
@@ -1005,7 +1005,7 @@ void Hachiko::Scripting::PlayerController::DashChargesManager()
 		return;
 	}
 
-	_dash_charging_time += Time::DeltaTime();
+	_dash_charging_time += Time::DeltaTimeScaled();
 
 	if (_dash_charging_time >= _dash_cooldown)
 	{
@@ -1083,14 +1083,14 @@ void Hachiko::Scripting::PlayerController::AttackController()
 	{
 		if (_after_attack_timer > 0.0f)
 		{
-			_after_attack_timer -= Time::DeltaTime();
+			_after_attack_timer -= Time::DeltaTimeScaled();
 		}
 		return;
 	}
 
 	if (_attack_current_duration > 0.0f)
 	{
-		_attack_current_duration -= Time::DeltaTime();
+		_attack_current_duration -= Time::DeltaTimeScaled();
 
 		if (_state == PlayerState::MELEE_ATTACKING)
 		{
@@ -1115,7 +1115,7 @@ void Hachiko::Scripting::PlayerController::AttackController()
 
 			if (_attack_current_delay > 0.f)
 			{
-				_attack_current_delay -= Time::DeltaTime();
+				_attack_current_delay -= Time::DeltaTimeScaled();
 				
 				if (_attack_current_delay <= 0.f)
 				{
