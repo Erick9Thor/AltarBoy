@@ -67,7 +67,7 @@ void Hachiko::Scripting::GauntletManager::OnUpdate()
 	}
 	else
 	{
-		
+		ControllCameraPos();
 		CheckRoundStatus();
 	}
 
@@ -98,7 +98,7 @@ void Hachiko::Scripting::GauntletManager::StartGauntlet()
 	_audio_manager->RegisterGaunlet();
 
 	// Set the camera to its position if there is an anchor set
-	if (_camera_anchor)
+	if (_camera_anchor && _central_anchor)
 	{
 		_main_camera->ChangeRelativePosition(_relative_position, false, .2f, 0.0f);
 		_main_camera->SetObjective(_camera_anchor);
@@ -178,4 +178,16 @@ void Hachiko::Scripting::GauntletManager::SpawnRound(unsigned round)
 	if (round >= _enemy_packs.size()) return;
 	_combat_manager->ActivateEnemyPack(_enemy_packs[round]);
 	_combat_manager->ResetEnemyPack(_enemy_packs[round], true);
+}
+
+void Hachiko::Scripting::GauntletManager::ControllCameraPos()
+{
+	if (_camera_anchor && _central_anchor)
+	{
+		float3 camera_a_pos = _camera_anchor->GetTransform()->GetGlobalPosition();
+		float3 player_pos = Scenes::GetPlayer()->GetTransform()->GetGlobalPosition();
+		float3 center_pos = _central_anchor->GetTransform()->GetGlobalPosition();
+		camera_a_pos = math::Lerp(center_pos, player_pos, 0.4f);
+		_camera_anchor->GetTransform()->SetGlobalPosition(camera_a_pos);
+	}
 }

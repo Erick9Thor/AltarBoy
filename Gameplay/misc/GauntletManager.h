@@ -45,6 +45,7 @@ namespace Hachiko
 			SERIALIZE_FIELD(GameObject*, _pack_3);		
 
 			SERIALIZE_FIELD(GameObject*, _camera_anchor);
+			SERIALIZE_FIELD(GameObject*, _central_anchor);
 			SERIALIZE_FIELD(float3, _relative_position);
 
 		private:
@@ -53,6 +54,7 @@ namespace Hachiko
 			void OpenDoors();
 			void CloseDoors();
 			void SpawnRound(unsigned round);
+			void ControllCameraPos();
 
 			unsigned current_round = 0;
 			bool completed = false;

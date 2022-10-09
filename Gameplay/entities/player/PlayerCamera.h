@@ -30,7 +30,7 @@ public:
 	/// <param name="new_relative_position"></param>
 	/// <param name="speed"></param>
 	/// <param name="duration"></param>
-	void ChangeRelativePosition(math::float3 new_relative_position, bool do_look_ahead = true, float speed = 0.0f, float duration = -1.0f);
+	void ChangeRelativePosition(math::float3 new_relative_position, float speed = 0.0f, bool do_look_ahead = true, float duration = -1.0f);
 
 	/// <summary>
 	/// Reverts Camera relative position to its previous position
@@ -80,6 +80,7 @@ private:
 	math::float3 _relative_position_aux = math::float3::zero;
 	math::float3 _updated_relative_position;
 	math::Quat _updated_rotation;
+	bool _look_ahead_aux;
 	bool _is_temporary_moved = false;
 	bool _is_in_position = true;
 	bool _is_in_rotation = true;

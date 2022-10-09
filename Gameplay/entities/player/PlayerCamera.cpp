@@ -193,7 +193,7 @@ float3 Hachiko::Scripting::PlayerCamera::Shake()
 	}
 }
 
-void Hachiko::Scripting::PlayerCamera::ChangeRelativePosition(math::float3 new_relative_position, bool do_look_ahead, float speed, float time)
+void Hachiko::Scripting::PlayerCamera::ChangeRelativePosition(math::float3 new_relative_position, float speed, bool do_look_ahead, float time)
 {
 	if (time > 0.0f)
 	{
@@ -215,6 +215,7 @@ void Hachiko::Scripting::PlayerCamera::ChangeRelativePosition(math::float3 new_r
 		_reposition_time = 1.0f;
 		_reposition_progress = 1.0f;
 	}
+	_look_ahead_aux = _do_look_ahead;
 	_do_look_ahead = do_look_ahead;
 }
 
@@ -222,6 +223,7 @@ void Hachiko::Scripting::PlayerCamera::RevertRelativePosition(float speed)
 {
 	_updated_relative_position = _relative_position_aux;
 	_is_in_position = false;
+	_do_look_ahead = _look_ahead_aux;
 	if (speed > 0.0f)
 	{
 		_reposition_time = 1.0f / speed;
