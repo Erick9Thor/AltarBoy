@@ -37,7 +37,7 @@ Hachiko::Scripting::BossController::BossController(GameObject* game_object)
     , _jump_end_position(float3::zero)
     , _crystal_jump_position(float3::zero)
     , _jumping_timer(0.0f)
-    , _jump_pattern_index(0)
+    , _jump_pattern_index(-1)
     , _current_jumping_mode(JumpingMode::BASIC_ATTACK)
     , _boss_state_text_ui(nullptr)
     , attack_current_cd(0.0f)
@@ -340,6 +340,7 @@ void Hachiko::Scripting::BossController::StartEncounterController()
 {
     // If there is any start sequence manage it here and hold state until it
     // ends. For now it goes to next state instantly:
+    std::copy(_jumping_pattern_1, _jumping_pattern_1 + JumpUtil::JUMP_PATTERN_SIZE, _current_jumping_pattern);
     state = BossState::COMBAT_FORM;
 }
 
@@ -421,6 +422,11 @@ void Hachiko::Scripting::BossController::FinishCocoon()
 {
     hitable = true;
     second_phase = true;
+
+    // We change our jumping pattern to the second one and reset the index
+    std::copy(_jumping_pattern_2, _jumping_pattern_2 + JumpUtil::JUMP_PATTERN_SIZE, _current_jumping_pattern);
+    _jump_pattern_index = -1;
+
     if (cocoon_placeholder_go)
     {
         cocoon_placeholder_go->SetActive(false);
@@ -579,7 +585,7 @@ void Hachiko::Scripting::BossController::TriggerJumpingState(
         _jump_pattern_index =
             (_jump_pattern_index + 1) % JumpUtil::JUMP_PATTERN_SIZE;
         // Set the jumping mode:
-        _current_jumping_mode = _jumping_pattern_1[_jump_pattern_index];
+        _current_jumping_mode = _current_jumping_pattern[_jump_pattern_index];
     }
 }
 

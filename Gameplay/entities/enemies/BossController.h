@@ -76,7 +76,7 @@ namespace Hachiko
 
         namespace JumpUtil
         {
-            constexpr int JUMP_PATTERN_SIZE = 15;
+            constexpr int JUMP_PATTERN_SIZE = 6;
         }
 
         class BossController : public Script
@@ -259,37 +259,21 @@ namespace Hachiko
                 JumpingMode::BASIC_ATTACK,
                 JumpingMode::BASIC_ATTACK, // 1
                 JumpingMode::STALAGMITE,
-                JumpingMode::LASER,
                 JumpingMode::BASIC_ATTACK, // 4
-                JumpingMode::WEAPON_CHANGE,
                 JumpingMode::BASIC_ATTACK,
-                JumpingMode::BASIC_ATTACK, // 7
-                JumpingMode::WEAPON_CHANGE,
-                JumpingMode::BASIC_ATTACK,
-                JumpingMode::BASIC_ATTACK, // 10
-                JumpingMode::STALAGMITE,
-                JumpingMode::BASIC_ATTACK,
-                JumpingMode::BASIC_ATTACK, // 13
                 JumpingMode::WEAPON_CHANGE
             };
 
             JumpingMode _jumping_pattern_2[JumpUtil::JUMP_PATTERN_SIZE] = {
-                JumpingMode::BASIC_ATTACK,
-                JumpingMode::BASIC_ATTACK, // 1
-                JumpingMode::STALAGMITE,
-                JumpingMode::BASIC_ATTACK,
+                JumpingMode::BASIC_ATTACK, 
+                JumpingMode::STALAGMITE,   // 1
+                JumpingMode::LASER,
                 JumpingMode::BASIC_ATTACK, // 4
-                JumpingMode::WEAPON_CHANGE,
                 JumpingMode::BASIC_ATTACK,
-                JumpingMode::BASIC_ATTACK, // 7
-                JumpingMode::WEAPON_CHANGE,
-                JumpingMode::BASIC_ATTACK,
-                JumpingMode::BASIC_ATTACK, // 10
-                JumpingMode::STALAGMITE,
-                JumpingMode::BASIC_ATTACK,
-                JumpingMode::BASIC_ATTACK, // 13
                 JumpingMode::WEAPON_CHANGE
             };
+
+            JumpingMode _current_jumping_pattern[JumpUtil::JUMP_PATTERN_SIZE];
 
             JumpingMode _current_jumping_mode;
 
