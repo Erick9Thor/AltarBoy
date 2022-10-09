@@ -156,18 +156,24 @@ namespace Hachiko
             void UpdatePatrolState();
             void EndPatrolState();
             EnemyState TransitionsPatrolState();
-            // PARASITE
-            void StartParasiteState();
-            void UpdateParasiteState();
-            void EndParasiteState();
-            EnemyState TransitionsParasiteState();
+            // HIT
+            void StartHitState();
+            void UpdateHitState();
+            void EndHitState();
+            EnemyState TransitionsHitState();
             // DEAD
             void StartDeadState();
             void UpdateDeadState();
             void EndDeadState();
             EnemyState TransitionsDeadState();
+            // PARASITE
+            void StartParasiteState();
+            void UpdateParasiteState();
+            void EndParasiteState();
+            EnemyState TransitionsParasiteState();
 
             Stats* _combat_stats;
+            SERIALIZE_FIELD(int, _state_num);
             SERIALIZE_FIELD(bool, _worm);
             SERIALIZE_FIELD(int, _aggro_range);
             SERIALIZE_FIELD(float, _attack_range);
