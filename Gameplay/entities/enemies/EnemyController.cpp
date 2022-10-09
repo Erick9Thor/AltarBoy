@@ -1220,11 +1220,6 @@ void Hachiko::Scripting::EnemyController::EndIdleState()
 
 Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::TransitionsIdleState()
 {
-	if (!_combat_stats->IsAlive())
-	{
-		return EnemyState::DEAD;
-	}
-
 	// If an enemy is from a gautlet, has the player on agro distance or is enrage, it will always follow the player if its reachable
 	float dist_to_player = _current_pos.Distance(_player_pos);
 	bool can_reach_player = true; //TODO
@@ -1329,11 +1324,6 @@ void Hachiko::Scripting::EnemyController::EndAttackingState()
 
 Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::TransitionsAttackingState()
 {
-	if (!_combat_stats->IsAlive())
-	{
-		return EnemyState::DEAD;
-	}
-
 	// If in attack dont move from this state
 	if (_attack_animation_timer < _attack_animation_duration)
 	{
@@ -1400,11 +1390,6 @@ void Hachiko::Scripting::EnemyController::EndMovingState()
 
 Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::TransitionsMovingState()
 {
-	if (!_combat_stats->IsAlive())
-	{
-		return EnemyState::DEAD;
-	}
-
 	// If an enemy is from a gautlet, has the player on agro distance or is enrage, it will always follow the player if its reachable
 	float dist_to_player = _current_pos.Distance(_player_pos);
 	bool can_reach_player = true; //TODO
@@ -1458,11 +1443,6 @@ void Hachiko::Scripting::EnemyController::EndMovingBackState()
 
 Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::TransitionsMovingBackState()
 {
-	if (!_combat_stats->IsAlive())
-	{
-		return EnemyState::DEAD;
-	}
-
 	// If an enemy is from a gautlet, has the player on agro distance or is enrage, it will always follow the player if its reachable
 	float dist_to_player = _current_pos.Distance(_player_pos);
 	bool can_reach_player = true; //TODO
@@ -1528,11 +1508,6 @@ void Hachiko::Scripting::EnemyController::EndPatrolState()
 
 Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::TransitionsPatrolState()
 {
-	if (!_combat_stats->IsAlive())
-	{
-		return EnemyState::DEAD;
-	}
-
 	// If an enemy is from a gautlet, has the player on agro distance or is enrage, it will always follow the player if its reachable
 	float dist_to_player = _current_pos.Distance(_player_pos);
 	bool can_reach_player = true; //TODO
