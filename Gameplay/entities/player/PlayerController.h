@@ -13,9 +13,11 @@ namespace Hachiko
 	class GameObject;
 	class ComponentMeshRenderer;
 	class ComponentProgressBar;
+
 	namespace Scripting
 	{
 		class PlayerCamera;
+		class CombatVisualEffectsPool;
 
 		enum class PlayerState
 		{
@@ -41,10 +43,10 @@ namespace Hachiko
 
 			enum class WeaponUsed
 			{
-				RED = 0,
-				GREEN,
-				BLUE,
-				YELLOW,
+				MELEE = 0,
+				CLAW,
+				SWORD,
+				HAMMER,
 				SIZE
 			};
 
@@ -122,7 +124,7 @@ namespace Hachiko
 			{
 				return _attack_idx;
 			}
-			
+
 			void SetLockTime(float lock_time)
 			{
 				_lock_time = lock_time;
@@ -182,7 +184,7 @@ namespace Hachiko
 			void StoreDashOrigin(const float3& dash_origin);
 			float3 GetLastValidDashOrigin();
 			void MeleeAttack();
-			
+
 			void RangedAttack();
 			void ReleaseAttack();
 			void CancelAttack();
@@ -224,6 +226,7 @@ namespace Hachiko
 			const float fall_speed = 25.f;
 
 			SERIALIZE_FIELD(GameObject*, _attack_indicator);
+			SERIALIZE_FIELD(GameObject*, _aim_indicator);
 			SERIALIZE_FIELD(GameObject*, _bullet_emitter);
 			SERIALIZE_FIELD(GameObject*, _goal);
 			SERIALIZE_FIELD(GameObject*, _player_geometry);
@@ -278,6 +281,7 @@ namespace Hachiko
 			ComponentParticleSystem* _heal_effect_particles_1 = nullptr;
 			ComponentParticleSystem* _heal_effect_particles_2 = nullptr;
 			ComponentBillboard* _damage_effect_billboard = nullptr;
+			ComponentBillboard* _aim_indicator_billboard = nullptr;
 
 			std::vector<Weapon> weapons{};
 
@@ -351,6 +355,8 @@ namespace Hachiko
 
 			LevelManager* _level_manager;
 
+			// Visual Effects:
+			CombatVisualEffectsPool* _combat_visual_effects_pool;
 		};
 	} // namespace Scripting
 } // namespace Hachiko
