@@ -13,6 +13,7 @@ Hachiko::Scripting::CameraPosChange::CameraPosChange(GameObject* game_object)
     , _duration(0.0f)
     , _relative_position(float3::zero)
     , _rotation(float3::zero)
+	, _check_box(false)
 {
 }
 
@@ -20,6 +21,9 @@ void Hachiko::Scripting::CameraPosChange::OnAwake()
 {
 	_player = Scenes::GetPlayer();
 	_camera = Scenes::GetMainCamera()->GetComponent<PlayerCamera>();
+	global_pos = game_object->GetTransform()->GetGlobalPosition();
+	local_matrix = game_object->GetTransform()->GetLocalMatrix();
+	boundingbox = OBB(local_matrix.Col3(3), float3(1.f, 1.f, 1.f), local_matrix.WorldX().Normalized(), local_matrix.WorldY().Normalized(), local_matrix.WorldZ().Normalized());
 }
 
 void Hachiko::Scripting::CameraPosChange::OnStart()
@@ -30,7 +34,7 @@ void Hachiko::Scripting::CameraPosChange::OnUpdate()
 {
 	if (_player && _camera)
 	{
-		float distance = Distance(game_object->GetTransform()->GetGlobalPosition(), _player->GetTransform()->GetGlobalPosition());
+		float distance = Distance(global_pos, _player->GetTransform()->GetGlobalPosition());
 		if (distance < 3.0f)
 		{
 			_is_inside = true;
@@ -49,4 +53,12 @@ void Hachiko::Scripting::CameraPosChange::OnUpdate()
 			_is_inside = false;
 		}
 	}
+}
+
+bool Hachiko::Scripting::CameraPosChange::InsideOBB()
+{
+	float3 player_pos = _player->GetTransform()->GetGlobalPosition();
+	Sphere hitbox = Sphere(player_pos, 0.5f);
+
+	return boundingbox.Intersects(hitbox);
 }
