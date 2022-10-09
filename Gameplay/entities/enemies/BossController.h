@@ -70,6 +70,7 @@ namespace Hachiko
             WEAPON_CHANGE,
             STALAGMITE,
             CRYSTAL,
+            LASER,
             DETERMINED_BY_PATTERN
         };
 
@@ -181,6 +182,8 @@ namespace Hachiko
             void SpawnEnemy();
             void ResetEnemies();
 
+            bool ControlLasers();
+
             // Jumping related methods:
             void TriggerJumpingState(JumpingMode jumping_mode);
             void ResetJumpingState();
@@ -252,7 +255,25 @@ namespace Hachiko
             // Jump pattern is used when the Jumping mode was set to
             // JumpingMode::DETERMINED_BY_PATTERN on TriggerJumping:
             int _jump_pattern_index;
-            JumpingMode _jumping_pattern[JumpUtil::JUMP_PATTERN_SIZE] = {
+            JumpingMode _jumping_pattern_1[JumpUtil::JUMP_PATTERN_SIZE] = {
+                JumpingMode::BASIC_ATTACK,
+                JumpingMode::BASIC_ATTACK, // 1
+                JumpingMode::STALAGMITE,
+                JumpingMode::LASER,
+                JumpingMode::BASIC_ATTACK, // 4
+                JumpingMode::WEAPON_CHANGE,
+                JumpingMode::BASIC_ATTACK,
+                JumpingMode::BASIC_ATTACK, // 7
+                JumpingMode::WEAPON_CHANGE,
+                JumpingMode::BASIC_ATTACK,
+                JumpingMode::BASIC_ATTACK, // 10
+                JumpingMode::STALAGMITE,
+                JumpingMode::BASIC_ATTACK,
+                JumpingMode::BASIC_ATTACK, // 13
+                JumpingMode::WEAPON_CHANGE
+            };
+
+            JumpingMode _jumping_pattern_2[JumpUtil::JUMP_PATTERN_SIZE] = {
                 JumpingMode::BASIC_ATTACK,
                 JumpingMode::BASIC_ATTACK, // 1
                 JumpingMode::STALAGMITE,
@@ -269,6 +290,7 @@ namespace Hachiko
                 JumpingMode::BASIC_ATTACK, // 13
                 JumpingMode::WEAPON_CHANGE
             };
+
             JumpingMode _current_jumping_mode;
 
             SERIALIZE_FIELD(GameObject*, _stalagmite_manager_go);
@@ -304,6 +326,11 @@ namespace Hachiko
 
             const float jump_placeholder_time = 5.f;
             float jump_placeholder_timer = 0.f;
+
+            SERIALIZE_FIELD(GameObject*, _laser_wall);
+            SERIALIZE_FIELD(float, _laser_wall_duration);
+            float _laser_wall_current_time = 0.0f;
+            SERIALIZE_FIELD(float, _laser_jump_height);
         };
     } // namespace Scripting
 } // namespace Hachiko

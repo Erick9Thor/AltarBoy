@@ -2,6 +2,7 @@
 
 #include "entities/enemies/BossController.h"
 #include "entities/enemies/EnemyController.h"
+#include "misc/LaserController.h"
 #include "misc/StalagmiteManager.h"
 #include "entities/Stats.h"
 #include "constants/Scenes.h"
@@ -42,6 +43,9 @@ Hachiko::Scripting::BossController::BossController(GameObject* game_object)
     , attack_current_cd(0.0f)
     , time_between_enemies(5.0)
     , enemy_pool(nullptr)
+    , _laser_wall(nullptr)
+    , _laser_wall_duration(2.0f)
+    , _laser_jump_height(50.0f)
 {
     CreateBossWeapons();
 }
@@ -107,6 +111,11 @@ void Hachiko::Scripting::BossController::OnAwake()
     for (GameObject* crystal_go : crystal_pool->children)
     {
         _explosive_crystals.push_back(crystal_go);
+    }
+
+    for (GameObject* laser : _laser_wall->children)
+    {
+        laser->GetComponent<LaserController>()->ChangeState(LaserController::State::INACTIVE);
     }
 
     if (_stalagmite_manager_go)
@@ -570,7 +579,7 @@ void Hachiko::Scripting::BossController::TriggerJumpingState(
         _jump_pattern_index =
             (_jump_pattern_index + 1) % JumpUtil::JUMP_PATTERN_SIZE;
         // Set the jumping mode:
-        _current_jumping_mode = _jumping_pattern[_jump_pattern_index];
+        _current_jumping_mode = _jumping_pattern_1[_jump_pattern_index];
     }
 }
 
@@ -584,7 +593,8 @@ inline bool ShouldDealBasicAOE(Hachiko::Scripting::JumpingMode mode)
 {
     return (mode == Hachiko::Scripting::JumpingMode::WEAPON_CHANGE ||
         mode == Hachiko::Scripting::JumpingMode::STALAGMITE ||
-        mode == Hachiko::Scripting::JumpingMode::BASIC_ATTACK);
+        mode == Hachiko::Scripting::JumpingMode::BASIC_ATTACK ||
+        mode == Hachiko::Scripting::JumpingMode::LASER);
 }
 
 void Hachiko::Scripting::BossController::ExecuteJumpingState()
@@ -608,6 +618,10 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
     else if (_current_jumping_mode == JumpingMode::CRYSTAL)
     {
         jump_type = "(Crystal)";
+    }
+    else if (_current_jumping_mode == JumpingMode::LASER)
+    {
+        jump_type = "(Laser)";
     }
     ///////////////////////////////////////////////////////////////////////////
 
@@ -710,16 +724,34 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
         // Boss starts playing the highest point animation here:
         _jumping_state = JumpingState::ON_HIGHEST_POINT;
         _jumping_timer = 0.0f;
-
+       
         // TODO: Trigger highest point animation here.
 
         ChangeStateText((jump_type + "On the highest point of the jump.").c_str());
+
+
+        if (_current_jumping_mode == JumpingMode::LASER)
+        {
+            for (GameObject* laser : _laser_wall->children)
+            {
+                laser->GetComponent<LaserController>()->ChangeState(LaserController::State::ACTIVATING);
+            }
+            _laser_wall_current_time = 0.0f;
+        }
 
         break;
     }
 
     case JumpingState::ON_HIGHEST_POINT:
     {
+        if (_current_jumping_mode == JumpingMode::LASER)
+        {
+            if (!ControlLasers())
+            {
+                break;
+            }
+        }
+
         if (_jumping_timer < _jump_on_highest_point_duration)
         {
             // Boss is on the highest point here:
@@ -855,7 +887,8 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
                 _stalagmite_manager->TriggerStalagmites();
             }
         }
-        else if (_current_jumping_mode == JumpingMode::WEAPON_CHANGE)
+        else if (_current_jumping_mode == JumpingMode::WEAPON_CHANGE ||
+            _current_jumping_mode == JumpingMode::LASER)
         {
             // TODO: Trigger weapon changing animation here.
 
@@ -879,6 +912,14 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
         {
             // Boss is casting skill here:
             break;
+        }
+
+        if (_current_jumping_mode == JumpingMode::STALAGMITE)
+        {
+            if (_stalagmite_manager && !_stalagmite_manager->AllStalactitesCollapsed())
+            {
+                break;
+            }
         }
 
         // Boss deals the aoe damage here:
@@ -965,13 +1006,15 @@ void Hachiko::Scripting::BossController::UpdateAscendingPosition() const
     // looks like a gravity is applied:
     const float height_step = CalculateAscendingHeightStep(position_step);
 
+    const float _real_height = _current_jumping_mode == JumpingMode::LASER ? _laser_jump_height : _jump_height;
+
     LerpJump(
         game_object,
         _jump_start_position,
         _jump_mid_position,
         position_step,
         _jump_start_position.y,
-        _jump_height,
+        _real_height,
         height_step);
 }
 
@@ -990,13 +1033,15 @@ void Hachiko::Scripting::BossController::UpdateDescendingPosition() const
     // looks like a gravity is applied:
     const float height_step = CalculateDescendingHeightStep(position_step);
 
+    const float _real_height = _current_jumping_mode == JumpingMode::LASER ? _laser_jump_height : _jump_height;
+
     LerpJump(
         game_object,
         _jump_mid_position,
         _jump_end_position,
         position_step,
         _jump_start_position.y,
-        _jump_height,
+        _real_height,
         height_step);
 }
 
@@ -1167,4 +1212,24 @@ void Hachiko::Scripting::BossController::ResetEnemies()
 
         enemy->SetActive(false);
     }
+}
+
+/**
+* Returns true if all lasers are finished
+*/
+bool Hachiko::Scripting::BossController::ControlLasers()
+{
+	if (_laser_wall_current_time < _laser_wall_duration)
+	{
+		_laser_wall_current_time += Time::DeltaTime();
+        return false;
+	}
+	else
+	{
+		for (GameObject* laser : _laser_wall->children)
+		{
+			laser->GetComponent<LaserController>()->ChangeState(LaserController::State::DISSOLVING);
+		}
+        return true;
+	}
 }

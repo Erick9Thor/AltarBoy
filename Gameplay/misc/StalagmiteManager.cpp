@@ -208,7 +208,7 @@ bool Hachiko::Scripting::StalagmiteManager::CheckPreviousStalagmite(int idx)
 void Hachiko::Scripting::StalagmiteManager::DestroyAllStalagmites()
 {
 	_should_fall_stalagmites = false;
-	for (unsigned i = 0; i < _stalagmites.size(); i++)
+	for (unsigned i = 0; i < _stalagmites.size(); ++i)
 	{
 		if (_stalagmites[i]->GetState() != StalagmiteState::COLLAPSED)
 		{
@@ -261,3 +261,15 @@ void Hachiko::Scripting::StalagmiteManager::KnockbackOnEnemies(float3 position)
 	}
 };
 
+bool Hachiko::Scripting::StalagmiteManager::AllStalactitesCollapsed()
+{
+	int collapsed = 0;
+	for (unsigned i = 0; i < _stalagmites.size(); ++i)
+	{
+		if (_stalagmites[i]->GetState() == StalagmiteState::COLLAPSED)
+		{
+			++collapsed;
+		}
+	}
+	return (collapsed == _stalagmites.size());
+}

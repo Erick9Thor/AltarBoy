@@ -149,6 +149,7 @@ void Hachiko::Scripting::LaserController::ChangeState(State new_state)
 		_laser->SetActive(false);
 		_laser->ChangeDissolveProgress(1.0, true);
 		break;
+
 	case State::DISSOLVING:
 		_audio_source->PostEvent(Hachiko::Sounds::STOP_LASER);
 		_elapsed_time = 0.0f;
