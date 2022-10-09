@@ -160,7 +160,6 @@ namespace Hachiko
         void ManageResolution(const ComponentCamera* camera);
         void Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* culling);
         void DrawDeferred(Scene* scene, ComponentCamera* camera, BatchManager* batch_manager);
-        void DrawForward(Scene* scene, BatchManager* batch_manager);
         void DrawParticles(Scene* scene, ComponentCamera* camera) const;
         bool DrawToShadowMap(Scene* scene, BatchManager* batch_manager, DrawConfig draw_config);
 

@@ -25,7 +25,6 @@ namespace Hachiko
             TRANSPARENT_DEPTH,
             FOG_PROGRAM,
             TEXTURE_COPY,
-            PARTICLE_DEPTH,
             COUNT,
         };
 

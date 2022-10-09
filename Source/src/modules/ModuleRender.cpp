@@ -383,8 +383,6 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
         scene->GetSkybox()->Draw(camera);
     }
     
-    DrawParticles(scene, camera);
-
     // ----------------------------- FORWARD PASS -----------------------------
 
     // Clear Transparent Batches:
@@ -430,6 +428,7 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
     const Scene::FogConfig& fog = scene->GetFogConfig();
     if (fog.enabled)
     {
+        glDepthMask(GL_FALSE);
         // Bind all g-buffer textures:
         g_buffer.BindForReading();
         g_buffer.BindFogTextures();
@@ -449,7 +448,10 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
         g_buffer.UnbindFogTextures();
         DisableBlending();
         Program::Deactivate();
+        glDepthMask(GL_TRUE);
     }
+
+    DrawParticles(scene, camera);
 
     // ----------------------------- POST PROCCESS -----------------------------
     
@@ -474,6 +476,8 @@ void Hachiko::ModuleRender::DrawParticles(Scene* scene, ComponentCamera* camera)
 
         Program::Deactivate();
 
+        /*
+        g_buffer.BlitDepth(frame_buffer, fb_width, fb_height);
         g_buffer.BindForDrawing();
 
         // Forward depth (Used for fog)
@@ -487,6 +491,7 @@ void Hachiko::ModuleRender::DrawParticles(Scene* scene, ComponentCamera* camera)
         
         Program::Deactivate();
         glBindFramebuffer(GL_DRAW_FRAMEBUFFER, frame_buffer);
+        */
     }
     
 
