@@ -470,7 +470,7 @@ void Hachiko::ComponentParticleSystem::Load(const YAML::Node& node)
     shape_section = node[PARTICLE_SECTIONS][SHAPE_SECTION].as<bool>();
     lights_section = node[PARTICLE_SECTIONS][LIGHTS_SECTION].as<bool>();
     renderer_section = node[PARTICLE_SECTIONS][RENDERER_SECTION].as<bool>();
-    //texture_section = node[PARTICLE_SECTIONS][TEXTURE_SECTION].as<bool>();
+    texture_section = node[PARTICLE_SECTIONS][TEXTURE_SECTION].IsDefined() ? node[PARTICLE_SECTIONS][TEXTURE_SECTION].as<bool>() : texture_section;
 
     // particle config
     duration = node[PARTICLE_PARAMETERS][PARTICLES_DURATION].as<float>();
