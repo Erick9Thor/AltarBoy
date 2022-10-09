@@ -144,12 +144,12 @@ namespace Hachiko
 
 			void ActivateTooltip()
 			{
-				_tooltip_display->SetActive(true);
+				_tooltip_display->GetComponent(Component::Type::IMAGE)->Enable();
 			}
 
 			void DeactivateTooltip()
 			{
-				_tooltip_display->SetActive(false);
+				_tooltip_display->GetComponent(Component::Type::IMAGE)->Disable();
 			}
 
 		private:
@@ -208,7 +208,8 @@ namespace Hachiko
 			void WalkingOrientationController();
 			void AttackController();
 
-			void PickupParasite(const math::float3& current_position);
+			void CheckNearbyParasytes(const math::float3& current_position);
+			void PickupParasite(EnemyController* enemy_contr);
 			void RecieveKnockback(const math::float3 direction);
 
 			void CheckState();

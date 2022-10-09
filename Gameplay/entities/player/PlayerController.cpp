@@ -243,6 +243,8 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		// Rotate player to the necessary direction:
 		WalkingOrientationController();
 
+		CheckNearbyParasytes(_player_position);
+
 		// Apply the position after everything is simulated
 		_player_transform->SetGlobalPosition(_player_position);
 	}
@@ -410,11 +412,6 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 		else if (!IsActionOnProgress())
 		{
 			_state = PlayerState::IDLE;
-		}
-
-		if (Input::IsKeyDown(Input::KeyCode::KEY_F) || Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_B))
-		{
-			PickupParasite(_player_position);
 		}
 	}	
 	else
@@ -1178,15 +1175,15 @@ void Hachiko::Scripting::PlayerController::AttackController()
 	}
 }
 
-void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_position)
+void Hachiko::Scripting::PlayerController::CheckNearbyParasytes(const float3& current_position)
 {
-	if (_enemies == nullptr) 
+	if (_enemies == nullptr)
 	{
 		return;
 	}
 
 	std::vector<GameObject*>& enemy_packs = _enemies->children;
-	
+
 	for (int i = 0; i < enemy_packs.size(); ++i)
 	{
 		GameObject* pack = enemy_packs[i];
@@ -1194,7 +1191,6 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 		{
 			continue;
 		}
-
 		std::vector<GameObject*>& enemies = pack->children;
 
 		for (int i = 0; i < enemies.size(); ++i)
@@ -1205,38 +1201,52 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 
 				if (enemy_controller->IsAlive() == false && enemy_controller->ParasiteDropped())
 				{
-
-					_state = PlayerState::PICK_UP;
-
-					DeactivateTooltip();
-					enemy_controller->GetParasite();
-
-					// Make player invulnerable for a period of time:
-					_invulnerability_time_remaining = _invulnerability_time;
-					if (_player_geometry != nullptr)
+					ActivateTooltip();
+					if (Input::IsKeyDown(Input::KeyCode::KEY_F) || Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_B))
 					{
-						_player_geometry->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, 0.5f), true);
+						PickupParasite(enemy_controller);
+						DeactivateTooltip();
 					}
-
-					_combat_stats->Heal(1);
-
-					_heal_effect_particles_1->Restart();
-					_heal_effect_particles_2->Restart();
-
-					UpdateHealthBar();
-
-					if (_player_geometry != nullptr)
-					{
-						_player_geometry->ChangeEmissiveColor(float4(0.0f, 255.0f, 0.0f, 255.0f), 0.3f, true);
-					}
-
-					// Select a random weapon:
-					ChangeWeapon(RandomUtil::RandomIntBetween(1, weapons.size() - 1));
-					break;
+					return;
 				}
+			}
+			else
+			{
+				continue;
 			}
 		}
 	}
+
+	DeactivateTooltip();
+}
+
+void Hachiko::Scripting::PlayerController::PickupParasite(EnemyController* enemy_controller)
+{
+	_state = PlayerState::PICK_UP;
+
+	enemy_controller->GetParasite();
+
+	// Make player invulnerable for a period of time:
+	_invulnerability_time_remaining = _invulnerability_time;
+	if (_player_geometry != nullptr)
+	{
+		_player_geometry->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, 0.5f), true);
+	}
+
+	_combat_stats->Heal(1);
+
+	_heal_effect_particles_1->Restart();
+	_heal_effect_particles_2->Restart();
+
+	UpdateHealthBar();
+
+	if (_player_geometry != nullptr)
+	{
+		_player_geometry->ChangeEmissiveColor(float4(0.0f, 255.0f, 0.0f, 255.0f), 0.3f, true);
+	}
+
+	// Select a random weapon:
+	ChangeWeapon(RandomUtil::RandomIntBetween(1, weapons.size() - 1));
 }
 
 bool Hachiko::Scripting::PlayerController::RegisterHit(int damage_received, float knockback, float3 direction, bool force_dmg, DamageType dmg_by)
