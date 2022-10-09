@@ -35,6 +35,14 @@ void Hachiko::Scripting::GauntletManager::OnAwake()
 	if (_pack_3) _enemy_packs.push_back(_pack_3);
 	for (GameObject* _pack : _enemy_packs)
 	{
+		for (GameObject* enemy : _pack->children)
+		{
+			ComponentAgent* agc = enemy->GetComponent<ComponentAgent>();
+			if (agc)
+			{
+				agc->RemoveFromCrowd();
+			}
+		}
 		_pack->SetActive(false);
 	}
 

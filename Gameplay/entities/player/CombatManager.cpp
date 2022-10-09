@@ -589,11 +589,27 @@ void Hachiko::Scripting::CombatManager::ResetEnemyPack(GameObject* pack, bool is
 
 void Hachiko::Scripting::CombatManager::ActivateEnemyPack(GameObject* pack)
 {
+	for (GameObject* enemy : pack->children)
+	{
+		ComponentAgent* agc = enemy->GetComponent<ComponentAgent>();
+		if (agc)
+		{
+			agc->RemoveFromCrowd();
+		}
+	}
 	pack->SetActive(true);
 }
 
 void Hachiko::Scripting::CombatManager::DeactivateEnemyPack(GameObject* pack)
 {
+	for (GameObject* enemy : pack->children)
+	{
+		ComponentAgent* agc = enemy->GetComponent<ComponentAgent>();
+		if (agc) 
+		{
+			agc->AddToCrowd();
+		}
+	}
 	pack->SetActive(false);
 }
 

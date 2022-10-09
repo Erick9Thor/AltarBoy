@@ -64,6 +64,48 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 	else
 	{
 		_enemy_type = EnemyType::BEETLE;
+
+		states_behaviour[static_cast<int>(EnemyState::DEAD)] = StateBehaviour(
+			std::bind(&EnemyController::StartDeadState, this),
+			std::bind(&EnemyController::UpdateDeadState, this),
+			std::bind(&EnemyController::EndDeadState, this),
+			std::bind(&EnemyController::TransitionsDeadState, this));
+		states_behaviour[static_cast<int>(EnemyState::IDLE)] = StateBehaviour(
+			std::bind(&EnemyController::StartIdleState, this),
+			std::bind(&EnemyController::UpdateIdleState, this),
+			std::bind(&EnemyController::EndIdleState, this),
+			std::bind(&EnemyController::TransitionsIdleState, this));
+		states_behaviour[static_cast<int>(EnemyState::ATTACKING)] = StateBehaviour(
+			std::bind(&EnemyController::StartAttackingState, this),
+			std::bind(&EnemyController::UpdateAttackingState, this),
+			std::bind(&EnemyController::EndAttackingState, this),
+			std::bind(&EnemyController::TransitionsAttackingState, this));
+		states_behaviour[static_cast<int>(EnemyState::PARASITE)] = StateBehaviour(
+			std::bind(&EnemyController::StartParasiteState, this),
+			std::bind(&EnemyController::UpdateParasiteState, this),
+			std::bind(&EnemyController::EndParasiteState, this),
+			std::bind(&EnemyController::TransitionsParasiteState, this));
+		states_behaviour[static_cast<int>(EnemyState::SPAWNING)] = StateBehaviour(
+			std::bind(&EnemyController::StartSpawningState, this),
+			std::bind(&EnemyController::UpdateSpawningState, this),
+			std::bind(&EnemyController::EndSpawningState, this),
+			std::bind(&EnemyController::TransitionsSpawningState, this));
+		states_behaviour[static_cast<int>(EnemyState::MOVING)] = StateBehaviour(
+			std::bind(&EnemyController::StartMovingState, this),
+			std::bind(&EnemyController::UpdateMovingState, this),
+			std::bind(&EnemyController::EndMovingState, this),
+			std::bind(&EnemyController::TransitionsMovingState, this));
+		states_behaviour[static_cast<int>(EnemyState::MOVING_BACK)] = StateBehaviour(
+			std::bind(&EnemyController::StartMovingBackState, this),
+			std::bind(&EnemyController::UpdateMovingBackState, this),
+			std::bind(&EnemyController::EndMovingBackState, this),
+			std::bind(&EnemyController::TransitionsMovingBackState, this));
+		states_behaviour[static_cast<int>(EnemyState::PATROL)] = StateBehaviour(
+			std::bind(&EnemyController::StartPatrolState, this),
+			std::bind(&EnemyController::UpdatePatrolState, this),
+			std::bind(&EnemyController::EndPatrolState, this),
+			std::bind(&EnemyController::TransitionsPatrolState, this));
+
 	}
 
 	// Mark enemies as using scaled delta time for its components such as agent,
@@ -103,50 +145,101 @@ void Hachiko::Scripting::EnemyController::OnStart()
 
 	ResetEnemy();
 
-	if (!_has_spawned)
+	if (_enemy_type == EnemyType::BEETLE)
 	{
-		Spawn();
+		if (!_has_spawned)
+		{
+			_state = EnemyState::SPAWNING;
+			states_behaviour[static_cast<int>(_state)].Start();
+		}
+	}
+	else
+	{
+		if (!_has_spawned)
+		{
+			Spawn();
+		}
 	}
 }
 
 void Hachiko::Scripting::EnemyController::OnUpdate()
 {
-	CheckState();
-
-	if (_state == EnemyState::INVALID && !_has_spawned)
+	if (_enemy_type == EnemyType::BEETLE)
 	{
-		Spawn();
-		return;
-	}
+		if (_state == EnemyState::SUPER_DEAD)
+		{
+			return;
+		}
 
-	if (_current_spawning_time > 0.0f || _state == EnemyState::SPAWNING)
+		// GENERIC STUFF
+		if (_is_stunned)
+		{
+			BeetleStunController();
+			return;
+		}
+
+		_attack_cooldown -= Time::DeltaTimeScaled();
+		_attack_cooldown = _attack_cooldown < 0.0f ? 0.0f : _attack_cooldown;
+
+		_enraged -= Time::DeltaTimeScaled();
+		_enraged = _enraged < 0.0f ? 0.0f : _enraged;
+
+		_player_pos = _player_controller->GetGameObject()->GetTransform()->GetGlobalPosition();
+		_current_pos = transform->GetGlobalPosition();
+		// GENERIC STUFF
+
+		StateBehaviour current_state = states_behaviour[static_cast<int>(_state)];
+		current_state.Update();
+
+		EnemyState next_state = current_state.Transitions();
+		if (next_state != EnemyState::INVALID)
+		{
+			current_state.End();
+
+			_state = next_state;
+			if (_state != EnemyState::SUPER_DEAD)
+				states_behaviour[static_cast<int>(_state)].Start();
+		}
+	}
+	else
 	{
-		spawn_progress += spawn_rate * Time::DeltaTimeScaled();
-		
-		_enemy_body->ChangeDissolveProgress(spawn_progress, true);
+		CheckState();
 
-		SpawnController();
-		return;
+		if (_state == EnemyState::INVALID && !_has_spawned)
+		{
+			Spawn();
+			return;
+		}
+
+		if (_current_spawning_time > 0.0f || _state == EnemyState::SPAWNING)
+		{
+			spawn_progress += spawn_rate * Time::DeltaTimeScaled();
+
+			_enemy_body->ChangeDissolveProgress(spawn_progress, true);
+
+			SpawnController();
+			return;
+		}
+
+		if (!_combat_stats->IsAlive())
+		{
+			DeathController();
+			return;
+		}
+
+		StunController();
+
+		if (_is_stunned)
+		{
+			return;
+		}
+
+		_player_pos = _player_controller->GetGameObject()->GetTransform()->GetGlobalPosition();
+		_current_pos = transform->GetGlobalPosition();
+
+		MovementController();
+		AttackController();
 	}
-
-	if (!_combat_stats->IsAlive())
-	{
-		DeathController();
-		return;
-	}
-
-	StunController();
-
-	if (_is_stunned)
-	{
-		return;
-	}
-
-	_player_pos = _player_controller->GetGameObject()->GetTransform()->GetGlobalPosition();
-	_current_pos = transform->GetGlobalPosition();
-
-	MovementController();
-	AttackController();
 }
 
 void Hachiko::Scripting::EnemyController::SpawnController()
@@ -276,6 +369,8 @@ void Hachiko::Scripting::EnemyController::GetComponents()
 
 	_audio_source = game_object->GetComponent<ComponentAudioSource>();
 	_audio_manager = _audio_manager_game_object->GetComponent<AudioManager>();
+
+	_component_agent = game_object->GetComponent<ComponentAgent>();
 }
 
 void Hachiko::Scripting::EnemyController::SetStats()
@@ -433,7 +528,7 @@ void Hachiko::Scripting::EnemyController::MovementController()
 		WormMovementController();
 		break;
 	case EnemyType::BEETLE:
-		BeetleMovementController();
+		//BeetleMovementController();
 		break;
 	}
 }
@@ -443,13 +538,13 @@ void Hachiko::Scripting::EnemyController::WormMovementController()
 	_enemy_body->GetTransform()->LookAtTarget(_player_pos);
 }
 
-void Hachiko::Scripting::EnemyController::BeetleMovementController()
+/*void Hachiko::Scripting::EnemyController::BeetleMovementController()
 {
 	if (_chase_remaining_cooldown > 0)
 	{
 		_chase_remaining_cooldown -= Time::DeltaTime();
 	}
-	
+
 	if (_state == EnemyState::ATTACKING && animation->IsAnimationStopped())
 	{
 		_state = EnemyState::IDLE;
@@ -472,7 +567,7 @@ void Hachiko::Scripting::EnemyController::BeetleMovementController()
 			_current_idle_cooldown = _idle_cooldown;
 		}
 	}
-}
+}*/
 
 void Hachiko::Scripting::EnemyController::AttackController()
 {
@@ -482,7 +577,7 @@ void Hachiko::Scripting::EnemyController::AttackController()
 	switch (_enemy_type)
 	{
 	case EnemyType::BEETLE:
-		BeetleAttackController();
+		//BeetleAttackController();
 		break;
 	case EnemyType::WORM:
 		WormAttackController();
@@ -490,7 +585,7 @@ void Hachiko::Scripting::EnemyController::AttackController()
 	}
 }
 
-void Hachiko::Scripting::EnemyController::BeetleAttackController()
+/*void Hachiko::Scripting::EnemyController::BeetleAttackController()
 {
 	_enraged -= Time::DeltaTimeScaled();
 	_enraged = _enraged < 0.0f ? 0.0f : _enraged;
@@ -506,7 +601,7 @@ void Hachiko::Scripting::EnemyController::BeetleAttackController()
 			_current_idle_cooldown = _idle_cooldown;
 		}
 	}
-	else 
+	else
 	{
 		_state = EnemyState::IDLE;
 	}
@@ -580,7 +675,7 @@ void Hachiko::Scripting::EnemyController::BeetleAttack()
 
 	transform->LookAtTarget(_player_pos);
 	StopMoving();
-}
+}*/
 
 float4x4 Hachiko::Scripting::EnemyController::GetMeleeAttackOrigin(float attack_range) const
 {
@@ -591,7 +686,7 @@ float4x4 Hachiko::Scripting::EnemyController::GetMeleeAttackOrigin(float attack_
 	return emitter;
 }
 
-void Hachiko::Scripting::EnemyController::ChasePlayer()
+/*void Hachiko::Scripting::EnemyController::ChasePlayer()
 {
 	if (_state == EnemyState::DEAD)
 	{
@@ -609,9 +704,9 @@ void Hachiko::Scripting::EnemyController::ChasePlayer()
 	{
 		MoveInNavmesh(corrected_pos);
 	}
-}
+}*/
 
-void Hachiko::Scripting::EnemyController::PatrolMovement()
+/*void Hachiko::Scripting::EnemyController::PatrolMovement()
 {
 	_state = EnemyState::PATROL;
 
@@ -627,7 +722,7 @@ void Hachiko::Scripting::EnemyController::PatrolMovement()
 		agc->SetMaxSpeed(_speed);
 		MoveInNavmesh(corrected_pos);
 	}
-}
+}*/
 
 void Hachiko::Scripting::EnemyController::StopMoving()
 {
@@ -643,7 +738,7 @@ void Hachiko::Scripting::EnemyController::MoveInNavmesh(const float3& target_pos
 
 	_target_pos = target_pos;
 	ComponentAgent* agc = game_object->GetComponent<ComponentAgent>();
-	
+
 	agc->SetTargetPosition(_target_pos);
 	if (!agc->CanReachTarget())
 	{
@@ -758,7 +853,7 @@ void Hachiko::Scripting::EnemyController::DropParasite()
 	StopMoving();
 	_state = EnemyState::PARASITE;
 	//TODO: Check if in scene there's already a parasite? Maybe?
-	if (_parasite) 
+	if (_parasite)
 	{
 		_parasite->SetActive(true);
 	}
@@ -995,4 +1090,468 @@ void Hachiko::Scripting::EnemyController::ResetEnemyPosition()
 {
 	transform->SetGlobalPosition(_spawn_pos);
 	transform->SetGlobalRotation(_spawn_rot);
+}
+
+/*
+	THE BUG IS USING THIS STAE MACHINE SYSTEM WHERE EACH STATE HAS 4 METHODS:
+	- START: EXECUTED WHEN THE STATE IS CHANGED
+	- UPDATE: EXECUTED EACH FRAME WHILE IN THAT STATE
+	- END: EXECUTED WHEN A TRANSITION IS FULLFILLED
+	- TRANSITIONS: THAT CHECKS ALL POSIBLE TRANSITIONS AND RETURNS THE NEW STATE, IF NOT INVALID
+*/
+
+// SPAWNING
+
+void Hachiko::Scripting::EnemyController::StartSpawningState()
+{
+	if (_enemy_body)
+	{
+		_enemy_body->SetActive(true);
+	}
+	if (_parasite)
+	{
+		_parasite->SetActive(false);
+	}
+
+	_current_spawning_time = _spawning_time;
+	_has_spawned = true;
+
+	animation->SendTrigger("isAppear");
+}
+
+void Hachiko::Scripting::EnemyController::UpdateSpawningState()
+{
+	if (_current_spawning_time > 0.0f)
+	{
+		spawn_progress += spawn_rate * Time::DeltaTimeScaled();
+
+		_enemy_body->ChangeDissolveProgress(spawn_progress, true);
+
+		_current_spawning_time -= Time::DeltaTimeScaled();
+	}
+}
+
+void Hachiko::Scripting::EnemyController::EndSpawningState()
+{
+	_enemy_body->ChangeDissolveProgress(1, true);
+}
+
+Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::TransitionsSpawningState()
+{
+	if (_current_spawning_time <= 0)
+	{
+		return EnemyState::IDLE;
+	}
+
+	return EnemyState::INVALID;
+}
+
+// IDLE
+
+void Hachiko::Scripting::EnemyController::StartIdleState()
+{
+	if (_already_in_combat)
+	{
+		_audio_manager->UnregisterCombat();
+		_already_in_combat = false;
+	}
+
+	_current_idle_cooldown = _idle_cooldown;
+
+	animation->SendTrigger("idle");
+}
+
+void Hachiko::Scripting::EnemyController::UpdateIdleState()
+{
+	_current_idle_cooldown -= Time::DeltaTimeScaled();
+}
+
+void Hachiko::Scripting::EnemyController::EndIdleState()
+{
+}
+
+Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::TransitionsIdleState()
+{
+	if (!_combat_stats->IsAlive())
+	{
+		return EnemyState::DEAD;
+	}
+
+	// If an enemy is from a gautlet, has the player on agro distance or is enrage, it will always follow the player if its reachable
+	float dist_to_player = _current_pos.Distance(_player_pos);
+	bool can_reach_player = true; //TODO
+	if ((_is_from_gautlet || dist_to_player < _aggro_range || _enraged > 0.0f) && can_reach_player && _player_controller->IsAlive())
+	{
+		if (dist_to_player <= _attack_range && _attack_cooldown <= 0.0f)
+		{
+			return EnemyState::ATTACKING;
+		}
+		else
+		{
+			return EnemyState::MOVING;
+		}
+	}
+
+	if (_current_idle_cooldown <= 0.0f)
+	{
+		return EnemyState::PATROL;
+	}
+
+	return EnemyState::INVALID;
+}
+
+// ATTACKING
+
+void Hachiko::Scripting::EnemyController::StartAttackingState()
+{
+	if (!_already_in_combat)
+	{
+		_audio_manager->RegisterCombat();
+		_already_in_combat = true;
+	}
+
+	_attack_animation_timer = 0.0f;
+	_attack_current_delay = _attack_delay;
+	StopMoving();
+
+	_audio_source->PostEvent(Sounds::ENEMY_ATTACK);
+	if (!_attack_alt)
+	{
+		animation->SendTrigger("isAttacking");
+	}
+	else
+	{
+		animation->SendTrigger("isAttackingAlt");
+	}
+}
+
+void Hachiko::Scripting::EnemyController::UpdateAttackingState()
+{
+	_attack_animation_timer += Time::DeltaTimeScaled();
+
+	// If attacking lower attack delay
+	_attack_current_delay -= Time::DeltaTimeScaled();
+
+	if (_attack_current_delay > 0.0f)
+	{
+		transform->LookAtTarget(_player_pos);
+		return;
+	}
+
+	if (_attack_cooldown > 0.0f)
+	{
+		return;
+	}
+
+	// Execute attack
+	transform->LookAtTarget(_player_pos);
+
+	// Reset cooldown and process attack
+	_attack_cooldown = _combat_stats->_attack_cd;
+
+	CombatManager::AttackStats attack_stats;
+	attack_stats.damage = _combat_stats->_attack_power;
+	attack_stats.knockback_distance = 0.0f;
+	attack_stats.width = 4.f;
+	attack_stats.range = _attack_range * 1.1f; // a bit bigger than its attack activation range
+	attack_stats.type = CombatManager::AttackType::RECTANGLE;
+
+	// comment next line for release
+	Debug::DebugDraw(_combat_manager->CreateAttackHitbox(GetMeleeAttackOrigin(attack_stats.range), attack_stats), float3(1.0f, 1.0f, 0.0f));
+
+	int hit = _combat_manager->EnemyMeleeAttack(GetMeleeAttackOrigin(attack_stats.range), attack_stats);
+
+	if (hit > 0)
+	{
+		_combat_visual_effects_pool->PlayEnemyAttackEffect(_enemy_type, _player_pos);
+	}
+
+	_attack_alt = !_attack_alt;
+}
+
+void Hachiko::Scripting::EnemyController::EndAttackingState()
+{
+}
+
+Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::TransitionsAttackingState()
+{
+	if (!_combat_stats->IsAlive())
+	{
+		return EnemyState::DEAD;
+	}
+
+	// If in attack dont move from this state
+	if (_attack_animation_timer < _attack_animation_duration)
+	{
+		return EnemyState::INVALID;
+	}
+
+	float dist_to_player = _current_pos.Distance(_player_pos);
+	bool can_reach_player = true; //TODO
+	if ((_is_from_gautlet || dist_to_player < _aggro_range || _enraged > 0.0f) && _player_controller->IsAlive())
+	{
+		if (dist_to_player <= _attack_range && _attack_cooldown <= 0.0f)
+		{
+			return EnemyState::ATTACKING;
+		}
+		else
+		{
+			return EnemyState::MOVING;
+		}
+	}
+	else
+	{
+		return EnemyState::MOVING_BACK;
+	}
+
+
+	return EnemyState::INVALID;
+}
+
+// MOVING
+
+void Hachiko::Scripting::EnemyController::StartMovingState()
+{
+	if (!_already_in_combat)
+	{
+		_audio_manager->RegisterCombat();
+		_already_in_combat = true;
+	}
+
+	_speed = _combat_stats->_move_speed;
+	_component_agent->SetMaxSpeed(_speed);
+
+	animation->SendTrigger("isMoving");
+}
+
+void Hachiko::Scripting::EnemyController::UpdateMovingState()
+{
+	float3 corrected_pos = Navigation::GetCorrectedPosition(_player_pos, math::float3(10.0f, 10.0f, 10.0f));
+	if (corrected_pos.x < FLT_MAX)
+	{
+		MoveInNavmesh(corrected_pos);
+	}
+}
+
+void Hachiko::Scripting::EnemyController::EndMovingState()
+{
+}
+
+Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::TransitionsMovingState()
+{
+	if (!_combat_stats->IsAlive())
+	{
+		return EnemyState::DEAD;
+	}
+
+	// If an enemy is from a gautlet, has the player on agro distance or is enrage, it will always follow the player if its reachable
+	float dist_to_player = _current_pos.Distance(_player_pos);
+	bool can_reach_player = true; //TODO
+	if ((_is_from_gautlet || dist_to_player < _aggro_range || _enraged > 0.0f) && can_reach_player && _player_controller->IsAlive())
+	{
+		if (dist_to_player <= _attack_range && _attack_cooldown <= 0.0f)
+		{
+			return EnemyState::ATTACKING;
+		}
+	}
+	else
+	{
+		return EnemyState::MOVING_BACK;
+	}
+
+	return EnemyState::INVALID;
+}
+
+// MOVING_BACK
+
+void Hachiko::Scripting::EnemyController::StartMovingBackState()
+{
+	if (_already_in_combat)
+	{
+		_audio_manager->UnregisterCombat();
+		_already_in_combat = false;
+	}
+
+	_speed = 3.0f;
+	_component_agent->SetMaxSpeed(_speed);
+
+	_spawn_pos.y = _current_pos.y;
+	MoveInNavmesh(_spawn_pos);
+
+	animation->SendTrigger("idle");
+}
+
+void Hachiko::Scripting::EnemyController::UpdateMovingBackState()
+{
+}
+
+void Hachiko::Scripting::EnemyController::EndMovingBackState()
+{
+}
+
+Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::TransitionsMovingBackState()
+{
+	if (!_combat_stats->IsAlive())
+	{
+		return EnemyState::DEAD;
+	}
+
+	// If an enemy is from a gautlet, has the player on agro distance or is enrage, it will always follow the player if its reachable
+	float dist_to_player = _current_pos.Distance(_player_pos);
+	bool can_reach_player = true; //TODO
+	if ((_is_from_gautlet || dist_to_player < _aggro_range || _enraged > 0.0f) && can_reach_player && _player_controller->IsAlive())
+	{
+		if (dist_to_player <= _attack_range && _attack_cooldown <= 0.0f)
+		{
+			return EnemyState::ATTACKING;
+		}
+		else
+		{
+			return EnemyState::MOVING;
+		}
+	}
+
+	if (_current_pos.Distance(_target_pos) <= 0.3f)
+	{
+		return EnemyState::IDLE;
+	}
+
+	return EnemyState::INVALID;
+}
+
+// PATROL
+
+void Hachiko::Scripting::EnemyController::StartPatrolState()
+{
+	if (_already_in_combat)
+	{
+		_audio_manager->UnregisterCombat();
+		_already_in_combat = false;
+	}
+
+	float random = ((float(rand()) / float(RAND_MAX)) * (5.0f - -5.0f)) + -5.0f;
+
+	float3 _new_pos = float3(_spawn_pos.x + random, _spawn_pos.y, _spawn_pos.z + random);
+
+	float3 corrected_pos = Navigation::GetCorrectedPosition(_new_pos, math::float3(10.0f, 10.0f, 10.0f));
+	if (corrected_pos.x < FLT_MAX)
+	{
+		_speed = 3.0f;
+		_component_agent->SetMaxSpeed(_speed);
+		MoveInNavmesh(corrected_pos);
+	}
+
+	animation->SendTrigger("idle");
+}
+
+void Hachiko::Scripting::EnemyController::UpdatePatrolState()
+{
+}
+
+void Hachiko::Scripting::EnemyController::EndPatrolState()
+{
+}
+
+Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::TransitionsPatrolState()
+{
+	if (!_combat_stats->IsAlive())
+	{
+		return EnemyState::DEAD;
+	}
+
+	// If an enemy is from a gautlet, has the player on agro distance or is enrage, it will always follow the player if its reachable
+	float dist_to_player = _current_pos.Distance(_player_pos);
+	bool can_reach_player = true; //TODO
+	if ((_is_from_gautlet || dist_to_player < _aggro_range || _enraged > 0.0f) && can_reach_player && _player_controller->IsAlive())
+	{
+		if (dist_to_player <= _attack_range && _attack_cooldown <= 0.0f)
+		{
+			return EnemyState::ATTACKING;
+		}
+		else
+		{
+			return EnemyState::MOVING;
+		}
+	}
+
+	if (_current_pos.Distance(_target_pos) <= 0.3f)
+	{
+		return EnemyState::IDLE;
+	}
+
+	return EnemyState::INVALID;
+}
+
+// DEAD
+
+void Hachiko::Scripting::EnemyController::StartDeadState()
+{
+	if (_already_in_combat)
+	{
+		_audio_manager->UnregisterCombat();
+		_already_in_combat = false;
+	}
+
+	_component_agent->RemoveFromCrowd();
+	_enemy_dissolving_time_progress = 0;
+
+	_audio_source->PostEvent(Sounds::ENEMY_DIE);
+	animation->SendTrigger("isDead");
+}
+
+void Hachiko::Scripting::EnemyController::UpdateDeadState()
+{
+	if (animation->IsAnimationStopped())
+	{
+		float transition = math::Sqrt(_enemy_dissolve_time - _enemy_dissolving_time_progress) * _enemy_dissolving;
+		_enemy_body->ChangeDissolveProgress(transition, true);
+		_enemy_dissolving_time_progress += Time::DeltaTimeScaled();
+	}
+}
+
+void Hachiko::Scripting::EnemyController::EndDeadState()
+{
+	_enemy_body->ChangeDissolveProgress(0, true);
+	_enemy_body->SetActive(false);
+}
+
+Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::TransitionsParasiteState()
+{
+	if (_enemy_dissolve_time < _enemy_dissolving_time_progress)
+	{
+		return EnemyState::PARASITE;
+	}
+
+	return EnemyState::INVALID;
+}
+
+// PARASITE
+
+void Hachiko::Scripting::EnemyController::StartParasiteState()
+{
+	_parasite->SetActive(true);
+
+	_parasite_dissolving_time_progress = 0;
+}
+
+void Hachiko::Scripting::EnemyController::UpdateParasiteState()
+{
+	float transition = math::Sqrt(_parasite_dissolve_time - _parasite_dissolving_time_progress) * _parasite_dissolving;
+	_parasite->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, transition), true);
+	_parasite_dissolving_time_progress += Time::DeltaTimeScaled();
+}
+
+void Hachiko::Scripting::EnemyController::EndParasiteState()
+{
+	DestroyEntity();
+}
+
+Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::TransitionsDeadState()
+{
+	if (_parasite_dissolving_time_progress >= _parasite_dissolve_time)
+	{
+		return EnemyState::SUPER_DEAD;
+	}
+
+	return EnemyState::INVALID;
 }

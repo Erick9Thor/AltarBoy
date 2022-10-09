@@ -3,6 +3,7 @@
 #include <scripting/Script.h>
 #include "entities/Stats.h"
 #include "entities/player/CombatManager.h"
+#include <functional>
 
 namespace Hachiko
 {
@@ -33,13 +34,15 @@ namespace Hachiko
             ATTACKING,
             PARASITE,
             SPAWNING,
+            SUPER_DEAD,
             // Beetle unique states
             MOVING,
             MOVING_BACK,
             PATROL,
             // Worm unique states
             HIDEN,
-            HIT
+            HIT,
+            COUNT
         };
 
         class EnemyController : public Script
@@ -86,14 +89,14 @@ namespace Hachiko
 
             void MovementController();
             void WormMovementController();
-            void BeetleMovementController();
+            //void BeetleMovementController();
 
             void AttackController();
-            void BeetleAttackController();
-            void BeetleAttack();
+            //void BeetleAttackController();
+            //void BeetleAttack();
             float4x4 GetMeleeAttackOrigin(float attack_range) const;
-            void ChasePlayer();
-            void PatrolMovement();
+            //void ChasePlayer();
+            //void PatrolMovement();
             void StopMoving();
             void MoveInNavmesh(const float3& target_pos);
             void WormAttackController();
@@ -104,6 +107,66 @@ namespace Hachiko
             bool IsAttacking() const { return _state == EnemyState::ATTACKING; }
 
         private:
+            struct StateBehaviour {
+                std::function<void()> Start = nullptr;
+                std::function<void()> Update = nullptr;
+                std::function<void()> End = nullptr;
+                std::function<EnemyState()> Transitions = nullptr;
+
+                StateBehaviour() {};
+
+                StateBehaviour(std::function<void()> start, std::function<void()> update, std::function<void()> end, std::function<EnemyState()> transitions)
+                {
+                    Start = start;
+                    Update = update;
+                    End = end;
+                    Transitions = transitions;
+                }
+            };
+            StateBehaviour states_behaviour[static_cast<int>(EnemyState::COUNT)];
+            //std::function<void()> start_behaviours[static_cast<int>(EnemyState::COUNT)];
+
+            // SPAWNING
+            void StartSpawningState();
+            void UpdateSpawningState();
+            void EndSpawningState();
+            EnemyState TransitionsSpawningState();
+            // IDLE
+            void StartIdleState();
+            void UpdateIdleState();
+            void EndIdleState();
+            EnemyState TransitionsIdleState();
+            // ATTACKING
+            void StartAttackingState();
+            void UpdateAttackingState();
+            void EndAttackingState();
+            EnemyState TransitionsAttackingState();
+            // MOVING
+            void StartMovingState();
+            void UpdateMovingState();
+            void EndMovingState();
+            EnemyState TransitionsMovingState();
+            // MOVING_BACK
+            void StartMovingBackState();
+            void UpdateMovingBackState();
+            void EndMovingBackState();
+            EnemyState TransitionsMovingBackState();
+            // PATROL
+            void StartPatrolState();
+            void UpdatePatrolState();
+            void EndPatrolState();
+            EnemyState TransitionsPatrolState();
+            // PARASITE
+            void StartParasiteState();
+            void UpdateParasiteState();
+            void EndParasiteState();
+            EnemyState TransitionsParasiteState();
+            // DEAD
+            void StartDeadState();
+            void UpdateDeadState();
+            void EndDeadState();
+            EnemyState TransitionsDeadState();
+
             Stats* _combat_stats;
             SERIALIZE_FIELD(bool, _worm);
             SERIALIZE_FIELD(int, _aggro_range);
@@ -150,6 +213,7 @@ namespace Hachiko
             ComponentBillboard* _outer_indicator_billboard = nullptr;
             ComponentParticleSystem* _projectile_particles_comp = nullptr;
             ComponentParticleSystem* _explosion_particles_comp = nullptr;
+            ComponentAgent* _component_agent = nullptr;
 
             Quat _spawn_rot;
 
