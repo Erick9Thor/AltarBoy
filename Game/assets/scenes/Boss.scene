@@ -161,7 +161,6 @@ child:
                 "'_will_die@bool'": true
                 "'_attack_animation_duration@float'": 1
                 "'_attack_animation_timer@float'": 0
-                "'_current_spawning_time@float'": 0
               - !<script>
                 id: 2693614180658787808
                 type: 15
@@ -1448,7 +1447,6 @@ child:
                 "'_will_die@bool'": true
                 "'_attack_animation_duration@float'": 1
                 "'_attack_animation_timer@float'": 0
-                "'_current_spawning_time@float'": 0
               - !<script>
                 id: 9634055109918564094
                 type: 15
@@ -2735,7 +2733,6 @@ child:
                 "'_will_die@bool'": true
                 "'_attack_animation_duration@float'": 1
                 "'_attack_animation_timer@float'": 0
-                "'_current_spawning_time@float'": 0
               - !<script>
                 id: 14059660793992025288
                 type: 15
@@ -4034,7 +4031,6 @@ child:
                 "'_will_die@bool'": true
                 "'_attack_animation_duration@float'": 1
                 "'_attack_animation_timer@float'": 0
-                "'_current_spawning_time@float'": 0
               - !<script>
                 id: 820113154382019159
                 type: 15
@@ -5321,7 +5317,6 @@ child:
                 "'_will_die@bool'": true
                 "'_attack_animation_duration@float'": 1
                 "'_attack_animation_timer@float'": 0
-                "'_current_spawning_time@float'": 0
               - !<script>
                 id: 3791588793205113221
                 type: 15
@@ -6608,7 +6603,6 @@ child:
                 "'_will_die@bool'": true
                 "'_attack_animation_duration@float'": 1
                 "'_attack_animation_timer@float'": 0
-                "'_current_spawning_time@float'": 0
               - !<script>
                 id: 16172110806435481636
                 type: 15
@@ -9510,7 +9504,7 @@ child:
         "'_fog_frequency@float'": 0.1
         "'_fog_max_density@float'": 0.015
         "'_fog_min_density@float'": 0.005
-        "'_audio_manager_go@GameObject*'": 0
+        "'_audio_manager_go@GameObject*'": 3361489421654677551
     child:
       - id: 18237002791232467726
         name: Goal
