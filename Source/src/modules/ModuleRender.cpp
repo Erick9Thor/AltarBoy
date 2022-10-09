@@ -378,7 +378,12 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
 
     // ------------------------------ PRE FORWARD -----------------------------
 
-    DrawPreForwardPass(scene, camera);
+    if (draw_skybox)
+    {
+        scene->GetSkybox()->Draw(camera);
+    }
+    
+    DrawParticles(scene, camera);
 
     // ----------------------------- FORWARD PASS -----------------------------
 
@@ -419,6 +424,7 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
         }
     }
 
+
     // ----------------------------- FOG -----------------------------
 
     const Scene::FogConfig& fog = scene->GetFogConfig();
@@ -442,23 +448,15 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
 
         g_buffer.UnbindFogTextures();
         DisableBlending();
+        Program::Deactivate();
     }
 
     // ----------------------------- POST PROCCESS -----------------------------
-
-    Program::Deactivate();
+    
 }
 
-void Hachiko::ModuleRender::DrawPreForwardPass(Scene* scene, ComponentCamera* camera) const
+void Hachiko::ModuleRender::DrawParticles(Scene* scene, ComponentCamera* camera) const
 {
-    // This method is to draw things that needs to be drawn before forward pass 
-    // of deferred rendering or before forward rendering.
-
-    if (draw_skybox)
-    {
-        scene->GetSkybox()->Draw(camera);
-    }
-
     EnableBlending();
 
     // Draw debug draw stuff:
@@ -475,6 +473,7 @@ void Hachiko::ModuleRender::DrawPreForwardPass(Scene* scene, ComponentCamera* ca
         }
 
         Program::Deactivate();
+
         g_buffer.BindForDrawing();
 
         // Forward depth (Used for fog)
@@ -489,6 +488,7 @@ void Hachiko::ModuleRender::DrawPreForwardPass(Scene* scene, ComponentCamera* ca
         Program::Deactivate();
         glBindFramebuffer(GL_DRAW_FRAMEBUFFER, frame_buffer);
     }
+    
 
     DisableBlending();
 }
