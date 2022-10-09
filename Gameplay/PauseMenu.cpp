@@ -7,6 +7,7 @@ Hachiko::Scripting::PauseMenu::PauseMenu(GameObject* game_object)
 
 void Hachiko::Scripting::PauseMenu::OnAwake()
 {
+	_level_manager = Scenes::GetLevelManager()->GetComponent<LevelManager>();
 }
 
 void Hachiko::Scripting::PauseMenu::OnUpdate()
@@ -19,12 +20,14 @@ void Hachiko::Scripting::PauseMenu::OnUpdate()
 		{
 			_player_hud->SetActive(false);
 			_pause_ui->SetActive(true);
+			_level_manager->BlockInputs(true);
 			Time::SetTimeScale(0.0f);
 		}
 		else
 		{
 			_player_hud->SetActive(true);
 			_pause_ui->SetActive(false);
+			_level_manager->BlockInputs(false);
 			Time::SetTimeScale(1.0f);
 		}
 	}
@@ -42,11 +45,13 @@ void Hachiko::Scripting::PauseMenu::HandleButtonInteractions()
 		_game_paused = false;
 		_player_hud->SetActive(true);
 		_pause_ui->SetActive(false);
+		_level_manager->BlockInputs(false);
 		Time::SetTimeScale(1.0f);
 	}
 
 	if (_quit_button->IsSelected())
 	{
+		_level_manager->BlockInputs(false);
 		SceneManagement::SwitchScene(Scenes::MAIN_MENU);
 	}
 }

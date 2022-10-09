@@ -144,12 +144,20 @@ namespace Hachiko
 
 			void ActivateTooltip()
 			{
-				_tooltip_display->GetComponent(Component::Type::IMAGE)->Enable();
+				if (Input::IsGamepadModeOn())
+				{
+					_controller_tooltip_display->GetComponent(Component::Type::IMAGE)->Enable();
+				}
+				else
+				{
+					_keyboard_tooltip_display->GetComponent(Component::Type::IMAGE)->Enable();
+				}
 			}
 
 			void DeactivateTooltip()
 			{
-				_tooltip_display->GetComponent(Component::Type::IMAGE)->Disable();
+				_controller_tooltip_display->GetComponent(Component::Type::IMAGE)->Disable();
+				_keyboard_tooltip_display->GetComponent(Component::Type::IMAGE)->Disable();
 			}
 
 		private:
@@ -279,7 +287,8 @@ namespace Hachiko
 			SERIALIZE_FIELD(GameObject*, _weapon_charge_bar_go);
 			ComponentProgressBar* _weapon_charge_bar = nullptr;
 
-			SERIALIZE_FIELD(GameObject*, _tooltip_display);
+			SERIALIZE_FIELD(GameObject*, _keyboard_tooltip_display);
+			SERIALIZE_FIELD(GameObject*, _controller_tooltip_display);
 
 			SERIALIZE_FIELD(GameObject*, _camera);
 			SERIALIZE_FIELD(GameObject*, _ui_damage);
