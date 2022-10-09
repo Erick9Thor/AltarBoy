@@ -172,6 +172,8 @@ namespace Hachiko
             void EndParasiteState();
             EnemyState TransitionsParasiteState();
 
+            EnemyState _force_state = EnemyState::INVALID;
+
             Stats* _combat_stats;
             SERIALIZE_FIELD(int, _state_num);
             SERIALIZE_FIELD(bool, _worm);

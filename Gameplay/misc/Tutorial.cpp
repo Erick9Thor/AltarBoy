@@ -53,7 +53,7 @@ void Hachiko::Scripting::Tutorial::OnUpdate()
 
 	if (!_tutorial_showed && _enemy_controller->ParasiteDropped())
 	{
-		//_parasite_tutorial->SetActive(true);
+		_parasite_tutorial->SetActive(true);
 		_level_manager->BlockInputs(true);
 		_tutorial_showed = true;
 	}

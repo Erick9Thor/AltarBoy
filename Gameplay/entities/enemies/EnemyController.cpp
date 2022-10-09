@@ -1,3 +1,4 @@
+//#define VERBOUSE
 #include "scriptingUtil/gameplaypch.h"
 #include "constants/Scenes.h"
 #include "entities/Stats.h"
@@ -178,7 +179,22 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 			return;
 		}
 
+		if (_force_state != EnemyState::INVALID)
+		{
+			states_behaviour[static_cast<int>(_state)].End();
+
+			_state = _force_state;
+			if (_state == EnemyState::SUPER_DEAD)
+			{
+				return;
+			}
+			states_behaviour[static_cast<int>(_state)].Start();
+
+			_force_state = EnemyState::INVALID;
+		}
+
 		// GENERIC STUFF
+
 		if (_is_stunned)
 		{
 			BeetleStunController();
@@ -744,14 +760,13 @@ void Hachiko::Scripting::EnemyController::MoveInNavmesh(const float3& target_pos
 	}
 
 	_target_pos = target_pos;
-	ComponentAgent* agc = game_object->GetComponent<ComponentAgent>();
 
-	agc->SetTargetPosition(_target_pos);
-	if (!agc->CanReachTarget())
+	_component_agent->SetTargetPosition(_target_pos);
+	if (!_component_agent->CanReachTarget())
 	{
 		_target_pos = _spawn_pos;
 		_chase_remaining_cooldown = _chase_cooldown;
-		agc->SetTargetPosition(_target_pos);
+		_component_agent->SetTargetPosition(_target_pos);
 	}
 	transform->LookAtTarget(_target_pos);
 }
@@ -885,7 +900,14 @@ void Hachiko::Scripting::EnemyController::RegisterHit(int damage, float3 directi
 		break;
 	}
 
-	_state = EnemyState::HIT;
+	/*if (_enemy_type == EnemyType::BEETLE)
+	{
+		_force_state = EnemyState::HIT;
+	}
+	else
+	{*/
+		_state = EnemyState::HIT;
+	//}
 
 	if (is_from_player)
 	{
@@ -917,7 +939,14 @@ void Hachiko::Scripting::EnemyController::RegisterHit(int damage, float3 directi
 
 void Hachiko::Scripting::EnemyController::GetParasite()
 {
-	DestroyEntity();
+	if (_enemy_type == EnemyType::BEETLE) 
+	{
+		_force_state = EnemyState::SUPER_DEAD;
+	}
+	else 
+	{
+		DestroyEntity();
+	}
 }
 
 void Hachiko::Scripting::EnemyController::Spawn()
@@ -1111,6 +1140,11 @@ void Hachiko::Scripting::EnemyController::ResetEnemyPosition()
 
 void Hachiko::Scripting::EnemyController::StartSpawningState()
 {
+#ifdef VERBOUSE
+	std::cout << "SPAWNING" << std::endl;
+	HE_LOG("SPAWNING");
+#endif
+
 	if (_enemy_body)
 	{
 		_enemy_body->SetActive(true);
@@ -1157,6 +1191,13 @@ Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::TransitionsS
 
 void Hachiko::Scripting::EnemyController::StartIdleState()
 {
+#ifdef VERBOUSE
+	std::cout << "IDLE" << std::endl;
+	HE_LOG("IDLE");
+
+	_enemy_body->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, 1.0f), true);
+#endif
+
 	if (_already_in_combat)
 	{
 		_audio_manager->UnregisterCombat();
@@ -1211,6 +1252,13 @@ Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::TransitionsI
 
 void Hachiko::Scripting::EnemyController::StartAttackingState()
 {
+#ifdef VERBOUSE
+	std::cout << "ATTACKING" << std::endl;
+	HE_LOG("ATTACKING");
+
+	_enemy_body->ChangeTintColor(float4(1.0f, 0.0f, 0.0f, 1.0f), true);
+#endif
+
 	if (!_already_in_combat)
 	{
 		_audio_manager->RegisterCombat();
@@ -1219,7 +1267,6 @@ void Hachiko::Scripting::EnemyController::StartAttackingState()
 
 	_attack_animation_timer = 0.0f;
 	_attack_current_delay = _attack_delay;
-	StopMoving();
 
 	_audio_source->PostEvent(Sounds::ENEMY_ATTACK);
 	if (!_attack_alt)
@@ -1319,6 +1366,13 @@ Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::TransitionsA
 
 void Hachiko::Scripting::EnemyController::StartMovingState()
 {
+#ifdef VERBOUSE
+	std::cout << "MOVING" << std::endl;
+	HE_LOG("MOVING");
+
+	_enemy_body->ChangeTintColor(float4(0.0f, 1.0f, 0.0f, 1.0f), true);
+#endif
+
 	if (!_already_in_combat)
 	{
 		_audio_manager->RegisterCombat();
@@ -1373,6 +1427,13 @@ Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::TransitionsM
 
 void Hachiko::Scripting::EnemyController::StartMovingBackState()
 {
+#ifdef VERBOUSE
+	std::cout << "MOVING_BACK" << std::endl;
+	HE_LOG("MOVING_BACK");
+
+	_enemy_body->ChangeTintColor(float4(0.0f, 0.0f, 1.0f, 1.0f), true);
+#endif
+
 	if (_already_in_combat)
 	{
 		_audio_manager->UnregisterCombat();
@@ -1419,7 +1480,7 @@ Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::TransitionsM
 
 	_target_pos.y = _current_pos.y;
 	float d = _current_pos.Distance(_target_pos);
-	if (d <= 0.3f)
+	if (d <= 2.0f)
 	{
 		return EnemyState::IDLE;
 	}
@@ -1431,6 +1492,11 @@ Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::TransitionsM
 
 void Hachiko::Scripting::EnemyController::StartPatrolState()
 {
+#ifdef VERBOUSE
+	std::cout << "PATROL" << std::endl;
+	HE_LOG("PATROL");
+#endif
+
 	if (_already_in_combat)
 	{
 		_audio_manager->UnregisterCombat();
@@ -1494,7 +1560,12 @@ Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::TransitionsP
 
 void Hachiko::Scripting::EnemyController::StartHitState()
 {
+#ifdef VERBOUSE
+	std::cout << "HIT" << std::endl;
+	HE_LOG("HIT");
+#endif
 
+	animation->SendTrigger("isHit");
 }
 
 void Hachiko::Scripting::EnemyController::UpdateHitState()
@@ -1527,18 +1598,18 @@ Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::TransitionsH
 		}
 	}
 
-	if (_current_pos.Distance(_target_pos) <= 0.3f)
-	{
-		return EnemyState::IDLE;
-	}
-
-	return EnemyState::INVALID;
+	return EnemyState::IDLE;
 }
 
 // DEAD
 
 void Hachiko::Scripting::EnemyController::StartDeadState()
 {
+#ifdef VERBOUSE
+	std::cout << "DEAD" << std::endl;
+	HE_LOG("DEAD");
+#endif
+
 	if (_already_in_combat)
 	{
 		_audio_manager->UnregisterCombat();
@@ -1582,7 +1653,17 @@ Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::TransitionsD
 
 void Hachiko::Scripting::EnemyController::StartParasiteState()
 {
-	_parasite->SetActive(true);
+#ifdef VERBOUSE
+	std::cout << "PARASITE" << std::endl;
+	HE_LOG("PARASITE");
+#endif
+
+	if (_parasite)
+	{
+		_parasite->SetActive(true);
+	}
+
+	_parasite_dropped = true;
 
 	_parasite_dissolving_time_progress = 0;
 }
@@ -1596,6 +1677,8 @@ void Hachiko::Scripting::EnemyController::UpdateParasiteState()
 
 void Hachiko::Scripting::EnemyController::EndParasiteState()
 {
+	_parasite_dropped = false;
+
 	DestroyEntity();
 }
 
