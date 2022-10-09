@@ -23,6 +23,7 @@ Hachiko::Scripting::GauntletManager::GauntletManager(GameObject* game_object)
 	, _pack_3(nullptr)
 	, _camera_anchor(nullptr)
 	, _relative_position(float3::zero)
+	, _camera_follows_player(0.4f)
 {}
 
 void Hachiko::Scripting::GauntletManager::OnAwake()
@@ -187,7 +188,7 @@ void Hachiko::Scripting::GauntletManager::ControllCameraPos()
 		float3 camera_a_pos = _camera_anchor->GetTransform()->GetGlobalPosition();
 		float3 player_pos = Scenes::GetPlayer()->GetTransform()->GetGlobalPosition();
 		float3 center_pos = _central_anchor->GetTransform()->GetGlobalPosition();
-		camera_a_pos = math::Lerp(center_pos, player_pos, 0.4f);
+		camera_a_pos = math::Lerp(center_pos, player_pos, _camera_follows_player);
 		_camera_anchor->GetTransform()->SetGlobalPosition(camera_a_pos);
 	}
 }

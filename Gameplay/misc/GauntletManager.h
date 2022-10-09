@@ -47,6 +47,7 @@ namespace Hachiko
 			SERIALIZE_FIELD(GameObject*, _camera_anchor);
 			SERIALIZE_FIELD(GameObject*, _central_anchor);
 			SERIALIZE_FIELD(float3, _relative_position);
+			SERIALIZE_FIELD(float, _camera_follows_player);
 
 		private:
 			
