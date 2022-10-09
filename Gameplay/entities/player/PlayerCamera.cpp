@@ -207,7 +207,7 @@ void Hachiko::Scripting::PlayerCamera::ChangeRelativePosition(math::float3 new_r
 	_is_in_position = false;
 	if (speed > 0.0f)
 	{
-		_reposition_time = 1 / speed;
+		_reposition_time = 1.0f / speed;
 		_reposition_progress = 0.0f;
 	}
 	else
