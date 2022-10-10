@@ -237,6 +237,7 @@ child:
                 "'_will_die@bool'": true
                 "'_attack_animation_duration@float'": 1
                 "'_attack_animation_timer@float'": 0
+                "'damage_effect_duration@float'": 1
               - !<script>
                 id: 2693614180658787808
                 type: 15
@@ -1524,6 +1525,7 @@ child:
                 "'_will_die@bool'": true
                 "'_attack_animation_duration@float'": 1
                 "'_attack_animation_timer@float'": 0
+                "'damage_effect_duration@float'": 1
               - !<script>
                 id: 9634055109918564094
                 type: 15
@@ -2811,6 +2813,7 @@ child:
                 "'_will_die@bool'": true
                 "'_attack_animation_duration@float'": 1
                 "'_attack_animation_timer@float'": 0
+                "'damage_effect_duration@float'": 1
               - !<script>
                 id: 14059660793992025288
                 type: 15
@@ -4110,6 +4113,7 @@ child:
                 "'_will_die@bool'": true
                 "'_attack_animation_duration@float'": 1
                 "'_attack_animation_timer@float'": 0
+                "'damage_effect_duration@float'": 1
               - !<script>
                 id: 820113154382019159
                 type: 15
@@ -5397,6 +5401,7 @@ child:
                 "'_will_die@bool'": true
                 "'_attack_animation_duration@float'": 1
                 "'_attack_animation_timer@float'": 0
+                "'damage_effect_duration@float'": 1
               - !<script>
                 id: 3791588793205113221
                 type: 15
@@ -6684,6 +6689,7 @@ child:
                 "'_will_die@bool'": true
                 "'_attack_animation_duration@float'": 1
                 "'_attack_animation_timer@float'": 0
+                "'damage_effect_duration@float'": 1
               - !<script>
                 id: 16172110806435481636
                 type: 15
@@ -9709,8 +9715,8 @@ child:
         id: 14102268478063243241
         type: 1
         enabled: true
-        position: [-82.4, 1.2, -58.27]
-        rotation: [-0, 0, -0]
+        position: [-81.87, 1.2, -34.06]
+        rotation: [-180, 3.5, -180]
         scale: [0.44, 0.45, 0.44]
       - !<animation>
         id: 10984657332597475539
@@ -9782,6 +9788,8 @@ child:
         "'_controller_tooltip_display@GameObject*'": 12257850835072404626
         "'_camera@GameObject*'": 2223877946256215970
         "'_ui_damage@GameObject*'": 0
+        "'_heal_effect_fade_duration@float'": 0.3
+        "'damage_effect_duration@float'": 1
       - !<script>
         id: 18094218733512646024
         type: 15
@@ -14175,6 +14183,25 @@ child:
                     blend_factor: 0.1
                     projection: true
                     randomize_tiles: false
+      - id: 3562216982415313602
+        name: LightUnder
+        enabled: true
+        component:
+          - !<transform>
+            id: 11602096055743156470
+            type: 1
+            enabled: true
+            position: [0.02, 2.22, 0.76]
+            rotation: [0, -45, 0]
+            scale: [2.273, 2.222, 2.273]
+          - id: 11909433660718730782
+            type: 6
+            enabled: true
+            light_type: 6
+            color: [0.7961, 0.5569, 0.2784, 1]
+            intensity: 3
+            radius: 3
+            draw_sphere: false
   - id: 4089779087202767202
     name: Boss
     enabled: true
@@ -14233,6 +14260,7 @@ child:
         "'_hammer_weapon@GameObject*'": 16397596031605413153
         "'time_between_enemies@float'": 5
         "'enemy_pool@GameObject*'": 2648566823339321148
+        "'damage_effect_duration@float'": 1
         "'_laser_wall@GameObject*'": 13937819642570068300
         "'_laser_wall_duration@float'": 6
         "'_laser_jump_height@float'": 25
@@ -47044,8 +47072,8 @@ child:
         type: 15
         enabled: true
         class_name: LevelManager
-        "'_level@unsigned'": 1
-        "'_respawn_position@float3'": [-84.74, 3.47, -56.32]
+        "'_level@unsigned'": 3
+        "'_respawn_position@float3'": [-81.9, 1.5, -34]
         "'_gauntlet_ui_go@GameObject*'": 14303009014360775269
         "'_gauntlet_counter_go@GameObject*'": 3781971181584712536
         "'_modify_fog@bool'": false
