@@ -172,6 +172,7 @@ namespace Hachiko
             void EndParasiteState();
             EnemyState TransitionsParasiteState();
 
+            bool forced_state = false;
             EnemyState _force_state = EnemyState::INVALID;
 
             Stats* _combat_stats;

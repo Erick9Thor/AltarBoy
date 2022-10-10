@@ -181,26 +181,30 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 
 		if (_force_state != EnemyState::INVALID)
 		{
-			states_behaviour[static_cast<int>(_state)].End();
-
+			_previous_state = _state;
 			_state = _force_state;
-			if (_state == EnemyState::SUPER_DEAD)
-			{
-				return;
-			}
 			states_behaviour[static_cast<int>(_state)].Start();
 
 			_force_state = EnemyState::INVALID;
 		}
-
-		// GENERIC STUFF
-
-		if (_is_stunned)
+		if (forced_state)
 		{
-			BeetleStunController();
-			return;
+			states_behaviour[static_cast<int>(_state)].Update();
+
+			EnemyState next_state = states_behaviour[static_cast<int>(_state)].Transitions();
+			if (next_state != EnemyState::INVALID) 
+			{
+				EnemyState aux = _state;
+				_state = _previous_state;
+				_previous_state = aux;
+			}
+			else
+			{
+				return;
+			}
 		}
 
+		// GENERIC STUFF
 		_attack_cooldown -= Time::DeltaTimeScaled();
 		_attack_cooldown = _attack_cooldown < 0.0f ? 0.0f : _attack_cooldown;
 
@@ -219,9 +223,12 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 		{
 			current_state.End();
 
+			_previous_state = _state;
 			_state = next_state;
-			if (_state != EnemyState::SUPER_DEAD)
+			if (_state != EnemyState::SUPER_DEAD) 
+			{
 				states_behaviour[static_cast<int>(_state)].Start();
+			}
 		}
 	}
 	else
@@ -900,14 +907,14 @@ void Hachiko::Scripting::EnemyController::RegisterHit(int damage, float3 directi
 		break;
 	}
 
-	/*if (_enemy_type == EnemyType::BEETLE)
+	if (_enemy_type == EnemyType::BEETLE)
 	{
 		_force_state = EnemyState::HIT;
 	}
 	else
-	{*/
+	{
 		_state = EnemyState::HIT;
-	//}
+	}
 
 	if (is_from_player)
 	{
@@ -941,7 +948,7 @@ void Hachiko::Scripting::EnemyController::GetParasite()
 {
 	if (_enemy_type == EnemyType::BEETLE) 
 	{
-		_force_state = EnemyState::SUPER_DEAD;
+		_parasite_dissolving_time_progress = _parasite_dissolve_time;
 	}
 	else 
 	{
@@ -1262,6 +1269,7 @@ void Hachiko::Scripting::EnemyController::StartAttackingState()
 
 	_attack_animation_timer = 0.0f;
 	_attack_current_delay = _attack_delay;
+	StopMoving();
 
 	_audio_source->PostEvent(Sounds::ENEMY_ATTACK);
 	if (!_attack_alt)
@@ -1540,15 +1548,30 @@ void Hachiko::Scripting::EnemyController::StartHitState()
 	HE_LOG("HIT");
 #endif
 
+	_is_stunned = true;
+	_stun_time = 0.8f;
+
 	animation->SendTrigger("isHit");
 }
 
 void Hachiko::Scripting::EnemyController::UpdateHitState()
 {
+	if (_stun_time > 0.0f)
+	{
+		// Run the timer for stun in unscaled time:
+		_stun_time -= Time::DeltaTime();
+		RecieveKnockback();
+		return;
+	}
+	_is_stunned = false;
 }
 
 void Hachiko::Scripting::EnemyController::EndHitState()
 {
+	ComponentAgent* agc = game_object->GetComponent<ComponentAgent>();
+	// We set the variables back to normal
+	agc->SetMaxAcceleration(_acceleration);
+	agc->SetMaxSpeed(_speed);
 }
 
 Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::TransitionsHitState()
@@ -1556,6 +1579,11 @@ Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::TransitionsH
 	if (!_combat_stats->IsAlive())
 	{
 		return EnemyState::DEAD;
+	}
+
+	if (_is_stunned)
+	{
+		return EnemyState::INVALID;
 	}
 
 	// If an enemy is from a gautlet, has the player on agro distance or is enrage, it will always follow the player if its reachable
