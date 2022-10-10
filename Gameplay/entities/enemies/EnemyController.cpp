@@ -1230,7 +1230,7 @@ Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::TransitionsI
 	// If an enemy is from a gautlet, has the player on agro distance or is enrage, it will always follow the player if its reachable
 	float dist_to_player = _current_pos.Distance(_player_pos);
 	bool can_reach_player = true; //TODO
-	if ((_is_from_gautlet || dist_to_player < _aggro_range || _enraged > 0.0f) && can_reach_player && _player_controller->IsAlive())
+	if ((_is_from_boss || _is_from_gautlet || dist_to_player < _aggro_range || _enraged > 0.0f) && can_reach_player && _player_controller->IsAlive())
 	{
 		if (dist_to_player <= _attack_range && _attack_cooldown <= 0.0f)
 		{
@@ -1340,7 +1340,7 @@ Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::TransitionsA
 
 	float dist_to_player = _current_pos.Distance(_player_pos);
 	bool can_reach_player = true; //TODO
-	if ((_is_from_gautlet || dist_to_player < _aggro_range || _enraged > 0.0f) && _player_controller->IsAlive())
+	if ((_is_from_boss || _is_from_gautlet || dist_to_player < _aggro_range || _enraged > 0.0f) && _player_controller->IsAlive())
 	{
 		if (dist_to_player <= _attack_range && _attack_cooldown <= 0.0f)
 		{
@@ -1401,7 +1401,7 @@ Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::TransitionsM
 	// If an enemy is from a gautlet, has the player on agro distance or is enrage, it will always follow the player if its reachable
 	float dist_to_player = _current_pos.Distance(_player_pos);
 	bool can_reach_player = true; //TODO
-	if ((_is_from_gautlet || dist_to_player < _aggro_range || _enraged > 0.0f) && can_reach_player && _player_controller->IsAlive())
+	if ((_is_from_boss || _is_from_gautlet || dist_to_player < _aggro_range || _enraged > 0.0f) && can_reach_player && _player_controller->IsAlive())
 	{
 		if (dist_to_player <= _attack_range && _attack_cooldown <= 0.0f)
 		{
@@ -1454,7 +1454,7 @@ Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::TransitionsM
 	// If an enemy is from a gautlet, has the player on agro distance or is enrage, it will always follow the player if its reachable
 	float dist_to_player = _current_pos.Distance(_player_pos);
 	bool can_reach_player = true; //TODO
-	if ((_is_from_gautlet || dist_to_player < _aggro_range || _enraged > 0.0f) && can_reach_player && _player_controller->IsAlive())
+	if ((_is_from_boss || _is_from_gautlet || dist_to_player < _aggro_range || _enraged > 0.0f) && can_reach_player && _player_controller->IsAlive())
 	{
 		if (dist_to_player <= _attack_range && _attack_cooldown <= 0.0f)
 		{
@@ -1519,7 +1519,7 @@ Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::TransitionsP
 	// If an enemy is from a gautlet, has the player on agro distance or is enrage, it will always follow the player if its reachable
 	float dist_to_player = _current_pos.Distance(_player_pos);
 	bool can_reach_player = true; //TODO
-	if ((_is_from_gautlet || dist_to_player < _aggro_range || _enraged > 0.0f) && can_reach_player && _player_controller->IsAlive())
+	if ((_is_from_boss || _is_from_gautlet || dist_to_player < _aggro_range || _enraged > 0.0f) && can_reach_player && _player_controller->IsAlive())
 	{
 		if (dist_to_player <= _attack_range && _attack_cooldown <= 0.0f)
 		{
@@ -1589,7 +1589,7 @@ Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::TransitionsH
 	// If an enemy is from a gautlet, has the player on agro distance or is enrage, it will always follow the player if its reachable
 	float dist_to_player = _current_pos.Distance(_player_pos);
 	bool can_reach_player = true; //TODO
-	if ((_is_from_gautlet || dist_to_player < _aggro_range || _enraged > 0.0f) && can_reach_player && _player_controller->IsAlive())
+	if ((_is_from_boss || _is_from_gautlet || dist_to_player < _aggro_range || _enraged > 0.0f) && can_reach_player && _player_controller->IsAlive())
 	{
 		if (dist_to_player <= _attack_range && _attack_cooldown <= 0.0f)
 		{
