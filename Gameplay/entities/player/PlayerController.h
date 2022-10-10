@@ -243,6 +243,16 @@ namespace Hachiko
 			SERIALIZE_FIELD(GameObject*, _walking_dust);
 			SERIALIZE_FIELD(GameObject*, _heal_effect);
 			SERIALIZE_FIELD(GameObject*, _damage_effect);
+			SERIALIZE_FIELD(GameObject*, _parasite_pickup_effect);
+			SERIALIZE_FIELD(GameObject*, _melee_trail_right);
+			SERIALIZE_FIELD(GameObject*, _melee_trail_left);
+			SERIALIZE_FIELD(GameObject*, _claws_trail_right);
+			SERIALIZE_FIELD(GameObject*, _claws_trail_left);
+			SERIALIZE_FIELD(GameObject*, _sword_trail_right);
+			SERIALIZE_FIELD(GameObject*, _sword_trail_left);
+			SERIALIZE_FIELD(GameObject*, _hammer_trail_right);
+			SERIALIZE_FIELD(GameObject*, _hammer_trail_left);
+			
 
 			const float _ranged_attack_cooldown = 0.2f;
 			const float _combo_grace_period = .5f;
@@ -281,6 +291,10 @@ namespace Hachiko
 			ComponentParticleSystem* _heal_effect_particles_1 = nullptr;
 			ComponentParticleSystem* _heal_effect_particles_2 = nullptr;
 			ComponentBillboard* _damage_effect_billboard = nullptr;
+			ComponentBillboard* _parasite_pickup_billboard = nullptr;
+			ComponentBillboard* _weapon_trails_billboard_right[static_cast<int>(WeaponUsed::SIZE)];
+			ComponentBillboard* _weapon_trails_billboard_left[static_cast<int>(WeaponUsed::SIZE)];
+
 			ComponentBillboard* _aim_indicator_billboard = nullptr;
 
 			std::vector<Weapon> weapons{};

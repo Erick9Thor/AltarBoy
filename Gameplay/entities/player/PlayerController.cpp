@@ -129,7 +129,44 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	{
 		_damage_effect_billboard = _damage_effect->GetComponent<ComponentBillboard>();
 	}
+	if (_melee_trail_right != nullptr)
+	{
+		_weapon_trails_billboard_right[static_cast<int>(WeaponUsed::MELEE)] = _melee_trail_right->GetComponent<ComponentBillboard>();
+	}
+	if (_melee_trail_left != nullptr)
+	{
+		_weapon_trails_billboard_left[static_cast<int>(WeaponUsed::MELEE)] = _melee_trail_left->GetComponent<ComponentBillboard>();
+	}
+	if (_claws_trail_right != nullptr)
+	{
+		_weapon_trails_billboard_right[static_cast<int>(WeaponUsed::CLAW)] = _claws_trail_right->GetComponent<ComponentBillboard>();
+	}
+	if (_claws_trail_left != nullptr)
+	{
+		_weapon_trails_billboard_left[static_cast<int>(WeaponUsed::CLAW)] = _claws_trail_left->GetComponent<ComponentBillboard>();
+	}
+	if (_sword_trail_right != nullptr)
+	{
+		_weapon_trails_billboard_right[static_cast<int>(WeaponUsed::SWORD)] = _sword_trail_right->GetComponent<ComponentBillboard>();
+	}
+	if (_sword_trail_left != nullptr)
+	{
+		_weapon_trails_billboard_left[static_cast<int>(WeaponUsed::SWORD)] = _sword_trail_left->GetComponent<ComponentBillboard>();
+	}
+	if (_hammer_trail_right != nullptr)
+	{
+		_weapon_trails_billboard_right[static_cast<int>(WeaponUsed::HAMMER)] = _hammer_trail_right->GetComponent<ComponentBillboard>();
+	}
+	if (_hammer_trail_left != nullptr)
+	{
+		_weapon_trails_billboard_left[static_cast<int>(WeaponUsed::HAMMER)] = _hammer_trail_left->GetComponent<ComponentBillboard>();
+	}
+	if (_parasite_pickup_effect != nullptr)
+	{
+		_parasite_pickup_billboard = _parasite_pickup_effect->GetComponent<ComponentBillboard>();
+	}
 
+	
 	if (_aim_indicator != nullptr)
 	{
 		_aim_indicator_billboard = _aim_indicator->GetComponent<ComponentBillboard>();
@@ -594,11 +631,18 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 	_state = PlayerState::MELEE_ATTACKING;
 	Weapon& weapon = GetCurrentWeapon();
 	const PlayerAttack& attack = GetNextAttack();
+	if (attack.stats.attack_trail == CombatManager::AttackTrail::RIGHT)
+	{
+		_weapon_trails_billboard_right[static_cast<int>(GetCurrentWeaponType())]->Play();
+	}
+	if (attack.stats.attack_trail == CombatManager::AttackTrail::LEFT)
+	{
+		_weapon_trails_billboard_left[static_cast<int>(GetCurrentWeaponType())]->Play();
+	}
 	if (!weapon.unlimited && _attack_charges)
 	{
 		_attack_charges--;
 	}
-
 	UpdateWeaponChargeUI();
 
 	_attack_current_duration = attack.duration;
@@ -714,6 +758,7 @@ void Hachiko::Scripting::PlayerController::ChangeWeapon(unsigned weapon_idx)
 		_claw_ui_addon->SetActive(false);
 		_maze_ui_addon->SetActive(true);
 	}
+	_parasite_pickup_billboard->Play();
 }
 
 void Hachiko::Scripting::PlayerController::ReloadAmmo(unsigned ammo)
@@ -1646,6 +1691,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 		// If its cone use degrees on width
 		attack.stats.width = 3.f;
 		attack.stats.range = 2.5f;
+		attack.stats.attack_trail = CombatManager::AttackTrail::RIGHT;
 		break;
 
 	case AttackType::COMMON_2:
@@ -1659,6 +1705,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 		// If its cone use degrees on width
 		attack.stats.width = 3.f;
 		attack.stats.range = 2.5f;
+		attack.stats.attack_trail = CombatManager::AttackTrail::LEFT;
 		break;
 
 	case AttackType::COMMON_3:
@@ -1686,6 +1733,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 		// If its cone use degrees on width
 		attack.stats.width = 2.5f;
 		attack.stats.range = 2.5f;
+		attack.stats.attack_trail = CombatManager::AttackTrail::RIGHT;
 		break;
 
 	case AttackType::QUICK_2:
@@ -1699,6 +1747,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 		// If its cone use degrees on width
 		attack.stats.width = 2.5f;
 		attack.stats.range = 2.5f;
+		attack.stats.attack_trail = CombatManager::AttackTrail::LEFT;
 		break;
 
 		// HEAVY ATTACKS
@@ -1713,6 +1762,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 		// If its cone use degrees on width
 		attack.stats.width = 5.f;
 		attack.stats.range = 3.f;
+		attack.stats.attack_trail = CombatManager::AttackTrail::RIGHT;
 		break;
 
 	case AttackType::HEAVY_2:
@@ -1726,6 +1776,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 		// If its cone use degrees on width
 		attack.stats.width = 5.f;
 		attack.stats.range = 3.f;
+		attack.stats.attack_trail = CombatManager::AttackTrail::LEFT;
 		break;
 
 	case AttackType::HEAVY_3:
@@ -1753,6 +1804,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 		// If its cone use degrees on width
 		attack.stats.width = 5.f;
 		attack.stats.range = 3.f;
+		attack.stats.attack_trail = CombatManager::AttackTrail::RIGHT;
 		break;
 
 	case AttackType::HAMMER_2:
@@ -1766,6 +1818,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 		// If its cone use degrees on width
 		attack.stats.width = 5.f;
 		attack.stats.range = 3.f;
+		attack.stats.attack_trail = CombatManager::AttackTrail::LEFT;
 		break;
 
 	case AttackType::HAMMER_3:
