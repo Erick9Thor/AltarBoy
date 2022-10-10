@@ -84,6 +84,8 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 		animation->StartAnimating();
 	}
 
+	_enemy_body->ChangeDissolveProgress(0.0f, true);
+
 	srand((unsigned)time(NULL));
 }
 
@@ -118,6 +120,10 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 
 	if (_current_spawning_time > 0.0f || _state == EnemyState::SPAWNING)
 	{
+		spawn_progress += spawn_rate * Time::DeltaTimeScaled();
+		
+		_enemy_body->ChangeDissolveProgress(spawn_progress, true);
+
 		SpawnController();
 		return;
 	}
@@ -807,7 +813,6 @@ void Hachiko::Scripting::EnemyController::Spawn()
 	switch (_enemy_type)
 	{
 	case EnemyType::BEETLE:
-		_current_spawning_time = _spawning_time;
 		if (_enemy_body)
 		{
 			_enemy_body->SetActive(true);
@@ -816,6 +821,7 @@ void Hachiko::Scripting::EnemyController::Spawn()
 		{
 			_parasite->SetActive(false);
 		}
+		_current_spawning_time = _spawning_time;
 		_has_spawned = true;
 		_state = EnemyState::SPAWNING;
 		break;
@@ -931,7 +937,6 @@ void Hachiko::Scripting::EnemyController::ResetEnemy()
 	if (_enemy_body)
 	{
 		_enemy_body->SetActive(true);
-		_enemy_body->ChangeDissolveProgress(1.0f, true);
 	}
 
 	if (_parasite)
