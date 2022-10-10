@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="12" SoundbankVersion="140">
 	<RootPaths>
-		<ProjectRoot>D:\Erimos\Alpha2LastBuild\Alpha2LastBuild\Game\ErimosWwise\</ProjectRoot>
-		<SourceFilesRoot>D:\Erimos\Alpha2LastBuild\Alpha2LastBuild\Game\ErimosWwise\.cache\Windows\</SourceFilesRoot>
-		<SoundBanksRoot>D:\Erimos\Alpha2LastBuild\Alpha2LastBuild\Game\ErimosWwise\GeneratedSoundBanks\Windows\</SoundBanksRoot>
+		<ProjectRoot>C:\Users\MO\Documents\Hachiko-Engine\Game\ErimosWwise\</ProjectRoot>
+		<SourceFilesRoot>C:\Users\MO\Documents\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\</SourceFilesRoot>
+		<SoundBanksRoot>C:\Users\MO\Documents\Hachiko-Engine\Game\ErimosWwise\GeneratedSoundBanks\Windows\</SoundBanksRoot>
 		<ExternalSourcesInputFile></ExternalSourcesInputFile>
-		<ExternalSourcesOutputRoot>D:\Erimos\Alpha2LastBuild\Alpha2LastBuild\Game\ErimosWwise\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
+		<ExternalSourcesOutputRoot>C:\Users\MO\Documents\Hachiko-Engine\Game\ErimosWwise\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
 	</RootPaths>
 	<DialogueEvents/>
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="626769978" Language="SFX" Hash="1739047723">
+		<SoundBank Id="626769978" Language="SFX" Hash="1167542298">
 			<ObjectPath>\SoundBanks\Default Work Unit\BackgroundMusic</ObjectPath>
 			<ShortName>BackgroundMusic</ShortName>
 			<Path>BackgroundMusic.bnk</Path>
@@ -170,7 +170,7 @@
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
 		</SoundBank>
-		<SoundBank Id="1551306167" Language="SFX" Hash="3397968975">
+		<SoundBank Id="1551306167" Language="SFX" Hash="1933214614">
 			<ObjectPath>\SoundBanks\Default Work Unit\UI</ObjectPath>
 			<ShortName>UI</ShortName>
 			<Path>UI.bnk</Path>
@@ -193,7 +193,7 @@
 				</Event>
 			</IncludedEvents>
 		</SoundBank>
-		<SoundBank Id="2385628198" Language="SFX" Hash="1639333358">
+		<SoundBank Id="2385628198" Language="SFX" Hash="364181247">
 			<ObjectPath>\SoundBanks\Default Work Unit\Footsteps</ObjectPath>
 			<ShortName>Footsteps</ShortName>
 			<Path>Footsteps.bnk</Path>
@@ -523,7 +523,7 @@
 				</SwitchGroup>
 			</SwitchGroups>
 		</SoundBank>
-		<SoundBank Id="3768541028" Language="SFX" Hash="1577809528">
+		<SoundBank Id="3768541028" Language="SFX" Hash="4210262672">
 			<ObjectPath>\SoundBanks\Default Work Unit\Attacks</ObjectPath>
 			<ShortName>Attacks</ShortName>
 			<Path>Attacks.bnk</Path>
@@ -644,7 +644,7 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="3909959462" Language="SFX" Hash="3150858916">
+		<SoundBank Id="3909959462" Language="SFX" Hash="3859404213">
 			<ObjectPath>\SoundBanks\Default Work Unit\Enviroment</ObjectPath>
 			<ShortName>Enviroment</ShortName>
 			<Path>Enviroment.bnk</Path>
@@ -710,6 +710,14 @@
 						<File Id="857441310" Language="SFX">
 							<ShortName>Ambient\Pebbles 4.wav</ShortName>
 							<Path>SFX\Ambient\Pebbles 4_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="3948925255" Name="Play_Splash" ObjectPath="\Events\Default Work Unit\Play_Splash">
+					<IncludedMemoryFiles>
+						<File Id="293397634" Language="SFX">
+							<ShortName>Splash-centipede.wav</ShortName>
+							<Path>SFX\Splash-centipede_10C4C929.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
