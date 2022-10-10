@@ -299,7 +299,7 @@ namespace Hachiko
             std::vector<EnemyController*> enemies;
             float enemy_timer = 0.0;
 
-            float damage_effect_duration = 1.0f;
+            SERIALIZE_FIELD(float, damage_effect_duration);
             float damage_effect_progress = 0.0f;
 
 

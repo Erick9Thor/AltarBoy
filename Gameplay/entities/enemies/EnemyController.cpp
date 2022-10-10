@@ -45,6 +45,7 @@ Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 	, _outer_indicator(nullptr)
 	, _projectile_particles(nullptr)
 	, _explosion_particles(nullptr)
+	, damage_effect_duration(1.0f)
 {
 	// Push attack
 	push_attack.damage = 0;

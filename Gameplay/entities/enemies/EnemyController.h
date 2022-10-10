@@ -191,7 +191,7 @@ namespace Hachiko
             bool _attack_landing = false;
             bool _attack_alt = false;
 
-            float damage_effect_duration = 1.0f;
+            SERIALIZE_FIELD(float, damage_effect_duration);
             float damage_effect_progress = 0.0f;
 
 

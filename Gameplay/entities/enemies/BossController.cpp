@@ -42,6 +42,7 @@ Hachiko::Scripting::BossController::BossController(GameObject* game_object)
     , attack_current_cd(0.0f)
     , time_between_enemies(5.0)
     , enemy_pool(nullptr)
+    , damage_effect_duration(1.0f)
 {
     CreateBossWeapons();
 }
