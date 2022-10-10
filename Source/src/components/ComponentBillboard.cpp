@@ -194,6 +194,7 @@ void Hachiko::ComponentBillboard::DrawGui()
                 Widgets::Checkbox("Flip X", &flip_texture_editor.x);
                 Widgets::Checkbox("Flip Y", &flip_texture_editor.y);
                 texture_properties.SetFlip(flip_texture_editor);
+                Widgets::Checkbox("Randomize tile selection", &randomize_tiles);
             }
             else
             {
@@ -372,7 +373,7 @@ void Hachiko::ComponentBillboard::Update()
     {
         Reset();
     }
-
+    
     UpdateAnimationData(delta_time);
     UpdateColorOverLifetime(delta_time);
     UpdateSizeOverLifetime(delta_time);
@@ -410,7 +411,7 @@ inline void Hachiko::ComponentBillboard::Reset()
     delayed = true;
     elapsed_time = 0.0f;
     current_frame = 0.0f;
-    animation_index = {0.0f, 0.0f};
+    animation_index = randomize_tiles ? GetRandomTile() : float2{0.0f, 0.0f};
     size = start_size.GetValue();
     rotation = start_rotation.GetValue();
 }
@@ -443,6 +444,7 @@ void Hachiko::ComponentBillboard::Save(YAML::Node& node) const
     node[START_ROTATION] = start_rotation;
     node[BLEND_FACTOR] = blend_factor;
     node[BILLBOARD_PROJECTION] = projection;
+    node[RANDOMIZE_TILE] = randomize_tiles;
 }
 
 void Hachiko::ComponentBillboard::Load(const YAML::Node& node)
@@ -508,6 +510,8 @@ void Hachiko::ComponentBillboard::Load(const YAML::Node& node)
     start_rotation = node[START_ROTATION].IsDefined() ? node[START_ROTATION].as<ParticleSystem::VariableTypeProperty>() : start_rotation;
 
     blend_factor = node[BLEND_FACTOR].IsDefined() ? node[BLEND_FACTOR].as<float>() : blend_factor;
+    
+    randomize_tiles = node[RANDOMIZE_TILE].IsDefined() ? node[RANDOMIZE_TILE].as<bool>() : randomize_tiles;
 }
 
 void Hachiko::ComponentBillboard::CollectResources(const YAML::Node& node, std::map<Resource::Type, std::set<UID>>& resources)
@@ -622,6 +626,20 @@ void Hachiko::ComponentBillboard::UpdateSizeOverLifetime(const float delta_time)
     }
 
     size += size_over_time.GetValue() * delta_time;
+}
+
+float2 Hachiko::ComponentBillboard::GetRandomTile()
+{
+    float2 retVal {0.0f, 0.0f};
+
+    if (!randomize_tiles)
+    {
+        return retVal;
+    }
+
+    retVal.x = RandomUtil::RandomIntBetween(0, texture_properties.GetTiles().x);
+    retVal.y = RandomUtil::RandomIntBetween(0, texture_properties.GetTiles().y);
+    return retVal;
 }
 
 void Hachiko::ComponentBillboard::PublishIntoScene()
