@@ -34,7 +34,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _camera(nullptr)
 	, _ui_damage(nullptr)
 	, _heal_effect_fade_duration(0.3)
-	, damage_effect_duration(1)
+	, damage_effect_duration(1.0f)
 	, _combat_visual_effects_pool(nullptr)
 {
 	CombatManager::BulletStats common_bullet;
@@ -223,19 +223,17 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 
 	if (_heal_fade_progress >= 0.0f) {
 		_heal_fade_progress -= Time::DeltaTime() / _heal_effect_fade_duration;
-		if (_player_geometry != nullptr)
-		{
-			_player_geometry->ChangeEmissiveColor(float4(0.0f, 1.0f, 0.0f, _heal_fade_progress), true);
-		}
+		float progress = _heal_fade_progress / _heal_effect_fade_duration;
+		_player_geometry->ChangeEmissiveColor(float4(0.0f, 1.0f, 0.0f, progress), true);
+
 	}
 
 	if (damage_effect_progress >= 0.0f)
 	{
 		damage_effect_progress -= Time::DeltaTime() / damage_effect_duration;
-		if (_player_geometry != nullptr)
-		{
-			_player_geometry->ChangeEmissiveColor(float4(1.0f, 1.0f, 1.0f, damage_effect_progress), true);
-		}
+		float progress = damage_effect_progress / damage_effect_duration;
+		_player_geometry->ChangeEmissiveColor(float4(1.0f, 1.0f, 1.0f, progress), true);
+
 	}
 
 	if (_enable_heal_particles && _heal_fade_progress < 0.0f) {

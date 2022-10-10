@@ -132,7 +132,8 @@ void Hachiko::Scripting::BossController::OnUpdate()
     if (damage_effect_progress >= 0.0f)
     {
         damage_effect_progress -= Time::DeltaTime() / damage_effect_duration;
-        game_object->ChangeEmissiveColor(float4(1.0f, 1.0f, 1.0f, damage_effect_progress), true);
+        float progress = damage_effect_progress / damage_effect_duration;
+        game_object->ChangeEmissiveColor(float4(1.0f, 1.0f, 1.0f, progress), true);
     }
 
     StateController();

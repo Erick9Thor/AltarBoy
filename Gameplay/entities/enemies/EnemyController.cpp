@@ -132,7 +132,8 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 	if (damage_effect_progress >= 0.0f)
 	{
 		damage_effect_progress -= Time::DeltaTime() / damage_effect_duration;
-		_enemy_body->ChangeEmissiveColor(float4(1.0f, 1.0f, 1.0f, damage_effect_progress), true);
+		float progress = damage_effect_progress / damage_effect_duration;
+		_enemy_body->ChangeEmissiveColor(float4(1.0f, 1.0f, 1.0f, progress), true);
 	}
 
 	if (!_combat_stats->IsAlive())
