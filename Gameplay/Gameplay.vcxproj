@@ -316,6 +316,7 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\stlemitter.h" />
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\traits.h" />
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\yaml.h" />
+    <ClInclude Include="effects\BloomAnimator.h" />
     <ClInclude Include="effects\BounceEffect.h" />
     <ClInclude Include="effects\RotationEffect.h" />
     <ClInclude Include="entities\enemies\BossController.h" />
@@ -748,6 +749,7 @@ RD /S /Q "$(TargetDir)"</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Play|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="effects\BloomAnimator.cpp" />
     <ClCompile Include="misc\Centipedes.cpp" />
     <ClCompile Include="effects\BounceEffect.cpp" />
     <ClCompile Include="effects\HoverEffect.cpp" />
