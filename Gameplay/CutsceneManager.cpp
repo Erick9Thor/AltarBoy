@@ -27,6 +27,19 @@ void Hachiko::Scripting::CutsceneManager::OnUpdate()
 {
     if (_cutscene_video != nullptr && !_cutscene_video->IsPlaying())
     {
-        SceneManagement::SwitchScene(Scenes::GAME);
+        switch (_next_level)
+        {
+        case 1:
+            SceneManagement::SwitchScene(Scenes::GAME);
+            break;
+        case 2:
+            SceneManagement::SwitchScene(Scenes::LEVEL2);
+            break;
+        case 3:
+            SceneManagement::SwitchScene(Scenes::BOSS_LEVEL);
+            break;
+        }
+
+        
     }
 }

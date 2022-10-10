@@ -17,6 +17,7 @@ namespace Hachiko
 			void OnUpdate() override;
 		private:
 			SERIALIZE_FIELD(GameObject*, _cutscene);
+			SERIALIZE_FIELD(unsigned, _next_level);
 			ComponentVideo* _cutscene_video = nullptr;
 		};
 	}
