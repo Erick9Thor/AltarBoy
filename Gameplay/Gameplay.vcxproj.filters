@@ -535,6 +535,7 @@
     <ClInclude Include="misc\StalagmiteManager.h" />
     <ClInclude Include="entities\crystals\Stalagmite.h" />
     <ClInclude Include="misc\Tutorial.h" />
+    <ClInclude Include="misc\Centipedes.h" />
     <ClInclude Include="effects\HoverEffect.h" />
     <ClInclude Include="effects\RotationEffect.h" />
     <ClInclude Include="effects\BounceEffect.h" />
@@ -823,6 +824,7 @@
     <ClCompile Include="misc\StalagmiteManager.cpp" />
     <ClCompile Include="entities\crystals\Stalagmite.cpp" />
     <ClCompile Include="misc\Tutorial.cpp" />
+    <ClCompile Include="misc\Centipedes.cpp" />
     <ClCompile Include="effects\HoverEffect.cpp" />
     <ClCompile Include="effects\RotationEffect.cpp" />
     <ClCompile Include="effects\BounceEffect.cpp" />
