@@ -144,6 +144,24 @@ namespace Hachiko
 				return ret_value;
 			}
 
+			void ActivateTooltip()
+			{
+				if (Input::IsGamepadModeOn())
+				{
+					_controller_tooltip_display->GetComponent(Component::Type::IMAGE)->Enable();
+				}
+				else
+				{
+					_keyboard_tooltip_display->GetComponent(Component::Type::IMAGE)->Enable();
+				}
+			}
+
+			void DeactivateTooltip()
+			{
+				_controller_tooltip_display->GetComponent(Component::Type::IMAGE)->Disable();
+				_keyboard_tooltip_display->GetComponent(Component::Type::IMAGE)->Disable();
+			}
+
 		private:
 			math::float3 GetRaycastPosition(
 				const math::float3& current_position) const;
@@ -200,7 +218,8 @@ namespace Hachiko
 			void WalkingOrientationController();
 			void AttackController();
 
-			void PickupParasite(const math::float3& current_position);
+			void CheckNearbyParasytes(const math::float3& current_position);
+			void PickupParasite(EnemyController* enemy_contr);
 			void RecieveKnockback(const math::float3 direction);
 
 			void CheckState();
@@ -280,6 +299,9 @@ namespace Hachiko
 
 			SERIALIZE_FIELD(GameObject*, _weapon_charge_bar_go);
 			ComponentProgressBar* _weapon_charge_bar = nullptr;
+
+			SERIALIZE_FIELD(GameObject*, _keyboard_tooltip_display);
+			SERIALIZE_FIELD(GameObject*, _controller_tooltip_display);
 
 			SERIALIZE_FIELD(GameObject*, _camera);
 			SERIALIZE_FIELD(GameObject*, _ui_damage);
