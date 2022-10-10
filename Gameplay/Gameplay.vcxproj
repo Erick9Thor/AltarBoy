@@ -321,6 +321,7 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClInclude Include="entities\enemies\BossController.h" />
     <ClInclude Include="misc\AssetsObstacle.h" />
     <ClInclude Include="misc\BossLaserController.h" />
+    <ClInclude Include="misc\Centipedes.h" />
     <ClInclude Include="misc\CrystalPlatform.h" />
     <ClInclude Include="generated\GeneratedProperties.h" />
     <ClInclude Include="misc\AudioManager.h" />
@@ -747,6 +748,7 @@ RD /S /Q "$(TargetDir)"</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Play|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="misc\Centipedes.cpp" />
     <ClCompile Include="effects\BounceEffect.cpp" />
     <ClCompile Include="effects\HoverEffect.cpp" />
     <ClCompile Include="effects\RotationEffect.cpp" />

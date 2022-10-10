@@ -844,6 +844,7 @@ void Hachiko::Scripting::PlayerController::ReleaseAttack()
 		else
 		{
 			math::Clamp(++_ammo_count, 0, MAX_AMMO);
+			_state = PlayerState::IDLE;
 		}
 
 		_aim_indicator_billboard->Stop();
@@ -862,6 +863,7 @@ void Hachiko::Scripting::PlayerController::CancelAttack()
 		bullet_controller->StopBullet(_current_bullet);
 		math::Clamp(++_ammo_count, 0, MAX_AMMO);
 
+		_state = PlayerState::IDLE;
 		_aim_indicator_billboard->Stop();
 	}
 }
