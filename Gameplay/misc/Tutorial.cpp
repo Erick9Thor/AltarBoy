@@ -49,12 +49,14 @@ void Hachiko::Scripting::Tutorial::OnUpdate()
 		_player_tutorial->SetActive(false);
 		_parasite_tutorial->SetActive(false);
 		_level_manager->BlockInputs(false);
+		_time_manager->InterpolateToTimeScale(1.0f, 0.1f, 0.2f);
 	}
 
 	if (!_tutorial_showed && _enemy_controller->ParasiteDropped())
 	{
 		_parasite_tutorial->SetActive(true);
 		_level_manager->BlockInputs(true);
+		Time::SetTimeScale(0.0001f);
 		_tutorial_showed = true;
 	}
 }
