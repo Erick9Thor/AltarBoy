@@ -48,7 +48,7 @@ child:
             navigable: false
             visible: true
             casting_shadow: true
-            material_id: 18249348712515306135
+            material_id: 425165045326043767
             tint_color: [1, 1, 1, 1]
   - name: Crystal_lamp_01
     enabled: true
@@ -76,7 +76,7 @@ child:
             navigable: false
             visible: true
             casting_shadow: true
-            material_id: 13838716584693807781
+            material_id: 3205997075502161914
             tint_color: [1, 1, 1, 1]
   - name: Crystal_lamp_02
     enabled: true
@@ -104,7 +104,7 @@ child:
             navigable: false
             visible: true
             casting_shadow: true
-            material_id: 4891175381920237845
+            material_id: 10282915194250151458
             tint_color: [1, 1, 1, 1]
   - name: Light
     enabled: true
@@ -170,5 +170,5 @@ child:
             navigable: false
             visible: true
             casting_shadow: true
-            material_id: 13838716584693807781
+            material_id: 3205997075502161914
             tint_color: [1, 1, 1, 1]
