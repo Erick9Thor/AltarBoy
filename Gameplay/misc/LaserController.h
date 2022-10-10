@@ -63,6 +63,9 @@ namespace Hachiko
             bool _movement_forward_direction = true;
             float _movement_position = 0.0f;
 
+            float activate_effect_duration = 0.1f;
+            float activate_effect_progress = 1.0f;
+
             GameObject* _terrain = nullptr;
             GameObject* _player = nullptr;
             ComponentAudioSource* _audio_source;

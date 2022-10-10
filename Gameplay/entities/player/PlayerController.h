@@ -372,6 +372,11 @@ namespace Hachiko
 
 			// General management
 			float _lock_time = 0.0f;
+			bool _enable_heal_particles = false;
+			float _heal_fade_progress;
+			SERIALIZE_FIELD(float, _heal_effect_fade_duration);
+			SERIALIZE_FIELD(float, damage_effect_duration);
+			float damage_effect_progress = 0.0f;
 
 			// Camera management
 			int _current_cam_setting = 0;
