@@ -298,6 +298,17 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Play_Splash" ID="{8AB68101-D4D2-4994-8516-F54362626C04}">
+					<ChildrenList>
+						<Action Name="" ID="{E84E8F0F-1315-4A34-9D81-C5BE3B4E5727}" ShortID="366202030">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="SplashCentipede" ID="{55E3B195-D4B9-40C2-B217-F55F2536711B}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>
