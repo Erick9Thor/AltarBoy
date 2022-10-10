@@ -5,7 +5,7 @@ component:
   - !<transform>
     type: 1
     enabled: true
-    position: [-88, -0.5267, 5.438]
+    position: [-88, -0.5267, 4.135]
     rotation: [-0, 0, -0]
     scale: [1.5, 1.5, 1.5]
   - !<obstacle>
@@ -20,9 +20,17 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [0, 0.9989, -0.0725]
+        position: [0, 1.05, -0.0725]
         rotation: [-0, 0, -0]
         scale: [1, 1, 1]
+      - !<script>
+        type: 15
+        enabled: true
+        class_name: RotationEffect
+        "'_rotate_x@bool'": false
+        "'_rotate_y@bool'": true
+        "'_rotate_z@bool'": false
+        "'_rotation_speed@float'": 50
     child:
       - name: Crystal.001
         enabled: true
