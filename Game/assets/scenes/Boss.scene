@@ -27,7 +27,7 @@ child:
         type: 1
         enabled: true
         position: [-85.36, 20.2, -48.15]
-        rotation: [125, 0, 180]
+        rotation: [125, 0, -180]
         scale: [1, 1, 1]
       - !<camera>
         id: 1219616210356617501
@@ -39,7 +39,7 @@ child:
           fov: 65
           position: [-85.36, 20.2, -48.15]
           front: [0, -0.8192, -0.5736]
-          up: [-0, 0.5736, -0.8192]
+          up: [0, 0.5736, -0.8192]
           pinned_camera: [0, 0, 0]
       - id: 13408884615593672014
         type: 19
@@ -660,7 +660,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [180, 3.615, 14.16]
+                                                                                        rotation: [-180, 3.615, 14.16]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 17083926916287189837
@@ -872,7 +872,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [180, 0, 85.39]
+                                                                                        rotation: [-180, 0, 85.39]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 16673762793204240827
@@ -1179,7 +1179,7 @@ child:
                                                                                                                         type: 1
                                                                                                                         enabled: true
                                                                                                                         position: [0, 0, 0]
-                                                                                                                        rotation: [180, -89.98, 180]
+                                                                                                                        rotation: [-180, -89.98, -180]
                                                                                                                         scale: [1, 1, 1]
                                                                                                               - id: 17824814368355884472
                                                                                                                 name: Wing_Middle_R
@@ -1946,7 +1946,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [180, 3.615, 14.16]
+                                                                                        rotation: [-180, 3.615, 14.16]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 7166805286709657581
@@ -2158,7 +2158,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [180, 0, 85.39]
+                                                                                        rotation: [-180, 0, 85.39]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 2831410405136228984
@@ -2465,7 +2465,7 @@ child:
                                                                                                                         type: 1
                                                                                                                         enabled: true
                                                                                                                         position: [0, 0, 0]
-                                                                                                                        rotation: [180, -89.98, 180]
+                                                                                                                        rotation: [-180, -89.98, -180]
                                                                                                                         scale: [1, 1, 1]
                                                                                                               - id: 18073054745000376799
                                                                                                                 name: Wing_Middle_R
@@ -3232,7 +3232,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [180, 3.615, 14.16]
+                                                                                        rotation: [-180, 3.615, 14.16]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 16660911846559829495
@@ -3444,7 +3444,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [180, 0, 85.39]
+                                                                                        rotation: [-180, 0, 85.39]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 5305186554916170386
@@ -3751,7 +3751,7 @@ child:
                                                                                                                         type: 1
                                                                                                                         enabled: true
                                                                                                                         position: [0, 0, 0]
-                                                                                                                        rotation: [180, -89.98, 180]
+                                                                                                                        rotation: [-180, -89.98, -180]
                                                                                                                         scale: [1, 1, 1]
                                                                                                               - id: 5762468314855338250
                                                                                                                 name: Wing_Middle_R
@@ -4530,7 +4530,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [180, 3.615, 14.16]
+                                                                                        rotation: [-180, 3.615, 14.16]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 2375049026776240409
@@ -4742,7 +4742,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [180, 0, 85.39]
+                                                                                        rotation: [-180, 0, 85.39]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 2545767677094883520
@@ -5049,7 +5049,7 @@ child:
                                                                                                                         type: 1
                                                                                                                         enabled: true
                                                                                                                         position: [0, 0, 0]
-                                                                                                                        rotation: [180, -89.98, 180]
+                                                                                                                        rotation: [-180, -89.98, -180]
                                                                                                                         scale: [1, 1, 1]
                                                                                                               - id: 6188514512839603856
                                                                                                                 name: Wing_Middle_R
@@ -5816,7 +5816,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [180, 3.615, 14.16]
+                                                                                        rotation: [-180, 3.615, 14.16]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 15556414505888023057
@@ -6028,7 +6028,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [180, 0, 85.39]
+                                                                                        rotation: [-180, 0, 85.39]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 16037035974818211267
@@ -6335,7 +6335,7 @@ child:
                                                                                                                         type: 1
                                                                                                                         enabled: true
                                                                                                                         position: [0, 0, 0]
-                                                                                                                        rotation: [180, -89.98, 180]
+                                                                                                                        rotation: [-180, -89.98, -180]
                                                                                                                         scale: [1, 1, 1]
                                                                                                               - id: 17287654595624956106
                                                                                                                 name: Wing_Middle_R
@@ -7102,7 +7102,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [180, 3.615, 14.16]
+                                                                                        rotation: [-180, 3.615, 14.16]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 10059902737588998568
@@ -7314,7 +7314,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [180, 0, 85.39]
+                                                                                        rotation: [-180, 0, 85.39]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - id: 5366420881040033485
@@ -7621,7 +7621,7 @@ child:
                                                                                                                         type: 1
                                                                                                                         enabled: true
                                                                                                                         position: [0, 0, 0]
-                                                                                                                        rotation: [180, -89.98, 180]
+                                                                                                                        rotation: [-180, -89.98, -180]
                                                                                                                         scale: [1, 1, 1]
                                                                                                               - id: 11361860213490135861
                                                                                                                 name: Wing_Middle_R
@@ -9332,6 +9332,7 @@ child:
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 0
             projection: true
+            randomize_tiles: false
       - id: 17727813928751328263
         name: VFX_CI_W_SpitBall
         enabled: false
@@ -9369,6 +9370,7 @@ child:
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 0
             projection: true
+            randomize_tiles: false
       - id: 1299952316031160402
         name: VFX_CI_W_SpitBall
         enabled: false
@@ -9406,6 +9408,7 @@ child:
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 0
             projection: true
+            randomize_tiles: false
       - id: 7724705639041070782
         name: VFX_CI_W_SpitBall
         enabled: false
@@ -9443,6 +9446,7 @@ child:
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 0
             projection: true
+            randomize_tiles: false
       - id: 1459582642304905863
         name: VFX_CI_W_SpitBall
         enabled: false
@@ -9480,181 +9484,7 @@ child:
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 0
             projection: true
-  - id: 8002262312438975456
-    name: LevelManager
-    enabled: true
-    component:
-      - !<transform>
-        id: 13573853879419289838
-        type: 1
-        enabled: true
-        position: [0, 0, 0]
-        rotation: [-0, 0, -0]
-        scale: [1, 1, 1]
-      - !<script>
-        id: 17504927595294855026
-        type: 15
-        enabled: true
-        class_name: LevelManager
-        "'_level@unsigned'": 3
-        "'_respawn_position@float3'": [-84.74, 3.466, -56.32]
-        "'_gauntlet_ui_go@GameObject*'": 11815393408956331148
-        "'_gauntlet_counter_go@GameObject*'": 290730714737929416
-        "'_modify_fog@bool'": false
-        "'_fog_frequency@float'": 0.1
-        "'_fog_max_density@float'": 0.015
-        "'_fog_min_density@float'": 0.005
-        "'_audio_manager_go@GameObject*'": 0
-    child:
-      - id: 18237002791232467726
-        name: Goal
-        enabled: true
-        component:
-          - !<transform>
-            id: 11342397454793462978
-            type: 1
-            enabled: true
-            position: [-39.62, -22.35, -80.62]
-            rotation: [-0, 0, -0]
-            scale: [1.1, 1.1, 1.1]
-        child:
-          - id: 16088503890572261495
-            name: cube
-            enabled: true
-            component:
-              - !<transform>
-                id: 4569952378143904738
-                type: 1
-                enabled: true
-                position: [0, 0, 0]
-                rotation: [-0, 0, -0]
-                scale: [0.9091, 0.9091, 0.9091]
-            child:
-              - id: 3791146322321516470
-                name: Box001
-                enabled: true
-                component:
-                  - !<transform>
-                    id: 11044873295406379562
-                    type: 1
-                    enabled: true
-                    position: [0, 0, 0]
-                    rotation: [-90, 0, 0]
-                    scale: [1, 1, 1]
-                  - !<mesh_renderer>
-                    id: 7368034646283535198
-                    type: 2
-                    enabled: true
-                    mesh_id: 1654487118907036717
-                    navigable: false
-                    visible: true
-                    casting_shadow: true
-                    material_id: 6750369022920963075
-                    tint_color: [1, 1, 1, 1]
-      - id: 11815393408956331148
-        name: GauntletUI
-        enabled: false
-        component:
-          - !<transform>
-            id: 14047231738512029451
-            type: 1
-            enabled: true
-            position: [0, 0, 0]
-            rotation: [-0, 0, -0]
-            scale: [1, 1, 1]
-          - !<transform_2d>
-            id: 17277352275548126706
-            type: 10
-            enabled: true
-            position: [0, 0, 0]
-            size: [1261, 625]
-            scale: [1, 1]
-            rotation: [0, 0, 0, 1]
-            pivot: [0.5, 0.5]
-            anchor: [0.5, 0.5]
-          - !<canvas>
-            id: 13869938061937603384
-            type: 8
-            enabled: true
-        child:
-          - id: 7108655066481101915
-            name: Icon
-            enabled: false
-            component:
-              - !<transform>
-                id: 10925479155328805212
-                type: 1
-                enabled: true
-                position: [0, 0, 0]
-                rotation: [-0, 0, -0]
-                scale: [1, 1, 1]
-              - !<transform_2d>
-                id: 615592738077366645
-                type: 10
-                enabled: true
-                position: [-480, -260, 0]
-                size: [65, 65]
-                scale: [1, 1]
-                rotation: [0, 0, 0, 1]
-                pivot: [0.5, 0.5]
-                anchor: [0.5, 0.5]
-              - !<canvas_renderer>
-                id: 2242190213838642902
-                type: 9
-                enabled: true
-                scale_ui: false
-                original_size_x: 0
-                original_size_y: 0
-              - !<image>
-                id: 6767309111992902835
-                type: 11
-                enabled: true
-                image_id: 15126335777279321710
-                hover_image_id: 0
-                image_color: [1, 1, 1, 1]
-                hover_image_color: [1, 1, 1, 1]
-                image_is_tiled: false
-                image_randomize_initial_frame: false
-                image_x_tiles: 1
-                image_y_tiles: 1
-                image_tiles_per_second: 1
-                fill_window: false
-          - id: 290730714737929416
-            name: Counter
-            enabled: false
-            component:
-              - !<transform>
-                id: 9874650094312303743
-                type: 1
-                enabled: true
-                position: [0, 0, 0]
-                rotation: [-0, 0, -0]
-                scale: [1, 1, 1]
-              - !<transform_2d>
-                id: 10772567431728428928
-                type: 10
-                enabled: true
-                position: [-430, 255.8, 0]
-                size: [10, 40]
-                scale: [1, 1]
-                rotation: [0, 0, 0, 1]
-                pivot: [0.5, 0.5]
-                anchor: [0.5, 0.5]
-              - !<canvas_renderer>
-                id: 15311852129418962621
-                type: 9
-                enabled: true
-                scale_ui: false
-                original_size_x: 0
-                original_size_y: 0
-              - !<text>
-                id: 10464344355642242475
-                type: 16
-                enabled: true
-                font_id: 15852548707070218669
-                color: [0.935, 0.1368, 0.1368, 1]
-                size: 28
-                label_text: 0
+            randomize_tiles: false
   - id: 15411302245792191041
     name: Checkpoint1
     enabled: true
@@ -9831,7 +9661,7 @@ child:
         "'_attack_indicator@GameObject*'": 11650371022511337214
         "'_aim_indicator@GameObject*'": 16744711593634271272
         "'_bullet_emitter@GameObject*'": 8459539939456400839
-        "'_goal@GameObject*'": 18251543931208160398
+        "'_goal@GameObject*'": 7915766907333402918
         "'_player_geometry@GameObject*'": 13055154213429600865
         "'_dash_duration@float'": 0.15
         "'_dash_distance@float'": 6
@@ -9847,18 +9677,20 @@ child:
         "'_damage_effect@GameObject*'": 0
         "'_rotation_duration@float'": 0.08
         "'_death_screen@GameObject*'": 0
-        "'_hp_cell_1@GameObject*'": 11748703727812461821
-        "'_hp_cell_2@GameObject*'": 16068930017980298820
-        "'_hp_cell_3@GameObject*'": 6694052651249836903
-        "'_hp_cell_4@GameObject*'": 15324029136768672943
-        "'_ammo_cell_1@GameObject*'": 14620204057901611003
-        "'_ammo_cell_2@GameObject*'": 16766702370385016932
-        "'_ammo_cell_3@GameObject*'": 14733637421703874506
-        "'_ammo_cell_4@GameObject*'": 8417757956945687545
-        "'_sword_ui_addon@GameObject*'": 9372532309728749581
-        "'_maze_ui_addon@GameObject*'": 16991925110529940745
-        "'_claw_ui_addon@GameObject*'": 13103392272043170015
-        "'_weapon_charge_bar_go@GameObject*'": 10268343424768569099
+        "'_hp_cell_1@GameObject*'": 8856581071078474772
+        "'_hp_cell_2@GameObject*'": 8646015738038394158
+        "'_hp_cell_3@GameObject*'": 13152415029606352818
+        "'_hp_cell_4@GameObject*'": 437777248414621311
+        "'_ammo_cell_1@GameObject*'": 2477449859228675703
+        "'_ammo_cell_2@GameObject*'": 12047661129597660954
+        "'_ammo_cell_3@GameObject*'": 9498315867571538527
+        "'_ammo_cell_4@GameObject*'": 11653574832143118474
+        "'_sword_ui_addon@GameObject*'": 12650223589207795949
+        "'_maze_ui_addon@GameObject*'": 15847334779578903923
+        "'_claw_ui_addon@GameObject*'": 1760052063959381380
+        "'_weapon_charge_bar_go@GameObject*'": 7329816778822984063
+        "'_keyboard_tooltip_display@GameObject*'": 12251843063773563054
+        "'_controller_tooltip_display@GameObject*'": 12257850835072404626
         "'_camera@GameObject*'": 2223877946256215970
         "'_ui_damage@GameObject*'": 0
       - !<script>
@@ -9985,7 +9817,7 @@ child:
                                         type: 1
                                         enabled: true
                                         position: [0, 1.081, -1.753]
-                                        rotation: [180, 0, -0]
+                                        rotation: [-180, 0, -0]
                                         scale: [2.54, 2.54, 2.54]
                                     child:
                                       - id: 9253628311517691346
@@ -11425,7 +11257,7 @@ child:
                                                                                                                             type: 1
                                                                                                                             enabled: true
                                                                                                                             position: [0, 0, 0]
-                                                                                                                            rotation: [-180, 0, -0]
+                                                                                                                            rotation: [180, 0, -0]
                                                                                                                             scale: [1, 1, 1]
                                                                                                                         child:
                                                                                                                           - id: 2983305070747123574
@@ -11484,7 +11316,7 @@ child:
                                                                                                                             type: 1
                                                                                                                             enabled: true
                                                                                                                             position: [0, 0, 0]
-                                                                                                                            rotation: [-180, 0, -0]
+                                                                                                                            rotation: [180, 0, -0]
                                                                                                                             scale: [1, 1, 1]
                                                                                                                         child:
                                                                                                                           - id: 7066723275852593375
@@ -11531,7 +11363,7 @@ child:
                                                                                                                             type: 1
                                                                                                                             enabled: true
                                                                                                                             position: [0, 0, 0]
-                                                                                                                            rotation: [-180, 0, -0]
+                                                                                                                            rotation: [180, 0, -0]
                                                                                                                             scale: [1, 1, 1]
                                                                                                                         child:
                                                                                                                           - id: 162512179504047294
@@ -11567,7 +11399,7 @@ child:
                                                                                                                                         type: 1
                                                                                                                                         enabled: true
                                                                                                                                         position: [0, 0, 0]
-                                                                                                                                        rotation: [-180, 1.356, -180]
+                                                                                                                                        rotation: [180, 1.356, 180]
                                                                                                                                         scale: [1, 1, 1]
                                                                                                                                     child:
                                                                                                                                       - id: 7378100646301905207
@@ -11603,7 +11435,7 @@ child:
                                                                                                                                                     type: 1
                                                                                                                                                     enabled: true
                                                                                                                                                     position: [0, 0, 0]
-                                                                                                                                                    rotation: [-180, -1.356, -180]
+                                                                                                                                                    rotation: [180, -1.356, 180]
                                                                                                                                                     scale: [1, 1, 1]
                                                                                                                                                 child:
                                                                                                                                                   - id: 8252445221293630384
@@ -11639,7 +11471,7 @@ child:
                                                                                                                                                                 type: 1
                                                                                                                                                                 enabled: true
                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                rotation: [180, -85.75, 180]
+                                                                                                                                                                rotation: [-180, -85.75, -180]
                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                             child:
                                                                                                                                                               - id: 2947997736083328444
@@ -11687,7 +11519,7 @@ child:
                                                                                                                                                                                 type: 1
                                                                                                                                                                                 enabled: true
                                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                                rotation: [180, -85.64, 180]
+                                                                                                                                                                                rotation: [-180, -85.64, -180]
                                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                                             child:
                                                                                                                                                                               - id: 1763020957479063615
@@ -11771,7 +11603,7 @@ child:
                                                                                                                                                                                                             type: 1
                                                                                                                                                                                                             enabled: true
                                                                                                                                                                                                             position: [0, 0, 0]
-                                                                                                                                                                                                            rotation: [-180, -11.85, -180]
+                                                                                                                                                                                                            rotation: [180, -11.85, 180]
                                                                                                                                                                                                             scale: [1, 1, 1]
                                                                                                                                                                                                         child:
                                                                                                                                                                                                           - id: 5138853394069507134
@@ -11818,7 +11650,7 @@ child:
                                                                                                                                                                 type: 1
                                                                                                                                                                 enabled: true
                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                rotation: [-180, -6.71, -180]
+                                                                                                                                                                rotation: [180, -6.71, 180]
                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                             child:
                                                                                                                                                               - id: 4775966870435545810
@@ -11866,7 +11698,7 @@ child:
                                                                                                                                                                                 type: 1
                                                                                                                                                                                 enabled: true
                                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                                rotation: [-180, 6.71, -180]
+                                                                                                                                                                                rotation: [180, 6.71, 180]
                                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                                             child:
                                                                                                                                                                               - id: 1743634718709042819
@@ -11913,7 +11745,7 @@ child:
                                                                                                                                                                 type: 1
                                                                                                                                                                 enabled: true
                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                rotation: [-180, 7.352, -180]
+                                                                                                                                                                rotation: [180, 7.352, 180]
                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                             child:
                                                                                                                                                               - id: 9861219265221988646
@@ -11961,7 +11793,7 @@ child:
                                                                                                                                                                                 type: 1
                                                                                                                                                                                 enabled: true
                                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                                rotation: [-180, -7.352, -180]
+                                                                                                                                                                                rotation: [180, -7.352, 180]
                                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                                             child:
                                                                                                                                                                               - id: 17760169468963757363
@@ -12008,7 +11840,7 @@ child:
                                                                                                                                                                 type: 1
                                                                                                                                                                 enabled: true
                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                rotation: [-180, 37.69, -180]
+                                                                                                                                                                rotation: [180, 37.69, 180]
                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                             child:
                                                                                                                                                               - id: 15315101104890206880
@@ -12056,7 +11888,7 @@ child:
                                                                                                                                                                                 type: 1
                                                                                                                                                                                 enabled: true
                                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                                rotation: [-180, -37.69, -180]
+                                                                                                                                                                                rotation: [180, -37.69, 180]
                                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                                             child:
                                                                                                                                                                               - id: 11459015822330793963
@@ -12103,7 +11935,7 @@ child:
                                                                                                                                         type: 1
                                                                                                                                         enabled: true
                                                                                                                                         position: [0, 0, 0]
-                                                                                                                                        rotation: [-180, -0.4737, -180]
+                                                                                                                                        rotation: [180, -0.4737, 180]
                                                                                                                                         scale: [1, 1, 1]
                                                                                                                                     child:
                                                                                                                                       - id: 15987344257245938791
@@ -12139,7 +11971,7 @@ child:
                                                                                                                                                     type: 1
                                                                                                                                                     enabled: true
                                                                                                                                                     position: [0, 0, 0]
-                                                                                                                                                    rotation: [-180, 0.4737, -180]
+                                                                                                                                                    rotation: [180, 0.4737, 180]
                                                                                                                                                     scale: [1, 1, 1]
                                                                                                                                                 child:
                                                                                                                                                   - id: 13223711270451322188
@@ -12469,7 +12301,7 @@ child:
             type: 1
             enabled: true
             position: [59.39, -15.02, -164.5]
-            rotation: [-180, -55.25, -180]
+            rotation: [180, -55.25, 180]
             scale: [1.079, 1.1, 1.079]
       - id: 11650371022511337214
         name: AttackIndicator
@@ -12491,7 +12323,7 @@ child:
             type: 1
             enabled: true
             position: [0, 3.815, -0.75]
-            rotation: [-180, 89.98, -180]
+            rotation: [-0, 90, 0]
             scale: [2, 0.4164, 2.178]
         child:
           - id: 14414538786768405220
@@ -12894,7 +12726,7 @@ child:
             type: 1
             enabled: true
             position: [-0.84, 2.16, 3.18]
-            rotation: [-90, -0, -180]
+            rotation: [-90, 0, 180]
             scale: [2, 2, 2]
           - !<particle_system>
             id: 14783160612015305116
@@ -12958,688 +12790,6 @@ child:
                 position: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 rotation: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 scale: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-      - id: 7699550872331088968
-        name: HUD_v2
-        enabled: true
-        component:
-          - !<transform>
-            id: 2012225281844497666
-            type: 1
-            enabled: true
-            position: [-437.3, -17.75, -4.223]
-            rotation: [-178.3, -59.74, -178]
-            scale: [5.132, 5.05, 5.132]
-          - !<transform_2d>
-            id: 7697211109522960565
-            type: 10
-            enabled: true
-            position: [0, 0, 0]
-            size: [1006, 614]
-            scale: [1, 1]
-            rotation: [0, 0, 0, 1]
-            pivot: [0.5, 0.5]
-            anchor: [0.5, 0.5]
-          - !<canvas>
-            id: 12920335374127280586
-            type: 8
-            enabled: true
-        child:
-          - id: 15243854340693904736
-            name: HP_Bar
-            enabled: true
-            component:
-              - !<transform>
-                id: 16627696178455256992
-                type: 1
-                enabled: true
-                position: [0, 0, 0]
-                rotation: [-0, 0, -0]
-                scale: [1, 1, 1]
-            child:
-              - id: 9372532309728749581
-                name: SWORD_ADDON
-                enabled: false
-                component:
-                  - !<transform>
-                    id: 290362304258271887
-                    type: 1
-                    enabled: true
-                    position: [0, 0, 0]
-                    rotation: [-0, 0, -0]
-                    scale: [1, 1, 1]
-                  - !<transform_2d>
-                    id: 6766579608304492567
-                    type: 10
-                    enabled: true
-                    position: [-331, 170, 1]
-                    size: [20, 20]
-                    scale: [24, 14]
-                    rotation: [0, 0, 0, 1]
-                    pivot: [0.5, 0.5]
-                    anchor: [0.5, 0.5]
-                  - !<canvas_renderer>
-                    id: 12290402170897436665
-                    type: 9
-                    enabled: true
-                    scale_ui: false
-                    original_size_x: 0
-                    original_size_y: 0
-                  - !<image>
-                    id: 14924569293951609101
-                    type: 11
-                    enabled: true
-                    image_id: 7250747684639293339
-                    hover_image_id: 0
-                    image_color: [1, 1, 1, 1]
-                    hover_image_color: [1, 1, 1, 1]
-                    image_is_tiled: false
-                    image_randomize_initial_frame: false
-                    image_x_tiles: 1
-                    image_y_tiles: 1
-                    image_tiles_per_second: 1
-                    fill_window: false
-              - id: 4797440371158721590
-                name: BASE
-                enabled: true
-                component:
-                  - !<transform>
-                    id: 3281666168354506848
-                    type: 1
-                    enabled: true
-                    position: [0, 0, 0]
-                    rotation: [-0, 0, -0]
-                    scale: [1, 1, 1]
-                  - !<transform_2d>
-                    id: 16264327939103122313
-                    type: 10
-                    enabled: true
-                    position: [-330, 170, 0]
-                    size: [20, 20]
-                    scale: [24, 14]
-                    rotation: [0, 0, 0, 1]
-                    pivot: [0.5, 0.5]
-                    anchor: [0.5, 0.5]
-                  - !<canvas_renderer>
-                    id: 16067279339183974169
-                    type: 9
-                    enabled: true
-                    scale_ui: false
-                    original_size_x: 0
-                    original_size_y: 0
-                  - !<image>
-                    id: 16483459547071047206
-                    type: 11
-                    enabled: true
-                    image_id: 14728578588781681137
-                    hover_image_id: 0
-                    image_color: [1, 1, 1, 1]
-                    hover_image_color: [1, 1, 1, 1]
-                    image_is_tiled: false
-                    image_randomize_initial_frame: false
-                    image_x_tiles: 1
-                    image_y_tiles: 1
-                    image_tiles_per_second: 1
-                    fill_window: false
-                child:
-                  - id: 18230351080972722680
-                    name: Bullets
-                    enabled: true
-                    component:
-                      - !<transform>
-                        id: 5848593966925979761
-                        type: 1
-                        enabled: true
-                        position: [0, 0, 0]
-                        rotation: [-0, 0, -0]
-                        scale: [1, 1, 1]
-                    child:
-                      - id: 14620204057901611003
-                        name: BULLET_CELL_1
-                        enabled: true
-                        component:
-                          - !<transform>
-                            id: 17917659923758359457
-                            type: 1
-                            enabled: true
-                            position: [0, 0, 0]
-                            rotation: [-0, 0, -0]
-                            scale: [1, 1, 1]
-                          - !<transform_2d>
-                            id: 17768823055504586395
-                            type: 10
-                            enabled: true
-                            position: [-400, 210, 0]
-                            size: [20, 20]
-                            scale: [3, 3]
-                            rotation: [0, 0, 0, 1]
-                            pivot: [0.5, 0.5]
-                            anchor: [0.5, 0.5]
-                          - !<canvas_renderer>
-                            id: 4961901580163602309
-                            type: 9
-                            enabled: true
-                            scale_ui: false
-                            original_size_x: 0
-                            original_size_y: 0
-                          - !<image>
-                            id: 9819322418894428973
-                            type: 11
-                            enabled: true
-                            image_id: 336690227497419917
-                            hover_image_id: 0
-                            image_color: [1, 1, 1, 1]
-                            hover_image_color: [1, 1, 1, 1]
-                            image_is_tiled: false
-                            image_randomize_initial_frame: false
-                            image_x_tiles: 1
-                            image_y_tiles: 1
-                            image_tiles_per_second: 1
-                            fill_window: false
-                      - id: 16766702370385016932
-                        name: BULLET_CELL_2
-                        enabled: true
-                        component:
-                          - !<transform>
-                            id: 5096488486166241410
-                            type: 1
-                            enabled: true
-                            position: [0, 0, 0]
-                            rotation: [-0, 0, -0]
-                            scale: [1, 1, 1]
-                          - !<transform_2d>
-                            id: 17464740609324187263
-                            type: 10
-                            enabled: true
-                            position: [-340, 210, 0]
-                            size: [20, 20]
-                            scale: [3, 3]
-                            rotation: [0, 0, 0, 1]
-                            pivot: [0.5, 0.5]
-                            anchor: [0.5, 0.5]
-                          - !<canvas_renderer>
-                            id: 3900478983283168626
-                            type: 9
-                            enabled: true
-                            scale_ui: false
-                            original_size_x: 0
-                            original_size_y: 0
-                          - !<image>
-                            id: 14585566447419760439
-                            type: 11
-                            enabled: true
-                            image_id: 336690227497419917
-                            hover_image_id: 0
-                            image_color: [1, 1, 1, 1]
-                            hover_image_color: [1, 1, 1, 1]
-                            image_is_tiled: false
-                            image_randomize_initial_frame: false
-                            image_x_tiles: 1
-                            image_y_tiles: 1
-                            image_tiles_per_second: 1
-                            fill_window: false
-                      - id: 14733637421703874506
-                        name: BULLET_CELL_3
-                        enabled: true
-                        component:
-                          - !<transform>
-                            id: 5610162926625660471
-                            type: 1
-                            enabled: true
-                            position: [0, 0, 0]
-                            rotation: [-0, 0, -0]
-                            scale: [1, 1, 1]
-                          - !<transform_2d>
-                            id: 2629104884397892662
-                            type: 10
-                            enabled: true
-                            position: [-280, 210, 0]
-                            size: [20, 20]
-                            scale: [3, 3]
-                            rotation: [0, 0, 0, 1]
-                            pivot: [0.5, 0.5]
-                            anchor: [0.5, 0.5]
-                          - !<canvas_renderer>
-                            id: 14035415764991086301
-                            type: 9
-                            enabled: true
-                            scale_ui: false
-                            original_size_x: 0
-                            original_size_y: 0
-                          - !<image>
-                            id: 6174158638848409500
-                            type: 11
-                            enabled: true
-                            image_id: 336690227497419917
-                            hover_image_id: 0
-                            image_color: [1, 1, 1, 1]
-                            hover_image_color: [1, 1, 1, 1]
-                            image_is_tiled: false
-                            image_randomize_initial_frame: false
-                            image_x_tiles: 1
-                            image_y_tiles: 1
-                            image_tiles_per_second: 1
-                            fill_window: false
-                      - id: 8417757956945687545
-                        name: BULLET_CELL_4
-                        enabled: true
-                        component:
-                          - !<transform>
-                            id: 5510477041674573524
-                            type: 1
-                            enabled: true
-                            position: [0, 0, 0]
-                            rotation: [-0, 0, -0]
-                            scale: [1, 1, 1]
-                          - !<transform_2d>
-                            id: 6132396073459434696
-                            type: 10
-                            enabled: true
-                            position: [-220, 210, 0]
-                            size: [20, 20]
-                            scale: [3, 3]
-                            rotation: [0, 0, 0, 1]
-                            pivot: [0.5, 0.5]
-                            anchor: [0.5, 0.5]
-                          - !<canvas_renderer>
-                            id: 511643720913632388
-                            type: 9
-                            enabled: true
-                            scale_ui: false
-                            original_size_x: 0
-                            original_size_y: 0
-                          - !<image>
-                            id: 2092154679152792948
-                            type: 11
-                            enabled: true
-                            image_id: 336690227497419917
-                            hover_image_id: 0
-                            image_color: [1, 1, 1, 1]
-                            hover_image_color: [1, 1, 1, 1]
-                            image_is_tiled: false
-                            image_randomize_initial_frame: false
-                            image_x_tiles: 1
-                            image_y_tiles: 1
-                            image_tiles_per_second: 1
-                            fill_window: false
-                  - id: 9688943429729214056
-                    name: Health_capsules
-                    enabled: true
-                    component:
-                      - !<transform>
-                        id: 4021036842656490982
-                        type: 1
-                        enabled: true
-                        position: [0, 0, 0]
-                        rotation: [-0, 0, -0]
-                        scale: [1, 1, 1]
-                    child:
-                      - id: 11748703727812461821
-                        name: Health_capsule_1
-                        enabled: true
-                        component:
-                          - !<transform>
-                            id: 4633259890615429659
-                            type: 1
-                            enabled: true
-                            position: [0, 0, 0]
-                            rotation: [-0, 0, -0]
-                            scale: [1, 1, 1]
-                          - !<transform_2d>
-                            id: 12078821782057012588
-                            type: 10
-                            enabled: true
-                            position: [-377, 253.9, 0]
-                            size: [20, 20]
-                            scale: [3.6, 2]
-                            rotation: [0, 0, 0, 1]
-                            pivot: [0.5, 0.5]
-                            anchor: [0.5, 0.5]
-                          - !<canvas_renderer>
-                            id: 3704778044886036234
-                            type: 9
-                            enabled: true
-                            scale_ui: false
-                            original_size_x: 0
-                            original_size_y: 0
-                          - !<image>
-                            id: 10562251136562599121
-                            type: 11
-                            enabled: true
-                            image_id: 15478304056567162071
-                            hover_image_id: 0
-                            image_color: [1, 1, 1, 1]
-                            hover_image_color: [1, 1, 1, 1]
-                            image_is_tiled: true
-                            image_randomize_initial_frame: true
-                            image_x_tiles: 7
-                            image_y_tiles: 2
-                            image_tiles_per_second: 14
-                            fill_window: false
-                      - id: 16068930017980298820
-                        name: Health_capsule_2
-                        enabled: true
-                        component:
-                          - !<transform>
-                            id: 6841096292375567990
-                            type: 1
-                            enabled: true
-                            position: [0, 0, 0]
-                            rotation: [-0, 0, -0]
-                            scale: [1, 1, 1]
-                          - !<transform_2d>
-                            id: 2873701348787260740
-                            type: 10
-                            enabled: true
-                            position: [-304, 253.9, 0]
-                            size: [20, 20]
-                            scale: [3.6, 2]
-                            rotation: [0, 0, 0, 1]
-                            pivot: [0.5, 0.5]
-                            anchor: [0.5, 0.5]
-                          - !<canvas_renderer>
-                            id: 12202567589082908655
-                            type: 9
-                            enabled: true
-                            scale_ui: false
-                            original_size_x: 0
-                            original_size_y: 0
-                          - !<image>
-                            id: 9574980468585096343
-                            type: 11
-                            enabled: true
-                            image_id: 15478304056567162071
-                            hover_image_id: 0
-                            image_color: [1, 1, 1, 1]
-                            hover_image_color: [1, 1, 1, 1]
-                            image_is_tiled: true
-                            image_randomize_initial_frame: true
-                            image_x_tiles: 7
-                            image_y_tiles: 2
-                            image_tiles_per_second: 14
-                            fill_window: false
-                      - id: 6694052651249836903
-                        name: Health_capsule_3
-                        enabled: true
-                        component:
-                          - !<transform>
-                            id: 4409432855179441273
-                            type: 1
-                            enabled: true
-                            position: [0, 0, 0]
-                            rotation: [-0, 0, -0]
-                            scale: [1, 1, 1]
-                          - !<transform_2d>
-                            id: 4820288611156638232
-                            type: 10
-                            enabled: true
-                            position: [-231, 253.9, 0]
-                            size: [20, 20]
-                            scale: [3.6, 2]
-                            rotation: [0, 0, 0, 1]
-                            pivot: [0.5, 0.5]
-                            anchor: [0.5, 0.5]
-                          - !<canvas_renderer>
-                            id: 2780342154628423557
-                            type: 9
-                            enabled: true
-                            scale_ui: false
-                            original_size_x: 0
-                            original_size_y: 0
-                          - !<image>
-                            id: 17296402630786876482
-                            type: 11
-                            enabled: true
-                            image_id: 15478304056567162071
-                            hover_image_id: 0
-                            image_color: [1, 1, 1, 1]
-                            hover_image_color: [1, 1, 1, 1]
-                            image_is_tiled: true
-                            image_randomize_initial_frame: true
-                            image_x_tiles: 7
-                            image_y_tiles: 2
-                            image_tiles_per_second: 14
-                            fill_window: false
-                      - id: 15324029136768672943
-                        name: Health_capsule_4
-                        enabled: true
-                        component:
-                          - !<transform>
-                            id: 6021969255180201939
-                            type: 1
-                            enabled: true
-                            position: [0, 0, 0]
-                            rotation: [-0, 0, -0]
-                            scale: [1, 1, 1]
-                          - !<transform_2d>
-                            id: 15456155326935915134
-                            type: 10
-                            enabled: true
-                            position: [-158, 253.9, 0]
-                            size: [20, 20]
-                            scale: [3.6, 2]
-                            rotation: [0, 0, 0, 1]
-                            pivot: [0.5, 0.5]
-                            anchor: [0.5, 0.5]
-                          - !<canvas_renderer>
-                            id: 11137042205238613157
-                            type: 9
-                            enabled: true
-                            scale_ui: false
-                            original_size_x: 0
-                            original_size_y: 0
-                          - !<image>
-                            id: 3589538216262360670
-                            type: 11
-                            enabled: true
-                            image_id: 15478304056567162071
-                            hover_image_id: 0
-                            image_color: [1, 1, 1, 1]
-                            hover_image_color: [1, 1, 1, 1]
-                            image_is_tiled: true
-                            image_randomize_initial_frame: true
-                            image_x_tiles: 7
-                            image_y_tiles: 2
-                            image_tiles_per_second: 14
-                            fill_window: false
-                  - id: 10268343424768569099
-                    name: Stamina
-                    enabled: true
-                    component:
-                      - !<transform>
-                        id: 6340704697699695973
-                        type: 1
-                        enabled: true
-                        position: [0, 0, 0]
-                        rotation: [-0, 0, -0]
-                        scale: [1, 1, 1]
-                      - !<progress_bar>
-                        id: 17612991641246861096
-                        type: 13
-                        enabled: true
-                        params:
-                          min: 0
-                          max: 1
-                          filled: 1
-                          direction: 0
-                      - !<transform_2d>
-                        id: 5807233216974545147
-                        type: 10
-                        enabled: true
-                        position: [0, 0, 0]
-                        size: [20, 20]
-                        scale: [1, 1]
-                        rotation: [0, 0, 0, 1]
-                        pivot: [0.5, 0.5]
-                        anchor: [0.5, 0.5]
-                    child:
-                      - id: 16657828942621503797
-                        name: Bar Background
-                        enabled: true
-                        component:
-                          - !<transform>
-                            id: 10204132761148658660
-                            type: 1
-                            enabled: true
-                            position: [0, 0, 0]
-                            rotation: [-0, 0, -0]
-                            scale: [1, 1, 1]
-                          - !<transform_2d>
-                            id: 13867720582400194479
-                            type: 10
-                            enabled: true
-                            position: [1.4, 0.25, 0]
-                            size: [12.5, 0.8]
-                            scale: [1, 1]
-                            rotation: [0, 0, 0, 1]
-                            pivot: [0.5, 0.5]
-                            anchor: [0.5, 0.5]
-                          - !<canvas_renderer>
-                            id: 10156446383801045388
-                            type: 9
-                            enabled: true
-                            scale_ui: false
-                            original_size_x: 0
-                            original_size_y: 0
-                          - !<image>
-                            id: 10815028700290023901
-                            type: 11
-                            enabled: true
-                            image_id: 16846014220398556825
-                            hover_image_id: 0
-                            image_color: [1, 0, 0, 1]
-                            hover_image_color: [1, 1, 1, 1]
-                            image_is_tiled: false
-                            image_randomize_initial_frame: false
-                            image_x_tiles: 1
-                            image_y_tiles: 1
-                            image_tiles_per_second: 1
-                            fill_window: false
-                      - id: 1591602173997558324
-                        name: Bar Fill
-                        enabled: true
-                        component:
-                          - !<transform>
-                            id: 3579150422107341247
-                            type: 1
-                            enabled: true
-                            position: [0, 0, 0]
-                            rotation: [-0, 0, -0]
-                            scale: [1, 1, 1]
-                          - !<transform_2d>
-                            id: 3240556621667725477
-                            type: 10
-                            enabled: true
-                            position: [1.4, 0.25, 0]
-                            size: [12.5, 0.8]
-                            scale: [1, 1]
-                            rotation: [0, 0, 0, 1]
-                            pivot: [0.5, 0.5]
-                            anchor: [0.5, 0.5]
-                          - !<canvas_renderer>
-                            id: 10858156875539742457
-                            type: 9
-                            enabled: true
-                            scale_ui: false
-                            original_size_x: 0
-                            original_size_y: 0
-                          - !<image>
-                            id: 17264423491891622029
-                            type: 11
-                            enabled: true
-                            image_id: 16846014220398556825
-                            hover_image_id: 0
-                            image_color: [1, 1, 1, 1]
-                            hover_image_color: [1, 1, 1, 1]
-                            image_is_tiled: false
-                            image_randomize_initial_frame: false
-                            image_x_tiles: 1
-                            image_y_tiles: 1
-                            image_tiles_per_second: 1
-                            fill_window: false
-              - id: 16991925110529940745
-                name: MAZE_ADDON
-                enabled: false
-                component:
-                  - !<transform>
-                    id: 6166950355477764999
-                    type: 1
-                    enabled: true
-                    position: [0, 0, 0]
-                    rotation: [-0, 0, -0]
-                    scale: [1, 1, 1]
-                  - !<transform_2d>
-                    id: 16340572994108674537
-                    type: 10
-                    enabled: true
-                    position: [-331.1, 169.1, 0]
-                    size: [20, 20]
-                    scale: [24, 14]
-                    rotation: [0, 0, 0, 1]
-                    pivot: [0.5, 0.5]
-                    anchor: [0.5, 0.5]
-                  - !<canvas_renderer>
-                    id: 6854347077469363147
-                    type: 9
-                    enabled: true
-                    scale_ui: false
-                    original_size_x: 0
-                    original_size_y: 0
-                  - !<image>
-                    id: 4535279696666362116
-                    type: 11
-                    enabled: true
-                    image_id: 14023195895871668462
-                    hover_image_id: 0
-                    image_color: [1, 1, 1, 1]
-                    hover_image_color: [1, 1, 1, 1]
-                    image_is_tiled: false
-                    image_randomize_initial_frame: false
-                    image_x_tiles: 1
-                    image_y_tiles: 1
-                    image_tiles_per_second: 1
-                    fill_window: false
-              - id: 13103392272043170015
-                name: CLAW_ADDON
-                enabled: false
-                component:
-                  - !<transform>
-                    id: 64767516727614407
-                    type: 1
-                    enabled: true
-                    position: [0, 0, 0]
-                    rotation: [-0, 0, -0]
-                    scale: [1, 1, 1]
-                  - !<transform_2d>
-                    id: 1289300948793815219
-                    type: 10
-                    enabled: true
-                    position: [-336, 170, 0]
-                    size: [20, 20]
-                    scale: [24, 14]
-                    rotation: [0, 0, 0, 1]
-                    pivot: [0.5, 0.5]
-                    anchor: [0.5, 0.5]
-                  - !<canvas_renderer>
-                    id: 10186988064983905208
-                    type: 9
-                    enabled: true
-                    scale_ui: false
-                    original_size_x: 0
-                    original_size_y: 0
-                  - !<image>
-                    id: 11288519102274763507
-                    type: 11
-                    enabled: true
-                    image_id: 17147944466834967470
-                    hover_image_id: 0
-                    image_color: [1, 1, 1, 1]
-                    hover_image_color: [1, 1, 1, 1]
-                    image_is_tiled: false
-                    image_randomize_initial_frame: false
-                    image_x_tiles: 1
-                    image_y_tiles: 1
-                    image_tiles_per_second: 1
-                    fill_window: false
       - id: 16744711593634271272
         name: AimIndicator
         enabled: true
@@ -13649,7 +12799,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 7]
-            rotation: [-180, 89.98, -180]
+            rotation: [180, 89.98, 180]
             scale: [2.5, 2.5, 2.5]
           - !<billboard>
             id: 12691712513651242410
@@ -13677,6 +12827,866 @@ child:
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 0
             projection: true
+            randomize_tiles: false
+      - id: 9206824715759104363
+        name: HUD_v2
+        enabled: true
+        component:
+          - !<transform>
+            id: 9667399233733381922
+            type: 1
+            enabled: true
+            position: [-787.5, -57.84, 304.8]
+            rotation: [-180, -69.5, -180]
+            scale: [11.69, 10.97, 11.69]
+          - !<transform_2d>
+            id: 3382000505959166036
+            type: 10
+            enabled: true
+            position: [0, 0, 0]
+            size: [1194, 637]
+            scale: [1, 1]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [0.5, 0.5]
+          - !<canvas>
+            id: 15482656144066959801
+            type: 8
+            enabled: true
+        child:
+          - id: 4622995022812409778
+            name: HP_Bar
+            enabled: true
+            component:
+              - !<transform>
+                id: 15614881338874346579
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<transform_2d>
+                id: 8227790992569428760
+                type: 10
+                enabled: true
+                position: [0, 0, 0]
+                size: [0, 0]
+                scale: [1, 1]
+                rotation: [0, 0, 0, 1]
+                pivot: [0, 1]
+                anchor: [0, 1]
+              - !<canvas_renderer>
+                id: 10880160161975694007
+                type: 9
+                enabled: true
+                scale_ui: false
+                original_size_x: 0
+                original_size_y: 0
+              - !<image>
+                id: 1195723032420062983
+                type: 11
+                enabled: true
+                image_id: 0
+                hover_image_id: 0
+                image_color: [1, 1, 1, 1]
+                hover_image_color: [1, 1, 1, 1]
+                image_is_tiled: false
+                image_randomize_initial_frame: false
+                image_x_tiles: 1
+                image_y_tiles: 1
+                image_tiles_per_second: 1
+                fill_window: false
+            child:
+              - id: 12650223589207795949
+                name: SWORD_ADDON
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 13748807733849603564
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                  - !<transform_2d>
+                    id: 15601097099070116280
+                    type: 10
+                    enabled: true
+                    position: [0, 0, 0]
+                    size: [20, 20]
+                    scale: [24, 14]
+                    rotation: [0, 0, 0, 1]
+                    pivot: [0, 1]
+                    anchor: [0, 1]
+                  - !<canvas_renderer>
+                    id: 8759585242218441020
+                    type: 9
+                    enabled: true
+                    scale_ui: false
+                    original_size_x: 0
+                    original_size_y: 0
+                  - !<image>
+                    id: 14636995882379597017
+                    type: 11
+                    enabled: true
+                    image_id: 7250747684639293339
+                    hover_image_id: 0
+                    image_color: [1, 1, 1, 1]
+                    hover_image_color: [1, 1, 1, 1]
+                    image_is_tiled: false
+                    image_randomize_initial_frame: false
+                    image_x_tiles: 1
+                    image_y_tiles: 1
+                    image_tiles_per_second: 1
+                    fill_window: false
+              - id: 6168457050012883645
+                name: BASE
+                enabled: true
+                component:
+                  - !<transform>
+                    id: 10258200495180698242
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                  - !<transform_2d>
+                    id: 1144626595270988741
+                    type: 10
+                    enabled: true
+                    position: [0, 0, 0]
+                    size: [20, 20]
+                    scale: [24, 14]
+                    rotation: [0, 0, 0, 1]
+                    pivot: [0, 1]
+                    anchor: [0, 1]
+                  - !<canvas_renderer>
+                    id: 3826039097994133839
+                    type: 9
+                    enabled: true
+                    scale_ui: false
+                    original_size_x: 0
+                    original_size_y: 0
+                  - !<image>
+                    id: 9774808881459564856
+                    type: 11
+                    enabled: true
+                    image_id: 14728578588781681137
+                    hover_image_id: 0
+                    image_color: [1, 1, 1, 1]
+                    hover_image_color: [1, 1, 1, 1]
+                    image_is_tiled: false
+                    image_randomize_initial_frame: false
+                    image_x_tiles: 1
+                    image_y_tiles: 1
+                    image_tiles_per_second: 1
+                    fill_window: false
+                child:
+                  - id: 1354265126022788783
+                    name: Bullets
+                    enabled: true
+                    component:
+                      - !<transform>
+                        id: 15620712818071298223
+                        type: 1
+                        enabled: true
+                        position: [0, 0, 0]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                      - !<transform_2d>
+                        id: 17655950125373793781
+                        type: 10
+                        enabled: true
+                        position: [-1.5, 2, 0]
+                        size: [0, 0]
+                        scale: [1.25, 2.5]
+                        rotation: [0, 0, 0, 1]
+                        pivot: [0, 1]
+                        anchor: [0, 1]
+                      - !<canvas_renderer>
+                        id: 13629724771817719154
+                        type: 9
+                        enabled: true
+                        scale_ui: false
+                        original_size_x: 0
+                        original_size_y: 0
+                      - !<image>
+                        id: 10242329933667886442
+                        type: 11
+                        enabled: true
+                        image_id: 0
+                        hover_image_id: 0
+                        image_color: [1, 1, 1, 1]
+                        hover_image_color: [1, 1, 1, 1]
+                        image_is_tiled: false
+                        image_randomize_initial_frame: false
+                        image_x_tiles: 1
+                        image_y_tiles: 1
+                        image_tiles_per_second: 1
+                        fill_window: false
+                    child:
+                      - id: 2477449859228675703
+                        name: BULLET_CELL_1
+                        enabled: true
+                        component:
+                          - !<transform>
+                            id: 3972027102959457882
+                            type: 1
+                            enabled: true
+                            position: [0, 0, 0]
+                            rotation: [-0, 0, -0]
+                            scale: [1, 1, 1]
+                          - !<transform_2d>
+                            id: 6971067036354892918
+                            type: 10
+                            enabled: true
+                            position: [6, -2.5, 0]
+                            size: [2, 2]
+                            scale: [1, 1]
+                            rotation: [0, 0, 0, 1]
+                            pivot: [0, 1]
+                            anchor: [0, 1]
+                          - !<canvas_renderer>
+                            id: 1461493740337433067
+                            type: 9
+                            enabled: true
+                            scale_ui: false
+                            original_size_x: 0
+                            original_size_y: 0
+                          - !<image>
+                            id: 3141567532127822415
+                            type: 11
+                            enabled: true
+                            image_id: 336690227497419917
+                            hover_image_id: 0
+                            image_color: [1, 1, 1, 1]
+                            hover_image_color: [1, 1, 1, 1]
+                            image_is_tiled: false
+                            image_randomize_initial_frame: false
+                            image_x_tiles: 1
+                            image_y_tiles: 1
+                            image_tiles_per_second: 1
+                            fill_window: false
+                      - id: 12047661129597660954
+                        name: BULLET_CELL_2
+                        enabled: true
+                        component:
+                          - !<transform>
+                            id: 6203608879787620208
+                            type: 1
+                            enabled: true
+                            position: [0, 0, 0]
+                            rotation: [-0, 0, -0]
+                            scale: [1, 1, 1]
+                          - !<transform_2d>
+                            id: 18165614238587510339
+                            type: 10
+                            enabled: true
+                            position: [8, -2.5, 0]
+                            size: [2, 2]
+                            scale: [1, 1]
+                            rotation: [0, 0, 0, 1]
+                            pivot: [0, 1]
+                            anchor: [0, 1]
+                          - !<canvas_renderer>
+                            id: 3956670258659989298
+                            type: 9
+                            enabled: true
+                            scale_ui: false
+                            original_size_x: 0
+                            original_size_y: 0
+                          - !<image>
+                            id: 16569218687838106113
+                            type: 11
+                            enabled: true
+                            image_id: 336690227497419917
+                            hover_image_id: 0
+                            image_color: [1, 1, 1, 1]
+                            hover_image_color: [1, 1, 1, 1]
+                            image_is_tiled: false
+                            image_randomize_initial_frame: false
+                            image_x_tiles: 1
+                            image_y_tiles: 1
+                            image_tiles_per_second: 1
+                            fill_window: false
+                      - id: 9498315867571538527
+                        name: BULLET_CELL_3
+                        enabled: true
+                        component:
+                          - !<transform>
+                            id: 7907661050959043020
+                            type: 1
+                            enabled: true
+                            position: [0, 0, 0]
+                            rotation: [-0, 0, -0]
+                            scale: [1, 1, 1]
+                          - !<transform_2d>
+                            id: 16914188281071879521
+                            type: 10
+                            enabled: true
+                            position: [10, -2.5, 0]
+                            size: [2, 2]
+                            scale: [1, 1]
+                            rotation: [0, 0, 0, 1]
+                            pivot: [0, 1]
+                            anchor: [0, 1]
+                          - !<canvas_renderer>
+                            id: 12375961572098712532
+                            type: 9
+                            enabled: true
+                            scale_ui: false
+                            original_size_x: 0
+                            original_size_y: 0
+                          - !<image>
+                            id: 15683701076528207039
+                            type: 11
+                            enabled: true
+                            image_id: 336690227497419917
+                            hover_image_id: 0
+                            image_color: [1, 1, 1, 1]
+                            hover_image_color: [1, 1, 1, 1]
+                            image_is_tiled: false
+                            image_randomize_initial_frame: false
+                            image_x_tiles: 1
+                            image_y_tiles: 1
+                            image_tiles_per_second: 1
+                            fill_window: false
+                      - id: 11653574832143118474
+                        name: BULLET_CELL_4
+                        enabled: true
+                        component:
+                          - !<transform>
+                            id: 12640383495808902655
+                            type: 1
+                            enabled: true
+                            position: [0, 0, 0]
+                            rotation: [-0, 0, -0]
+                            scale: [1, 1, 1]
+                          - !<transform_2d>
+                            id: 3806388011854956055
+                            type: 10
+                            enabled: true
+                            position: [12, -2.5, 0]
+                            size: [2, 2]
+                            scale: [1, 1]
+                            rotation: [0, 0, 0, 1]
+                            pivot: [0, 1]
+                            anchor: [0, 1]
+                          - !<canvas_renderer>
+                            id: 17901875644794857045
+                            type: 9
+                            enabled: true
+                            scale_ui: false
+                            original_size_x: 0
+                            original_size_y: 0
+                          - !<image>
+                            id: 14852762484790283675
+                            type: 11
+                            enabled: true
+                            image_id: 336690227497419917
+                            hover_image_id: 0
+                            image_color: [1, 1, 1, 1]
+                            hover_image_color: [1, 1, 1, 1]
+                            image_is_tiled: false
+                            image_randomize_initial_frame: false
+                            image_x_tiles: 1
+                            image_y_tiles: 1
+                            image_tiles_per_second: 1
+                            fill_window: false
+                  - id: 11315628968893688252
+                    name: Health_capsules
+                    enabled: true
+                    component:
+                      - !<transform>
+                        id: 10218147101188140501
+                        type: 1
+                        enabled: true
+                        position: [0, 0, 0]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                      - !<transform_2d>
+                        id: 15186312200248330681
+                        type: 10
+                        enabled: true
+                        position: [0, 0.5, 0]
+                        size: [0, 0]
+                        scale: [3, 3]
+                        rotation: [0, 0, 0, 1]
+                        pivot: [0, 1]
+                        anchor: [0, 1]
+                      - !<canvas_renderer>
+                        id: 4997598542242623812
+                        type: 9
+                        enabled: true
+                        scale_ui: false
+                        original_size_x: 0
+                        original_size_y: 0
+                      - !<image>
+                        id: 16250015681223926006
+                        type: 11
+                        enabled: true
+                        image_id: 0
+                        hover_image_id: 0
+                        image_color: [1, 1, 1, 1]
+                        hover_image_color: [1, 1, 1, 1]
+                        image_is_tiled: false
+                        image_randomize_initial_frame: false
+                        image_x_tiles: 1
+                        image_y_tiles: 1
+                        image_tiles_per_second: 1
+                        fill_window: false
+                    child:
+                      - id: 8856581071078474772
+                        name: Health_capsule_1
+                        enabled: true
+                        component:
+                          - !<transform>
+                            id: 675131755273695207
+                            type: 1
+                            enabled: true
+                            position: [0, 0, 0]
+                            rotation: [-0, 0, -0]
+                            scale: [1, 1, 1]
+                          - !<transform_2d>
+                            id: 9618449989001326494
+                            type: 10
+                            enabled: true
+                            position: [2.8, -1.2, 0]
+                            size: [1, 1]
+                            scale: [1, 1]
+                            rotation: [0, 0, 0, 1]
+                            pivot: [0.5, 0.5]
+                            anchor: [0.5, 0.5]
+                          - !<canvas_renderer>
+                            id: 3197283481744489998
+                            type: 9
+                            enabled: true
+                            scale_ui: false
+                            original_size_x: 0
+                            original_size_y: 0
+                          - !<image>
+                            id: 15954869321054930976
+                            type: 11
+                            enabled: true
+                            image_id: 15478304056567162071
+                            hover_image_id: 0
+                            image_color: [1, 1, 1, 1]
+                            hover_image_color: [1, 1, 1, 1]
+                            image_is_tiled: true
+                            image_randomize_initial_frame: false
+                            image_x_tiles: 7
+                            image_y_tiles: 2
+                            image_tiles_per_second: 14
+                            fill_window: false
+                      - id: 8646015738038394158
+                        name: Health_capsule_2
+                        enabled: true
+                        component:
+                          - !<transform>
+                            id: 12388408116490643193
+                            type: 1
+                            enabled: true
+                            position: [0, 0, 0]
+                            rotation: [-0, 0, -0]
+                            scale: [1, 1, 1]
+                          - !<transform_2d>
+                            id: 11336235126605932463
+                            type: 10
+                            enabled: true
+                            position: [3.8, -1.2, 0]
+                            size: [1, 1]
+                            scale: [1, 1]
+                            rotation: [0, 0, 0, 1]
+                            pivot: [0.5, 0.5]
+                            anchor: [0.5, 0.5]
+                          - !<canvas_renderer>
+                            id: 13984241432030576698
+                            type: 9
+                            enabled: true
+                            scale_ui: false
+                            original_size_x: 0
+                            original_size_y: 0
+                          - !<image>
+                            id: 6914741544615873359
+                            type: 11
+                            enabled: true
+                            image_id: 15478304056567162071
+                            hover_image_id: 0
+                            image_color: [1, 1, 1, 1]
+                            hover_image_color: [1, 1, 1, 1]
+                            image_is_tiled: true
+                            image_randomize_initial_frame: false
+                            image_x_tiles: 7
+                            image_y_tiles: 2
+                            image_tiles_per_second: 14
+                            fill_window: false
+                      - id: 13152415029606352818
+                        name: Health_capsule_3
+                        enabled: true
+                        component:
+                          - !<transform>
+                            id: 13427317246560152358
+                            type: 1
+                            enabled: true
+                            position: [0, 0, 0]
+                            rotation: [-0, 0, -0]
+                            scale: [1, 1, 1]
+                          - !<transform_2d>
+                            id: 10074720644385440455
+                            type: 10
+                            enabled: true
+                            position: [4.8, -1.2, 0]
+                            size: [1, 1]
+                            scale: [1, 1]
+                            rotation: [0, 0, 0, 1]
+                            pivot: [0.5, 0.5]
+                            anchor: [0.5, 0.5]
+                          - !<canvas_renderer>
+                            id: 4624060512111532401
+                            type: 9
+                            enabled: true
+                            scale_ui: false
+                            original_size_x: 0
+                            original_size_y: 0
+                          - !<image>
+                            id: 11432950703754091649
+                            type: 11
+                            enabled: true
+                            image_id: 15478304056567162071
+                            hover_image_id: 0
+                            image_color: [1, 1, 1, 1]
+                            hover_image_color: [1, 1, 1, 1]
+                            image_is_tiled: true
+                            image_randomize_initial_frame: false
+                            image_x_tiles: 7
+                            image_y_tiles: 2
+                            image_tiles_per_second: 14
+                            fill_window: false
+                      - id: 437777248414621311
+                        name: Health_capsule_4
+                        enabled: true
+                        component:
+                          - !<transform>
+                            id: 10867188912695863543
+                            type: 1
+                            enabled: true
+                            position: [0, 0, 0]
+                            rotation: [-0, 0, -0]
+                            scale: [1, 1, 1]
+                          - !<transform_2d>
+                            id: 9821277821142636244
+                            type: 10
+                            enabled: true
+                            position: [5.8, -1.2, 0]
+                            size: [1, 1]
+                            scale: [1, 1]
+                            rotation: [0, 0, 0, 1]
+                            pivot: [0.5, 0.5]
+                            anchor: [0.5, 0.5]
+                          - !<canvas_renderer>
+                            id: 13029480693755390528
+                            type: 9
+                            enabled: true
+                            scale_ui: false
+                            original_size_x: 0
+                            original_size_y: 0
+                          - !<image>
+                            id: 2409006955118841978
+                            type: 11
+                            enabled: true
+                            image_id: 15478304056567162071
+                            hover_image_id: 0
+                            image_color: [1, 1, 1, 1]
+                            hover_image_color: [1, 1, 1, 1]
+                            image_is_tiled: true
+                            image_randomize_initial_frame: false
+                            image_x_tiles: 7
+                            image_y_tiles: 2
+                            image_tiles_per_second: 14
+                            fill_window: false
+                  - id: 7329816778822984063
+                    name: Stamina
+                    enabled: false
+                    component:
+                      - !<transform>
+                        id: 11259836256440441670
+                        type: 1
+                        enabled: true
+                        position: [0, 0, 0]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                      - !<progress_bar>
+                        id: 8506236863584923615
+                        type: 13
+                        enabled: true
+                        params:
+                          min: 0
+                          max: 0
+                          filled: 1
+                          direction: 0
+                      - !<transform_2d>
+                        id: 8068924005500289980
+                        type: 10
+                        enabled: true
+                        position: [0, 0, 0]
+                        size: [1, 1]
+                        scale: [1, 1]
+                        rotation: [0, 0, 0, 1]
+                        pivot: [0.5, 0.5]
+                        anchor: [0.5, 0.5]
+                    child:
+                      - id: 2029929430092817937
+                        name: Bar Background
+                        enabled: true
+                        component:
+                          - !<transform>
+                            id: 12606515081581351126
+                            type: 1
+                            enabled: true
+                            position: [0, 0, 0]
+                            rotation: [-0, 0, -0]
+                            scale: [1, 1, 1]
+                          - !<transform_2d>
+                            id: 14288184010410602712
+                            type: 10
+                            enabled: true
+                            position: [1.4, 0.25, 0]
+                            size: [12.5, 0.8]
+                            scale: [1, 1]
+                            rotation: [0, 0, 0, 1]
+                            pivot: [0.5, 0.5]
+                            anchor: [0.5, 0.5]
+                          - !<canvas_renderer>
+                            id: 3122200051054831363
+                            type: 9
+                            enabled: true
+                            scale_ui: false
+                            original_size_x: 0
+                            original_size_y: 0
+                          - !<image>
+                            id: 13212453302320741317
+                            type: 11
+                            enabled: true
+                            image_id: 16846014220398556825
+                            hover_image_id: 0
+                            image_color: [1, 0, 0, 1]
+                            hover_image_color: [1, 1, 1, 1]
+                            image_is_tiled: false
+                            image_randomize_initial_frame: false
+                            image_x_tiles: 1
+                            image_y_tiles: 1
+                            image_tiles_per_second: 1
+                            fill_window: false
+                      - id: 6259438009976572169
+                        name: Bar Fill
+                        enabled: true
+                        component:
+                          - !<transform>
+                            id: 2535652731305507766
+                            type: 1
+                            enabled: true
+                            position: [0, 0, 0]
+                            rotation: [-0, 0, -0]
+                            scale: [1, 1, 1]
+                          - !<transform_2d>
+                            id: 11779245351473156416
+                            type: 10
+                            enabled: true
+                            position: [1.4, 0.25, 0]
+                            size: [12.5, 0.8]
+                            scale: [1, 1]
+                            rotation: [0, 0, 0, 1]
+                            pivot: [0.5, 0.5]
+                            anchor: [0.5, 0.5]
+                          - !<canvas_renderer>
+                            id: 2824647465121750724
+                            type: 9
+                            enabled: true
+                            scale_ui: false
+                            original_size_x: 0
+                            original_size_y: 0
+                          - !<image>
+                            id: 14718021825437500318
+                            type: 11
+                            enabled: true
+                            image_id: 16846014220398556825
+                            hover_image_id: 0
+                            image_color: [1, 1, 1, 1]
+                            hover_image_color: [1, 1, 1, 1]
+                            image_is_tiled: false
+                            image_randomize_initial_frame: false
+                            image_x_tiles: 1
+                            image_y_tiles: 1
+                            image_tiles_per_second: 1
+                            fill_window: false
+              - id: 15847334779578903923
+                name: MAZE_ADDON
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 7240596177487815523
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                  - !<transform_2d>
+                    id: 231040712770006426
+                    type: 10
+                    enabled: true
+                    position: [10.8, -4.5, 0]
+                    size: [20, 20]
+                    scale: [24, 14]
+                    rotation: [0, 0, 0, 1]
+                    pivot: [0, 1]
+                    anchor: [0, 1]
+                  - !<canvas_renderer>
+                    id: 10941055514581861553
+                    type: 9
+                    enabled: true
+                    scale_ui: false
+                    original_size_x: 0
+                    original_size_y: 0
+                  - !<image>
+                    id: 13679346877320653726
+                    type: 11
+                    enabled: true
+                    image_id: 14023195895871668462
+                    hover_image_id: 0
+                    image_color: [1, 1, 1, 1]
+                    hover_image_color: [1, 1, 1, 1]
+                    image_is_tiled: false
+                    image_randomize_initial_frame: false
+                    image_x_tiles: 1
+                    image_y_tiles: 1
+                    image_tiles_per_second: 1
+                    fill_window: false
+              - id: 1760052063959381380
+                name: CLAW_ADDON
+                enabled: false
+                component:
+                  - !<transform>
+                    id: 14063878775652999217
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                  - !<transform_2d>
+                    id: 285994629032573868
+                    type: 10
+                    enabled: true
+                    position: [0, 0, 0]
+                    size: [20, 20]
+                    scale: [24, 14]
+                    rotation: [0, 0, 0, 1]
+                    pivot: [0, 1]
+                    anchor: [0, 1]
+                  - !<canvas_renderer>
+                    id: 12446205290827525198
+                    type: 9
+                    enabled: true
+                    scale_ui: false
+                    original_size_x: 0
+                    original_size_y: 0
+                  - !<image>
+                    id: 17048529782758720127
+                    type: 11
+                    enabled: true
+                    image_id: 17147944466834967470
+                    hover_image_id: 0
+                    image_color: [1, 1, 1, 1]
+                    hover_image_color: [1, 1, 1, 1]
+                    image_is_tiled: false
+                    image_randomize_initial_frame: false
+                    image_x_tiles: 1
+                    image_y_tiles: 1
+                    image_tiles_per_second: 1
+                    fill_window: false
+          - id: 12251843063773563054
+            name: KeyboardTooltipDisplay
+            enabled: true
+            component:
+              - !<transform>
+                id: 7683851259909824992
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-0, 0, -0]
+                scale: [0.4417, 0.45, 0.4417]
+              - !<transform_2d>
+                id: 501249012991429780
+                type: 10
+                enabled: true
+                position: [0, -150, 1]
+                size: [934, 148]
+                scale: [0.5, 0.5]
+                rotation: [0, 0, 0, 1]
+                pivot: [0.5, 0.5]
+                anchor: [0.5, 0.5]
+              - !<canvas_renderer>
+                id: 14729699714987868023
+                type: 9
+                enabled: true
+                scale_ui: false
+                original_size_x: 0
+                original_size_y: 0
+              - !<image>
+                id: 5216175295648096275
+                type: 11
+                enabled: true
+                image_id: 18000803453350606936
+                hover_image_id: 0
+                image_color: [1, 1, 1, 1]
+                hover_image_color: [1, 1, 1, 1]
+                image_is_tiled: false
+                image_randomize_initial_frame: false
+                image_x_tiles: 1
+                image_y_tiles: 1
+                image_tiles_per_second: 1
+                fill_window: false
+          - id: 12257850835072404626
+            name: GamepadTooltipDisplay
+            enabled: true
+            component:
+              - !<transform>
+                id: 11211724201196613589
+                type: 1
+                enabled: true
+                position: [-0.7397, 3.369, -63.07]
+                rotation: [-0, 20.48, -0]
+                scale: [0.4417, 0.45, 0.4417]
+              - !<transform_2d>
+                id: 17204685679124194127
+                type: 10
+                enabled: true
+                position: [0, -150, 0]
+                size: [934, 148]
+                scale: [0.5, 0.5]
+                rotation: [0, 0, 0, 1]
+                pivot: [0.5, 0.5]
+                anchor: [0.5, 0.5]
+              - !<canvas_renderer>
+                id: 12690375750635952629
+                type: 9
+                enabled: true
+                scale_ui: false
+                original_size_x: 0
+                original_size_y: 0
+              - !<image>
+                id: 6347392237001829829
+                type: 11
+                enabled: true
+                image_id: 407881782410796713
+                hover_image_id: 0
+                image_color: [1, 1, 1, 1]
+                hover_image_color: [1, 1, 1, 1]
+                image_is_tiled: false
+                image_randomize_initial_frame: false
+                image_x_tiles: 1
+                image_y_tiles: 1
+                image_tiles_per_second: 1
+                fill_window: false
   - id: 4089779087202767202
     name: Boss
     enabled: true
@@ -13763,7 +13773,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1006, 614]
+            size: [1194, 637]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -14551,6 +14561,7 @@ child:
                     start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                     blend_factor: 0
                     projection: true
+                    randomize_tiles: false
               - id: 17784683407209329049
                 name: OuterEffect
                 enabled: true
@@ -14588,6 +14599,7 @@ child:
                     start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                     blend_factor: 0
                     projection: true
+                    randomize_tiles: false
       - id: 12658792274592281624
         name: ExplodingCrystal
         enabled: true
@@ -15079,6 +15091,7 @@ child:
                     start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                     blend_factor: 0
                     projection: true
+                    randomize_tiles: false
               - id: 17982690388293093191
                 name: OuterEffect
                 enabled: true
@@ -15116,6 +15129,7 @@ child:
                     start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                     blend_factor: 0
                     projection: true
+                    randomize_tiles: false
       - id: 9200129246005863145
         name: ExplodingCrystal
         enabled: true
@@ -15607,6 +15621,7 @@ child:
                     start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                     blend_factor: 0
                     projection: true
+                    randomize_tiles: false
               - id: 10051214987329786535
                 name: OuterEffect
                 enabled: true
@@ -15644,6 +15659,7 @@ child:
                     start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                     blend_factor: 0
                     projection: true
+                    randomize_tiles: false
       - id: 6985350489773538375
         name: ExplodingCrystal
         enabled: true
@@ -16135,6 +16151,7 @@ child:
                     start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                     blend_factor: 0
                     projection: true
+                    randomize_tiles: false
               - id: 2658060752243991369
                 name: OuterEffect
                 enabled: true
@@ -16172,6 +16189,7 @@ child:
                     start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                     blend_factor: 0
                     projection: true
+                    randomize_tiles: false
       - id: 1131343018237048300
         name: ExplodingCrystal
         enabled: true
@@ -16663,6 +16681,7 @@ child:
                     start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                     blend_factor: 0
                     projection: true
+                    randomize_tiles: false
               - id: 1396663883301844509
                 name: OuterEffect
                 enabled: true
@@ -16700,6 +16719,7 @@ child:
                     start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                     blend_factor: 0
                     projection: true
+                    randomize_tiles: false
   - id: 8216337757247596693
     name: StalagmiteManager
     enabled: true
@@ -18003,7 +18023,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0, 0, 0]
-                            rotation: [-180, -82.71, -178.8]
+                            rotation: [180, -82.71, -178.8]
                             scale: [1, 1, 1]
                         child:
                           - id: 7528231635659626325
@@ -18050,7 +18070,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0, 0, 0]
-                            rotation: [180, -86.87, 180]
+                            rotation: [-180, -86.87, -180]
                             scale: [1, 1, 1]
                         child:
                           - id: 16282965796465958809
@@ -19535,7 +19555,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0, 0, 0]
-                            rotation: [-180, -82.71, -178.8]
+                            rotation: [180, -82.71, -178.8]
                             scale: [1, 1, 1]
                         child:
                           - id: 9099175317089368136
@@ -19582,7 +19602,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0, 0, 0]
-                            rotation: [180, -86.87, 180]
+                            rotation: [-180, -86.87, -180]
                             scale: [1, 1, 1]
                         child:
                           - id: 8915223915001220277
@@ -21067,7 +21087,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0, 0, 0]
-                            rotation: [-180, -82.71, -178.8]
+                            rotation: [180, -82.71, -178.8]
                             scale: [1, 1, 1]
                         child:
                           - id: 12932932958051372062
@@ -21114,7 +21134,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0, 0, 0]
-                            rotation: [180, -86.87, 180]
+                            rotation: [-180, -86.87, -180]
                             scale: [1, 1, 1]
                         child:
                           - id: 12571270047636935796
@@ -22599,7 +22619,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0, 0, 0]
-                            rotation: [-180, -82.71, -178.8]
+                            rotation: [180, -82.71, -178.8]
                             scale: [1, 1, 1]
                         child:
                           - id: 5362970284039626118
@@ -22646,7 +22666,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0, 0, 0]
-                            rotation: [180, -86.87, 180]
+                            rotation: [-180, -86.87, -180]
                             scale: [1, 1, 1]
                         child:
                           - id: 15088282022863175382
@@ -22912,6 +22932,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 2455300819300092130
             name: Claw_VFX
             enabled: true
@@ -22949,6 +22970,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 6876282171560365095
             name: Claw_VFX
             enabled: true
@@ -22986,6 +23008,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 14978606651452069340
             name: Claw_VFX
             enabled: true
@@ -23023,6 +23046,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 11288827373821192561
             name: Claw_VFX
             enabled: true
@@ -23060,6 +23084,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 6931189818393835671
             name: Claw_VFX
             enabled: true
@@ -23097,6 +23122,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 1047326659355835264
             name: Claw_VFX
             enabled: true
@@ -23134,6 +23160,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 14476406087307527385
             name: Claw_VFX
             enabled: true
@@ -23171,6 +23198,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 9678880947689349009
             name: Claw_VFX
             enabled: true
@@ -23208,6 +23236,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 12308050494222203790
             name: Claw_VFX
             enabled: true
@@ -23245,6 +23274,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
       - id: 17871555822939545296
         name: Sword
         enabled: true
@@ -23294,6 +23324,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 16996184812719024809
             name: Sword_VFX
             enabled: true
@@ -23331,6 +23362,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 8574179784588757188
             name: Sword_VFX
             enabled: true
@@ -23368,6 +23400,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 15542425902922116005
             name: Sword_VFX
             enabled: true
@@ -23405,6 +23438,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 13560283984848083332
             name: Sword_VFX
             enabled: true
@@ -23442,6 +23476,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 15918127981303920888
             name: Sword_VFX
             enabled: true
@@ -23479,6 +23514,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 4332682001921916909
             name: Sword_VFX
             enabled: true
@@ -23516,6 +23552,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 6783203677830501020
             name: Sword_VFX
             enabled: true
@@ -23553,6 +23590,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 4566558713678466598
             name: Sword_VFX
             enabled: true
@@ -23590,6 +23628,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 9248106244572569687
             name: Sword_VFX
             enabled: true
@@ -23627,6 +23666,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
       - id: 7571988860206958863
         name: Melee
         enabled: true
@@ -23676,6 +23716,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 7072601179926847234
             name: Melee_VFX
             enabled: true
@@ -23713,6 +23754,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 14294819156992879901
             name: Melee_VFX
             enabled: true
@@ -23750,6 +23792,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 1678896591946452764
             name: Melee_VFX
             enabled: true
@@ -23787,6 +23830,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 3130673110307932445
             name: Melee_VFX
             enabled: true
@@ -23824,6 +23868,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 6143710444806326243
             name: Melee_VFX
             enabled: true
@@ -23861,6 +23906,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 9313131918060334494
             name: Melee_VFX
             enabled: true
@@ -23898,6 +23944,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 14954977002522760167
             name: Melee_VFX
             enabled: true
@@ -23935,6 +23982,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 7093711587257659761
             name: Melee_VFX
             enabled: true
@@ -23972,6 +24020,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 11697543054777637301
             name: Melee_VFX
             enabled: true
@@ -24009,6 +24058,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
       - id: 2270252202179111637
         name: Hammer
         enabled: true
@@ -24058,6 +24108,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 9550681229176364103
             name: Hammer_VFX
             enabled: true
@@ -24095,6 +24146,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 11354136336453053436
             name: Hammer_VFX
             enabled: true
@@ -24132,6 +24184,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 11412393373578156317
             name: Hammer_VFX
             enabled: true
@@ -24169,6 +24222,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 3612682604305170307
             name: Hammer_VFX
             enabled: true
@@ -24206,6 +24260,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 8491779447322536519
             name: Hammer_VFX
             enabled: true
@@ -24243,6 +24298,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 9331235674070417774
             name: Hammer_VFX
             enabled: true
@@ -24280,6 +24336,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 3812679006748931573
             name: Hammer_VFX
             enabled: true
@@ -24317,6 +24374,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 391009796266504539
             name: Hammer_VFX
             enabled: true
@@ -24354,6 +24412,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 7366300392269108301
             name: Hammer_VFX
             enabled: true
@@ -24391,6 +24450,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
       - id: 17201681995987139227
         name: Worm
         enabled: true
@@ -24440,6 +24500,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 7314440114185043448
             name: Worm_VFX
             enabled: true
@@ -24477,6 +24538,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 5118652437697087723
             name: Worm_VFX
             enabled: true
@@ -24514,6 +24576,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 15130630333607040111
             name: Worm_VFX
             enabled: true
@@ -24551,6 +24614,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 9530881983914747651
             name: Worm_VFX
             enabled: true
@@ -24588,6 +24652,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 17754957377265722654
             name: Worm_VFX
             enabled: true
@@ -24625,6 +24690,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 3457804148979362955
             name: Worm_VFX
             enabled: true
@@ -24662,6 +24728,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 6907621881626098844
             name: Worm_VFX
             enabled: true
@@ -24699,6 +24766,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 8639333026175606331
             name: Worm_VFX
             enabled: true
@@ -24736,6 +24804,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 4243286279962726032
             name: Worm_VFX
             enabled: true
@@ -24773,6 +24842,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
       - id: 4855358885992166100
         name: Beetle
         enabled: true
@@ -24822,6 +24892,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 5181265590408393949
             name: Beetle_VFX
             enabled: true
@@ -24859,6 +24930,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 9936373758677233482
             name: Beetle_VFX
             enabled: true
@@ -24896,6 +24968,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 14054794437227822372
             name: Beetle_VFX
             enabled: true
@@ -24933,6 +25006,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 3857962785541663086
             name: Beetle_VFX
             enabled: true
@@ -24970,6 +25044,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 15949008723964668355
             name: Beetle_VFX
             enabled: true
@@ -25007,6 +25082,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 5759751771277668489
             name: Beetle_VFX
             enabled: true
@@ -25044,6 +25120,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 16241502581946665825
             name: Beetle_VFX
             enabled: true
@@ -25081,6 +25158,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 5670593701721973758
             name: Beetle_VFX
             enabled: true
@@ -25118,6 +25196,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
           - id: 334664953690287732
             name: Beetle_VFX
             enabled: true
@@ -25155,6 +25234,7 @@ child:
                 start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 1
                 projection: true
+                randomize_tiles: false
   - id: 452776920222929379
     name: 2022_10_08_boss_03
     enabled: true
@@ -25164,7 +25244,7 @@ child:
         type: 1
         enabled: true
         position: [-70.76, 3.583, -68.37]
-        rotation: [-180, 89.98, -180]
+        rotation: [180, 89.98, 180]
         scale: [1, 1, 1]
       - !<animation>
         id: 15546774712202218161
@@ -25214,7 +25294,7 @@ child:
                 type: 1
                 enabled: true
                 position: [55.11, 0.0014, -8.728]
-                rotation: [-0, 0, -180]
+                rotation: [-0, 0, 180]
                 scale: [0.0226, 0.0226, 0.0226]
               - !<mesh_renderer>
                 id: 13657537392911659155
@@ -25235,7 +25315,7 @@ child:
                 type: 1
                 enabled: true
                 position: [15.7, 0.0014, -8.728]
-                rotation: [-0, 0, 180]
+                rotation: [-0, 0, -180]
                 scale: [0.0226, 0.0226, 0.0226]
               - !<mesh_renderer>
                 id: 8696858304598696182
@@ -25256,7 +25336,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-4.006, 0.0014, -8.728]
-                rotation: [-0, 0, -180]
+                rotation: [-0, 0, 180]
                 scale: [0.0226, 0.0226, 0.0226]
               - !<mesh_renderer>
                 id: 1017481828300540562
@@ -25415,7 +25495,7 @@ child:
                 type: 1
                 enabled: true
                 position: [55.11, 0.0014, -8.728]
-                rotation: [-0, 0, -180]
+                rotation: [-0, 0, 180]
                 scale: [0.0226, 0.0226, 0.0226]
               - !<mesh_renderer>
                 id: 6586377232760692333
@@ -25436,7 +25516,7 @@ child:
                 type: 1
                 enabled: true
                 position: [15.7, 0.0014, -8.728]
-                rotation: [-0, 0, 180]
+                rotation: [-0, 0, -180]
                 scale: [0.0226, 0.0226, 0.0226]
               - !<mesh_renderer>
                 id: 471905193144900437
@@ -25457,7 +25537,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-4.006, 0.0014, -8.728]
-                rotation: [-0, 0, -180]
+                rotation: [-0, 0, 180]
                 scale: [0.0226, 0.0226, 0.0226]
               - !<mesh_renderer>
                 id: 10769233375644318556
@@ -25553,7 +25633,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0.4815, -0.0174, -11.54]
-                rotation: [-0, 0, 180]
+                rotation: [-0, 0, -180]
                 scale: [0.1693, 0.1693, 0.432]
               - !<mesh_renderer>
                 id: 12848158636930085224
@@ -26300,7 +26380,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0.4815, -0.0174, -11.54]
-                rotation: [-0, 0, 180]
+                rotation: [-0, 0, -180]
                 scale: [0.1693, 0.1693, 0.432]
               - !<mesh_renderer>
                 id: 13776013839039065149
@@ -27047,7 +27127,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0.4815, -0.0174, -11.54]
-                rotation: [-0, 0, 180]
+                rotation: [-0, 0, -180]
                 scale: [0.1693, 0.1693, 0.432]
               - !<mesh_renderer>
                 id: 16461097665647755869
@@ -27794,7 +27874,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0.4815, -0.0174, -11.54]
-                rotation: [-0, 0, 180]
+                rotation: [-0, 0, -180]
                 scale: [0.1693, 0.1693, 0.432]
               - !<mesh_renderer>
                 id: 16377228860190648554
@@ -28541,7 +28621,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0.4815, -0.0174, -11.54]
-                rotation: [-0, 0, -180]
+                rotation: [-0, 0, 180]
                 scale: [0.1693, 0.1693, 0.432]
               - !<mesh_renderer>
                 id: 10478763104843592618
@@ -29288,7 +29368,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0.4815, -0.0174, -11.54]
-                rotation: [-0, 0, 180]
+                rotation: [-0, 0, -180]
                 scale: [0.1693, 0.1693, 0.432]
               - !<mesh_renderer>
                 id: 13120172350263472826
@@ -30035,7 +30115,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0.4815, -0.0174, -11.54]
-                rotation: [-0, 0, 180]
+                rotation: [-0, 0, -180]
                 scale: [0.1693, 0.1693, 0.432]
               - !<mesh_renderer>
                 id: 4556976559659494296
@@ -30782,7 +30862,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0.4815, -0.0174, -11.54]
-                rotation: [-0, 0, 180]
+                rotation: [-0, 0, -180]
                 scale: [0.1693, 0.1693, 0.432]
               - !<mesh_renderer>
                 id: 2901965916083856850
@@ -31529,7 +31609,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0.4815, -0.0174, -11.54]
-                rotation: [-0, 0, 180]
+                rotation: [-0, 0, -180]
                 scale: [0.1693, 0.1693, 0.432]
               - !<mesh_renderer>
                 id: 11335352383979763252
@@ -32276,7 +32356,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0.4815, -0.0174, -11.54]
-                rotation: [-0, 0, -180]
+                rotation: [-0, 0, 180]
                 scale: [0.1693, 0.1693, 0.432]
               - !<mesh_renderer>
                 id: 17232834842404211560
@@ -33023,7 +33103,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0.4815, -0.0174, -11.54]
-                rotation: [-0, 0, 180]
+                rotation: [-0, 0, -180]
                 scale: [0.1693, 0.1693, 0.432]
               - !<mesh_renderer>
                 id: 2447408692323255384
@@ -33770,7 +33850,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0.4815, -0.0174, -11.54]
-                rotation: [-0, 0, 180]
+                rotation: [-0, 0, -180]
                 scale: [0.1693, 0.1693, 0.432]
               - !<mesh_renderer>
                 id: 4821317528307127058
@@ -34517,7 +34597,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0.4815, -0.0174, -11.54]
-                rotation: [-0, 0, 180]
+                rotation: [-0, 0, -180]
                 scale: [0.1693, 0.1693, 0.432]
               - !<mesh_renderer>
                 id: 9314698497407590113
@@ -35264,7 +35344,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0.4815, -0.0174, -11.54]
-                rotation: [-0, 0, -180]
+                rotation: [-0, 0, 180]
                 scale: [0.1693, 0.1693, 0.432]
               - !<mesh_renderer>
                 id: 6299875776330237339
@@ -36011,7 +36091,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0.4815, -0.0174, -11.54]
-                rotation: [-0, 0, -180]
+                rotation: [-0, 0, 180]
                 scale: [0.1693, 0.1693, 0.432]
               - !<mesh_renderer>
                 id: 14666214825055464903
@@ -36758,7 +36838,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0.4815, -0.0174, -11.54]
-                rotation: [-0, 0, 180]
+                rotation: [-0, 0, -180]
                 scale: [0.1693, 0.1693, 0.432]
               - !<mesh_renderer>
                 id: 15164568694471625463
@@ -37505,7 +37585,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0.4815, -0.0174, -11.54]
-                rotation: [-0, 0, 180]
+                rotation: [-0, 0, -180]
                 scale: [0.1693, 0.1693, 0.432]
               - !<mesh_renderer>
                 id: 18066093512997522113
@@ -38252,7 +38332,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0.4815, -0.0174, -11.54]
-                rotation: [-0, 0, 180]
+                rotation: [-0, 0, -180]
                 scale: [0.1693, 0.1693, 0.432]
               - !<mesh_renderer>
                 id: 4918582970999979507
@@ -38999,7 +39079,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0.4815, -0.0174, -11.54]
-                rotation: [-0, 0, 180]
+                rotation: [-0, 0, -180]
                 scale: [0.1693, 0.1693, 0.432]
               - !<mesh_renderer>
                 id: 17947828522467878768
@@ -39746,7 +39826,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0.4815, -0.0174, -11.54]
-                rotation: [-0, 0, 180]
+                rotation: [-0, 0, -180]
                 scale: [0.1693, 0.1693, 0.432]
               - !<mesh_renderer>
                 id: 16391937410614762479
@@ -40493,7 +40573,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0.4815, -0.0174, -11.54]
-                rotation: [-0, 0, 180]
+                rotation: [-0, 0, -180]
                 scale: [0.1693, 0.1693, 0.432]
               - !<mesh_renderer>
                 id: 8536996185702706366
@@ -41240,7 +41320,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0.4815, -0.0174, -11.54]
-                rotation: [-0, 0, -180]
+                rotation: [-0, 0, 180]
                 scale: [0.1693, 0.1693, 0.432]
               - !<mesh_renderer>
                 id: 11604625285464115105
@@ -41966,7 +42046,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0.4815, -0.0174, -11.54]
-                rotation: [-0, 0, 180]
+                rotation: [-0, 0, -180]
                 scale: [0.1693, 0.1693, 0.432]
               - !<mesh_renderer>
                 id: 5822885910050827872
@@ -42713,7 +42793,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-0.4703, -0.3456, -12.39]
-                rotation: [-0, 0, -180]
+                rotation: [-0, 0, 180]
                 scale: [0.2357, 0.2357, 0.432]
               - !<mesh_renderer>
                 id: 1060025518361775512
@@ -42914,7 +42994,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-0.4703, -0.3456, -12.39]
-                rotation: [-0, 0, -180]
+                rotation: [-0, 0, 180]
                 scale: [0.2357, 0.2357, 0.432]
               - !<mesh_renderer>
                 id: 6873606208227344151
@@ -43115,7 +43195,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-0.4703, -0.3456, -12.39]
-                rotation: [-0, 0, -180]
+                rotation: [-0, 0, 180]
                 scale: [0.2357, 0.2357, 0.432]
               - !<mesh_renderer>
                 id: 14720451152963721875
@@ -43316,7 +43396,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-0.4703, -0.3456, -12.39]
-                rotation: [-0, 0, -180]
+                rotation: [-0, 0, 180]
                 scale: [0.2357, 0.2357, 0.432]
               - !<mesh_renderer>
                 id: 14886382959702732490
@@ -43517,7 +43597,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-0.4703, -0.3456, -12.39]
-                rotation: [-0, 0, 180]
+                rotation: [-0, 0, -180]
                 scale: [0.2357, 0.2357, 0.432]
               - !<mesh_renderer>
                 id: 13728335629175845610
@@ -43718,7 +43798,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-0.4703, -0.3456, -12.39]
-                rotation: [-0, 0, -180]
+                rotation: [-0, 0, 180]
                 scale: [0.2357, 0.2357, 0.432]
               - !<mesh_renderer>
                 id: 15649982525806761376
@@ -43919,7 +43999,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-0.4703, -0.3456, -12.39]
-                rotation: [-0, 0, 180]
+                rotation: [-0, 0, -180]
                 scale: [0.2357, 0.2357, 0.432]
               - !<mesh_renderer>
                 id: 1620524977756013716
@@ -44120,7 +44200,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-0.4703, -0.3456, -12.39]
-                rotation: [-0, 0, 180]
+                rotation: [-0, 0, -180]
                 scale: [0.2357, 0.2357, 0.432]
               - !<mesh_renderer>
                 id: 11663178283707372392
@@ -44321,7 +44401,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-0.4703, -0.3456, -12.39]
-                rotation: [-0, 0, 180]
+                rotation: [-0, 0, -180]
                 scale: [0.2357, 0.2357, 0.432]
               - !<mesh_renderer>
                 id: 8049318911976530910
@@ -44522,7 +44602,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-0.4703, -0.3456, -12.39]
-                rotation: [-0, 0, -180]
+                rotation: [-0, 0, 180]
                 scale: [0.2357, 0.2357, 0.432]
               - !<mesh_renderer>
                 id: 4794153252430138740
@@ -44723,7 +44803,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-0.4703, -0.3456, -12.39]
-                rotation: [-0, 0, 180]
+                rotation: [-0, 0, -180]
                 scale: [0.2357, 0.2357, 0.432]
               - !<mesh_renderer>
                 id: 4628881647743379260
@@ -44924,7 +45004,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-0.4703, -0.3456, -12.39]
-                rotation: [-0, 0, 180]
+                rotation: [-0, 0, -180]
                 scale: [0.2357, 0.2357, 0.432]
               - !<mesh_renderer>
                 id: 18214673953318968482
@@ -45125,7 +45205,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-0.4703, -0.3456, -12.39]
-                rotation: [-0, 0, 180]
+                rotation: [-0, 0, -180]
                 scale: [0.2357, 0.2357, 0.432]
               - !<mesh_renderer>
                 id: 5944963986603016012
@@ -45326,7 +45406,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-0.4703, -0.3456, -12.39]
-                rotation: [-0, 0, 180]
+                rotation: [-0, 0, -180]
                 scale: [0.2357, 0.2357, 0.432]
               - !<mesh_renderer>
                 id: 8742155297626105398
@@ -45527,7 +45607,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-0.4703, -0.3456, -12.39]
-                rotation: [-0, 0, 180]
+                rotation: [-0, 0, -180]
                 scale: [0.2357, 0.2357, 0.432]
               - !<mesh_renderer>
                 id: 3322980381021727560
@@ -45728,7 +45808,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-0.4703, -0.3456, -12.39]
-                rotation: [-0, 0, 180]
+                rotation: [-0, 0, -180]
                 scale: [0.2357, 0.2357, 0.432]
               - !<mesh_renderer>
                 id: 11729002590226833167
@@ -46163,7 +46243,7 @@ child:
             type: 1
             enabled: true
             position: [16, -2.563, -80.94]
-            rotation: [90, 0, -180]
+            rotation: [90, -0, 180]
             scale: [0.2466, 0.2466, 0.1682]
           - !<mesh_renderer>
             id: 12992595316158716759
@@ -46184,7 +46264,7 @@ child:
             type: 1
             enabled: true
             position: [16, -2.842, -11.03]
-            rotation: [-180, 0, -180]
+            rotation: [180, 0, 180]
             scale: [0.01, 0.01, 0.01]
           - !<mesh_renderer>
             id: 11330342245312947434
@@ -46217,7 +46297,7 @@ child:
                 type: 1
                 enabled: true
                 position: [12.73, -12.72, 0]
-                rotation: [-0, 0, -180]
+                rotation: [-0, 0, 180]
                 scale: [1, 1, 1]
             child:
               - id: 5016467822954957933
@@ -47048,7 +47128,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0.4815, -0.0174, -11.54]
-                rotation: [-0, 0, 180]
+                rotation: [-0, 0, -180]
                 scale: [0.1693, 0.1693, 0.432]
               - !<mesh_renderer>
                 id: 1805114372307532873
@@ -48848,7 +48928,7 @@ child:
             type: 1
             enabled: true
             position: [-15.19, 17.69, -28.12]
-            rotation: [86.23, -0, -180]
+            rotation: [86.23, 0, 180]
             scale: [0.1887, 0.1887, 0.2689]
           - !<mesh_renderer>
             id: 5675612881222953733
@@ -48869,7 +48949,7 @@ child:
             type: 1
             enabled: true
             position: [-15.47, 17.69, 10.06]
-            rotation: [95.98, -0, -180]
+            rotation: [95.98, 0, 180]
             scale: [0.1887, 0.1887, 0.2689]
           - !<mesh_renderer>
             id: 8831012842819043871
@@ -48890,7 +48970,7 @@ child:
             type: 1
             enabled: true
             position: [-15.53, 16.25, 6.181]
-            rotation: [95.98, -0, -180]
+            rotation: [95.98, 0, 180]
             scale: [0.1887, 0.1887, 0.2689]
           - !<mesh_renderer>
             id: 12470333225442222402
@@ -48911,7 +48991,7 @@ child:
             type: 1
             enabled: true
             position: [-33.14, 27.33, -23.3]
-            rotation: [88.29, 0, -180]
+            rotation: [88.29, -0, 180]
             scale: [0.2252, 0.2252, 0.3209]
           - !<mesh_renderer>
             id: 4796224762472316846
@@ -48932,7 +49012,7 @@ child:
             type: 1
             enabled: true
             position: [-29.58, 28.94, -19]
-            rotation: [88.29, 0, -180]
+            rotation: [88.29, -0, 180]
             scale: [0.121, 0.121, 0.1724]
           - !<mesh_renderer>
             id: 11106741729524824576
@@ -48965,7 +49045,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0, -1.628, -2.187]
-                rotation: [180, 0, -0]
+                rotation: [-180, 0, -0]
                 scale: [1, 1, 1]
             child:
               - id: 11107994273991338796
@@ -49202,7 +49282,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0, -1.628, -2.187]
-                rotation: [180, 0, -0]
+                rotation: [-180, 0, -0]
                 scale: [1, 1, 1]
             child:
               - id: 1834310516957671185
@@ -49364,7 +49444,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0, -1.628, -2.187]
-                rotation: [180, 0, -0]
+                rotation: [-180, 0, -0]
                 scale: [1, 1, 1]
             child:
               - id: 15426619164419081515
@@ -49667,7 +49747,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-17.39, -26.02, 0]
-                rotation: [-0, 0, -180]
+                rotation: [-0, 0, 180]
                 scale: [1, 1, 1]
             child:
               - id: 6116033485344969953
@@ -49796,7 +49876,7 @@ child:
                 type: 1
                 enabled: true
                 position: [55.11, 0.0014, -8.728]
-                rotation: [-0, 0, -180]
+                rotation: [-0, 0, 180]
                 scale: [0.0226, 0.0226, 0.0226]
               - !<mesh_renderer>
                 id: 4963488442980568631
@@ -49817,7 +49897,7 @@ child:
                 type: 1
                 enabled: true
                 position: [15.7, 0.0014, -8.728]
-                rotation: [-0, 0, 180]
+                rotation: [-0, 0, -180]
                 scale: [0.0226, 0.0226, 0.0226]
               - !<mesh_renderer>
                 id: 9654511114575518358
@@ -49838,7 +49918,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-4.006, 0.0014, -8.728]
-                rotation: [-0, 0, -180]
+                rotation: [-0, 0, 180]
                 scale: [0.0226, 0.0226, 0.0226]
               - !<mesh_renderer>
                 id: 14738041026014361829
@@ -50914,7 +50994,7 @@ child:
             type: 1
             enabled: true
             position: [-83.14, 14.89, -54.93]
-            rotation: [-0, 0, -180]
+            rotation: [-0, 0, 180]
             scale: [1, 1, 1]
           - !<particle_system>
             id: 7245919515471101572
@@ -51000,7 +51080,7 @@ child:
             type: 1
             enabled: true
             position: [-62.27, -4.219, -45.54]
-            rotation: [-0, 0, -180]
+            rotation: [-0, 0, 180]
             scale: [1, 1, 1]
           - !<particle_system>
             id: 15270704774159960379
@@ -51074,7 +51154,7 @@ child:
             type: 1
             enabled: true
             position: [-90.29, -1.339, -36.07]
-            rotation: [-0, 0, -180]
+            rotation: [-0, 0, 180]
             scale: [1, 1, 1]
           - !<particle_system>
             id: 10269512329805280316
@@ -51148,7 +51228,7 @@ child:
             type: 1
             enabled: true
             position: [-101.1, -4.695, -47.1]
-            rotation: [-0, 0, -180]
+            rotation: [-0, 0, 180]
             scale: [1, 1, 1]
           - !<particle_system>
             id: 10711410628514089792
@@ -51222,7 +51302,7 @@ child:
             type: 1
             enabled: true
             position: [-101.9, -0.6192, -64.14]
-            rotation: [-0, 0, -180]
+            rotation: [-0, 0, 180]
             scale: [1, 1, 1]
           - !<particle_system>
             id: 9627384989091186799
@@ -51296,7 +51376,7 @@ child:
             type: 1
             enabled: true
             position: [-94.75, -1.638, -80.12]
-            rotation: [-0, 0, -180]
+            rotation: [-0, 0, 180]
             scale: [1, 1, 1]
           - !<particle_system>
             id: 6851211746486041391
@@ -51370,7 +51450,7 @@ child:
             type: 1
             enabled: true
             position: [-68.01, -4.467, -78.63]
-            rotation: [-0, 0, -180]
+            rotation: [-0, 0, 180]
             scale: [1, 1, 1]
           - !<particle_system>
             id: 10695164093152045874
@@ -51444,7 +51524,7 @@ child:
             type: 1
             enabled: true
             position: [-59.1, -5.122, -65.15]
-            rotation: [-0, 0, -180]
+            rotation: [-0, 0, 180]
             scale: [1, 1, 1]
           - !<particle_system>
             id: 5153661733065688326
@@ -51509,3 +51589,325 @@ child:
                 position: [true, true, 0, [22.8, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 rotation: [true, true, 0, [5.7, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 scale: [true, true, 1, [1, 2], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+  - id: 1298600738054076829
+    name: LevelManager
+    enabled: true
+    component:
+      - !<transform>
+        id: 14432553157200915233
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [-0, 0, -0]
+        scale: [1, 1, 1]
+      - !<script>
+        id: 5741128011841467372
+        type: 15
+        enabled: true
+        class_name: LevelManager
+        "'_level@unsigned'": 1
+        "'_respawn_position@float3'": [-84.74, 3.47, -56.32]
+        "'_gauntlet_ui_go@GameObject*'": 14303009014360775269
+        "'_gauntlet_counter_go@GameObject*'": 3781971181584712536
+        "'_modify_fog@bool'": false
+        "'_fog_frequency@float'": 0.1
+        "'_fog_max_density@float'": 0.015
+        "'_fog_min_density@float'": 0.005
+        "'_audio_manager_go@GameObject*'": 0
+      - !<script>
+        id: 9673773846935216921
+        type: 15
+        enabled: true
+        class_name: PauseMenu
+        "'_pause_ui@GameObject*'": 6176356638000236994
+        "'_player_hud@GameObject*'": 9206824715759104363
+        "'_resume_button@ComponentButton*'": 15539445419105017024
+        "'_quit_button@ComponentButton*'": 8547481213687600992
+    child:
+      - id: 14303009014360775269
+        name: GauntletUI
+        enabled: false
+        component:
+          - !<transform>
+            id: 8242394393979521800
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+          - !<transform_2d>
+            id: 3780027439245263336
+            type: 10
+            enabled: true
+            position: [0, 0, 0]
+            size: [1180, 637]
+            scale: [1, 1]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [0.5, 0.5]
+          - !<canvas>
+            id: 2494580568812861327
+            type: 8
+            enabled: true
+        child:
+          - id: 9510859117516296478
+            name: Icon
+            enabled: true
+            component:
+              - !<transform>
+                id: 9961602768418088305
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<transform_2d>
+                id: 13807694574508116366
+                type: 10
+                enabled: true
+                position: [-480, -260, 0]
+                size: [65, 65]
+                scale: [1, 1]
+                rotation: [0, 0, 0, 1]
+                pivot: [0.5, 0.5]
+                anchor: [0.5, 0.5]
+              - !<canvas_renderer>
+                id: 2503446149449488775
+                type: 9
+                enabled: true
+                scale_ui: false
+                original_size_x: 0
+                original_size_y: 0
+              - !<image>
+                id: 1013710468125251010
+                type: 11
+                enabled: true
+                image_id: 15126335777279321710
+                hover_image_id: 0
+                image_color: [1, 1, 1, 1]
+                hover_image_color: [1, 1, 1, 1]
+                image_is_tiled: false
+                image_randomize_initial_frame: false
+                image_x_tiles: 1
+                image_y_tiles: 1
+                image_tiles_per_second: 1
+                fill_window: false
+          - id: 3781971181584712536
+            name: Counter
+            enabled: true
+            component:
+              - !<transform>
+                id: 5898834434809718043
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<transform_2d>
+                id: 15766986257605177539
+                type: 10
+                enabled: true
+                position: [-430, 255.8, 0]
+                size: [10, 40]
+                scale: [1, 1]
+                rotation: [0, 0, 0, 1]
+                pivot: [0.5, 0.5]
+                anchor: [0.5, 0.5]
+              - !<canvas_renderer>
+                id: 1113077335470093692
+                type: 9
+                enabled: true
+                scale_ui: false
+                original_size_x: 0
+                original_size_y: 0
+              - !<text>
+                id: 15642646377254777837
+                type: 16
+                enabled: true
+                font_id: 15852548707070218669
+                color: [0.935, 0.1368, 0.1368, 1]
+                size: 28
+                label_text: 0
+      - id: 7915766907333402918
+        name: Goal
+        enabled: true
+        component:
+          - !<transform>
+            id: 6169337152266315911
+            type: 1
+            enabled: true
+            position: [-39.62, -22.35, -80.62]
+            rotation: [0, 0, 0]
+            scale: [1.074, 1.098, 1.074]
+      - id: 6176356638000236994
+        name: PauseMenu
+        enabled: false
+        component:
+          - !<transform>
+            id: 676983916266111037
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+          - !<transform_2d>
+            id: 14037897213934373558
+            type: 10
+            enabled: true
+            position: [0, 0, 0]
+            size: [1180, 637]
+            scale: [1, 1]
+            rotation: [0, 0, 0, 1]
+            pivot: [0, 1]
+            anchor: [0, 1]
+          - !<canvas>
+            id: 17138044764981973137
+            type: 8
+            enabled: true
+        child:
+          - id: 198626131814117735
+            name: Background
+            enabled: true
+            component:
+              - !<transform>
+                id: 17433206828047018667
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<transform_2d>
+                id: 13199158717810865451
+                type: 10
+                enabled: true
+                position: [-571.8, 313.9, 0]
+                size: [1180, 637]
+                scale: [1, 1]
+                rotation: [0, 0, 0, 1]
+                pivot: [0.5, 0.5]
+                anchor: [0.5, 0.5]
+              - !<canvas_renderer>
+                id: 3519697528800646732
+                type: 9
+                enabled: true
+                scale_ui: true
+                original_size_x: 1157
+                original_size_y: 628
+              - !<image>
+                id: 16772626626865767322
+                type: 11
+                enabled: true
+                image_id: 0
+                hover_image_id: 0
+                image_color: [0, 0, 0, 0.8]
+                hover_image_color: [1, 1, 1, 1]
+                image_is_tiled: false
+                image_randomize_initial_frame: false
+                image_x_tiles: 1
+                image_y_tiles: 1
+                image_tiles_per_second: 1
+                fill_window: true
+          - id: 8591868870809251021
+            name: Buttons
+            enabled: true
+            component:
+              - !<transform>
+                id: 10674529503750643815
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+            child:
+              - id: 15539445419105017024
+                name: Resume
+                enabled: true
+                component:
+                  - !<transform>
+                    id: 14329305819271315967
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                  - !<transform_2d>
+                    id: 960918029466834348
+                    type: 10
+                    enabled: true
+                    position: [-100, 100, 0]
+                    size: [20, 20]
+                    scale: [10, 4]
+                    rotation: [0, 0, 0, 1]
+                    pivot: [0, 1]
+                    anchor: [0, 1]
+                  - !<canvas_renderer>
+                    id: 8357985268847076668
+                    type: 9
+                    enabled: true
+                    scale_ui: false
+                    original_size_x: 0
+                    original_size_y: 0
+                  - !<button>
+                    id: 18125133469179977234
+                    type: 12
+                    enabled: true
+                  - !<image>
+                    id: 206259611391951933
+                    type: 11
+                    enabled: true
+                    image_id: 14946830610424765549
+                    hover_image_id: 1430857250527776094
+                    image_color: [1, 1, 1, 1]
+                    hover_image_color: [1, 1, 1, 1]
+                    image_is_tiled: false
+                    image_randomize_initial_frame: false
+                    image_x_tiles: 1
+                    image_y_tiles: 1
+                    image_tiles_per_second: 1
+                    fill_window: false
+              - id: 8547481213687600992
+                name: Exit
+                enabled: true
+                component:
+                  - !<transform>
+                    id: 1216285872957713510
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                  - !<transform_2d>
+                    id: 14501406555303083163
+                    type: 10
+                    enabled: true
+                    position: [-100, 6, 0]
+                    size: [20, 20]
+                    scale: [10, 4]
+                    rotation: [0, 0, 0, 1]
+                    pivot: [0, 1]
+                    anchor: [0, 1]
+                  - !<canvas_renderer>
+                    id: 8942191241642405779
+                    type: 9
+                    enabled: true
+                    scale_ui: false
+                    original_size_x: 0
+                    original_size_y: 0
+                  - !<button>
+                    id: 17215648972655939077
+                    type: 12
+                    enabled: true
+                  - !<image>
+                    id: 9394382919475360711
+                    type: 11
+                    enabled: true
+                    image_id: 10387759699808828896
+                    hover_image_id: 3995525956884596057
+                    image_color: [1, 1, 1, 1]
+                    hover_image_color: [1, 1, 1, 1]
+                    image_is_tiled: false
+                    image_randomize_initial_frame: false
+                    image_x_tiles: 1
+                    image_y_tiles: 1
+                    image_tiles_per_second: 1
+                    fill_window: false
