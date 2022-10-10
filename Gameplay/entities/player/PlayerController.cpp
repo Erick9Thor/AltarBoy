@@ -33,6 +33,8 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _death_screen(nullptr)
 	, _camera(nullptr)
 	, _ui_damage(nullptr)
+	, _heal_effect_fade_duration(0.3)
+	, damage_effect_duration(1.0f)
 	, _combat_visual_effects_pool(nullptr)
 {
 	CombatManager::BulletStats common_bullet;
@@ -256,6 +258,28 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		_lock_time = 0.0f;
 	}
 
+	if (_heal_fade_progress >= 0.0f) {
+		_heal_fade_progress -= Time::DeltaTime() / _heal_effect_fade_duration;
+		float progress = _heal_fade_progress / _heal_effect_fade_duration;
+		_player_geometry->ChangeEmissiveColor(float4(0.0f, 1.0f, 0.0f, progress), true);
+
+	}
+
+	if (damage_effect_progress >= 0.0f)
+	{
+		damage_effect_progress -= Time::DeltaTime() / damage_effect_duration;
+		float progress = damage_effect_progress / damage_effect_duration;
+		_player_geometry->ChangeEmissiveColor(float4(1.0f, 1.0f, 1.0f, progress), true);
+
+	}
+
+	if (_enable_heal_particles && _heal_fade_progress < 0.0f) {
+		_heal_effect_particles_1->Restart();
+		_heal_effect_particles_2->Restart();
+		_enable_heal_particles = false;
+	}
+		
+	
 	if (_invulnerability_time_remaining > 0.0f)
 	{
 		_invulnerability_time_remaining -= Time::DeltaTimeScaled();
@@ -695,7 +719,7 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 	// Fast and Scuffed, has to be changed when changing attack indicator
 	float4 attack_color = float4(1.0f, 1.0f, 1.0f, 1.0f);
 
-	_attack_indicator->ChangeEmissiveColor(attack_color, attack.duration, true);
+	_attack_indicator->ChangeEmissiveColor(attack_color, true);
 }
 
 void Hachiko::Scripting::PlayerController::ChangeWeapon(unsigned weapon_idx)
@@ -1292,22 +1316,15 @@ void Hachiko::Scripting::PlayerController::PickupParasite(EnemyController* enemy
 
 	// Make player invulnerable for a period of time:
 	_invulnerability_time_remaining = _invulnerability_time;
-	if (_player_geometry != nullptr)
-	{
-		_player_geometry->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, 0.5f), true);
-	}
 
 	_combat_stats->Heal(1);
 
 	_heal_effect_particles_1->Restart();
 	_heal_effect_particles_2->Restart();
+	_heal_fade_progress = 1.0f;
+	_enable_heal_particles = true;
 
 	UpdateHealthBar();
-
-	if (_player_geometry != nullptr)
-	{
-		_player_geometry->ChangeEmissiveColor(float4(0.0f, 255.0f, 0.0f, 255.0f), 0.3f, true);
-	}
 
 	// Select a random weapon:
 	ChangeWeapon(RandomUtil::RandomIntBetween(1, weapons.size() - 1));
@@ -1337,7 +1354,7 @@ bool Hachiko::Scripting::PlayerController::RegisterHit(int damage_received, floa
 
 		if (_player_geometry != nullptr)
 		{
-			_player_geometry->ChangeEmissiveColor(float4(255, 255, 255, 255), 0.3f, true);
+			damage_effect_progress = damage_effect_duration;
 		}
 
 		// Activate vignette
