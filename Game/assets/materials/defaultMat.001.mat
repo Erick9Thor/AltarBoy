@@ -1,9 +1,9 @@
 name: defaultMat.001
-diffuse: 0
+diffuse: 4505996885577942858
 specular: 0
-normals: 0
-metalness: 0
-emissive: 0
+normals: 7182936825454419049
+metalness: 8532226624290047707
+emissive: 14797951898659974109
 diffuse_color: [0.8, 0.8, 0.8, 1]
 specular_color: [0.8, 0.8, 0.8, 1]
 emissive_color: [0, 0, 0, 1]

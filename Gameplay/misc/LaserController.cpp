@@ -156,10 +156,12 @@ void Hachiko::Scripting::LaserController::ChangeState(State new_state)
 	case State::DISSOLVING:
 		_audio_source->PostEvent(Hachiko::Sounds::STOP_LASER);
 		_elapsed_time = 0.0f;
-		_sparks_particles->Stop();
-		_laser->ChangeEmissiveColor(float4(1.0f, 1.0f, 1.0f, 0.0f), true);
-		_laser->SetActive(false);
-
+		if (_sparks_particles != nullptr)
+		{
+			_sparks_particles->Stop();
+			_laser->ChangeEmissiveColor(float4(1.0f, 1.0f, 1.0f, 0.0f), true);
+			_laser->SetActive(false);
+		}
 		break;
 	}
 	_state = new_state;
