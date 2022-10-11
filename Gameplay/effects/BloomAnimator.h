@@ -20,6 +20,7 @@ namespace Hachiko
             void OnUpdate() override;
 
             void AnimateBloomManually(
+                float4 initial_emissive_color,
                 float target_intensity, 
                 float duration, 
                 bool should_return_to_automatic_mode = false);
@@ -30,6 +31,7 @@ namespace Hachiko
             SERIALIZE_FIELD(GameObject*, _bloom_target);
             SERIALIZE_FIELD(bool, _is_automatic);
             SERIALIZE_FIELD(float, _automatic_lerp_duration);
+            SERIALIZE_FIELD(float4, _initial_emissive_color);
 
             float _initial_intensity;
             float _target_intensity;

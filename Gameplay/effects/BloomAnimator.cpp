@@ -34,8 +34,9 @@ void Hachiko::Scripting::BloomAnimator::OnUpdate()
 	_current_intensity = 
 		math::Lerp(_initial_intensity, _target_intensity, _lerp_progress);
 
-	float4 emissive_color = _bloom_target->GetEmissiveColors()[0];
-	emissive_color.w = _current_intensity;
+	const float4 emissive_color(
+		_initial_emissive_color.xyz(), 
+		_current_intensity);
 
 	_bloom_target->ChangeEmissiveColor(emissive_color, true);
 	
@@ -62,15 +63,16 @@ void Hachiko::Scripting::BloomAnimator::OnUpdate()
 }
 
 void Hachiko::Scripting::BloomAnimator::AnimateBloomManually(
+	const float4 initial_emissive_color,
 	const float target_intensity, 
 	const float duration,
 	const bool should_return_to_automatic_mode)
 {
-	constexpr float inverse_255 = 1.0f / 255.0f;
-
 	SetShouldAnimate(true);
 
-	_initial_intensity = _bloom_target->GetEmissiveColors()[0].w * inverse_255;
+	_initial_emissive_color = initial_emissive_color;
+
+	_initial_intensity = initial_emissive_color.w;
 
 	_used_lerp_duration = duration;
 
