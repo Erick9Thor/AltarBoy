@@ -257,6 +257,7 @@ namespace Hachiko
 			SERIALIZE_FIELD(unsigned, _dash_scaler);
 			SERIALIZE_FIELD(unsigned, _max_dash_charges);
 			SERIALIZE_FIELD(GameObject*, _dash_trail);
+			SERIALIZE_FIELD(GameObject*, _dash_trail_vfx);
 			SERIALIZE_FIELD(float, _trail_enlarger);
 			SERIALIZE_FIELD(GameObject*, _falling_dust);
 			SERIALIZE_FIELD(GameObject*, _walking_dust);
@@ -318,6 +319,7 @@ namespace Hachiko
 			ComponentBillboard* _weapon_trails_billboard_left[static_cast<int>(WeaponUsed::SIZE)];
 
 			ComponentBillboard* _aim_indicator_billboard = nullptr;
+			ComponentParticleSystem* _dash_particles = nullptr;
 
 			std::vector<Weapon> weapons{};
 
@@ -372,6 +374,11 @@ namespace Hachiko
 
 			// General management
 			float _lock_time = 0.0f;
+			bool _enable_heal_particles = false;
+			float _heal_fade_progress;
+			SERIALIZE_FIELD(float, _heal_effect_fade_duration);
+			SERIALIZE_FIELD(float, damage_effect_duration);
+			float damage_effect_progress = 0.0f;
 
 			// Camera management
 			int _current_cam_setting = 0;

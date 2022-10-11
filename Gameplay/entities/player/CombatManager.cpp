@@ -883,6 +883,10 @@ int Hachiko::Scripting::CombatManager::ProcessPlayerCircle(const float3& attack_
 		float3 knockback_dir = _player->GetTransform()->GetGlobalPosition() - attack_source_pos;
 		knockback_dir.y = 0;
 		knockback_dir.Normalize();
+		if (knockback_dir.Equals(float3::zero))
+		{
+			knockback_dir = float3(0.0f, 0.0f, 1.0f);
+		}
 		HitPlayer(attack_stats.damage, attack_stats.knockback_distance, knockback_dir);
 		return 1;
 	}

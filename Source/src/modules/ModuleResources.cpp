@@ -65,7 +65,7 @@ bool ModuleResources::CleanUp()
 
     for (auto& it : loaded_resources)
     {
-        HE_LOG("Removing unreleased resources %llu %i", it.first, it.second.n_users);
+        // HE_LOG("Removing unreleased resources %llu %i", it.first, it.second.n_users);
         delete it.second.resource;
     }
     loaded_resources.clear();
