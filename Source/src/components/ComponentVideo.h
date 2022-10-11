@@ -71,7 +71,7 @@ namespace Hachiko
         AVPacket* av_packet = nullptr; // Data packet. This is sent to de decoders to obtain a frame of any type (video or audio).
         AVFrame* av_frame = nullptr; // Frame Data. This is what a decoder returns after decoding a packet.
         SwsContext* scaler_ctx = nullptr; // Used for converting the frame data to RGB format.
-        AVRational time_base = {0, 0}; // Used to obtain the FrameTime -> Used to sync video and audio.
+        AVRational* time_base = nullptr; // Used to obtain the FrameTime -> Used to sync video and audio.
 
         // LibAV external Video data
         int video_stream_index = -1; // Video data stream inside file.
