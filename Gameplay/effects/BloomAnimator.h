@@ -24,14 +24,16 @@ namespace Hachiko
                 float duration, 
                 bool should_return_to_automatic_mode = false);
             void SetShouldAnimate(bool should_animate);
+            void RefreshAsAutomatic();
 
         private:
-            SERIALIZE_FIELD(ComponentMeshRenderer*, _target_mesh_renderer);
+            SERIALIZE_FIELD(GameObject*, _bloom_target);
             SERIALIZE_FIELD(bool, _is_automatic);
             SERIALIZE_FIELD(float, _automatic_lerp_duration);
 
             float _initial_intensity;
             float _target_intensity;
+            float _current_intensity;
             float _used_lerp_duration;
             float _lerp_progress;
             bool _should_return_to_automatic_mode;

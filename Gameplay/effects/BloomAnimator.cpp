@@ -3,24 +3,62 @@
 
 Hachiko::Scripting::BloomAnimator::BloomAnimator(GameObject* game_object)
 	: Script(game_object, "BloomAnimator")
-	, _target_mesh_renderer(nullptr)
+	, _bloom_target(nullptr)
 	, _is_automatic(true)
 	, _automatic_lerp_duration(1.0f)
+	, _initial_intensity(0.0f)
 	, _target_intensity(1.0f)
-	, _used_lerp_duration(0)
-	, _lerp_progress(0)
-	, _should_return_to_automatic_mode(false)
+	, _current_intensity(0.0f)
+	, _used_lerp_duration(1.0f)
+	, _lerp_progress(0.0f)
+	, _should_return_to_automatic_mode(true)
+	, _should_animate(true)
 
 {
 }
 
 void Hachiko::Scripting::BloomAnimator::OnAwake()
 {
-
 }
 
 void Hachiko::Scripting::BloomAnimator::OnUpdate()
 {
+	if (!_should_animate)
+	{
+		return;
+	}
+
+	_lerp_progress += Time::DeltaTime() / _used_lerp_duration;
+	_lerp_progress = _lerp_progress > 1.0f ? 1.0f : _lerp_progress;
+
+	_current_intensity = 
+		math::Lerp(_initial_intensity, _target_intensity, _lerp_progress);
+
+	float4 emissive_color = _bloom_target->GetEmissiveColors()[0];
+	emissive_color.w = _current_intensity;
+
+	_bloom_target->ChangeEmissiveColor(emissive_color, true);
+	
+	if (_lerp_progress < 1.0f)
+	{
+		return;
+	}
+
+	_lerp_progress = 0.0f;
+
+	if (_is_automatic || _should_return_to_automatic_mode)
+	{
+		std::swap(_target_intensity, _initial_intensity);
+		_current_intensity = _initial_intensity;
+		_used_lerp_duration = _automatic_lerp_duration;
+		_is_automatic = true;
+	}
+	else
+	{
+		_current_intensity = _initial_intensity = 0.0f;
+		_target_intensity = 1.0f;
+		_should_animate = false;
+	}
 }
 
 void Hachiko::Scripting::BloomAnimator::AnimateBloomManually(
@@ -28,13 +66,28 @@ void Hachiko::Scripting::BloomAnimator::AnimateBloomManually(
 	const float duration,
 	const bool should_return_to_automatic_mode)
 {
+	constexpr float inverse_255 = 1.0f / 255.0f;
+
 	SetShouldAnimate(true);
 
-	//_initial_intensity = 
+	_initial_intensity = _bloom_target->GetEmissiveColors()[0].w * inverse_255;
 
+	_used_lerp_duration = duration;
+
+	_target_intensity = target_intensity;
+
+	_should_return_to_automatic_mode = should_return_to_automatic_mode;
 }
 
 void Hachiko::Scripting::BloomAnimator::SetShouldAnimate(bool should_animate)
 {
 	_should_animate = should_animate;
+}
+
+void Hachiko::Scripting::BloomAnimator::RefreshAsAutomatic()
+{
+	_is_automatic = true;
+	_current_intensity = _initial_intensity = 0.0f;
+	_target_intensity = 1.0f;
+	_should_animate = false;
 }
