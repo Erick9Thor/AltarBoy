@@ -269,13 +269,16 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		_player_geometry->ChangeEmissiveColor(float4(0.0f, 1.0f, 0.0f, progress), true);
 
 	}
-
-	if (damage_effect_progress >= 0.0f)
+	else if (damage_effect_progress >= 0.0f)
 	{
 		damage_effect_progress -= Time::DeltaTime() / damage_effect_duration;
 		float progress = damage_effect_progress / damage_effect_duration;
 		_player_geometry->ChangeEmissiveColor(float4(1.0f, 1.0f, 1.0f, progress), true);
 
+	}
+	else
+	{
+		_player_geometry->ResetEmissive(true);
 	}
 
 	if (_enable_heal_particles && _heal_fade_progress < 0.0f) {
