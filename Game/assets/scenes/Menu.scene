@@ -60,7 +60,7 @@ child:
         type: 10
         enabled: true
         position: [0, 0, 0]
-        size: [1842, 1042]
+        size: [1866, 1006]
         scale: [1, 1]
         rotation: [0, 0, 0, 1]
         pivot: [0.5, 0.5]
@@ -105,7 +105,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1842, 1042]
+            size: [1866, 1006]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -146,19 +146,19 @@ child:
             id: 11573762086171599171
             type: 10
             enabled: true
-            position: [55, 600, 0]
+            position: [55, 55, 0]
             size: [438, 158]
             scale: [0.45, 0.45]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
-            anchor: [0.5, 0]
+            anchor: [0.5, 0.5]
           - !<canvas_renderer>
             id: 6340919664879631665
             type: 9
             enabled: true
-            scale_ui: false
-            original_size_x: 0
-            original_size_y: 0
+            scale_ui: true
+            original_size_x: 1902
+            original_size_y: 1006
           - !<button>
             id: 14922076439648240991
             type: 12
@@ -192,19 +192,19 @@ child:
             id: 12485261860033650679
             type: 10
             enabled: true
-            position: [150, 526, 0]
+            position: [150, -15, 0]
             size: [700, 174]
             scale: [0.45, 0.45]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
-            anchor: [0.5, 0]
+            anchor: [0.5, 0.5]
           - !<canvas_renderer>
             id: 13961633755337133385
             type: 9
             enabled: true
-            scale_ui: false
-            original_size_x: 0
-            original_size_y: 0
+            scale_ui: true
+            original_size_x: 1902
+            original_size_y: 1006
           - !<button>
             id: 5627592797897612334
             type: 12
@@ -238,19 +238,19 @@ child:
             id: 4231912232200162890
             type: 10
             enabled: true
-            position: [137, 442.8, 0]
+            position: [137, -90, 0]
             size: [663, 160]
             scale: [0.45, 0.45]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
-            anchor: [0.5, 0]
+            anchor: [0.5, 0.5]
           - !<canvas_renderer>
             id: 16549682737339658831
             type: 9
             enabled: true
-            scale_ui: false
-            original_size_x: 0
-            original_size_y: 0
+            scale_ui: true
+            original_size_x: 1902
+            original_size_y: 1006
           - !<button>
             id: 11766846335578041050
             type: 12
@@ -284,19 +284,19 @@ child:
             id: 12612247618848250662
             type: 10
             enabled: true
-            position: [55, 362.4, 0]
+            position: [55, -170, 0]
             size: [432, 147]
             scale: [0.45, 0.45]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
-            anchor: [0.5, 0]
+            anchor: [0.5, 0.5]
           - !<canvas_renderer>
             id: 7984435262585265924
             type: 9
             enabled: true
-            scale_ui: false
-            original_size_x: 0
-            original_size_y: 0
+            scale_ui: true
+            original_size_x: 1902
+            original_size_y: 1006
           - !<button>
             id: 16903851833182070283
             type: 12
@@ -484,19 +484,19 @@ child:
             id: 7637097761508394094
             type: 10
             enabled: true
-            position: [-257.7, -582.5, 0]
+            position: [200, -200, 0]
             size: [206, 70]
             scale: [0.6, 0.6]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
-            anchor: [0.75, 0.85]
+            anchor: [0.5, 0.5]
           - !<canvas_renderer>
             id: 13379399604533935340
             type: 9
             enabled: true
-            scale_ui: false
-            original_size_x: 0
-            original_size_y: 0
+            scale_ui: true
+            original_size_x: 1866
+            original_size_y: 1006
           - !<button>
             id: 7268867612220351968
             type: 12
