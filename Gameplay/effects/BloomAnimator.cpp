@@ -40,7 +40,7 @@ void Hachiko::Scripting::BloomAnimator::OnUpdate()
 		_initial_emissive_color.xyz(), 
 		_current_intensity);
 
-	_bloom_target->ChangeEmissiveColor(emissive_color, true);
+	_bloom_target->ChangeEmissiveColor(emissive_color, true, true);
 	
 	if (_lerp_progress < 1.0f)
 	{
