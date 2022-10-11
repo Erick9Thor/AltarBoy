@@ -102,7 +102,7 @@ void Hachiko::Scripting::PlayerCamera::MoveCamera()
 	ComponentTransform* transform = game_object->GetTransform();
 	float3 current_position = transform->GetGlobalPosition();
 
-	float delayed_time = _is_in_position ? Time::DeltaTime() / _follow_delay : _reposition_progress;
+	float delayed_time = Time::DeltaTime() / _follow_delay;
 	Clamp<float>(delayed_time, 0.0f, 1.0f);
 
 	// Lerp to the position to the player with a delay: 

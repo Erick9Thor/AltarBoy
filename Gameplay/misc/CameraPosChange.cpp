@@ -23,35 +23,48 @@ void Hachiko::Scripting::CameraPosChange::OnAwake()
 	_camera = Scenes::GetMainCamera()->GetComponent<PlayerCamera>();
 	global_pos = game_object->GetTransform()->GetGlobalPosition();
 	local_matrix = game_object->GetTransform()->GetLocalMatrix();
-	boundingbox = OBB(local_matrix.Col3(3), float3(1.f, 1.f, 1.f), local_matrix.WorldX().Normalized(), local_matrix.WorldY().Normalized(), local_matrix.WorldZ().Normalized());
+	// Adjust bounding box size to object scale
+	float3 scale = game_object->GetTransform()->GetLocalScale();
+	boundingbox = OBB(global_pos, float3(.5f * scale.x, .5f * scale.y, .5f * scale.z),
+		local_matrix.WorldX().Normalized(), local_matrix.WorldY().Normalized(), local_matrix.WorldZ().Normalized());
 }
 
 void Hachiko::Scripting::CameraPosChange::OnStart()
 {
+	_is_inside = false;
 }
 
 void Hachiko::Scripting::CameraPosChange::OnUpdate()
 {
 	if (_player && _camera)
 	{
-		float distance = Distance(global_pos, _player->GetTransform()->GetGlobalPosition());
-		if (distance < 3.0f)
-		{
-			_is_inside = true;
-		}
-		else 
+		if (InsideOBB())
 		{
 			if (_is_inside)
 			{
-				_camera->ChangeRelativePosition(_relative_position, _do_look_ahead, _speed, _duration);
-				_camera->RotateCameraTo(_rotation, _speed);
-				if (_objective)
-				{
-					_camera->SetObjective(_objective);
-				}
+				return;
 			}
+			_is_inside = true;
+
+			_camera->ChangeRelativePosition(_relative_position, _speed, _do_look_ahead, _duration);
+			_camera->RotateCameraTo(_rotation, _speed);
+			if (_objective)
+			{
+				_camera->SetObjective(_objective);
+			}
+		}
+		else
+		{
 			_is_inside = false;
 		}
+	}
+
+	if (_check_box)	// Only for debug purposes
+	{
+		float3 scale = game_object->GetTransform()->GetLocalScale();
+		boundingbox = OBB(global_pos, float3(.5f * scale.x, .5f * scale.y, .5f * scale.z),
+			local_matrix.WorldX().Normalized(), local_matrix.WorldY().Normalized(), local_matrix.WorldZ().Normalized());
+		Debug::DebugDraw(boundingbox, float3(1.0f, 1.0f, 0.0f));
 	}
 }
 
