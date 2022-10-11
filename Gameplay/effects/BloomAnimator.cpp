@@ -5,6 +5,9 @@ Hachiko::Scripting::BloomAnimator::BloomAnimator(GameObject* game_object)
 	: Script(game_object, "BloomAnimator")
 	, _bloom_target(nullptr)
 	, _is_automatic(true)
+	, _is_randomized(false)
+	, _randomized_duration_min(0.2f)
+	, _randomized_duration_max(3.0f)
 	, _automatic_lerp_duration(1.0f)
 	, _initial_intensity(0.0f)
 	, _target_intensity(1.0f)
@@ -13,7 +16,6 @@ Hachiko::Scripting::BloomAnimator::BloomAnimator(GameObject* game_object)
 	, _lerp_progress(0.0f)
 	, _should_return_to_automatic_mode(true)
 	, _should_animate(true)
-
 {
 }
 
@@ -51,7 +53,12 @@ void Hachiko::Scripting::BloomAnimator::OnUpdate()
 	{
 		std::swap(_target_intensity, _initial_intensity);
 		_current_intensity = _initial_intensity;
-		_used_lerp_duration = _automatic_lerp_duration;
+
+		_used_lerp_duration = _is_randomized
+			? RandomUtil::RandomBetween(
+				_randomized_duration_min, _randomized_duration_max)
+			: _automatic_lerp_duration;
+
 		_is_automatic = true;
 	}
 	else

@@ -30,6 +30,9 @@ namespace Hachiko
         private:
             SERIALIZE_FIELD(GameObject*, _bloom_target);
             SERIALIZE_FIELD(bool, _is_automatic);
+            SERIALIZE_FIELD(bool, _is_randomized);
+            SERIALIZE_FIELD(float, _randomized_duration_min);
+            SERIALIZE_FIELD(float, _randomized_duration_max);
             SERIALIZE_FIELD(float, _automatic_lerp_duration);
             SERIALIZE_FIELD(float4, _initial_emissive_color);
 
