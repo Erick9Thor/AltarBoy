@@ -114,7 +114,12 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 		_dash_trail->SetActive(false);
 	}
 
-	if (_falling_dust != nullptr)
+	if (_dash_trail_vfx)
+	{
+		_dash_particles = _dash_trail_vfx->GetComponent<ComponentParticleSystem>();
+	}
+
+	if (_falling_dust != nullptr) 
 	{
 		_falling_dust_particles = _falling_dust->GetComponent<ComponentParticleSystem>();
 	}
@@ -264,13 +269,16 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		_player_geometry->ChangeEmissiveColor(float4(0.0f, 1.0f, 0.0f, progress), true);
 
 	}
-
-	if (damage_effect_progress >= 0.0f)
+	else if (damage_effect_progress >= 0.0f)
 	{
 		damage_effect_progress -= Time::DeltaTime() / damage_effect_duration;
 		float progress = damage_effect_progress / damage_effect_duration;
 		_player_geometry->ChangeEmissiveColor(float4(1.0f, 1.0f, 1.0f, progress), true);
 
+	}
+	else
+	{
+		_player_geometry->ResetEmissive(true);
 	}
 
 	if (_enable_heal_particles && _heal_fade_progress < 0.0f) {
@@ -1065,6 +1073,11 @@ void Hachiko::Scripting::PlayerController::DashController()
 		return;
 	}
 
+	if (_dash_particles != nullptr && IsDashing())
+	{
+		_dash_particles->Play();
+	}
+
 	_dash_progress += Time::DeltaTime() / _dash_duration;
 	_dash_progress = _dash_progress > 1.0f ? 1.0f : _dash_progress;
 
@@ -1076,7 +1089,6 @@ void Hachiko::Scripting::PlayerController::DashController()
 
 
 	DashTrailManager(_dash_progress);
-
 	// Attack status is stopped in attack controller
 	if (_dash_progress >= 1.0f && IsDashing())
 	{
@@ -1107,7 +1119,6 @@ void Hachiko::Scripting::PlayerController::DashChargesManager()
 
 void Hachiko::Scripting::PlayerController::DashTrailManager(float dash_progress)
 {
-
 	_show_dashtrail = _state == PlayerState::DASHING;
 	_dash_trail->SetActive(_show_dashtrail);
 
@@ -1115,7 +1126,6 @@ void Hachiko::Scripting::PlayerController::DashTrailManager(float dash_progress)
 	{
 		return;
 	}
-
 	_dash_trail->GetTransform()->SetLocalPosition(math::float3::Lerp(_trail_start_pos, _trail_end_pos,
 		_dash_progress));
 	_dash_trail->GetTransform()->SetLocalScale(math::float3::Lerp(_trail_start_scale, _trail_end_scale,
@@ -1361,6 +1371,11 @@ bool Hachiko::Scripting::PlayerController::RegisterHit(int damage_received, floa
 		if (_ui_damage && _combat_stats->_current_hp / _combat_stats->_max_hp < 0.25f)
 		{
 			_ui_damage->SetActive(true);
+		}
+
+		if (_damage_effect_billboard != nullptr)
+		{
+			_damage_effect_billboard->Play();
 		}
 	}
 

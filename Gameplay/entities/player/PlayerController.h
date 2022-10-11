@@ -257,6 +257,7 @@ namespace Hachiko
 			SERIALIZE_FIELD(unsigned, _dash_scaler);
 			SERIALIZE_FIELD(unsigned, _max_dash_charges);
 			SERIALIZE_FIELD(GameObject*, _dash_trail);
+			SERIALIZE_FIELD(GameObject*, _dash_trail_vfx);
 			SERIALIZE_FIELD(float, _trail_enlarger);
 			SERIALIZE_FIELD(GameObject*, _falling_dust);
 			SERIALIZE_FIELD(GameObject*, _walking_dust);
@@ -318,6 +319,7 @@ namespace Hachiko
 			ComponentBillboard* _weapon_trails_billboard_left[static_cast<int>(WeaponUsed::SIZE)];
 
 			ComponentBillboard* _aim_indicator_billboard = nullptr;
+			ComponentParticleSystem* _dash_particles = nullptr;
 
 			std::vector<Weapon> weapons{};
 

@@ -223,6 +223,7 @@ namespace Hachiko
 
         void ChangeEmissiveColor(float4 color, bool include_children = false);
         std::vector<float4> GetEmissiveColors() const;
+        void ResetEmissive(bool include_children = false);
         void ChangeTintColor(float4 color, bool include_children = false);
         void ChangeDissolveProgress(float progress, bool include_children = false);
         void SetVisible(bool v, bool include_children = false);

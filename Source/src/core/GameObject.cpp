@@ -832,6 +832,23 @@ std::vector<float4> Hachiko::GameObject::GetEmissiveColors() const
 }
 
 
+void Hachiko::GameObject::ResetEmissive(bool include_children)
+{
+    std::vector<ComponentMeshRenderer*> v_mesh_renderer = GetComponents<ComponentMeshRenderer>();
+    for (int i = 0; i < v_mesh_renderer.size(); ++i)
+    {
+        v_mesh_renderer[i]->LiftOverrideEmissive();
+    }
+
+    if (!include_children)
+        return;
+
+    for (GameObject* child : children)
+    {
+        child->ResetEmissive(include_children);
+    }
+}
+
 void Hachiko::GameObject::ChangeTintColor(float4 color, bool include_children)
 {
     std::vector<ComponentMeshRenderer*> v_mesh_renderer = GetComponents<ComponentMeshRenderer>();
