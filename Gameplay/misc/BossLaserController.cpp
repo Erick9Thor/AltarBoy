@@ -93,7 +93,7 @@ void Hachiko::Scripting::BossLaserController::ChangeState(State new_state)
 		_elapsed_time = 0.0f;
 		_scale = 0.0f;
 		AdjustLength();
-		_laser->ChangeEmissiveColor(float4(1.0f, 1.0f, 1.0f, 0.2f), _activation_time, true);
+		_laser->ChangeEmissiveColor(float4(1.0f, 1.0f, 1.0f, 0.2f), true);
 		break;
 
 	case State::INACTIVE:

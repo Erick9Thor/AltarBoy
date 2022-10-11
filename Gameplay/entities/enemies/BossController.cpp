@@ -19,6 +19,9 @@ Hachiko::Scripting::BossController::BossController(GameObject* game_object)
     , _explosive_crystals({})
     , _current_index_crystals(0)
     , start_encounter_range(0.0f)
+    , camera_transition_speed(2.0f)
+    , encounter_start_duration(2.0f)
+    , pre_combat_camera_offset(float3(0.f, 13.f, 8.f))
     , _jump_start_delay(0.0f)
     , _jump_ascending_duration(0.0f)
     , _jump_post_ascending_delay(0.0f)
@@ -46,6 +49,7 @@ Hachiko::Scripting::BossController::BossController(GameObject* game_object)
     , _laser_wall(nullptr)
     , _laser_wall_duration(2.0f)
     , _laser_jump_height(50.0f)
+    , damage_effect_duration(1.0f)
 {
     CreateBossWeapons();
 }
@@ -88,10 +92,7 @@ void Hachiko::Scripting::BossController::OnAwake()
     SetUpHpBar();
     // Hp bar starts hidden until encounter starts
     SetHpBarActive(false);
-    if (cocoon_placeholder_go)
-    {
-        cocoon_placeholder_go->SetActive(false);
-    }
+    SetUpCocoon();
     gauntlet = gauntlet_go->GetComponent<GauntletManager>();
 
     ChangeWeapon(0);
@@ -127,6 +128,7 @@ void Hachiko::Scripting::BossController::OnAwake()
 
 void Hachiko::Scripting::BossController::OnStart()
 {
+    OverrideCameraOffset();
 }
 
 void Hachiko::Scripting::BossController::OnUpdate()
@@ -135,6 +137,13 @@ void Hachiko::Scripting::BossController::OnUpdate()
     {
         constexpr int player_dmg = 5;
         RegisterHit(player_dmg);
+    }
+
+    if (damage_effect_progress >= 0.0f)
+    {
+        damage_effect_progress -= Time::DeltaTime() / damage_effect_duration;
+        float progress = damage_effect_progress / damage_effect_duration;
+        game_object->ChangeEmissiveColor(float4(1.0f, 1.0f, 1.0f, progress), true);
     }
 
     StateController();
@@ -149,13 +158,19 @@ bool Hachiko::Scripting::BossController::IsAlive() const
 
 void Hachiko::Scripting::BossController::RegisterHit(int dmg)
 {
-    if (hitable)
+    if (state == BossState::WAITING_ENCOUNTER)
     {
-        combat_stats->_current_hp -= dmg;
-        UpdateHpBar();
-
-        game_object->ChangeEmissiveColor(float4(255, 255, 255, 255), 0.3f, true);
+        state = BossState::STARTING_ENCOUNTER;
     }
+
+    if (!hitable)
+    {
+        return;
+    }
+
+    damage_effect_progress = damage_effect_duration;
+    combat_stats->_current_hp -= dmg;
+    UpdateHpBar();
 }
 
 void Hachiko::Scripting::BossController::UpdateHpBar() const
@@ -324,23 +339,28 @@ float Hachiko::Scripting::BossController::GetPlayerDistance()
 
 void Hachiko::Scripting::BossController::WaitingController()
 {
-    if (GetPlayerDistance() <= start_encounter_range)
-    {
-        // Will trigger StartEncounter
-        state = BossState::STARTING_ENCOUNTER;
-    }
 }
 
 void Hachiko::Scripting::BossController::StartEncounter()
 {
-    SetHpBarActive(true);
+    encounter_start_timer = 0.f;
+    RestoreCameraOffset();
 }
 
 void Hachiko::Scripting::BossController::StartEncounterController()
 {
-    // If there is any start sequence manage it here and hold state until it
-    // ends. For now it goes to next state instantly:
+    // Add any effects desired for combat start, for now it only delays while camera is transitioning
+    enemy_timer += Time::DeltaTime();
+    if (enemy_timer < encounter_start_duration)
+    {
+        return;
+    }
+    SetHpBarActive(true);
+
+    player_camera->SetDoLookAhead(true);
+    BreakCocoon();
     std::copy(_jumping_pattern_1, _jumping_pattern_1 + JumpUtil::JUMP_PATTERN_SIZE, _current_jumping_pattern);
+
     state = BossState::COMBAT_FORM;
 }
 
@@ -370,14 +390,10 @@ float4x4 Hachiko::Scripting::BossController::GetMeleeAttackOrigin(float attack_r
 
 void Hachiko::Scripting::BossController::StartCocoon()
 {
-    hitable = false;
     time_elapse = 0.0;
-    if (cocoon_placeholder_go)
-    {
-        cocoon_placeholder_go->SetActive(true);
-    }
+    SetUpCocoon();
+    FocusCameraOnBoss(true);
     _stalagmite_manager->DestroyAllStalagmites();
-    FocusCamera(true);
 }
 
 void Hachiko::Scripting::BossController::CocoonController()
@@ -389,7 +405,7 @@ void Hachiko::Scripting::BossController::CocoonController()
 
         if (time_elapse >= 2) // HARDCODED TIME FOR CAMERA FOCUS
         {
-            FocusCamera(false);
+            FocusCameraOnBoss(false);
         }
     }
 
@@ -399,6 +415,25 @@ void Hachiko::Scripting::BossController::CocoonController()
         FinishCocoon();
     }
 }
+
+void Hachiko::Scripting::BossController::SetUpCocoon()
+{
+    hitable = false;
+    if (cocoon_placeholder_go)
+    {
+        cocoon_placeholder_go->SetActive(true);
+    }
+}
+
+void Hachiko::Scripting::BossController::BreakCocoon()
+{
+    hitable = true;
+    if (cocoon_placeholder_go)
+    {
+        cocoon_placeholder_go->SetActive(false);
+    }
+}
+
 
 bool Hachiko::Scripting::BossController::CocoonTrigger()
 {
@@ -422,15 +457,12 @@ void Hachiko::Scripting::BossController::FinishCocoon()
 {
     hitable = true;
     second_phase = true;
+    BreakCocoon();
 
     // We change our jumping pattern to the second one and reset the index
     std::copy(_jumping_pattern_2, _jumping_pattern_2 + JumpUtil::JUMP_PATTERN_SIZE, _current_jumping_pattern);
     _jump_pattern_index = -1;
 
-    if (cocoon_placeholder_go)
-    {
-        cocoon_placeholder_go->SetActive(false);
-    }
     gauntlet->ResetGauntlet();
 
     ChangeStateText("Finished Cocoon.");
@@ -552,20 +584,7 @@ void Hachiko::Scripting::BossController::SpawnCrystalsController()
     combat_state = CombatState::CHASING;
 }
 
-void Hachiko::Scripting::BossController::FocusCamera(bool focus_on_boss)
-{
-    camera_focus_on_boss = focus_on_boss;
-    if (camera_focus_on_boss)
-    {
-        level_manager->BlockInputs(true);
-        player_camera->SetObjective(game_object);
-    }
-    else
-    {
-        level_manager->BlockInputs(false);
-        player_camera->SetObjective(player);
-    }
-}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Jumping State Related Methods:
@@ -1068,6 +1087,40 @@ void Hachiko::Scripting::BossController::ChangeStateText(
     }
 
     _boss_state_text_ui->SetText(state_string);
+}
+
+void Hachiko::Scripting::BossController::OverrideCameraOffset()
+{   
+    overriden_original_camera_offset = true;
+    original_camera_offset = player_camera->GetRelativePosition();
+    player_camera->ChangeRelativePosition(pre_combat_camera_offset);
+}
+
+void Hachiko::Scripting::BossController::RestoreCameraOffset()
+{
+    if (!overriden_original_camera_offset)
+    {
+        // Prevents using unitialized pre_combat_camera_offset
+        return;
+    }
+    overriden_original_camera_offset = false;
+    constexpr bool do_lookahead = false;
+    player_camera->ChangeRelativePosition(original_camera_offset, do_lookahead, camera_transition_speed);
+}
+
+void Hachiko::Scripting::BossController::FocusCameraOnBoss(bool focus_on_boss)
+{
+    camera_focus_on_boss = focus_on_boss;
+    if (camera_focus_on_boss)
+    {
+        level_manager->BlockInputs(true);
+        player_camera->SetObjective(game_object);
+    }
+    else
+    {
+        level_manager->BlockInputs(false);
+        player_camera->SetObjective(player);
+    }
 }
 
 Hachiko::Scripting::BossController::BossAttack

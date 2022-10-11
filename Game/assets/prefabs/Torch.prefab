@@ -5,7 +5,7 @@ component:
   - !<transform>
     type: 1
     enabled: true
-    position: [-74.03, 2.022, 32.67]
+    position: [-74.03, 2.031, 32.67]
     rotation: [-0, 0, -0]
     scale: [1.5, 1.5, 1.5]
   - !<obstacle>
@@ -39,7 +39,8 @@ child:
             mesh_id: 3996608725693908784
             navigable: false
             visible: true
-            material_id: 13838716584693807781
+            casting_shadow: true
+            material_id: 3205997075502161914
             tint_color: [1, 1, 1, 1]
   - name: Crystal_lamp_02
     enabled: true
@@ -66,7 +67,8 @@ child:
             mesh_id: 12261142078418812676
             navigable: false
             visible: true
-            material_id: 4891175381920237845
+            casting_shadow: true
+            material_id: 10282915194250151458
             tint_color: [1, 1, 1, 1]
   - name: Light
     enabled: true
@@ -112,7 +114,7 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [-0.1148, 3.17, -0.2062]
+        position: [-0.0207, 3.17, -0.2516]
         rotation: [-0, 0, -0]
         scale: [0.6667, 0.6667, 0.6667]
       - !<billboard>
@@ -140,6 +142,7 @@ child:
         start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
         blend_factor: 0.8
         projection: true
+        randomize_tiles: false
   - name: Smoke
     enabled: true
     component:
@@ -174,6 +177,7 @@ child:
         start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
         blend_factor: 1
         projection: true
+        randomize_tiles: false
   - name: Sparks
     enabled: true
     component:
