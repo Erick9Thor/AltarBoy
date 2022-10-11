@@ -98,7 +98,7 @@ void Hachiko::Scripting::MainMenuManager::OnUpdate()
 		break;
 
 		case State::PLAY:
-			SceneManagement::SwitchScene(Scenes::GAME);
+			SceneManagement::SwitchScene(Scenes::CUTSCENE_INTRO);
 		break;
 	}
 	
