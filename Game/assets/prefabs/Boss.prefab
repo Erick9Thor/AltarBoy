@@ -5,7 +5,7 @@ component:
   - !<transform>
     type: 1
     enabled: true
-    position: [-78.62, 1.312, -64.41]
+    position: [-77.2, 1.312, -66.8]
     rotation: [-0, 0, -0]
     scale: [1, 0.9998, 0.9998]
   - !<agent>
@@ -13,7 +13,7 @@ component:
     enabled: true
     max_speed: 3
     max_acceleration: 15
-    avoid_obstacles: false
+    avoid_obstacles: true
     radius: 1
     is_player: false
   - !<script>
@@ -21,11 +21,41 @@ component:
     enabled: true
     class_name: BossController
     "'state_value@int'": 0
+    "'combat_state_value@int'": 0
+    "'second_phase@bool'": false
     "'hp_bar_go@GameObject*'": 3
     "'crystal_target_go@GameObject*'": 0
-    "'cocoon_placeholder_go@GameObject*'": 6
-    "'gauntlet_go@GameObject*'": 7
+    "'cocoon_placeholder_go@GameObject*'": 7
+    "'gauntlet_go@GameObject*'": 8
+    "'_current_index_crystals@int'": 0
+    "'crystal_pool@GameObject*'": 0
     "'start_encounter_range@float'": 5
+    "'attack_delay@float'": 0.5
+    "'after_attack_wait@float'": 1
+    "'_jump_start_delay@float'": 0.1
+    "'_jump_ascending_duration@float'": 0.6
+    "'_jump_post_ascending_delay@float'": 0
+    "'_jump_on_highest_point_duration@float'": 0
+    "'_jump_post_on_highest_point_delay@float'": 0
+    "'_jump_descending_duration@float'": 0.6
+    "'_jump_post_descending_delay@float'": 0.1
+    "'_jump_getting_up_duration@float'": 0.3
+    "'_jump_skill_delay@float'": 0.1
+    "'_jump_skill_duration@float'": 0.3
+    "'_jump_post_skill_delay@float'": 1
+    "'_jump_height@float'": 5
+    "'_jump_offset@float'": 1.5
+    "'_crystal_jump_position@float3'": [-85, 1.5, -60]
+    "'_stalagmite_manager_go@GameObject*'": 0
+    "'_boss_state_text_ui@ComponentText*'": 0
+    "'_sword_weapon@GameObject*'": 13
+    "'_claw_weapon@GameObject*'": 12
+    "'_hammer_weapon@GameObject*'": 14
+    "'time_between_enemies@float'": 5
+    "'enemy_pool@GameObject*'": 0
+    "'_laser_wall@GameObject*'": 0
+    "'_laser_wall_duration@float'": 6
+    "'_laser_jump_height@float'": 30
   - !<script>
     type: 15
     enabled: true
@@ -50,7 +80,7 @@ child:
         type: 10
         enabled: true
         position: [0, 0, 0]
-        size: [1191, 635]
+        size: [1055, 644]
         scale: [1, 1]
         rotation: [0, 0, 0, 1]
         pivot: [0.5, 0.5]
@@ -107,6 +137,9 @@ child:
               - !<canvas_renderer>
                 type: 9
                 enabled: true
+                scale_ui: false
+                original_size_x: 0
+                original_size_y: 0
               - !<image>
                 type: 11
                 enabled: true
@@ -141,6 +174,9 @@ child:
               - !<canvas_renderer>
                 type: 9
                 enabled: true
+                scale_ui: false
+                original_size_x: 0
+                original_size_y: 0
               - !<image>
                 type: 11
                 enabled: true
@@ -154,6 +190,37 @@ child:
                 image_y_tiles: 1
                 image_tiles_per_second: 1
                 fill_window: false
+      - name: Boss state text
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [42.32, 56.67, -17.04]
+            rotation: [-90, 0, 0]
+            scale: [1, 1, 1]
+          - !<transform_2d>
+            type: 10
+            enabled: true
+            position: [0, 0, 0]
+            size: [300, 300]
+            scale: [1, 1]
+            rotation: [0, 0, 0, 1]
+            pivot: [0, 0.5]
+            anchor: [0, 0.5]
+          - !<canvas_renderer>
+            type: 9
+            enabled: true
+            scale_ui: false
+            original_size_x: 0
+            original_size_y: 0
+          - !<text>
+            type: 16
+            enabled: true
+            font_id: 13446434311746485888
+            color: [1, 1, 1, 1]
+            size: 28
+            label_text: Boss State
   - name: CacoonPlaceholder
     enabled: true
     component:
@@ -169,6 +236,7 @@ child:
         mesh_id: 1654487118907036717
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 6750369022920963075
         tint_color: [1, 1, 1, 1]
   - name: BossGauntlet1
@@ -218,5 +286,43 @@ child:
             mesh_id: 1309944288732959230
             navigable: false
             visible: true
+            casting_shadow: true
             material_id: 6750369022920963075
             tint_color: [1, 1, 1, 1]
+  - name: Weapons
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [78.62, -1.312, 64.42]
+        rotation: [-0, 0, -0]
+        scale: [1, 1, 1]
+    child:
+      - name: Clawn
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+      - name: Sword
+        enabled: false
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+      - name: Hammer
+        enabled: false
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]

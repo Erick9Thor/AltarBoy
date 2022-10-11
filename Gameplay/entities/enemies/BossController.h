@@ -70,12 +70,13 @@ namespace Hachiko
             WEAPON_CHANGE,
             STALAGMITE,
             CRYSTAL,
+            LASER,
             DETERMINED_BY_PATTERN
         };
 
         namespace JumpUtil
         {
-            constexpr int JUMP_PATTERN_SIZE = 15;
+            constexpr int JUMP_PATTERN_SIZE = 6;
         }
 
         class BossController : public Script
@@ -131,7 +132,7 @@ namespace Hachiko
 
 
         private:
-            // WEAPON MANAGE
+            // Weapon Management
             void ChangeWeapon(unsigned weapon_idx);
             void CreateBossWeapons();
             static BossAttack GetAttackType(AttackType attack_type);
@@ -159,9 +160,13 @@ namespace Hachiko
 
             float4x4 GetMeleeAttackOrigin(float attack_range) const;
 
-            // Cacoon
+            // Cocoon
             void StartCocoon();
             void CocoonController();
+            // Manage cocoon related effects and boss inmunity
+            // Used on boss starting encounter and on cocoon phase
+            void SetUpCocoon();
+            void BreakCocoon();
 
             bool CocoonTrigger();
             void FinishCocoon();
@@ -176,10 +181,10 @@ namespace Hachiko
             void SpawnCrystals();
             void SpawnCrystalsController();
 
-            void FocusCamera(bool focus_on_boss);
-
             void SpawnEnemy();
             void ResetEnemies();
+
+            bool ControlLasers();
 
             // Jumping related methods:
             void TriggerJumpingState(JumpingMode jumping_mode);
@@ -191,6 +196,11 @@ namespace Hachiko
 
             // Debug methods:
             void ChangeStateText(const char* state_string) const;
+
+            // Camera related methods:
+            void OverrideCameraOffset();
+            void RestoreCameraOffset();
+            void FocusCameraOnBoss(bool focus_on_boss);
 
         private:
             SERIALIZE_FIELD(int, state_value);
@@ -208,7 +218,6 @@ namespace Hachiko
             SERIALIZE_FIELD(float, after_attack_wait);
             GameObject* player = nullptr; // It's found on scene based on name
             LevelManager* level_manager = nullptr; // It's found on scene based on name
-            PlayerCamera* player_camera = nullptr; // It's found on scene based on name
             ComponentTransform* transform = nullptr;
             ComponentProgressBar* hp_bar = nullptr;
             ComponentAgent* agent = nullptr;
@@ -220,8 +229,18 @@ namespace Hachiko
             CombatState combat_state = CombatState::IDLE;
             CombatState prev_combat_state = combat_state;
             bool hitable = true;
-            std::vector<float> gauntlet_thresholds_percent{0.3f, 0.7f};
+            std::vector<float> gauntlet_thresholds_percent{0.5f};
             float3 target_position = float3::zero;
+            
+            // Camera variables
+            PlayerCamera* player_camera = nullptr; // It's found on scene based on name
+            bool overriden_original_camera_offset = false;
+            SERIALIZE_FIELD(float, camera_transition_speed);
+            // Should be higher than camera transition duration
+            SERIALIZE_FIELD(float, encounter_start_duration); 
+            float encounter_start_timer = 0.f;
+            SERIALIZE_FIELD(float3, pre_combat_camera_offset);
+            float3 original_camera_offset = float3::zero;
 
             // Jumping state related fields:
             SERIALIZE_FIELD(float, _jump_start_delay);
@@ -252,23 +271,26 @@ namespace Hachiko
             // Jump pattern is used when the Jumping mode was set to
             // JumpingMode::DETERMINED_BY_PATTERN on TriggerJumping:
             int _jump_pattern_index;
-            JumpingMode _jumping_pattern[JumpUtil::JUMP_PATTERN_SIZE] = {
+            JumpingMode _jumping_pattern_1[JumpUtil::JUMP_PATTERN_SIZE] = {
                 JumpingMode::BASIC_ATTACK,
                 JumpingMode::BASIC_ATTACK, // 1
                 JumpingMode::STALAGMITE,
-                JumpingMode::BASIC_ATTACK,
                 JumpingMode::BASIC_ATTACK, // 4
-                JumpingMode::WEAPON_CHANGE,
                 JumpingMode::BASIC_ATTACK,
-                JumpingMode::BASIC_ATTACK, // 7
-                JumpingMode::WEAPON_CHANGE,
-                JumpingMode::BASIC_ATTACK,
-                JumpingMode::BASIC_ATTACK, // 10
-                JumpingMode::STALAGMITE,
-                JumpingMode::BASIC_ATTACK,
-                JumpingMode::BASIC_ATTACK, // 13
                 JumpingMode::WEAPON_CHANGE
             };
+
+            JumpingMode _jumping_pattern_2[JumpUtil::JUMP_PATTERN_SIZE] = {
+                JumpingMode::BASIC_ATTACK, 
+                JumpingMode::STALAGMITE,   // 1
+                JumpingMode::LASER,
+                JumpingMode::BASIC_ATTACK, // 4
+                JumpingMode::BASIC_ATTACK,
+                JumpingMode::WEAPON_CHANGE
+            };
+
+            JumpingMode _current_jumping_pattern[JumpUtil::JUMP_PATTERN_SIZE];
+
             JumpingMode _current_jumping_mode;
 
             SERIALIZE_FIELD(GameObject*, _stalagmite_manager_go);
@@ -299,12 +321,20 @@ namespace Hachiko
             std::vector<EnemyController*> enemies;
             float enemy_timer = 0.0;
 
+            SERIALIZE_FIELD(float, damage_effect_duration);
+            float damage_effect_progress = 0.0f;
+
 
             // It needs to start as true so the first normal jump sets it to false
             bool double_jump_toggle = true;
 
             const float jump_placeholder_time = 5.f;
             float jump_placeholder_timer = 0.f;
+
+            SERIALIZE_FIELD(GameObject*, _laser_wall);
+            SERIALIZE_FIELD(float, _laser_wall_duration);
+            float _laser_wall_current_time = 0.0f;
+            SERIALIZE_FIELD(float, _laser_jump_height);
         };
     } // namespace Scripting
 } // namespace Hachiko
