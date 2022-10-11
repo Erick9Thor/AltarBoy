@@ -58,6 +58,7 @@ child:
         enabled: true
         class_name: CutsceneManager
         "'_cutscene@GameObject*'": 11284506405159390339
+        "'_next_level@unsigned'": 1
     child:
       - id: 11284506405159390339
         name: Cutscene Video
@@ -74,7 +75,7 @@ child:
             id: 14473220105854959343
             type: 23
             enabled: true
-            video_id: 13220022770713114255
+            video_id: 12594848557541310033
             projected: false
             loop: false
             flip: false
