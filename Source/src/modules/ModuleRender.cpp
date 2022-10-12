@@ -383,48 +383,11 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
         scene->GetSkybox()->Draw(camera);
     }
     
-    // ----------------------------- FORWARD PASS -----------------------------
-
-    // Clear Transparent Batches:
-    batch_manager->ClearTransparentBatchesDrawList();
-
-    // If forward pass is disabled on the settings, return:
-    if (render_forward_pass)
-    {
-        // Get transparent meshes:
-        const std::vector<RenderTarget>& transparent_targets = render_list.GetTransparentTargets();
-
-        if (transparent_targets.size() > 0)
-        {
-            // Get the targets that has transparent materials. These targets will be
-            // rendered with regular forward rendering pass:
-            for (const RenderTarget& target : transparent_targets)
-            {
-                batch_manager->AddDrawComponent(target.mesh_renderer);
-            }
-
-            // Forward rendering pass for transparent game objects:
-            program = App->program->GetProgram(Program::PROGRAMS::FORWARD);
-            program->Activate();
-
-            EnableBlending();
-            batch_manager->DrawTransparentBatches(program);
-            DisableBlending();
-
-            g_buffer.BindForDrawing();
-            // Forward depth (Used for fog)
-            program = App->program->GetProgram(Program::PROGRAMS::TRANSPARENT_DEPTH);
-            program->Activate();
-
-            batch_manager->DrawTransparentBatches(program);
-            Program::Deactivate();
-            glBindFramebuffer(GL_DRAW_FRAMEBUFFER, frame_buffer);
-        }
-    }
-
-
+   
     // ----------------------------- FOG -----------------------------
 
+    // Fog is drawn before forward pass because it doesnt apply its values to gbuffer
+    // And we want to ensure that all the forward rendered objects are properly visible
     const Scene::FogConfig& fog = scene->GetFogConfig();
     if (fog.enabled)
     {
@@ -451,10 +414,39 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
         glDepthMask(GL_TRUE);
     }
 
-    DrawParticles(scene, camera);
+    // ----------------------------- FORWARD PASS -----------------------------
+    // 
+    // Clear Transparent Batches:
+    batch_manager->ClearTransparentBatchesDrawList();
 
+     // If forward pass is disabled on the settings, skip:
+    if (render_forward_pass)
+    {
+        // Get transparent meshes:
+        const std::vector<RenderTarget>& transparent_targets = render_list.GetTransparentTargets();
+
+        if (transparent_targets.size() > 0)
+        {
+            // Get the targets that has transparent materials. These targets will be
+            // rendered with regular forward rendering pass:
+            for (const RenderTarget& target : transparent_targets)
+            {
+                batch_manager->AddDrawComponent(target.mesh_renderer);
+            }
+
+            // Forward rendering pass for transparent game objects:
+            program = App->program->GetProgram(Program::PROGRAMS::FORWARD);
+            program->Activate();
+
+            EnableBlending();
+            batch_manager->DrawTransparentBatches(program);
+            DisableBlending();
+        }
+    }
+
+    DrawParticles(scene, camera);
+      
     // ----------------------------- POST PROCCESS -----------------------------
-    
 }
 
 void Hachiko::ModuleRender::DrawParticles(Scene* scene, ComponentCamera* camera) const
