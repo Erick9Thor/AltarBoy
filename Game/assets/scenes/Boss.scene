@@ -13090,7 +13090,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1130, 686]
+            size: [989, 608]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -14414,7 +14414,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1130, 686]
+            size: [989, 608]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -48588,7 +48588,7 @@ child:
         "'_fog_frequency@float'": 0.1
         "'_fog_max_density@float'": 0.015
         "'_fog_min_density@float'": 0.005
-        "'_audio_manager_go@GameObject*'": 0
+        "'_audio_manager_go@GameObject*'": 3361489421654677551
       - !<script>
         id: 9673773846935216921
         type: 15
@@ -54104,7 +54104,7 @@ child:
         type: 10
         enabled: true
         position: [0, 0, 0]
-        size: [1130, 686]
+        size: [989, 608]
         scale: [1, 1]
         rotation: [0, 0, 0, 1]
         pivot: [0.5, 0.5]
@@ -55229,7 +55229,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1130, 686]
+            size: [989, 608]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -55445,7 +55445,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1130, 686]
+            size: [989, 608]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
