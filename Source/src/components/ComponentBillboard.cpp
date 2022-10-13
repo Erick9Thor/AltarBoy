@@ -28,7 +28,7 @@ Hachiko::ComponentBillboard::~ComponentBillboard()
 
 void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program)
 {
-    if (state == ParticleSystem::Emitter::State::STOPPED || !game_object->IsActive())
+    if (state == ParticleSystem::Emitter::State::STOPPED || !game_object->IsActive() || delayed)
     {
         return;
     }
@@ -323,6 +323,8 @@ void Hachiko::ComponentBillboard::Start()
     {
         state = ParticleSystem::Emitter::State::PLAYING;
     }
+    
+    delayed = start_delay.GetValue() <= DBL_EPSILON ? false : true;
 
     Restart();
 }
@@ -357,9 +359,12 @@ void Hachiko::ComponentBillboard::Update()
     // Delay
     if (elapsed_time < start_delay.GetValue())
     {
+        delayed = true;
         return;
     }
 
+    delayed = false;
+    
     if (!loop && elapsed_time >= duration)
     {
         state = ParticleSystem::Emitter::State::STOPPED;
@@ -395,6 +400,7 @@ void Hachiko::ComponentBillboard::Restart()
 
 inline void Hachiko::ComponentBillboard::Stop()
 {
+    delayed = true;
     color_frame = 0.0f;
     animation_index = float2(0.0f, 0.0f);
     state = ParticleSystem::Emitter::State::STOPPED;
@@ -402,6 +408,7 @@ inline void Hachiko::ComponentBillboard::Stop()
 
 inline void Hachiko::ComponentBillboard::Reset()
 {
+    delayed = true;
     elapsed_time = 0.0f;
     current_frame = 0.0f;
     animation_index = randomize_tiles ? GetRandomTile() : float2{0.0f, 0.0f};

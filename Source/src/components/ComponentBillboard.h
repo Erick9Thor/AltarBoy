@@ -61,6 +61,7 @@ namespace Hachiko
 
     private:
         bool in_scene = false;
+        bool delayed = true;
         ParticleSystem::Emitter::State state = ParticleSystem::Emitter::State::STOPPED;
         ParticleSystem::Emitter::Properties emitter_properties;
         float elapsed_time = 0.0f;

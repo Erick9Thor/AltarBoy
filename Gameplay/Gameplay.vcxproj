@@ -316,6 +316,8 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\stlemitter.h" />
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\traits.h" />
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\yaml.h" />
+    <ClInclude Include="effects\BloomAnimator.h" />
+    <ClInclude Include="CutsceneManager.h" />
     <ClInclude Include="effects\BounceEffect.h" />
     <ClInclude Include="effects\RotationEffect.h" />
     <ClInclude Include="entities\enemies\BossController.h" />
@@ -339,6 +341,7 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClInclude Include="misc\StalagmiteManager.h" />
     <ClInclude Include="entities\crystals\Stalagmite.h" />
     <ClInclude Include="misc\Tutorial.h" />
+    <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="TriggerAnim.h" />
     <ClInclude Include="ui\BackToMainMenu.h" />
     <ClInclude Include="entities\player\CombatManager.h" />
@@ -747,6 +750,8 @@ RD /S /Q "$(TargetDir)"</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Play|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="effects\BloomAnimator.cpp" />
+    <ClCompile Include="CutsceneManager.cpp" />
     <ClCompile Include="misc\Centipedes.cpp" />
     <ClCompile Include="effects\BounceEffect.cpp" />
     <ClCompile Include="effects\HoverEffect.cpp" />
@@ -769,6 +774,7 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClCompile Include="misc\StalagmiteManager.cpp" />
     <ClCompile Include="entities\crystals\Stalagmite.cpp" />
     <ClCompile Include="misc\Tutorial.cpp" />
+    <ClCompile Include="PauseMenu.cpp" />
     <ClCompile Include="TriggerAnim.cpp" />
     <ClCompile Include="ui\BackToMainMenu.cpp" />
     <ClCompile Include="entities\player\CombatManager.cpp" />

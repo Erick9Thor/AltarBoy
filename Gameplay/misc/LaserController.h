@@ -17,7 +17,8 @@ namespace Hachiko
             {
                 ACTIVE = 0,
                 ACTIVATING = 1,
-                INACTIVE = 2
+                INACTIVE = 2,
+                DISSOLVING = 3
             };
 
             // Methods
@@ -49,6 +50,7 @@ namespace Hachiko
             SERIALIZE_FIELD(bool, _toggle_activation);
             SERIALIZE_FIELD(float, _toggle_active_time);
             SERIALIZE_FIELD(float, _toggle_inactive_time);
+            SERIALIZE_FIELD(float, _dissolving_time);
             SERIALIZE_FIELD(GameObject* , _sparks);
             
         private:
@@ -60,6 +62,9 @@ namespace Hachiko
             float3 _initial_position = float3::zero;
             bool _movement_forward_direction = true;
             float _movement_position = 0.0f;
+
+            float activate_effect_duration = 0.1f;
+            float activate_effect_progress = 1.0f;
 
             GameObject* _terrain = nullptr;
             GameObject* _player = nullptr;

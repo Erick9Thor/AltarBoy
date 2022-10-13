@@ -55,7 +55,17 @@ public:
 	/// <param name="speed"></param>
 	void RotateCameraTo(math::float3 new_rotation, float speed = 0.0f);
 
+	/// <summary>
+	/// Sets a gameobject as the camera objective to follow
+	/// </summary>
+	/// <param name="objective"></param>
 	void SetObjective(GameObject* objective) { _objective = objective; };
+
+	/// <summary>
+	/// Toggles the camera lookahead functionality
+	/// </summary>
+	/// <param name="objective"></param>
+	void SetDoLookAhead(bool do_look_ahead) { _do_look_ahead = do_look_ahead; };
 
 	float3 GetRelativePosition() { return _relative_position_to_player; };
 

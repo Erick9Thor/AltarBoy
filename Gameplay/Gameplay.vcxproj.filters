@@ -539,6 +539,9 @@
     <ClInclude Include="effects\HoverEffect.h" />
     <ClInclude Include="effects\RotationEffect.h" />
     <ClInclude Include="effects\BounceEffect.h" />
+    <ClInclude Include="CutsceneManager.h" />
+    <ClInclude Include="PauseMenu.h" />
+    <ClInclude Include="effects\BloomAnimator.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scriptingUtil\gameplaypch.cpp">
@@ -828,6 +831,9 @@
     <ClCompile Include="effects\HoverEffect.cpp" />
     <ClCompile Include="effects\RotationEffect.cpp" />
     <ClCompile Include="effects\BounceEffect.cpp" />
+    <ClCompile Include="CutsceneManager.cpp" />
+    <ClCompile Include="PauseMenu.cpp" />
+    <ClCompile Include="effects\BloomAnimator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Source\vendors\MathGeoLib\Math\float2.inl">

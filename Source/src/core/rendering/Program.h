@@ -22,7 +22,6 @@ namespace Hachiko
             UI_TEXT,
             PARTICLE,
             VIDEO,
-            TRANSPARENT_DEPTH,
             FOG_PROGRAM,
             TEXTURE_COPY,
             COUNT,
