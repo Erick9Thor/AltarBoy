@@ -568,11 +568,6 @@ void Hachiko::Scripting::CombatManager::ResetEnemyPack(GameObject* pack, bool is
 
 	for (int i = 0; i < enemies->children.size(); ++i)
 	{
-		ComponentAgent* agent = enemies->children[i]->GetComponent<ComponentAgent>();
-		if (agent)
-		{
-			agent->RemoveFromCrowd();
-		}
 		EnemyController* enemy_controller = enemies->children[i]->GetComponent<EnemyController>();
 		if (enemy_controller)
 		{
@@ -580,37 +575,17 @@ void Hachiko::Scripting::CombatManager::ResetEnemyPack(GameObject* pack, bool is
 			enemy_controller->ResetEnemy();
 			enemy_controller->ResetEnemyPosition();
 			enemy_controller->OnStart();
-		}		
-		if (agent)
-		{
-			agent->AddToCrowd();
 		}
 	}
 }
 
 void Hachiko::Scripting::CombatManager::ActivateEnemyPack(GameObject* pack)
 {
-	for (GameObject* enemy : pack->children)
-	{
-		ComponentAgent* agc = enemy->GetComponent<ComponentAgent>();
-		if (agc)
-		{
-			agc->RemoveFromCrowd();
-		}
-	}
 	pack->SetActive(true);
 }
 
 void Hachiko::Scripting::CombatManager::DeactivateEnemyPack(GameObject* pack)
 {
-	for (GameObject* enemy : pack->children)
-	{
-		ComponentAgent* agc = enemy->GetComponent<ComponentAgent>();
-		if (agc) 
-		{
-			agc->AddToCrowd();
-		}
-	}
 	pack->SetActive(false);
 }
 

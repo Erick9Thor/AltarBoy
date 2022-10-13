@@ -66,6 +66,8 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 	{
 		_enemy_type = EnemyType::BEETLE;
 
+		_chase_remaining_cooldown = 0;
+
 		states_behaviour[static_cast<int>(EnemyState::DEAD)] = StateBehaviour(
 			std::bind(&EnemyController::StartDeadState, this),
 			std::bind(&EnemyController::UpdateDeadState, this),
@@ -368,7 +370,7 @@ void Hachiko::Scripting::EnemyController::DeathController()
 		{
 			_audio_manager->UnregisterCombat();
 			_state = EnemyState::HIDEN;
-			game_object->GetComponent<ComponentAgent>()->RemoveFromCrowd();
+			_component_agent->RemoveFromCrowd();
 			return;
 		}
 		else
@@ -378,7 +380,7 @@ void Hachiko::Scripting::EnemyController::DeathController()
 				_audio_manager->UnregisterCombat();
 			}
 			_state = EnemyState::DEAD;
-			game_object->GetComponent<ComponentAgent>()->RemoveFromCrowd();
+			_component_agent->RemoveFromCrowd();
 			return;
 		}
 	}
@@ -413,8 +415,9 @@ void Hachiko::Scripting::EnemyController::SetStats()
 	switch (_enemy_type)
 	{
 	case EnemyType::BEETLE:
-		_acceleration = game_object->GetComponent<ComponentAgent>()->GetMaxAcceleration();
-		_speed = game_object->GetComponent<ComponentAgent>()->GetMaxSpeed();
+		_acceleration = _component_agent->GetMaxAcceleration();
+		_speed = _component_agent->GetMaxSpeed();
+		_component_agent->SetRadius(1.5f);
 		break;
 	}
 }
@@ -511,21 +514,20 @@ void Hachiko::Scripting::EnemyController::BeetleStunController()
 			return;
 		}
 		_is_stunned = false;
-		ComponentAgent* agc = game_object->GetComponent<ComponentAgent>();
+
 		// We set the variables back to normal
-		agc->SetMaxAcceleration(_acceleration);
-		agc->SetMaxSpeed(_speed);
+		_component_agent->SetMaxAcceleration(_acceleration);
+		_component_agent->SetMaxSpeed(_speed);
 	}
 }
 
 void Hachiko::Scripting::EnemyController::RecieveKnockback()
 {
-	ComponentAgent* agc = game_object->GetComponent<ComponentAgent>();
 	_target_pos = Navigation::GetCorrectedPosition(_knockback_pos, math::float3(10.0f, 1.0f, 10.0f));
 	// We exagerate the movement
-	agc->SetMaxAcceleration(50.0f);
-	agc->SetMaxSpeed(30.0f);
-	agc->SetTargetPosition(_target_pos);
+	_component_agent->SetMaxAcceleration(50.0f);
+	_component_agent->SetMaxSpeed(30.0f);
+	_component_agent->SetTargetPosition(_target_pos);
 }
 
 void Hachiko::Scripting::EnemyController::WormStunController()
@@ -756,10 +758,20 @@ float4x4 Hachiko::Scripting::EnemyController::GetMeleeAttackOrigin(float attack_
 
 void Hachiko::Scripting::EnemyController::StopMoving()
 {
-	MoveInNavmesh(transform->GetGlobalPosition());
+	_target_pos = transform->GetGlobalPosition();
+
+	_component_agent->SetTargetPosition(_target_pos);
 }
 
 void Hachiko::Scripting::EnemyController::MoveInNavmesh(const float3& target_pos)
+{
+	_target_pos = target_pos;
+
+	_component_agent->SetTargetPosition(_target_pos);
+	transform->LookAtTarget(_target_pos);
+}
+
+/*void Hachiko::Scripting::EnemyController::MoveInNavmesh(const float3& target_pos)
 {
 	if (_chase_remaining_cooldown > 0)
 	{
@@ -776,7 +788,7 @@ void Hachiko::Scripting::EnemyController::MoveInNavmesh(const float3& target_pos
 		_component_agent->SetTargetPosition(_target_pos);
 	}
 	transform->LookAtTarget(_target_pos);
-}
+}*/
 
 void Hachiko::Scripting::EnemyController::WormAttackController()
 {
@@ -867,10 +879,9 @@ void Hachiko::Scripting::EnemyController::DestroyEntity()
 		ResetEnemy();
 		ResetEnemyPosition();
 
-		ComponentAgent* agent = game_object->GetComponent<ComponentAgent>();
-		if (agent)
+		if (_component_agent)
 		{
-			agent->RemoveFromCrowd();
+			_component_agent->RemoveFromCrowd();
 		}
 	}
 
@@ -1082,8 +1093,11 @@ void Hachiko::Scripting::EnemyController::ResetEnemy()
 	_enemy_dissolving_time_progress = 0.f;
 	_parasite_dropped = false;
 
+	animation->ResetState();
+
 	if (_enemy_body)
 	{
+		_enemy_body->ChangeDissolveProgress(0.0f, true);
 		_enemy_body->SetActive(true);
 	}
 
@@ -1140,7 +1154,7 @@ void Hachiko::Scripting::EnemyController::ResetEnemyPosition()
 	- START: EXECUTED WHEN THE STATE IS CHANGED
 	- UPDATE: EXECUTED EACH FRAME WHILE IN THAT STATE
 	- END: EXECUTED WHEN A TRANSITION IS FULLFILLED
-	- TRANSITIONS: THAT CHECKS ALL POSIBLE TRANSITIONS AND RETURNS THE NEW STATE, IF NOT INVALID
+	- TRANSITIONS: CHECKS ALL POSIBLE TRANSITIONS AND RETURNS THE NEW STATE, IF NOT RETURNS INVALID
 */
 
 // SPAWNING
@@ -1163,6 +1177,7 @@ void Hachiko::Scripting::EnemyController::StartSpawningState()
 
 	_current_spawning_time = _spawning_time;
 	_has_spawned = true;
+	spawn_progress = 0;
 
 	animation->SendTrigger("isAppear");
 }
@@ -1182,6 +1197,7 @@ void Hachiko::Scripting::EnemyController::UpdateSpawningState()
 void Hachiko::Scripting::EnemyController::EndSpawningState()
 {
 	_enemy_body->ChangeDissolveProgress(1, true);
+	_component_agent->AddToCrowd();
 }
 
 Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::TransitionsSpawningState()
@@ -1568,10 +1584,9 @@ void Hachiko::Scripting::EnemyController::UpdateHitState()
 
 void Hachiko::Scripting::EnemyController::EndHitState()
 {
-	ComponentAgent* agc = game_object->GetComponent<ComponentAgent>();
 	// We set the variables back to normal
-	agc->SetMaxAcceleration(_acceleration);
-	agc->SetMaxSpeed(_speed);
+	_component_agent->SetMaxAcceleration(_acceleration);
+	_component_agent->SetMaxSpeed(_speed);
 }
 
 Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::TransitionsHitState()
