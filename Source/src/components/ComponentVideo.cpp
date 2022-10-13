@@ -282,7 +282,7 @@ void Hachiko::ComponentVideo::ReadNextFrame()
         break;
     }
 
-    video_frame_time = static_cast<float>(av_frame->pts * time_base.num) / static_cast<float>(time_base.den);
+    video_frame_time = static_cast<float>(av_frame->pts * time_base->num) / static_cast<float>(time_base->den);
     if (video_frame_time == 0)
     {
         time = 0;
@@ -458,7 +458,7 @@ void Hachiko::ComponentVideo::OpenVideo()
     // Set video parameters and Allocate frame buffer
     frame_width = videoCodecParams->width;
     frame_height = videoCodecParams->height;
-    time_base = format_ctx->streams[video_stream_index]->time_base;
+    time_base = &format_ctx->streams[video_stream_index]->time_base;
     frame_data = new uint8_t[frame_width * frame_height * 4];
     CleanFrameBuffer();
 

@@ -25,7 +25,7 @@ namespace Hachiko
 			void OnAwake() override;
 			void OnStart() override;
 			void OnUpdate() override;
-			void ResetGauntlet();
+			void ResetGauntlet(bool complete_reset);
 			void StartGauntlet();
 			bool IsCompleted() const { return completed; }
 			bool IsFinished() const;

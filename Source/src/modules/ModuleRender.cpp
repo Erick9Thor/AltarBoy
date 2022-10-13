@@ -270,17 +270,7 @@ void Hachiko::ModuleRender::Draw(Scene* scene,
 
     BatchManager* batch_manager = scene->GetBatchManager();
 
-    if (draw_deferred)
-    {
-        DrawDeferred(scene, camera, batch_manager);
-    }
-    else
-    {
-        render_list.Update(culling->GetFrustum(), scene->GetQuadtree());
-        DrawPreForwardPass(scene, camera);
-        // TODO: Forward rendering still has that weird stuttering bug, fix this.
-        DrawForward(scene, batch_manager);
-    }
+    DrawDeferred(scene, camera, batch_manager);
 }
 
 void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
@@ -388,14 +378,48 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
 
     // ------------------------------ PRE FORWARD -----------------------------
 
-    DrawPreForwardPass(scene, camera);
+    if (draw_skybox)
+    {
+        scene->GetSkybox()->Draw(camera);
+    }
+    
+   
+    // ----------------------------- FOG -----------------------------
+
+    // Fog is drawn before forward pass because it doesnt apply its values to gbuffer
+    // And we want to ensure that all the forward rendered objects are properly visible
+    const Scene::FogConfig& fog = scene->GetFogConfig();
+    if (fog.enabled)
+    {
+        glDepthMask(GL_FALSE);
+        // Bind all g-buffer textures:
+        g_buffer.BindForReading();
+        g_buffer.BindFogTextures();
+
+        program = App->program->GetProgram(Program::PROGRAMS::FOG_PROGRAM);
+        program->Activate();
+
+        EnableBlending();
+        const Scene::FogConfig& fog = scene->GetFogConfig();
+        program->BindUniformFloat3(Uniforms::Fog::COLOR, fog.color.ptr());
+        program->BindUniformFloat(Uniforms::Fog::GLOBAL_DENSITY, &fog.global_density);
+        program->BindUniformFloat(Uniforms::Fog::HEIGHT_FALLOFF, &fog.height_falloff);
+
+        RenderFullScreenQuad();
+        glBindVertexArray(0);
+
+        g_buffer.UnbindFogTextures();
+        DisableBlending();
+        Program::Deactivate();
+        glDepthMask(GL_TRUE);
+    }
 
     // ----------------------------- FORWARD PASS -----------------------------
-
+    // 
     // Clear Transparent Batches:
     batch_manager->ClearTransparentBatchesDrawList();
 
-    // If forward pass is disabled on the settings, return:
+     // If forward pass is disabled on the settings, skip:
     if (render_forward_pass)
     {
         // Get transparent meshes:
@@ -417,87 +441,16 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
             EnableBlending();
             batch_manager->DrawTransparentBatches(program);
             DisableBlending();
-
-            g_buffer.BindForDrawing();
-            // Forward depth (Used for fog)
-            program = App->program->GetProgram(Program::PROGRAMS::TRANSPARENT_DEPTH);
-            program->Activate();
-
-            batch_manager->DrawTransparentBatches(program);
-            Program::Deactivate();
-            glBindFramebuffer(GL_DRAW_FRAMEBUFFER, frame_buffer);
         }
     }
 
-    // ----------------------------- FOG -----------------------------
-
-    const Scene::FogConfig& fog = scene->GetFogConfig();
-    if (fog.enabled)
-    {
-        // Bind all g-buffer textures:
-        g_buffer.BindForReading();
-        g_buffer.BindFogTextures();
-
-        program = App->program->GetProgram(Program::PROGRAMS::FOG_PROGRAM);
-        program->Activate();
-
-        EnableBlending();
-        const Scene::FogConfig& fog = scene->GetFogConfig();
-        program->BindUniformFloat3(Uniforms::Fog::COLOR, fog.color.ptr());
-        program->BindUniformFloat(Uniforms::Fog::GLOBAL_DENSITY, &fog.global_density);
-        program->BindUniformFloat(Uniforms::Fog::HEIGHT_FALLOFF, &fog.height_falloff);
-
-        RenderFullScreenQuad();
-        glBindVertexArray(0);
-
-        g_buffer.UnbindFogTextures();
-        DisableBlending();
-    }
-
+    DrawParticles(scene, camera);
+      
     // ----------------------------- POST PROCCESS -----------------------------
-
-    Program::Deactivate();
 }
 
-void Hachiko::ModuleRender::DrawForward(Scene* scene, BatchManager* batch_manager)
+void Hachiko::ModuleRender::DrawParticles(Scene* scene, ComponentCamera* camera) const
 {
-    Program* program = App->program->GetProgram(Program::PROGRAMS::FORWARD);
-    program->Activate();
-
-    // Bind ImageBasedLighting uniforms
-    scene->GetSkybox()->BindImageBasedLightingUniforms(program);
-
-    batch_manager->ClearOpaqueBatchesDrawList();
-    batch_manager->ClearTransparentBatchesDrawList();
-
-    // Add opaque targets:
-    for (RenderTarget& target : render_list.GetOpaqueTargets())
-    {
-        batch_manager->AddDrawComponent(target.mesh_renderer);
-    }
-
-    // Add transparent targets:
-    for (RenderTarget& target : render_list.GetTransparentTargets())
-    {
-        batch_manager->AddDrawComponent(target.mesh_renderer);
-    }
-
-    batch_manager->DrawOpaqueBatches(program);
-    batch_manager->DrawTransparentBatches(program);
-
-    Program::Deactivate();
-}
-
-void Hachiko::ModuleRender::DrawPreForwardPass(Scene* scene, ComponentCamera* camera) const
-{
-    // This method is to draw things that needs to be drawn before forward pass 
-    // of deferred rendering or before forward rendering.
-
-    if (draw_skybox)
-    {
-        scene->GetSkybox()->Draw(camera);
-    }
-
     EnableBlending();
 
     // Draw debug draw stuff:
@@ -508,31 +461,33 @@ void Hachiko::ModuleRender::DrawPreForwardPass(Scene* scene, ComponentCamera* ca
     {
         Program* particle_program = App->program->GetProgram(Program::PROGRAMS::PARTICLE);
         particle_program->Activate();
-        for (auto particle : scene_particles)
+        for (auto& particle : scene_particles)
         {
             particle->Draw(camera, particle_program);
         }
+
         Program::Deactivate();
+
+        /*
+        g_buffer.BlitDepth(frame_buffer, fb_width, fb_height);
+        g_buffer.BindForDrawing();
+
+        // Forward depth (Used for fog)
+        particle_program = App->program->GetProgram(Program::PROGRAMS::PARTICLE_DEPTH);
+        particle_program->Activate();
+
+        for (auto& particle : scene_particles)
+        {
+            particle->Draw(camera, particle_program);
+        }
+        
+        Program::Deactivate();
+        glBindFramebuffer(GL_DRAW_FRAMEBUFFER, frame_buffer);
+        */
     }
+    
 
     DisableBlending();
-
-    //GameObject* selected_go = App->editor->GetSelectedGameObject();
-    /*if (outline_selection && selected_go)
-    {
-        glStencilFunc(GL_NOTEQUAL, 1, 0XFF);
-        glStencilMask(0X00);
-        glDisable(GL_DEPTH_TEST);
-
-        Program* outline_program = App->program->GetStencilProgram();
-        outline_program->Activate();
-        selected_go->DrawStencil(camera, outline_program);
-        Program::Deactivate();
-
-        glStencilMask(0XFF);
-        glStencilFunc(GL_ALWAYS, 0, 0xFF);
-        glEnable(GL_DEPTH_TEST);
-    }*/
 }
 
 bool Hachiko::ModuleRender::DrawToShadowMap(

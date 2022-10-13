@@ -31,6 +31,7 @@ namespace AK
         static const AkUniqueID PLAY_RANGEDATTACK = 3766948527U;
         static const AkUniqueID PLAY_RECEIVEDAMAGE = 3438014598U;
         static const AkUniqueID PLAY_SHOOTNOAMMO = 1388583332U;
+        static const AkUniqueID PLAY_SPLASH = 3948925255U;
         static const AkUniqueID PLAY_UICLICK = 1615720664U;
         static const AkUniqueID PLAY_UIHOVER = 2502251926U;
         static const AkUniqueID PLAY_WIND = 1020223172U;

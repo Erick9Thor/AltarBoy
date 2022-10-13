@@ -10,6 +10,7 @@ namespace Hachiko::Scenes
 	static UID MAIN_MENU = 3083261127926411514;
 	static UID LEVEL2 = 8516499815050636676;
 	static UID BOSS_LEVEL = 9597392922211235555;
+	static UID CUTSCENE_INTRO = 16234779812797112625;
 	static const char* player_go_name = "Player";
 	static const char* boss_go_name = "Boss";
 	static const char* main_camera_go_name = "Main Camera";

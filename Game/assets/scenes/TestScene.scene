@@ -2988,6 +2988,7 @@ child:
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 0
             projection: true
+            randomize_tiles: false
       - id: 3090574280302983108
         name: VFX_CI_W_SpitBall
         enabled: false
@@ -3025,6 +3026,7 @@ child:
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 0
             projection: true
+            randomize_tiles: false
       - id: 12602719405314281526
         name: VFX_CI_W_SpitBall
         enabled: false
@@ -3062,6 +3064,7 @@ child:
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 0
             projection: true
+            randomize_tiles: false
       - id: 12900140593389837100
         name: VFX_CI_W_SpitBall
         enabled: false
@@ -3099,6 +3102,7 @@ child:
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 0
             projection: true
+            randomize_tiles: false
       - id: 15291510201808257648
         name: VFX_CI_W_SpitBall
         enabled: false
@@ -3136,6 +3140,7 @@ child:
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 0
             projection: true
+            randomize_tiles: false
   - id: 13722226791976009516
     name: CrystalPlatform
     enabled: true
@@ -16391,6 +16396,7 @@ child:
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 0
             projection: true
+            randomize_tiles: false
   - id: 14664350594673818352
     name: LevelManager
     enabled: true

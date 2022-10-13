@@ -2,6 +2,7 @@
 
 #include "entities/enemies/BossController.h"
 #include "entities/enemies/EnemyController.h"
+#include "misc/LaserController.h"
 #include "misc/StalagmiteManager.h"
 #include "entities/Stats.h"
 #include "constants/Scenes.h"
@@ -18,6 +19,9 @@ Hachiko::Scripting::BossController::BossController(GameObject* game_object)
     , _explosive_crystals({})
     , _current_index_crystals(0)
     , start_encounter_range(0.0f)
+    , camera_transition_speed(2.0f)
+    , encounter_start_duration(2.0f)
+    , pre_combat_camera_offset(float3(0.f, 13.f, 8.f))
     , _jump_start_delay(0.0f)
     , _jump_ascending_duration(0.0f)
     , _jump_post_ascending_delay(0.0f)
@@ -36,12 +40,16 @@ Hachiko::Scripting::BossController::BossController(GameObject* game_object)
     , _jump_end_position(float3::zero)
     , _crystal_jump_position(float3::zero)
     , _jumping_timer(0.0f)
-    , _jump_pattern_index(0)
+    , _jump_pattern_index(-1)
     , _current_jumping_mode(JumpingMode::BASIC_ATTACK)
     , _boss_state_text_ui(nullptr)
     , attack_current_cd(0.0f)
     , time_between_enemies(5.0)
     , enemy_pool(nullptr)
+    , _laser_wall(nullptr)
+    , _laser_wall_duration(2.0f)
+    , _laser_jump_height(50.0f)
+    , damage_effect_duration(1.0f)
 {
     CreateBossWeapons();
 }
@@ -81,13 +89,13 @@ void Hachiko::Scripting::BossController::OnAwake()
     combat_stats = game_object->GetComponent<Stats>();
     agent = game_object->GetComponent<ComponentAgent>();
     agent->SetMaxSpeed(combat_stats->_move_speed);
+
+    animation = game_object->GetComponent<ComponentAnimation>();
+
     SetUpHpBar();
     // Hp bar starts hidden until encounter starts
     SetHpBarActive(false);
-    if (cocoon_placeholder_go)
-    {
-        cocoon_placeholder_go->SetActive(false);
-    }
+    SetUpCocoon();
     gauntlet = gauntlet_go->GetComponent<GauntletManager>();
 
     ChangeWeapon(0);
@@ -109,6 +117,11 @@ void Hachiko::Scripting::BossController::OnAwake()
         _explosive_crystals.push_back(crystal_go);
     }
 
+    for (GameObject* laser : _laser_wall->children)
+    {
+        laser->GetComponent<LaserController>()->ChangeState(LaserController::State::INACTIVE);
+    }
+
     if (_stalagmite_manager_go)
     {
         _stalagmite_manager =
@@ -118,6 +131,8 @@ void Hachiko::Scripting::BossController::OnAwake()
 
 void Hachiko::Scripting::BossController::OnStart()
 {
+    animation->StartAnimating();
+    OverrideCameraOffset();
 }
 
 void Hachiko::Scripting::BossController::OnUpdate()
@@ -126,6 +141,13 @@ void Hachiko::Scripting::BossController::OnUpdate()
     {
         constexpr int player_dmg = 5;
         RegisterHit(player_dmg);
+    }
+
+    if (damage_effect_progress >= 0.0f)
+    {
+        damage_effect_progress -= Time::DeltaTime() / damage_effect_duration;
+        float progress = damage_effect_progress / damage_effect_duration;
+        game_object->ChangeEmissiveColor(float4(1.0f, 1.0f, 1.0f, progress), true);
     }
 
     StateController();
@@ -140,13 +162,19 @@ bool Hachiko::Scripting::BossController::IsAlive() const
 
 void Hachiko::Scripting::BossController::RegisterHit(int dmg)
 {
-    if (hitable)
+    if (state == BossState::WAITING_ENCOUNTER)
     {
-        combat_stats->_current_hp -= dmg;
-        UpdateHpBar();
-
-        game_object->ChangeEmissiveColor(float4(255, 255, 255, 255), 0.3f, true);
+        state = BossState::STARTING_ENCOUNTER;
     }
+
+    if (!hitable)
+    {
+        return;
+    }
+
+    damage_effect_progress = damage_effect_duration;
+    combat_stats->_current_hp -= dmg;
+    UpdateHpBar();
 }
 
 void Hachiko::Scripting::BossController::UpdateHpBar() const
@@ -255,6 +283,7 @@ void Hachiko::Scripting::BossController::CombatController()
     switch (combat_state)
     {
     case CombatState::IDLE:
+        animation->SendTrigger("isIdle");
         break;
     case CombatState::CHASING:
         ChaseController();
@@ -315,22 +344,28 @@ float Hachiko::Scripting::BossController::GetPlayerDistance()
 
 void Hachiko::Scripting::BossController::WaitingController()
 {
-    if (GetPlayerDistance() <= start_encounter_range)
-    {
-        // Will trigger StartEncounter
-        state = BossState::STARTING_ENCOUNTER;
-    }
 }
 
 void Hachiko::Scripting::BossController::StartEncounter()
 {
-    SetHpBarActive(true);
+    encounter_start_timer = 0.f;
+    RestoreCameraOffset();
 }
 
 void Hachiko::Scripting::BossController::StartEncounterController()
 {
-    // If there is any start sequence manage it here and hold state until it
-    // ends. For now it goes to next state instantly:
+    // Add any effects desired for combat start, for now it only delays while camera is transitioning
+    enemy_timer += Time::DeltaTime();
+    if (enemy_timer < encounter_start_duration)
+    {
+        return;
+    }
+    SetHpBarActive(true);
+
+    player_camera->SetDoLookAhead(true);
+    BreakCocoon();
+    std::copy(_jumping_pattern_1, _jumping_pattern_1 + JumpUtil::JUMP_PATTERN_SIZE, _current_jumping_pattern);
+
     state = BossState::COMBAT_FORM;
 }
 
@@ -360,13 +395,10 @@ float4x4 Hachiko::Scripting::BossController::GetMeleeAttackOrigin(float attack_r
 
 void Hachiko::Scripting::BossController::StartCocoon()
 {
-    hitable = false;
     time_elapse = 0.0;
-    if (cocoon_placeholder_go)
-    {
-        cocoon_placeholder_go->SetActive(true);
-    }
-    FocusCamera(true);
+    SetUpCocoon();
+    FocusCameraOnBoss(true);
+    _stalagmite_manager->DestroyAllStalagmites();
 }
 
 void Hachiko::Scripting::BossController::CocoonController()
@@ -378,7 +410,7 @@ void Hachiko::Scripting::BossController::CocoonController()
 
         if (time_elapse >= 2) // HARDCODED TIME FOR CAMERA FOCUS
         {
-            FocusCamera(false);
+            FocusCameraOnBoss(false);
         }
     }
 
@@ -388,6 +420,25 @@ void Hachiko::Scripting::BossController::CocoonController()
         FinishCocoon();
     }
 }
+
+void Hachiko::Scripting::BossController::SetUpCocoon()
+{
+    hitable = false;
+    if (cocoon_placeholder_go)
+    {
+        cocoon_placeholder_go->SetActive(true);
+    }
+}
+
+void Hachiko::Scripting::BossController::BreakCocoon()
+{
+    hitable = true;
+    if (cocoon_placeholder_go)
+    {
+        cocoon_placeholder_go->SetActive(false);
+    }
+}
+
 
 bool Hachiko::Scripting::BossController::CocoonTrigger()
 {
@@ -411,11 +462,13 @@ void Hachiko::Scripting::BossController::FinishCocoon()
 {
     hitable = true;
     second_phase = true;
-    if (cocoon_placeholder_go)
-    {
-        cocoon_placeholder_go->SetActive(false);
-    }
-    gauntlet->ResetGauntlet();
+    BreakCocoon();
+
+    // We change our jumping pattern to the second one and reset the index
+    std::copy(_jumping_pattern_2, _jumping_pattern_2 + JumpUtil::JUMP_PATTERN_SIZE, _current_jumping_pattern);
+    _jump_pattern_index = -1;
+
+    gauntlet->ResetGauntlet(true);
 
     ChangeStateText("Finished Cocoon.");
 
@@ -536,20 +589,7 @@ void Hachiko::Scripting::BossController::SpawnCrystalsController()
     combat_state = CombatState::CHASING;
 }
 
-void Hachiko::Scripting::BossController::FocusCamera(bool focus_on_boss)
-{
-    camera_focus_on_boss = focus_on_boss;
-    if (camera_focus_on_boss)
-    {
-        level_manager->BlockInputs(true);
-        player_camera->SetObjective(game_object);
-    }
-    else
-    {
-        level_manager->BlockInputs(false);
-        player_camera->SetObjective(player);
-    }
-}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Jumping State Related Methods:
@@ -569,7 +609,7 @@ void Hachiko::Scripting::BossController::TriggerJumpingState(
         _jump_pattern_index =
             (_jump_pattern_index + 1) % JumpUtil::JUMP_PATTERN_SIZE;
         // Set the jumping mode:
-        _current_jumping_mode = _jumping_pattern[_jump_pattern_index];
+        _current_jumping_mode = _current_jumping_pattern[_jump_pattern_index];
     }
 }
 
@@ -583,7 +623,8 @@ inline bool ShouldDealBasicAOE(Hachiko::Scripting::JumpingMode mode)
 {
     return (mode == Hachiko::Scripting::JumpingMode::WEAPON_CHANGE ||
         mode == Hachiko::Scripting::JumpingMode::STALAGMITE ||
-        mode == Hachiko::Scripting::JumpingMode::BASIC_ATTACK);
+        mode == Hachiko::Scripting::JumpingMode::BASIC_ATTACK ||
+        mode == Hachiko::Scripting::JumpingMode::LASER);
 }
 
 void Hachiko::Scripting::BossController::ExecuteJumpingState()
@@ -608,6 +649,10 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
     {
         jump_type = "(Crystal)";
     }
+    else if (_current_jumping_mode == JumpingMode::LASER)
+    {
+        jump_type = "(Laser)";
+    }
     ///////////////////////////////////////////////////////////////////////////
 
     if (_jumping_state == JumpingState::NOT_TRIGGERED)
@@ -618,7 +663,7 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
 
         ChangeStateText((jump_type + "Waiting to jump.").c_str());
 
-        // TODO: Trigger getting ready for jump animation here.
+        animation->SendTrigger("isPreJump");
 
         // Disable the agent component, gets enabled back when boss lands back:
         agent->RemoveFromCrowd();
@@ -675,7 +720,7 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
 
         ChangeStateText((jump_type + "Ascending").c_str());
 
-        // TODO: Trigger Jumping animation here.
+        animation->SendTrigger("isJumpAir");
 
         break;
     }
@@ -709,16 +754,34 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
         // Boss starts playing the highest point animation here:
         _jumping_state = JumpingState::ON_HIGHEST_POINT;
         _jumping_timer = 0.0f;
-
+       
         // TODO: Trigger highest point animation here.
 
         ChangeStateText((jump_type + "On the highest point of the jump.").c_str());
+
+
+        if (_current_jumping_mode == JumpingMode::LASER)
+        {
+            for (GameObject* laser : _laser_wall->children)
+            {
+                laser->GetComponent<LaserController>()->ChangeState(LaserController::State::ACTIVATING);
+            }
+            _laser_wall_current_time = 0.0f;
+        }
 
         break;
     }
 
     case JumpingState::ON_HIGHEST_POINT:
     {
+        if (_current_jumping_mode == JumpingMode::LASER)
+        {
+            if (!ControlLasers())
+            {
+                break;
+            }
+        }
+
         if (_jumping_timer < _jump_on_highest_point_duration)
         {
             // Boss is on the highest point here:
@@ -753,6 +816,7 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
 
     case JumpingState::DESCENDING:
     {
+
         UpdateDescendingPosition();
 
         if (_jumping_timer < _jump_descending_duration)
@@ -793,6 +857,8 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
             // TODO: Trigger normal landing & getting up animation here.
         }
 
+        animation->SendTrigger("isLanding");
+
         ChangeStateText((jump_type + "Landed & waiting").c_str());
 
         break;
@@ -800,6 +866,8 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
 
     case JumpingState::GETTING_UP:
     {
+        animation->SendTrigger("isIdle");
+
         if (_jumping_timer < _jump_getting_up_duration)
         {
             // Boss is getting up here:
@@ -854,7 +922,8 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
                 _stalagmite_manager->TriggerStalagmites();
             }
         }
-        else if (_current_jumping_mode == JumpingMode::WEAPON_CHANGE)
+        else if (_current_jumping_mode == JumpingMode::WEAPON_CHANGE ||
+            _current_jumping_mode == JumpingMode::LASER)
         {
             // TODO: Trigger weapon changing animation here.
 
@@ -878,6 +947,14 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
         {
             // Boss is casting skill here:
             break;
+        }
+
+        if (_current_jumping_mode == JumpingMode::STALAGMITE)
+        {
+            if (_stalagmite_manager && !_stalagmite_manager->AllStalactitesCollapsed())
+            {
+                break;
+            }
         }
 
         // Boss deals the aoe damage here:
@@ -964,13 +1041,15 @@ void Hachiko::Scripting::BossController::UpdateAscendingPosition() const
     // looks like a gravity is applied:
     const float height_step = CalculateAscendingHeightStep(position_step);
 
+    const float _real_height = _current_jumping_mode == JumpingMode::LASER ? _laser_jump_height : _jump_height;
+
     LerpJump(
         game_object,
         _jump_start_position,
         _jump_mid_position,
         position_step,
         _jump_start_position.y,
-        _jump_height,
+        _real_height,
         height_step);
 }
 
@@ -989,13 +1068,15 @@ void Hachiko::Scripting::BossController::UpdateDescendingPosition() const
     // looks like a gravity is applied:
     const float height_step = CalculateDescendingHeightStep(position_step);
 
+    const float _real_height = _current_jumping_mode == JumpingMode::LASER ? _laser_jump_height : _jump_height;
+
     LerpJump(
         game_object,
         _jump_mid_position,
         _jump_end_position,
         position_step,
         _jump_start_position.y,
-        _jump_height,
+        _real_height,
         height_step);
 }
 
@@ -1016,6 +1097,40 @@ void Hachiko::Scripting::BossController::ChangeStateText(
     }
 
     _boss_state_text_ui->SetText(state_string);
+}
+
+void Hachiko::Scripting::BossController::OverrideCameraOffset()
+{   
+    overriden_original_camera_offset = true;
+    original_camera_offset = player_camera->GetRelativePosition();
+    player_camera->ChangeRelativePosition(pre_combat_camera_offset);
+}
+
+void Hachiko::Scripting::BossController::RestoreCameraOffset()
+{
+    if (!overriden_original_camera_offset)
+    {
+        // Prevents using unitialized pre_combat_camera_offset
+        return;
+    }
+    overriden_original_camera_offset = false;
+    constexpr bool do_lookahead = false;
+    player_camera->ChangeRelativePosition(original_camera_offset, do_lookahead, camera_transition_speed);
+}
+
+void Hachiko::Scripting::BossController::FocusCameraOnBoss(bool focus_on_boss)
+{
+    camera_focus_on_boss = focus_on_boss;
+    if (camera_focus_on_boss)
+    {
+        level_manager->BlockInputs(true);
+        player_camera->SetObjective(game_object);
+    }
+    else
+    {
+        level_manager->BlockInputs(false);
+        player_camera->SetObjective(player);
+    }
 }
 
 Hachiko::Scripting::BossController::BossAttack
@@ -1167,4 +1282,24 @@ void Hachiko::Scripting::BossController::ResetEnemies()
 
         enemy->SetActive(false);
     }
+}
+
+/**
+* Returns true if all lasers are finished
+*/
+bool Hachiko::Scripting::BossController::ControlLasers()
+{
+	if (_laser_wall_current_time < _laser_wall_duration)
+	{
+		_laser_wall_current_time += Time::DeltaTime();
+        return false;
+	}
+	else
+	{
+		for (GameObject* laser : _laser_wall->children)
+		{
+			laser->GetComponent<LaserController>()->ChangeState(LaserController::State::DISSOLVING);
+		}
+        return true;
+	}
 }

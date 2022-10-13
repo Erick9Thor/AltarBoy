@@ -1,0 +1,1127 @@
+prefab_name: Boss_test
+name: RootNode
+enabled: true
+component:
+  - !<transform>
+    type: 1
+    enabled: true
+    position: [0, 0, 0]
+    rotation: [-0, 0, -0]
+    scale: [1, 1, 1]
+  - !<animation>
+    type: 14
+    enabled: true
+    state_machine: 0
+child:
+  - name: Mesh
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [-0, 0, -0]
+        scale: [1, 1, 1]
+    child:
+      - name: boss_grp
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [0, 0.0265, 0]
+            rotation: [-180, 0, -180]
+            scale: [1, 1, 1]
+        child:
+          - name: mask
+            enabled: true
+            component:
+              - !<transform>
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<mesh_renderer>
+                type: 2
+                enabled: true
+                mesh_id: 17907028314124278371
+                navigable: false
+                visible: true
+                casting_shadow: true
+                material_id: 16615586293878050055
+                tint_color: [1, 1, 1, 1]
+          - name: claws
+            enabled: true
+            component:
+              - !<transform>
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<mesh_renderer>
+                type: 2
+                enabled: true
+                mesh_id: 15488938491940384873
+                navigable: false
+                visible: true
+                casting_shadow: true
+                material_id: 16615586293878050055
+                tint_color: [1, 1, 1, 1]
+          - name: body
+            enabled: true
+            component:
+              - !<transform>
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+              - !<mesh_renderer>
+                type: 2
+                enabled: true
+                mesh_id: 10996895240570763655
+                navigable: false
+                visible: true
+                casting_shadow: true
+                material_id: 16615586293878050055
+                tint_color: [1, 1, 1, 1]
+  - name: Root
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-0, 0.0172, -0.003]
+        rotation: [-11.72, -29.16, 0.3008]
+        scale: [1, 1, 1]
+    child:
+      - name: CenterSpine_Jnt
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [0, 0.0046, -0.0027]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+        child:
+          - name: MiddleSpine_Jnt
+            enabled: true
+            component:
+              - !<transform>
+                type: 1
+                enabled: true
+                position: [-0.0023, 0.0058, -0.001]
+                rotation: [-31.91, 26.11, 15.33]
+                scale: [1, 1, 1]
+            child:
+              - name: EndSpine_Jnt
+                enabled: true
+                component:
+                  - !<transform>
+                    type: 1
+                    enabled: true
+                    position: [-0.0002, 0.0133, 0.0053]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                child:
+                  - name: Neck_Jnt_$AssimpFbx$_Translation
+                    enabled: true
+                    component:
+                      - !<transform>
+                        type: 1
+                        enabled: true
+                        position: [0.0002, 0.0015, 0.0046]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                    child:
+                      - name: Neck_Jnt_$AssimpFbx$_PreRotation
+                        enabled: true
+                        component:
+                          - !<transform>
+                            type: 1
+                            enabled: true
+                            position: [0, 0, 0]
+                            rotation: [-75.77, 0, -89.69]
+                            scale: [1, 1, 1]
+                        child:
+                          - name: Neck_Jnt_$AssimpFbx$_Rotation
+                            enabled: true
+                            component:
+                              - !<transform>
+                                type: 1
+                                enabled: true
+                                position: [0, 0, 0]
+                                rotation: [-0.0843, -15, -0.0111]
+                                scale: [1, 1, 1]
+                            child:
+                              - name: Neck_Jnt
+                                enabled: true
+                                component:
+                                  - !<transform>
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [-0, 0, -0]
+                                    scale: [1, 1, 1]
+                                child:
+                                  - name: CenterHead_Jnt_$AssimpFbx$_Translation
+                                    enabled: true
+                                    component:
+                                      - !<transform>
+                                        type: 1
+                                        enabled: true
+                                        position: [0.0113, -0, 0]
+                                        rotation: [-0, 0, -0]
+                                        scale: [1, 1, 1]
+                                    child:
+                                      - name: CenterHead_Jnt_$AssimpFbx$_PreRotation
+                                        enabled: true
+                                        component:
+                                          - !<transform>
+                                            type: 1
+                                            enabled: true
+                                            position: [0, 0, 0]
+                                            rotation: [1.241, 75.77, 88.72]
+                                            scale: [1, 1, 1]
+                                        child:
+                                          - name: CenterHead_Jnt
+                                            enabled: true
+                                            component:
+                                              - !<transform>
+                                                type: 1
+                                                enabled: true
+                                                position: [0, 0, 0]
+                                                rotation: [-0, 0, -0]
+                                                scale: [1, 1, 1]
+              - name: RightPreShoulder_Jnt_$AssimpFbx$_Translation
+                enabled: true
+                component:
+                  - !<transform>
+                    type: 1
+                    enabled: true
+                    position: [-0.0066, 0.0062, 0.012]
+                    rotation: [-0, 0, -0]
+                    scale: [1, 1, 1]
+                child:
+                  - name: RightPreShoulder_Jnt_$AssimpFbx$_PreRotation
+                    enabled: true
+                    component:
+                      - !<transform>
+                        type: 1
+                        enabled: true
+                        position: [0, 0, 0]
+                        rotation: [180, 0, -0]
+                        scale: [1, 1, 1]
+                    child:
+                      - name: RightPreShoulder_Jnt_$AssimpFbx$_Rotation
+                        enabled: true
+                        component:
+                          - !<transform>
+                            type: 1
+                            enabled: true
+                            position: [0, 0, 0]
+                            rotation: [1.893, -6.384, 10.45]
+                            scale: [1, 1, 1]
+                        child:
+                          - name: RightPreShoulder_Jnt
+                            enabled: true
+                            component:
+                              - !<transform>
+                                type: 1
+                                enabled: true
+                                position: [0, 0, 0]
+                                rotation: [-0, 0, -0]
+                                scale: [1, 1, 1]
+                            child:
+                              - name: RightShoulder_$AssimpFbx$_Translation
+                                enabled: true
+                                component:
+                                  - !<transform>
+                                    type: 1
+                                    enabled: true
+                                    position: [-0.0048, -0.0063, 0.0051]
+                                    rotation: [-0, 0, -0]
+                                    scale: [1, 1, 1]
+                                child:
+                                  - name: RightShoulder_$AssimpFbx$_PreRotation
+                                    enabled: true
+                                    component:
+                                      - !<transform>
+                                        type: 1
+                                        enabled: true
+                                        position: [0, 0, 0]
+                                        rotation: [-169.6, 0, -127.6]
+                                        scale: [1, 1, 1]
+                                    child:
+                                      - name: RightShoulder_$AssimpFbx$_Rotation
+                                        enabled: true
+                                        component:
+                                          - !<transform>
+                                            type: 1
+                                            enabled: true
+                                            position: [0, 0, 0]
+                                            rotation: [60.48, -67.85, 9.889]
+                                            scale: [1, 1, 1]
+                                        child:
+                                          - name: RightShoulder
+                                            enabled: true
+                                            component:
+                                              - !<transform>
+                                                type: 1
+                                                enabled: true
+                                                position: [0, 0, 0]
+                                                rotation: [-0, 0, -0]
+                                                scale: [1, 1, 1]
+                                            child:
+                                              - name: RightElbow_$AssimpFbx$_Translation
+                                                enabled: true
+                                                component:
+                                                  - !<transform>
+                                                    type: 1
+                                                    enabled: true
+                                                    position: [0.0166, -0.0001, 0]
+                                                    rotation: [-0, 0, -0]
+                                                    scale: [1, 1, 1]
+                                                child:
+                                                  - name: RightElbow_$AssimpFbx$_PreRotation
+                                                    enabled: true
+                                                    component:
+                                                      - !<transform>
+                                                        type: 1
+                                                        enabled: true
+                                                        position: [0, 0, 0]
+                                                        rotation: [22.3, -26.23, 5.608]
+                                                        scale: [1, 1, 1]
+                                                    child:
+                                                      - name: RightElbow_$AssimpFbx$_Rotation
+                                                        enabled: true
+                                                        component:
+                                                          - !<transform>
+                                                            type: 1
+                                                            enabled: true
+                                                            position: [0, 0, 0]
+                                                            rotation: [9.076, -34.91, -12.71]
+                                                            scale: [1, 1, 1]
+                                                        child:
+                                                          - name: RightElbow
+                                                            enabled: true
+                                                            component:
+                                                              - !<transform>
+                                                                type: 1
+                                                                enabled: true
+                                                                position: [0, 0, 0]
+                                                                rotation: [-0, 0, -0]
+                                                                scale: [1, 1, 1]
+                                                            child:
+                                                              - name: RightHand
+                                                                enabled: true
+                                                                component:
+                                                                  - !<transform>
+                                                                    type: 1
+                                                                    enabled: true
+                                                                    position: [0.0145, 0, 0.0001]
+                                                                    rotation: [-25.24, -24.99, -5.886]
+                                                                    scale: [1, 1, 1]
+                                                                child:
+                                                                  - name: RightFinger_Index_Jnt_$AssimpFbx$_Translation
+                                                                    enabled: true
+                                                                    component:
+                                                                      - !<transform>
+                                                                        type: 1
+                                                                        enabled: true
+                                                                        position: [0.0078, -0.0009, 0.0022]
+                                                                        rotation: [-0, 0, -0]
+                                                                        scale: [1, 1, 1]
+                                                                    child:
+                                                                      - name: RightFinger_Index_Jnt_$AssimpFbx$_PreRotation
+                                                                        enabled: true
+                                                                        component:
+                                                                          - !<transform>
+                                                                            type: 1
+                                                                            enabled: true
+                                                                            position: [0, 0, 0]
+                                                                            rotation: [-11.98, 15.26, 9.988]
+                                                                            scale: [1, 1, 1]
+                                                                        child:
+                                                                          - name: RightFinger_Index_Jnt
+                                                                            enabled: true
+                                                                            component:
+                                                                              - !<transform>
+                                                                                type: 1
+                                                                                enabled: true
+                                                                                position: [0, 0, 0]
+                                                                                rotation: [-0, 0, -0]
+                                                                                scale: [1, 1, 1]
+                                                                            child:
+                                                                              - name: RightFinger_index_middle_Jnt_$AssimpFbx$_Translation
+                                                                                enabled: true
+                                                                                component:
+                                                                                  - !<transform>
+                                                                                    type: 1
+                                                                                    enabled: true
+                                                                                    position: [0.0076, -0.0006, 0.0001]
+                                                                                    rotation: [-0, 0, -0]
+                                                                                    scale: [1, 1, 1]
+                                                                                child:
+                                                                                  - name: RightFinger_index_middle_Jnt_$AssimpFbx$_PreRotation
+                                                                                    enabled: true
+                                                                                    component:
+                                                                                      - !<transform>
+                                                                                        type: 1
+                                                                                        enabled: true
+                                                                                        position: [0, 0, 0]
+                                                                                        rotation: [-3.047, 5.505, 29.03]
+                                                                                        scale: [1, 1, 1]
+                                                                                    child:
+                                                                                      - name: RightFinger_index_middle_Jnt
+                                                                                        enabled: true
+                                                                                        component:
+                                                                                          - !<transform>
+                                                                                            type: 1
+                                                                                            enabled: true
+                                                                                            position: [0, 0, 0]
+                                                                                            rotation: [-0, 0, -0]
+                                                                                            scale: [1, 1, 1]
+                                                                                        child:
+                                                                                          - name: RightFinger_indez_end_Jnt_$AssimpFbx$_Translation
+                                                                                            enabled: true
+                                                                                            component:
+                                                                                              - !<transform>
+                                                                                                type: 1
+                                                                                                enabled: true
+                                                                                                position: [0.0088, 0.0018, 0.0002]
+                                                                                                rotation: [-0, 0, -0]
+                                                                                                scale: [1, 1, 1]
+                                                                                            child:
+                                                                                              - name: RightFinger_indez_end_Jnt_$AssimpFbx$_PreRotation
+                                                                                                enabled: true
+                                                                                                component:
+                                                                                                  - !<transform>
+                                                                                                    type: 1
+                                                                                                    enabled: true
+                                                                                                    position: [0, 0, 0]
+                                                                                                    rotation: [0, -2.071, 90]
+                                                                                                    scale: [1, 1, 1]
+                                                                                                child:
+                                                                                                  - name: RightFinger_indez_end_Jnt
+                                                                                                    enabled: true
+                                                                                                    component:
+                                                                                                      - !<transform>
+                                                                                                        type: 1
+                                                                                                        enabled: true
+                                                                                                        position: [0, 0, 0]
+                                                                                                        rotation: [-0, 0, -0]
+                                                                                                        scale: [1, 1, 1]
+                                                                  - name: RightFinger_Middle_Jnt_$AssimpFbx$_Translation
+                                                                    enabled: true
+                                                                    component:
+                                                                      - !<transform>
+                                                                        type: 1
+                                                                        enabled: true
+                                                                        position: [0.006, -0.0022, -0.0042]
+                                                                        rotation: [-0, 0, -0]
+                                                                        scale: [1, 1, 1]
+                                                                    child:
+                                                                      - name: RightFinger_Middle_Jnt_$AssimpFbx$_PreRotation
+                                                                        enabled: true
+                                                                        component:
+                                                                          - !<transform>
+                                                                            type: 1
+                                                                            enabled: true
+                                                                            position: [0, 0, 0]
+                                                                            rotation: [-11.98, 15.26, 9.988]
+                                                                            scale: [1, 1, 1]
+                                                                        child:
+                                                                          - name: RightFinger_Middle_Jnt
+                                                                            enabled: true
+                                                                            component:
+                                                                              - !<transform>
+                                                                                type: 1
+                                                                                enabled: true
+                                                                                position: [0, 0, 0]
+                                                                                rotation: [-0, 0, -0]
+                                                                                scale: [1, 1, 1]
+                                                                            child:
+                                                                              - name: RightFinger_Middle_middle__Jnt_$AssimpFbx$_Translation
+                                                                                enabled: true
+                                                                                component:
+                                                                                  - !<transform>
+                                                                                    type: 1
+                                                                                    enabled: true
+                                                                                    position: [0.0075, -0.0006, -0.0009]
+                                                                                    rotation: [-0, 0, -0]
+                                                                                    scale: [1, 1, 1]
+                                                                                child:
+                                                                                  - name: RightFinger_Middle_middle__Jnt_$AssimpFbx$_PreRotation
+                                                                                    enabled: true
+                                                                                    component:
+                                                                                      - !<transform>
+                                                                                        type: 1
+                                                                                        enabled: true
+                                                                                        position: [0, 0, 0]
+                                                                                        rotation: [-3.047, 5.505, 29.03]
+                                                                                        scale: [1, 1, 1]
+                                                                                    child:
+                                                                                      - name: RightFinger_Middle_middle__Jnt
+                                                                                        enabled: true
+                                                                                        component:
+                                                                                          - !<transform>
+                                                                                            type: 1
+                                                                                            enabled: true
+                                                                                            position: [0, 0, 0]
+                                                                                            rotation: [-0, 0, -0]
+                                                                                            scale: [1, 1, 1]
+                                                                                        child:
+                                                                                          - name: RightFinger_Middle_end_Jnt_$AssimpFbx$_Translation
+                                                                                            enabled: true
+                                                                                            component:
+                                                                                              - !<transform>
+                                                                                                type: 1
+                                                                                                enabled: true
+                                                                                                position: [0.0088, 0.0018, 0.0004]
+                                                                                                rotation: [-0, 0, -0]
+                                                                                                scale: [1, 1, 1]
+                                                                                            child:
+                                                                                              - name: RightFinger_Middle_end_Jnt_$AssimpFbx$_PreRotation
+                                                                                                enabled: true
+                                                                                                component:
+                                                                                                  - !<transform>
+                                                                                                    type: 1
+                                                                                                    enabled: true
+                                                                                                    position: [0, 0, 0]
+                                                                                                    rotation: [0, -2.071, 90]
+                                                                                                    scale: [1, 1, 1]
+                                                                                                child:
+                                                                                                  - name: RightFinger_Middle_end_Jnt
+                                                                                                    enabled: true
+                                                                                                    component:
+                                                                                                      - !<transform>
+                                                                                                        type: 1
+                                                                                                        enabled: true
+                                                                                                        position: [0, 0, 0]
+                                                                                                        rotation: [-0, 0, -0]
+                                                                                                        scale: [1, 1, 1]
+                                                                  - name: RightFinger_thumb_Jnt_$AssimpFbx$_Translation
+                                                                    enabled: true
+                                                                    component:
+                                                                      - !<transform>
+                                                                        type: 1
+                                                                        enabled: true
+                                                                        position: [0.0023, 0.0018, 0.0038]
+                                                                        rotation: [-0, 0, -0]
+                                                                        scale: [1, 1, 1]
+                                                                    child:
+                                                                      - name: RightFinger_thumb_Jnt_$AssimpFbx$_PreRotation
+                                                                        enabled: true
+                                                                        component:
+                                                                          - !<transform>
+                                                                            type: 1
+                                                                            enabled: true
+                                                                            position: [0, 0, 0]
+                                                                            rotation: [90, 37.26, 21.99]
+                                                                            scale: [1, 1, 1]
+                                                                        child:
+                                                                          - name: RightFinger_thumb_Jnt
+                                                                            enabled: true
+                                                                            component:
+                                                                              - !<transform>
+                                                                                type: 1
+                                                                                enabled: true
+                                                                                position: [0, 0, 0]
+                                                                                rotation: [-0, 0, -0]
+                                                                                scale: [1, 1, 1]
+                                                                            child:
+                                                                              - name: RightFinger_thumb_middle_Jnt_$AssimpFbx$_Translation
+                                                                                enabled: true
+                                                                                component:
+                                                                                  - !<transform>
+                                                                                    type: 1
+                                                                                    enabled: true
+                                                                                    position: [0.0063, 0, 0.0001]
+                                                                                    rotation: [-0, 0, -0]
+                                                                                    scale: [1, 1, 1]
+                                                                                child:
+                                                                                  - name: RightFinger_thumb_middle_Jnt_$AssimpFbx$_PreRotation
+                                                                                    enabled: true
+                                                                                    component:
+                                                                                      - !<transform>
+                                                                                        type: 1
+                                                                                        enabled: true
+                                                                                        position: [0, 0, 0]
+                                                                                        rotation: [0, 0, -2.929]
+                                                                                        scale: [1, 1, 1]
+                                                                                    child:
+                                                                                      - name: RightFinger_thumb_middle_Jnt
+                                                                                        enabled: true
+                                                                                        component:
+                                                                                          - !<transform>
+                                                                                            type: 1
+                                                                                            enabled: true
+                                                                                            position: [0, 0, 0]
+                                                                                            rotation: [-0, 0, -0]
+                                                                                            scale: [1, 1, 1]
+                                                                                        child:
+                                                                                          - name: RightFinger_thumb_end_Jnt_$AssimpFbx$_Translation
+                                                                                            enabled: true
+                                                                                            component:
+                                                                                              - !<transform>
+                                                                                                type: 1
+                                                                                                enabled: true
+                                                                                                position: [0.0075, -0, 0.0014]
+                                                                                                rotation: [-0, 0, -0]
+                                                                                                scale: [1, 1, 1]
+                                                                                            child:
+                                                                                              - name: RightFinger_thumb_end_Jnt_$AssimpFbx$_PreRotation
+                                                                                                enabled: true
+                                                                                                component:
+                                                                                                  - !<transform>
+                                                                                                    type: 1
+                                                                                                    enabled: true
+                                                                                                    position: [0, 0, 0]
+                                                                                                    rotation: [-90, 42.59, 90]
+                                                                                                    scale: [1, 1, 1]
+                                                                                                child:
+                                                                                                  - name: RightFinger_thumb_end_Jnt
+                                                                                                    enabled: true
+                                                                                                    component:
+                                                                                                      - !<transform>
+                                                                                                        type: 1
+                                                                                                        enabled: true
+                                                                                                        position: [0, 0, 0]
+                                                                                                        rotation: [-0, 0, -0]
+                                                                                                        scale: [1, 1, 1]
+              - name: LeftPreShoulder_Jnt
+                enabled: true
+                component:
+                  - !<transform>
+                    type: 1
+                    enabled: true
+                    position: [0.0066, 0.0062, 0.012]
+                    rotation: [1.764, -5.599, 10.24]
+                    scale: [1, 1, 1]
+                child:
+                  - name: LeftShoulder_$AssimpFbx$_Translation
+                    enabled: true
+                    component:
+                      - !<transform>
+                        type: 1
+                        enabled: true
+                        position: [0.0048, 0.0063, -0.0051]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                    child:
+                      - name: LeftShoulder_$AssimpFbx$_PreRotation
+                        enabled: true
+                        component:
+                          - !<transform>
+                            type: 1
+                            enabled: true
+                            position: [0, 0, 0]
+                            rotation: [-169.6, 0, -127.6]
+                            scale: [1, 1, 1]
+                        child:
+                          - name: LeftShoulder_$AssimpFbx$_Rotation
+                            enabled: true
+                            component:
+                              - !<transform>
+                                type: 1
+                                enabled: true
+                                position: [0, 0, 0]
+                                rotation: [-1.308, -62.62, -44.33]
+                                scale: [1, 1, 1]
+                            child:
+                              - name: LeftShoulder
+                                enabled: true
+                                component:
+                                  - !<transform>
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [-0, 0, -0]
+                                    scale: [1, 1, 1]
+                                child:
+                                  - name: LeftElbow_$AssimpFbx$_Translation
+                                    enabled: true
+                                    component:
+                                      - !<transform>
+                                        type: 1
+                                        enabled: true
+                                        position: [-0.0167, 0.0001, -0]
+                                        rotation: [-0, 0, -0]
+                                        scale: [1, 1, 1]
+                                    child:
+                                      - name: LeftElbow_$AssimpFbx$_PreRotation
+                                        enabled: true
+                                        component:
+                                          - !<transform>
+                                            type: 1
+                                            enabled: true
+                                            position: [0, 0, 0]
+                                            rotation: [22.3, -26.23, 5.608]
+                                            scale: [1, 1, 1]
+                                        child:
+                                          - name: LeftElbow_$AssimpFbx$_Rotation
+                                            enabled: true
+                                            component:
+                                              - !<transform>
+                                                type: 1
+                                                enabled: true
+                                                position: [0, 0, 0]
+                                                rotation: [-1.632, -30.82, -28.47]
+                                                scale: [1, 1, 1]
+                                            child:
+                                              - name: LeftElbow
+                                                enabled: true
+                                                component:
+                                                  - !<transform>
+                                                    type: 1
+                                                    enabled: true
+                                                    position: [0, 0, 0]
+                                                    rotation: [-0, 0, -0]
+                                                    scale: [1, 1, 1]
+                                                child:
+                                                  - name: LeftHand
+                                                    enabled: true
+                                                    component:
+                                                      - !<transform>
+                                                        type: 1
+                                                        enabled: true
+                                                        position: [-0.0145, -0, 0]
+                                                        rotation: [-2.983, -14.75, -2.382]
+                                                        scale: [1, 1, 1]
+                                                    child:
+                                                      - name: LefFinger_Index_Jnt_$AssimpFbx$_Translation
+                                                        enabled: true
+                                                        component:
+                                                          - !<transform>
+                                                            type: 1
+                                                            enabled: true
+                                                            position: [-0.0078, 0.0009, -0.0022]
+                                                            rotation: [-0, 0, -0]
+                                                            scale: [1, 1, 1]
+                                                        child:
+                                                          - name: LefFinger_Index_Jnt_$AssimpFbx$_PreRotation
+                                                            enabled: true
+                                                            component:
+                                                              - !<transform>
+                                                                type: 1
+                                                                enabled: true
+                                                                position: [0, 0, 0]
+                                                                rotation: [-11.98, 15.26, 9.988]
+                                                                scale: [1, 1, 1]
+                                                            child:
+                                                              - name: LefFinger_Index_Jnt
+                                                                enabled: true
+                                                                component:
+                                                                  - !<transform>
+                                                                    type: 1
+                                                                    enabled: true
+                                                                    position: [0, 0, 0]
+                                                                    rotation: [-0, 0, -0]
+                                                                    scale: [1, 1, 1]
+                                                                child:
+                                                                  - name: LefFinger_Index_middle_Jnt_$AssimpFbx$_Translation
+                                                                    enabled: true
+                                                                    component:
+                                                                      - !<transform>
+                                                                        type: 1
+                                                                        enabled: true
+                                                                        position: [-0.0076, 0.0006, -0.0001]
+                                                                        rotation: [-0, 0, -0]
+                                                                        scale: [1, 1, 1]
+                                                                    child:
+                                                                      - name: LefFinger_Index_middle_Jnt_$AssimpFbx$_PreRotation
+                                                                        enabled: true
+                                                                        component:
+                                                                          - !<transform>
+                                                                            type: 1
+                                                                            enabled: true
+                                                                            position: [0, 0, 0]
+                                                                            rotation: [-3.047, 5.505, 29.03]
+                                                                            scale: [1, 1, 1]
+                                                                        child:
+                                                                          - name: LefFinger_Index_middle_Jnt
+                                                                            enabled: true
+                                                                            component:
+                                                                              - !<transform>
+                                                                                type: 1
+                                                                                enabled: true
+                                                                                position: [0, 0, 0]
+                                                                                rotation: [-0, 0, -0]
+                                                                                scale: [1, 1, 1]
+                                                                            child:
+                                                                              - name: LefFinger_Index_end_Jnt_$AssimpFbx$_Translation
+                                                                                enabled: true
+                                                                                component:
+                                                                                  - !<transform>
+                                                                                    type: 1
+                                                                                    enabled: true
+                                                                                    position: [-0.0088, -0.0018, -0.0002]
+                                                                                    rotation: [-0, 0, -0]
+                                                                                    scale: [1, 1, 1]
+                                                                                child:
+                                                                                  - name: LefFinger_Index_end_Jnt_$AssimpFbx$_PreRotation
+                                                                                    enabled: true
+                                                                                    component:
+                                                                                      - !<transform>
+                                                                                        type: 1
+                                                                                        enabled: true
+                                                                                        position: [0, 0, 0]
+                                                                                        rotation: [0, -2.071, 90]
+                                                                                        scale: [1, 1, 1]
+                                                                                    child:
+                                                                                      - name: LefFinger_Index_end_Jnt
+                                                                                        enabled: true
+                                                                                        component:
+                                                                                          - !<transform>
+                                                                                            type: 1
+                                                                                            enabled: true
+                                                                                            position: [0, 0, 0]
+                                                                                            rotation: [-0, 0, -0]
+                                                                                            scale: [1, 1, 1]
+                                                      - name: LefFinger_Middle_Jnt_$AssimpFbx$_Translation
+                                                        enabled: true
+                                                        component:
+                                                          - !<transform>
+                                                            type: 1
+                                                            enabled: true
+                                                            position: [-0.006, 0.0022, 0.0042]
+                                                            rotation: [-0, 0, -0]
+                                                            scale: [1, 1, 1]
+                                                        child:
+                                                          - name: LefFinger_Middle_Jnt_$AssimpFbx$_PreRotation
+                                                            enabled: true
+                                                            component:
+                                                              - !<transform>
+                                                                type: 1
+                                                                enabled: true
+                                                                position: [0, 0, 0]
+                                                                rotation: [-11.98, 15.26, 9.988]
+                                                                scale: [1, 1, 1]
+                                                            child:
+                                                              - name: LefFinger_Middle_Jnt
+                                                                enabled: true
+                                                                component:
+                                                                  - !<transform>
+                                                                    type: 1
+                                                                    enabled: true
+                                                                    position: [0, 0, 0]
+                                                                    rotation: [-0, 0, -0]
+                                                                    scale: [1, 1, 1]
+                                                                child:
+                                                                  - name: LefFinger_Middle_middle_Jnt_$AssimpFbx$_Translation
+                                                                    enabled: true
+                                                                    component:
+                                                                      - !<transform>
+                                                                        type: 1
+                                                                        enabled: true
+                                                                        position: [-0.0075, 0.0006, 0.0009]
+                                                                        rotation: [-0, 0, -0]
+                                                                        scale: [1, 1, 1]
+                                                                    child:
+                                                                      - name: LefFinger_Middle_middle_Jnt_$AssimpFbx$_PreRotation
+                                                                        enabled: true
+                                                                        component:
+                                                                          - !<transform>
+                                                                            type: 1
+                                                                            enabled: true
+                                                                            position: [0, 0, 0]
+                                                                            rotation: [-3.047, 5.505, 29.03]
+                                                                            scale: [1, 1, 1]
+                                                                        child:
+                                                                          - name: LefFinger_Middle_middle_Jnt
+                                                                            enabled: true
+                                                                            component:
+                                                                              - !<transform>
+                                                                                type: 1
+                                                                                enabled: true
+                                                                                position: [0, 0, 0]
+                                                                                rotation: [-0, 0, -0]
+                                                                                scale: [1, 1, 1]
+                                                                            child:
+                                                                              - name: LefFinger_Middle_end_Jnt_$AssimpFbx$_Translation
+                                                                                enabled: true
+                                                                                component:
+                                                                                  - !<transform>
+                                                                                    type: 1
+                                                                                    enabled: true
+                                                                                    position: [-0.0088, -0.0018, -0.0004]
+                                                                                    rotation: [-0, 0, -0]
+                                                                                    scale: [1, 1, 1]
+                                                                                child:
+                                                                                  - name: LefFinger_Middle_end_Jnt_$AssimpFbx$_PreRotation
+                                                                                    enabled: true
+                                                                                    component:
+                                                                                      - !<transform>
+                                                                                        type: 1
+                                                                                        enabled: true
+                                                                                        position: [0, 0, 0]
+                                                                                        rotation: [0, -2.071, 90]
+                                                                                        scale: [1, 1, 1]
+                                                                                    child:
+                                                                                      - name: LefFinger_Middle_end_Jnt
+                                                                                        enabled: true
+                                                                                        component:
+                                                                                          - !<transform>
+                                                                                            type: 1
+                                                                                            enabled: true
+                                                                                            position: [0, 0, 0]
+                                                                                            rotation: [-0, 0, -0]
+                                                                                            scale: [1, 1, 1]
+                                                      - name: LefFinger_thumb_Jnt_$AssimpFbx$_Translation
+                                                        enabled: true
+                                                        component:
+                                                          - !<transform>
+                                                            type: 1
+                                                            enabled: true
+                                                            position: [-0.0023, -0.0018, -0.0038]
+                                                            rotation: [-0, 0, -0]
+                                                            scale: [1, 1, 1]
+                                                        child:
+                                                          - name: LefFinger_thumb_Jnt_$AssimpFbx$_PreRotation
+                                                            enabled: true
+                                                            component:
+                                                              - !<transform>
+                                                                type: 1
+                                                                enabled: true
+                                                                position: [0, 0, 0]
+                                                                rotation: [90, 37.26, 21.99]
+                                                                scale: [1, 1, 1]
+                                                            child:
+                                                              - name: LefFinger_thumb_Jnt
+                                                                enabled: true
+                                                                component:
+                                                                  - !<transform>
+                                                                    type: 1
+                                                                    enabled: true
+                                                                    position: [0, 0, 0]
+                                                                    rotation: [-0, 0, -0]
+                                                                    scale: [1, 1, 1]
+                                                                child:
+                                                                  - name: LeftFinger_thumb_Middle_Jnt_$AssimpFbx$_Translation
+                                                                    enabled: true
+                                                                    component:
+                                                                      - !<transform>
+                                                                        type: 1
+                                                                        enabled: true
+                                                                        position: [-0.0063, -0, -0.0001]
+                                                                        rotation: [-0, 0, -0]
+                                                                        scale: [1, 1, 1]
+                                                                    child:
+                                                                      - name: LeftFinger_thumb_Middle_Jnt_$AssimpFbx$_PreRotation
+                                                                        enabled: true
+                                                                        component:
+                                                                          - !<transform>
+                                                                            type: 1
+                                                                            enabled: true
+                                                                            position: [0, 0, 0]
+                                                                            rotation: [0, 0, -2.929]
+                                                                            scale: [1, 1, 1]
+                                                                        child:
+                                                                          - name: LeftFinger_thumb_Middle_Jnt
+                                                                            enabled: true
+                                                                            component:
+                                                                              - !<transform>
+                                                                                type: 1
+                                                                                enabled: true
+                                                                                position: [0, 0, 0]
+                                                                                rotation: [-0, 0, -0]
+                                                                                scale: [1, 1, 1]
+                                                                            child:
+                                                                              - name: LeftFinger_thumb_end_Jnt_$AssimpFbx$_Translation
+                                                                                enabled: true
+                                                                                component:
+                                                                                  - !<transform>
+                                                                                    type: 1
+                                                                                    enabled: true
+                                                                                    position: [-0.0075, 0, -0.0014]
+                                                                                    rotation: [-0, 0, -0]
+                                                                                    scale: [1, 1, 1]
+                                                                                child:
+                                                                                  - name: LeftFinger_thumb_end_Jnt_$AssimpFbx$_PreRotation
+                                                                                    enabled: true
+                                                                                    component:
+                                                                                      - !<transform>
+                                                                                        type: 1
+                                                                                        enabled: true
+                                                                                        position: [0, 0, 0]
+                                                                                        rotation: [-90, 42.59, 90]
+                                                                                        scale: [1, 1, 1]
+                                                                                    child:
+                                                                                      - name: LeftFinger_thumb_end_Jnt
+                                                                                        enabled: true
+                                                                                        component:
+                                                                                          - !<transform>
+                                                                                            type: 1
+                                                                                            enabled: true
+                                                                                            position: [0, 0, 0]
+                                                                                            rotation: [-0, 0, -0]
+                                                                                            scale: [1, 1, 1]
+          - name: Belly_jnt
+            enabled: true
+            component:
+              - !<transform>
+                type: 1
+                enabled: true
+                position: [0, -0, 0.0105]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+      - name: CenterHip_jnt
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [0, -0.0011, 0]
+            rotation: [-2.878, 29.97, 1.438]
+            scale: [1, 1, 1]
+        child:
+          - name: LeftLeg_jnt
+            enabled: true
+            component:
+              - !<transform>
+                type: 1
+                enabled: true
+                position: [0.0066, -0.0007, -0]
+                rotation: [-8.237, 11.22, 5.433]
+                scale: [1, 1, 1]
+            child:
+              - name: LeftKnee_jnt
+                enabled: true
+                component:
+                  - !<transform>
+                    type: 1
+                    enabled: true
+                    position: [0.0004, -0.0068, 0.002]
+                    rotation: [12.77, 0.491, -0.737]
+                    scale: [1, 1, 1]
+                child:
+                  - name: LeftFoot_jnt
+                    enabled: true
+                    component:
+                      - !<transform>
+                        type: 1
+                        enabled: true
+                        position: [0.0002, -0.0063, -0.002]
+                        rotation: [-0, 0, -0]
+                        scale: [1, 1, 1]
+                    child:
+                      - name: LeftToe_jnt
+                        enabled: true
+                        component:
+                          - !<transform>
+                            type: 1
+                            enabled: true
+                            position: [-0, -0.0023, 0.0016]
+                            rotation: [9.414, 16.18, -0.0228]
+                            scale: [1, 1, 1]
+                        child:
+                          - name: LeftZeroToe_jnt
+                            enabled: true
+                            component:
+                              - !<transform>
+                                type: 1
+                                enabled: true
+                                position: [-0, 0, 0.0039]
+                                rotation: [-0, 0, -0]
+                                scale: [1, 1, 1]
+          - name: RightLeg_jnt_$AssimpFbx$_Translation
+            enabled: true
+            component:
+              - !<transform>
+                type: 1
+                enabled: true
+                position: [-0.0066, -0.0007, -0]
+                rotation: [-0, 0, -0]
+                scale: [1, 1, 1]
+            child:
+              - name: RightLeg_jnt_$AssimpFbx$_PreRotation
+                enabled: true
+                component:
+                  - !<transform>
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0]
+                    rotation: [180, 0, -0]
+                    scale: [1, 1, 1]
+                child:
+                  - name: RightLeg_jnt_$AssimpFbx$_Rotation
+                    enabled: true
+                    component:
+                      - !<transform>
+                        type: 1
+                        enabled: true
+                        position: [0, 0, 0]
+                        rotation: [26.42, 13.01, 5.109]
+                        scale: [1, 1, 1]
+                    child:
+                      - name: RightLeg_jnt
+                        enabled: true
+                        component:
+                          - !<transform>
+                            type: 1
+                            enabled: true
+                            position: [0, 0, 0]
+                            rotation: [-0, 0, -0]
+                            scale: [1, 1, 1]
+                        child:
+                          - name: RightKnee_Jnt
+                            enabled: true
+                            component:
+                              - !<transform>
+                                type: 1
+                                enabled: true
+                                position: [-0.0004, 0.0068, -0.002]
+                                rotation: [8.982, 0.3789, -0.4946]
+                                scale: [1, 1, 1]
+                            child:
+                              - name: RighFoot_Jnt
+                                enabled: true
+                                component:
+                                  - !<transform>
+                                    type: 1
+                                    enabled: true
+                                    position: [-0.0002, 0.0063, 0.002]
+                                    rotation: [-0, 0, -0]
+                                    scale: [1, 1, 1]
+                                child:
+                                  - name: RightToe_Jnt
+                                    enabled: true
+                                    component:
+                                      - !<transform>
+                                        type: 1
+                                        enabled: true
+                                        position: [0, 0.0023, -0.0016]
+                                        rotation: [-15.98, 33.17, -8.722]
+                                        scale: [1, 1, 1]
+                                    child:
+                                      - name: RightZeroToe_Jnt
+                                        enabled: true
+                                        component:
+                                          - !<transform>
+                                            type: 1
+                                            enabled: true
+                                            position: [0, -0, -0.0039]
+                                            rotation: [-0, 0, -0]
+                                            scale: [1, 1, 1]
+      - name: ikHandle2
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [0.0073, -0.0143, -0.0034]
+            rotation: [19.95, 58.09, -11.36]
+            scale: [1, 1, 1]
+      - name: ikHandle1
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [-0.0101, -0.0128, -0.0014]
+            rotation: [8.517, -16.31, -6.227]
+            scale: [1, 1, 1]
