@@ -46,7 +46,7 @@ void Hachiko::Scripting::GauntletManager::OnStart()
 	_level_manager = Scenes::GetLevelManager()->GetComponent<LevelManager>();
 	game_object->SetVisible(false, false);
 
-	ResetGauntlet();
+	ResetGauntlet(true);
 }
 
 void Hachiko::Scripting::GauntletManager::OnUpdate()
@@ -69,7 +69,7 @@ void Hachiko::Scripting::GauntletManager::OnUpdate()
 
 }
 
-void Hachiko::Scripting::GauntletManager::ResetGauntlet()
+void Hachiko::Scripting::GauntletManager::ResetGauntlet(bool complete_reset)
 {
 	CloseDoors();
 	for (GameObject* enemy_pack : _enemy_packs)
@@ -77,14 +77,19 @@ void Hachiko::Scripting::GauntletManager::ResetGauntlet()
 		_combat_manager->DeactivateEnemyPack(enemy_pack);
 	}
 	started = false;
-	current_round = 0;
+	
 	remaining_between_round_time = 0.f;
+
+	if (!complete_reset)
+	{
+		return;
+	}
+	current_round = 0;
 }
 
 void Hachiko::Scripting::GauntletManager::StartGauntlet()
 {
 	started = true;
-	current_round = 0;
 	SpawnRound(current_round);
 
 	// Notify level manager

@@ -88,6 +88,11 @@ namespace Hachiko
             return mesh->normals;
         }
 
+        [[nodiscard]] bool GetOverrideMaterialFlag() const
+        {
+            return override_emissive_flag_override;
+        }
+
         [[nodiscard]] const ResourceMesh* GetResourceMesh() const
         {
             return mesh;
@@ -98,15 +103,32 @@ namespace Hachiko
             return material;
         }
 
-        void SetTintColor(const float4& color)
+        HACHIKO_API void SetTintColor(const float4& color)
         {
             tint_color = color;
         }
 
-        [[nodiscard]] const float4& GetTintColor() const
+        HACHIKO_API  [[nodiscard]] const float4& GetTintColor() const
         {
             return tint_color;
         }
+
+        HACHIKO_API void SetDissolveProgress(const float progress)
+        {
+            dissolve_progress = progress;
+        }
+
+        HACHIKO_API [[nodiscard]] float GetDissolveProgress() const
+        {
+            return dissolve_progress;
+        }
+
+        HACHIKO_API [[nodiscard]] bool IsCastingShadow() const
+        {
+            return is_casting_shadow;
+        }
+
+        HACHIKO_API void SetCastingShadow(bool value);
 
         void DrawGui() override;
 
@@ -121,14 +143,15 @@ namespace Hachiko
         }
 
         // Scripting
-        [[nodiscard]] bool OverrideMaterialActive() const
+        HACHIKO_API [[nodiscard]] bool OverrideMaterialActive() const
         {
             return override_material;
         }
 
-        void OverrideEmissive(const float4& color, float time);
+        HACHIKO_API void OverrideEmissive(const float4& color, bool override_flag = false);
+        HACHIKO_API void LiftOverrideEmissive();
 
-        [[nodiscard]] const float4& GetOverrideEmissiveColor() const
+        HACHIKO_API [[nodiscard]] const float4& GetOverrideEmissiveColor() const
         {
             return override_emissive;
         }
@@ -145,6 +168,7 @@ namespace Hachiko
         void UpdateBoundingBoxes();
         bool visible = true;
         bool navigable = false;
+        bool is_casting_shadow = true;
 
         AABB aabb;
         OBB obb;
@@ -157,10 +181,12 @@ namespace Hachiko
         ResourceMesh* mesh = nullptr;
         ResourceMaterial* material = nullptr;
         float4 tint_color = float4::one;
+        float dissolve_progress = 1.0f; // Not stored (min 0, max 1)
 
         // Scripting
         bool override_material = false;
         float override_timer = 0;
         float4 override_emissive;
+        bool override_emissive_flag_override = false;
     };
 } // namespace Hachiko

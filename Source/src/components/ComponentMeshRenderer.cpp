@@ -43,17 +43,6 @@ void Hachiko::ComponentMeshRenderer::Update()
         return;
     }
 
-    // Material override
-    if (override_material)
-    {
-        override_timer -= GameTimer::delta_time;
-        if (override_timer <= 0)
-        {
-            override_material = false;
-            override_timer = 0;
-        }
-    }
-
     if (palette.empty())
     {
         palette.resize(mesh->num_bones);
@@ -166,6 +155,11 @@ void Hachiko::ComponentMeshRenderer::LoadMaterial(UID material_id)
     SetMaterialResource(static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, material_id)));
 }
 
+void Hachiko::ComponentMeshRenderer::SetCastingShadow(const bool value)
+{
+    is_casting_shadow = value;
+}
+
 void Hachiko::ComponentMeshRenderer::DrawGui()
 {
     static const ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_DefaultOpen;
@@ -183,13 +177,21 @@ void Hachiko::ComponentMeshRenderer::DrawGui()
                             mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES)]);
                 Widgets::Checkbox("Visible", &visible);
                 Widgets::Checkbox("Navigable", &navigable);
+                Widgets::Checkbox("Casts shadows", &is_casting_shadow);
             }
             ImGui::TreePop();
         }
 
         if (ImGui::TreeNodeEx((void*)&material, flags, "Material"))
         {
+            Widgets::DragFloatConfig cfg;
+            cfg.speed = 0.01f;
+            cfg.min = 0.0f;
+            cfg.max = 1.0f;
+            
             Widgets::ColorEdit4("Tint color", tint_color);
+            Widgets::DragFloat("Dissolve progress", dissolve_progress, &cfg);
+
             ChangeMaterial();
             if (material != nullptr)
             {
@@ -213,6 +215,7 @@ void Hachiko::ComponentMeshRenderer::Save(YAML::Node& node) const
         node[RENDERER_MESH_ID] = mesh->GetID();
         node[MESH_NAVIGABLE] = navigable;
         node[MESH_VISIBLE] = visible;
+        node[MESH_CASTING_SHADOW] = is_casting_shadow;
     }
     else
     {
@@ -238,8 +241,15 @@ void Hachiko::ComponentMeshRenderer::Load(const YAML::Node& node)
     UID material_id = node[RENDERER_MATERIAL_ID].as<UID>();
     if (mesh_id)
     {
-        navigable = node[MESH_NAVIGABLE].IsDefined() ? node[MESH_NAVIGABLE].as<bool>() : false;
-        visible = node[MESH_VISIBLE].IsDefined() ? node[MESH_VISIBLE].as<bool>() : true;
+        navigable = node[MESH_NAVIGABLE].IsDefined()
+            ? node[MESH_NAVIGABLE].as<bool>()
+            : false;
+        visible = node[MESH_VISIBLE].IsDefined()
+            ? node[MESH_VISIBLE].as<bool>()
+            : true;
+        is_casting_shadow = node[MESH_CASTING_SHADOW].IsDefined()
+            ? node[MESH_CASTING_SHADOW].as<bool>()
+            : true;
 
         LoadMesh(mesh_id);
     }
@@ -353,11 +363,15 @@ void Hachiko::ComponentMeshRenderer::ChangeMaterial()
     }
 }
 
-void Hachiko::ComponentMeshRenderer::OverrideEmissive(const float4& color, float time)
+void Hachiko::ComponentMeshRenderer::OverrideEmissive(const float4& color, bool override_flag)
 {
-    override_material = true;
-    override_timer = time;
     override_emissive = color;
+    override_material = true;
+    override_emissive_flag_override = override_flag;
+}
+void Hachiko::ComponentMeshRenderer::LiftOverrideEmissive() {
+    override_emissive = float4::zero;
+    override_material = false;
 }
 
 void Hachiko::ComponentMeshRenderer::UpdateBoundingBoxes()
