@@ -43,6 +43,7 @@ namespace Hachiko::Sounds
 	//UI
 	constexpr const wchar_t* CLICK = L"Play_UIClick";
 	constexpr const wchar_t* HOVER = L"Play_UIHover";
+	constexpr const wchar_t* INTRO_CINEMATIC = L"Play_IntroCinematic";
 
 	// Wwise RTPC
 	// Enemy

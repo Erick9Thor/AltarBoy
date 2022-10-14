@@ -309,6 +309,28 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Play_WormSpawn" ID="{B04DB298-3D08-45A3-B3B1-867510C6AA89}">
+					<ChildrenList>
+						<Action Name="" ID="{109FF4FA-7C38-448E-9736-1F1C8E9726FF}" ShortID="888566352">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="WormSpawn" ID="{F0CA4DD7-8064-40E9-ADDF-7B8C07903D55}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_IntroCinematic" ID="{6A505290-4483-47BB-AD2E-7CE891B2721F}">
+					<ChildrenList>
+						<Action Name="" ID="{C3FA0533-8AA2-4EFB-B181-FC08AB36C89B}" ShortID="596128091">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Intro" ID="{15A3A9FA-90AA-4E1D-9BE7-EA7233284557}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

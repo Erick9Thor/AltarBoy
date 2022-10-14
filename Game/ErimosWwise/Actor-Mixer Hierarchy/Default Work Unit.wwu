@@ -944,6 +944,98 @@
 								<ActiveSource Name="monster-dying" ID="{F6CC589C-BBBF-4128-BAEF-B4F7FC7616BE}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
+						<Sound Name="WormSpawn" ID="{F0CA4DD7-8064-40E9-ADDF-7B8C07903D55}" ShortID="225385521">
+							<PropertyList>
+								<Property Name="Lowpass" Type="int16">
+									<ValueList>
+										<Value>6</Value>
+									</ValueList>
+								</Property>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>3</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+								</Reference>
+								<Reference Name="Effect0">
+									<Custom>
+										<Effect Name="Wwise Convolution Reverb (Custom)" ID="{473A05C5-25C7-43A2-883D-3293679C43F5}" ShortID="577711089" PluginName="Wwise Convolution Reverb" CompanyID="0" PluginID="127" PluginType="3">											<PluginData>
+	<ConvolutionData>
+		<CurveList Version="1">
+			<CurveInfo Name="IRGraphicEQ">
+				<Curve Name="" ID="{E74D5793-4A4A-48AA-8700-91681ADB88B7}">
+					<PropertyList>
+						<Property Name="Flags" Type="int32" Value="19"/>
+					</PropertyList>
+					<PointList>
+						<Point>
+							<XPos>20</XPos>
+							<YPos>0</YPos>
+							<Flags>5</Flags>
+						</Point>
+						<Point>
+							<XPos>20000</XPos>
+							<YPos>0</YPos>
+							<Flags>37</Flags>
+						</Point>
+					</PointList>
+				</Curve>
+			</CurveInfo>
+		</CurveList>
+	</ConvolutionData>
+</PluginData>
+										</Effect>
+									</Custom>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="WormGiantSpawn" ID="{6E30BE0D-3188-4926-9CF6-2AA076A037AE}">
+									<PropertyList>
+										<Property Name="FadeInDuration" Type="Real64" Value="0.440008384306104"/>
+										<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+										<Property Name="TrimBegin" Type="Real64" Value="2.57004897196974"/>
+									</PropertyList>
+									<Language>SFX</Language>
+									<AudioFile>WormGiantSpawn.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="648836578"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ObjectLists/>
+							<ActiveSourceList>
+								<ActiveSource Name="WormGiantSpawn" ID="{6E30BE0D-3188-4926-9CF6-2AA076A037AE}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="WormRoar" ID="{72E8272F-7641-4D38-9A67-C5547C903C68}" ShortID="126410661">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+								</Reference>
+							</ReferenceList>
+							<ObjectLists/>
+						</Sound>
+						<Sound Name="WormDeath" ID="{271E9397-E7D5-46F5-8902-1E09387A7D37}" ShortID="791067424">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+								</Reference>
+							</ReferenceList>
+							<ObjectLists/>
+						</Sound>
 					</ChildrenList>
 				</Folder>
 				<Folder Name="Player" ID="{FB7CD1BD-E88B-474D-B27A-C390D0EFA017}" ShortID="411809325">
@@ -2971,6 +3063,33 @@
 							<ObjectLists/>
 							<ActiveSourceList>
 								<ActiveSource Name="Impact - Lightweight" ID="{67C22AFB-4E81-45DD-B2CE-D587C423D809}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+					</ChildrenList>
+				</Folder>
+				<Folder Name="Cinematics" ID="{D9DEF62D-F0E1-4206-86CF-AD13E1128CB1}" ShortID="310417662">
+					<ChildrenList>
+						<Sound Name="Intro" ID="{15A3A9FA-90AA-4E1D-9BE7-EA7233284557}" ShortID="221027909">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="chavo-del-ocho" ID="{990F7986-4A8F-403D-BA12-DAB5EF8214B4}">
+									<Language>SFX</Language>
+									<AudioFile>chavo-del-ocho.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="623610003"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ObjectLists/>
+							<ActiveSourceList>
+								<ActiveSource Name="chavo-del-ocho" ID="{990F7986-4A8F-403D-BA12-DAB5EF8214B4}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
 					</ChildrenList>
