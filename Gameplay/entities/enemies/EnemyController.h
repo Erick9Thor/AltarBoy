@@ -66,42 +66,23 @@ namespace Hachiko
             void SetIsFromBoss(bool v) { _is_from_boss = v; }
             void RegisterHit(int player_atk, math::float3 direction, float knockback, bool is_from_player, bool is_ranged);
             void GetParasite();
-            void Spawn();
             bool ParasiteDropped() { return _parasite_dropped; };
 
-            void CheckState();
             void ResetEnemy();
             void ResetEnemyPosition();
 
         private:
-            void SpawnController();
-            void DeathController();
-
             void GetComponents();
             void SetStats();
             void SetVfx();
             void SetUpWormVfx();
             
-            void StunController();
-            void BeetleStunController();
             void RecieveKnockback();
-            void WormStunController();
 
-            void MovementController();
-            void WormMovementController();
-            //void BeetleMovementController();
-
-            void AttackController();
-            //void BeetleAttackController();
-            //void BeetleAttack();
             float4x4 GetMeleeAttackOrigin(float attack_range) const;
-            //void ChasePlayer();
-            //void PatrolMovement();
             void StopMoving();
             void MoveInNavmesh(const float3& target_pos);
-            void WormAttackController();
             
-            void DropParasite();
             void DestroyEntity();
 
             bool IsAttacking() const { return _state == EnemyState::ATTACKING; }
@@ -124,8 +105,9 @@ namespace Hachiko
                 }
             };
             StateBehaviour states_behaviour[static_cast<int>(EnemyState::COUNT)];
-            StateBehaviour worm_states_behaviour[static_cast<int>(EnemyState::COUNT)];
-            //std::function<void()> start_behaviours[static_cast<int>(EnemyState::COUNT)];
+
+            void BeetleUpdate();
+            void WormUpdate();
 
             // SPAWNING
             void StartSpawningState();
