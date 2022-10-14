@@ -47,13 +47,13 @@ clips:
     clips_id: 4056876361213600651
     clips_loop: true
   - clip_name: clawOne
-    clips_id: 7241399800701620650
+    clips_id: 6282709936503807176
     clips_loop: false
   - clip_name: clawTwo
-    clips_id: 13967982993898321496
+    clips_id: 2327603597464627208
     clips_loop: false
   - clip_name: clawThree
-    clips_id: 12871651413963507001
+    clips_id: 7705294016027316699
     clips_loop: false
   - clip_name: death
     clips_id: 17554408115023876718
@@ -62,13 +62,13 @@ clips:
     clips_id: 18424576933785159401
     clips_loop: true
   - clip_name: hammerOne
-    clips_id: 4394700582092389549
+    clips_id: 1962363980534774792
     clips_loop: false
   - clip_name: hammerTwo
-    clips_id: 18046269277240889654
+    clips_id: 3791358448086268976
     clips_loop: false
   - clip_name: hammerThree
-    clips_id: 3991727125863517679
+    clips_id: 8013928387579266742
     clips_loop: false
   - clip_name: Wounded
     clips_id: 14339518451560539032
