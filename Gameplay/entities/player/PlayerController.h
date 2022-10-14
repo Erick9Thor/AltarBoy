@@ -226,6 +226,8 @@ namespace Hachiko
 			void CheckComboAnimation();
 			void ResetPlayer(float3 spawn_pos);
 			void StopParticles();
+			void UpdateEmissives();
+			void UpdateVignete();
 
 		public:
 			SERIALIZE_FIELD(PlayerState, _state);
@@ -246,7 +248,7 @@ namespace Hachiko
 
 			SERIALIZE_FIELD(GameObject*, _attack_indicator);
 			SERIALIZE_FIELD(GameObject*, _aim_indicator);
-			SERIALIZE_FIELD(GameObject*, _bullet_emitter);
+			SERIALIZE_FIELD(GameObject*, _combat_manager);
 			SERIALIZE_FIELD(GameObject*, _goal);
 			SERIALIZE_FIELD(GameObject*, _player_geometry);
 
@@ -384,6 +386,8 @@ namespace Hachiko
 			int _current_cam_setting = 0;
 			std::vector<float3> _cam_positions = {};
 			std::vector<float3> _cam_rotations = {};
+			float _low_health_vfx_time = 1.f;
+			float _lh_vfx_current_time = 0.0f;
 
 			float3 _player_position = float3::zero;
 			float3 _movement_direction = float3::zero;
