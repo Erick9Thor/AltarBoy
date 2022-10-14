@@ -15,6 +15,7 @@ namespace Hachiko
         class PlayerController;
         class BossController;
         class CrystalExplosion;
+        class PlayerCamera;
 
         class CombatManager : public Script
         {
@@ -168,6 +169,7 @@ namespace Hachiko
             PlayerController* _player_controller;
             BossController* _boss_controller;
             TimeManager* _time_manager;
+            PlayerCamera* _camera;
 
             SERIALIZE_FIELD(GameObject*, _charge_vfx);
             SERIALIZE_FIELD(GameObject*, _shot_vfx);
