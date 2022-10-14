@@ -59,21 +59,17 @@ Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 
 void Hachiko::Scripting::EnemyController::OnAwake()
 {
-	if (_worm)
-	{
-		_enemy_type = EnemyType::WORM;
-	}
-	else
+	if (!_worm)
 	{
 		_enemy_type = EnemyType::BEETLE;
 
 		_chase_remaining_cooldown = 0;
 
-		states_behaviour[static_cast<int>(EnemyState::DEAD)] = StateBehaviour(
-			std::bind(&EnemyController::StartDeadState, this),
-			std::bind(&EnemyController::UpdateDeadState, this),
-			std::bind(&EnemyController::EndDeadState, this),
-			std::bind(&EnemyController::TransitionsDeadState, this));
+		states_behaviour[static_cast<int>(EnemyState::SPAWNING)] = StateBehaviour(
+			std::bind(&EnemyController::StartSpawningState, this),
+			std::bind(&EnemyController::UpdateSpawningState, this),
+			std::bind(&EnemyController::EndSpawningState, this),
+			std::bind(&EnemyController::TransitionsSpawningState, this));
 		states_behaviour[static_cast<int>(EnemyState::IDLE)] = StateBehaviour(
 			std::bind(&EnemyController::StartIdleState, this),
 			std::bind(&EnemyController::UpdateIdleState, this),
@@ -84,16 +80,6 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 			std::bind(&EnemyController::UpdateAttackingState, this),
 			std::bind(&EnemyController::EndAttackingState, this),
 			std::bind(&EnemyController::TransitionsAttackingState, this));
-		states_behaviour[static_cast<int>(EnemyState::PARASITE)] = StateBehaviour(
-			std::bind(&EnemyController::StartParasiteState, this),
-			std::bind(&EnemyController::UpdateParasiteState, this),
-			std::bind(&EnemyController::EndParasiteState, this),
-			std::bind(&EnemyController::TransitionsParasiteState, this));
-		states_behaviour[static_cast<int>(EnemyState::SPAWNING)] = StateBehaviour(
-			std::bind(&EnemyController::StartSpawningState, this),
-			std::bind(&EnemyController::UpdateSpawningState, this),
-			std::bind(&EnemyController::EndSpawningState, this),
-			std::bind(&EnemyController::TransitionsSpawningState, this));
 		states_behaviour[static_cast<int>(EnemyState::MOVING)] = StateBehaviour(
 			std::bind(&EnemyController::StartMovingState, this),
 			std::bind(&EnemyController::UpdateMovingState, this),
@@ -114,7 +100,51 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 			std::bind(&EnemyController::UpdateHitState, this),
 			std::bind(&EnemyController::EndHitState, this),
 			std::bind(&EnemyController::TransitionsHitState, this));
+		states_behaviour[static_cast<int>(EnemyState::DEAD)] = StateBehaviour(
+			std::bind(&EnemyController::StartDeadState, this),
+			std::bind(&EnemyController::UpdateDeadState, this),
+			std::bind(&EnemyController::EndDeadState, this),
+			std::bind(&EnemyController::TransitionsDeadState, this));
+		states_behaviour[static_cast<int>(EnemyState::PARASITE)] = StateBehaviour(
+			std::bind(&EnemyController::StartParasiteState, this),
+			std::bind(&EnemyController::UpdateParasiteState, this),
+			std::bind(&EnemyController::EndParasiteState, this),
+			std::bind(&EnemyController::TransitionsParasiteState, this));
+	}
+	else
+	{
+		_enemy_type = EnemyType::WORM;
 
+		worm_states_behaviour[static_cast<int>(EnemyState::SPAWNING)] = StateBehaviour(
+			std::bind(&EnemyController::WormStartSpawningState, this),
+			std::bind(&EnemyController::WormUpdateSpawningState, this),
+			std::bind(&EnemyController::WormEndSpawningState, this),
+			std::bind(&EnemyController::WormTransitionsSpawningState, this));
+		worm_states_behaviour[static_cast<int>(EnemyState::IDLE)] = StateBehaviour(
+			std::bind(&EnemyController::WormStartIdleState, this),
+			std::bind(&EnemyController::WormUpdateIdleState, this),
+			std::bind(&EnemyController::WormEndIdleState, this),
+			std::bind(&EnemyController::WormTransitionsIdleState, this));
+		worm_states_behaviour[static_cast<int>(EnemyState::ATTACKING)] = StateBehaviour(
+			std::bind(&EnemyController::WormStartAttackingState, this),
+			std::bind(&EnemyController::WormUpdateAttackingState, this),
+			std::bind(&EnemyController::WormEndAttackingState, this),
+			std::bind(&EnemyController::WormTransitionsAttackingState, this));
+		worm_states_behaviour[static_cast<int>(EnemyState::HIT)] = StateBehaviour(
+			std::bind(&EnemyController::WormStartHitState, this),
+			std::bind(&EnemyController::WormUpdateHitState, this),
+			std::bind(&EnemyController::WormEndHitState, this),
+			std::bind(&EnemyController::WormTransitionsHitState, this));
+		worm_states_behaviour[static_cast<int>(EnemyState::DEAD)] = StateBehaviour(
+			std::bind(&EnemyController::StartDeadState, this),
+			std::bind(&EnemyController::UpdateDeadState, this),
+			std::bind(&EnemyController::EndDeadState, this),
+			std::bind(&EnemyController::TransitionsDeadState, this));
+		worm_states_behaviour[static_cast<int>(EnemyState::PARASITE)] = StateBehaviour(
+			std::bind(&EnemyController::StartParasiteState, this),
+			std::bind(&EnemyController::UpdateParasiteState, this),
+			std::bind(&EnemyController::EndParasiteState, this),
+			std::bind(&EnemyController::TransitionsParasiteState, this));
 	}
 
 	// Mark enemies as using scaled delta time for its components such as agent,
@@ -166,7 +196,9 @@ void Hachiko::Scripting::EnemyController::OnStart()
 	{
 		if (!_has_spawned)
 		{
-			Spawn();
+			//Spawn();
+			_state = EnemyState::SPAWNING;
+			worm_states_behaviour[static_cast<int>(_state)].Start();
 		}
 	}
 }
@@ -236,6 +268,7 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 	}
 	else
 	{
+		/*
 		CheckState();
 
 		if (_state == EnemyState::INVALID && !_has_spawned)
@@ -279,6 +312,66 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 
 		MovementController();
 		AttackController();
+
+		*/
+		if (_state == EnemyState::SUPER_DEAD)
+		{
+			return;
+		}
+
+		if (_force_state != EnemyState::INVALID)
+		{
+			_previous_state = _state;
+			_state = _force_state;
+			worm_states_behaviour[static_cast<int>(_state)].Start();
+
+			_force_state = EnemyState::INVALID;
+		}
+		if (forced_state)
+		{
+			worm_states_behaviour[static_cast<int>(_state)].Update();
+
+			EnemyState next_state = worm_states_behaviour[static_cast<int>(_state)].Transitions();
+			if (next_state != EnemyState::INVALID)
+			{
+				EnemyState aux = _state;
+				_state = _previous_state;
+				_previous_state = aux;
+			}
+			else
+			{
+				return;
+			}
+		}
+
+		// GENERIC STUFF
+		_attack_cooldown -= Time::DeltaTimeScaled();
+		_attack_cooldown = _attack_cooldown < 0.0f ? 0.0f : _attack_cooldown;
+
+		_enraged -= Time::DeltaTimeScaled();
+		_enraged = _enraged < 0.0f ? 0.0f : _enraged;
+
+		_player_pos = _player_controller->GetGameObject()->GetTransform()->GetGlobalPosition();
+		_current_pos = transform->GetGlobalPosition();
+
+		_enemy_body->GetTransform()->LookAtTarget(_player_pos);
+		// GENERIC STUFF
+
+		StateBehaviour current_state = worm_states_behaviour[static_cast<int>(_state)];
+		current_state.Update();
+
+		EnemyState next_state = current_state.Transitions();
+		if (next_state != EnemyState::INVALID)
+		{
+			current_state.End();
+
+			_previous_state = _state;
+			_state = next_state;
+			if (_state != EnemyState::SUPER_DEAD)
+			{
+				worm_states_behaviour[static_cast<int>(_state)].Start();
+			}
+		}
 	}
 }
 
@@ -1716,4 +1809,233 @@ Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::TransitionsP
 	}
 
 	return EnemyState::INVALID;
+}
+
+/* WORM */
+
+// SPAWNING
+
+void Hachiko::Scripting::EnemyController::WormStartSpawningState()
+{
+	_has_spawned = true;
+	if (_enemy_body)
+	{
+		_enemy_body->SetActive(false);
+}
+	if (_parasite)
+	{
+		_parasite->SetActive(false);
+	}
+	_small_dust_particles->Restart();
+	_current_spawning_time = _spawning_time;
+	_player_camera->Shake(_spawning_time, 0.8f);
+
+	animation->SendTrigger("isAppear");
+}
+
+void Hachiko::Scripting::EnemyController::WormUpdateSpawningState()
+{
+	if (_current_spawning_time > 0.0f)
+	{
+		spawn_progress += spawn_rate * Time::DeltaTimeScaled();
+
+		_enemy_body->ChangeDissolveProgress(spawn_progress, true);
+
+		if (_state == EnemyState::SPAWNING && _enemy_body)
+		{
+			_player_camera->Shake(0.5f, 0.8f);
+			_enemy_body->SetActive(true);
+			_big_dust_particles->Restart();
+			//Push the player back
+			int hit = _combat_manager->EnemyMeleeAttack(transform->GetGlobalMatrix(), push_attack);
+
+			if (hit > 0)
+			{
+				_combat_visual_effects_pool->PlayEnemyAttackEffect(_enemy_type, _player_pos);
+			}
+
+			_attack_cooldown = _combat_stats->_attack_cd;
+		}
+
+		_current_spawning_time -= Time::DeltaTimeScaled();
+	}
+}
+
+void Hachiko::Scripting::EnemyController::WormEndSpawningState()
+{
+	_enemy_body->ChangeDissolveProgress(1, true);
+	_component_agent->AddToCrowd();
+}
+
+Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::WormTransitionsSpawningState()
+{
+	if (_current_spawning_time <= 0.0f && animation->IsAnimationStopped())
+	{
+		return EnemyState::IDLE;
+	}
+
+	return EnemyState::INVALID;
+}
+
+// IDLE
+
+void Hachiko::Scripting::EnemyController::WormStartIdleState()
+{
+	animation->SendTrigger("idle");
+}
+
+void Hachiko::Scripting::EnemyController::WormUpdateIdleState()
+{
+}
+
+void Hachiko::Scripting::EnemyController::WormEndIdleState()
+{
+}
+
+Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::WormTransitionsIdleState()
+{
+	if (!_combat_stats->IsAlive())
+	{
+		return EnemyState::DEAD;
+	}
+
+	//if (_attack_cooldown <= 0.0f && !_attack_landing && _current_pos.Distance(_player_pos) <= _attack_range && _player_controller->IsAlive())
+	if (_attack_cooldown <= 0.0f && !_attack_landing && _player_controller->IsAlive())
+	{
+		_attack_current_delay = _attack_delay;
+		return EnemyState::ATTACKING;
+	}
+
+	return EnemyState::IDLE;
+}
+
+// ATTACKING
+
+void Hachiko::Scripting::EnemyController::WormStartAttackingState()
+{
+	if (!_already_in_combat)
+	{
+		_audio_manager->RegisterCombat();
+		_already_in_combat = true;
+	}
+
+	//if (!_attack_landing && _attack_current_delay <= 0.0f && _current_pos.Distance(_player_pos) <= _attack_range && _player_controller->IsAlive())
+	if (_attack_current_delay <= 0.0f)
+	{
+		// We create the attack zone after the delay
+		_attack_zone->GetTransform()->SetGlobalPosition(_player_pos);
+		_attack_landing = true;
+		_inner_indicator_billboard->Play();
+		_outer_indicator_billboard->Play();
+		_attack_animation_timer = 0.0f;
+		_projectile_particles_comp->Play();
+	}
+}
+
+void Hachiko::Scripting::EnemyController::WormUpdateAttackingState()
+{
+	_attack_current_delay -= Time::DeltaTimeScaled();
+
+	if (_attack_landing)
+	{
+		_attack_animation_timer += Time::DeltaTimeScaled();
+		if (_attack_animation_timer >= 1.0f)
+		{
+			CombatManager::AttackStats attack_stats;
+			attack_stats.damage = _combat_stats->_attack_power;
+			attack_stats.knockback_distance = 0.0f;
+			attack_stats.width = 0.f;
+			attack_stats.range = 2.5; // a bit bigger than its attack activation range
+			attack_stats.type = CombatManager::AttackType::CIRCLE;
+
+
+			int hit = _combat_manager->EnemyMeleeAttack(_attack_zone->GetTransform()->GetGlobalMatrix(), attack_stats);
+
+			if (hit > 0)
+			{
+				_combat_visual_effects_pool->PlayEnemyAttackEffect(_enemy_type, _player_pos);
+			}
+
+			_attack_landing = false;
+			_attack_cooldown = _combat_stats->_attack_cd;
+
+			_explosion_particles->GetTransform()->SetGlobalPosition(_attack_zone->GetTransform()->GetGlobalPosition());
+			_explosion_particles_comp->Play();
+
+			_projectile_particles_comp->Stop();
+		}
+		else if (_attack_animation_timer >= 0.5f)
+		{
+			float3 offset_attack_pos = _attack_zone->GetTransform()->GetGlobalPosition();
+			offset_attack_pos.y += 50;
+			_projectile_particles->GetTransform()->SetGlobalPosition(math::float3::Lerp(offset_attack_pos, _attack_zone->GetTransform()->GetGlobalPosition(), _attack_animation_timer));
+		}
+		else
+		{
+			float3 offset_worm_pos = transform->GetGlobalPosition();
+			offset_worm_pos.y += 50;
+			_projectile_particles->GetTransform()->SetGlobalPosition(math::float3::Lerp(transform->GetGlobalPosition(), offset_worm_pos, _attack_animation_timer));
+		}
+	}
+}
+
+void Hachiko::Scripting::EnemyController::WormEndAttackingState()
+{
+}
+
+Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::WormTransitionsAttackingState()
+{
+	if (animation->IsAnimationStopped())
+	{
+		return EnemyState::IDLE;
+	}
+
+	return EnemyState::INVALID;
+}
+
+// HIT
+
+void Hachiko::Scripting::EnemyController::WormStartHitState()
+{
+	_is_stunned = true;
+	_stun_time = 0.8f;
+
+	animation->SendTrigger("isHit");
+}
+
+void Hachiko::Scripting::EnemyController::WormUpdateHitState()
+{
+	if (_stun_time > 0.0f)
+	{
+		// Run the timer for stun in unscaled time:
+		_stun_time -= Time::DeltaTime();
+		RecieveKnockback();
+		return;
+	}
+	_is_stunned = false;
+}
+
+void Hachiko::Scripting::EnemyController::WormEndHitState()
+{
+
+}
+
+Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::WormTransitionsHitState()
+{
+	if (!_combat_stats->IsAlive())
+	{
+		return EnemyState::DEAD;
+	}
+
+	if (_is_stunned)
+	{
+		return EnemyState::INVALID;
+	}
+
+	if (animation->IsAnimationStopped())
+	{
+		return EnemyState::IDLE;
+	}
+
+	return EnemyState::HIT;
 }

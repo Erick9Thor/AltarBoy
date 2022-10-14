@@ -124,6 +124,7 @@ namespace Hachiko
                 }
             };
             StateBehaviour states_behaviour[static_cast<int>(EnemyState::COUNT)];
+            StateBehaviour worm_states_behaviour[static_cast<int>(EnemyState::COUNT)];
             //std::function<void()> start_behaviours[static_cast<int>(EnemyState::COUNT)];
 
             // SPAWNING
@@ -171,6 +172,28 @@ namespace Hachiko
             void UpdateParasiteState();
             void EndParasiteState();
             EnemyState TransitionsParasiteState();
+
+            /* WORM */
+            // SPAWNING
+            void WormStartSpawningState();
+            void WormUpdateSpawningState();
+            void WormEndSpawningState();
+            EnemyState WormTransitionsSpawningState();
+            // IDLE
+            void WormStartIdleState();
+            void WormUpdateIdleState();
+            void WormEndIdleState();
+            EnemyState WormTransitionsIdleState();
+            // ATTACKING
+            void WormStartAttackingState();
+            void WormUpdateAttackingState();
+            void WormEndAttackingState();
+            EnemyState WormTransitionsAttackingState();
+            // HIT
+            void WormStartHitState();
+            void WormUpdateHitState();
+            void WormEndHitState();
+            EnemyState WormTransitionsHitState();
 
             bool forced_state = false;
             EnemyState _force_state = EnemyState::INVALID;
