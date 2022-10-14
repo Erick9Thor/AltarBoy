@@ -70,6 +70,12 @@ void Hachiko::Scripting::PlayerCamera::SetLookAhead()
 		Clamp<float>(look_ahead_time, 0.0f, 1.0f);
 		_look_ahead = math::float3::Lerp(_look_ahead, _current_objective->GetTransform()->GetFront() * 5, look_ahead_time);
 	}
+	else if (_do_look_ahead && _player_ctrl && _player_ctrl->_state == PlayerState::RANGED_CHARGING)
+	{
+		const float look_ahead_time = Time::DeltaTime() / 0.2f;
+		Clamp<float>(look_ahead_time, 0.0f, 1.0f);
+		_look_ahead = math::float3::Lerp(_look_ahead, _current_objective->GetTransform()->GetFront() * 6, look_ahead_time);
+	}
 	else
 	{
 		_look_ahead = float3::zero;
@@ -116,7 +122,7 @@ void Hachiko::Scripting::PlayerCamera::MoveCamera()
 
 float2 Hachiko::Scripting::PlayerCamera::MoveCameraWithMouse()
 {
-	if (_player_ctrl == nullptr) 
+	if (_player_ctrl == nullptr || !_do_mouse_movement) 
 	{
 		return float2::zero;
 	}
@@ -193,7 +199,7 @@ float3 Hachiko::Scripting::PlayerCamera::Shake()
 	}
 }
 
-void Hachiko::Scripting::PlayerCamera::ChangeRelativePosition(math::float3 new_relative_position, bool do_look_ahead, float speed, float time)
+void Hachiko::Scripting::PlayerCamera::ChangeRelativePosition(math::float3 new_relative_position, bool do_look_ahead, float speed, float time, bool do_mouse_movement)
 {
 	if (time > 0.0f)
 	{
@@ -216,6 +222,7 @@ void Hachiko::Scripting::PlayerCamera::ChangeRelativePosition(math::float3 new_r
 		_reposition_progress = 1.0f;
 	}
 	_do_look_ahead = do_look_ahead;
+	_do_mouse_movement = do_mouse_movement;
 }
 
 void Hachiko::Scripting::PlayerCamera::RevertRelativePosition(float speed)

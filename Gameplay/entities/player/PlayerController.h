@@ -376,6 +376,7 @@ namespace Hachiko
 
 			// General management
 			float _lock_time = 0.0f;
+			bool _is_dying = false;
 			bool _enable_heal_particles = false;
 			float _heal_fade_progress;
 			SERIALIZE_FIELD(float, _heal_effect_fade_duration);

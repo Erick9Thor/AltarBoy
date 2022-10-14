@@ -340,6 +340,12 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 			_dash_trail->SetActive(false);
 			StopParticles();
 
+			if (!_is_dying)
+			{
+				_camera->GetComponent<PlayerCamera>()->ChangeRelativePosition(float3(0.0, 10.0, 7.0), false, 0.005f, 0.0f, false);
+				_is_dying = true;
+			}
+
 			// By checking previous state we know that the current animation is the correct one
 			if (_previous_state == PlayerState::DIE && animation->IsAnimationStopped())
 			{
@@ -1601,6 +1607,10 @@ void Hachiko::Scripting::PlayerController::ResetPlayer(float3 spawn_pos)
 
 	_aim_indicator_billboard->Stop();
 
+	_ui_damage->SetActive(false);
+	_camera->GetComponent<PlayerCamera>()->ChangeRelativePosition(_cam_positions[0], true, 0.0f);
+	_is_dying = false;
+
 	ChangeWeapon(_current_weapon);
 	UpdateHealthBar();
 	UpdateAmmoUI();
@@ -1720,7 +1730,29 @@ void Hachiko::Scripting::PlayerController::UpdateVignete()
 		return;
 	}
 
-	if (_lh_vfx_current_time > _low_health_vfx_time)
+	float transparency = 0.0f;
+	float progress = _lh_vfx_current_time / _low_health_vfx_time;
+	float clamp_max = 1.0f;
+
+	switch (_combat_stats->_current_hp)
+	{
+	case 0:
+		clamp_max = 3.0f;
+		transparency = math::Clamp(progress, 0.0f, clamp_max);;
+		break;
+	case 1:
+		clamp_max = 1.0f;
+		transparency = math::Clamp(progress, 0.0f, clamp_max);;
+		break;
+	default:
+		clamp_max = 1.0f;
+		transparency = math::Clamp(1 - progress, 0.0f, clamp_max);;
+		break;
+	}
+
+	_ui_damage->GetComponent<ComponentImage>()->SetColor(float4(1.0f, 1.0f, 1.0f, transparency));
+
+	if (transparency >= clamp_max)
 	{
 		if (_combat_stats->_current_hp > 1)
 		{
@@ -1731,20 +1763,6 @@ void Hachiko::Scripting::PlayerController::UpdateVignete()
 	}
 
 	_lh_vfx_current_time += Time::DeltaTimeScaled();
-
-	float transparency = 0.0f;
-	float progress = _lh_vfx_current_time / _low_health_vfx_time;
-
-	if (_combat_stats->_current_hp <= 1)
-	{
-		transparency = math::Clamp(progress, 0.0f, 1.0f);;
-	}
-	else
-	{
-		transparency = math::Clamp(1 - progress, 0.0f, 1.0f);;
-	}
-
-	_ui_damage->GetComponent<ComponentImage>()->SetColor(float4(1.0f, 1.0f, 1.0f, transparency));
 }
 
 void Hachiko::Scripting::PlayerController::UpdateEmissives()

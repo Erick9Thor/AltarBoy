@@ -149,7 +149,7 @@ int Hachiko::Scripting::CombatManager::PlayerMeleeAttack(const float4x4& origin,
 		// We shake the camera depending on the hit's strenght
 		if (_camera)
 		{
-			_camera->Shake(0.6, 0.4 * (float)attack_stats.damage);
+			_camera->Shake(0.6, 0.6 * (float)attack_stats.damage);
 		}
 	}
 
@@ -263,7 +263,7 @@ void Hachiko::Scripting::CombatManager::RunBulletSimulation()
 			DeactivateBullet(i);
 			if (_camera)
 			{
-				_camera->Shake(0.6f, 0.8f);
+				_camera->Shake(0.6f, 1.f);
 			}
 			continue;
 		}
