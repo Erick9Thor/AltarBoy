@@ -7,6 +7,7 @@
 					<ObjectInclusionList>
 						<ObjectRef Name="Play_Combat" ID="{DF59185F-C72C-4550-8276-02199898FFD6}" WorkUnitID="{D4B90C1A-D5A0-4CD0-82EB-1E7666F66EDB}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_Navigation" ID="{C72B32F3-D0E9-476D-A101-B04D035F2671}" WorkUnitID="{D4B90C1A-D5A0-4CD0-82EB-1E7666F66EDB}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Play_IntroCinematic" ID="{6A505290-4483-47BB-AD2E-7CE891B2721F}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Stop_Combat" ID="{5DE2B3AE-E618-4BF8-BEB5-34D4EABAE122}" WorkUnitID="{D4B90C1A-D5A0-4CD0-82EB-1E7666F66EDB}" Origin="Manual" Filter="7"/>
 					</ObjectInclusionList>
 					<ObjectExclusionList/>

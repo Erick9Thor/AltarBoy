@@ -21,6 +21,7 @@ namespace AK
         static const AkUniqueID PLAY_ENEMYDIE = 2402038236U;
         static const AkUniqueID PLAY_FOOTSTEP = 1602358412U;
         static const AkUniqueID PLAY_GAMEOVER = 3174629258U;
+        static const AkUniqueID PLAY_INTROCINEMATIC = 2953314807U;
         static const AkUniqueID PLAY_LASER = 2270376495U;
         static const AkUniqueID PLAY_LASER_HIT = 4092857357U;
         static const AkUniqueID PLAY_LOADINGAMMO = 998505444U;
