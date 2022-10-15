@@ -226,6 +226,8 @@ namespace Hachiko
 			void CheckComboAnimation();
 			void ResetPlayer(float3 spawn_pos);
 			void StopParticles();
+			void UpdateEmissives();
+			void UpdateVignete();
 
 		public:
 			SERIALIZE_FIELD(PlayerState, _state);
@@ -246,7 +248,7 @@ namespace Hachiko
 
 			SERIALIZE_FIELD(GameObject*, _attack_indicator);
 			SERIALIZE_FIELD(GameObject*, _aim_indicator);
-			SERIALIZE_FIELD(GameObject*, _bullet_emitter);
+			SERIALIZE_FIELD(GameObject*, _combat_manager);
 			SERIALIZE_FIELD(GameObject*, _goal);
 			SERIALIZE_FIELD(GameObject*, _player_geometry);
 
@@ -266,12 +268,16 @@ namespace Hachiko
 			SERIALIZE_FIELD(GameObject*, _parasite_pickup_effect);
 			SERIALIZE_FIELD(GameObject*, _melee_trail_right);
 			SERIALIZE_FIELD(GameObject*, _melee_trail_left);
+			SERIALIZE_FIELD(GameObject*, _melee_trail_center);
 			SERIALIZE_FIELD(GameObject*, _claws_trail_right);
 			SERIALIZE_FIELD(GameObject*, _claws_trail_left);
+			SERIALIZE_FIELD(GameObject*, _claws_trail_center);
 			SERIALIZE_FIELD(GameObject*, _sword_trail_right);
 			SERIALIZE_FIELD(GameObject*, _sword_trail_left);
+			SERIALIZE_FIELD(GameObject*, _sword_trail_center);
 			SERIALIZE_FIELD(GameObject*, _hammer_trail_right);
 			SERIALIZE_FIELD(GameObject*, _hammer_trail_left);
+			SERIALIZE_FIELD(GameObject*, _hammer_trail_center);
 			
 
 			const float _ranged_attack_cooldown = 0.2f;
@@ -317,6 +323,7 @@ namespace Hachiko
 			ComponentBillboard* _parasite_pickup_billboard = nullptr;
 			ComponentBillboard* _weapon_trails_billboard_right[static_cast<int>(WeaponUsed::SIZE)];
 			ComponentBillboard* _weapon_trails_billboard_left[static_cast<int>(WeaponUsed::SIZE)];
+			ComponentBillboard* _weapon_trails_billboard_center[static_cast<int>(WeaponUsed::SIZE)];
 
 			ComponentBillboard* _aim_indicator_billboard = nullptr;
 			ComponentParticleSystem* _dash_particles = nullptr;
@@ -374,6 +381,7 @@ namespace Hachiko
 
 			// General management
 			float _lock_time = 0.0f;
+			bool _is_dying = false;
 			bool _enable_heal_particles = false;
 			float _heal_fade_progress;
 			SERIALIZE_FIELD(float, _heal_effect_fade_duration);
@@ -384,6 +392,8 @@ namespace Hachiko
 			int _current_cam_setting = 0;
 			std::vector<float3> _cam_positions = {};
 			std::vector<float3> _cam_rotations = {};
+			float _low_health_vfx_time = 1.f;
+			float _lh_vfx_current_time = 0.0f;
 
 			float3 _player_position = float3::zero;
 			float3 _movement_direction = float3::zero;
