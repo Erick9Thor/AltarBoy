@@ -268,12 +268,16 @@ namespace Hachiko
 			SERIALIZE_FIELD(GameObject*, _parasite_pickup_effect);
 			SERIALIZE_FIELD(GameObject*, _melee_trail_right);
 			SERIALIZE_FIELD(GameObject*, _melee_trail_left);
+			SERIALIZE_FIELD(GameObject*, _melee_trail_center);
 			SERIALIZE_FIELD(GameObject*, _claws_trail_right);
 			SERIALIZE_FIELD(GameObject*, _claws_trail_left);
+			SERIALIZE_FIELD(GameObject*, _claws_trail_center);
 			SERIALIZE_FIELD(GameObject*, _sword_trail_right);
 			SERIALIZE_FIELD(GameObject*, _sword_trail_left);
+			SERIALIZE_FIELD(GameObject*, _sword_trail_center);
 			SERIALIZE_FIELD(GameObject*, _hammer_trail_right);
 			SERIALIZE_FIELD(GameObject*, _hammer_trail_left);
+			SERIALIZE_FIELD(GameObject*, _hammer_trail_center);
 			
 
 			const float _ranged_attack_cooldown = 0.2f;
@@ -319,6 +323,7 @@ namespace Hachiko
 			ComponentBillboard* _parasite_pickup_billboard = nullptr;
 			ComponentBillboard* _weapon_trails_billboard_right[static_cast<int>(WeaponUsed::SIZE)];
 			ComponentBillboard* _weapon_trails_billboard_left[static_cast<int>(WeaponUsed::SIZE)];
+			ComponentBillboard* _weapon_trails_billboard_center[static_cast<int>(WeaponUsed::SIZE)];
 
 			ComponentBillboard* _aim_indicator_billboard = nullptr;
 			ComponentParticleSystem* _dash_particles = nullptr;

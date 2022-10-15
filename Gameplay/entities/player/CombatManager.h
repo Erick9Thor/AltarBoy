@@ -52,7 +52,8 @@ namespace Hachiko
             {
                 DEFAULT,
                 RIGHT,
-                LEFT
+                LEFT,
+                CENTER
             };
 
             struct AttackStats
@@ -65,7 +66,7 @@ namespace Hachiko
                 float width = 0.f;
                 float range = 0.f;
                 // Status effect
-                //Trail direction 1 for right and 2 for left
+                //Trail direction 1 for right, 2 for left and 3 for center
                 AttackTrail attack_trail = AttackTrail::DEFAULT;
             };
             

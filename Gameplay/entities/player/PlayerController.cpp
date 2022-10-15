@@ -145,6 +145,10 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	{
 		_weapon_trails_billboard_left[static_cast<int>(WeaponUsed::MELEE)] = _melee_trail_left->GetComponent<ComponentBillboard>();
 	}
+	if (_melee_trail_center != nullptr)
+	{
+		_weapon_trails_billboard_center[static_cast<int>(WeaponUsed::MELEE)] = _melee_trail_center->GetComponent<ComponentBillboard>();
+	}
 	if (_claws_trail_right != nullptr)
 	{
 		_weapon_trails_billboard_right[static_cast<int>(WeaponUsed::CLAW)] = _claws_trail_right->GetComponent<ComponentBillboard>();
@@ -654,13 +658,17 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 	_state = PlayerState::MELEE_ATTACKING;
 	Weapon& weapon = GetCurrentWeapon();
 	const PlayerAttack& attack = GetNextAttack();
-	if (attack.stats.attack_trail == CombatManager::AttackTrail::RIGHT)
+	switch (attack.stats.attack_trail)
 	{
+	case CombatManager::AttackTrail::RIGHT:
 		_weapon_trails_billboard_right[static_cast<int>(GetCurrentWeaponType())]->Play();
-	}
-	if (attack.stats.attack_trail == CombatManager::AttackTrail::LEFT)
-	{
+		break;
+	case CombatManager::AttackTrail::LEFT:
 		_weapon_trails_billboard_left[static_cast<int>(GetCurrentWeaponType())]->Play();
+		break;
+	case CombatManager::AttackTrail::CENTER:
+		_weapon_trails_billboard_center[static_cast<int>(GetCurrentWeaponType())]->Play();
+		break;
 	}
 	if (!weapon.unlimited && _attack_charges)
 	{
@@ -1832,6 +1840,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 		// If its cone use degrees on width
 		attack.stats.width = 2.f;
 		attack.stats.range = 4.0f;
+		attack.stats.attack_trail = CombatManager::AttackTrail::CENTER;
 		break;
 
 		// QUICK ATTACKS
