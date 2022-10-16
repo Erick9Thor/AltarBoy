@@ -340,15 +340,11 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		{
 			_state = PlayerState::DIE;
 
-			// Camera gets set back to player when it dies
-			_camera->GetComponent<PlayerCamera>()->SwitchRelativePosition(_cam_positions[0], .2f);
-			_camera->GetComponent<PlayerCamera>()->RotateCameraTo(_cam_rotations[0], .2f);
-			_camera->GetComponent<PlayerCamera>()->SetObjective(game_object);
-
 			// Some basic resets as disabling the dash and restarting the particles
 			_dash_trail->SetActive(false);
 			StopParticles();
 
+			// Close up to player when dying
 			if (!_is_dying)
 			{
 				_camera->GetComponent<PlayerCamera>()->ChangeRelativePosition(float3(0.0, 10.0, 7.0), false, 0.005f, 0.0f, false);
@@ -1343,7 +1339,6 @@ void Hachiko::Scripting::PlayerController::PickupParasite(EnemyController* enemy
 	if (_ui_damage && _ui_damage->IsActive())
 	{
 		_lh_vfx_current_time = 0.0f;
-		_camera->GetComponent<PlayerCamera>()->ChangeRelativePosition(_cam_positions[0], true, 1.0f / _low_health_vfx_time);
 		_ui_damage->GetComponent<ComponentImage>()->SetColor(float4(1.0f, 1.0f, 1.0f, 1.0f));
 	}
 
@@ -1382,7 +1377,6 @@ bool Hachiko::Scripting::PlayerController::RegisterHit(int damage_received, floa
 		if (_ui_damage && _combat_stats->_current_hp <= 1)
 		{
 			_lh_vfx_current_time = 0.0f;
-			_camera->GetComponent<PlayerCamera>()->ChangeRelativePosition(_cam_positions[1], true, 1.0f/_low_health_vfx_time);
 			_ui_damage->SetActive(true);
 			_ui_damage->GetComponent<ComponentImage>()->SetColor(float4(1.0f, 1.0f, 1.0f, 0.0f));
 		}
@@ -1623,6 +1617,11 @@ void Hachiko::Scripting::PlayerController::ResetPlayer(float3 spawn_pos)
 	_ui_damage->SetActive(false);
 	_camera->GetComponent<PlayerCamera>()->ChangeRelativePosition(_cam_positions[0], true, 0.0f);
 	_is_dying = false;
+
+	// Camera gets set back to player when it respawns
+	_camera->GetComponent<PlayerCamera>()->ChangeRelativePosition(_cam_positions[0], false, .2f);
+	_camera->GetComponent<PlayerCamera>()->RotateCameraTo(_cam_rotations[0], .2f);
+	_camera->GetComponent<PlayerCamera>()->SetObjective(game_object);
 
 	ChangeWeapon(_current_weapon);
 	UpdateHealthBar();

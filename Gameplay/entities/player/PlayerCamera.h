@@ -105,6 +105,9 @@ private:
 	float shake_time = 0.0f;
 	float shake_intensity = 0.0f;
 	float shake_magnitude = 0.0f;
+
+	bool _anchor_is_player = false;
+	bool _low_health_mode = false;
 };
 } // namespace Scripting
 } // namespace Hachiko

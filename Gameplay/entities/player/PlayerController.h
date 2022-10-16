@@ -394,6 +394,7 @@ namespace Hachiko
 			std::vector<float3> _cam_rotations = {};
 			float _low_health_vfx_time = 1.f;
 			float _lh_vfx_current_time = 0.0f;
+			GameObject* previous_anchor = nullptr;
 
 			float3 _player_position = float3::zero;
 			float3 _movement_direction = float3::zero;
