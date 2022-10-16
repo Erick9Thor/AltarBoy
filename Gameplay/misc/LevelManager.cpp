@@ -13,6 +13,7 @@ Hachiko::Scripting::LevelManager::LevelManager(GameObject* game_object)
 	, _level(1)
 	, _respawn_position(float3::zero)
 	, _last_gauntlet(nullptr)
+	, _gauntlets_easy_mode(true)
 	, _modify_fog(false)
 	, _fog_frequency(0.1)
 	, _fog_max_density(0.015)
@@ -64,7 +65,9 @@ float3 Hachiko::Scripting::LevelManager::Respawn()
 {
 	if (_last_gauntlet != nullptr && !_last_gauntlet->IsCompleted())
 	{
-		_last_gauntlet->ResetGauntlet();
+		// If we play on easy mode do not reset gaunlets from first round
+		bool complete_reset_gauntlet = !_gauntlets_easy_mode;
+		_last_gauntlet->ResetGauntlet(complete_reset_gauntlet);
 	}
 
 	if (_audio_manager != nullptr)

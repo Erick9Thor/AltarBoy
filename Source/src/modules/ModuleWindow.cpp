@@ -55,6 +55,14 @@ bool Hachiko::ModuleWindow::Init()
         {
             // Get window surface, it must be updated on resize
             screen_surface = SDL_GetWindowSurface(window);
+
+            // So that the engine, while loading, is black instead of that
+            // f***ing eye killing white:
+            SDL_FillRect(
+                screen_surface, 
+                NULL, 
+                SDL_MapRGB(screen_surface->format, 0, 0, 0));
+            SDL_UpdateWindowSurface(window);
         }
         SDL_DisplayMode mode;
         SDL_GetDisplayMode(0, 0, &mode);

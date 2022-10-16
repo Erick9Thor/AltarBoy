@@ -88,6 +88,11 @@ namespace Hachiko
             return mesh->normals;
         }
 
+        [[nodiscard]] bool GetOverrideMaterialFlag() const
+        {
+            return override_emissive_flag_override;
+        }
+
         [[nodiscard]] const ResourceMesh* GetResourceMesh() const
         {
             return mesh;
@@ -143,7 +148,7 @@ namespace Hachiko
             return override_material;
         }
 
-        HACHIKO_API void OverrideEmissive(const float4& color);
+        HACHIKO_API void OverrideEmissive(const float4& color, bool override_flag = false);
         HACHIKO_API void LiftOverrideEmissive();
 
         HACHIKO_API [[nodiscard]] const float4& GetOverrideEmissiveColor() const
@@ -182,5 +187,6 @@ namespace Hachiko
         bool override_material = false;
         float override_timer = 0;
         float4 override_emissive;
+        bool override_emissive_flag_override = false;
     };
 } // namespace Hachiko

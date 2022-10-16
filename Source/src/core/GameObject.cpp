@@ -793,12 +793,12 @@ Hachiko::GameObject* Hachiko::GameObject::FindDescendantWithName(const std::stri
     return nullptr;
 }
 
-void Hachiko::GameObject::ChangeEmissiveColor(float4 color, bool include_children)
+void Hachiko::GameObject::ChangeEmissiveColor(float4 color, bool include_children, bool override_flag)
 {
     std::vector<ComponentMeshRenderer*> v_mesh_renderer = GetComponents<ComponentMeshRenderer>();
     for (int i = 0; i < v_mesh_renderer.size(); ++i)
     {
-        v_mesh_renderer[i]->OverrideEmissive(color);
+        v_mesh_renderer[i]->OverrideEmissive(color, override_flag);
     }
 
     if (!include_children)
@@ -806,7 +806,46 @@ void Hachiko::GameObject::ChangeEmissiveColor(float4 color, bool include_childre
 
     for (GameObject* child : children)
     {
-        child->ChangeEmissiveColor(color, include_children);
+        child->ChangeEmissiveColor(color, include_children, override_flag);
+    }
+}
+
+std::vector<float4> Hachiko::GameObject::GetEmissiveColors() const
+{
+    std::vector<ComponentMeshRenderer*> v_mesh_renderer = GetComponents<ComponentMeshRenderer>();
+
+    std::vector<float4> emissive_colors;
+    emissive_colors.reserve(v_mesh_renderer.size());
+
+    for (ComponentMeshRenderer* renderer : v_mesh_renderer)
+    {
+        emissive_colors.push_back(
+            renderer->GetOverrideEmissiveColor());
+    }
+
+    if (emissive_colors.empty())
+    {
+        emissive_colors.push_back(float4::zero);
+    }
+
+    return emissive_colors;
+}
+
+
+void Hachiko::GameObject::ResetEmissive(bool include_children)
+{
+    std::vector<ComponentMeshRenderer*> v_mesh_renderer = GetComponents<ComponentMeshRenderer>();
+    for (int i = 0; i < v_mesh_renderer.size(); ++i)
+    {
+        v_mesh_renderer[i]->LiftOverrideEmissive();
+    }
+
+    if (!include_children)
+        return;
+
+    for (GameObject* child : children)
+    {
+        child->ResetEmissive(include_children);
     }
 }
 

@@ -363,10 +363,11 @@ void Hachiko::ComponentMeshRenderer::ChangeMaterial()
     }
 }
 
-void Hachiko::ComponentMeshRenderer::OverrideEmissive(const float4& color)
+void Hachiko::ComponentMeshRenderer::OverrideEmissive(const float4& color, bool override_flag)
 {
     override_emissive = color;
     override_material = true;
+    override_emissive_flag_override = override_flag;
 }
 void Hachiko::ComponentMeshRenderer::LiftOverrideEmissive() {
     override_emissive = float4::zero;

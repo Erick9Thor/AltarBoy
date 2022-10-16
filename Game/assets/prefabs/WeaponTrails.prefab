@@ -25,8 +25,8 @@ child:
           - !<transform>
             type: 1
             enabled: true
-            position: [-2.788, 2.3, 2.145]
-            rotation: [-0, 13.9, -0]
+            position: [-0.79, 2.3, 3]
+            rotation: [-0, 56.3, -0]
             scale: [1, 0.9999, 1]
           - !<billboard>
             type: 21
@@ -36,7 +36,7 @@ child:
             tiles: [3, 3]
             flip: [false, false]
             billboard_lifetime: 0.35
-            properties: [0.5, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            properties: [1, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
             animation_speed: 0.05
             total_tiles: 9
             animation_loop: false
@@ -49,17 +49,18 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [3, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [5, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 0.1
             projection: true
+            randomize_tiles: false
       - name: MeleeTrailLeft
         enabled: true
         component:
           - !<transform>
             type: 1
             enabled: true
-            position: [1.134, 2.3, 4.076]
+            position: [0.5, 2.3, 3]
             rotation: [0, -80, 0]
             scale: [1, 0.9999, 1]
           - !<billboard>
@@ -70,7 +71,7 @@ child:
             tiles: [3, 3]
             flip: [false, true]
             billboard_lifetime: 0.55
-            properties: [0.5, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            properties: [1, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
             animation_speed: 0.05
             total_tiles: 9
             animation_loop: false
@@ -83,10 +84,46 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0.2, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [3, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [5, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 0.1
             projection: true
+            randomize_tiles: false
+      - name: MeleeTrailCenter
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [-0.4282, 2.3, 4.81]
+            rotation: [-0, 17.5, -0]
+            scale: [1, 0.5, 0.6]
+          - !<billboard>
+            type: 21
+            enabled: true
+            play_on_awake: false
+            texture_id: 15300208463688155448
+            tiles: [3, 3]
+            flip: [false, false]
+            billboard_lifetime: 0.5
+            properties: [1, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 0.05
+            total_tiles: 9
+            animation_loop: false
+            color_cycles: 1
+            color_gradient: [[1, 0, 0, 0, 1]]
+            animation_section: true
+            color_section: true
+            size_section: false
+            size_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0.15, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [5, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 0.1
+            projection: true
+            randomize_tiles: false
   - name: ClawsTrail
     enabled: true
     component:
@@ -103,8 +140,8 @@ child:
           - !<transform>
             type: 1
             enabled: true
-            position: [-2.277, 2.3, 2.329]
-            rotation: [-0, 20, -0]
+            position: [-0.29, 2.3, 3]
+            rotation: [-0, 71.9, -0]
             scale: [1, 0.9999, 1]
           - !<billboard>
             type: 21
@@ -114,7 +151,7 @@ child:
             tiles: [3, 3]
             flip: [false, false]
             billboard_lifetime: 0.35
-            properties: [0.5, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            properties: [1, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
             animation_speed: 0.05
             total_tiles: 9
             animation_loop: false
@@ -127,17 +164,18 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [3, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [5, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 0.1
             projection: true
+            randomize_tiles: false
       - name: ClawsTrailL
         enabled: true
         component:
           - !<transform>
             type: 1
             enabled: true
-            position: [0.293, 2.3, 4.746]
+            position: [0.293, 2.3, 3]
             rotation: [0, -81.4, 0]
             scale: [1, 0.9999, 1]
           - !<billboard>
@@ -148,7 +186,7 @@ child:
             tiles: [3, 3]
             flip: [false, true]
             billboard_lifetime: 0.35
-            properties: [0.5, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            properties: [1, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
             animation_speed: 0.05
             total_tiles: 9
             animation_loop: false
@@ -161,10 +199,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [3, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [5, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 0.1
             projection: true
+            randomize_tiles: false
   - name: SwordTrail
     enabled: true
     component:
@@ -181,8 +220,8 @@ child:
           - !<transform>
             type: 1
             enabled: true
-            position: [-3.605, 2.3, 2.471]
-            rotation: [-0, 15, -0]
+            position: [-0.6, 2.3, 4.5]
+            rotation: [-0, 70, -0]
             scale: [1, 0.9999, 1]
           - !<billboard>
             type: 21
@@ -192,7 +231,7 @@ child:
             tiles: [3, 3]
             flip: [false, false]
             billboard_lifetime: 0.5
-            properties: [0.5, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            properties: [1, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
             animation_speed: 0.05
             total_tiles: 9
             animation_loop: false
@@ -205,17 +244,18 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0.15, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [3.5, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [6.5, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 0.1
             projection: true
+            randomize_tiles: false
       - name: SwordTrailL
         enabled: true
         component:
           - !<transform>
             type: 1
             enabled: true
-            position: [-1.428, 2.3, 5.03]
+            position: [-0.13, 2.3, 4.5]
             rotation: [0, -88.6, 0]
             scale: [1, 0.9999, 1]
           - !<billboard>
@@ -226,7 +266,7 @@ child:
             tiles: [3, 3]
             flip: [false, true]
             billboard_lifetime: 0.65
-            properties: [0.5, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            properties: [1, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
             animation_speed: 0.05
             total_tiles: 9
             animation_loop: false
@@ -239,10 +279,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0.3, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [3.5, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [6.5, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 0.1
             projection: true
+            randomize_tiles: false
   - name: HammerTrail
     enabled: true
     component:
@@ -259,9 +300,9 @@ child:
           - !<transform>
             type: 1
             enabled: true
-            position: [-3.442, 2.3, 2.703]
-            rotation: [-0, 23.2, -0]
-            scale: [1, 0.9999, 1]
+            position: [-0.74, 2.3, 4.5]
+            rotation: [-0, 70, -0]
+            scale: [1.1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
@@ -270,7 +311,7 @@ child:
             tiles: [3, 3]
             flip: [false, false]
             billboard_lifetime: 0.4
-            properties: [0.5, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            properties: [1, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
             animation_speed: 0.05
             total_tiles: 9
             animation_loop: false
@@ -283,19 +324,20 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0.05, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [3.5, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [6.5, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 0.1
             projection: true
+            randomize_tiles: false
       - name: HammerTrailL
         enabled: true
         component:
           - !<transform>
             type: 1
             enabled: true
-            position: [0.9854, 2.3, 4.502]
-            rotation: [0, -58.5, 0]
-            scale: [1, 0.9999, 1]
+            position: [-0.11, 2.3, 4.502]
+            rotation: [-0, -90, 0]
+            scale: [1.1, 0.9999, 1]
           - !<billboard>
             type: 21
             enabled: true
@@ -304,7 +346,7 @@ child:
             tiles: [3, 3]
             flip: [false, true]
             billboard_lifetime: 0.55
-            properties: [0.5, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            properties: [1, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
             animation_speed: 0.05
             total_tiles: 9
             animation_loop: false
@@ -317,7 +359,8 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0.2, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [3.5, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [6.5, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 0.1
             projection: true
+            randomize_tiles: false

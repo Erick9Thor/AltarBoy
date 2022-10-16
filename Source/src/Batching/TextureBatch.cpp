@@ -235,7 +235,7 @@ void Hachiko::TextureBatch::UpdateBatch(int segment, const std::vector<const Com
 
         if (components[i]->OverrideMaterialActive())
         {
-            materials[i].emissive_flag = 0;
+            materials[i].emissive_flag = components[i]->GetOverrideMaterialFlag() ? 1 : 0;
             materials[i].emissive_color = components[i]->GetOverrideEmissiveColor();
         }
 
