@@ -32,6 +32,7 @@ namespace Hachiko
 			void Restart();
 			void SetLevel(unsigned level);
 
+			void PlaySpawnWorm();
 		private:
 			bool updated = false;
 			bool _in_combat = false;

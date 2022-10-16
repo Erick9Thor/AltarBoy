@@ -94,6 +94,11 @@ void Hachiko::Scripting::AudioManager::SetLevel(unsigned level)
 	_level = level;
 }
 
+void Hachiko::Scripting::AudioManager::PlaySpawnWorm()
+{
+	_audio_source->PostEvent(Sounds::WORM_SPAWN);
+}
+
 void Hachiko::Scripting::AudioManager::SetCombat()
 {
 	_audio_source->SetRTPCValue(Sounds::ENEMY_AWARE, 100);

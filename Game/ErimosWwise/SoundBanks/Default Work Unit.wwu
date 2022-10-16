@@ -23,9 +23,12 @@
 				<SoundBank Name="Attacks" ID="{DB2C905B-568D-4B66-AC0A-61B413B8C327}">
 					<ObjectInclusionList>
 						<ObjectRef Name="Play_EnemyDie" ID="{1A2143DE-8308-40D0-B869-5E18110D70AF}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Play_WormRoar" ID="{B8781F99-A075-41D1-B0EC-BB7E2E7FDC19}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_ParasitePickUp" ID="{4760CDA1-AB7E-4214-8F3A-DA9ACB675859}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_LoadingAmmo" ID="{C4E09ED1-0447-4268-A2B0-E11B7585FA34}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Play_WormAttack" ID="{04DB42BB-1F62-43FD-9AE8-6FB9B5996078}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_GameOver" ID="{67AE84D6-FEB9-4443-A8F1-0F56D8966BBE}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Play_WormSpawn" ID="{B04DB298-3D08-45A3-B3B1-867510C6AA89}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_ShootNoAmmo" ID="{7BB2ABDB-C806-47F0-9B66-71A5BF844916}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_RangedAttack" ID="{1AB4989D-79DB-4814-8BB0-2FA70A13AC2C}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_EnemyAttack" ID="{416579A2-32FC-48B0-8308-5AEB9768B0CE}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
