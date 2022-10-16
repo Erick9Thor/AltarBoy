@@ -914,107 +914,152 @@
 								<ActiveSource Name="slime-squish" ID="{AE69E905-F297-4FA6-9595-474C18D2126D}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
-						<Sound Name="MonsterDying" ID="{7B3E37F7-5F18-428F-B8A3-9A96AB53B3F6}" ShortID="77596972">
+						<Sound Name="Earthquake" ID="{F0CA4DD7-8064-40E9-ADDF-7B8C07903D55}" ShortID="225385521">
 							<PropertyList>
-								<Property Name="Volume" Type="Real64">
+								<Property Name="3DSpatialization" Type="int16" Value="1"/>
+								<Property Name="EnableAttenuation" Type="bool" Value="False"/>
+								<Property Name="IsGlobalLimit" Type="int16" Value="1"/>
+								<Property Name="ListenerRelativeRouting" Type="bool" Value="False"/>
+								<Property Name="MaxReachedBehavior" Type="int16" Value="1"/>
+								<Property Name="MaxSoundPerInstance" Type="int16">
 									<ValueList>
-										<Value>3</Value>
+										<Value>1</Value>
 									</ValueList>
 								</Property>
-							</PropertyList>
-							<ReferenceList>
-								<Reference Name="Conversion">
-									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
-								</Reference>
-								<Reference Name="OutputBus">
-									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
-								</Reference>
-							</ReferenceList>
-							<ChildrenList>
-								<AudioFileSource Name="monster-dying" ID="{F6CC589C-BBBF-4128-BAEF-B4F7FC7616BE}">
-									<Language>SFX</Language>
-									<AudioFile>monster-dying.wav</AudioFile>
-									<MediaIDList>
-										<MediaID ID="719773623"/>
-									</MediaIDList>
-								</AudioFileSource>
-							</ChildrenList>
-							<ObjectLists/>
-							<ActiveSourceList>
-								<ActiveSource Name="monster-dying" ID="{F6CC589C-BBBF-4128-BAEF-B4F7FC7616BE}" Platform="Linked"/>
-							</ActiveSourceList>
-						</Sound>
-						<Sound Name="WormSpawn" ID="{F0CA4DD7-8064-40E9-ADDF-7B8C07903D55}" ShortID="225385521">
-							<PropertyList>
-								<Property Name="Lowpass" Type="int16">
+								<Property Name="UseMaxSoundPerInstance" Type="bool">
 									<ValueList>
-										<Value>6</Value>
+										<Value>True</Value>
 									</ValueList>
 								</Property>
 								<Property Name="Volume" Type="Real64">
 									<ValueList>
-										<Value>3</Value>
+										<Value>-3</Value>
 									</ValueList>
 								</Property>
 							</PropertyList>
 							<ReferenceList>
-								<Reference Name="Conversion">
-									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
-								</Reference>
-								<Reference Name="Effect0">
+								<Reference Name="Attenuation">
 									<Custom>
-										<Effect Name="Wwise Convolution Reverb (Custom)" ID="{473A05C5-25C7-43A2-883D-3293679C43F5}" ShortID="577711089" PluginName="Wwise Convolution Reverb" CompanyID="0" PluginID="127" PluginType="3">											<PluginData>
-	<ConvolutionData>
-		<CurveList Version="1">
-			<CurveInfo Name="IRGraphicEQ">
-				<Curve Name="" ID="{E74D5793-4A4A-48AA-8700-91681ADB88B7}">
-					<PropertyList>
-						<Property Name="Flags" Type="int32" Value="19"/>
-					</PropertyList>
-					<PointList>
-						<Point>
-							<XPos>20</XPos>
-							<YPos>0</YPos>
-							<Flags>5</Flags>
-						</Point>
-						<Point>
-							<XPos>20000</XPos>
-							<YPos>0</YPos>
-							<Flags>37</Flags>
-						</Point>
-					</PointList>
-				</Curve>
-			</CurveInfo>
-		</CurveList>
-	</ConvolutionData>
-</PluginData>
-										</Effect>
+										<Attenuation Name="Attenuation (Custom)" ID="{95075429-98E0-4F95-87E1-B515005010C8}" ShortID="60989872">
+											<CurveUsageInfoList>
+												<VolumeDryUsage>
+													<CurveUsageInfo Platform="Linked" CurveToUse="Custom">
+														<Curve Name="VolumeDry" ID="{61F38586-FF3B-4A66-88FA-5DC05DD4817C}">
+															<PropertyList>
+																<Property Name="Flags" Type="int32" Value="3"/>
+															</PropertyList>
+															<PointList>
+																<Point>
+																	<XPos>0</XPos>
+																	<YPos>0</YPos>
+																	<Flags>5</Flags>
+																</Point>
+																<Point>
+																	<XPos>100</XPos>
+																	<YPos>-200</YPos>
+																	<Flags>37</Flags>
+																</Point>
+															</PointList>
+														</Curve>
+													</CurveUsageInfo>
+												</VolumeDryUsage>
+												<VolumeWetGameUsage>
+													<CurveUsageInfo Platform="Linked" CurveToUse="UseVolumeDry"/>
+												</VolumeWetGameUsage>
+												<VolumeWetUserUsage>
+													<CurveUsageInfo Platform="Linked" CurveToUse="UseVolumeDry"/>
+												</VolumeWetUserUsage>
+												<LowPassFilterUsage>
+													<CurveUsageInfo Platform="Linked" CurveToUse="None"/>
+												</LowPassFilterUsage>
+												<HighPassFilterUsage>
+													<CurveUsageInfo Platform="Linked" CurveToUse="None"/>
+												</HighPassFilterUsage>
+												<SpreadUsage>
+													<CurveUsageInfo Platform="Linked" CurveToUse="None"/>
+												</SpreadUsage>
+												<FocusUsage>
+													<CurveUsageInfo Platform="Linked" CurveToUse="None"/>
+												</FocusUsage>
+											</CurveUsageInfoList>
+										</Attenuation>
 									</Custom>
 								</Reference>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+								</Reference>
 								<Reference Name="OutputBus">
 									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
 								</Reference>
 							</ReferenceList>
 							<ChildrenList>
-								<AudioFileSource Name="WormGiantSpawn" ID="{6E30BE0D-3188-4926-9CF6-2AA076A037AE}">
+								<AudioFileSource Name="quake-and-break-99034" ID="{8B51F0B9-98A3-4330-A1E1-F19BB308A36E}">
 									<PropertyList>
-										<Property Name="FadeInDuration" Type="Real64" Value="0.440008384306104"/>
+										<Property Name="FadeInDuration" Type="Real64" Value="0.544110992529349"/>
 										<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
-										<Property Name="TrimBegin" Type="Real64" Value="2.57004897196974"/>
+										<Property Name="TrimBegin" Type="Real64" Value="0.991325506937033"/>
 									</PropertyList>
 									<Language>SFX</Language>
-									<AudioFile>WormGiantSpawn.wav</AudioFile>
+									<AudioFile>quake-and-break-99034.wav</AudioFile>
 									<MediaIDList>
-										<MediaID ID="648836578"/>
+										<MediaID ID="678769752"/>
 									</MediaIDList>
 								</AudioFileSource>
 							</ChildrenList>
 							<ObjectLists/>
 							<ActiveSourceList>
-								<ActiveSource Name="WormGiantSpawn" ID="{6E30BE0D-3188-4926-9CF6-2AA076A037AE}" Platform="Linked"/>
+								<ActiveSource Name="quake-and-break-99034" ID="{8B51F0B9-98A3-4330-A1E1-F19BB308A36E}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
 						<Sound Name="WormRoar" ID="{72E8272F-7641-4D38-9A67-C5547C903C68}" ShortID="126410661">
+							<PropertyList>
+								<Property Name="3DSpatialization" Type="int16" Value="1"/>
+								<Property Name="IsGlobalLimit" Type="int16" Value="1"/>
+								<Property Name="MaxSoundPerInstance" Type="int16">
+									<ValueList>
+										<Value>1</Value>
+									</ValueList>
+								</Property>
+								<Property Name="UseMaxSoundPerInstance" Type="bool">
+									<ValueList>
+										<Value>True</Value>
+									</ValueList>
+								</Property>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>10</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Dragon roar" ID="{E1BBEB44-E53E-4A05-816F-F831A8612D30}">
+									<PropertyList>
+										<Property Name="FadeOutDuration" Type="Real64" Value="0.447238319195991"/>
+										<Property Name="FadeOutShape" Type="int16" Value="0"/>
+										<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+										<Property Name="TrimEnd" Type="Real64" Value="2.6898190340216"/>
+									</PropertyList>
+									<Language>SFX</Language>
+									<AudioFile>Dragon roar.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="682024451"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ObjectLists/>
+							<ActiveSourceList>
+								<ActiveSource Name="Dragon roar" ID="{E1BBEB44-E53E-4A05-816F-F831A8612D30}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="WormDeath" ID="{271E9397-E7D5-46F5-8902-1E09387A7D37}" ShortID="791067424">
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
@@ -1025,7 +1070,14 @@
 							</ReferenceList>
 							<ObjectLists/>
 						</Sound>
-						<Sound Name="WormDeath" ID="{271E9397-E7D5-46F5-8902-1E09387A7D37}" ShortID="791067424">
+						<Sound Name="WormAttack" ID="{8AC589FC-B000-4D88-8913-C0161A1579E6}" ShortID="798099975">
+							<PropertyList>
+								<Property Name="Inclusion" Type="bool">
+									<ValueList>
+										<Value>False</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
@@ -3070,6 +3122,9 @@
 				<Folder Name="Cinematics" ID="{D9DEF62D-F0E1-4206-86CF-AD13E1128CB1}" ShortID="310417662">
 					<ChildrenList>
 						<Sound Name="Intro" ID="{15A3A9FA-90AA-4E1D-9BE7-EA7233284557}" ShortID="221027909">
+							<PropertyList>
+								<Property Name="ListenerRelativeRouting" Type="bool" Value="False"/>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
@@ -3080,6 +3135,9 @@
 							</ReferenceList>
 							<ChildrenList>
 								<AudioFileSource Name="chavo-del-ocho" ID="{990F7986-4A8F-403D-BA12-DAB5EF8214B4}">
+									<PropertyList>
+										<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+									</PropertyList>
 									<Language>SFX</Language>
 									<AudioFile>chavo-del-ocho.wav</AudioFile>
 									<MediaIDList>

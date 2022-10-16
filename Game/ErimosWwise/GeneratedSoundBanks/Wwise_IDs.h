@@ -36,6 +36,9 @@ namespace AK
         static const AkUniqueID PLAY_UICLICK = 1615720664U;
         static const AkUniqueID PLAY_UIHOVER = 2502251926U;
         static const AkUniqueID PLAY_WIND = 1020223172U;
+        static const AkUniqueID PLAY_WORMATTACK = 1678827735U;
+        static const AkUniqueID PLAY_WORMROAR = 4242710327U;
+        static const AkUniqueID PLAY_WORMSPAWN = 3126715392U;
         static const AkUniqueID STOP_COMBAT = 913896232U;
         static const AkUniqueID STOP_LASER = 738066393U;
         static const AkUniqueID STOP_PEBBLE = 707649828U;

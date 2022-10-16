@@ -314,7 +314,7 @@
 						<Action Name="" ID="{109FF4FA-7C38-448E-9736-1F1C8E9726FF}" ShortID="888566352">
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="WormSpawn" ID="{F0CA4DD7-8064-40E9-ADDF-7B8C07903D55}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+									<ObjectRef Name="Earthquake" ID="{F0CA4DD7-8064-40E9-ADDF-7B8C07903D55}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
@@ -326,6 +326,28 @@
 							<ReferenceList>
 								<Reference Name="Target">
 									<ObjectRef Name="Intro" ID="{15A3A9FA-90AA-4E1D-9BE7-EA7233284557}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_WormRoar" ID="{B8781F99-A075-41D1-B0EC-BB7E2E7FDC19}">
+					<ChildrenList>
+						<Action Name="" ID="{8669638F-2CDC-4D3F-B084-CA4D1A295974}" ShortID="524879933">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="WormRoar" ID="{72E8272F-7641-4D38-9A67-C5547C903C68}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_WormAttack" ID="{04DB42BB-1F62-43FD-9AE8-6FB9B5996078}">
+					<ChildrenList>
+						<Action Name="" ID="{D8D27281-6CE3-4FEE-8F65-525ABBA33942}" ShortID="241284816">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="WormAttack" ID="{8AC589FC-B000-4D88-8913-C0161A1579E6}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
