@@ -531,7 +531,7 @@
 				</SwitchGroup>
 			</SwitchGroups>
 		</SoundBank>
-		<SoundBank Id="3768541028" Language="SFX" Hash="2340382923">
+		<SoundBank Id="3768541028" Language="SFX" Hash="3822829447">
 			<ObjectPath>\SoundBanks\Default Work Unit\Attacks</ObjectPath>
 			<ShortName>Attacks</ShortName>
 			<Path>Attacks.bnk</Path>
@@ -638,7 +638,14 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="1678827735" Name="Play_WormAttack" ObjectPath="\Events\Default Work Unit\Play_WormAttack"/>
+				<Event Id="1678827735" Name="Play_WormAttack" ObjectPath="\Events\Default Work Unit\Play_WormAttack">
+					<IncludedMemoryFiles>
+						<File Id="199242398" Language="SFX">
+							<ShortName>Dragon fire.wav</ShortName>
+							<Path>SFX\Dragon fire_5CE55913.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
 				<Event Id="4242710327" Name="Play_WormRoar" ObjectPath="\Events\Default Work Unit\Play_WormRoar">
 					<IncludedMemoryFiles>
 						<File Id="682024451" Language="SFX">

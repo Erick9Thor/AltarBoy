@@ -174,7 +174,7 @@ void Hachiko::Scripting::EnemyController::SpawnController()
 		{
 			return;
 		}
-
+		_audio_source->PostEvent(Sounds::WORM_SPAWN);
 		if (_enemy_body->IsActive() && _state == EnemyState::SPAWNING && animation->IsAnimationStopped())
 		{
 			_state = EnemyState::IDLE;
@@ -186,6 +186,7 @@ void Hachiko::Scripting::EnemyController::SpawnController()
 			_player_camera->Shake(0.5f, 0.8f);
 			_enemy_body->SetActive(true);
 			_big_dust_particles->Restart();
+			_audio_source->PostEvent(Sounds::WORM_ROAR);
 			//Push the player back
 			int hit = _combat_manager->EnemyMeleeAttack(transform->GetGlobalMatrix(), push_attack);
 
@@ -661,10 +662,14 @@ void Hachiko::Scripting::EnemyController::WormAttackController()
 		_attack_current_delay = _attack_delay;
 		return;
 	}
-
-	if (_state == EnemyState::ATTACKING && animation->IsAnimationStopped())
+	
+	if (_state == EnemyState::ATTACKING)
 	{
-		_state = EnemyState::IDLE;
+		_audio_source->PostEvent(Sounds::WORM_ATTACK);
+		if (animation->IsAnimationStopped())
+		{
+			_state = EnemyState::IDLE;
+		}
 	}
 
 	_attack_current_delay -= Time::DeltaTimeScaled();
