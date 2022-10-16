@@ -31,6 +31,7 @@ namespace Hachiko
 
 			SERIALIZE_FIELD(GameObject*, _objective);
 			SERIALIZE_FIELD(bool, _do_look_ahead);
+			SERIALIZE_FIELD(bool, _do_mouse_movement);
 			SERIALIZE_FIELD(float, _speed);
 			SERIALIZE_FIELD(float, _duration);
 			SERIALIZE_FIELD(float3, _relative_position);

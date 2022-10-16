@@ -9,6 +9,7 @@ Hachiko::Scripting::CameraPosChange::CameraPosChange(GameObject* game_object)
 	: Script(game_object, "CameraPosChange")
 	, _objective(nullptr)
 	, _do_look_ahead(false)
+	, _do_mouse_movement(true)
     , _speed(0.0f)
     , _duration(0.0f)
     , _relative_position(float3::zero)
@@ -46,7 +47,7 @@ void Hachiko::Scripting::CameraPosChange::OnUpdate()
 			}
 			_is_inside = true;
 
-			_camera->ChangeRelativePosition(_relative_position, _speed, _do_look_ahead, _duration);
+			_camera->ChangeRelativePosition(_relative_position, _do_look_ahead, _speed, _duration, _do_mouse_movement);
 			_camera->RotateCameraTo(_rotation, _speed);
 			if (_objective)
 			{

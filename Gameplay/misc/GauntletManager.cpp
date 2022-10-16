@@ -106,7 +106,7 @@ void Hachiko::Scripting::GauntletManager::StartGauntlet()
 	// Set the camera to its position if there is an anchor set
 	if (_camera_anchor && _central_anchor)
 	{
-		_main_camera->ChangeRelativePosition(_relative_position, .2f, false, 0.0f);
+		_main_camera->ChangeRelativePosition(_relative_position, false, .2f, 0.0f);
 		_main_camera->SetObjective(_camera_anchor);
 	}
 }
