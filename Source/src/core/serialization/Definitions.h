@@ -184,7 +184,7 @@
 #define AMBIENT_LIGHT "ambient_light"
 #define AMBIENT_LIGHT_INTENSITY "intensity"
 #define AMBIENT_LIGHT_COLOR "color"
-#define FOG "fog"
+#define FOG_PROPERTY "fog"
 #define FOG_ENABLED "enabled"
 #define FOG_COLOR "color"
 #define FOG_GLOBAL_DENSITY "global_density"

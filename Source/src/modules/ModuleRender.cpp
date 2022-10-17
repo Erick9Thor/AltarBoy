@@ -21,6 +21,7 @@
 #include "components/ComponentDirLight.h"
 #include "components/ComponentImage.h"
 #include "components/ComponentVideo.h"
+#include "core/rendering/StandaloneGLTexture.h"
 
 #ifdef _DEBUG
 #include "core/ErrorHandler.h"
@@ -47,6 +48,8 @@ bool Hachiko::ModuleRender::Init()
     shadow_manager.GenerateShadowMap();
 
     bloom_manager.Initialize();
+
+    SetupSSAO();
 
 #ifdef _DEBUG
     glEnable(GL_DEBUG_OUTPUT); // Enable output callback
@@ -150,6 +153,9 @@ void Hachiko::ModuleRender::ManageResolution(const ComponentCamera* camera)
 
     // Resize textures of bloom:
     bloom_manager.Resize(fb_width, fb_height);
+
+    // Resize SSAO texture:
+    ResizeSSAO(fb_width, fb_height);
 }
 
 void Hachiko::ModuleRender::CreateContext()
@@ -319,7 +325,7 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
     }
 
     // Draw collected meshes with geometry pass rogram:
-    program = App->program->GetProgram(Program::PROGRAMS::DEFERRED_GEOMETRY);
+    program = App->program->GetProgram(Program::Programs::DEFERRED_GEOMETRY);
 
     program->Activate();
 
@@ -329,8 +335,13 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
     batch_manager->DrawOpaqueBatches(program);
     Program::Deactivate();
 
-    // Read the emissive texture, copy it and blur it band write to another texture:
-    bloom_manager.ApplyBloom(g_buffer.GetEmissiveTexture());
+    if (ssao_enabled)
+    {
+        DrawSSAO(scene, camera);
+    }
+
+    //// Read the emissive texture, copy it and blur it band write to another texture:
+    //bloom_manager.ApplyBloom(g_buffer.GetEmissiveTexture());
 
     // ------------------------------ LIGHT PASS ------------------------------
 
@@ -338,7 +349,7 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Use Deferred rendering lighting pass program:
-    program = App->program->GetProgram(Program::PROGRAMS::DEFERRED_LIGHTING);
+    program = App->program->GetProgram(Program::Programs::DEFERRED_LIGHTING);
     program->Activate();
 
     // Bind shadow specific necessary uniforms for lighting pass:
@@ -346,6 +357,9 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
 
     // Bind ImageBasedLighting uniforms
     scene->GetSkybox()->BindImageBasedLightingUniforms(program);
+
+    // Bind SSAO flag:
+    program->BindUniformBool("ssao_enabled", ssao_enabled);
 
     // Bind all g-buffer textures:
     g_buffer.BindTextures();
@@ -358,9 +372,15 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
     // Bind blurred out emissive texture from bloom_manager:
     bloom_manager.BindForReading();
 
+    if (ssao_enabled)
+    {
+        // Bind SSAO texture:
+        BindSSAOTexture();
+    }
+
     // Bind deferred rendering mode. This can be configured from the editor,
     // and shader sets the fragment color according to this mode:
-    int render_shadows = static_cast<int>(shadow_pass_enabled);
+    const int render_shadows = static_cast<int>(shadow_pass_enabled);
     program->BindUniformInts(Uniforms::ShadowMap::RENDER_MODE, 1, &render_shadows);
     program->BindUniformInts(Uniforms::DeferredRendering::MODE, 1, &deferred_mode);
 
@@ -386,8 +406,10 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
    
     // ----------------------------- FOG -----------------------------
 
-    // Fog is drawn before forward pass because it doesnt apply its values to gbuffer
-    // And we want to ensure that all the forward rendered objects are properly visible
+    // Fog is drawn before forward pass because it doesnt apply its values to
+    // gbuffer and we want to ensure that all the forward rendered objects are
+    // properly visible.
+
     const Scene::FogConfig& fog = scene->GetFogConfig();
     if (fog.enabled)
     {
@@ -396,7 +418,7 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
         g_buffer.BindForReading();
         g_buffer.BindFogTextures();
 
-        program = App->program->GetProgram(Program::PROGRAMS::FOG_PROGRAM);
+        program = App->program->GetProgram(Program::Programs::FOG);
         program->Activate();
 
         EnableBlending();
@@ -435,7 +457,7 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
             }
 
             // Forward rendering pass for transparent game objects:
-            program = App->program->GetProgram(Program::PROGRAMS::FORWARD);
+            program = App->program->GetProgram(Program::Programs::FORWARD);
             program->Activate();
 
             EnableBlending();
@@ -459,7 +481,7 @@ void Hachiko::ModuleRender::DrawParticles(Scene* scene, ComponentCamera* camera)
     const auto& scene_particles = scene->GetSceneParticles();
     if (!scene_particles.empty())
     {
-        Program* particle_program = App->program->GetProgram(Program::PROGRAMS::PARTICLE);
+        Program* particle_program = App->program->GetProgram(Program::Programs::PARTICLE);
         particle_program->Activate();
         for (auto& particle : scene_particles)
         {
@@ -510,7 +532,7 @@ bool Hachiko::ModuleRender::DrawToShadowMap(
 
     // Draw collected meshes with shadow mapping program:
     const Program* program = 
-        App->program->GetProgram(Program::PROGRAMS::SHADOW_MAPPING);
+        App->program->GetProgram(Program::Programs::SHADOW_MAPPING);
     program->Activate();
 
     // Bind shadow map generation specific necessary uniforms:
@@ -563,9 +585,142 @@ bool Hachiko::ModuleRender::DrawToShadowMap(
 
     // Smooth out the shadow map by applying gaussian filtering:
     shadow_manager.ApplyGaussianBlur(
-        App->program->GetProgram(Program::PROGRAMS::GAUSSIAN_FILTERING));
+        App->program->GetProgram(Program::Programs::GAUSSIAN_FILTERING));
 
     return true;
+}
+
+void Hachiko::ModuleRender::SetupSSAO()
+{
+    // We gonna use the position, normal and  diffuse from g buffer inside the
+    // ssao shader.
+    constexpr float kernel_size_inverse = 
+        1.0f / static_cast<float>(ssao_kernel_size);
+    // We generate random direction vectors (normal oriented hemisphere) to
+    // mimic light occlusion for each pixel.
+    for (size_t i = 0; i < ssao_kernel_size; ++i)
+    {
+        float3& current_sample = ssao_kernel[i];
+
+        // Give x and y values between -1.0f and 1.0f:
+        current_sample.x = RandomUtil::RandomSigned();
+        current_sample.y = RandomUtil::RandomSigned();
+        // Give z value between 0.0f and 1.0f so that we have a hemisphere from
+        // surface, not a full sphere:
+        current_sample.z = RandomUtil::Random();
+
+        // Normalize and apply a random weight:
+        current_sample.Normalize();
+        current_sample *= RandomUtil::Random();
+
+        // Give more weight to the samples that are closer to the actual
+        // fragment:
+        float scale = kernel_size_inverse * i;
+        scale = math::Lerp(0.1f, 1.0f, scale * scale);
+        current_sample *= scale;
+
+        HE_LOG("Current Sample: %f, %f, %f", FLOAT3_TO_ARGS(current_sample));
+    }
+
+    ssao_texture = new StandaloneGLTexture(
+        fb_width, 
+        fb_height, 
+        GL_RED, 
+        0, 
+        GL_RED, 
+        GL_FLOAT, 
+        GL_NEAREST, 
+        GL_NEAREST, 
+        true);
+
+    // We generate random kernel rotations that we're gonna tile around the
+    // screen instead of generating a rotation from scratch for each pixel:
+    constexpr size_t number_of_vecs = 16;
+    float3 ssao_noise[number_of_vecs];
+    for (float3& noise : ssao_noise)
+    {
+        noise.x = RandomUtil::RandomSigned();
+        noise.y = RandomUtil::RandomSigned();
+        noise.z = 0.0f;
+    }
+
+    glGenTextures(1, &ssao_noise_texture);
+    glBindTexture(GL_TEXTURE_2D, ssao_noise_texture);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, 4, 4, 0, GL_RGB, GL_FLOAT, &ssao_noise[0]);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+}
+
+void Hachiko::ModuleRender::ResizeSSAO(unsigned width, unsigned height)
+{
+    ssao_texture->Resize(width, height);
+}
+
+void Hachiko::ModuleRender::DrawSSAO(Scene* scene, ComponentCamera* camera)
+{
+    // Bind SSAO fbo for drawing:
+    ssao_texture->BindBuffer();
+
+    // Activate SSAO shader:
+    Program* ssao_program = App->program->GetProgram(Program::Programs::SSAO);
+    ssao_program->Activate();
+    
+    const float frame_buffer_width = static_cast<float>(fb_width);
+    const float frame_buffer_height = static_cast<float>(fb_height);
+
+    // Bind Uniforms:
+    // Bind samples array:
+    for (size_t i = 0; i < ssao_kernel_size; ++i)
+    {
+        ssao_program->BindUniformFloat3(
+            ("samples[" + std::to_string(i) + "]").c_str(), 
+            ssao_kernel[i].ptr());
+    }
+    // Bind projection matrix:
+    ssao_program->BindUniformFloat4x4(
+        "projection", 
+        scene->GetCullingCamera()->GetFrustum().ProjectionMatrix().ptr());
+    ssao_program->BindUniformFloat4x4(
+        "view", 
+        scene->GetCullingCamera()->GetFrustum().ViewMatrix().ptr());
+    // Bind frame buffer sizes:
+    // TODO: Make these uniforms used through variables.
+    ssao_program->BindUniformFloat("frame_buffer_width", &frame_buffer_width);
+    ssao_program->BindUniformFloat("frame_buffer_height", &frame_buffer_height);
+    // Bind ssao config related variables:
+    ssao_program->BindUniformUInt("kernel_size", ssao_kernel_size);
+    ssao_program->BindUniformFloat("radius", &ssao_radius);
+    ssao_program->BindUniformFloat("bias", &ssao_bias);
+    // Bind the generated noise texture:
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, ssao_noise_texture);
+    // Bind necessary G-Buffer textures:
+    g_buffer.BindSSAOTextures();
+
+    // Render Quad:
+    RenderFullScreenQuad();
+
+    // Deactivate SSAO shader:
+    Program::Deactivate();
+
+    // Unbind textures:
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    g_buffer.UnbindSSAOTextures();
+
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void Hachiko::ModuleRender::BindSSAOTexture()
+{
+    ssao_texture->BindForReading(10);
+}
+
+void Hachiko::ModuleRender::UnbindSSAOTexture()
+{
+    // TODO: Implement this.
 }
 
 void Hachiko::ModuleRender::ApplyGaussianFilter(
@@ -714,6 +869,16 @@ void Hachiko::ModuleRender::OptionsMenu()
     ImGui::TextWrapped("Bloom");
     ImGui::Separator();
     bloom_manager.DrawEditorContent();
+
+    ImGui::NewLine();
+    ImGui::TextWrapped("Ambient Occlusion");
+    ImGui::Separator();
+    Widgets::Checkbox("SSAO enabled", &ssao_enabled);
+    Widgets::DragFloatConfig ssao_config;
+    ssao_config.min = 0.0f;
+    ssao_config.speed = 0.01f;
+    Widgets::DragFloat("Radius", ssao_radius, &ssao_config);
+    Widgets::DragFloat("Bias", ssao_bias, &ssao_config);
 }
 
 void Hachiko::ModuleRender::LoadingScreenOptions() 
@@ -1049,7 +1214,7 @@ void Hachiko::ModuleRender::DrawLoadingScreen(const float delta)
 {
     OPTICK_CATEGORY("DrawLoadingScreen", Optick::Category::Rendering);
 
-    Program* img_program = App->program->GetProgram(Program::PROGRAMS::UI_IMAGE);
+    Program* img_program = App->program->GetProgram(Program::Programs::UI_IMAGE);
 
     glDepthFunc(GL_ALWAYS);
 

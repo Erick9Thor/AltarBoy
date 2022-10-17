@@ -19,6 +19,7 @@ uniform float light_bleeding_reduction_amount;
 uniform float min_variance;
 uniform mat4 light_projection;
 uniform mat4 light_view;
+uniform bool ssao_enabled;
 
 layout (binding = 0) uniform sampler2D g_diffuse;
 layout (binding = 1) uniform sampler2D g_specular_smoothness;
@@ -27,6 +28,7 @@ layout (binding = 3) uniform sampler2D g_position;
 layout (binding = 4) uniform sampler2D g_emissive;
 layout (binding = 5) uniform sampler2D shadow_map;
 layout (binding = 6) uniform sampler2D emissive_bloom;
+layout (binding = 10) uniform sampler2D ssao;
 
 void main()
 {
@@ -40,10 +42,12 @@ void main()
     float fragment_smoothness = fragment_specular_smoothness.a;
     vec3  fragment_emissive_bloom = (texture(emissive_bloom, texture_coords)).rgb;
     vec3  view_direction = normalize(camera.pos - fragment_position);
+    float fragment_ao = ssao_enabled ? texture(ssao, texture_coords).r : 1.0;
     
     if (mode == 0)
     {
-        vec3 hdr_color = vec3(0.0);
+        vec3 hdr_color = vec3(0.8 * fragment_diffuse * fragment_ao);
+
         float fragment_shadow = render_shadows == 1.0 ? CalculateShadowExponentialVariance(
             shadow_map, 
             fragment_position_from_light, 
@@ -54,23 +58,30 @@ void main()
             
         hdr_color += vec3(fragment_shadow) * DirectionalPBR(fragment_normal, view_direction, lights.directional, fragment_diffuse, fragment_specular, fragment_smoothness);
         
+        vec3 positional_pbr = vec3(0.0);
         for(uint i=0; i<lights.n_points; ++i)
         {
             if (distance(lights.points[i].position.xyz, fragment_position) <= lights.points[i].radius)
             {
-                hdr_color +=  PositionalPBR(fragment_position, fragment_normal, view_direction, lights.points[i], fragment_diffuse, fragment_specular, fragment_smoothness);
+                positional_pbr +=  PositionalPBR(fragment_position, fragment_normal, view_direction, lights.points[i], fragment_diffuse, fragment_specular, fragment_smoothness);
             }
         }
-
+        hdr_color += positional_pbr;
+            
+        vec3 spot_pbr = vec3(0.0);
         for(uint i=0; i<lights.n_spots; ++i)
         {
-            hdr_color +=  SpotPBR(fragment_position, fragment_normal, view_direction, lights.spots[i], fragment_diffuse, fragment_specular, fragment_smoothness);
+            spot_pbr += vec3(fragment_shadow) * SpotPBR(fragment_position, fragment_normal, view_direction, lights.spots[i], fragment_diffuse, fragment_specular, fragment_smoothness);
         }
-
+        hdr_color += spot_pbr;
         
-        hdr_color += GetAmbientLight(fragment_normal, reflect(-view_direction, fragment_normal), dot(fragment_normal, view_direction), pow(1.0 - fragment_smoothness, 2), fragment_diffuse, fragment_specular);
+        // // Apply shadows:
+        // hdr_color *= vec3(fragment_shadow);
 
-        hdr_color += fragment_emissive + fragment_emissive_bloom;
+        vec3 ambient_light = GetAmbientLight(fragment_normal, reflect(-view_direction, fragment_normal), dot(fragment_normal, view_direction), pow(1.0 - fragment_smoothness, 2), fragment_diffuse, fragment_specular);
+        hdr_color += ambient_light;
+
+        hdr_color += vec3(fragment_shadow) * (fragment_emissive + fragment_emissive_bloom);
 
         // Reinhard tone mapping
         vec3 ldr_color = hdr_color / (hdr_color + vec3(1.0));
@@ -103,6 +114,6 @@ void main()
     }
     else
     {
-        fragment_color = vec4(fragment_emissive, 1.0f);
+        fragment_color = vec4(vec3(texture(ssao, texture_coords).r), 1.0f);
     }
 }

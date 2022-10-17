@@ -158,10 +158,39 @@ namespace Hachiko
         void GenerateFrameBuffer();
         void ResizeFrameBuffer(int width, int height) const;
         void ManageResolution(const ComponentCamera* camera);
-        void Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* culling);
-        void DrawDeferred(Scene* scene, ComponentCamera* camera, BatchManager* batch_manager);
+        void Draw(
+            Scene* scene, 
+            ComponentCamera* camera, 
+            ComponentCamera* culling);
+        void DrawDeferred(
+            Scene* scene, 
+            ComponentCamera* camera, 
+            BatchManager* batch_manager);
         void DrawParticles(Scene* scene, ComponentCamera* camera) const;
-        bool DrawToShadowMap(Scene* scene, BatchManager* batch_manager, DrawConfig draw_config);
+        bool DrawToShadowMap(
+            Scene* scene, 
+            BatchManager* batch_manager, 
+            DrawConfig draw_config);
+
+        // SSAO Related stuff:
+        void SetupSSAO();
+        void ResizeSSAO(unsigned int width, unsigned int height);
+        void DrawSSAO(Scene* scene, ComponentCamera* camera);
+        void BindSSAOTexture();
+        void UnbindSSAOTexture();
+
+        float ssao_radius = 0.5f;
+        float ssao_bias = 0.1f;
+
+        static const size_t ssao_kernel_size = 64; 
+        float3 ssao_kernel[ssao_kernel_size];
+
+        StandaloneGLTexture* ssao_texture;
+        unsigned int ssao_noise_texture = 0;
+        bool ssao_enabled = true;
+
+        /*unsigned int ssao_fbo = 0;*/
+
 
         void SetRenderMode(bool is_deferred);
 
