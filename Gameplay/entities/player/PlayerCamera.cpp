@@ -67,11 +67,23 @@ void Hachiko::Scripting::PlayerCamera::CheckForObjective()
 
 	if (_current_objective != _objective)
 	{
+		if (!_is_in_position && _current_objective != nullptr)
+		{
+			_objective_pos = math::Lerp(_current_objective->GetTransform()->GetGlobalPosition(), _objective->GetTransform()->GetGlobalPosition(), _reposition_progress);
+			return;
+		}
+
 		_current_objective = _objective;
+
 		if (_current_objective != nullptr && _current_objective->GetComponent<PlayerController>() != nullptr)
 		{
 			_anchor_is_player = true;
 		}
+	}
+
+	if (_current_objective != nullptr)
+	{
+		_objective_pos = _current_objective->GetTransform()->GetGlobalPosition();
 	}
 }
 
@@ -120,7 +132,7 @@ void Hachiko::Scripting::PlayerCamera::MoveCamera()
 		ScrollWheelZoom(&_relative_position_to_player);
 	}
 
-	const float3 final_position = _current_objective->GetTransform()->GetGlobalPosition()
+	const float3 final_position = _objective_pos
 		+ _look_ahead + movement + _relative_position_to_player;
 	ComponentTransform* transform = game_object->GetTransform();
 	float3 current_position = transform->GetGlobalPosition();

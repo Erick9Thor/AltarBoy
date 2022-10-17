@@ -87,6 +87,7 @@ private:
 	math::float3 _look_ahead = math::float3::zero;
 	PlayerController* _player_ctrl = nullptr;
 	GameObject* _current_objective = nullptr;
+	math::float3 _objective_pos = math::float3::zero;
 	math::float3 _relative_position_aux = math::float3::zero;
 	math::float3 _updated_relative_position;
 	math::Quat _updated_rotation;
