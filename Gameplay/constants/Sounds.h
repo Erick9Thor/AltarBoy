@@ -18,6 +18,7 @@ namespace Hachiko::Sounds
 	constexpr const wchar_t* WORM_SPAWN = L"Play_WormSpawn";
 	constexpr const wchar_t* WORM_ROAR = L"Play_WormRoar";
 	constexpr const wchar_t* WORM_ATTACK = L"Play_WormAttack";
+	constexpr const wchar_t* WORM_DEATH = L"Play_WormDeath";
 
 	// Enviroment
 	constexpr const wchar_t* CRYSTAL = L"Play_Crystal";
