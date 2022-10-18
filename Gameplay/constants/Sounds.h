@@ -28,7 +28,6 @@ namespace Hachiko::Sounds
 	constexpr const wchar_t* PLAY_PEBBLE = L"Play_Pebble";
 	constexpr const wchar_t* STOP_PEBBLE = L"Stop_Pebble";
 	constexpr const wchar_t* PLAY_LASER = L"Play_Laser";
-	constexpr const wchar_t* STOP_LASER = L"Stop_Laser";
 	constexpr const wchar_t* PLAY_LASER_HIT = L"Play_Laser_Hit";
 	constexpr const wchar_t* PLAY_SPLASH = L"Play_Splash";
 

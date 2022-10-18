@@ -42,7 +42,6 @@ namespace AK
         static const AkUniqueID PLAY_WORMROAR = 4242710327U;
         static const AkUniqueID PLAY_WORMSPAWN = 3126715392U;
         static const AkUniqueID STOP_COMBAT = 913896232U;
-        static const AkUniqueID STOP_LASER = 738066393U;
         static const AkUniqueID STOP_PEBBLE = 707649828U;
         static const AkUniqueID STOP_WIND = 3173136834U;
     } // namespace EVENTS

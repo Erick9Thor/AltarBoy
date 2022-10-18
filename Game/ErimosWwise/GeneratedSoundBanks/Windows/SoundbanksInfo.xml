@@ -744,7 +744,7 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="3909959462" Language="SFX" Hash="715683876">
+		<SoundBank Id="3909959462" Language="SFX" Hash="117735521">
 			<ObjectPath>\SoundBanks\Default Work Unit\Enviroment</ObjectPath>
 			<ShortName>Enviroment</ShortName>
 			<Path>Enviroment.bnk</Path>
@@ -775,18 +775,18 @@
 				</Event>
 				<Event Id="2270376495" Name="Play_Laser" ObjectPath="\Events\Default Work Unit\Play_Laser">
 					<IncludedMemoryFiles>
-						<File Id="781381782" Language="SFX">
-							<ShortName>Laser\Noise - Swirly Spinner.wav</ShortName>
-							<Path>SFX\Laser\Noise - Swirly Spinner_86AE19BA.wem</Path>
-						</File>
-						<File Id="786404871" Language="SFX">
-							<ShortName>Laser\Sub - Sub Bees.wav</ShortName>
-							<Path>SFX\Laser\Sub - Sub Bees_AA994B59.wem</Path>
+						<File Id="1029896715" Language="SFX">
+							<ShortName>ES_Laser Sword Hum - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Laser Sword Hum - SFX Producer_10C4C929.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
 				<Event Id="4092857357" Name="Play_Laser_Hit" ObjectPath="\Events\Default Work Unit\Play_Laser_Hit">
 					<IncludedMemoryFiles>
+						<File Id="971224351" Language="SFX">
+							<ShortName>ES_MM Design Element 43 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_MM Design Element 43 - SFX Producer_10C4C929.wem</Path>
+						</File>
 						<File Id="1053424550" Language="SFX">
 							<ShortName>Laser\Swish - Call And Response.wav</ShortName>
 							<Path>SFX\Laser\Swish - Call And Response_EB955B5F.wem</Path>
@@ -829,7 +829,6 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="738066393" Name="Stop_Laser" ObjectPath="\Events\Default Work Unit\Stop_Laser"/>
 				<Event Id="707649828" Name="Stop_Pebble" ObjectPath="\Events\Default Work Unit\Stop_Pebble"/>
 				<Event Id="3173136834" Name="Stop_Wind" ObjectPath="\Events\Default Work Unit\Stop_Wind"/>
 			</IncludedEvents>

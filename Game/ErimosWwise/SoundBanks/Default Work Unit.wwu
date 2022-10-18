@@ -51,7 +51,6 @@
 						<ObjectRef Name="Play_Pebble" ID="{7E7451A2-4336-4CCF-BE28-99A6CF205E0D}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_Laser" ID="{944F2DC9-1865-4DE5-A41F-7D847F3A9945}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_Crystal" ID="{422E26F2-F986-4E14-B6FC-38411475A3E4}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
-						<ObjectRef Name="Stop_Laser" ID="{3C13283E-EB38-4E39-A6B6-331AC2181D30}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Stop_Pebble" ID="{3C2F1626-380B-4EF3-9CB2-4CA76FA289C8}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
 					</ObjectInclusionList>
 					<ObjectExclusionList/>
