@@ -13,12 +13,12 @@ namespace AK
 {
     namespace EVENTS
     {
+        static const AkUniqueID PLAY_BEETLEATTACK = 4275867775U;
+        static const AkUniqueID PLAY_BEETLEDEATH = 3318027631U;
         static const AkUniqueID PLAY_COMBAT = 513571230U;
         static const AkUniqueID PLAY_CRYSTAL = 2035174344U;
         static const AkUniqueID PLAY_DASH = 2211787386U;
         static const AkUniqueID PLAY_DOOROPENS = 1196441153U;
-        static const AkUniqueID PLAY_ENEMYATTACK = 1824944578U;
-        static const AkUniqueID PLAY_ENEMYDIE = 2402038236U;
         static const AkUniqueID PLAY_FOOTSTEP = 1602358412U;
         static const AkUniqueID PLAY_GAMEOVER = 3174629258U;
         static const AkUniqueID PLAY_INTROCINEMATIC = 2953314807U;
@@ -37,6 +37,8 @@ namespace AK
         static const AkUniqueID PLAY_UIHOVER = 2502251926U;
         static const AkUniqueID PLAY_WIND = 1020223172U;
         static const AkUniqueID PLAY_WORMATTACK = 1678827735U;
+        static const AkUniqueID PLAY_WORMDEATH = 1996518743U;
+        static const AkUniqueID PLAY_WORMHIDE = 3900269399U;
         static const AkUniqueID PLAY_WORMROAR = 4242710327U;
         static const AkUniqueID PLAY_WORMSPAWN = 3126715392U;
         static const AkUniqueID STOP_COMBAT = 913896232U;

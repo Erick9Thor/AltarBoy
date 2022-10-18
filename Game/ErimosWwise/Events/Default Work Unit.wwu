@@ -100,12 +100,12 @@
 						</Action>
 					</ChildrenList>
 				</Event>
-				<Event Name="Play_EnemyAttack" ID="{416579A2-32FC-48B0-8308-5AEB9768B0CE}">
+				<Event Name="Play_BeetleAttack" ID="{416579A2-32FC-48B0-8308-5AEB9768B0CE}">
 					<ChildrenList>
 						<Action Name="" ID="{C04BFC07-75E7-4A41-9066-2CE1CAE193C1}" ShortID="230530224">
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="MonsterAttack" ID="{CAA077B9-4FE9-4FC8-A815-785B688A966E}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+									<ObjectRef Name="BeetleAttack" ID="{7850B448-DC3A-474B-973E-5C97ABB7454C}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
@@ -132,17 +132,6 @@
 							<ReferenceList>
 								<Reference Name="Target">
 									<ObjectRef Name="EnemyAware" ID="{AA4A7D7C-95D8-4C61-B605-792EEBC96CF0}" WorkUnitID="{5077D92F-D971-4BAD-B936-0C1CED1B7E69}"/>
-								</Reference>
-							</ReferenceList>
-						</Action>
-					</ChildrenList>
-				</Event>
-				<Event Name="Play_EnemyDie" ID="{1A2143DE-8308-40D0-B869-5E18110D70AF}">
-					<ChildrenList>
-						<Action Name="" ID="{9F69B31B-BAA9-4936-83F0-77F95ABAC8FB}" ShortID="426692160">
-							<ReferenceList>
-								<Reference Name="Target">
-									<ObjectRef Name="MonsterDying" ID="{7B3E37F7-5F18-428F-B8A3-9A96AB53B3F6}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
@@ -348,6 +337,39 @@
 							<ReferenceList>
 								<Reference Name="Target">
 									<ObjectRef Name="WormAttack" ID="{8AC589FC-B000-4D88-8913-C0161A1579E6}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_WormDeath" ID="{A35C0037-6263-4E31-9BC2-87CE2663F889}">
+					<ChildrenList>
+						<Action Name="" ID="{206AD5E1-24C1-4509-BDAA-50318F6BB787}" ShortID="548448368">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="WormDeath" ID="{73DC3121-6AE8-4502-9CE4-4C0B4260FB78}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_BeetleDeath" ID="{14F98276-F20F-44B9-A344-C241DC91EAD8}">
+					<ChildrenList>
+						<Action Name="" ID="{15694438-F97E-44A8-B137-E4434FC1427B}" ShortID="594377816">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="BeetleDie" ID="{B0A8F7CD-488D-48C0-B8AC-F7A6DAFEE2B2}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_WormHide" ID="{3CF76374-4614-412C-A303-B3F6FEAD0C65}">
+					<ChildrenList>
+						<Action Name="" ID="{5E863717-3BD9-49B7-A052-77D48868E125}" ShortID="324510201">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="HideAndSand" ID="{A2905973-8F9A-4F8F-9504-D52A69E8E83C}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>

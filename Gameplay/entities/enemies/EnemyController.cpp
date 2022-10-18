@@ -174,7 +174,9 @@ void Hachiko::Scripting::EnemyController::SpawnController()
 		{
 			return;
 		}
+
 		_audio_source->PostEvent(Sounds::WORM_SPAWN);
+		
 		if (_enemy_body->IsActive() && _state == EnemyState::SPAWNING && animation->IsAnimationStopped())
 		{
 			_state = EnemyState::IDLE;
@@ -252,6 +254,7 @@ void Hachiko::Scripting::EnemyController::DeathController()
 		if (!_will_die && _enemy_type == EnemyType::WORM)
 		{
 			_audio_manager->UnregisterCombat();
+			_audio_source->PostEvent(Sounds::WORM_HIDE);
 			_state = EnemyState::HIDEN;
 			game_object->GetComponent<ComponentAgent>()->RemoveFromCrowd();
 			return;
@@ -260,7 +263,12 @@ void Hachiko::Scripting::EnemyController::DeathController()
 		{
 			if (_enemy_type == EnemyType::WORM)
 			{
+				_audio_source->PostEvent(Sounds::WORM_DEATH);
 				_audio_manager->UnregisterCombat();
+			}
+			else
+			{
+				_audio_source->PostEvent(Sounds::BEETLE_DEATH);
 			}
 			_state = EnemyState::DEAD;
 			game_object->GetComponent<ComponentAgent>()->RemoveFromCrowd();
@@ -540,6 +548,7 @@ void Hachiko::Scripting::EnemyController::BeetleAttack()
 	// If no current attack start attack
 	if (_attack_current_delay <= 0.0f || _previous_state != EnemyState::ATTACKING)
 	{
+		_audio_source->PostEvent(Sounds::BEETLE_ATTACK);
 		_attack_current_delay = _attack_delay;
 		_state = EnemyState::ATTACKING;
 	}
@@ -890,7 +899,6 @@ void Hachiko::Scripting::EnemyController::CheckState()
 		animation->SendTrigger("idle");
 		break;
 	case EnemyState::ATTACKING:
-		_audio_source->PostEvent(Sounds::ENEMY_ATTACK);
 		if (!_attack_alt)
 		{
 			animation->SendTrigger("isAttacking");
@@ -901,7 +909,6 @@ void Hachiko::Scripting::EnemyController::CheckState()
 		}
 		break;
 	case EnemyState::DEAD:
-		_audio_source->PostEvent(Sounds::ENEMY_DIE);
 		animation->SendTrigger("isDead");
 		break;
 	case EnemyState::MOVING:

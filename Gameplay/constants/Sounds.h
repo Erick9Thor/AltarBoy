@@ -13,11 +13,12 @@ namespace Hachiko::Sounds
 	constexpr const wchar_t* PARASITE_PICKUP = L"Play_ParasitePickUp";
 
 	// Enemy
-	constexpr const wchar_t* ENEMY_ATTACK = L"Play_EnemyAttack";
-	constexpr const wchar_t* ENEMY_DIE = L"Play_EnemyDie";
+	constexpr const wchar_t* BEETLE_ATTACK = L"Play_BeetleAttack";
+	constexpr const wchar_t* BEETLE_DEATH = L"Play_BeetleDeath";
 	constexpr const wchar_t* WORM_SPAWN = L"Play_WormSpawn";
 	constexpr const wchar_t* WORM_ROAR = L"Play_WormRoar";
 	constexpr const wchar_t* WORM_ATTACK = L"Play_WormAttack";
+	constexpr const wchar_t* WORM_HIDE = L"Play_WormHide";
 	constexpr const wchar_t* WORM_DEATH = L"Play_WormDeath";
 
 	// Enviroment
