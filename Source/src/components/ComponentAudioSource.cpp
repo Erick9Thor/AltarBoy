@@ -49,6 +49,11 @@ HACHIKO_API void Hachiko::ComponentAudioSource::SetRTPCValue(const wchar_t* rtpc
     AK::SoundEngine::SetRTPCValue(rtpc_name, value);
 }
 
+HACHIKO_API void Hachiko::ComponentAudioSource::SetSwitch(const wchar_t* switch_group, const wchar_t* switch_state)
+{
+    AK::SoundEngine::SetSwitch(switch_group, switch_state, source_id);
+}
+
 void Hachiko::ComponentAudioSource::DrawGui()
 {
     ImGui::PushID(this);
