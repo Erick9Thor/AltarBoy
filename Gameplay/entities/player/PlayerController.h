@@ -162,6 +162,11 @@ namespace Hachiko
 				_keyboard_tooltip_display->GetComponent(Component::Type::IMAGE)->Disable();
 			}
 
+			float3 GetCamBasicPos()
+			{
+				return _cam_positions[1];
+			}
+
 		private:
 			math::float3 GetRaycastPosition(
 				const math::float3& current_position) const;

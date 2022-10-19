@@ -5,6 +5,7 @@
 #include "misc/LevelManager.h"
 #include "misc/AudioManager.h"
 #include "entities/player/PlayerCamera.h"
+#include "entities/player/PlayerController.h"
 #include "constants/Scenes.h"
 
 // TODO: Delete this include:
@@ -122,7 +123,7 @@ void Hachiko::Scripting::GauntletManager::CheckRoundStatus()
 		completed = true;
 		OpenDoors();
 		_audio_manager->UnregisterGaunlet();
-		_main_camera->RevertRelativePosition(.2f);
+		_main_camera->ChangeRelativePosition(Scenes::GetPlayer()->GetComponent<PlayerController>()->GetCamBasicPos(), false, .2f, 0.0f);
 		_main_camera->SetObjective(Scenes::GetPlayer());
 		return;
 	}

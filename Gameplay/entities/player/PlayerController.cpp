@@ -201,11 +201,12 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 
 	_weapon_charge_bar = _weapon_charge_bar_go->GetComponent<ComponentProgressBar>();
 
-	// First position and rotation set if no camera is found
-	_cam_positions.push_back(float3(0.0f, 26.0f, 17.5f));
+	// The first position will be the current position the camera has
+	_cam_positions.push_back(float3(0.0f, 20.0f, 13.0f));
 	_cam_rotations.push_back(float3(125.0f, 0.0f, 180.0f));
 
-	_cam_positions.push_back(float3(0.0f, 19.0f, 13.0f));
+	// Second position is the "Basic" position for travelling camera
+	_cam_positions.push_back(float3(0.0f, 26.0f, 17.5f));
 	_cam_rotations.push_back(float3(125.0f, 0.0f, 180.0f));
 
 	if (_camera != nullptr)
@@ -519,19 +520,6 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 		_god_mode = !_god_mode;
 
 		ToggleGodMode();
-	}
-
-	// Testing for camera
-	if (Input::IsKeyDown(Input::KeyCode::KEY_C))
-	{
-
-		_camera->GetComponent<PlayerCamera>()->SwitchRelativePosition(_cam_positions[1], 1.0f);
-		_camera->GetComponent<PlayerCamera>()->RotateCameraTo(_cam_rotations[1], 1.0f);
-
-		if (_ui_damage)
-		{
-			_ui_damage->SetActive(!_ui_damage->IsActive());
-		}
 	}
 }
 
