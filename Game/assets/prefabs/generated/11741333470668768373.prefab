@@ -6,7 +6,7 @@ component:
     type: 1
     enabled: true
     position: [0, 0, 0]
-    rotation: [-0, 0, -0]
+    rotation: [0, 0, 0]
     scale: [1, 1, 1]
   - !<animation>
     type: 14
@@ -30,7 +30,7 @@ child:
             type: 1
             enabled: true
             position: [-74.81, -0.0014, -8.728]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [0.0226, 0.0226, 0.0226]
           - !<mesh_renderer>
             type: 2
@@ -48,7 +48,7 @@ child:
             type: 1
             enabled: true
             position: [55.11, 0.0014, -8.728]
-            rotation: [-0, 0, 180]
+            rotation: [0, 0, 180]
             scale: [0.0226, 0.0226, 0.0226]
           - !<mesh_renderer>
             type: 2
@@ -66,7 +66,7 @@ child:
             type: 1
             enabled: true
             position: [15.7, 0.0014, -8.728]
-            rotation: [-0, 0, -180]
+            rotation: [0, 0, -180]
             scale: [0.0226, 0.0226, 0.0226]
           - !<mesh_renderer>
             type: 2
@@ -84,7 +84,7 @@ child:
             type: 1
             enabled: true
             position: [-4.006, 0.0014, -8.728]
-            rotation: [-0, 0, 180]
+            rotation: [0, 0, 180]
             scale: [0.0226, 0.0226, 0.0226]
           - !<mesh_renderer>
             type: 2
@@ -102,7 +102,7 @@ child:
             type: 1
             enabled: true
             position: [-35.4, -0.0014, -8.728]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [0.0226, 0.0226, 0.0226]
           - !<mesh_renderer>
             type: 2
@@ -120,7 +120,7 @@ child:
             type: 1
             enabled: true
             position: [23.71, -0.0014, -8.728]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [0.0226, 0.0226, 0.0226]
           - !<mesh_renderer>
             type: 2
@@ -138,7 +138,7 @@ child:
             type: 1
             enabled: true
             position: [-94.51, -0.0014, -8.728]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [0.0226, 0.0226, 0.0226]
           - !<mesh_renderer>
             type: 2
@@ -156,7 +156,7 @@ child:
             type: 1
             enabled: true
             position: [82.82, -0.0014, -8.728]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [0.0226, 0.0226, 0.0226]
           - !<mesh_renderer>
             type: 2
@@ -184,7 +184,7 @@ child:
             type: 1
             enabled: true
             position: [82.82, -0.0014, -8.728]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [0.0226, 0.0226, 0.0226]
           - !<mesh_renderer>
             type: 2
@@ -202,7 +202,7 @@ child:
             type: 1
             enabled: true
             position: [23.71, -0.0014, -8.728]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [0.0226, 0.0226, 0.0226]
           - !<mesh_renderer>
             type: 2
@@ -220,7 +220,7 @@ child:
             type: 1
             enabled: true
             position: [55.11, 0.0014, -8.728]
-            rotation: [-0, 0, 180]
+            rotation: [0, 0, 180]
             scale: [0.0226, 0.0226, 0.0226]
           - !<mesh_renderer>
             type: 2
@@ -238,7 +238,7 @@ child:
             type: 1
             enabled: true
             position: [15.7, 0.0014, -8.728]
-            rotation: [-0, 0, -180]
+            rotation: [0, 0, -180]
             scale: [0.0226, 0.0226, 0.0226]
           - !<mesh_renderer>
             type: 2
@@ -256,7 +256,7 @@ child:
             type: 1
             enabled: true
             position: [-4.006, 0.0014, -8.728]
-            rotation: [-0, 0, 180]
+            rotation: [0, 0, 180]
             scale: [0.0226, 0.0226, 0.0226]
           - !<mesh_renderer>
             type: 2
@@ -274,7 +274,7 @@ child:
             type: 1
             enabled: true
             position: [-35.4, -0.0014, -8.728]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [0.0226, 0.0226, 0.0226]
           - !<mesh_renderer>
             type: 2
@@ -292,7 +292,7 @@ child:
             type: 1
             enabled: true
             position: [-74.81, -0.0014, -8.728]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [0.0226, 0.0226, 0.0226]
           - !<mesh_renderer>
             type: 2
@@ -310,7 +310,7 @@ child:
             type: 1
             enabled: true
             position: [-94.51, -0.0014, -8.728]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [0.0226, 0.0226, 0.0226]
           - !<mesh_renderer>
             type: 2
@@ -17792,7 +17792,7 @@ child:
             type: 1
             enabled: true
             position: [4.435, 0, -0.0784]
-            rotation: [-0, 0, 45]
+            rotation: [0, 0, 45]
             scale: [1.642, 1.642, 1.582]
         child:
           - name: bridge_whole222
@@ -17856,7 +17856,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-0, -0, 4.754]
-                rotation: [-0, 0, -135]
+                rotation: [0, 0, -135]
                 scale: [0.5779, 0.5779, 0.5779]
               - !<mesh_renderer>
                 type: 2
@@ -17874,7 +17874,7 @@ child:
             type: 1
             enabled: true
             position: [-4.435, 0, -0.0784]
-            rotation: [-0, 0, 45]
+            rotation: [0, 0, 45]
             scale: [1.642, 1.642, 1.582]
         child:
           - name: bridge_whole218
@@ -17938,7 +17938,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-0, -0, 4.754]
-                rotation: [-0, 0, -135]
+                rotation: [0, 0, -135]
                 scale: [0.5779, 0.5779, 0.5779]
               - !<mesh_renderer>
                 type: 2
@@ -17956,7 +17956,7 @@ child:
             type: 1
             enabled: true
             position: [-6, 1.5, 17.19]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<mesh_renderer>
             type: 2
@@ -17974,7 +17974,7 @@ child:
             type: 1
             enabled: true
             position: [3, 1.5, 17.19]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<mesh_renderer>
             type: 2
@@ -18038,7 +18038,7 @@ child:
             type: 1
             enabled: true
             position: [12.73, -12.72, 0]
-            rotation: [-0, 0, 180]
+            rotation: [0, 0, 180]
             scale: [1, 1, 1]
         child:
           - name: bridge_whole114
@@ -18120,7 +18120,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0, 0, 4.754]
-                rotation: [-0, 0, -135]
+                rotation: [0, 0, -135]
                 scale: [0.5779, 0.5779, 0.5779]
               - !<mesh_renderer>
                 type: 2
@@ -18138,7 +18138,7 @@ child:
             type: 1
             enabled: true
             position: [-12.72, -12.73, 0]
-            rotation: [-0, 0, 90]
+            rotation: [0, 0, 90]
             scale: [1, 1, 1]
         child:
           - name: bridge_whole122
@@ -18220,7 +18220,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0, 0, 4.754]
-                rotation: [-0, 0, -135]
+                rotation: [0, 0, -135]
                 scale: [0.5779, 0.5779, 0.5779]
               - !<mesh_renderer>
                 type: 2
@@ -18238,7 +18238,7 @@ child:
             type: 1
             enabled: true
             position: [0.0076, -17.99, 0]
-            rotation: [-0, 0, 135]
+            rotation: [0, 0, 135]
             scale: [1, 1, 1]
         child:
           - name: bridge_whole118
@@ -18320,7 +18320,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-0, -0, 4.754]
-                rotation: [-0, 0, -135]
+                rotation: [0, 0, -135]
                 scale: [0.5779, 0.5779, 0.5779]
               - !<mesh_renderer>
                 type: 2
@@ -18338,7 +18338,7 @@ child:
             type: 1
             enabled: true
             position: [17.99, 0.0077, 0]
-            rotation: [-0, 0, -135]
+            rotation: [0, 0, -135]
             scale: [1, 1, 1]
         child:
           - name: bridge_whole110
@@ -18420,7 +18420,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-0, 0, 4.754]
-                rotation: [-0, 0, -135]
+                rotation: [0, 0, -135]
                 scale: [0.5779, 0.5779, 0.5779]
               - !<mesh_renderer>
                 type: 2
@@ -18520,7 +18520,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0, 0, 4.754]
-                rotation: [-0, 0, -135]
+                rotation: [0, 0, -135]
                 scale: [0.5779, 0.5779, 0.5779]
               - !<mesh_renderer>
                 type: 2
@@ -18620,7 +18620,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-0, -0, 4.754]
-                rotation: [-0, 0, -135]
+                rotation: [0, 0, -135]
                 scale: [0.5779, 0.5779, 0.5779]
               - !<mesh_renderer>
                 type: 2
@@ -18638,7 +18638,7 @@ child:
             type: 1
             enabled: true
             position: [-12.73, 12.72, 0]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
         child:
           - name: tile_whole018
@@ -18648,7 +18648,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0, 0, 4.754]
-                rotation: [-0, 0, -135]
+                rotation: [0, 0, -135]
                 scale: [0.5779, 0.5779, 0.5779]
               - !<mesh_renderer>
                 type: 2
@@ -19380,7 +19380,7 @@ child:
                 type: 1
                 enabled: true
                 position: [14.53, -14.52, 0]
-                rotation: [-0, 0, -0]
+                rotation: [0, 0, 0]
                 scale: [1, 1, 1]
             child:
               - name: bridge_whole162
@@ -19462,7 +19462,7 @@ child:
                     type: 1
                     enabled: true
                     position: [-14.53, 14.52, 4.754]
-                    rotation: [-0, 0, -135]
+                    rotation: [0, 0, -135]
                     scale: [0.5779, 0.5779, 0.5779]
                   - !<mesh_renderer>
                     type: 2
@@ -19480,7 +19480,7 @@ child:
             type: 1
             enabled: true
             position: [-20.96, 8.471, 0]
-            rotation: [-0, 0, 22.97]
+            rotation: [0, 0, 22.97]
             scale: [1.1, 1.1, 1.257]
         child:
           - name: Group039_$AssimpFbx$_GeometricTranslationInverse
@@ -19490,7 +19490,7 @@ child:
                 type: 1
                 enabled: true
                 position: [14.53, -14.52, 0]
-                rotation: [-0, 0, -0]
+                rotation: [0, 0, 0]
                 scale: [1, 1, 1]
             child:
               - name: bridge_whole158
@@ -19572,7 +19572,7 @@ child:
                     type: 1
                     enabled: true
                     position: [-14.53, 14.52, 4.754]
-                    rotation: [-0, 0, -135]
+                    rotation: [0, 0, -135]
                     scale: [0.5779, 0.5779, 0.5779]
                   - !<mesh_renderer>
                     type: 2
@@ -19600,7 +19600,7 @@ child:
                 type: 1
                 enabled: true
                 position: [14.53, -14.52, 0]
-                rotation: [-0, 0, -0]
+                rotation: [0, 0, 0]
                 scale: [1, 1, 1]
             child:
               - name: bridge_whole166
@@ -19682,7 +19682,7 @@ child:
                     type: 1
                     enabled: true
                     position: [-14.53, 14.52, 4.754]
-                    rotation: [-0, 0, -135]
+                    rotation: [0, 0, -135]
                     scale: [0.5779, 0.5779, 0.5779]
                   - !<mesh_renderer>
                     type: 2
@@ -19710,7 +19710,7 @@ child:
                 type: 1
                 enabled: true
                 position: [14.53, -14.52, 0]
-                rotation: [-0, 0, -0]
+                rotation: [0, 0, 0]
                 scale: [1, 1, 1]
             child:
               - name: bridge_whole170
@@ -19792,7 +19792,7 @@ child:
                     type: 1
                     enabled: true
                     position: [-14.53, 14.52, 4.754]
-                    rotation: [-0, 0, -135]
+                    rotation: [0, 0, -135]
                     scale: [0.5779, 0.5779, 0.5779]
                   - !<mesh_renderer>
                     type: 2
@@ -19810,7 +19810,7 @@ child:
             type: 1
             enabled: true
             position: [20.96, -8.471, 0]
-            rotation: [-0, 0, -157]
+            rotation: [0, 0, -157]
             scale: [1.1, 1.1, 1.257]
         child:
           - name: Group043_$AssimpFbx$_GeometricTranslationInverse
@@ -19820,7 +19820,7 @@ child:
                 type: 1
                 enabled: true
                 position: [14.53, -14.52, 0]
-                rotation: [-0, 0, -0]
+                rotation: [0, 0, 0]
                 scale: [1, 1, 1]
             child:
               - name: bridge_whole174
@@ -19902,7 +19902,7 @@ child:
                     type: 1
                     enabled: true
                     position: [-14.53, 14.52, 4.754]
-                    rotation: [-0, 0, -135]
+                    rotation: [0, 0, -135]
                     scale: [0.5779, 0.5779, 0.5779]
                   - !<mesh_renderer>
                     type: 2
@@ -19920,7 +19920,7 @@ child:
             type: 1
             enabled: true
             position: [8.831, -20.81, 0]
-            rotation: [-0, 0, 158]
+            rotation: [0, 0, 158]
             scale: [1.1, 1.1, 1.257]
         child:
           - name: Group044_$AssimpFbx$_GeometricTranslationInverse
@@ -19930,7 +19930,7 @@ child:
                 type: 1
                 enabled: true
                 position: [14.53, -14.52, 0]
-                rotation: [-0, 0, -0]
+                rotation: [0, 0, 0]
                 scale: [1, 1, 1]
             child:
               - name: bridge_whole178
@@ -20012,7 +20012,7 @@ child:
                     type: 1
                     enabled: true
                     position: [-14.53, 14.52, 4.754]
-                    rotation: [-0, 0, -135]
+                    rotation: [0, 0, -135]
                     scale: [0.5779, 0.5779, 0.5779]
                   - !<mesh_renderer>
                     type: 2
@@ -20030,7 +20030,7 @@ child:
             type: 1
             enabled: true
             position: [-8.471, -20.96, 0]
-            rotation: [-0, 0, 113]
+            rotation: [0, 0, 113]
             scale: [1.1, 1.1, 1.257]
         child:
           - name: Group045_$AssimpFbx$_GeometricTranslationInverse
@@ -20040,7 +20040,7 @@ child:
                 type: 1
                 enabled: true
                 position: [14.53, -14.52, 0]
-                rotation: [-0, 0, -0]
+                rotation: [0, 0, 0]
                 scale: [1, 1, 1]
             child:
               - name: bridge_whole182
@@ -20122,7 +20122,7 @@ child:
                     type: 1
                     enabled: true
                     position: [-14.53, 14.52, 4.754]
-                    rotation: [-0, 0, -135]
+                    rotation: [0, 0, -135]
                     scale: [0.5779, 0.5779, 0.5779]
                   - !<mesh_renderer>
                     type: 2
@@ -20140,7 +20140,7 @@ child:
             type: 1
             enabled: true
             position: [-20.81, -8.831, 0]
-            rotation: [-0, 0, 67.97]
+            rotation: [0, 0, 67.97]
             scale: [1.1, 1.1, 1.257]
         child:
           - name: Group046_$AssimpFbx$_GeometricTranslationInverse
@@ -20150,7 +20150,7 @@ child:
                 type: 1
                 enabled: true
                 position: [14.53, -14.52, 0]
-                rotation: [-0, 0, -0]
+                rotation: [0, 0, 0]
                 scale: [1, 1, 1]
             child:
               - name: bridge_whole186
@@ -20232,7 +20232,7 @@ child:
                     type: 1
                     enabled: true
                     position: [-14.53, 14.52, 4.754]
-                    rotation: [-0, 0, -135]
+                    rotation: [0, 0, -135]
                     scale: [0.5779, 0.5779, 0.5779]
                   - !<mesh_renderer>
                     type: 2
@@ -20386,7 +20386,7 @@ child:
             type: 1
             enabled: true
             position: [0, -1.628, -2.187]
-            rotation: [-180, 0, -0]
+            rotation: [-180, 0, 0]
             scale: [1, 1, 1]
         child:
           - name: CaveRock_01_1.010
@@ -20450,7 +20450,7 @@ child:
             type: 1
             enabled: true
             position: [0, 1.628, 2.187]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
         child:
           - name: CaveRock_01_1.007
@@ -20524,7 +20524,7 @@ child:
             type: 1
             enabled: true
             position: [-0, 1.628, 2.187]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
         child:
           - name: CaveRock_01_1.013
@@ -20588,7 +20588,7 @@ child:
             type: 1
             enabled: true
             position: [0, -1.628, -2.187]
-            rotation: [-180, 0, -0]
+            rotation: [-180, 0, 0]
             scale: [1, 1, 1]
         child:
           - name: CaveRock_01_1.016
@@ -20662,7 +20662,7 @@ child:
             type: 1
             enabled: true
             position: [0, 1.628, 2.187]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
         child:
           - name: CaveRock_01_1.019
@@ -20726,7 +20726,7 @@ child:
             type: 1
             enabled: true
             position: [0, -1.628, -2.187]
-            rotation: [-180, 0, -0]
+            rotation: [-180, 0, 0]
             scale: [1, 1, 1]
         child:
           - name: CaveRock_01_1.022
@@ -20800,7 +20800,7 @@ child:
             type: 1
             enabled: true
             position: [-17.81, 25.6, 0]
-            rotation: [-0, 0, 35]
+            rotation: [0, 0, 35]
             scale: [1, 1, 1]
         child:
           - name: Crystal.017
@@ -20846,7 +20846,7 @@ child:
             type: 1
             enabled: true
             position: [-1.035, 25.74, 0]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
         child:
           - name: Plane.003
@@ -20984,7 +20984,7 @@ child:
             type: 1
             enabled: true
             position: [-17.39, -26.02, 0]
-            rotation: [-0, 0, 180]
+            rotation: [0, 0, 180]
             scale: [1, 1, 1]
         child:
           - name: Crystal.013
@@ -21058,7 +21058,7 @@ child:
             type: 1
             enabled: true
             position: [82.82, -0.0014, -8.728]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [0.0226, 0.0226, 0.0226]
           - !<mesh_renderer>
             type: 2
@@ -21076,7 +21076,7 @@ child:
             type: 1
             enabled: true
             position: [23.71, -0.0014, -8.728]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [0.0226, 0.0226, 0.0226]
           - !<mesh_renderer>
             type: 2
@@ -21094,7 +21094,7 @@ child:
             type: 1
             enabled: true
             position: [55.11, 0.0014, -8.728]
-            rotation: [-0, 0, 180]
+            rotation: [0, 0, 180]
             scale: [0.0226, 0.0226, 0.0226]
           - !<mesh_renderer>
             type: 2
@@ -21112,7 +21112,7 @@ child:
             type: 1
             enabled: true
             position: [15.7, 0.0014, -8.728]
-            rotation: [-0, 0, -180]
+            rotation: [0, 0, -180]
             scale: [0.0226, 0.0226, 0.0226]
           - !<mesh_renderer>
             type: 2
@@ -21130,7 +21130,7 @@ child:
             type: 1
             enabled: true
             position: [-4.006, 0.0014, -8.728]
-            rotation: [-0, 0, 180]
+            rotation: [0, 0, 180]
             scale: [0.0226, 0.0226, 0.0226]
           - !<mesh_renderer>
             type: 2
@@ -21148,7 +21148,7 @@ child:
             type: 1
             enabled: true
             position: [-35.4, -0.0014, -8.728]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [0.0226, 0.0226, 0.0226]
           - !<mesh_renderer>
             type: 2
@@ -21166,7 +21166,7 @@ child:
             type: 1
             enabled: true
             position: [-74.81, -0.0014, -8.728]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [0.0226, 0.0226, 0.0226]
           - !<mesh_renderer>
             type: 2
@@ -21184,7 +21184,7 @@ child:
             type: 1
             enabled: true
             position: [-94.51, -0.0014, -8.728]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [0.0226, 0.0226, 0.0226]
           - !<mesh_renderer>
             type: 2
@@ -21212,7 +21212,7 @@ child:
             type: 1
             enabled: true
             position: [-33.84, 15.93, 0.1838]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [0.7417, 0.7417, 0.7417]
         child:
           - name: rockBorder_044
@@ -21258,7 +21258,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-31.91, 20.49, -0.8595]
-                rotation: [-0, 0, 77.02]
+                rotation: [0, 0, 77.02]
                 scale: [1.786, 1.786, 1.786]
               - !<mesh_renderer>
                 type: 2
@@ -21276,7 +21276,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-5.348, 6.852, 4.667]
-                rotation: [-0, 0, 177.1]
+                rotation: [0, 0, 177.1]
                 scale: [2.875, 2.875, 2.875]
               - !<mesh_renderer>
                 type: 2
@@ -21294,7 +21294,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-8.692, 30.92, 11.65]
-                rotation: [-0, 0, -173.2]
+                rotation: [0, 0, -173.2]
                 scale: [0.0809, 0.0809, 0.0809]
               - !<mesh_renderer>
                 type: 2
@@ -21312,7 +21312,7 @@ child:
                 type: 1
                 enabled: true
                 position: [30.83, 7.514, 9.643]
-                rotation: [-0, 0, 35.75]
+                rotation: [0, 0, 35.75]
                 scale: [1.867, 1.867, 1.867]
               - !<mesh_renderer>
                 type: 2
@@ -21330,7 +21330,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-11.81, 37.14, 1.736]
-                rotation: [-0, 0, 47.55]
+                rotation: [0, 0, 47.55]
                 scale: [1.672, 1.672, 1.672]
               - !<mesh_renderer>
                 type: 2
@@ -21384,7 +21384,7 @@ child:
             type: 1
             enabled: true
             position: [19.25, 39.54, 0.5443]
-            rotation: [-0, 0, 69.3]
+            rotation: [0, 0, 69.3]
             scale: [0.6289, 0.6289, 0.6289]
         child:
           - name: rockBorder_053
@@ -21430,7 +21430,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-31.91, 20.49, -0.8595]
-                rotation: [-0, 0, 77.02]
+                rotation: [0, 0, 77.02]
                 scale: [1.786, 1.786, 1.786]
               - !<mesh_renderer>
                 type: 2
@@ -21448,7 +21448,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-5.348, 6.852, 4.667]
-                rotation: [-0, 0, 177.1]
+                rotation: [0, 0, 177.1]
                 scale: [2.875, 2.875, 2.875]
               - !<mesh_renderer>
                 type: 2
@@ -21466,7 +21466,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-8.692, 30.92, 11.65]
-                rotation: [-0, 0, -173.2]
+                rotation: [0, 0, -173.2]
                 scale: [0.0809, 0.0809, 0.0809]
               - !<mesh_renderer>
                 type: 2
@@ -21484,7 +21484,7 @@ child:
                 type: 1
                 enabled: true
                 position: [30.83, 7.514, 9.643]
-                rotation: [-0, 0, 35.75]
+                rotation: [0, 0, 35.75]
                 scale: [1.867, 1.867, 1.867]
               - !<mesh_renderer>
                 type: 2
@@ -21502,7 +21502,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-11.81, 37.14, 1.736]
-                rotation: [-0, 0, 47.55]
+                rotation: [0, 0, 47.55]
                 scale: [1.672, 1.672, 1.672]
               - !<mesh_renderer>
                 type: 2
@@ -21602,7 +21602,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-31.91, 20.49, -0.8595]
-                rotation: [-0, 0, 77.02]
+                rotation: [0, 0, 77.02]
                 scale: [1.786, 1.786, 1.786]
               - !<mesh_renderer>
                 type: 2
@@ -21620,7 +21620,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-5.348, 6.852, 4.667]
-                rotation: [-0, 0, 177.1]
+                rotation: [0, 0, 177.1]
                 scale: [2.875, 2.875, 2.875]
               - !<mesh_renderer>
                 type: 2
@@ -21638,7 +21638,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-8.692, 30.92, 11.65]
-                rotation: [-0, 0, -173.2]
+                rotation: [0, 0, -173.2]
                 scale: [0.0809, 0.0809, 0.0809]
               - !<mesh_renderer>
                 type: 2
@@ -21656,7 +21656,7 @@ child:
                 type: 1
                 enabled: true
                 position: [30.83, 7.514, 9.643]
-                rotation: [-0, 0, 35.75]
+                rotation: [0, 0, 35.75]
                 scale: [1.867, 1.867, 1.867]
               - !<mesh_renderer>
                 type: 2
@@ -21674,7 +21674,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-11.81, 37.14, 1.736]
-                rotation: [-0, 0, 47.55]
+                rotation: [0, 0, 47.55]
                 scale: [1.672, 1.672, 1.672]
               - !<mesh_renderer>
                 type: 2

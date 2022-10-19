@@ -3,7 +3,7 @@ model_name: centipede_mesh
 meshes:
   - 7135448508068517713
 materials:
-  - 2794686973665786143
+  - 13229714461914868613
 animations:
   - 11763322258457322543
   - 621176544835310018
@@ -17,7 +17,7 @@ resources:
   - resource_id: 7135448508068517713
     resource_type: 3
     resource_hash: 2151218325060951982
-  - resource_id: 2794686973665786143
+  - resource_id: 13229714461914868613
     resource_type: 1
     resource_hash: 15902600530980029232
   - resource_id: 11763322258457322543
@@ -31,4 +31,4 @@ resources:
     resource_hash: 12856785099208903971
   - resource_id: 9802191417765369236
     resource_type: 13
-    resource_hash: 13188078420092460737
+    resource_hash: 9903282937017361348
