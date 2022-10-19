@@ -1287,8 +1287,9 @@ void Hachiko::Scripting::BossController::SpawnEnemy()
         }
 
         enemy->SetActive(true);
-        ComponentAgent* agent = enemy->GetComponent<ComponentAgent>();
+        enemy_controller->OnStart();
 
+        ComponentAgent* agent = enemy->GetComponent<ComponentAgent>();
         if (agent)
         {
             agent->AddToCrowd();

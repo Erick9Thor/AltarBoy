@@ -164,6 +164,23 @@ void Hachiko::ComponentTransform::SetGlobalRotationEuler(const float3& new_rotat
     SetGlobalTransform(position, rotation, scale);
 }
 
+float3 Hachiko::ComponentTransform::AsConsistentEulerAngles(const float3& euler_angles) const
+{
+    float3 consistent_euler_angles = euler_angles;
+    FixEulerAngleSymbol(consistent_euler_angles.x);
+    FixEulerAngleSymbol(consistent_euler_angles.y);
+    FixEulerAngleSymbol(consistent_euler_angles.z);
+    return consistent_euler_angles;
+}
+
+void Hachiko::ComponentTransform::FixEulerAngleSymbol(float& euler_angle) const
+{
+    if (euler_angle == -180.f || euler_angle == -0.f)
+    {
+        euler_angle = abs(euler_angle);
+    }
+}
+
 
 /***    GETTERS     ***/
 
@@ -295,7 +312,7 @@ void Hachiko::ComponentTransform::Save(YAML::Node& node) const
 {
     node.SetTag("transform");
     node[TRANSFORM_POSITION] = local_position;
-    node[TRANSFORM_ROTATION] = local_rotation_euler;
+    node[TRANSFORM_ROTATION] = AsConsistentEulerAngles(local_rotation_euler);
     node[TRANSFORM_SCALE] = local_scale;
 }
 
