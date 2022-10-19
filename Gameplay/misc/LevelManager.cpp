@@ -31,6 +31,11 @@ void Hachiko::Scripting::LevelManager::OnAwake()
 
 	_gauntlet_ui_go->SetActive(false);
 
+	if (_victory_screen != nullptr)
+	{
+		_victory_screen->SetActive(false);
+	}
+
 	_time = 0;
 }
 
@@ -48,6 +53,11 @@ void Hachiko::Scripting::LevelManager::OnUpdate()
 	if (_last_gauntlet) 
 	{
 		_gauntlet_ui_go->SetActive(_last_gauntlet && !_last_gauntlet->IsCompleted());
+	}
+
+	if (_victory && Input::IsKeyPressed(Input::KeyCode::KEY_SPACE))
+	{
+		SceneManagement::SwitchScene(Scenes::MAIN_MENU);
 	}
 }
 
@@ -94,4 +104,13 @@ void Hachiko::Scripting::LevelManager::GoalReached()
 	{
 		SceneManagement::SwitchScene(Scenes::MAIN_MENU);
 	}
+}
+
+void Hachiko::Scripting::LevelManager::BossKilled()
+{
+	if (_victory_screen != nullptr)
+	{
+		_victory_screen->SetActive(true);
+	}
+	_victory = true;
 }
