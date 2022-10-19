@@ -201,11 +201,12 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 
 	_weapon_charge_bar = _weapon_charge_bar_go->GetComponent<ComponentProgressBar>();
 
-	// First position and rotation set if no camera is found
-	_cam_positions.push_back(float3(0.0f, 26.0f, 17.5f));
+	// The first position will be the current position the camera has
+	_cam_positions.push_back(float3(0.0f, 20.0f, 13.0f));
 	_cam_rotations.push_back(float3(125.0f, 0.0f, 180.0f));
 
-	_cam_positions.push_back(float3(0.0f, 19.0f, 13.0f));
+	// Second position is the "Basic" position for travelling camera
+	_cam_positions.push_back(float3(0.0f, 26.0f, 17.5f));
 	_cam_rotations.push_back(float3(125.0f, 0.0f, 180.0f));
 
 	if (_camera != nullptr)
@@ -344,6 +345,7 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 			_dash_trail->SetActive(false);
 			StopParticles();
 
+			// Close up to player when dying
 			if (!_is_dying)
 			{
 				_camera->GetComponent<PlayerCamera>()->ChangeRelativePosition(float3(0.0, 10.0, 7.0), false, 0.005f, 0.0f, false);
@@ -518,19 +520,6 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 		_god_mode = !_god_mode;
 
 		ToggleGodMode();
-	}
-
-	// Testing for camera
-	if (Input::IsKeyDown(Input::KeyCode::KEY_C))
-	{
-
-		_camera->GetComponent<PlayerCamera>()->SwitchRelativePosition(_cam_positions[1], 1.0f);
-		_camera->GetComponent<PlayerCamera>()->RotateCameraTo(_cam_rotations[1], 1.0f);
-
-		if (_ui_damage)
-		{
-			_ui_damage->SetActive(!_ui_damage->IsActive());
-		}
 	}
 }
 
@@ -1338,7 +1327,6 @@ void Hachiko::Scripting::PlayerController::PickupParasite(EnemyController* enemy
 	if (_ui_damage && _ui_damage->IsActive())
 	{
 		_lh_vfx_current_time = 0.0f;
-		_camera->GetComponent<PlayerCamera>()->ChangeRelativePosition(_cam_positions[0], true, 1.0f / _low_health_vfx_time);
 		_ui_damage->GetComponent<ComponentImage>()->SetColor(float4(1.0f, 1.0f, 1.0f, 1.0f));
 	}
 
@@ -1377,7 +1365,6 @@ bool Hachiko::Scripting::PlayerController::RegisterHit(int damage_received, floa
 		if (_ui_damage && _combat_stats->_current_hp <= 1)
 		{
 			_lh_vfx_current_time = 0.0f;
-			_camera->GetComponent<PlayerCamera>()->ChangeRelativePosition(_cam_positions[1], true, 1.0f/_low_health_vfx_time);
 			_ui_damage->SetActive(true);
 			_ui_damage->GetComponent<ComponentImage>()->SetColor(float4(1.0f, 1.0f, 1.0f, 0.0f));
 		}
@@ -1616,8 +1603,13 @@ void Hachiko::Scripting::PlayerController::ResetPlayer(float3 spawn_pos)
 	_aim_indicator_billboard->Stop();
 
 	_ui_damage->SetActive(false);
-	_camera->GetComponent<PlayerCamera>()->ChangeRelativePosition(_cam_positions[0], true, 0.0f);
+	_camera->GetComponent<PlayerCamera>()->ChangeRelativePosition(_cam_positions[1], true, 0.0f);
 	_is_dying = false;
+
+	// Camera gets set back to player when it respawns
+	_camera->GetComponent<PlayerCamera>()->ChangeRelativePosition(_cam_positions[1], false, .2f);
+	_camera->GetComponent<PlayerCamera>()->RotateCameraTo(_cam_rotations[0], .2f);
+	_camera->GetComponent<PlayerCamera>()->SetObjective(game_object);
 
 	ChangeWeapon(_current_weapon);
 	UpdateHealthBar();
