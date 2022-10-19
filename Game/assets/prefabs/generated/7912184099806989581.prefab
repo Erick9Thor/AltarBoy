@@ -6,7 +6,7 @@ component:
     type: 1
     enabled: true
     position: [0, 0, 0]
-    rotation: [-0, 0, -0]
+    rotation: [0, 0, 0]
     scale: [1, 1, 1]
 child:
   - name: trap_grp
@@ -16,7 +16,7 @@ child:
         type: 1
         enabled: true
         position: [0, 0, 0]
-        rotation: [-0, 0, -0]
+        rotation: [0, 0, 0]
         scale: [0.01, 0.01, 0.01]
     child:
       - name: crystalPlatform_mesh
@@ -26,7 +26,7 @@ child:
             type: 1
             enabled: true
             position: [-5864, -166.8, -29.8]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [92.13, 92.13, 92.13]
           - !<mesh_renderer>
             type: 2
@@ -34,6 +34,7 @@ child:
             mesh_id: 2506644708261707169
             navigable: false
             visible: true
+            casting_shadow: true
             material_id: 2763340240390045342
             tint_color: [1, 1, 1, 1]
       - name: crystalPlatform_mesh001
@@ -51,6 +52,7 @@ child:
             mesh_id: 17643454874662636899
             navigable: false
             visible: true
+            casting_shadow: true
             material_id: 2763340240390045342
             tint_color: [1, 1, 1, 1]
       - name: crystalPlatform_mesh002
@@ -68,6 +70,7 @@ child:
             mesh_id: 16887761931200774082
             navigable: false
             visible: true
+            casting_shadow: true
             material_id: 2763340240390045342
             tint_color: [1, 1, 1, 1]
       - name: crystalPlatform_mesh003
@@ -77,7 +80,7 @@ child:
             type: 1
             enabled: true
             position: [-2022, -166.8, -31.17]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [92.13, 92.13, 92.13]
           - !<mesh_renderer>
             type: 2
@@ -85,6 +88,7 @@ child:
             mesh_id: 15205887062554213019
             navigable: false
             visible: true
+            casting_shadow: true
             material_id: 2763340240390045342
             tint_color: [1, 1, 1, 1]
       - name: crystalPlatform_mesh004
@@ -102,6 +106,7 @@ child:
             mesh_id: 15757691034467910288
             navigable: false
             visible: true
+            casting_shadow: true
             material_id: 2763340240390045342
             tint_color: [1, 1, 1, 1]
       - name: crystalPlatform_mesh005
@@ -119,6 +124,7 @@ child:
             mesh_id: 3813130990395514432
             navigable: false
             visible: true
+            casting_shadow: true
             material_id: 2763340240390045342
             tint_color: [1, 1, 1, 1]
       - name: crystalPlatform_mesh006
@@ -128,7 +134,7 @@ child:
             type: 1
             enabled: true
             position: [1.055e+04, -166.8, 9036]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [92.13, 92.13, 92.13]
           - !<mesh_renderer>
             type: 2
@@ -136,6 +142,7 @@ child:
             mesh_id: 15925157204140414919
             navigable: false
             visible: true
+            casting_shadow: true
             material_id: 2763340240390045342
             tint_color: [1, 1, 1, 1]
       - name: crystalPlatform_mesh007
@@ -145,7 +152,7 @@ child:
             type: 1
             enabled: true
             position: [1.133e+04, -166.8, 9036]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [92.13, 92.13, 92.13]
           - !<mesh_renderer>
             type: 2
@@ -153,6 +160,7 @@ child:
             mesh_id: 7372642355701035740
             navigable: false
             visible: true
+            casting_shadow: true
             material_id: 2763340240390045342
             tint_color: [1, 1, 1, 1]
   - name: colaiderPlane_mesh
@@ -170,6 +178,7 @@ child:
         mesh_id: 8602460364612300220
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 6750369022920963075
         tint_color: [1, 1, 1, 1]
   - name: bridgeWhole_mesh
@@ -187,6 +196,7 @@ child:
         mesh_id: 8171315654612620853
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 18317123039148962586
         tint_color: [1, 1, 1, 1]
       - !<mesh_renderer>
@@ -195,6 +205,7 @@ child:
         mesh_id: 808652311086485587
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 11703061343301313175
         tint_color: [1, 1, 1, 1]
   - name: cristalEnergy_mesh
@@ -212,6 +223,7 @@ child:
         mesh_id: 5500727274536686468
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 6203751403559151145
         tint_color: [1, 1, 1, 1]
       - !<mesh_renderer>
@@ -220,6 +232,7 @@ child:
         mesh_id: 11611118726600457917
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 17484963463488759119
         tint_color: [1, 1, 1, 1]
   - name: bridgeWhole_mesh001
@@ -237,6 +250,7 @@ child:
         mesh_id: 5684241499364032365
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 11703061343301313175
         tint_color: [1, 1, 1, 1]
   - name: bridgeBroken_mesh
@@ -246,7 +260,7 @@ child:
         type: 1
         enabled: true
         position: [-75.43, 2.601, -33.22]
-        rotation: [-0, 0, -0]
+        rotation: [0, 0, 0]
         scale: [0.6445, 0.6445, 0.6445]
       - !<mesh_renderer>
         type: 2
@@ -254,6 +268,7 @@ child:
         mesh_id: 944353366499008603
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 11472302246130122108
         tint_color: [1, 1, 1, 1]
   - name: bridgeBroken_mesh001
@@ -271,6 +286,7 @@ child:
         mesh_id: 13467940143018794114
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 11472302246130122108
         tint_color: [1, 1, 1, 1]
   - name: tileWhole02_mesh
@@ -288,6 +304,7 @@ child:
         mesh_id: 1668722456899139167
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 13169960043478831330
         tint_color: [1, 1, 1, 1]
   - name: tileWhole02_mesh001
@@ -305,6 +322,7 @@ child:
         mesh_id: 7133067130711396982
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 14695989268197528901
         tint_color: [1, 1, 1, 1]
   - name: tileWhole02_mesh002
@@ -322,6 +340,7 @@ child:
         mesh_id: 14156556956042135593
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 14695989268197528901
         tint_color: [1, 1, 1, 1]
       - !<mesh_renderer>
@@ -330,6 +349,7 @@ child:
         mesh_id: 11297598867215515877
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 9941088358221198828
         tint_color: [1, 1, 1, 1]
       - !<mesh_renderer>
@@ -338,6 +358,7 @@ child:
         mesh_id: 12952540202143492308
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 7100525532478954960
         tint_color: [1, 1, 1, 1]
   - name: shrine_mesh
@@ -355,6 +376,7 @@ child:
         mesh_id: 5746596155727572461
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 16007776213478930409
         tint_color: [1, 1, 1, 1]
   - name: tileWhole02_mesh003
@@ -372,6 +394,7 @@ child:
         mesh_id: 17956086959890280888
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 13169960043478831330
         tint_color: [1, 1, 1, 1]
   - name: tileWhole03_mesh
@@ -389,6 +412,7 @@ child:
         mesh_id: 17435603703751999588
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 9941088358221198828
         tint_color: [1, 1, 1, 1]
       - !<mesh_renderer>
@@ -397,6 +421,7 @@ child:
         mesh_id: 4836917990603703729
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 7100525532478954960
         tint_color: [1, 1, 1, 1]
       - !<mesh_renderer>
@@ -405,6 +430,7 @@ child:
         mesh_id: 3215486742393510487
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 14695989268197528901
         tint_color: [1, 1, 1, 1]
   - name: tileWhole02_mesh004
@@ -422,6 +448,7 @@ child:
         mesh_id: 7791067447445931077
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 14695989268197528901
         tint_color: [1, 1, 1, 1]
       - !<mesh_renderer>
@@ -430,6 +457,7 @@ child:
         mesh_id: 9501063347387610911
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 9941088358221198828
         tint_color: [1, 1, 1, 1]
   - name: tileWhole02_mesh005
@@ -447,6 +475,7 @@ child:
         mesh_id: 6966000223974283358
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 14695989268197528901
         tint_color: [1, 1, 1, 1]
       - !<mesh_renderer>
@@ -455,6 +484,7 @@ child:
         mesh_id: 2790794265852485456
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 9941088358221198828
         tint_color: [1, 1, 1, 1]
   - name: tileWhole02_mesh006
@@ -472,6 +502,7 @@ child:
         mesh_id: 9505157321036735226
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 13169960043478831330
         tint_color: [1, 1, 1, 1]
       - !<mesh_renderer>
@@ -480,6 +511,7 @@ child:
         mesh_id: 1682445345776503115
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 1653963119651545497
         tint_color: [1, 1, 1, 1]
   - name: tileWhole02_mesh007
@@ -497,6 +529,7 @@ child:
         mesh_id: 12211857774899852906
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 13169960043478831330
         tint_color: [1, 1, 1, 1]
   - name: tileWhole02_mesh008
@@ -514,6 +547,7 @@ child:
         mesh_id: 13603176411770429683
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 13169960043478831330
         tint_color: [1, 1, 1, 1]
   - name: tileWhole02_mesh009
@@ -531,6 +565,7 @@ child:
         mesh_id: 1155858436844966645
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 13169960043478831330
         tint_color: [1, 1, 1, 1]
       - !<mesh_renderer>
@@ -539,6 +574,7 @@ child:
         mesh_id: 245853817192098862
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 7972135461413650396
         tint_color: [1, 1, 1, 1]
   - name: tileWhole02_mesh010
@@ -556,6 +592,7 @@ child:
         mesh_id: 17620765898322856954
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 14695989268197528901
         tint_color: [1, 1, 1, 1]
   - name: tileWhole02_mesh011
@@ -573,6 +610,7 @@ child:
         mesh_id: 7523788956377503846
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 14695989268197528901
         tint_color: [1, 1, 1, 1]
   - name: tileWhole02_mesh012
@@ -590,6 +628,7 @@ child:
         mesh_id: 14358622285485580665
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 14695989268197528901
         tint_color: [1, 1, 1, 1]
   - name: plant07_mesh001
@@ -607,6 +646,7 @@ child:
         mesh_id: 13041356543390342954
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 8190522889918511575
         tint_color: [1, 1, 1, 1]
   - name: wallStatementDoor_mesh
@@ -624,6 +664,7 @@ child:
         mesh_id: 16161787242940110785
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 7972135461413650396
         tint_color: [1, 1, 1, 1]
   - name: wallStatementTile02_mesh
@@ -641,6 +682,7 @@ child:
         mesh_id: 6088652455407464889
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 4681365883756121416
         tint_color: [1, 1, 1, 1]
       - !<mesh_renderer>
@@ -649,6 +691,7 @@ child:
         mesh_id: 15523811914246811461
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 1602815782701709871
         tint_color: [1, 1, 1, 1]
   - name: floorTilePlain01_mesh
@@ -666,6 +709,7 @@ child:
         mesh_id: 964794996928569871
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 2877723901879540075
         tint_color: [1, 1, 1, 1]
       - !<mesh_renderer>
@@ -674,6 +718,7 @@ child:
         mesh_id: 16531340738167257503
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 2300243673058527724
         tint_color: [1, 1, 1, 1]
   - name: tileWhole02_mesh013
@@ -700,6 +745,7 @@ child:
         mesh_id: 645065880688857796
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 13905282772193698380
         tint_color: [1, 1, 1, 1]
   - name: columnArc_mesh
@@ -717,6 +763,7 @@ child:
         mesh_id: 3607908681890545516
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 13905282772193698380
         tint_color: [1, 1, 1, 1]
       - !<mesh_renderer>
@@ -725,6 +772,7 @@ child:
         mesh_id: 2074261218975206606
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 5414009786853766812
         tint_color: [1, 1, 1, 1]
   - name: laser_mesh
@@ -742,6 +790,7 @@ child:
         mesh_id: 838002531152775858
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 16971418098135223375
         tint_color: [1, 1, 1, 1]
   - name: laser_mesh001
@@ -759,6 +808,7 @@ child:
         mesh_id: 2785840491367996640
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 16971418098135223375
         tint_color: [1, 1, 1, 1]
   - name: laser_mesh002
@@ -776,6 +826,7 @@ child:
         mesh_id: 14800171153703890816
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 16971418098135223375
         tint_color: [1, 1, 1, 1]
   - name: laser_mesh003
@@ -793,6 +844,7 @@ child:
         mesh_id: 15952062884272764606
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 17731599994553605144
         tint_color: [1, 1, 1, 1]
   - name: laser_mesh004
@@ -810,6 +862,7 @@ child:
         mesh_id: 18340676131623295134
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 16971418098135223375
         tint_color: [1, 1, 1, 1]
   - name: laser_mesh005
@@ -827,6 +880,7 @@ child:
         mesh_id: 14395962706028979140
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 17731599994553605144
         tint_color: [1, 1, 1, 1]
   - name: rockBig01_mesh
@@ -844,6 +898,7 @@ child:
         mesh_id: 14421628124758579373
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 4294729846357876471
         tint_color: [1, 1, 1, 1]
   - name: rockSpike02_mesh
@@ -861,6 +916,7 @@ child:
         mesh_id: 3287526454941184188
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 1150697867389977299
         tint_color: [1, 1, 1, 1]
   - name: rockBorder01_mesh
@@ -878,6 +934,7 @@ child:
         mesh_id: 18152971788731054844
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 4294729846357876471
         tint_color: [1, 1, 1, 1]
   - name: rock03_mesh
@@ -895,6 +952,7 @@ child:
         mesh_id: 10663180488276873909
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 16744904178708904229
         tint_color: [1, 1, 1, 1]
   - name: rockBorder02_mesh
@@ -912,6 +970,7 @@ child:
         mesh_id: 7197093082144126351
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 16744904178708904229
         tint_color: [1, 1, 1, 1]
   - name: rockBorder01_mesh001
@@ -929,6 +988,7 @@ child:
         mesh_id: 9249361611754661212
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 16744904178708904229
         tint_color: [1, 1, 1, 1]
   - name: caveRock_mesh
@@ -946,6 +1006,7 @@ child:
         mesh_id: 5068531176614757348
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 4294729846357876471
         tint_color: [1, 1, 1, 1]
   - name: rock01_mesh
@@ -963,6 +1024,7 @@ child:
         mesh_id: 3977437998825167557
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 4294729846357876471
         tint_color: [1, 1, 1, 1]
   - name: rock03_mesh001
@@ -980,6 +1042,7 @@ child:
         mesh_id: 12095710516946875287
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 4294729846357876471
         tint_color: [1, 1, 1, 1]
   - name: rockSpike01_mesh
@@ -997,6 +1060,7 @@ child:
         mesh_id: 13098484541330563292
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 1150697867389977299
         tint_color: [1, 1, 1, 1]
   - name: rockBorder01_mesh002
@@ -1014,6 +1078,7 @@ child:
         mesh_id: 2585751641865332421
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 4294729846357876471
         tint_color: [1, 1, 1, 1]
   - name: crystal_mesh
@@ -1031,6 +1096,7 @@ child:
         mesh_id: 9380729358790712301
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 6203751403559151145
         tint_color: [1, 1, 1, 1]
   - name: caveRock_mesh001
@@ -1040,7 +1106,7 @@ child:
         type: 1
         enabled: true
         position: [95.08, 0.1354, 27.67]
-        rotation: [-180, -40, -180]
+        rotation: [-180, -40, 180]
         scale: [0.0045, 0.0045, 0.0045]
       - !<mesh_renderer>
         type: 2
@@ -1048,6 +1114,7 @@ child:
         mesh_id: 15583727261095232421
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 16744904178708904229
         tint_color: [1, 1, 1, 1]
   - name: rock01_mesh001
@@ -1065,6 +1132,7 @@ child:
         mesh_id: 7332433352440866885
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 4294729846357876471
         tint_color: [1, 1, 1, 1]
   - name: columnArcBroken04_mesh
@@ -1082,6 +1150,7 @@ child:
         mesh_id: 14787598519906202492
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 13905282772193698380
         tint_color: [1, 1, 1, 1]
   - name: columnArcBroken04_mesh001
@@ -1108,6 +1177,7 @@ child:
         mesh_id: 2211582317009912896
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 16176601509327396827
         tint_color: [1, 1, 1, 1]
   - name: tileWhole02_mesh014
@@ -1125,6 +1195,7 @@ child:
         mesh_id: 5283997983669502575
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 13169960043478831330
         tint_color: [1, 1, 1, 1]
       - !<mesh_renderer>
@@ -1133,6 +1204,7 @@ child:
         mesh_id: 6323362913767587387
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 1653963119651545497
         tint_color: [1, 1, 1, 1]
   - name: tileWhole02_mesh015
@@ -1150,6 +1222,7 @@ child:
         mesh_id: 5826872817723713764
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 13169960043478831330
         tint_color: [1, 1, 1, 1]
   - name: FloorTileBroken_mesh001
@@ -1167,6 +1240,7 @@ child:
         mesh_id: 617009206266365726
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 16176601509327396827
         tint_color: [1, 1, 1, 1]
   - name: rockMound01_mesh
@@ -1184,6 +1258,7 @@ child:
         mesh_id: 12406295079345409758
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 16744904178708904229
         tint_color: [1, 1, 1, 1]
   - name: columnArcComplet_mesh001
@@ -1201,6 +1276,7 @@ child:
         mesh_id: 5427916776193168951
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 13905282772193698380
         tint_color: [1, 1, 1, 1]
       - !<mesh_renderer>
@@ -1209,6 +1285,7 @@ child:
         mesh_id: 12601186139563447943
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 5414009786853766812
         tint_color: [1, 1, 1, 1]
   - name: crystalLamp02_mesh
@@ -1226,6 +1303,7 @@ child:
         mesh_id: 9169282181222322196
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 5020567223825987701
         tint_color: [1, 1, 1, 1]
       - !<mesh_renderer>
@@ -1234,6 +1312,7 @@ child:
         mesh_id: 13108355647367400871
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 15757518705011541631
         tint_color: [1, 1, 1, 1]
   - name: crystalLamp02_mesh001
@@ -1243,7 +1322,7 @@ child:
         type: 1
         enabled: true
         position: [48.84, 20.08, 74.37]
-        rotation: [180, 10, -180]
+        rotation: [180, 10, 180]
         scale: [1.863, 3.351, 2.508]
       - !<mesh_renderer>
         type: 2
@@ -1251,6 +1330,7 @@ child:
         mesh_id: 1208083601733192766
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 5020567223825987701
         tint_color: [1, 1, 1, 1]
       - !<mesh_renderer>
@@ -1259,6 +1339,7 @@ child:
         mesh_id: 1741081291930428229
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 15757518705011541631
         tint_color: [1, 1, 1, 1]
   - name: crystalLamp02_mesh002
@@ -1276,6 +1357,7 @@ child:
         mesh_id: 4502459504390863777
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 5020567223825987701
         tint_color: [1, 1, 1, 1]
       - !<mesh_renderer>
@@ -1284,6 +1366,7 @@ child:
         mesh_id: 12381130894879851703
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 15757518705011541631
         tint_color: [1, 1, 1, 1]
   - name: rock03_mesh002
@@ -1301,6 +1384,7 @@ child:
         mesh_id: 15776521003712865831
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 16744904178708904229
         tint_color: [1, 1, 1, 1]
   - name: rock03_mesh003
@@ -1318,6 +1402,7 @@ child:
         mesh_id: 14713877288946719045
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 16744904178708904229
         tint_color: [1, 1, 1, 1]
   - name: rock03_mesh004
@@ -1335,6 +1420,7 @@ child:
         mesh_id: 870668949042825567
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 16744904178708904229
         tint_color: [1, 1, 1, 1]
   - name: rock03_mesh005
@@ -1352,6 +1438,7 @@ child:
         mesh_id: 17124283308791289569
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 16744904178708904229
         tint_color: [1, 1, 1, 1]
   - name: rock03_mesh006
@@ -1369,6 +1456,7 @@ child:
         mesh_id: 13031462058998458651
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 16744904178708904229
         tint_color: [1, 1, 1, 1]
   - name: rock03_mesh007
@@ -1386,6 +1474,7 @@ child:
         mesh_id: 8066112702025486586
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 16744904178708904229
         tint_color: [1, 1, 1, 1]
   - name: crystalLamp02_mesh001001
@@ -1403,6 +1492,7 @@ child:
         mesh_id: 2864146588916219875
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 5020567223825987701
         tint_color: [1, 1, 1, 1]
       - !<mesh_renderer>
@@ -1411,6 +1501,7 @@ child:
         mesh_id: 17363829842249937477
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 15757518705011541631
         tint_color: [1, 1, 1, 1]
   - name: laser_mesh006
@@ -1428,6 +1519,7 @@ child:
         mesh_id: 3890582027726987314
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 17731599994553605144
         tint_color: [1, 1, 1, 1]
   - name: laser_mesh007
@@ -1445,6 +1537,7 @@ child:
         mesh_id: 11480420843327225315
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 16971418098135223375
         tint_color: [1, 1, 1, 1]
   - name: laser_mesh008
@@ -1462,6 +1555,7 @@ child:
         mesh_id: 3119166968559484812
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 16971418098135223375
         tint_color: [1, 1, 1, 1]
   - name: columnArcBroken04_mesh002
@@ -1479,6 +1573,7 @@ child:
         mesh_id: 6754471613960286475
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 5414009786853766812
         tint_color: [1, 1, 1, 1]
   - name: columnArcBroken0_mesh
@@ -1496,6 +1591,7 @@ child:
         mesh_id: 7575045046385165559
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 5414009786853766812
         tint_color: [1, 1, 1, 1]
   - name: columnArcBroken04_mesh003
@@ -1513,6 +1609,7 @@ child:
         mesh_id: 18446509368348417340
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 5414009786853766812
         tint_color: [1, 1, 1, 1]
   - name: laser_mesh009
@@ -1530,6 +1627,7 @@ child:
         mesh_id: 10271416170440275269
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 16971418098135223375
         tint_color: [1, 1, 1, 1]
   - name: laser_mesh010
@@ -1547,6 +1645,7 @@ child:
         mesh_id: 132037210107893495
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 16971418098135223375
         tint_color: [1, 1, 1, 1]
   - name: laser_mesh011
@@ -1564,6 +1663,7 @@ child:
         mesh_id: 2669557461018634537
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 16971418098135223375
         tint_color: [1, 1, 1, 1]
   - name: laser_mesh012
@@ -1581,6 +1681,7 @@ child:
         mesh_id: 17626617280204260355
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 16971418098135223375
         tint_color: [1, 1, 1, 1]
   - name: laser_mesh013
@@ -1598,6 +1699,7 @@ child:
         mesh_id: 18315592547322668310
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 16971418098135223375
         tint_color: [1, 1, 1, 1]
   - name: laser_mesh014
@@ -1607,7 +1709,7 @@ child:
         type: 1
         enabled: true
         position: [-6.57, 0.8659, 21.19]
-        rotation: [-180, -0, 180]
+        rotation: [180, -0, 180]
         scale: [0.0082, 0.0082, 0.0082]
       - !<mesh_renderer>
         type: 2
@@ -1615,6 +1717,7 @@ child:
         mesh_id: 9168729086806035331
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 16971418098135223375
         tint_color: [1, 1, 1, 1]
   - name: laser_mesh015
@@ -1632,6 +1735,7 @@ child:
         mesh_id: 16906259582772825870
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 16971418098135223375
         tint_color: [1, 1, 1, 1]
   - name: laser_mesh001001
@@ -1649,6 +1753,7 @@ child:
         mesh_id: 449047118773989097
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 16971418098135223375
         tint_color: [1, 1, 1, 1]
   - name: laser_mesh002001
@@ -1666,6 +1771,7 @@ child:
         mesh_id: 17498612263796642982
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 16971418098135223375
         tint_color: [1, 1, 1, 1]
   - name: laser_mesh003001
@@ -1683,6 +1789,7 @@ child:
         mesh_id: 4089555946509765057
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 16971418098135223375
         tint_color: [1, 1, 1, 1]
   - name: laser_mesh004001
@@ -1700,6 +1807,7 @@ child:
         mesh_id: 634736463805399101
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 16971418098135223375
         tint_color: [1, 1, 1, 1]
   - name: laser_mesh005001
@@ -1709,7 +1817,7 @@ child:
         type: 1
         enabled: true
         position: [-6.723, 0.8659, 15.96]
-        rotation: [180, 40, -180]
+        rotation: [180, 40, 180]
         scale: [0.0082, 0.0082, 0.0082]
       - !<mesh_renderer>
         type: 2
@@ -1717,6 +1825,7 @@ child:
         mesh_id: 3661467260837011397
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 16971418098135223375
         tint_color: [1, 1, 1, 1]
   - name: laser_mesh006001
@@ -1734,6 +1843,7 @@ child:
         mesh_id: 14966739791518371539
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 16971418098135223375
         tint_color: [1, 1, 1, 1]
   - name: laser_mesh007001
@@ -1743,7 +1853,7 @@ child:
         type: 1
         enabled: true
         position: [-22.17, 0.8659, 0.8548]
-        rotation: [180, 40, -180]
+        rotation: [180, 40, 180]
         scale: [0.0082, 0.0082, 0.0082]
       - !<mesh_renderer>
         type: 2
@@ -1751,6 +1861,7 @@ child:
         mesh_id: 16094669698837069619
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 16971418098135223375
         tint_color: [1, 1, 1, 1]
   - name: laser_mesh008001
@@ -1768,5 +1879,6 @@ child:
         mesh_id: 10277299180418018143
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 16971418098135223375
         tint_color: [1, 1, 1, 1]
