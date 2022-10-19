@@ -6,7 +6,7 @@ component:
     type: 1
     enabled: true
     position: [0, 0, 0]
-    rotation: [-0, 0, -0]
+    rotation: [0, 0, 0]
     scale: [1, 1, 1]
   - !<animation>
     type: 14
@@ -101,7 +101,7 @@ child:
         type: 1
         enabled: true
         position: [-75.43, 2.601, -33.22]
-        rotation: [-0, 0, -0]
+        rotation: [0, 0, 0]
         scale: [0.6445, 0.6445, 0.6445]
       - !<mesh_renderer>
         type: 2
@@ -1253,7 +1253,7 @@ child:
         type: 1
         enabled: true
         position: [-75.52, 2.601, -33.22]
-        rotation: [-0, 0, -0]
+        rotation: [0, 0, 0]
         scale: [0.6445, 0.6445, 0.6445]
       - !<mesh_renderer>
         type: 2
@@ -24962,7 +24962,7 @@ child:
             type: 1
             enabled: true
             position: [-4.244, -0.0157, 1.635]
-            rotation: [-0, 0, 99.9]
+            rotation: [0, 0, 99.9]
             scale: [0.674, 0.674, 0.674]
         child:
           - name: crystalChunkk041
@@ -25148,7 +25148,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0.1721, 0.3532, -0.9034]
-                    rotation: [65, 0, -0]
+                    rotation: [65, 0, 0]
                     scale: [0.0254, 0.0254, 0.0254]
                   - !<mesh_renderer>
                     type: 2
@@ -25166,7 +25166,7 @@ child:
                     type: 1
                     enabled: true
                     position: [-0.0893, 0.1136, -0.8654]
-                    rotation: [30, 0, -0]
+                    rotation: [30, 0, 0]
                     scale: [0.0142, 0.0142, 0.0254]
                   - !<mesh_renderer>
                     type: 2
@@ -28828,7 +28828,7 @@ child:
             type: 1
             enabled: true
             position: [2.424, -4.449, -7.272]
-            rotation: [-0, 0, 20.75]
+            rotation: [0, 0, 20.75]
             scale: [0.3505, 0.3505, 0.3505]
           - !<mesh_renderer>
             type: 2
@@ -28882,7 +28882,7 @@ child:
             type: 1
             enabled: true
             position: [-2.243, -3.878, -7.351]
-            rotation: [-0, 0, 153.9]
+            rotation: [0, 0, 153.9]
             scale: [0.2779, 0.2779, 0.2779]
           - !<mesh_renderer>
             type: 2
@@ -28918,7 +28918,7 @@ child:
             type: 1
             enabled: true
             position: [2.722, -0.911, -6.675]
-            rotation: [-0, 0, 85]
+            rotation: [0, 0, 85]
             scale: [0.2668, 0.2668, 0.2668]
           - !<mesh_renderer>
             type: 2
@@ -28972,7 +28972,7 @@ child:
             type: 1
             enabled: true
             position: [1.657, -2.336, 0.3253]
-            rotation: [-0, 0, -168]
+            rotation: [0, 0, -168]
             scale: [0.0106, 0.0106, 0.0106]
           - !<mesh_renderer>
             type: 2
@@ -28990,7 +28990,7 @@ child:
             type: 1
             enabled: true
             position: [-2.701, -1.294, -0.259]
-            rotation: [-0, 0, 105.3]
+            rotation: [0, 0, 105.3]
             scale: [0.2076, 0.2076, 0.2076]
           - !<mesh_renderer>
             type: 2
@@ -29008,7 +29008,7 @@ child:
             type: 1
             enabled: true
             position: [-1.74, 1.471, 0.3089]
-            rotation: [-0, 0, -149.3]
+            rotation: [0, 0, -149.3]
             scale: [0.223, 0.223, 0.223]
           - !<mesh_renderer>
             type: 2
@@ -29026,7 +29026,7 @@ child:
             type: 1
             enabled: true
             position: [-1.383, 0.4886, -5.964]
-            rotation: [-0, 0, -130.9]
+            rotation: [0, 0, -130.9]
             scale: [0.2655, 0.2655, 0.2655]
           - !<mesh_renderer>
             type: 2
@@ -29044,7 +29044,7 @@ child:
             type: 1
             enabled: true
             position: [1.078, 1.116, 0.6004]
-            rotation: [-0, 0, -170.9]
+            rotation: [0, 0, -170.9]
             scale: [0.1379, 0.1379, 0.1379]
           - !<mesh_renderer>
             type: 2
@@ -31594,7 +31594,7 @@ child:
             type: 1
             enabled: true
             position: [-4.244, -0.0157, 1.635]
-            rotation: [-0, 0, 99.9]
+            rotation: [0, 0, 99.9]
             scale: [0.674, 0.674, 0.674]
         child:
           - name: crystalChunkk045
@@ -31780,7 +31780,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0.1721, 0.3532, -0.9034]
-                    rotation: [65, 0, -0]
+                    rotation: [65, 0, 0]
                     scale: [0.0254, 0.0254, 0.0254]
                   - !<mesh_renderer>
                     type: 2
@@ -31798,7 +31798,7 @@ child:
                     type: 1
                     enabled: true
                     position: [-0.0893, 0.1136, -0.8654]
-                    rotation: [30, 0, -0]
+                    rotation: [30, 0, 0]
                     scale: [0.0142, 0.0142, 0.0254]
                   - !<mesh_renderer>
                     type: 2
@@ -35460,7 +35460,7 @@ child:
             type: 1
             enabled: true
             position: [2.424, -4.449, -7.272]
-            rotation: [-0, 0, 20.75]
+            rotation: [0, 0, 20.75]
             scale: [0.3505, 0.3505, 0.3505]
           - !<mesh_renderer>
             type: 2
@@ -35514,7 +35514,7 @@ child:
             type: 1
             enabled: true
             position: [-2.243, -3.878, -7.351]
-            rotation: [-0, 0, 153.9]
+            rotation: [0, 0, 153.9]
             scale: [0.2779, 0.2779, 0.2779]
           - !<mesh_renderer>
             type: 2
@@ -35550,7 +35550,7 @@ child:
             type: 1
             enabled: true
             position: [2.722, -0.911, -6.675]
-            rotation: [-0, 0, 85]
+            rotation: [0, 0, 85]
             scale: [0.2668, 0.2668, 0.2668]
           - !<mesh_renderer>
             type: 2
@@ -35604,7 +35604,7 @@ child:
             type: 1
             enabled: true
             position: [1.657, -2.336, 0.3253]
-            rotation: [-0, 0, -168]
+            rotation: [0, 0, -168]
             scale: [0.0106, 0.0106, 0.0106]
           - !<mesh_renderer>
             type: 2
@@ -35622,7 +35622,7 @@ child:
             type: 1
             enabled: true
             position: [-2.701, -1.294, -0.259]
-            rotation: [-0, 0, 105.3]
+            rotation: [0, 0, 105.3]
             scale: [0.2076, 0.2076, 0.2076]
           - !<mesh_renderer>
             type: 2
@@ -35640,7 +35640,7 @@ child:
             type: 1
             enabled: true
             position: [-1.74, 1.471, 0.3089]
-            rotation: [-0, 0, -149.3]
+            rotation: [0, 0, -149.3]
             scale: [0.223, 0.223, 0.223]
           - !<mesh_renderer>
             type: 2
@@ -35658,7 +35658,7 @@ child:
             type: 1
             enabled: true
             position: [-1.383, 0.4886, -5.964]
-            rotation: [-0, 0, -130.9]
+            rotation: [0, 0, -130.9]
             scale: [0.2655, 0.2655, 0.2655]
           - !<mesh_renderer>
             type: 2
@@ -35676,7 +35676,7 @@ child:
             type: 1
             enabled: true
             position: [1.078, 1.116, 0.6004]
-            rotation: [-0, 0, -170.9]
+            rotation: [0, 0, -170.9]
             scale: [0.1379, 0.1379, 0.1379]
           - !<mesh_renderer>
             type: 2
@@ -37710,7 +37710,7 @@ child:
         type: 1
         enabled: true
         position: [113.3, -1.668, 90.36]
-        rotation: [0, 0, -0]
+        rotation: [0, 0, 0]
         scale: [0.9213, 0.9213, 0.9213]
       - !<mesh_renderer>
         type: 2
@@ -37728,7 +37728,7 @@ child:
         type: 1
         enabled: true
         position: [105.5, -1.668, 90.36]
-        rotation: [0, 0, -0]
+        rotation: [0, 0, 0]
         scale: [0.9213, 0.9213, 0.9213]
       - !<mesh_renderer>
         type: 2
@@ -37782,7 +37782,7 @@ child:
         type: 1
         enabled: true
         position: [-20.22, -1.668, -0.3117]
-        rotation: [0, 0, -0]
+        rotation: [0, 0, 0]
         scale: [0.9213, 0.9213, 0.9213]
       - !<mesh_renderer>
         type: 2
@@ -37836,7 +37836,7 @@ child:
         type: 1
         enabled: true
         position: [-58.64, -1.668, -0.298]
-        rotation: [0, 0, -0]
+        rotation: [0, 0, 0]
         scale: [0.9213, 0.9213, 0.9213]
       - !<mesh_renderer>
         type: 2
