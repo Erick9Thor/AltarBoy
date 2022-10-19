@@ -53,6 +53,11 @@ void Hachiko::Scripting::CameraPosChange::OnUpdate()
 			{
 				_camera->SetObjective(_objective);
 			}
+			else
+			{
+				// If no objective is set we return to the player
+				_camera->SetObjective(_player);
+			}
 		}
 		else
 		{
