@@ -64,8 +64,7 @@ void Hachiko::Scripting::PlayerCamera::CheckForObjective()
 		_current_objective = Scenes::GetPlayer();
 		return;
 	}
-
-	if (_current_objective != _objective)
+	else if (_current_objective != _objective)
 	{
 		if (!_is_in_position && _current_objective != nullptr)
 		{
