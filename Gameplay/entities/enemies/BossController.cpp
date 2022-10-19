@@ -439,6 +439,11 @@ void Hachiko::Scripting::BossController::CocoonController()
 
             agent->RemoveFromCrowd();
             obstacle->AddObstacle();
+
+            if (cocoon_placeholder_go)
+            {
+                cocoon_placeholder_go->SetActive(true);
+            }
         }
         return;
     }
@@ -464,10 +469,6 @@ void Hachiko::Scripting::BossController::CocoonController()
 void Hachiko::Scripting::BossController::SetUpCocoon()
 {
     hitable = false;
-    if (cocoon_placeholder_go)
-    {
-        cocoon_placeholder_go->SetActive(true);
-    }
 }
 
 void Hachiko::Scripting::BossController::BreakCocoon()
