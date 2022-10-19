@@ -7,6 +7,7 @@
 #include "entities/player/PlayerController.h"
 #include "entities/player/CombatManager.h"
 #include "entities/enemies/BossController.h"
+#include "entities/player/PlayerCamera.h"
 #include "misc/TimeManager.h"
 
 // TODO: Delete this include:
@@ -39,6 +40,7 @@ void Hachiko::Scripting::CombatManager::OnAwake()
 
 	_player = Scenes::GetPlayer();
 	_boss = Scenes::GetBoss();
+	_camera = Scenes::GetMainCamera()->GetComponent<PlayerCamera>();
 
 	_enemy_packs_container = Scenes::GetEnemiesContainer();
 
@@ -139,10 +141,16 @@ int Hachiko::Scripting::CombatManager::PlayerMeleeAttack(const float4x4& origin,
 		// TODO: Make these settable from editor, but the values are good ngl.
 
 		// Set the time scale to 0.075 instantly:
-		Time::SetTimeScale(0.075f);
+		Time::SetTimeScale(0.75f);
 		// Wait for 0.2 seconds, and Lerp time scale back to
 		// 1.0 in 0.1 seconds:
 		_time_manager->InterpolateToTimeScale(1.0f, 0.1f, 0.2f);
+
+		// We shake the camera depending on the hit's strenght
+		if (_camera)
+		{
+			_camera->Shake(0.6, 0.6 * (float)attack_stats.damage);
+		}
 	}
 
 	return hit_count;
@@ -253,6 +261,10 @@ void Hachiko::Scripting::CombatManager::RunBulletSimulation()
 		if (CheckBulletCollisions(i))
 		{
 			DeactivateBullet(i);
+			if (_camera)
+			{
+				_camera->Shake(0.6f, 1.f);
+			}
 			continue;
 		}
 
