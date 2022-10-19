@@ -62,7 +62,6 @@ void Hachiko::Scripting::PlayerCamera::CheckForObjective()
 	if (_player_ctrl && _player_ctrl->GetCurrentHp() == 1)
 	{
 		_current_objective = Scenes::GetPlayer();
-		return;
 	}
 	else if (_current_objective != _objective)
 	{
