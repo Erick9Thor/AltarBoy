@@ -1603,11 +1603,11 @@ void Hachiko::Scripting::PlayerController::ResetPlayer(float3 spawn_pos)
 	_aim_indicator_billboard->Stop();
 
 	_ui_damage->SetActive(false);
-	_camera->GetComponent<PlayerCamera>()->ChangeRelativePosition(_cam_positions[0], true, 0.0f);
+	_camera->GetComponent<PlayerCamera>()->ChangeRelativePosition(_cam_positions[1], true, 0.0f);
 	_is_dying = false;
 
 	// Camera gets set back to player when it respawns
-	_camera->GetComponent<PlayerCamera>()->ChangeRelativePosition(_cam_positions[0], false, .2f);
+	_camera->GetComponent<PlayerCamera>()->ChangeRelativePosition(_cam_positions[1], false, .2f);
 	_camera->GetComponent<PlayerCamera>()->RotateCameraTo(_cam_rotations[0], .2f);
 	_camera->GetComponent<PlayerCamera>()->SetObjective(game_object);
 
