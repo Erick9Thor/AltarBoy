@@ -3749,6 +3749,11 @@
 						<Sound Name="Intro" ID="{15A3A9FA-90AA-4E1D-9BE7-EA7233284557}" ShortID="221027909">
 							<PropertyList>
 								<Property Name="ListenerRelativeRouting" Type="bool" Value="False"/>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-3</Value>
+									</ValueList>
+								</Property>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
@@ -3759,20 +3764,17 @@
 								</Reference>
 							</ReferenceList>
 							<ChildrenList>
-								<AudioFileSource Name="chavo-del-ocho" ID="{990F7986-4A8F-403D-BA12-DAB5EF8214B4}">
-									<PropertyList>
-										<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
-									</PropertyList>
+								<AudioFileSource Name="ER_cin_with dx" ID="{4180D57C-69CA-4C81-8527-FB7B3BB36FE6}">
 									<Language>SFX</Language>
-									<AudioFile>chavo-del-ocho.wav</AudioFile>
+									<AudioFile>ER_cin_with dx.wav</AudioFile>
 									<MediaIDList>
-										<MediaID ID="623610003"/>
+										<MediaID ID="663488229"/>
 									</MediaIDList>
 								</AudioFileSource>
 							</ChildrenList>
 							<ObjectLists/>
 							<ActiveSourceList>
-								<ActiveSource Name="chavo-del-ocho" ID="{990F7986-4A8F-403D-BA12-DAB5EF8214B4}" Platform="Linked"/>
+								<ActiveSource Name="ER_cin_with dx" ID="{4180D57C-69CA-4C81-8527-FB7B3BB36FE6}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
 					</ChildrenList>

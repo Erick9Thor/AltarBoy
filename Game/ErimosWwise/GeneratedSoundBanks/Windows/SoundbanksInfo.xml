@@ -11,7 +11,7 @@
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="626769978" Language="SFX" Hash="1878892266">
+		<SoundBank Id="626769978" Language="SFX" Hash="2990562031">
 			<ObjectPath>\SoundBanks\Default Work Unit\BackgroundMusic</ObjectPath>
 			<ShortName>BackgroundMusic</ShortName>
 			<Path>BackgroundMusic.bnk</Path>
@@ -19,9 +19,9 @@
 				<Event Id="513571230" Name="Play_Combat" ObjectPath="\Events\Music\Play_Combat"/>
 				<Event Id="2953314807" Name="Play_IntroCinematic" ObjectPath="\Events\Default Work Unit\Play_IntroCinematic">
 					<IncludedMemoryFiles>
-						<File Id="623610003" Language="SFX">
-							<ShortName>chavo-del-ocho.wav</ShortName>
-							<Path>SFX\chavo-del-ocho_10C4C929.wem</Path>
+						<File Id="663488229" Language="SFX">
+							<ShortName>ER_cin_with dx.wav</ShortName>
+							<Path>SFX\ER_cin_with dx_10C4C929.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -531,7 +531,7 @@
 				</SwitchGroup>
 			</SwitchGroups>
 		</SoundBank>
-		<SoundBank Id="3768541028" Language="SFX" Hash="3024064135">
+		<SoundBank Id="3768541028" Language="SFX" Hash="2508552715">
 			<ObjectPath>\SoundBanks\Default Work Unit\Attacks</ObjectPath>
 			<ShortName>Attacks</ShortName>
 			<Path>Attacks.bnk</Path>
@@ -552,11 +552,11 @@
 						</File>
 						<File Id="364841447" Language="SFX">
 							<ShortName>ES_Alien Chirp Critter 2 - SFX Producer.wav</ShortName>
-							<Path>SFX\ES_Alien Chirp Critter 2 - SFX Producer_25A2E661.wem</Path>
+							<Path>SFX\ES_Alien Chirp Critter 2 - SFX Producer_801B1EBA.wem</Path>
 						</File>
 						<File Id="519900430" Language="SFX">
 							<ShortName>ES_Alien Chirp Critter 1 - SFX Producer.wav</ShortName>
-							<Path>SFX\ES_Alien Chirp Critter 1 - SFX Producer_035D8C81.wem</Path>
+							<Path>SFX\ES_Alien Chirp Critter 1 - SFX Producer_4F1280FD.wem</Path>
 						</File>
 						<File Id="589813107" Language="SFX">
 							<ShortName>ES_Insect Wings Fly 9 - SFX Producer.wav</ShortName>
@@ -568,7 +568,7 @@
 					<IncludedMemoryFiles>
 						<File Id="236324433" Language="SFX">
 							<ShortName>ES_Alien Chirp Critter 1 - SFX Producer.wav</ShortName>
-							<Path>SFX\ES_Alien Chirp Critter 1 - SFX Producer_69A72C49.wem</Path>
+							<Path>SFX\ES_Alien Chirp Critter 1 - SFX Producer_CC19F156.wem</Path>
 						</File>
 						<File Id="238216169" Language="SFX">
 							<ShortName>ES_Insect Squish 20 - SFX Producer.wav</ShortName>
@@ -629,7 +629,7 @@
 						</File>
 						<File Id="944417870" Language="SFX">
 							<ShortName>Player\Melee attack\Punch - Pop.wav</ShortName>
-							<Path>SFX\Player\Melee attack\Punch - Pop_2A43A773.wem</Path>
+							<Path>SFX\Player\Melee attack\Punch - Pop_2CBD9A18.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -705,7 +705,7 @@
 					<IncludedMemoryFiles>
 						<File Id="644673135" Language="SFX">
 							<ShortName>Dragon roar.wav</ShortName>
-							<Path>SFX\Dragon roar_EF186A81.wem</Path>
+							<Path>SFX\Dragon roar_6DDFAEFA.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -713,7 +713,7 @@
 					<IncludedMemoryFiles>
 						<File Id="142787767" Language="SFX">
 							<ShortName>Dragon roar.wav</ShortName>
-							<Path>SFX\Dragon roar_3A8FA5F4.wem</Path>
+							<Path>SFX\Dragon roar_C54B14D7.wem</Path>
 						</File>
 						<File Id="668240954" Language="SFX">
 							<ShortName>WormGiantSpawn.wav</ShortName>
