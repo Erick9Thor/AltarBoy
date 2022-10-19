@@ -80,6 +80,10 @@ float3 Hachiko::Scripting::LevelManager::Respawn()
 	//Disable gauntlet ui
 }
 
+void Hachiko::Scripting::LevelManager::ReloadBossScene() {
+	SceneManagement::SwitchScene(Scenes::BOSS_LEVEL);
+}
+
 void Hachiko::Scripting::LevelManager::GoalReached() 
 {
 	if (_level == 1)
