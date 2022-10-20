@@ -14164,7 +14164,7 @@ child:
         type: 15
         enabled: true
         class_name: StalagmiteManager
-        "'_falling_cooldown@float'": 1.5
+        "'_falling_cooldown@float'": 2
     child:
       - id: 11721815587432998699
         name: Stalagmite
