@@ -94,6 +94,12 @@ void Hachiko::Scripting::AudioManager::SetLevel(unsigned level)
 	_level = level;
 }
 
+void Hachiko::Scripting::AudioManager::PlaySpawnWorm()
+{
+	_audio_source->PostEvent(Sounds::WORM_ROAR);
+	_audio_source->PostEvent(Sounds::WORM_SPAWN);
+}
+
 void Hachiko::Scripting::AudioManager::SetCombat()
 {
 	_audio_source->SetRTPCValue(Sounds::ENEMY_AWARE, 100);
@@ -143,4 +149,20 @@ const wchar_t* Hachiko::Scripting::AudioManager::GetStopMusicEventName(unsigned 
 void Hachiko::Scripting::AudioManager::StopMusic()
 {
 	_audio_source->PostEvent(GetStopMusicEventName(_level));
+}
+
+void Hachiko::Scripting::AudioManager::PlayEnemyDeath(EnemyType enemy_type)
+{
+	switch (enemy_type)
+	{
+	case Hachiko::Scripting::EnemyType::BEETLE:
+		_audio_source->PostEvent(Sounds::BEETLE_DEATH);
+		break;
+	case Hachiko::Scripting::EnemyType::WORM:
+		_audio_source->PostEvent(Sounds::WORM_DEATH);
+		break;
+	default:
+		break;
+	}
+
 }
