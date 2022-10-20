@@ -221,7 +221,8 @@ namespace Hachiko
         [[nodiscard]] GameObject* GetFirstChildWithName(const std::string& child_name) const;
         [[nodiscard]] GameObject* FindDescendantWithName(const std::string& child_name) const;
 
-        void ChangeEmissiveColor(float4 color, bool include_children = false);
+        void ChangeEmissiveColor(float4 color, bool include_children = false, bool override_flag = false);
+        std::vector<float4> GetEmissiveColors() const;
         void ResetEmissive(bool include_children = false);
         void ChangeTintColor(float4 color, bool include_children = false);
         void ChangeDissolveProgress(float progress, bool include_children = false);

@@ -468,7 +468,7 @@ void Hachiko::Scripting::BossController::FinishCocoon()
     std::copy(_jumping_pattern_2, _jumping_pattern_2 + JumpUtil::JUMP_PATTERN_SIZE, _current_jumping_pattern);
     _jump_pattern_index = -1;
 
-    gauntlet->ResetGauntlet();
+    gauntlet->ResetGauntlet(true);
 
     ChangeStateText("Finished Cocoon.");
 
@@ -1245,8 +1245,9 @@ void Hachiko::Scripting::BossController::SpawnEnemy()
         }
 
         enemy->SetActive(true);
-        ComponentAgent* agent = enemy->GetComponent<ComponentAgent>();
+        enemy_controller->OnStart();
 
+        ComponentAgent* agent = enemy->GetComponent<ComponentAgent>();
         if (agent)
         {
             agent->AddToCrowd();

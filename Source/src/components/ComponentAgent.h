@@ -26,6 +26,7 @@ namespace Hachiko
         [[nodiscard]] float GetRadius() const{ return radius; }
 		[[nodiscard]] float GetMaxAcceleration() const { return max_acceleration; }
 		[[nodiscard]] bool IsAvoidingObstacles() const { return avoid_obstacles; }
+		[[nodiscard]] bool CanReachTarget() const;
 
 		// Returns the max_speed or max_speed_scaled based on time_scale_mode.
 		[[nodiscard]] float GetMaxSpeedBasedOnTimeScaleMode() const;

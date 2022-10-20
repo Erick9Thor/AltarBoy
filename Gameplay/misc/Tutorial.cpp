@@ -4,6 +4,7 @@
 #include "constants/Scenes.h"
 #include "entities/player/PlayerController.h"
 #include "entities/enemies/EnemyController.h"
+#include "misc/LevelManager.h"
 
 #include "Tutorial.h"
 
@@ -14,6 +15,8 @@ Hachiko::Scripting::Tutorial::Tutorial(GameObject* game_object)
 
 void Hachiko::Scripting::Tutorial::OnAwake()
 {
+	_level_manager = Scenes::GetLevelManager()->GetComponent<LevelManager>();
+
 	_time_manager = game_object->GetComponent<TimeManager>();
 
 	_player = Scenes::GetPlayer();
@@ -36,7 +39,7 @@ void Hachiko::Scripting::Tutorial::OnAwake()
 void Hachiko::Scripting::Tutorial::OnStart()
 {
 	_player_tutorial->SetActive(true);
-	BlockActions();
+	_level_manager->BlockInputs(true);
 }
 
 void Hachiko::Scripting::Tutorial::OnUpdate()
@@ -45,25 +48,15 @@ void Hachiko::Scripting::Tutorial::OnUpdate()
 	{
 		_player_tutorial->SetActive(false);
 		_parasite_tutorial->SetActive(false);
-		UnblockActions();
+		_level_manager->BlockInputs(false);
+		_time_manager->InterpolateToTimeScale(1.0f, 0.1f, 0.2f);
 	}
 
 	if (!_tutorial_showed && _enemy_controller->ParasiteDropped())
 	{
 		_parasite_tutorial->SetActive(true);
-		BlockActions();
+		_level_manager->BlockInputs(true);
+		Time::SetTimeScale(0.0001f);
 		_tutorial_showed = true;
 	}
-}
-
-void Hachiko::Scripting::Tutorial::BlockActions()
-{
-	Time::SetTimeScale(0.0001f);
-	_player_controller->SetLockTime(60.0f);
-}
-
-void Hachiko::Scripting::Tutorial::UnblockActions()
-{
-	_player_controller->SetLockTime(0.0f);
-	_time_manager->InterpolateToTimeScale(1.0f, 0.1f, 0.2f);
 }

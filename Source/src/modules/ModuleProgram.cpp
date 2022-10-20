@@ -36,7 +36,6 @@ bool Hachiko::ModuleProgram::Init()
     programs[static_cast<int>(Program::PROGRAMS::UI_TEXT)] = CreateProgram(SHADERS_FOLDER "vertex_font.glsl", SHADERS_FOLDER "fragment_font.glsl");
     programs[static_cast<int>(Program::PROGRAMS::PARTICLE)] = CreateProgram(SHADERS_FOLDER "vertex_particle.glsl", SHADERS_FOLDER "fragment_particle.glsl");
     programs[static_cast<int>(Program::PROGRAMS::VIDEO)] = CreateProgram(SHADERS_FOLDER "vertex_video.glsl", SHADERS_FOLDER "fragment_video.glsl");
-    programs[static_cast<int>(Program::PROGRAMS::TRANSPARENT_DEPTH)] = CreateProgram(SHADERS_FOLDER "vertex.glsl", SHADERS_FOLDER "fragment_deferred_transparent_depth.glsl");
     programs[static_cast<int>(Program::PROGRAMS::FOG_PROGRAM)] = CreateProgram(SHADERS_FOLDER "vertex_deferred_lighting.glsl", SHADERS_FOLDER "fragment_fog.glsl");
     programs[static_cast<int>(Program::PROGRAMS::TEXTURE_COPY)] = CreateProgram(SHADERS_FOLDER "vertex_texture_copy.glsl", SHADERS_FOLDER "fragment_texture_copy.glsl");
 

@@ -6,7 +6,7 @@ component:
     type: 1
     enabled: true
     position: [0, 0, 0]
-    rotation: [-0, 0, -0]
+    rotation: [0, 0, 0]
     scale: [1, 1, 1]
 child:
   - name: Geo
@@ -16,7 +16,7 @@ child:
         type: 1
         enabled: true
         position: [0, 0, 0]
-        rotation: [-0, 0, -0]
+        rotation: [0, 0, 0]
         scale: [1, 1, 1]
     child:
       - name: crystalSpike_mesh_Part_1_$AssimpFbx$_RotationPivot
@@ -26,7 +26,7 @@ child:
             type: 1
             enabled: true
             position: [-0.0762, 0.4947, 0.1023]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
         child:
           - name: crystalSpike_mesh_Part_1_$AssimpFbx$_RotationPivotInverse
@@ -36,7 +36,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0.0762, -0.4947, -0.1023]
-                rotation: [-0, 0, -0]
+                rotation: [0, 0, 0]
                 scale: [1, 1, 1]
             child:
               - name: crystalSpike_mesh_Part_1_$AssimpFbx$_ScalingPivot
@@ -46,7 +46,7 @@ child:
                     type: 1
                     enabled: true
                     position: [-0.0762, 0.4947, 0.1023]
-                    rotation: [-0, 0, -0]
+                    rotation: [0, 0, 0]
                     scale: [1, 1, 1]
                 child:
                   - name: crystalSpike_mesh_Part_1_$AssimpFbx$_ScalingPivotInverse
@@ -56,7 +56,7 @@ child:
                         type: 1
                         enabled: true
                         position: [0.0762, -0.4947, -0.1023]
-                        rotation: [-0, 0, -0]
+                        rotation: [0, 0, 0]
                         scale: [1, 1, 1]
                     child:
                       - name: crystalSpike_mesh_Part_1
@@ -66,7 +66,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0, 0, 0]
-                            rotation: [-0, 0, -0]
+                            rotation: [0, 0, 0]
                             scale: [1, 1, 1]
                           - !<mesh_renderer>
                             type: 2
@@ -74,6 +74,7 @@ child:
                             mesh_id: 10175395471774891078
                             navigable: false
                             visible: true
+                            casting_shadow: true
                             material_id: 5759363592208955763
                             tint_color: [1, 1, 1, 1]
       - name: crystalSpike_mesh_Part_2_$AssimpFbx$_RotationPivot
@@ -83,7 +84,7 @@ child:
             type: 1
             enabled: true
             position: [0.0911, 0.2996, 0.0456]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
         child:
           - name: crystalSpike_mesh_Part_2_$AssimpFbx$_RotationPivotInverse
@@ -93,7 +94,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-0.0911, -0.2996, -0.0456]
-                rotation: [-0, 0, -0]
+                rotation: [0, 0, 0]
                 scale: [1, 1, 1]
             child:
               - name: crystalSpike_mesh_Part_2_$AssimpFbx$_ScalingPivot
@@ -103,7 +104,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0.0911, 0.2996, 0.0456]
-                    rotation: [-0, 0, -0]
+                    rotation: [0, 0, 0]
                     scale: [1, 1, 1]
                 child:
                   - name: crystalSpike_mesh_Part_2_$AssimpFbx$_ScalingPivotInverse
@@ -113,7 +114,7 @@ child:
                         type: 1
                         enabled: true
                         position: [-0.0911, -0.2996, -0.0456]
-                        rotation: [-0, 0, -0]
+                        rotation: [0, 0, 0]
                         scale: [1, 1, 1]
                     child:
                       - name: crystalSpike_mesh_Part_2
@@ -123,7 +124,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0, 0, 0]
-                            rotation: [-0, 0, -0]
+                            rotation: [0, 0, 0]
                             scale: [1, 1, 1]
                           - !<mesh_renderer>
                             type: 2
@@ -131,6 +132,7 @@ child:
                             mesh_id: 6229385771345559983
                             navigable: false
                             visible: true
+                            casting_shadow: true
                             material_id: 5759363592208955763
                             tint_color: [1, 1, 1, 1]
       - name: crystalSpike_mesh_Part_3_$AssimpFbx$_RotationPivot
@@ -140,7 +142,7 @@ child:
             type: 1
             enabled: true
             position: [0.187, 0.4844, 0.0622]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
         child:
           - name: crystalSpike_mesh_Part_3_$AssimpFbx$_RotationPivotInverse
@@ -150,7 +152,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-0.187, -0.4844, -0.0622]
-                rotation: [-0, 0, -0]
+                rotation: [0, 0, 0]
                 scale: [1, 1, 1]
             child:
               - name: crystalSpike_mesh_Part_3_$AssimpFbx$_ScalingPivot
@@ -160,7 +162,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0.187, 0.4844, 0.0622]
-                    rotation: [-0, 0, -0]
+                    rotation: [0, 0, 0]
                     scale: [1, 1, 1]
                 child:
                   - name: crystalSpike_mesh_Part_3_$AssimpFbx$_ScalingPivotInverse
@@ -170,7 +172,7 @@ child:
                         type: 1
                         enabled: true
                         position: [-0.187, -0.4844, -0.0622]
-                        rotation: [-0, 0, -0]
+                        rotation: [0, 0, 0]
                         scale: [1, 1, 1]
                     child:
                       - name: crystalSpike_mesh_Part_3
@@ -180,7 +182,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0, 0, 0]
-                            rotation: [-0, 0, -0]
+                            rotation: [0, 0, 0]
                             scale: [1, 1, 1]
                           - !<mesh_renderer>
                             type: 2
@@ -188,6 +190,7 @@ child:
                             mesh_id: 903393536084662082
                             navigable: false
                             visible: true
+                            casting_shadow: true
                             material_id: 5759363592208955763
                             tint_color: [1, 1, 1, 1]
       - name: crystalSpike_mesh_Part_4_$AssimpFbx$_RotationPivot
@@ -197,7 +200,7 @@ child:
             type: 1
             enabled: true
             position: [0.1453, 0.2564, 0.2718]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
         child:
           - name: crystalSpike_mesh_Part_4_$AssimpFbx$_RotationPivotInverse
@@ -207,7 +210,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-0.1453, -0.2564, -0.2718]
-                rotation: [-0, 0, -0]
+                rotation: [0, 0, 0]
                 scale: [1, 1, 1]
             child:
               - name: crystalSpike_mesh_Part_4_$AssimpFbx$_ScalingPivot
@@ -217,7 +220,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0.1453, 0.2564, 0.2718]
-                    rotation: [-0, 0, -0]
+                    rotation: [0, 0, 0]
                     scale: [1, 1, 1]
                 child:
                   - name: crystalSpike_mesh_Part_4_$AssimpFbx$_ScalingPivotInverse
@@ -227,7 +230,7 @@ child:
                         type: 1
                         enabled: true
                         position: [-0.1453, -0.2564, -0.2718]
-                        rotation: [-0, 0, -0]
+                        rotation: [0, 0, 0]
                         scale: [1, 1, 1]
                     child:
                       - name: crystalSpike_mesh_Part_4
@@ -237,7 +240,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0, 0, 0]
-                            rotation: [-0, 0, -0]
+                            rotation: [0, 0, 0]
                             scale: [1, 1, 1]
                           - !<mesh_renderer>
                             type: 2
@@ -245,6 +248,7 @@ child:
                             mesh_id: 17479070581851126897
                             navigable: false
                             visible: true
+                            casting_shadow: true
                             material_id: 5759363592208955763
                             tint_color: [1, 1, 1, 1]
   - name: Bones
@@ -254,7 +258,7 @@ child:
         type: 1
         enabled: true
         position: [0, 0, 0]
-        rotation: [-0, 0, -0]
+        rotation: [0, 0, 0]
         scale: [1, 1, 1]
     child:
       - name: Root
@@ -264,7 +268,7 @@ child:
             type: 1
             enabled: true
             position: [-0.0003, 0, -0.0006]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
         child:
           - name: Up
@@ -274,7 +278,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-0.0759, 0.4947, 0.1029]
-                rotation: [-0, 0, -0]
+                rotation: [0, 0, 0]
                 scale: [1, 1, 1]
           - name: Down
             enabled: true
@@ -283,7 +287,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0.0915, 0.2996, 0.0463]
-                rotation: [-0, 0, -0]
+                rotation: [0, 0, 0]
                 scale: [1, 1, 1]
           - name: Middle
             enabled: true
@@ -292,7 +296,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0.1873, 0.4844, 0.0629]
-                rotation: [-0, 0, -0]
+                rotation: [0, 0, 0]
                 scale: [1, 1, 1]
           - name: Down_two
             enabled: true
@@ -301,5 +305,5 @@ child:
                 type: 1
                 enabled: true
                 position: [0.1457, 0.2564, 0.2724]
-                rotation: [-0, 0, -0]
+                rotation: [0, 0, 0]
                 scale: [1, 1, 1]

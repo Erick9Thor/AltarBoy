@@ -11,6 +11,7 @@ namespace Hachiko
 		class TimeManager;
 		class PlayerController;
 		class EnemyController;
+		class LevelManager;
 
 		class Tutorial : public Script
 		{
@@ -25,9 +26,6 @@ namespace Hachiko
 			void OnUpdate() override;
 
 		private:
-			void BlockActions();
-			void UnblockActions();
-
 			SERIALIZE_FIELD(GameObject*, _first_enemy);
 
 			TimeManager* _time_manager;
@@ -36,6 +34,7 @@ namespace Hachiko
 			GameObject* _parasite_tutorial = nullptr;
 			PlayerController* _player_controller;
 			EnemyController* _enemy_controller;
+			LevelManager* _level_manager;
 
 			bool _tutorial_showed = false;
 		};
