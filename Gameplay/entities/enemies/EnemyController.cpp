@@ -204,7 +204,7 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 		states_behaviour[static_cast<int>(_state)].Update();
 
 		EnemyState next_state = states_behaviour[static_cast<int>(_state)].Transitions();
-		if (next_state != EnemyState::INVALID) 
+		if (next_state != EnemyState::INVALID)
 		{
 			EnemyState aux = _state;
 			_state = _previous_state;
@@ -220,7 +220,7 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 	{
 		BeetleUpdate();
 	}
-	else 
+	else
 	{
 		WormUpdate();
 	}
@@ -235,7 +235,7 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 
 		_previous_state = _state;
 		_state = next_state;
-		if (_state != EnemyState::SUPER_DEAD) 
+		if (_state != EnemyState::SUPER_DEAD)
 		{
 			states_behaviour[static_cast<int>(_state)].Start();
 		}
@@ -443,11 +443,11 @@ void Hachiko::Scripting::EnemyController::RegisterHit(int damage, float3 directi
 
 void Hachiko::Scripting::EnemyController::GetParasite()
 {
-	if (_enemy_type == EnemyType::BEETLE) 
+	if (_enemy_type == EnemyType::BEETLE)
 	{
 		_parasite_dissolving_time_progress = _parasite_dissolve_time;
 	}
-	else 
+	else
 	{
 		DestroyEntity();
 	}
@@ -567,7 +567,7 @@ void Hachiko::Scripting::EnemyController::WormUpdate()
 	_player_pos = _player_controller->GetGameObject()->GetTransform()->GetGlobalPosition();
 	_current_pos = transform->GetGlobalPosition();
 
-	if (GetState() != EnemyState::DEAD) {
+	if (GetState() != EnemyState::DEAD && GetState() != EnemyState::PARASITE) {
 		_enemy_body->GetTransform()->LookAtTarget(_player_pos);
 	}
 }
@@ -1132,7 +1132,7 @@ void Hachiko::Scripting::EnemyController::WormStartSpawningState()
 	if (_enemy_body)
 	{
 		_enemy_body->SetActive(false);
-}
+	}
 	if (_parasite)
 	{
 		_parasite->SetActive(false);
@@ -1212,7 +1212,7 @@ Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::WormTransiti
 
 	if (_attack_cooldown <= 0.0f && !_attack_landing && _current_pos.Distance(_player_pos) <= _attack_range && _player_controller->IsAlive())
 	{
-		
+
 		return EnemyState::ATTACKING;
 	}
 
