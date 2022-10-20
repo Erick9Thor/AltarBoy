@@ -38,7 +38,7 @@ namespace Hachiko
 			}
 
 			float3 Respawn();
-			void ReloadBossScene();
+			void ReloadBossScene() const;
 			void GoalReached();
 
 			void BlockInputs(bool block)
