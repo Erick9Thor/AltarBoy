@@ -44,12 +44,12 @@ void Hachiko::ComponentAudioSource::PostEvent(const wchar_t* name_event) const
     AK::SoundEngine::PostEvent(name_event, source_id);
 }
 
-HACHIKO_API void Hachiko::ComponentAudioSource::SetRTPCValue(const wchar_t* rtpc_name, const float value)
+void Hachiko::ComponentAudioSource::SetRTPCValue(const wchar_t* rtpc_name, const float value)
 {
     AK::SoundEngine::SetRTPCValue(rtpc_name, value);
 }
 
-HACHIKO_API void Hachiko::ComponentAudioSource::SetSwitch(const wchar_t* switch_group, const wchar_t* switch_state)
+void Hachiko::ComponentAudioSource::SetSwitch(const wchar_t* switch_group, const wchar_t* switch_state)
 {
     AK::SoundEngine::SetSwitch(switch_group, switch_state, source_id);
 }
