@@ -11,7 +11,7 @@
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="626769978" Language="SFX" Hash="2990562031">
+		<SoundBank Id="626769978" Language="SFX" Hash="4120172180">
 			<ObjectPath>\SoundBanks\Default Work Unit\BackgroundMusic</ObjectPath>
 			<ShortName>BackgroundMusic</ShortName>
 			<Path>BackgroundMusic.bnk</Path>
@@ -19,9 +19,9 @@
 				<Event Id="513571230" Name="Play_Combat" ObjectPath="\Events\Music\Play_Combat"/>
 				<Event Id="2953314807" Name="Play_IntroCinematic" ObjectPath="\Events\Default Work Unit\Play_IntroCinematic">
 					<IncludedMemoryFiles>
-						<File Id="663488229" Language="SFX">
-							<ShortName>ER_cin_with dx.wav</ShortName>
-							<Path>SFX\ER_cin_with dx_10C4C929.wem</Path>
+						<File Id="1003919086" Language="SFX">
+							<ShortName>ER_cinematica_masterv2.wav</ShortName>
+							<Path>SFX\ER_cinematica_masterv2_10C4C929.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>

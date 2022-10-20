@@ -3751,7 +3751,7 @@
 								<Property Name="ListenerRelativeRouting" Type="bool" Value="False"/>
 								<Property Name="Volume" Type="Real64">
 									<ValueList>
-										<Value>-3</Value>
+										<Value>-5</Value>
 									</ValueList>
 								</Property>
 							</PropertyList>
@@ -3764,17 +3764,17 @@
 								</Reference>
 							</ReferenceList>
 							<ChildrenList>
-								<AudioFileSource Name="ER_cin_with dx" ID="{4180D57C-69CA-4C81-8527-FB7B3BB36FE6}">
+								<AudioFileSource Name="ER_cinematica_masterv2" ID="{438F1F35-38FD-4B6A-A794-C035FC9B9B3E}">
 									<Language>SFX</Language>
-									<AudioFile>ER_cin_with dx.wav</AudioFile>
+									<AudioFile>ER_cinematica_masterv2.wav</AudioFile>
 									<MediaIDList>
-										<MediaID ID="663488229"/>
+										<MediaID ID="1003919086"/>
 									</MediaIDList>
 								</AudioFileSource>
 							</ChildrenList>
 							<ObjectLists/>
 							<ActiveSourceList>
-								<ActiveSource Name="ER_cin_with dx" ID="{4180D57C-69CA-4C81-8527-FB7B3BB36FE6}" Platform="Linked"/>
+								<ActiveSource Name="ER_cinematica_masterv2" ID="{438F1F35-38FD-4B6A-A794-C035FC9B9B3E}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
 					</ChildrenList>
