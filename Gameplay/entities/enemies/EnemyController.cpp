@@ -700,7 +700,7 @@ void Hachiko::Scripting::EnemyController::StartAttackingState()
 	_attack_current_delay = _attack_delay;
 	StopMoving();
 
-	_audio_source->PostEvent(Sounds::ENEMY_ATTACK);
+	_audio_source->PostEvent(Sounds::BEETLE_ATTACK);
 	if (!_attack_alt)
 	{
 		animation->SendTrigger("isAttacking");
@@ -1046,8 +1046,7 @@ void Hachiko::Scripting::EnemyController::StartDeadState()
 
 	_component_agent->RemoveFromCrowd();
 	_enemy_dissolving_time_progress = 0;
-
-	_audio_source->PostEvent(Sounds::ENEMY_DIE);
+	_audio_manager->PlayEnemyDeath(_enemy_type);
 	animation->SendTrigger("isDead");
 }
 
@@ -1138,7 +1137,7 @@ void Hachiko::Scripting::EnemyController::WormStartSpawningState()
 	_small_dust_particles->Restart();
 	_current_spawning_time = _spawning_time;
 	_player_camera->Shake(_spawning_time, 0.8f);
-
+	_audio_manager->PlaySpawnWorm();
 	animation->SendTrigger("isAppear");
 }
 
@@ -1231,7 +1230,7 @@ void Hachiko::Scripting::EnemyController::WormStartAttackingState()
 	_attack_current_delay = _attack_delay;
 	_attack_landing = false;
 
-	_audio_source->PostEvent(Sounds::ENEMY_ATTACK);
+	_audio_source->PostEvent(Sounds::WORM_ATTACK);
 	animation->SendTrigger("isAttacking");
 }
 
