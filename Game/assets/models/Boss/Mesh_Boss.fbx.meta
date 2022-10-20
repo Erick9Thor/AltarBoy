@@ -1,0 +1,63 @@
+asset_hash: 13634200185737861471
+model_name: Mesh_Boss
+meshes:
+  - 11162261797799345163
+  - 10436340023121522723
+materials:
+  - 14401479547015406387
+animations:
+  - 6491281157354455657
+  - 15576105046632466391
+  - 13438794135290278430
+  - 13410190010720844936
+  - 1796013135954871431
+  - 4452019886981331497
+  - 2926438496483968145
+  - 15715921008022030383
+animation_names:
+  - Idle
+  - PreJump
+  - JumpLoop
+  - Landing
+  - PfreJump_Crystal
+  - JumpLoop_Crystal
+  - Landing_Crystal
+  - Summon_ Crystals
+prefab_id: 9034058379545771715
+resources:
+  - resource_id: 11162261797799345163
+    resource_type: 3
+    resource_hash: 14314990200952329829
+  - resource_id: 10436340023121522723
+    resource_type: 3
+    resource_hash: 15982423494664238387
+  - resource_id: 14401479547015406387
+    resource_type: 1
+    resource_hash: 12403802873457691054
+  - resource_id: 6491281157354455657
+    resource_type: 7
+    resource_hash: 158429669304659652
+  - resource_id: 15576105046632466391
+    resource_type: 7
+    resource_hash: 11646646424326702877
+  - resource_id: 13438794135290278430
+    resource_type: 7
+    resource_hash: 2270429641946254781
+  - resource_id: 13410190010720844936
+    resource_type: 7
+    resource_hash: 15774332134165297628
+  - resource_id: 1796013135954871431
+    resource_type: 7
+    resource_hash: 15681747332224853886
+  - resource_id: 4452019886981331497
+    resource_type: 7
+    resource_hash: 10119677268119795003
+  - resource_id: 2926438496483968145
+    resource_type: 7
+    resource_hash: 3379735760907408378
+  - resource_id: 15715921008022030383
+    resource_type: 7
+    resource_hash: 7066978283092573376
+  - resource_id: 9034058379545771715
+    resource_type: 13
+    resource_hash: 1486830246597682642

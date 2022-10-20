@@ -1,0 +1,110 @@
+name: Boss_v2
+default_node: 0
+clips:
+  - clip_name: none
+    clips_id: 0
+    clips_loop: false
+  - clip_name: Idle
+    clips_id: 6491281157354455657
+    clips_loop: true
+  - clip_name: PreJump
+    clips_id: 15576105046632466391
+    clips_loop: false
+  - clip_name: JumpLoop
+    clips_id: 13438794135290278430
+    clips_loop: true
+  - clip_name: Landing
+    clips_id: 13410190010720844936
+    clips_loop: false
+  - clip_name: PreJumpCrystal
+    clips_id: 1796013135954871431
+    clips_loop: false
+  - clip_name: JumpLoopCrystal
+    clips_id: 4452019886981331497
+    clips_loop: true
+  - clip_name: LandingCrystal
+    clips_id: 2926438496483968145
+    clips_loop: false
+  - clip_name: Summon_Crystal
+    clips_id: 15715921008022030383
+    clips_loop: false
+nodes:
+  - node_name: Idle
+    node_clip_name: Idle
+  - node_name: ANY
+    node_clip_name: none
+  - node_name: PreJump
+    node_clip_name: PreJump
+  - node_name: JumpLoop
+    node_clip_name: JumpLoop
+  - node_name: Landing
+    node_clip_name: Landing
+  - node_name: PreJumpCrystal
+    node_clip_name: PreJumpCrystal
+  - node_name: JumpLoopCrystal
+    node_clip_name: JumpLoopCrystal
+  - node_name: LandingCrystal
+    node_clip_name: LandingCrystal
+  - node_name: Summon_Crystal
+    node_clip_name: Summon_Crystal
+transitions:
+  - transition_source: ANY
+    transition_target: Idle
+    transition_trigger: isIdle
+    transition_blend: 300
+  - transition_source: Idle
+    transition_target: PreJump
+    transition_trigger: isPreJump
+    transition_blend: 300
+  - transition_source: Idle
+    transition_target: PreJumpCrystal
+    transition_trigger: isPreJumpCrystal
+    transition_blend: 300
+  - transition_source: Idle
+    transition_target: Summon_Crystal
+    transition_trigger: isSummonCrystal
+    transition_blend: 300
+  - transition_source: PreJump
+    transition_target: JumpLoop
+    transition_trigger: isJumpLoop
+    transition_blend: 300
+  - transition_source: JumpLoop
+    transition_target: Landing
+    transition_trigger: isLanding
+    transition_blend: 300
+  - transition_source: PreJumpCrystal
+    transition_target: JumpLoopCrystal
+    transition_trigger: isJumpLoopCrystal
+    transition_blend: 300
+  - transition_source: JumpLoopCrystal
+    transition_target: LandingCrystal
+    transition_trigger: isLandingCrystal
+    transition_blend: 300
+  - transition_source: ANY
+    transition_target: PreJump
+    transition_trigger: isPreJump
+    transition_blend: 300
+  - transition_source: ANY
+    transition_target: JumpLoop
+    transition_trigger: isJumpLoop
+    transition_blend: 300
+  - transition_source: ANY
+    transition_target: Landing
+    transition_trigger: isLanding
+    transition_blend: 300
+  - transition_source: ANY
+    transition_target: Summon_Crystal
+    transition_trigger: isSummonCrystal
+    transition_blend: 300
+  - transition_source: ANY
+    transition_target: PreJumpCrystal
+    transition_trigger: isPreJumpCrystal
+    transition_blend: 300
+  - transition_source: ANY
+    transition_target: JumpLoopCrystal
+    transition_trigger: isJumpLoopCrystal
+    transition_blend: 300
+  - transition_source: ANY
+    transition_target: LandingCrystal
+    transition_trigger: isLandingCrystal
+    transition_blend: 300
