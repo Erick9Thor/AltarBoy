@@ -12,6 +12,7 @@ namespace Hachiko
 	{
 		class PlayerController;
 		class AudioManager;
+		class PlayerSoundManager;
 
 		class LevelManager : public Script
 		{
@@ -59,6 +60,7 @@ namespace Hachiko
 			SERIALIZE_FIELD(float, _fog_max_density);
 			SERIALIZE_FIELD(float, _fog_min_density);
 			SERIALIZE_FIELD(GameObject*, _audio_manager_go);
+			SERIALIZE_FIELD(GameObject*, _player_sound_manager_go);
 			
 
 
@@ -66,6 +68,7 @@ namespace Hachiko
 			GauntletManager* _last_gauntlet = nullptr;
 			ComponentText* _enemy_counter = nullptr;
 			AudioManager* _audio_manager = nullptr;
+			PlayerSoundManager* _player_sound_manager = nullptr;
 			bool _inputs_blocked = false;
 
 			float _time;
