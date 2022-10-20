@@ -742,9 +742,6 @@ void Hachiko::Scripting::EnemyController::UpdateAttackingState()
 	attack_stats.range = _attack_range * 1.1f; // a bit bigger than its attack activation range
 	attack_stats.type = CombatManager::AttackType::RECTANGLE;
 
-	// comment next line for release
-	Debug::DebugDraw(_combat_manager->CreateAttackHitbox(GetMeleeAttackOrigin(attack_stats.range), attack_stats), float3(1.0f, 1.0f, 0.0f));
-
 	int hit = _combat_manager->EnemyMeleeAttack(GetMeleeAttackOrigin(attack_stats.range), attack_stats);
 
 	if (hit > 0)
