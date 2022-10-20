@@ -9,6 +9,7 @@ namespace Hachiko
 
 	namespace Scripting
 	{
+		enum class EnemyType;
 
 		class AudioManager : public Script
 		{
@@ -32,7 +33,10 @@ namespace Hachiko
 			void Restart();
 			void SetLevel(unsigned level);
 
+			// Enemies
+			void PlayEnemyDeath(EnemyType enemy_type);
 			void PlaySpawnWorm();
+
 		private:
 			bool updated = false;
 			bool _in_combat = false;
