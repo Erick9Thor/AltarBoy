@@ -6,7 +6,7 @@ component:
     type: 1
     enabled: true
     position: [-83.73, 6.815, -50.99]
-    rotation: [-0, 0, -0]
+    rotation: [0, 0, 0]
     scale: [1, 1, 1]
   - !<particle_system>
     type: 22
@@ -17,6 +17,7 @@ component:
       shape: true
       lights: false
       renderer: true
+      texture: true
     parameters:
       duration: 5
       loop: true
@@ -34,7 +35,7 @@ component:
       type: 0
       properties: [359, 0, [0, 0, 0], 0.47, 0.45, [0, 0, 0], [1, 1, 1], 0.95]
     texture:
-      texture_id: 9152448586092648378
+      texture_id: 5859839257161063696
       tiles: [4, 4]
       flip: [false, false]
       total_tiles: 16
