@@ -4,6 +4,8 @@
 
 #include "misc/LevelManager.h"
 #include "misc/AudioManager.h"
+#include "entities/player/PlayerCamera.h"
+#include "entities/player/PlayerController.h"
 #include "constants/Scenes.h"
 
 // TODO: Delete this include:
@@ -20,6 +22,9 @@ Hachiko::Scripting::GauntletManager::GauntletManager(GameObject* game_object)
 	, _pack_1(nullptr)
 	, _pack_2(nullptr)
 	, _pack_3(nullptr)
+	, _camera_anchor(nullptr)
+	, _relative_position(float3::zero)
+	, _camera_follows_player(0.4f)
 {}
 
 void Hachiko::Scripting::GauntletManager::OnAwake()
@@ -35,6 +40,14 @@ void Hachiko::Scripting::GauntletManager::OnAwake()
 	if (_pack_3) _enemy_packs.push_back(_pack_3);
 	for (GameObject* _pack : _enemy_packs)
 	{
+		for (GameObject* enemy : _pack->children)
+		{
+			ComponentAgent* agc = enemy->GetComponent<ComponentAgent>();
+			if (agc)
+			{
+				agc->RemoveFromCrowd();
+			}
+		}
 		_pack->SetActive(false);
 	}
 
@@ -44,6 +57,7 @@ void Hachiko::Scripting::GauntletManager::OnAwake()
 void Hachiko::Scripting::GauntletManager::OnStart()
 {
 	_level_manager = Scenes::GetLevelManager()->GetComponent<LevelManager>();
+	_main_camera = Scenes::GetMainCamera()->GetComponent<PlayerCamera>();
 	game_object->SetVisible(false, false);
 
 	ResetGauntlet(true);
@@ -63,7 +77,7 @@ void Hachiko::Scripting::GauntletManager::OnUpdate()
 	}
 	else
 	{
-		
+		ControllCameraPos();
 		CheckRoundStatus();
 	}
 
@@ -97,6 +111,13 @@ void Hachiko::Scripting::GauntletManager::StartGauntlet()
 
 	// Notify audio manager
 	_audio_manager->RegisterGaunlet();
+
+	// Set the camera to its position if there is an anchor set
+	if (_camera_anchor && _central_anchor)
+	{
+		_main_camera->ChangeRelativePosition(_relative_position, false, .2f, 0.0f);
+		_main_camera->SetObjective(_camera_anchor);
+	}
 }
 
 bool Hachiko::Scripting::GauntletManager::IsFinished() const
@@ -110,6 +131,8 @@ void Hachiko::Scripting::GauntletManager::CheckRoundStatus()
 		completed = true;
 		OpenDoors();
 		_audio_manager->UnregisterGaunlet();
+		_main_camera->ChangeRelativePosition(Scenes::GetPlayer()->GetComponent<PlayerController>()->GetCamBasicPos(), false, .2f, 0.0f);
+		_main_camera->SetObjective(Scenes::GetPlayer());
 		return;
 	}
 
@@ -170,4 +193,16 @@ void Hachiko::Scripting::GauntletManager::SpawnRound(unsigned round)
 	if (round >= _enemy_packs.size()) return;
 	_combat_manager->ActivateEnemyPack(_enemy_packs[round]);
 	_combat_manager->ResetEnemyPack(_enemy_packs[round], true);
+}
+
+void Hachiko::Scripting::GauntletManager::ControllCameraPos()
+{
+	if (_camera_anchor && _central_anchor)
+	{
+		float3 camera_a_pos = _camera_anchor->GetTransform()->GetGlobalPosition();
+		float3 player_pos = Scenes::GetPlayer()->GetTransform()->GetGlobalPosition();
+		float3 center_pos = _central_anchor->GetTransform()->GetGlobalPosition();
+		camera_a_pos = math::Lerp(center_pos, player_pos, _camera_follows_player);
+		_camera_anchor->GetTransform()->SetGlobalPosition(camera_a_pos);
+	}
 }

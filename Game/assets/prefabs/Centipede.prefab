@@ -5,18 +5,13 @@ component:
   - !<transform>
     type: 1
     enabled: true
-    position: [-56.11, 3.447, -86.28]
-    rotation: [-0, 0, -0]
+    position: [-16.48, 3.447, -33.9]
+    rotation: [-180, -12.25, -180]
     scale: [1.5, 1.5, 1.5]
   - !<animation>
     type: 14
     enabled: true
     state_machine: 7682389451716035974
-  - !<script>
-    type: 15
-    enabled: true
-    class_name: Centipedes
-    "'_damage_effect@GameObject*'": 44
   - !<agent>
     type: 17
     enabled: true
@@ -27,6 +22,11 @@ component:
     is_player: false
   - type: 20
     enabled: true
+  - !<script>
+    type: 15
+    enabled: true
+    class_name: Centipedes
+    "'_damage_effect@GameObject*'": 44
 child:
   - name: Geo
     enabled: true
@@ -93,6 +93,7 @@ child:
                             mesh_id: 7135448508068517713
                             navigable: false
                             visible: true
+                            casting_shadow: true
                             material_id: 2160253085304144858
                             tint_color: [1, 1, 1, 1]
   - name: Head_$AssimpFbx$_Translation
@@ -122,7 +123,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0, 0, 0]
-                rotation: [-0, 16.88, -0]
+                rotation: [0, -36.81, 0]
                 scale: [1, 1, 1]
             child:
               - name: Head_$AssimpFbx$_Scaling
@@ -172,7 +173,7 @@ child:
                                     type: 1
                                     enabled: true
                                     position: [0, 0, 0]
-                                    rotation: [-0, 58.07, -0]
+                                    rotation: [0, -5.472, 0]
                                     scale: [1, 1, 1]
                                 child:
                                   - name: Neck_$AssimpFbx$_Scaling
@@ -222,7 +223,7 @@ child:
                                                         type: 1
                                                         enabled: true
                                                         position: [0, 0, 0]
-                                                        rotation: [-0, 86.29, -0]
+                                                        rotation: [-0, 73.54, -0]
                                                         scale: [1, 1, 1]
                                                     child:
                                                       - name: Body_1_$AssimpFbx$_Scaling
@@ -252,7 +253,7 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [0.2122, -0.0032, -0.0259]
-                                                                    rotation: [-0, 64.3, -0]
+                                                                    rotation: [0.5559, -5.014, -4.372]
                                                                     scale: [1, 1, 1]
                                                                 child:
                                                                   - name: Body_3_$AssimpFbx$_Translation
@@ -282,7 +283,7 @@ child:
                                                                                 type: 1
                                                                                 enabled: true
                                                                                 position: [0, 0, 0]
-                                                                                rotation: [-0, 50.57, -0]
+                                                                                rotation: [-1.885, 24.97, 6.524]
                                                                                 scale: [1, 1, 1]
                                                                             child:
                                                                               - name: Body_3_$AssimpFbx$_Scaling
@@ -332,7 +333,7 @@ child:
                                                                                                     type: 1
                                                                                                     enabled: true
                                                                                                     position: [0, 0, 0]
-                                                                                                    rotation: [-0, 20.12, -0]
+                                                                                                    rotation: [-0.0102, -45.56, -3.691]
                                                                                                     scale: [1, 1, 1]
                                                                                                 child:
                                                                                                   - name: Body_4_$AssimpFbx$_Scaling
@@ -382,7 +383,7 @@ child:
                                                                                                                         type: 1
                                                                                                                         enabled: true
                                                                                                                         position: [0, 0, 0]
-                                                                                                                        rotation: [0.4624, 19.04, -0.5355]
+                                                                                                                        rotation: [-1.45, -15.47, 3.139]
                                                                                                                         scale: [1, 1, 1]
                                                                                                                     child:
                                                                                                                       - name: Body_5_$AssimpFbx$_Scaling
@@ -432,7 +433,7 @@ child:
                                                                                                                                             type: 1
                                                                                                                                             enabled: true
                                                                                                                                             position: [0, 0, 0]
-                                                                                                                                            rotation: [-0, 50.9, -0]
+                                                                                                                                            rotation: [-0, 31.67, -0]
                                                                                                                                             scale: [1, 1, 1]
                                                                                                                                         child:
                                                                                                                                           - name: Tail_$AssimpFbx$_Scaling
@@ -488,4 +489,4 @@ child:
         start_rotation: [true, true, 1, [1.5, 4], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
         blend_factor: 1
         projection: true
-        randomize_tiles: false
+        randomize_tiles: true

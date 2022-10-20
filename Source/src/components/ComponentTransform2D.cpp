@@ -247,7 +247,8 @@ void Hachiko::ComponentTransform2D::Save(YAML::Node& node) const
 {
     node.SetTag("transform_2d");
     node[TRANSFORM_POSITION] = position;
-    node[TRANSFORM_SIZE] = size;
+    // If a canvas is managing size prevent engine from keep updating transform size serialization
+    node[TRANSFORM_SIZE] = game_object->GetComponent<ComponentCanvas>() ? float2::one : size;
     node[TRANSFORM_SCALE] = scale.xy();
     node[TRANSFORM_ROTATION] = rotation;
     node[TRANSFORM_PIVOT] = pivot_pct_position;

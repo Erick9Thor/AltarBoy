@@ -6,7 +6,7 @@ component:
     type: 1
     enabled: true
     position: [0, 0, 0]
-    rotation: [0, 0, 0, 1]
+    rotation: [0, 0, 0]
     scale: [1, 1, 1]
   - !<animation>
     type: 14
@@ -20,7 +20,7 @@ child:
         type: 1
         enabled: true
         position: [0.0107, 0.4875, 0.1376]
-        rotation: [-0.6409, 0.2988, 0.2988, 0.6409]
+        rotation: [-90, 0, 50]
         scale: [2.54, 2.54, 2.54]
       - !<mesh_renderer>
         type: 2
@@ -28,6 +28,7 @@ child:
         mesh_id: 4490140843496684970
         navigable: false
         visible: true
+        casting_shadow: true
         material_id: 15711698613413314858
         tint_color: [1, 1, 1, 1]
   - name: Root_$AssimpFbx$_Translation
@@ -37,7 +38,7 @@ child:
         type: 1
         enabled: true
         position: [0, -0.877, 0.147]
-        rotation: [0, 0, 0, 1]
+        rotation: [0, 0, 0]
         scale: [1, 1, 1]
     child:
       - name: Root_$AssimpFbx$_PreRotation
@@ -47,7 +48,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [-0.4777, -0.5214, 0.4777, 0.5213]
+            rotation: [-85, -90, 0]
             scale: [1, 1, 1]
         child:
           - name: Root_$AssimpFbx$_Rotation
@@ -57,7 +58,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0, 0, 0]
-                rotation: [0, 0, 0, 1]
+                rotation: [0, 0, 0]
                 scale: [1, 1, 1]
             child:
               - name: Root_$AssimpFbx$_Scaling
@@ -67,7 +68,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [0, 0, 0, 1]
+                    rotation: [0, 0, 0]
                     scale: [1, 1, 1]
                 child:
                   - name: Root
@@ -77,7 +78,7 @@ child:
                         type: 1
                         enabled: true
                         position: [0, 0, 0]
-                        rotation: [0, 0, 0, 1]
+                        rotation: [0, 0, 0]
                         scale: [1, 1, 1]
                     child:
                       - name: Top_$AssimpFbx$_Translation
@@ -87,7 +88,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0.9283, -0, 0]
-                            rotation: [0, 0, 0, 1]
+                            rotation: [0, 0, 0]
                             scale: [1, 1, 1]
                         child:
                           - name: Top_$AssimpFbx$_PreRotation
@@ -97,7 +98,7 @@ child:
                                 type: 1
                                 enabled: true
                                 position: [0, 0, 0]
-                                rotation: [0.4777, 0.5214, -0.4777, 0.5213]
+                                rotation: [90, 5.004, -90]
                                 scale: [1, 1, 1]
                             child:
                               - name: Top
@@ -107,7 +108,7 @@ child:
                                     type: 1
                                     enabled: true
                                     position: [0, 0, 0]
-                                    rotation: [0, 0, 0, 1]
+                                    rotation: [0, 0, 0]
                                     scale: [1, 1, 1]
                       - name: Mid_$AssimpFbx$_Translation
                         enabled: true
@@ -116,7 +117,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0.1194, -0.041, 0.0603]
-                            rotation: [0, 0, 0, 1]
+                            rotation: [0, 0, 0]
                             scale: [1, 1, 1]
                         child:
                           - name: Mid_$AssimpFbx$_PreRotation
@@ -126,7 +127,7 @@ child:
                                 type: 1
                                 enabled: true
                                 position: [0, 0, 0]
-                                rotation: [0.4777, 0.5214, -0.4777, 0.5213]
+                                rotation: [90, 5.004, -90]
                                 scale: [1, 1, 1]
                             child:
                               - name: Mid_$AssimpFbx$_Rotation
@@ -136,7 +137,7 @@ child:
                                     type: 1
                                     enabled: true
                                     position: [0, 0, 0]
-                                    rotation: [0.4858, 0, 0, 0.8741]
+                                    rotation: [58.13, 0, 0]
                                     scale: [1, 1, 1]
                                 child:
                                   - name: Mid_$AssimpFbx$_Scaling
@@ -146,7 +147,7 @@ child:
                                         type: 1
                                         enabled: true
                                         position: [0, 0, 0]
-                                        rotation: [0, 0, 0, 1]
+                                        rotation: [0, 0, 0]
                                         scale: [1, 1, 1]
                                     child:
                                       - name: Mid
@@ -156,7 +157,7 @@ child:
                                             type: 1
                                             enabled: true
                                             position: [0, 0, 0]
-                                            rotation: [0, 0, 0, 1]
+                                            rotation: [0, 0, 0]
                                             scale: [1, 1, 1]
                       - name: Down_$AssimpFbx$_Translation
                         enabled: true
@@ -165,7 +166,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0.0697, -0.1003, -0.1204]
-                            rotation: [0, 0, 0, 1]
+                            rotation: [0, 0, 0]
                             scale: [1, 1, 1]
                         child:
                           - name: Down_$AssimpFbx$_PreRotation
@@ -175,7 +176,7 @@ child:
                                 type: 1
                                 enabled: true
                                 position: [0, 0, 0]
-                                rotation: [0.4777, 0.5214, -0.4777, 0.5213]
+                                rotation: [90, 5.004, -90]
                                 scale: [1, 1, 1]
                             child:
                               - name: Down_$AssimpFbx$_Rotation
@@ -185,7 +186,7 @@ child:
                                     type: 1
                                     enabled: true
                                     position: [0, 0, 0]
-                                    rotation: [-0.0237, 0.1176, 0.1145, 0.9862]
+                                    rotation: [-4.339, 13.09, 13.74]
                                     scale: [1, 1, 1]
                                 child:
                                   - name: Down_$AssimpFbx$_Scaling
@@ -195,7 +196,7 @@ child:
                                         type: 1
                                         enabled: true
                                         position: [0, 0, 0]
-                                        rotation: [0, 0, 0, 1]
+                                        rotation: [0, 0, 0]
                                         scale: [1, 1, 1]
                                     child:
                                       - name: Down
@@ -205,5 +206,5 @@ child:
                                             type: 1
                                             enabled: true
                                             position: [0, 0, 0]
-                                            rotation: [0, 0, 0, 1]
+                                            rotation: [0, 0, 0]
                                             scale: [1, 1, 1]
