@@ -567,7 +567,9 @@ void Hachiko::Scripting::EnemyController::WormUpdate()
 	_player_pos = _player_controller->GetGameObject()->GetTransform()->GetGlobalPosition();
 	_current_pos = transform->GetGlobalPosition();
 
-	_enemy_body->GetTransform()->LookAtTarget(_player_pos);
+	if (GetState() != EnemyState::DEAD) {
+		_enemy_body->GetTransform()->LookAtTarget(_player_pos);
+	}
 }
 
 // SPAWNING
