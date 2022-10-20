@@ -956,7 +956,7 @@ void Hachiko::ModuleRender::CreateNoiseTexture()
 {
     const unsigned width = 128;
     const unsigned height = 128;
-    const double delta = 0.01f;
+    const double delta = 0.05f;
 
     OpenSimplex2S os;
     byte* result = new byte[width * height];

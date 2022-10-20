@@ -204,7 +204,7 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 		states_behaviour[static_cast<int>(_state)].Update();
 
 		EnemyState next_state = states_behaviour[static_cast<int>(_state)].Transitions();
-		if (next_state != EnemyState::INVALID) 
+		if (next_state != EnemyState::INVALID)
 		{
 			EnemyState aux = _state;
 			_state = _previous_state;
@@ -220,7 +220,7 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 	{
 		BeetleUpdate();
 	}
-	else 
+	else
 	{
 		WormUpdate();
 	}
@@ -235,7 +235,7 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 
 		_previous_state = _state;
 		_state = next_state;
-		if (_state != EnemyState::SUPER_DEAD) 
+		if (_state != EnemyState::SUPER_DEAD)
 		{
 			states_behaviour[static_cast<int>(_state)].Start();
 		}
@@ -443,11 +443,11 @@ void Hachiko::Scripting::EnemyController::RegisterHit(int damage, float3 directi
 
 void Hachiko::Scripting::EnemyController::GetParasite()
 {
-	if (_enemy_type == EnemyType::BEETLE) 
+	if (_enemy_type == EnemyType::BEETLE)
 	{
 		_parasite_dissolving_time_progress = _parasite_dissolve_time;
 	}
-	else 
+	else
 	{
 		DestroyEntity();
 	}
@@ -567,7 +567,9 @@ void Hachiko::Scripting::EnemyController::WormUpdate()
 	_player_pos = _player_controller->GetGameObject()->GetTransform()->GetGlobalPosition();
 	_current_pos = transform->GetGlobalPosition();
 
-	_enemy_body->GetTransform()->LookAtTarget(_player_pos);
+	if (GetState() != EnemyState::DEAD && GetState() != EnemyState::PARASITE) {
+		_enemy_body->GetTransform()->LookAtTarget(_player_pos);
+	}
 }
 
 // SPAWNING
@@ -700,7 +702,7 @@ void Hachiko::Scripting::EnemyController::StartAttackingState()
 	_attack_current_delay = _attack_delay;
 	StopMoving();
 
-	_audio_source->PostEvent(Sounds::ENEMY_ATTACK);
+	_audio_source->PostEvent(Sounds::BEETLE_ATTACK);
 	if (!_attack_alt)
 	{
 		animation->SendTrigger("isAttacking");
@@ -1046,8 +1048,7 @@ void Hachiko::Scripting::EnemyController::StartDeadState()
 
 	_component_agent->RemoveFromCrowd();
 	_enemy_dissolving_time_progress = 0;
-
-	_audio_source->PostEvent(Sounds::ENEMY_DIE);
+	_audio_manager->PlayEnemyDeath(_enemy_type);
 	animation->SendTrigger("isDead");
 }
 
@@ -1130,7 +1131,7 @@ void Hachiko::Scripting::EnemyController::WormStartSpawningState()
 	if (_enemy_body)
 	{
 		_enemy_body->SetActive(false);
-}
+	}
 	if (_parasite)
 	{
 		_parasite->SetActive(false);
@@ -1138,7 +1139,7 @@ void Hachiko::Scripting::EnemyController::WormStartSpawningState()
 	_small_dust_particles->Restart();
 	_current_spawning_time = _spawning_time;
 	_player_camera->Shake(_spawning_time, 0.8f);
-
+	_audio_manager->PlaySpawnWorm();
 	animation->SendTrigger("isAppear");
 }
 
@@ -1210,7 +1211,7 @@ Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::WormTransiti
 
 	if (_attack_cooldown <= 0.0f && !_attack_landing && _current_pos.Distance(_player_pos) <= _attack_range && _player_controller->IsAlive())
 	{
-		
+
 		return EnemyState::ATTACKING;
 	}
 
@@ -1231,7 +1232,7 @@ void Hachiko::Scripting::EnemyController::WormStartAttackingState()
 	_attack_current_delay = _attack_delay;
 	_attack_landing = false;
 
-	_audio_source->PostEvent(Sounds::ENEMY_ATTACK);
+	_audio_source->PostEvent(Sounds::WORM_ATTACK);
 	animation->SendTrigger("isAttacking");
 }
 

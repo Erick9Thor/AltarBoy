@@ -38,6 +38,7 @@ namespace Hachiko
 			}
 
 			float3 Respawn();
+			void ReloadBossScene() const;
 			void GoalReached();
 
 			void BlockInputs(bool block)
@@ -49,6 +50,8 @@ namespace Hachiko
 				return _inputs_blocked;
 			}
 
+			void BossKilled();
+
 			SERIALIZE_FIELD(unsigned, _level);
 			SERIALIZE_FIELD(float3, _respawn_position);
 			SERIALIZE_FIELD(GameObject*, _gauntlet_ui_go);
@@ -59,14 +62,14 @@ namespace Hachiko
 			SERIALIZE_FIELD(float, _fog_max_density);
 			SERIALIZE_FIELD(float, _fog_min_density);
 			SERIALIZE_FIELD(GameObject*, _audio_manager_go);
+			SERIALIZE_FIELD(GameObject*, _victory_screen);
 			
-
-
 		private:
 			GauntletManager* _last_gauntlet = nullptr;
 			ComponentText* _enemy_counter = nullptr;
 			AudioManager* _audio_manager = nullptr;
 			bool _inputs_blocked = false;
+			bool _victory = false;
 
 			float _time;
 		};

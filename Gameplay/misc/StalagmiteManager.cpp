@@ -208,6 +208,12 @@ bool Hachiko::Scripting::StalagmiteManager::CheckPreviousStalagmite(int idx)
 void Hachiko::Scripting::StalagmiteManager::DestroyAllStalagmites()
 {
 	_should_fall_stalagmites = false;
+
+	// When destroying the stalactites we generate a random seed to offset its destruction time between 0 and 3 seconds
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_real_distribution<> offset(0.0f, 3.0f);
+
 	for (unsigned i = 0; i < _stalagmites.size(); ++i)
 	{
 		if (_stalagmites[i]->GetState() != StalagmiteState::COLLAPSED)
@@ -215,7 +221,7 @@ void Hachiko::Scripting::StalagmiteManager::DestroyAllStalagmites()
 			return;
 		}
 		_stalagmites[i]->SetNewState(StalagmiteState::DISSOLVING);
-		_stalagmites[i]->_dissolving_time = _total_dissolving_time;
+		_stalagmites[i]->_dissolving_time = _total_dissolving_time + (float)offset(gen);
 	}
 }
 

@@ -16,6 +16,7 @@ namespace Hachiko
     class ComponentParticleSystem;
     class ComponentBillboard;
     class ComponentProgressBar;
+    class ComponentObstacle;
 
     namespace Scripting
     {
@@ -221,6 +222,7 @@ namespace Hachiko
             ComponentTransform* transform = nullptr;
             ComponentProgressBar* hp_bar = nullptr;
             ComponentAgent* agent = nullptr;
+            ComponentObstacle* obstacle = nullptr;
             ComponentAnimation* animation = nullptr;
             GauntletManager* gauntlet = nullptr;
             CombatManager* combat_manager = nullptr;
@@ -232,6 +234,9 @@ namespace Hachiko
             bool hitable = true;
             std::vector<float> gauntlet_thresholds_percent{0.5f};
             float3 target_position = float3::zero;
+
+            float3 initial_position = float3::zero;
+            float3 initial_rotation = float3::zero;
             
             // Camera variables
             PlayerCamera* player_camera = nullptr; // It's found on scene based on name
@@ -314,6 +319,7 @@ namespace Hachiko
             float after_attack_wait_timer = 0.f;
             bool attacked = false;
 
+            bool moving_to_initial_pos = false;
             bool camera_focus_on_boss = false;
             float time_elapse = 0.0;
 
