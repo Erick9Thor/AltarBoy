@@ -6,7 +6,7 @@ component:
     type: 1
     enabled: true
     position: [0, 0, 0]
-    rotation: [-0, 0, -0]
+    rotation: [0, 0, 0]
     scale: [1, 1, 1]
   - !<animation>
     type: 14
@@ -30,7 +30,7 @@ child:
             type: 1
             enabled: true
             position: [16.25, 21.17, -0.858]
-            rotation: [90, 0, -0]
+            rotation: [90, 0, 0]
             scale: [0.0082, 0.0082, 0.0082]
           - !<mesh_renderer>
             type: 2
@@ -102,7 +102,7 @@ child:
             type: 1
             enabled: true
             position: [5.18, -10.59, -0.858]
-            rotation: [90, 0, -0]
+            rotation: [90, 0, 0]
             scale: [0.0082, 0.0082, 0.0082]
           - !<mesh_renderer>
             type: 2

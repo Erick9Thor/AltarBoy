@@ -162,6 +162,11 @@ namespace Hachiko
 				_keyboard_tooltip_display->GetComponent(Component::Type::IMAGE)->Disable();
 			}
 
+			float3 GetCamBasicPos()
+			{
+				return _cam_positions[1];
+			}
+
 		private:
 			math::float3 GetRaycastPosition(
 				const math::float3& current_position) const;
@@ -394,6 +399,7 @@ namespace Hachiko
 			std::vector<float3> _cam_rotations = {};
 			float _low_health_vfx_time = 1.f;
 			float _lh_vfx_current_time = 0.0f;
+			GameObject* previous_anchor = nullptr;
 
 			float3 _player_position = float3::zero;
 			float3 _movement_direction = float3::zero;

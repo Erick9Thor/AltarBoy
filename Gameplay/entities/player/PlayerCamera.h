@@ -87,9 +87,11 @@ private:
 	math::float3 _look_ahead = math::float3::zero;
 	PlayerController* _player_ctrl = nullptr;
 	GameObject* _current_objective = nullptr;
+	math::float3 _objective_pos = math::float3::zero;
 	math::float3 _relative_position_aux = math::float3::zero;
 	math::float3 _updated_relative_position;
 	math::Quat _updated_rotation;
+	bool _look_ahead_aux;
 	bool _is_temporary_moved = false;
 	bool _is_in_position = true;
 	bool _is_in_rotation = true;
@@ -104,6 +106,9 @@ private:
 	float shake_time = 0.0f;
 	float shake_intensity = 0.0f;
 	float shake_magnitude = 0.0f;
+
+	bool _anchor_is_player = false;
+	bool _low_health_mode = false;
 };
 } // namespace Scripting
 } // namespace Hachiko

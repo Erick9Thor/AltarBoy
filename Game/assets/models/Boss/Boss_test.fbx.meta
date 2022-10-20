@@ -22,13 +22,13 @@ prefab_id: 9605075083358377557
 resources:
   - resource_id: 17255370575369453606
     resource_type: 3
-    resource_hash: 827303730495608979
+    resource_hash: 1037933735597898109
   - resource_id: 6116451041249666207
     resource_type: 3
-    resource_hash: 17461242714248999956
+    resource_hash: 4696890643268758432
   - resource_id: 6471800413123556556
     resource_type: 3
-    resource_hash: 6441519692446994404
+    resource_hash: 13048345251305036380
   - resource_id: 16615586293878050055
     resource_type: 1
     resource_hash: 842665144909973451
@@ -49,4 +49,4 @@ resources:
     resource_hash: 13591676740508449514
   - resource_id: 9605075083358377557
     resource_type: 13
-    resource_hash: 4035226619140906667
+    resource_hash: 8911303881899487142

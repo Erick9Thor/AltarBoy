@@ -6,7 +6,7 @@ component:
     type: 1
     enabled: true
     position: [0, 0, 0]
-    rotation: [-0, 0, -0]
+    rotation: [0, 0, 0]
     scale: [1, 1, 1]
   - !<animation>
     type: 14
@@ -20,7 +20,7 @@ child:
         type: 1
         enabled: true
         position: [0, 0, 0]
-        rotation: [-0, 0, -0]
+        rotation: [0, 0, 0]
         scale: [1, 1, 1]
     child:
       - name: crystalSpike_mesh_Part_1
@@ -38,6 +38,7 @@ child:
             mesh_id: 17789429169679455827
             navigable: false
             visible: true
+            casting_shadow: true
             material_id: 5759363592208955763
             tint_color: [1, 1, 1, 1]
       - name: crystalSpike_mesh_Part_2
@@ -55,6 +56,7 @@ child:
             mesh_id: 1494762647162242913
             navigable: false
             visible: true
+            casting_shadow: true
             material_id: 5759363592208955763
             tint_color: [1, 1, 1, 1]
       - name: crystalSpike_mesh_Part_3
@@ -72,6 +74,7 @@ child:
             mesh_id: 1812384364130807972
             navigable: false
             visible: true
+            casting_shadow: true
             material_id: 5759363592208955763
             tint_color: [1, 1, 1, 1]
       - name: crystalSpike_mesh_Part_4
@@ -89,6 +92,7 @@ child:
             mesh_id: 7089974370551433925
             navigable: false
             visible: true
+            casting_shadow: true
             material_id: 5759363592208955763
             tint_color: [1, 1, 1, 1]
   - name: Bones
@@ -98,7 +102,7 @@ child:
         type: 1
         enabled: true
         position: [0, 0, 0]
-        rotation: [-0, 0, -0]
+        rotation: [0, 0, 0]
         scale: [1, 1, 1]
     child:
       - name: Root
@@ -108,7 +112,7 @@ child:
             type: 1
             enabled: true
             position: [-0.0003, 0, -0.0006]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
         child:
           - name: Up
