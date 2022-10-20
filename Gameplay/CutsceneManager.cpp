@@ -1,7 +1,9 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "CutsceneManager.h"
 #include "components/ComponentVideo.h"
+#include "components/ComponentAudioSource.h"
 #include "constants/Scenes.h"
+#include "constants/Sounds.h"
 
 Hachiko::Scripting::CutsceneManager::CutsceneManager(GameObject* new_game_object)
     : Script(new_game_object, "CutsceneManager")
@@ -13,6 +15,8 @@ void Hachiko::Scripting::CutsceneManager::OnAwake()
     {
         _cutscene_video = _cutscene->GetComponent<ComponentVideo>();
     }
+
+    _audio_source = game_object->GetComponent<ComponentAudioSource>();
 }
 
 void Hachiko::Scripting::CutsceneManager::OnStart()
@@ -20,6 +24,11 @@ void Hachiko::Scripting::CutsceneManager::OnStart()
     if (_cutscene_video != nullptr)
     {
         _cutscene_video->Play();
+    }
+
+    if (_audio_source != nullptr)
+    {
+        _audio_source->PostEvent(Sounds::INTRO_CINEMATIC);
     }
 }
 

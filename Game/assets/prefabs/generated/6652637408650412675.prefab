@@ -6,7 +6,7 @@ component:
     type: 1
     enabled: true
     position: [0, 0, 0]
-    rotation: [0, 0, 0, 1]
+    rotation: [0, 0, 0]
     scale: [1, 1, 1]
   - !<animation>
     type: 14
@@ -20,7 +20,7 @@ child:
         type: 1
         enabled: true
         position: [0, 0, 0]
-        rotation: [0, 0, 0, 1]
+        rotation: [0, 0, 0]
         scale: [1, 1, 1]
     child:
       - name: floatingPilar
@@ -30,7 +30,7 @@ child:
             type: 1
             enabled: true
             position: [0, 1.529, -0]
-            rotation: [-0.7071, 0, 0, 0.7071]
+            rotation: [-90, 0, 0]
             scale: [0.0045, 0.0163, 0.0073]
           - !<mesh_renderer>
             type: 2
@@ -38,6 +38,7 @@ child:
             mesh_id: 1203891621113514067
             navigable: false
             visible: true
+            casting_shadow: true
             material_id: 6520207381227701875
             tint_color: [1, 1, 1, 1]
   - name: left_$AssimpFbx$_Translation
@@ -47,7 +48,7 @@ child:
         type: 1
         enabled: true
         position: [-10, 1.563, 1.012]
-        rotation: [0, 0, 0, 1]
+        rotation: [0, 0, 0]
         scale: [1, 1, 1]
     child:
       - name: left_$AssimpFbx$_Rotation
@@ -57,7 +58,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [0, -0.7071, 0, 0.7071]
+            rotation: [0, -89.98, 0]
             scale: [1, 1, 1]
         child:
           - name: left_$AssimpFbx$_PostRotation
@@ -67,7 +68,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0, 0, 0]
-                rotation: [0, 0.7071, 0, 0.7071]
+                rotation: [0, 89.98, 0]
                 scale: [1, 1, 1]
             child:
               - name: left
@@ -77,7 +78,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [0, 0, 0, 1]
+                    rotation: [0, 0, 0]
                     scale: [1, 1, 1]
   - name: Root
     enabled: true
@@ -86,7 +87,7 @@ child:
         type: 1
         enabled: true
         position: [0.0041, 0.1946, 0]
-        rotation: [0, 0, 0, 1]
+        rotation: [0, 0, 0]
         scale: [1, 1, 1]
     child:
       - name: Pilar
@@ -96,7 +97,7 @@ child:
             type: 1
             enabled: true
             position: [0.0118, 1.641, 0.0537]
-            rotation: [0, 0, 0, 1]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
   - name: Ctrl_Pilar
     enabled: true
@@ -105,7 +106,7 @@ child:
         type: 1
         enabled: true
         position: [0, 1.698, 0]
-        rotation: [0, 0, 0, 1]
+        rotation: [0, 0, 0]
         scale: [1, 1, 1]
     child:
       - name: Control_Pilar
@@ -115,5 +116,5 @@ child:
             type: 1
             enabled: true
             position: [0, 0.1377, 0]
-            rotation: [0, 0, 0, 1]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]

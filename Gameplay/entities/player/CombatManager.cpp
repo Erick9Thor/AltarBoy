@@ -580,21 +580,13 @@ void Hachiko::Scripting::CombatManager::ResetEnemyPack(GameObject* pack, bool is
 
 	for (int i = 0; i < enemies->children.size(); ++i)
 	{
-		ComponentAgent* agent = enemies->children[i]->GetComponent<ComponentAgent>();
-		if (agent)
-		{
-			agent->RemoveFromCrowd();
-		}
 		EnemyController* enemy_controller = enemies->children[i]->GetComponent<EnemyController>();
 		if (enemy_controller)
 		{
 			enemy_controller->SetIsFromGauntlet(is_gauntlet);
 			enemy_controller->ResetEnemy();
 			enemy_controller->ResetEnemyPosition();
-		}		
-		if (agent)
-		{
-			agent->AddToCrowd();
+			enemy_controller->OnStart();
 		}
 	}
 }

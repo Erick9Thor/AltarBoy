@@ -3,6 +3,7 @@
 namespace Hachiko
 {
 	class ComponentVideo;
+	class ComponentAudioSource;
 
 	namespace Scripting
 	{
@@ -19,6 +20,7 @@ namespace Hachiko
 			SERIALIZE_FIELD(GameObject*, _cutscene);
 			SERIALIZE_FIELD(unsigned, _next_level);
 			ComponentVideo* _cutscene_video = nullptr;
+			ComponentAudioSource* _audio_source = nullptr;
 		};
 	}
 }

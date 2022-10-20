@@ -400,7 +400,7 @@ void Hachiko::ComponentBillboard::Restart()
 
 inline void Hachiko::ComponentBillboard::Stop()
 {
-    delayed = true;
+    delayed = start_delay.GetValue() <= DBL_EPSILON ? false : true;
     color_frame = 0.0f;
     animation_index = float2(0.0f, 0.0f);
     state = ParticleSystem::Emitter::State::STOPPED;
@@ -408,7 +408,7 @@ inline void Hachiko::ComponentBillboard::Stop()
 
 inline void Hachiko::ComponentBillboard::Reset()
 {
-    delayed = true;
+    delayed = start_delay.GetValue() <= DBL_EPSILON ? false : true;
     elapsed_time = 0.0f;
     current_frame = 0.0f;
     animation_index = randomize_tiles ? GetRandomTile() : float2{0.0f, 0.0f};
