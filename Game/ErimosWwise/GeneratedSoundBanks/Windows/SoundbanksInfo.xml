@@ -531,7 +531,7 @@
 				</SwitchGroup>
 			</SwitchGroups>
 		</SoundBank>
-		<SoundBank Id="3768541028" Language="SFX" Hash="2508552715">
+		<SoundBank Id="3768541028" Language="SFX" Hash="3860751078">
 			<ObjectPath>\SoundBanks\Default Work Unit\Attacks</ObjectPath>
 			<ShortName>Attacks</ShortName>
 			<Path>Attacks.bnk</Path>
@@ -733,7 +733,7 @@
 					<IncludedMemoryFiles>
 						<File Id="678769752" Language="SFX">
 							<ShortName>quake-and-break-99034.wav</ShortName>
-							<Path>SFX\quake-and-break-99034_A79C14D5.wem</Path>
+							<Path>SFX\quake-and-break-99034_C6668062.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>

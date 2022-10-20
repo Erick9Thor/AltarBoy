@@ -708,9 +708,11 @@
 								<AudioFileSource Name="quake-and-break-99034" ID="{8B51F0B9-98A3-4330-A1E1-F19BB308A36E}">
 									<PropertyList>
 										<Property Name="FadeInDuration" Type="Real64" Value="0.544110992529349"/>
+										<Property Name="FadeOutDuration" Type="Real64" Value="1.70110960757781"/>
 										<Property Name="FadeOutShape" Type="int16" Value="0"/>
 										<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
-										<Property Name="TrimBegin" Type="Real64" Value="1.69942550693703"/>
+										<Property Name="TrimBegin" Type="Real64" Value="1.32140114969752"/>
+										<Property Name="TrimEnd" Type="Real64" Value="6.76663599458728"/>
 									</PropertyList>
 									<Language>SFX</Language>
 									<AudioFile>quake-and-break-99034.wav</AudioFile>
