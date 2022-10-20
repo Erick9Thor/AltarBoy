@@ -330,6 +330,9 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 				{
 					_death_screen->SetActive(false);
 				}
+				if (_level_manager->_level > 2) {
+					_level_manager->ReloadBossScene();
+				}
 
 				ResetPlayer(_level_manager->Respawn());
 
