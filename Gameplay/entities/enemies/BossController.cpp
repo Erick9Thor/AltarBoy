@@ -6,6 +6,7 @@
 #include "misc/StalagmiteManager.h"
 #include "entities/Stats.h"
 #include "constants/Scenes.h"
+#include "components/ComponentObstacle.h"
 
 Hachiko::Scripting::BossController::BossController(GameObject* game_object)
     : Script(game_object, "BossController")
@@ -89,6 +90,9 @@ void Hachiko::Scripting::BossController::OnAwake()
     combat_stats = game_object->GetComponent<Stats>();
     agent = game_object->GetComponent<ComponentAgent>();
     agent->SetMaxSpeed(combat_stats->_move_speed);
+    agent->RemoveFromCrowd();
+    obstacle = game_object->GetComponent<ComponentObstacle>();
+    obstacle->AddObstacle();
 
     animation = game_object->GetComponent<ComponentAnimation>();
 
@@ -127,6 +131,9 @@ void Hachiko::Scripting::BossController::OnAwake()
         _stalagmite_manager =
             _stalagmite_manager_go->GetComponent<StalagmiteManager>();
     }
+
+    initial_position = transform->GetGlobalPosition();
+    initial_rotation = transform->GetGlobalRotationEuler();
 }
 
 void Hachiko::Scripting::BossController::OnStart()
@@ -350,6 +357,9 @@ void Hachiko::Scripting::BossController::StartEncounter()
 {
     encounter_start_timer = 0.f;
     RestoreCameraOffset();
+
+    obstacle->RemoveObstacle();
+    agent->AddToCrowd();
 }
 
 void Hachiko::Scripting::BossController::StartEncounterController()
@@ -399,10 +409,45 @@ void Hachiko::Scripting::BossController::StartCocoon()
     SetUpCocoon();
     FocusCameraOnBoss(true);
     _stalagmite_manager->DestroyAllStalagmites();
+
+    // Direct boss to intial position
+    moving_to_initial_pos = true;
+    initial_position.y = transform->GetGlobalPosition().y;
+    transform->LookAtTarget(initial_position);
+    agent->SetTargetPosition(initial_position);
+
+    // Knockback player
+    float3 player_pos = player->GetTransform()->GetGlobalPosition();
+    if (Distance(player_pos, initial_position) <= 3)
+    {
+        float3 player_end_pos = player_pos + (player_pos - initial_position).Normalized() * 3;
+        player->GetTransform()->SetGlobalPosition(player_end_pos);
+    }
 }
 
 void Hachiko::Scripting::BossController::CocoonController()
 {
+    // Handle boss movement to initial position
+    if (moving_to_initial_pos)
+    {
+        float3 current_pos = transform->GetGlobalPosition();
+        if (Distance(current_pos, initial_position) <= 0.5f)
+        {
+            moving_to_initial_pos = false;
+            transform->SetGlobalPosition(initial_position);
+            transform->SetGlobalRotationEuler(initial_rotation);
+
+            agent->RemoveFromCrowd();
+            obstacle->AddObstacle();
+
+            if (cocoon_placeholder_go)
+            {
+                cocoon_placeholder_go->SetActive(true);
+            }
+        }
+        return;
+    }
+
     // Handle camera focus
     if (camera_focus_on_boss)
     {
@@ -424,10 +469,6 @@ void Hachiko::Scripting::BossController::CocoonController()
 void Hachiko::Scripting::BossController::SetUpCocoon()
 {
     hitable = false;
-    if (cocoon_placeholder_go)
-    {
-        cocoon_placeholder_go->SetActive(true);
-    }
 }
 
 void Hachiko::Scripting::BossController::BreakCocoon()
@@ -464,6 +505,9 @@ void Hachiko::Scripting::BossController::FinishCocoon()
     second_phase = true;
     BreakCocoon();
 
+    obstacle->RemoveObstacle();
+    agent->AddToCrowd();
+
     // We change our jumping pattern to the second one and reset the index
     std::copy(_jumping_pattern_2, _jumping_pattern_2 + JumpUtil::JUMP_PATTERN_SIZE, _current_jumping_pattern);
     _jump_pattern_index = -1;
@@ -485,8 +529,6 @@ void Hachiko::Scripting::BossController::ChaseController()
 {
     const float3& player_position = player->GetTransform()->GetGlobalPosition();
     const BossAttack& boss_attack = GetCurrentAttack();
-
-    transform->LookAtTarget(player_position);
 
     transform->LookAtTarget(player_position);
 
@@ -1245,8 +1287,9 @@ void Hachiko::Scripting::BossController::SpawnEnemy()
         }
 
         enemy->SetActive(true);
-        ComponentAgent* agent = enemy->GetComponent<ComponentAgent>();
+        enemy_controller->OnStart();
 
+        ComponentAgent* agent = enemy->GetComponent<ComponentAgent>();
         if (agent)
         {
             agent->AddToCrowd();
