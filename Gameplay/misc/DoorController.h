@@ -8,6 +8,8 @@ namespace Hachiko
 	class ComponentTransform;
 	namespace Scripting
 	{
+		class AudioManager;
+
 		class DoorController : public Script
 		{
 			SERIALIZATION_METHODS(false)
@@ -36,9 +38,11 @@ namespace Hachiko
 		// Variables
 		public:
 			SERIALIZE_FIELD(GameObject*, _door_prefab);
+			SERIALIZE_FIELD(GameObject*, _audio_manager_go);
 			GameObject* _closed_door_mesh = nullptr;
 			GameObject* _open_door_mesh = nullptr;
 			ComponentObstacle* door_obstacle = nullptr;
+			AudioManager* _audio_manager = nullptr;
 
 		private:
 			State _prev_state = State::OPEN;

@@ -11,7 +11,7 @@
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="626769978" Language="SFX" Hash="4120172180">
+		<SoundBank Id="626769978" Language="SFX" Hash="1934351260">
 			<ObjectPath>\SoundBanks\Default Work Unit\BackgroundMusic</ObjectPath>
 			<ShortName>BackgroundMusic</ShortName>
 			<Path>BackgroundMusic.bnk</Path>
@@ -201,7 +201,7 @@
 				</Event>
 			</IncludedEvents>
 		</SoundBank>
-		<SoundBank Id="2385628198" Language="SFX" Hash="3950947451">
+		<SoundBank Id="2385628198" Language="SFX" Hash="270110705">
 			<ObjectPath>\SoundBanks\Default Work Unit\Footsteps</ObjectPath>
 			<ShortName>Footsteps</ShortName>
 			<Path>Footsteps.bnk</Path>
@@ -277,12 +277,11 @@
 					<Switches>
 						<Switch Id="3025917178" Name="Standard" ObjectPath="\Switches\Default Work Unit\Footsteps\Standard" GUID="{2C9ECBF8-7A64-4321-B615-F710DABFDE10}"/>
 						<Switch Id="2185786256" Name="Gravel" ObjectPath="\Switches\Default Work Unit\Footsteps\Gravel" GUID="{F7D7D03C-0417-4D3E-9CEC-0FC5F71A0B58}"/>
-						<Switch Id="2058049674" Name="Wood" ObjectPath="\Switches\Default Work Unit\Footsteps\Wood" GUID="{453FD6AC-2658-48CA-9152-F3C1A8A9CC4E}"/>
 					</Switches>
 				</SwitchGroup>
 			</SwitchGroups>
 		</SoundBank>
-		<SoundBank Id="3768541028" Language="SFX" Hash="3860751078">
+		<SoundBank Id="3768541028" Language="SFX" Hash="575919304">
 			<ObjectPath>\SoundBanks\Default Work Unit\Attacks</ObjectPath>
 			<ShortName>Attacks</ShortName>
 			<Path>Attacks.bnk</Path>
@@ -484,7 +483,7 @@
 					<IncludedMemoryFiles>
 						<File Id="678769752" Language="SFX">
 							<ShortName>quake-and-break-99034.wav</ShortName>
-							<Path>SFX\quake-and-break-99034_C6668062.wem</Path>
+							<Path>SFX\quake-and-break-99034_A10B38E5.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -495,7 +494,7 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="3909959462" Language="SFX" Hash="117735521">
+		<SoundBank Id="3909959462" Language="SFX" Hash="767608571">
 			<ObjectPath>\SoundBanks\Default Work Unit\Enviroment</ObjectPath>
 			<ShortName>Enviroment</ShortName>
 			<Path>Enviroment.bnk</Path>
@@ -516,11 +515,15 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="1196441153" Name="Play_DoorOpens" ObjectPath="\Events\Default Work Unit\Play_DoorOpens">
+				<Event Id="1784075418" Name="Play_DoorOpening" ObjectPath="\Events\Default Work Unit\Play_DoorOpening">
 					<IncludedMemoryFiles>
-						<File Id="291347773" Language="SFX">
-							<ShortName>DoorOpenSlime.wav</ShortName>
-							<Path>SFX\DoorOpenSlime_10C4C929.wem</Path>
+						<File Id="2294738" Language="SFX">
+							<ShortName>ES_Sci Fi Warp Airy - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Sci Fi Warp Airy - SFX Producer_10C4C929.wem</Path>
+						</File>
+						<File Id="459435838" Language="SFX">
+							<ShortName>ES_Sci Fi Portal Warp - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Sci Fi Portal Warp - SFX Producer_10C4C929.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>

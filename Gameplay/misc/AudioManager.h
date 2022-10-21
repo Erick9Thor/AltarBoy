@@ -37,6 +37,8 @@ namespace Hachiko
 			void PlayEnemyDeath(EnemyType enemy_type);
 			void PlaySpawnWorm();
 
+			// Environment
+			void PlayDoorOpening();
 		private:
 			bool updated = false;
 			bool _in_combat = false;

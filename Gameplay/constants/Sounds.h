@@ -30,6 +30,7 @@ namespace Hachiko::Sounds
 	constexpr const wchar_t* PLAY_LASER = L"Play_Laser";
 	constexpr const wchar_t* PLAY_LASER_HIT = L"Play_Laser_Hit";
 	constexpr const wchar_t* PLAY_SPLASH = L"Play_Splash";
+	constexpr const wchar_t* PLAY_DOOR_OPENING = L"Play_DoorOpening";
 
 	// Background Music
 	// TODO: Rename this events in wwise

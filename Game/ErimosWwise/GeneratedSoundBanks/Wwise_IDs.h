@@ -18,7 +18,7 @@ namespace AK
         static const AkUniqueID PLAY_COMBAT = 513571230U;
         static const AkUniqueID PLAY_CRYSTAL = 2035174344U;
         static const AkUniqueID PLAY_DASH = 2211787386U;
-        static const AkUniqueID PLAY_DOOROPENS = 1196441153U;
+        static const AkUniqueID PLAY_DOOROPENING = 1784075418U;
         static const AkUniqueID PLAY_FOOTSTEP = 1602358412U;
         static const AkUniqueID PLAY_GAMEOVER = 3174629258U;
         static const AkUniqueID PLAY_INTROCINEMATIC = 2953314807U;
@@ -115,7 +115,6 @@ namespace AK
             {
                 static const AkUniqueID GRAVEL = 2185786256U;
                 static const AkUniqueID STANDARD = 3025917178U;
-                static const AkUniqueID WOOD = 2058049674U;
             } // namespace SWITCH
         } // namespace FOOTSTEPS
 
