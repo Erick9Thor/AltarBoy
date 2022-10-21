@@ -21,8 +21,13 @@ public:
 	~PlayerSoundManager() override = default;
 
 	void OnAwake() override;
+	void OnStart() override;
 	void OnUpdate() override;
 
+	void SetLevel(const unsigned lvl)
+	{
+		_level = lvl;
+	}
 private:
 	PlayerController* _player_controller;
 
@@ -33,9 +38,12 @@ private:
 	SERIALIZE_FIELD(float, _timer);
 	SERIALIZE_FIELD(PlayerState, _previous_state);
 
+	unsigned _level = 1;
 	float _current_frequency;
 	float _damage_timer;
 	float _dmg_cool_down;
+
+	void SetGroundEffect();
 };
 } // namespace Scripting
 } // namespace Hachiko

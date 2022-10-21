@@ -12,10 +12,17 @@ component:
     type: 15
     enabled: true
     class_name: LevelManager
-    "'_level@unsigned'": 1
-    "'_respawn_position@float3'": [-84.74, 3.47, -56.32]
+    "'_level@unsigned'": 3
+    "'_respawn_position@float3'": [-81.9, 1.5, -34]
     "'_gauntlet_ui_go@GameObject*'": 2
     "'_gauntlet_counter_go@GameObject*'": 4
+    "'_gauntlets_easy_mode@bool'": true
+    "'_modify_fog@bool'": false
+    "'_fog_frequency@float'": 0.1
+    "'_fog_max_density@float'": 0.015
+    "'_fog_min_density@float'": 0.005
+    "'_audio_manager_go@GameObject*'": 0
+    "'_victory_screen@GameObject*'": 12
   - !<script>
     type: 15
     enabled: true
@@ -121,8 +128,8 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [-39.71, -22.14, -72.37]
-        rotation: [180, -55.25, 180]
+        position: [-39.62, -22.35, -80.62]
+        rotation: [-0, 0, -0]
         scale: [1.074, 1.098, 1.074]
   - name: PauseMenu
     enabled: false
@@ -273,3 +280,62 @@ child:
                 image_y_tiles: 1
                 image_tiles_per_second: 1
                 fill_window: false
+  - name: VictoryScreen
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [-0, 0, -0]
+        scale: [1, 1, 1]
+      - !<transform_2d>
+        type: 10
+        enabled: true
+        position: [0, 0, 0]
+        size: [1133, 630]
+        scale: [1, 1]
+        rotation: [0, 0, 0, 1]
+        pivot: [0.5, 0.5]
+        anchor: [0.5, 0.5]
+      - !<canvas>
+        type: 8
+        enabled: true
+    child:
+      - name: VictoryScreen
+        enabled: false
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0, 0, -0]
+            scale: [1, 1, 1]
+          - !<transform_2d>
+            type: 10
+            enabled: true
+            position: [0, 0, 0]
+            size: [967, 317]
+            scale: [1, 1]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [0.5, 0.5]
+          - !<canvas_renderer>
+            type: 9
+            enabled: true
+            scale_ui: false
+            original_size_x: 0
+            original_size_y: 0
+          - !<image>
+            type: 11
+            enabled: true
+            image_id: 16657816342595857346
+            hover_image_id: 0
+            image_color: [1, 1, 1, 1]
+            hover_image_color: [1, 1, 1, 1]
+            image_is_tiled: false
+            image_randomize_initial_frame: false
+            image_x_tiles: 1
+            image_y_tiles: 1
+            image_tiles_per_second: 1
+            fill_window: false

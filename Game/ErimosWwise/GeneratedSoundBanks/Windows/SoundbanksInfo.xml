@@ -201,52 +201,16 @@
 				</Event>
 			</IncludedEvents>
 		</SoundBank>
-		<SoundBank Id="2385628198" Language="SFX" Hash="2908784342">
+		<SoundBank Id="2385628198" Language="SFX" Hash="3950947451">
 			<ObjectPath>\SoundBanks\Default Work Unit\Footsteps</ObjectPath>
 			<ShortName>Footsteps</ShortName>
 			<Path>Footsteps.bnk</Path>
 			<IncludedEvents>
 				<Event Id="1602358412" Name="Play_Footstep" ObjectPath="\Events\Default Work Unit\Play_Footstep">
 					<IncludedMemoryFiles>
-						<File Id="48899789" Language="SFX">
-							<ShortName>Steps\Wood\Step_06Wood.wav</ShortName>
-							<Path>SFX\Steps\Wood\Step_06Wood_10C4C929.wem</Path>
-						</File>
-						<File Id="51288901" Language="SFX">
-							<ShortName>Steps\Wood\Step_07Wood.wav</ShortName>
-							<Path>SFX\Steps\Wood\Step_07Wood_10C4C929.wem</Path>
-						</File>
-						<File Id="53483494" Language="SFX">
-							<ShortName>Steps\Gravel\Step_45Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_45Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="54698883" Language="SFX">
-							<ShortName>Steps\Gravel\Step_59Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_59Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="72839060" Language="SFX">
-							<ShortName>Steps\Wood\Step_09Wood.wav</ShortName>
-							<Path>SFX\Steps\Wood\Step_09Wood_10C4C929.wem</Path>
-						</File>
 						<File Id="83818322" Language="SFX">
 							<ShortName>Steps\Gravel\Step_31Gravel.wav</ShortName>
 							<Path>SFX\Steps\Gravel\Step_31Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="118664291" Language="SFX">
-							<ShortName>Steps\Gravel\Step_49Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_49Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="122971765" Language="SFX">
-							<ShortName>Steps\Gravel\Step_35Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_35Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="129393656" Language="SFX">
-							<ShortName>Steps\Standard\Step_23Standard.wav</ShortName>
-							<Path>SFX\Steps\Standard\Step_23Standard_10C4C929.wem</Path>
-						</File>
-						<File Id="148813729" Language="SFX">
-							<ShortName>Steps\Gravel\Step_40Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_40Gravel_10C4C929.wem</Path>
 						</File>
 						<File Id="173851412" Language="SFX">
 							<ShortName>Steps\Standard\Step_26Standard.wav</ShortName>
@@ -260,262 +224,49 @@
 							<ShortName>Steps\Standard\Step_27Standard.wav</ShortName>
 							<Path>SFX\Steps\Standard\Step_27Standard_10C4C929.wem</Path>
 						</File>
-						<File Id="238004578" Language="SFX">
-							<ShortName>Steps\Gravel\Step_44Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_44Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="266760772" Language="SFX">
-							<ShortName>Steps\Gravel\Step_57Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_57Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="292151356" Language="SFX">
-							<ShortName>Steps\Gravel\Step_50Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_50Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="298631203" Language="SFX">
-							<ShortName>Steps\Wood\Step_10Wood.wav</ShortName>
-							<Path>SFX\Steps\Wood\Step_10Wood_10C4C929.wem</Path>
-						</File>
 						<File Id="358036158" Language="SFX">
 							<ShortName>Steps\Standard\Step_28Standard.wav</ShortName>
 							<Path>SFX\Steps\Standard\Step_28Standard_10C4C929.wem</Path>
-						</File>
-						<File Id="394815816" Language="SFX">
-							<ShortName>Steps\Gravel\Step_58Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_58Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="410464228" Language="SFX">
-							<ShortName>Steps\Gravel\Step_55Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_55Gravel_10C4C929.wem</Path>
 						</File>
 						<File Id="413866373" Language="SFX">
 							<ShortName>Steps\Gravel\Step_30Gravel.wav</ShortName>
 							<Path>SFX\Steps\Gravel\Step_30Gravel_10C4C929.wem</Path>
 						</File>
-						<File Id="427485899" Language="SFX">
-							<ShortName>Steps\Wood\Step_13Wood.wav</ShortName>
-							<Path>SFX\Steps\Wood\Step_13Wood_10C4C929.wem</Path>
-						</File>
-						<File Id="434537556" Language="SFX">
-							<ShortName>Steps\Wood\Step_04Wood.wav</ShortName>
-							<Path>SFX\Steps\Wood\Step_04Wood_10C4C929.wem</Path>
-						</File>
-						<File Id="459568182" Language="SFX">
-							<ShortName>Steps\Gravel\Step_41Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_41Gravel_10C4C929.wem</Path>
-						</File>
 						<File Id="485678867" Language="SFX">
 							<ShortName>Steps\Gravel\Step_29Gravel.wav</ShortName>
 							<Path>SFX\Steps\Gravel\Step_29Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="486383263" Language="SFX">
-							<ShortName>Steps\Gravel\Step_56Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_56Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="494968059" Language="SFX">
-							<ShortName>Steps\Wood\Step_03Wood.wav</ShortName>
-							<Path>SFX\Steps\Wood\Step_03Wood_10C4C929.wem</Path>
-						</File>
-						<File Id="554606686" Language="SFX">
-							<ShortName>Steps\Wood\Step_11Wood.wav</ShortName>
-							<Path>SFX\Steps\Wood\Step_11Wood_10C4C929.wem</Path>
-						</File>
-						<File Id="559398380" Language="SFX">
-							<ShortName>Steps\Wood\Step_02Wood.wav</ShortName>
-							<Path>SFX\Steps\Wood\Step_02Wood_10C4C929.wem</Path>
-						</File>
-						<File Id="576389374" Language="SFX">
-							<ShortName>Steps\Standard\Step_21Standard.wav</ShortName>
-							<Path>SFX\Steps\Standard\Step_21Standard_10C4C929.wem</Path>
-						</File>
-						<File Id="607001280" Language="SFX">
-							<ShortName>Steps\Gravel\Step_47Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_47Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="614908418" Language="SFX">
-							<ShortName>Steps\Wood\Step_08Wood.wav</ShortName>
-							<Path>SFX\Steps\Wood\Step_08Wood_10C4C929.wem</Path>
-						</File>
-						<File Id="629120236" Language="SFX">
-							<ShortName>Steps\Standard\Step_18Standard.wav</ShortName>
-							<Path>SFX\Steps\Standard\Step_18Standard_10C4C929.wem</Path>
-						</File>
-						<File Id="641829977" Language="SFX">
-							<ShortName>Steps\Gravel\Step_54Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_54Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="657974905" Language="SFX">
-							<ShortName>Steps\Wood\Step_12Wood.wav</ShortName>
-							<Path>SFX\Steps\Wood\Step_12Wood_10C4C929.wem</Path>
-						</File>
-						<File Id="665772693" Language="SFX">
-							<ShortName>Steps\Gravel\Step_42Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_42Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="714419186" Language="SFX">
-							<ShortName>Steps\Wood\Step_15Wood.wav</ShortName>
-							<Path>SFX\Steps\Wood\Step_15Wood_10C4C929.wem</Path>
-						</File>
-						<File Id="721761556" Language="SFX">
-							<ShortName>Steps\Gravel\Step_52Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_52Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="733912445" Language="SFX">
-							<ShortName>Steps\Standard\Step_17Standard.wav</ShortName>
-							<Path>SFX\Steps\Standard\Step_17Standard_10C4C929.wem</Path>
-						</File>
-						<File Id="745617401" Language="SFX">
-							<ShortName>Steps\Standard\Step_16Standard.wav</ShortName>
-							<Path>SFX\Steps\Standard\Step_16Standard_10C4C929.wem</Path>
-						</File>
-						<File Id="770293676" Language="SFX">
-							<ShortName>Steps\Wood\Step_14Wood.wav</ShortName>
-							<Path>SFX\Steps\Wood\Step_14Wood_10C4C929.wem</Path>
-						</File>
-						<File Id="786082910" Language="SFX">
-							<ShortName>Steps\Wood\Step_05Wood.wav</ShortName>
-							<Path>SFX\Steps\Wood\Step_05Wood_10C4C929.wem</Path>
-						</File>
-						<File Id="796728033" Language="SFX">
-							<ShortName>Steps\Standard\Step_22Standard.wav</ShortName>
-							<Path>SFX\Steps\Standard\Step_22Standard_10C4C929.wem</Path>
-						</File>
-						<File Id="826019934" Language="SFX">
-							<ShortName>Steps\Gravel\Step_43Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_43Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="826637502" Language="SFX">
-							<ShortName>Steps\Gravel\Step_46Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_46Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="843662702" Language="SFX">
-							<ShortName>Steps\Gravel\Step_34Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_34Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="845194166" Language="SFX">
-							<ShortName>Steps\Gravel\Step_36Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_36Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="852855157" Language="SFX">
-							<ShortName>Steps\Standard\Step_20Standard.wav</ShortName>
-							<Path>SFX\Steps\Standard\Step_20Standard_10C4C929.wem</Path>
-						</File>
-						<File Id="860091779" Language="SFX">
-							<ShortName>Steps\Gravel\Step_51Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_51Gravel_10C4C929.wem</Path>
 						</File>
 						<File Id="869379579" Language="SFX">
 							<ShortName>Steps\Gravel\Step_33Gravel.wav</ShortName>
 							<Path>SFX\Steps\Gravel\Step_33Gravel_10C4C929.wem</Path>
 						</File>
-						<File Id="871085966" Language="SFX">
-							<ShortName>Steps\Gravel\Step_38Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_38Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="903618395" Language="SFX">
-							<ShortName>Steps\Wood\Step_01Wood.wav</ShortName>
-							<Path>SFX\Steps\Wood\Step_01Wood_10C4C929.wem</Path>
-						</File>
 						<File Id="932264669" Language="SFX">
 							<ShortName>Steps\Standard\Step_25Standard.wav</ShortName>
 							<Path>SFX\Steps\Standard\Step_25Standard_10C4C929.wem</Path>
 						</File>
-						<File Id="945328830" Language="SFX">
-							<ShortName>Steps\Gravel\Step_48Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_48Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="1014601458" Language="SFX">
-							<ShortName>Steps\Gravel\Step_37Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_37Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="1041417094" Language="SFX">
-							<ShortName>Steps\Standard\Step_19Standard.wav</ShortName>
-							<Path>SFX\Steps\Standard\Step_19Standard_10C4C929.wem</Path>
-						</File>
 						<File Id="1068479001" Language="SFX">
 							<ShortName>Steps\Gravel\Step_32Gravel.wav</ShortName>
 							<Path>SFX\Steps\Gravel\Step_32Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="1069978422" Language="SFX">
-							<ShortName>Steps\Gravel\Step_53Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_53Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="1070030653" Language="SFX">
-							<ShortName>Steps\Gravel\Step_39Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_39Gravel_10C4C929.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 					<DefaultSwitchValue>{F7D7D03C-0417-4D3E-9CEC-0FC5F71A0B58}</DefaultSwitchValue>
 					<SwitchContainers>
 						<SwitchContainer SwitchValue="{F7D7D03C-0417-4D3E-9CEC-0FC5F71A0B58}">
 							<Media>
-								<File Id="53483494"/>
-								<File Id="54698883"/>
 								<File Id="83818322"/>
-								<File Id="118664291"/>
-								<File Id="122971765"/>
-								<File Id="148813729"/>
-								<File Id="238004578"/>
-								<File Id="266760772"/>
-								<File Id="292151356"/>
-								<File Id="394815816"/>
-								<File Id="410464228"/>
 								<File Id="413866373"/>
-								<File Id="459568182"/>
 								<File Id="485678867"/>
-								<File Id="486383263"/>
-								<File Id="607001280"/>
-								<File Id="641829977"/>
-								<File Id="665772693"/>
-								<File Id="721761556"/>
-								<File Id="826019934"/>
-								<File Id="826637502"/>
-								<File Id="843662702"/>
-								<File Id="845194166"/>
-								<File Id="860091779"/>
 								<File Id="869379579"/>
-								<File Id="871085966"/>
-								<File Id="945328830"/>
-								<File Id="1014601458"/>
 								<File Id="1068479001"/>
-								<File Id="1069978422"/>
-								<File Id="1070030653"/>
-							</Media>
-						</SwitchContainer>
-						<SwitchContainer SwitchValue="{453FD6AC-2658-48CA-9152-F3C1A8A9CC4E}">
-							<Media>
-								<File Id="48899789"/>
-								<File Id="51288901"/>
-								<File Id="72839060"/>
-								<File Id="298631203"/>
-								<File Id="427485899"/>
-								<File Id="434537556"/>
-								<File Id="494968059"/>
-								<File Id="554606686"/>
-								<File Id="559398380"/>
-								<File Id="614908418"/>
-								<File Id="657974905"/>
-								<File Id="714419186"/>
-								<File Id="770293676"/>
-								<File Id="786082910"/>
-								<File Id="903618395"/>
 							</Media>
 						</SwitchContainer>
 						<SwitchContainer SwitchValue="{2C9ECBF8-7A64-4321-B615-F710DABFDE10}">
 							<Media>
-								<File Id="129393656"/>
 								<File Id="173851412"/>
 								<File Id="213768533"/>
 								<File Id="234756790"/>
 								<File Id="358036158"/>
-								<File Id="576389374"/>
-								<File Id="629120236"/>
-								<File Id="733912445"/>
-								<File Id="745617401"/>
-								<File Id="796728033"/>
-								<File Id="852855157"/>
 								<File Id="932264669"/>
-								<File Id="1041417094"/>
 							</Media>
 						</SwitchContainer>
 					</SwitchContainers>
