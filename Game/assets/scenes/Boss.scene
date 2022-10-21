@@ -41634,6 +41634,7 @@ child:
         "'_fog_max_density@float'": 0.015
         "'_fog_min_density@float'": 0.005
         "'_audio_manager_go@GameObject*'": 3361489421654677551
+        "'_player_sound_manager_go@GameObject*'": 18228802010358417349
         "'_victory_screen@GameObject*'": 11894863846231363565
       - !<script>
         id: 9673773846935216921
