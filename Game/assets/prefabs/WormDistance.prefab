@@ -5,8 +5,8 @@ component:
   - !<transform>
     type: 1
     enabled: true
-    position: [67.26, -14.51, 44.25]
-    rotation: [0, -49.78, 0]
+    position: [-48, -20.35, 22]
+    rotation: [0, 0, 0]
     scale: [5, 5, 5]
   - !<animation>
     type: 14
@@ -48,7 +48,7 @@ component:
     "'_already_in_combat@bool'": false
     "'_is_from_gautlet@bool'": false
     "'_is_from_boss@bool'": false
-    "'_will_die@bool'": false
+    "'_will_die@bool'": true
     "'_attack_animation_duration@float'": 0
     "'_attack_animation_timer@float'": 0
     "'damage_effect_duration@float'": 1
@@ -128,7 +128,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [180, 89.98, 180]
+                    rotation: [-180, 89.98, -180]
                     scale: [1, 1, 1]
                 child:
                   - name: Neck_$AssimpFbx$_Rotation
@@ -217,7 +217,7 @@ child:
                                     type: 1
                                     enabled: true
                                     position: [0, 0, 0]
-                                    rotation: [180, -89.98, 180]
+                                    rotation: [-180, -89.98, -180]
                                     scale: [1, 1, 1]
                                 child:
                                   - name: Head_$AssimpFbx$_Rotation
@@ -346,8 +346,8 @@ child:
                                                                                     type: 1
                                                                                     enabled: true
                                                                                     position: [0, 0, 0]
-                                                                                    rotation: [180, 0, -53.03]
-                                                                                    scale: [1, 0.9903, 0.9903]
+                                                                                    rotation: [-180, 0, -53.03]
+                                                                                    scale: [1, 0.9885, 0.9885]
                                                                                 child:
                                                                                   - name: Jaw_End_R_$AssimpFbx$_Rotation
                                                                                     enabled: true
@@ -659,7 +659,7 @@ child:
         enabled: true
         position: [0, 0, 0]
         rotation: [0, 0, 0]
-        scale: [0.1617, 0.1617, 0.1617]
+        scale: [0.2, 0.2, 0.2]
     child:
       - name: PM3D_Sphere124
         enabled: true
@@ -837,8 +837,8 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [-15.49, 2.903, 3.995]
-        rotation: [-180, 80.44, -180]
+        position: [10, 4.071, -4.795]
+        rotation: [0, 49.78, 0]
         scale: [1, 1, 1]
     child:
       - name: ProjectileParticle
@@ -940,7 +940,7 @@ child:
               size: [true, true, 0, [2.5, 1], 0.25, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
               rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
               delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-              properties: [1, 1, 0, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+              properties: [1, 0, 0, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
             emission:
               rate: [true, true, 0, [600, 10], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
               rate_burst: [true, true, 0, [10, 10], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
