@@ -1363,6 +1363,7 @@
 								<MusicTransition Name="Transition" ID="{897F64CF-E2A9-4620-8A9B-B61E9627322E}">
 									<PropertyList>
 										<Property Name="DestinationContextType" Type="int16" Value="2"/>
+										<Property Name="DestinationJumpPositionPreset" Type="int16" Value="1"/>
 										<Property Name="SourceContextType" Type="int16" Value="2"/>
 									</PropertyList>
 									<ReferenceList>

@@ -52,4 +52,10 @@ namespace Hachiko::Sounds
 	// Wwise RTPC
 	// Enemy
 	constexpr const wchar_t* ENEMY_AWARE = L"EnemyAware";
+
+	// Wwise Switch
+	// Footsteps
+	constexpr const wchar_t* SWITCH_GROUP_FOOTSTEPS = L"Footsteps";
+	constexpr const wchar_t* SWITCH_STATE_FOOTSTEPS_GRAVEL = L"Gravel";
+	constexpr const wchar_t* SWITCH_STATE_FOOTSTEPS_STANDARD = L"Standard";
 } // namespace Hachiko::Sounds
