@@ -171,7 +171,7 @@ void Hachiko::BatchManager::DebugMenu()
     ImGui::Separator();
     ShowDebugMenuForBatches(geometry_batches_opaque);
 
-    ImGui::NewLine();
+    ImGui::Separator();
 
     ImGui::TextWrapped("Transparent batches"); 
     ImGui::Separator();
@@ -181,14 +181,17 @@ void Hachiko::BatchManager::DebugMenu()
 void Hachiko::BatchManager::ShowDebugMenuForBatches(
     const std::vector<GeometryBatch*>& batches) const 
 {
-    for (GeometryBatch* geometry_batch : batches)
+    for (int i = 0; i < batches.size(); ++i)
     {
-        Widgets::Label("Bones", StringUtils::ToString(geometry_batch->batch->layout.bones));
-        Widgets::Label("Normals", StringUtils::ToString(geometry_batch->batch->layout.normals));
-        Widgets::Label("TexCoords", StringUtils::ToString(geometry_batch->batch->layout.text_coords));
+        ImGui::TextWrapped("Geometry batch %i:", i);
+        ImGui::BulletText("Bones %d", batches[i]->batch->layout.bones);
+        ImGui::BulletText("Normals %d", batches[i]->batch->layout.normals);
+        ImGui::BulletText("TexCoords %d", batches[i]->batch->layout.text_coords);
+        ImGui::NewLine();
 
-        geometry_batch->ImGuiWindow();
-        ImGui::Separator();
+        batches[i]->ImGuiWindow();
+
+        ImGui::NewLine();
     }
 }
 
