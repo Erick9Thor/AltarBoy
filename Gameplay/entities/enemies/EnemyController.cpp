@@ -980,6 +980,8 @@ void Hachiko::Scripting::EnemyController::StartHitState()
 	_stun_time = 0.8f;
 
 	animation->SendTrigger("isHit");
+
+	RecieveKnockback();
 }
 
 void Hachiko::Scripting::EnemyController::UpdateHitState()
@@ -988,7 +990,6 @@ void Hachiko::Scripting::EnemyController::UpdateHitState()
 	{
 		// Run the timer for stun in unscaled time:
 		_stun_time -= Time::DeltaTime();
-		RecieveKnockback();
 		return;
 	}
 	_is_stunned = false;

@@ -47,6 +47,7 @@ Hachiko::Scripting::BossController::BossController(GameObject* game_object)
     , attack_current_cd(0.0f)
     , time_between_enemies(5.0)
     , enemy_pool(nullptr)
+    , _rotating_lasers(nullptr)
     , _laser_wall(nullptr)
     , _laser_wall_duration(2.0f)
     , _laser_jump_height(50.0f)
@@ -124,6 +125,12 @@ void Hachiko::Scripting::BossController::OnAwake()
     for (GameObject* laser : _laser_wall->children)
     {
         laser->GetComponent<LaserController>()->ChangeState(LaserController::State::INACTIVE);
+    }
+
+    for (GameObject* laser : _rotating_lasers->children)
+    {
+        laser->GetComponent<LaserController>()->ChangeState(LaserController::State::INACTIVE);
+        laser->GetComponent<LaserController>()->_toggle_activation = false;
     }
 
     if (_stalagmite_manager_go)
@@ -278,6 +285,7 @@ void Hachiko::Scripting::BossController::CombatController()
 
     if (combat_stats->_current_hp <= 0)
     {
+        KillEnemies();
         level_manager->BossKilled();
         state = BossState::DEAD;
         return;
@@ -408,7 +416,10 @@ void Hachiko::Scripting::BossController::StartCocoon()
     time_elapse = 0.0;
     SetUpCocoon();
     FocusCameraOnBoss(true);
+
+    //Remove all stalactites and enemies
     _stalagmite_manager->DestroyAllStalagmites();
+    KillEnemies();
 
     // Direct boss to intial position
     moving_to_initial_pos = true;
@@ -456,7 +467,16 @@ void Hachiko::Scripting::BossController::CocoonController()
         if (time_elapse >= 2) // HARDCODED TIME FOR CAMERA FOCUS
         {
             FocusCameraOnBoss(false);
+            // Gauntlet Starts once the camera is unlocked
+            InitCocoonGauntlet();
         }
+    }
+
+    if (_rotating_lasers)
+    {
+        float3 rot_lasers_rotation = _rotating_lasers->GetTransform()->GetLocalRotationEuler();
+        rot_lasers_rotation.y += Time::DeltaTime() * 10;
+        _rotating_lasers->GetTransform()->SetLocalRotationEuler(rot_lasers_rotation);
     }
 
     // Replace with is gauntlet completed
@@ -480,6 +500,16 @@ void Hachiko::Scripting::BossController::BreakCocoon()
     }
 }
 
+void Hachiko::Scripting::BossController::InitCocoonGauntlet()
+{
+    // Unlock the lasers
+    for (GameObject* laser : _rotating_lasers->children)
+    {
+        laser->GetComponent<LaserController>()->_toggle_activation = true;
+    }
+    // Start spawning enemies
+    gauntlet->StartGauntlet();
+}
 
 bool Hachiko::Scripting::BossController::CocoonTrigger()
 {
@@ -490,7 +520,6 @@ bool Hachiko::Scripting::BossController::CocoonTrigger()
     if (gauntlet_thresholds_percent.back() >= static_cast<float>(combat_stats->_current_hp) / combat_stats->_max_hp)
     {
         gauntlet_thresholds_percent.pop_back();
-        gauntlet->StartGauntlet();
 
         ChangeStateText("In Cocoon.");
 
@@ -513,6 +542,12 @@ void Hachiko::Scripting::BossController::FinishCocoon()
     _jump_pattern_index = -1;
 
     gauntlet->ResetGauntlet(true);
+
+    for (GameObject* laser : _rotating_lasers->children)
+    {
+        laser->GetComponent<LaserController>()->ChangeState(LaserController::State::INACTIVE);
+        laser->GetComponent<LaserController>()->_toggle_activation = false;
+    }
 
     ChangeStateText("Finished Cocoon.");
 
@@ -804,6 +839,16 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
 
         if (_current_jumping_mode == JumpingMode::LASER)
         {
+            const int dir = RandomUtil::RandomIntBetween(0, 3);
+            
+            // Set a random direction for the lasers
+            float3 laser_wall_rot = _laser_wall->GetTransform()->GetLocalRotationEuler();
+            laser_wall_rot.y = _wall_dir_angles[dir];
+            _laser_wall->GetTransform()->SetLocalRotationEuler(laser_wall_rot);
+
+            // Kill all enemies before lasers
+            KillEnemies();
+
             for (GameObject* laser : _laser_wall->children)
             {
                 laser->GetComponent<LaserController>()->ChangeState(LaserController::State::ACTIVATING);
@@ -1323,6 +1368,14 @@ void Hachiko::Scripting::BossController::ResetEnemies()
         }
 
         enemy->SetActive(false);
+    }
+}
+
+void Hachiko::Scripting::BossController::KillEnemies()
+{
+    for (EnemyController* enemy_controller : enemies)
+    {
+        enemy_controller->SetDead();
     }
 }
 

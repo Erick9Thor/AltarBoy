@@ -169,6 +169,7 @@ namespace Hachiko
             void SetUpCocoon();
             void BreakCocoon();
 
+            void InitCocoonGauntlet();
             bool CocoonTrigger();
             void FinishCocoon();
 
@@ -184,6 +185,7 @@ namespace Hachiko
 
             void SpawnEnemy();
             void ResetEnemies();
+            void KillEnemies();
 
             bool ControlLasers();
 
@@ -338,9 +340,13 @@ namespace Hachiko
             const float jump_placeholder_time = 5.f;
             float jump_placeholder_timer = 0.f;
 
+            // Lasers
+            SERIALIZE_FIELD(GameObject*, _rotating_lasers);
+            SERIALIZE_FIELD(float, _rotating_lasers_speed);
             SERIALIZE_FIELD(GameObject*, _laser_wall);
             SERIALIZE_FIELD(float, _laser_wall_duration);
             float _laser_wall_current_time = 0.0f;
+            const std::array<float, 4> _wall_dir_angles = { 0.f, 90.f, 180.f, 270.f};
             SERIALIZE_FIELD(float, _laser_jump_height);
         };
     } // namespace Scripting
