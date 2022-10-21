@@ -19,11 +19,13 @@ void Hachiko::Scripting::AudioManager::OnAwake()
 {
 	_audio_source = game_object->GetComponent<ComponentAudioSource>();
 	SetNavigation();
+	SetFootstepEffect();
 }
 
 void Hachiko::Scripting::AudioManager::OnStart()
 {
 	SetNavigation();
+	SetFootstepEffect();
 	_audio_source->PostEvent(GetPlayMusicEventName(_level));
 	_audio_source->PostEvent(Sounds::PLAY_WIND);
 	_audio_source->PostEvent(Sounds::PLAY_PEBBLE);
@@ -108,6 +110,18 @@ void Hachiko::Scripting::AudioManager::SetCombat()
 void Hachiko::Scripting::AudioManager::SetNavigation()
 {
 	_audio_source->SetRTPCValue(Sounds::ENEMY_AWARE, 0);
+}
+
+void Hachiko::Scripting::AudioManager::SetFootstepEffect()
+{
+	if (_level == 1)
+	{
+		_audio_source->SetSwitch(Sounds::SWITCH_GROUP_FOOTSTEPS, Sounds::SWITCH_STATE_FOOTSTEPS_GRAVEL);
+	}
+	else
+	{
+		_audio_source->SetSwitch(Sounds::SWITCH_GROUP_FOOTSTEPS, Sounds::SWITCH_STATE_FOOTSTEPS_STANDARD);
+	}
 }
 
 const wchar_t* Hachiko::Scripting::AudioManager::GetPlayMusicEventName(unsigned level)

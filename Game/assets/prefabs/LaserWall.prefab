@@ -5,8 +5,8 @@ component:
   - !<transform>
     type: 1
     enabled: true
-    position: [-115.6, 0, -48.89]
-    rotation: [-0, 0, -0]
+    position: [-81.63, 0, -61.83]
+    rotation: [0, 0, 0]
     scale: [1, 1, 1]
 child:
   - name: Laser
@@ -15,8 +15,8 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [0, 1.846, -2]
-        rotation: [-180, -89.98, -180]
+        position: [-34.05, 1.846, -21.27]
+        rotation: [180, -89.98, 180]
         scale: [1, 1, 1]
       - type: 20
         enabled: true
@@ -35,7 +35,7 @@ child:
         "'_movement_speed@float'": 0.5
         "'_movement_target@GameObject*'": 0
         "'_toggle_activation@bool'": false
-        "'_toggle_active_time@float'": 15
+        "'_toggle_active_time@float'": 2
         "'_toggle_inactive_time@float'": 5
         "'_dissolving_time@float'": 0.5
         "'_sparks@GameObject*'": 6
@@ -65,7 +65,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0.5, -0.5]
-            rotation: [180, 0, -0]
+            rotation: [-180, 0, 0]
             scale: [0.2, 0.2, 3.492]
           - !<mesh_renderer>
             type: 2
@@ -101,7 +101,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [90, 0, -0]
+            rotation: [90, 0, 0]
             scale: [1, 1, 1]
           - !<particle_system>
             type: 22
@@ -112,6 +112,7 @@ child:
               shape: true
               lights: false
               renderer: true
+              texture: false
             parameters:
               duration: 0.05
               loop: true
@@ -171,8 +172,8 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [0, 1.846, -3.5]
-        rotation: [180, -89.98, 180]
+        position: [-34.05, 1.846, -19.77]
+        rotation: [-180, -89.98, -180]
         scale: [1, 1, 1]
       - type: 20
         enabled: true
@@ -191,7 +192,7 @@ child:
         "'_movement_speed@float'": 0.5
         "'_movement_target@GameObject*'": 0
         "'_toggle_activation@bool'": false
-        "'_toggle_active_time@float'": 2
+        "'_toggle_active_time@float'": 15
         "'_toggle_inactive_time@float'": 5
         "'_dissolving_time@float'": 0.5
         "'_sparks@GameObject*'": 11
@@ -221,7 +222,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0.5, -0.5]
-            rotation: [-180, 0, -0]
+            rotation: [180, 0, 0]
             scale: [0.2, 0.2, 3.492]
           - !<mesh_renderer>
             type: 2
@@ -257,7 +258,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [90, 0, -0]
+            rotation: [90, 0, 0]
             scale: [1, 1, 1]
           - !<particle_system>
             type: 22
@@ -268,6 +269,7 @@ child:
               shape: true
               lights: false
               renderer: true
+              texture: false
             parameters:
               duration: 0.05
               loop: true
@@ -327,8 +329,8 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [0, 1.846, -5]
-        rotation: [180, -89.98, 180]
+        position: [-34.05, 1.846, -18.27]
+        rotation: [-180, -89.98, -180]
         scale: [1, 1, 1]
       - type: 20
         enabled: true
@@ -347,7 +349,7 @@ child:
         "'_movement_speed@float'": 0.5
         "'_movement_target@GameObject*'": 0
         "'_toggle_activation@bool'": false
-        "'_toggle_active_time@float'": 15
+        "'_toggle_active_time@float'": 2
         "'_toggle_inactive_time@float'": 5
         "'_dissolving_time@float'": 0.5
         "'_sparks@GameObject*'": 16
@@ -377,7 +379,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0.5, -0.5]
-            rotation: [-180, 0, -0]
+            rotation: [180, 0, 0]
             scale: [0.2, 0.2, 3.492]
           - !<mesh_renderer>
             type: 2
@@ -413,7 +415,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [90, 0, -0]
+            rotation: [90, 0, 0]
             scale: [1, 1, 1]
           - !<particle_system>
             type: 22
@@ -424,6 +426,7 @@ child:
               shape: true
               lights: false
               renderer: true
+              texture: false
             parameters:
               duration: 0.05
               loop: true
@@ -483,8 +486,8 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [0, 1.846, -6.5]
-        rotation: [-180, -89.98, -180]
+        position: [-34.05, 1.846, -16.77]
+        rotation: [180, -89.98, 180]
         scale: [1, 1, 1]
       - type: 20
         enabled: true
@@ -503,7 +506,7 @@ child:
         "'_movement_speed@float'": 0.5
         "'_movement_target@GameObject*'": 0
         "'_toggle_activation@bool'": false
-        "'_toggle_active_time@float'": 2
+        "'_toggle_active_time@float'": 15
         "'_toggle_inactive_time@float'": 5
         "'_dissolving_time@float'": 0.5
         "'_sparks@GameObject*'": 21
@@ -533,7 +536,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0.5, -0.5]
-            rotation: [180, 0, -0]
+            rotation: [-180, 0, 0]
             scale: [0.2, 0.2, 3.492]
           - !<mesh_renderer>
             type: 2
@@ -569,7 +572,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [90, 0, -0]
+            rotation: [90, 0, 0]
             scale: [1, 1, 1]
           - !<particle_system>
             type: 22
@@ -580,6 +583,7 @@ child:
               shape: true
               lights: false
               renderer: true
+              texture: false
             parameters:
               duration: 0.05
               loop: true
@@ -639,7 +643,7 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [-0.0395, 1.846, -8]
+        position: [-34.05, 1.846, -15.27]
         rotation: [180, -89.98, 180]
         scale: [1, 1, 1]
       - type: 20
@@ -659,7 +663,7 @@ child:
         "'_movement_speed@float'": 0.5
         "'_movement_target@GameObject*'": 0
         "'_toggle_activation@bool'": false
-        "'_toggle_active_time@float'": 15
+        "'_toggle_active_time@float'": 2
         "'_toggle_inactive_time@float'": 5
         "'_dissolving_time@float'": 0.5
         "'_sparks@GameObject*'": 26
@@ -689,7 +693,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0.5, -0.5]
-            rotation: [-180, 0, -0]
+            rotation: [-180, 0, 0]
             scale: [0.2, 0.2, 3.492]
           - !<mesh_renderer>
             type: 2
@@ -725,7 +729,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [90, 0, -0]
+            rotation: [90, 0, 0]
             scale: [1, 1, 1]
           - !<particle_system>
             type: 22
@@ -736,6 +740,7 @@ child:
               shape: true
               lights: false
               renderer: true
+              texture: false
             parameters:
               duration: 0.05
               loop: true
@@ -795,7 +800,7 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [-0.0395, 1.846, -9.5]
+        position: [-34.05, 1.846, -13.77]
         rotation: [-180, -89.98, -180]
         scale: [1, 1, 1]
       - type: 20
@@ -815,7 +820,7 @@ child:
         "'_movement_speed@float'": 0.5
         "'_movement_target@GameObject*'": 0
         "'_toggle_activation@bool'": false
-        "'_toggle_active_time@float'": 2
+        "'_toggle_active_time@float'": 15
         "'_toggle_inactive_time@float'": 5
         "'_dissolving_time@float'": 0.5
         "'_sparks@GameObject*'": 31
@@ -845,7 +850,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0.5, -0.5]
-            rotation: [180, 0, -0]
+            rotation: [180, 0, 0]
             scale: [0.2, 0.2, 3.492]
           - !<mesh_renderer>
             type: 2
@@ -881,7 +886,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [90, 0, -0]
+            rotation: [90, 0, 0]
             scale: [1, 1, 1]
           - !<particle_system>
             type: 22
@@ -892,6 +897,7 @@ child:
               shape: true
               lights: false
               renderer: true
+              texture: false
             parameters:
               duration: 0.05
               loop: true
@@ -951,8 +957,8 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [-0.0395, 1.846, -11]
-        rotation: [-180, -89.98, -180]
+        position: [-34.01, 1.846, -12.27]
+        rotation: [180, -89.98, 180]
         scale: [1, 1, 1]
       - type: 20
         enabled: true
@@ -971,7 +977,7 @@ child:
         "'_movement_speed@float'": 0.5
         "'_movement_target@GameObject*'": 0
         "'_toggle_activation@bool'": false
-        "'_toggle_active_time@float'": 15
+        "'_toggle_active_time@float'": 2
         "'_toggle_inactive_time@float'": 5
         "'_dissolving_time@float'": 0.5
         "'_sparks@GameObject*'": 36
@@ -1001,7 +1007,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0.5, -0.5]
-            rotation: [180, 0, -0]
+            rotation: [-180, 0, 0]
             scale: [0.2, 0.2, 3.492]
           - !<mesh_renderer>
             type: 2
@@ -1037,7 +1043,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [90, 0, -0]
+            rotation: [90, 0, 0]
             scale: [1, 1, 1]
           - !<particle_system>
             type: 22
@@ -1048,6 +1054,7 @@ child:
               shape: true
               lights: false
               renderer: true
+              texture: false
             parameters:
               duration: 0.05
               loop: true
@@ -1107,8 +1114,8 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [-0.0395, 1.846, -12.5]
-        rotation: [180, -89.98, 180]
+        position: [-34.01, 1.846, -10.77]
+        rotation: [-180, -89.98, -180]
         scale: [1, 1, 1]
       - type: 20
         enabled: true
@@ -1127,7 +1134,7 @@ child:
         "'_movement_speed@float'": 0.5
         "'_movement_target@GameObject*'": 0
         "'_toggle_activation@bool'": false
-        "'_toggle_active_time@float'": 2
+        "'_toggle_active_time@float'": 15
         "'_toggle_inactive_time@float'": 5
         "'_dissolving_time@float'": 0.5
         "'_sparks@GameObject*'": 41
@@ -1157,7 +1164,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0.5, -0.5]
-            rotation: [-180, 0, -0]
+            rotation: [180, 0, 0]
             scale: [0.2, 0.2, 3.492]
           - !<mesh_renderer>
             type: 2
@@ -1193,7 +1200,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [90, 0, -0]
+            rotation: [90, 0, 0]
             scale: [1, 1, 1]
           - !<particle_system>
             type: 22
@@ -1204,6 +1211,7 @@ child:
               shape: true
               lights: false
               renderer: true
+              texture: false
             parameters:
               duration: 0.05
               loop: true
@@ -1263,8 +1271,8 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [-0.0395, 1.846, -14]
-        rotation: [180, -89.98, 180]
+        position: [-34.01, 1.846, -9.27]
+        rotation: [-180, -89.98, -180]
         scale: [1, 1, 1]
       - type: 20
         enabled: true
@@ -1283,7 +1291,7 @@ child:
         "'_movement_speed@float'": 0.5
         "'_movement_target@GameObject*'": 0
         "'_toggle_activation@bool'": false
-        "'_toggle_active_time@float'": 15
+        "'_toggle_active_time@float'": 2
         "'_toggle_inactive_time@float'": 5
         "'_dissolving_time@float'": 0.5
         "'_sparks@GameObject*'": 46
@@ -1313,7 +1321,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0.5, -0.5]
-            rotation: [-180, 0, -0]
+            rotation: [180, 0, 0]
             scale: [0.2, 0.2, 3.492]
           - !<mesh_renderer>
             type: 2
@@ -1349,7 +1357,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [90, 0, -0]
+            rotation: [90, 0, 0]
             scale: [1, 1, 1]
           - !<particle_system>
             type: 22
@@ -1360,6 +1368,7 @@ child:
               shape: true
               lights: false
               renderer: true
+              texture: false
             parameters:
               duration: 0.05
               loop: true
@@ -1419,8 +1428,8 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [-0.0395, 1.846, -15.5]
-        rotation: [-180, -89.98, -180]
+        position: [-34.01, 1.846, -7.77]
+        rotation: [180, -89.98, 180]
         scale: [1, 1, 1]
       - type: 20
         enabled: true
@@ -1439,7 +1448,7 @@ child:
         "'_movement_speed@float'": 0.5
         "'_movement_target@GameObject*'": 0
         "'_toggle_activation@bool'": false
-        "'_toggle_active_time@float'": 2
+        "'_toggle_active_time@float'": 15
         "'_toggle_inactive_time@float'": 5
         "'_dissolving_time@float'": 0.5
         "'_sparks@GameObject*'": 51
@@ -1469,7 +1478,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0.5, -0.5]
-            rotation: [180, 0, -0]
+            rotation: [-180, 0, 0]
             scale: [0.2, 0.2, 3.492]
           - !<mesh_renderer>
             type: 2
@@ -1505,7 +1514,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [90, 0, -0]
+            rotation: [90, 0, 0]
             scale: [1, 1, 1]
           - !<particle_system>
             type: 22
@@ -1516,6 +1525,7 @@ child:
               shape: true
               lights: false
               renderer: true
+              texture: false
             parameters:
               duration: 0.05
               loop: true
@@ -1575,7 +1585,7 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [-0.0395, 1.846, 13]
+        position: [-34.05, 1.846, 8.731]
         rotation: [180, -89.98, 180]
         scale: [1, 1, 1]
       - type: 20
@@ -1595,7 +1605,7 @@ child:
         "'_movement_speed@float'": 0.5
         "'_movement_target@GameObject*'": 0
         "'_toggle_activation@bool'": false
-        "'_toggle_active_time@float'": 15
+        "'_toggle_active_time@float'": 2
         "'_toggle_inactive_time@float'": 5
         "'_dissolving_time@float'": 0.5
         "'_sparks@GameObject*'": 56
@@ -1625,7 +1635,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0.5, -0.5]
-            rotation: [-180, 0, -0]
+            rotation: [-180, 0, 0]
             scale: [0.2, 0.2, 3.492]
           - !<mesh_renderer>
             type: 2
@@ -1661,7 +1671,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [90, 0, -0]
+            rotation: [90, 0, 0]
             scale: [1, 1, 1]
           - !<particle_system>
             type: 22
@@ -1672,6 +1682,7 @@ child:
               shape: true
               lights: false
               renderer: true
+              texture: false
             parameters:
               duration: 0.05
               loop: true
@@ -1731,7 +1742,7 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [-0.0395, 1.846, 11.5]
+        position: [-34.05, 1.846, 10.23]
         rotation: [-180, -89.98, -180]
         scale: [1, 1, 1]
       - type: 20
@@ -1751,7 +1762,7 @@ child:
         "'_movement_speed@float'": 0.5
         "'_movement_target@GameObject*'": 0
         "'_toggle_activation@bool'": false
-        "'_toggle_active_time@float'": 2
+        "'_toggle_active_time@float'": 15
         "'_toggle_inactive_time@float'": 5
         "'_dissolving_time@float'": 0.5
         "'_sparks@GameObject*'": 61
@@ -1781,7 +1792,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0.5, -0.5]
-            rotation: [180, 0, -0]
+            rotation: [180, 0, 0]
             scale: [0.2, 0.2, 3.492]
           - !<mesh_renderer>
             type: 2
@@ -1817,7 +1828,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [90, 0, -0]
+            rotation: [90, 0, 0]
             scale: [1, 1, 1]
           - !<particle_system>
             type: 22
@@ -1828,6 +1839,7 @@ child:
               shape: true
               lights: false
               renderer: true
+              texture: false
             parameters:
               duration: 0.05
               loop: true
@@ -1887,7 +1899,7 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [-0.0395, 1.846, 10]
+        position: [-34.05, 1.846, 11.73]
         rotation: [-180, -89.98, -180]
         scale: [1, 1, 1]
       - type: 20
@@ -1907,7 +1919,7 @@ child:
         "'_movement_speed@float'": 0.5
         "'_movement_target@GameObject*'": 0
         "'_toggle_activation@bool'": false
-        "'_toggle_active_time@float'": 15
+        "'_toggle_active_time@float'": 2
         "'_toggle_inactive_time@float'": 5
         "'_dissolving_time@float'": 0.5
         "'_sparks@GameObject*'": 66
@@ -1937,7 +1949,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0.5, -0.5]
-            rotation: [180, 0, -0]
+            rotation: [180, 0, 0]
             scale: [0.2, 0.2, 3.492]
           - !<mesh_renderer>
             type: 2
@@ -1973,7 +1985,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [90, 0, -0]
+            rotation: [90, 0, 0]
             scale: [1, 1, 1]
           - !<particle_system>
             type: 22
@@ -1984,6 +1996,7 @@ child:
               shape: true
               lights: false
               renderer: true
+              texture: false
             parameters:
               duration: 0.05
               loop: true
@@ -2043,7 +2056,7 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [-0.0395, 1.846, 8.501]
+        position: [-34.05, 1.846, 13.23]
         rotation: [180, -89.98, 180]
         scale: [1, 1, 1]
       - type: 20
@@ -2063,7 +2076,7 @@ child:
         "'_movement_speed@float'": 0.5
         "'_movement_target@GameObject*'": 0
         "'_toggle_activation@bool'": false
-        "'_toggle_active_time@float'": 2
+        "'_toggle_active_time@float'": 15
         "'_toggle_inactive_time@float'": 5
         "'_dissolving_time@float'": 0.5
         "'_sparks@GameObject*'": 71
@@ -2093,7 +2106,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0.5, -0.5]
-            rotation: [-180, 0, -0]
+            rotation: [-180, 0, 0]
             scale: [0.2, 0.2, 3.492]
           - !<mesh_renderer>
             type: 2
@@ -2129,7 +2142,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [90, 0, -0]
+            rotation: [90, 0, 0]
             scale: [1, 1, 1]
           - !<particle_system>
             type: 22
@@ -2140,6 +2153,7 @@ child:
               shape: true
               lights: false
               renderer: true
+              texture: false
             parameters:
               duration: 0.05
               loop: true
@@ -2199,8 +2213,8 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [-0.079, 1.846, 7.001]
-        rotation: [-180, -89.98, -180]
+        position: [-34.05, 1.846, 14.73]
+        rotation: [180, -89.98, 180]
         scale: [1, 1, 1]
       - type: 20
         enabled: true
@@ -2219,7 +2233,7 @@ child:
         "'_movement_speed@float'": 0.5
         "'_movement_target@GameObject*'": 0
         "'_toggle_activation@bool'": false
-        "'_toggle_active_time@float'": 15
+        "'_toggle_active_time@float'": 2
         "'_toggle_inactive_time@float'": 5
         "'_dissolving_time@float'": 0.5
         "'_sparks@GameObject*'": 76
@@ -2249,7 +2263,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0.5, -0.5]
-            rotation: [180, 0, -0]
+            rotation: [-180, 0, 0]
             scale: [0.2, 0.2, 3.492]
           - !<mesh_renderer>
             type: 2
@@ -2285,7 +2299,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [90, 0, -0]
+            rotation: [90, 0, 0]
             scale: [1, 1, 1]
           - !<particle_system>
             type: 22
@@ -2296,6 +2310,7 @@ child:
               shape: true
               lights: false
               renderer: true
+              texture: false
             parameters:
               duration: 0.05
               loop: true
@@ -2355,8 +2370,8 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [-0.079, 1.846, 5.501]
-        rotation: [180, -89.98, 180]
+        position: [-34.05, 1.846, 16.23]
+        rotation: [-180, -89.98, -180]
         scale: [1, 1, 1]
       - type: 20
         enabled: true
@@ -2375,7 +2390,7 @@ child:
         "'_movement_speed@float'": 0.5
         "'_movement_target@GameObject*'": 0
         "'_toggle_activation@bool'": false
-        "'_toggle_active_time@float'": 2
+        "'_toggle_active_time@float'": 15
         "'_toggle_inactive_time@float'": 5
         "'_dissolving_time@float'": 0.5
         "'_sparks@GameObject*'": 81
@@ -2405,7 +2420,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0.5, -0.5]
-            rotation: [-180, 0, -0]
+            rotation: [180, 0, 0]
             scale: [0.2, 0.2, 3.492]
           - !<mesh_renderer>
             type: 2
@@ -2441,7 +2456,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [90, 0, -0]
+            rotation: [90, 0, 0]
             scale: [1, 1, 1]
           - !<particle_system>
             type: 22
@@ -2452,6 +2467,7 @@ child:
               shape: true
               lights: false
               renderer: true
+              texture: false
             parameters:
               duration: 0.05
               loop: true
@@ -2511,7 +2527,7 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [-0.079, 1.846, 4.001]
+        position: [-34.01, 1.846, 17.73]
         rotation: [180, -89.98, 180]
         scale: [1, 1, 1]
       - type: 20
@@ -2531,7 +2547,7 @@ child:
         "'_movement_speed@float'": 0.5
         "'_movement_target@GameObject*'": 0
         "'_toggle_activation@bool'": false
-        "'_toggle_active_time@float'": 15
+        "'_toggle_active_time@float'": 2
         "'_toggle_inactive_time@float'": 5
         "'_dissolving_time@float'": 0.5
         "'_sparks@GameObject*'": 86
@@ -2561,7 +2577,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0.5, -0.5]
-            rotation: [-180, 0, -0]
+            rotation: [-180, 0, 0]
             scale: [0.2, 0.2, 3.492]
           - !<mesh_renderer>
             type: 2
@@ -2597,7 +2613,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [90, 0, -0]
+            rotation: [90, 0, 0]
             scale: [1, 1, 1]
           - !<particle_system>
             type: 22
@@ -2608,6 +2624,7 @@ child:
               shape: true
               lights: false
               renderer: true
+              texture: false
             parameters:
               duration: 0.05
               loop: true
@@ -2667,7 +2684,7 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [-0.079, 1.846, 2.501]
+        position: [-34.01, 1.846, 19.23]
         rotation: [-180, -89.98, -180]
         scale: [1, 1, 1]
       - type: 20
@@ -2687,7 +2704,7 @@ child:
         "'_movement_speed@float'": 0.5
         "'_movement_target@GameObject*'": 0
         "'_toggle_activation@bool'": false
-        "'_toggle_active_time@float'": 2
+        "'_toggle_active_time@float'": 15
         "'_toggle_inactive_time@float'": 5
         "'_dissolving_time@float'": 0.5
         "'_sparks@GameObject*'": 91
@@ -2717,7 +2734,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0.5, -0.5]
-            rotation: [180, 0, -0]
+            rotation: [180, 0, 0]
             scale: [0.2, 0.2, 3.492]
           - !<mesh_renderer>
             type: 2
@@ -2753,7 +2770,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [90, 0, -0]
+            rotation: [90, 0, 0]
             scale: [1, 1, 1]
           - !<particle_system>
             type: 22
@@ -2764,6 +2781,7 @@ child:
               shape: true
               lights: false
               renderer: true
+              texture: false
             parameters:
               duration: 0.05
               loop: true
@@ -2823,7 +2841,7 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [-0.079, 1.846, 1.001]
+        position: [-34.01, 1.846, 20.73]
         rotation: [-180, -89.98, -180]
         scale: [1, 1, 1]
       - type: 20
@@ -2843,7 +2861,7 @@ child:
         "'_movement_speed@float'": 0.5
         "'_movement_target@GameObject*'": 0
         "'_toggle_activation@bool'": false
-        "'_toggle_active_time@float'": 15
+        "'_toggle_active_time@float'": 2
         "'_toggle_inactive_time@float'": 5
         "'_dissolving_time@float'": 0.5
         "'_sparks@GameObject*'": 96
@@ -2873,7 +2891,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0.5, -0.5]
-            rotation: [180, 0, -0]
+            rotation: [180, 0, 0]
             scale: [0.2, 0.2, 3.492]
           - !<mesh_renderer>
             type: 2
@@ -2909,7 +2927,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [90, 0, -0]
+            rotation: [90, 0, 0]
             scale: [1, 1, 1]
           - !<particle_system>
             type: 22
@@ -2920,6 +2938,7 @@ child:
               shape: true
               lights: false
               renderer: true
+              texture: false
             parameters:
               duration: 0.05
               loop: true
@@ -2979,7 +2998,7 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [-0.079, 1.846, -0.4991]
+        position: [-34.01, 1.846, 22.23]
         rotation: [180, -89.98, 180]
         scale: [1, 1, 1]
       - type: 20
@@ -2999,7 +3018,7 @@ child:
         "'_movement_speed@float'": 0.5
         "'_movement_target@GameObject*'": 0
         "'_toggle_activation@bool'": false
-        "'_toggle_active_time@float'": 2
+        "'_toggle_active_time@float'": 15
         "'_toggle_inactive_time@float'": 5
         "'_dissolving_time@float'": 0.5
         "'_sparks@GameObject*'": 101
@@ -3029,7 +3048,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0.5, -0.5]
-            rotation: [-180, 0, -0]
+            rotation: [-180, 0, 0]
             scale: [0.2, 0.2, 3.492]
           - !<mesh_renderer>
             type: 2
@@ -3065,7 +3084,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [90, 0, -0]
+            rotation: [90, 0, 0]
             scale: [1, 1, 1]
           - !<particle_system>
             type: 22
@@ -3076,6 +3095,7 @@ child:
               shape: true
               lights: false
               renderer: true
+              texture: false
             parameters:
               duration: 0.05
               loop: true
@@ -3135,8 +3155,8 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [-0.0395, 1.846, -17]
-        rotation: [180, -89.98, 180]
+        position: [-34.01, 1.846, -6.27]
+        rotation: [-180, -89.98, -180]
         scale: [1, 1, 1]
       - type: 20
         enabled: true
@@ -3155,7 +3175,7 @@ child:
         "'_movement_speed@float'": 0.5
         "'_movement_target@GameObject*'": 0
         "'_toggle_activation@bool'": false
-        "'_toggle_active_time@float'": 15
+        "'_toggle_active_time@float'": 2
         "'_toggle_inactive_time@float'": 5
         "'_dissolving_time@float'": 0.5
         "'_sparks@GameObject*'": 106
@@ -3185,7 +3205,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0.5, -0.5]
-            rotation: [-180, 0, -0]
+            rotation: [180, 0, 0]
             scale: [0.2, 0.2, 3.492]
           - !<mesh_renderer>
             type: 2
@@ -3221,7 +3241,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [90, 0, -0]
+            rotation: [90, 0, 0]
             scale: [1, 1, 1]
           - !<particle_system>
             type: 22
@@ -3232,6 +3252,7 @@ child:
               shape: true
               lights: false
               renderer: true
+              texture: false
             parameters:
               duration: 0.05
               loop: true
@@ -3291,8 +3312,8 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [-0.0395, 1.846, -18.5]
-        rotation: [-180, -89.98, -180]
+        position: [-34.01, 1.846, -4.77]
+        rotation: [180, -89.98, 180]
         scale: [1, 1, 1]
       - type: 20
         enabled: true
@@ -3311,7 +3332,7 @@ child:
         "'_movement_speed@float'": 0.5
         "'_movement_target@GameObject*'": 0
         "'_toggle_activation@bool'": false
-        "'_toggle_active_time@float'": 2
+        "'_toggle_active_time@float'": 15
         "'_toggle_inactive_time@float'": 5
         "'_dissolving_time@float'": 0.5
         "'_sparks@GameObject*'": 111
@@ -3341,7 +3362,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0.5, -0.5]
-            rotation: [180, 0, -0]
+            rotation: [-180, 0, 0]
             scale: [0.2, 0.2, 3.492]
           - !<mesh_renderer>
             type: 2
@@ -3377,7 +3398,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [90, 0, -0]
+            rotation: [90, 0, 0]
             scale: [1, 1, 1]
           - !<particle_system>
             type: 22
@@ -3388,6 +3409,7 @@ child:
               shape: true
               lights: false
               renderer: true
+              texture: false
             parameters:
               duration: 0.05
               loop: true
@@ -3447,8 +3469,8 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [-0.0395, 1.846, -20]
-        rotation: [-180, -89.98, -180]
+        position: [-34.01, 1.846, -3.27]
+        rotation: [180, -89.98, 180]
         scale: [1, 1, 1]
       - type: 20
         enabled: true
@@ -3467,7 +3489,7 @@ child:
         "'_movement_speed@float'": 0.5
         "'_movement_target@GameObject*'": 0
         "'_toggle_activation@bool'": false
-        "'_toggle_active_time@float'": 15
+        "'_toggle_active_time@float'": 2
         "'_toggle_inactive_time@float'": 5
         "'_dissolving_time@float'": 0.5
         "'_sparks@GameObject*'": 116
@@ -3497,7 +3519,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0.5, -0.5]
-            rotation: [180, 0, -0]
+            rotation: [-180, 0, 0]
             scale: [0.2, 0.2, 3.492]
           - !<mesh_renderer>
             type: 2
@@ -3533,7 +3555,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [90, 0, -0]
+            rotation: [90, 0, 0]
             scale: [1, 1, 1]
           - !<particle_system>
             type: 22
@@ -3544,6 +3566,7 @@ child:
               shape: true
               lights: false
               renderer: true
+              texture: false
             parameters:
               duration: 0.05
               loop: true
@@ -3603,8 +3626,8 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [-0.0395, 1.846, -21.5]
-        rotation: [180, -89.98, 180]
+        position: [-34.01, 1.846, -1.77]
+        rotation: [-180, -89.98, -180]
         scale: [1, 1, 1]
       - type: 20
         enabled: true
@@ -3623,7 +3646,7 @@ child:
         "'_movement_speed@float'": 0.5
         "'_movement_target@GameObject*'": 0
         "'_toggle_activation@bool'": false
-        "'_toggle_active_time@float'": 2
+        "'_toggle_active_time@float'": 15
         "'_toggle_inactive_time@float'": 5
         "'_dissolving_time@float'": 0.5
         "'_sparks@GameObject*'": 121
@@ -3653,7 +3676,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0.5, -0.5]
-            rotation: [-180, 0, -0]
+            rotation: [180, 0, 0]
             scale: [0.2, 0.2, 3.492]
           - !<mesh_renderer>
             type: 2
@@ -3689,7 +3712,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [90, 0, -0]
+            rotation: [90, 0, 0]
             scale: [1, 1, 1]
           - !<particle_system>
             type: 22
@@ -3700,6 +3723,7 @@ child:
               shape: true
               lights: false
               renderer: true
+              texture: false
             parameters:
               duration: 0.05
               loop: true
@@ -3759,7 +3783,7 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [-0.079, 1.846, -23]
+        position: [-34.01, 1.846, -0.27]
         rotation: [-180, -89.98, -180]
         scale: [1, 1, 1]
       - type: 20
@@ -3779,7 +3803,7 @@ child:
         "'_movement_speed@float'": 0.5
         "'_movement_target@GameObject*'": 0
         "'_toggle_activation@bool'": false
-        "'_toggle_active_time@float'": 15
+        "'_toggle_active_time@float'": 2
         "'_toggle_inactive_time@float'": 5
         "'_dissolving_time@float'": 0.5
         "'_sparks@GameObject*'": 126
@@ -3809,7 +3833,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0.5, -0.5]
-            rotation: [180, 0, -0]
+            rotation: [180, 0, 0]
             scale: [0.2, 0.2, 3.492]
           - !<mesh_renderer>
             type: 2
@@ -3845,7 +3869,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [90, 0, -0]
+            rotation: [90, 0, 0]
             scale: [1, 1, 1]
           - !<particle_system>
             type: 22
@@ -3856,6 +3880,7 @@ child:
               shape: true
               lights: false
               renderer: true
+              texture: false
             parameters:
               duration: 0.05
               loop: true
@@ -3915,7 +3940,7 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [-0.079, 1.846, -24.5]
+        position: [-34.01, 1.846, 1.23]
         rotation: [180, -89.98, 180]
         scale: [1, 1, 1]
       - type: 20
@@ -3935,7 +3960,7 @@ child:
         "'_movement_speed@float'": 0.5
         "'_movement_target@GameObject*'": 0
         "'_toggle_activation@bool'": false
-        "'_toggle_active_time@float'": 2
+        "'_toggle_active_time@float'": 15
         "'_toggle_inactive_time@float'": 5
         "'_dissolving_time@float'": 0.5
         "'_sparks@GameObject*'": 131
@@ -3965,7 +3990,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0.5, -0.5]
-            rotation: [-180, 0, -0]
+            rotation: [-180, 0, 0]
             scale: [0.2, 0.2, 3.492]
           - !<mesh_renderer>
             type: 2
@@ -4001,7 +4026,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [90, 0, -0]
+            rotation: [90, 0, 0]
             scale: [1, 1, 1]
           - !<particle_system>
             type: 22
@@ -4012,6 +4037,7 @@ child:
               shape: true
               lights: false
               renderer: true
+              texture: false
             parameters:
               duration: 0.05
               loop: true
@@ -4071,8 +4097,8 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [-0.079, 1.846, -26]
-        rotation: [180, -89.98, 180]
+        position: [-33.97, 1.846, 2.73]
+        rotation: [-180, -89.98, -180]
         scale: [1, 1, 1]
       - type: 20
         enabled: true
@@ -4091,7 +4117,7 @@ child:
         "'_movement_speed@float'": 0.5
         "'_movement_target@GameObject*'": 0
         "'_toggle_activation@bool'": false
-        "'_toggle_active_time@float'": 15
+        "'_toggle_active_time@float'": 2
         "'_toggle_inactive_time@float'": 5
         "'_dissolving_time@float'": 0.5
         "'_sparks@GameObject*'": 136
@@ -4121,7 +4147,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0.5, -0.5]
-            rotation: [-180, 0, -0]
+            rotation: [180, 0, 0]
             scale: [0.2, 0.2, 3.492]
           - !<mesh_renderer>
             type: 2
@@ -4157,7 +4183,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [90, 0, -0]
+            rotation: [90, 0, 0]
             scale: [1, 1, 1]
           - !<particle_system>
             type: 22
@@ -4168,6 +4194,7 @@ child:
               shape: true
               lights: false
               renderer: true
+              texture: false
             parameters:
               duration: 0.05
               loop: true
@@ -4227,8 +4254,8 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [-0.079, 1.846, -27.5]
-        rotation: [-180, -89.98, -180]
+        position: [-33.97, 1.846, 4.23]
+        rotation: [180, -89.98, 180]
         scale: [1, 1, 1]
       - type: 20
         enabled: true
@@ -4247,7 +4274,7 @@ child:
         "'_movement_speed@float'": 0.5
         "'_movement_target@GameObject*'": 0
         "'_toggle_activation@bool'": false
-        "'_toggle_active_time@float'": 2
+        "'_toggle_active_time@float'": 15
         "'_toggle_inactive_time@float'": 5
         "'_dissolving_time@float'": 0.5
         "'_sparks@GameObject*'": 141
@@ -4277,7 +4304,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0.5, -0.5]
-            rotation: [180, 0, -0]
+            rotation: [-180, 0, 0]
             scale: [0.2, 0.2, 3.492]
           - !<mesh_renderer>
             type: 2
@@ -4313,7 +4340,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [90, 0, -0]
+            rotation: [90, 0, 0]
             scale: [1, 1, 1]
           - !<particle_system>
             type: 22
@@ -4324,6 +4351,7 @@ child:
               shape: true
               lights: false
               renderer: true
+              texture: false
             parameters:
               duration: 0.05
               loop: true
@@ -4383,8 +4411,8 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [-0.079, 1.846, -29]
-        rotation: [-180, -89.98, -180]
+        position: [-33.97, 1.846, 5.73]
+        rotation: [180, -89.98, 180]
         scale: [1, 1, 1]
       - type: 20
         enabled: true
@@ -4403,7 +4431,7 @@ child:
         "'_movement_speed@float'": 0.5
         "'_movement_target@GameObject*'": 0
         "'_toggle_activation@bool'": false
-        "'_toggle_active_time@float'": 15
+        "'_toggle_active_time@float'": 2
         "'_toggle_inactive_time@float'": 5
         "'_dissolving_time@float'": 0.5
         "'_sparks@GameObject*'": 146
@@ -4433,7 +4461,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0.5, -0.5]
-            rotation: [180, 0, -0]
+            rotation: [-180, 0, 0]
             scale: [0.2, 0.2, 3.492]
           - !<mesh_renderer>
             type: 2
@@ -4469,7 +4497,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [90, 0, -0]
+            rotation: [90, 0, 0]
             scale: [1, 1, 1]
           - !<particle_system>
             type: 22
@@ -4480,6 +4508,7 @@ child:
               shape: true
               lights: false
               renderer: true
+              texture: false
             parameters:
               duration: 0.05
               loop: true
@@ -4539,8 +4568,8 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [-0.079, 1.846, -30.5]
-        rotation: [180, -89.98, 180]
+        position: [-33.97, 1.846, 7.23]
+        rotation: [-180, -89.98, -180]
         scale: [1, 1, 1]
       - type: 20
         enabled: true
@@ -4559,7 +4588,7 @@ child:
         "'_movement_speed@float'": 0.5
         "'_movement_target@GameObject*'": 0
         "'_toggle_activation@bool'": false
-        "'_toggle_active_time@float'": 2
+        "'_toggle_active_time@float'": 15
         "'_toggle_inactive_time@float'": 5
         "'_dissolving_time@float'": 0.5
         "'_sparks@GameObject*'": 151
@@ -4589,7 +4618,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0.5, -0.5]
-            rotation: [-180, 0, -0]
+            rotation: [180, 0, 0]
             scale: [0.2, 0.2, 3.492]
           - !<mesh_renderer>
             type: 2
@@ -4625,7 +4654,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [90, 0, -0]
+            rotation: [90, 0, 0]
             scale: [1, 1, 1]
           - !<particle_system>
             type: 22
@@ -4636,6 +4665,7 @@ child:
               shape: true
               lights: false
               renderer: true
+              texture: false
             parameters:
               duration: 0.05
               loop: true

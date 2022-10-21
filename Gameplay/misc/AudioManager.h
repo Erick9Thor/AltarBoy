@@ -48,6 +48,7 @@ namespace Hachiko
 			void StopMusic();
 			void SetCombat();
 			void SetNavigation();
+			void SetFootstepEffect();
 			const wchar_t* GetPlayMusicEventName(unsigned level);
 			const wchar_t* GetStopMusicEventName(unsigned level);
 			
