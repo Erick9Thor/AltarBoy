@@ -185,6 +185,7 @@ namespace Hachiko
 
             void SpawnEnemy();
             void ResetEnemies();
+            void KillEnemies();
 
             bool ControlLasers();
 

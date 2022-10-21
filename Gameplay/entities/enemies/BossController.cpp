@@ -1360,6 +1360,14 @@ void Hachiko::Scripting::BossController::ResetEnemies()
     }
 }
 
+void Hachiko::Scripting::BossController::KillEnemies()
+{
+    for (EnemyController* enemy_controller : enemies)
+    {
+        enemy_controller->SetDead();
+    }
+}
+
 /**
 * Returns true if all lasers are finished
 */
