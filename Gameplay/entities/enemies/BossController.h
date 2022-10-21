@@ -346,6 +346,7 @@ namespace Hachiko
             SERIALIZE_FIELD(GameObject*, _laser_wall);
             SERIALIZE_FIELD(float, _laser_wall_duration);
             float _laser_wall_current_time = 0.0f;
+            const std::array<float, 4> _wall_dir_angles = { 0.f, 90.f, 180.f, 270.f};
             SERIALIZE_FIELD(float, _laser_jump_height);
         };
     } // namespace Scripting

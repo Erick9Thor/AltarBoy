@@ -842,6 +842,16 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
 
         if (_current_jumping_mode == JumpingMode::LASER)
         {
+            const int dir = RandomUtil::RandomIntBetween(0, 3);
+            
+            // Set a random direction for the lasers
+            float3 laser_wall_rot = _laser_wall->GetTransform()->GetLocalRotationEuler();
+            laser_wall_rot.y = _wall_dir_angles[dir];
+            _laser_wall->GetTransform()->SetLocalRotationEuler(laser_wall_rot);
+
+            // Kill all enemies before lasers
+            KillEnemies();
+
             for (GameObject* laser : _laser_wall->children)
             {
                 laser->GetComponent<LaserController>()->ChangeState(LaserController::State::ACTIVATING);
