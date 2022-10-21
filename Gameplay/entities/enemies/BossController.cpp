@@ -285,6 +285,7 @@ void Hachiko::Scripting::BossController::CombatController()
 
     if (combat_stats->_current_hp <= 0)
     {
+        KillEnemies();
         level_manager->BossKilled();
         state = BossState::DEAD;
         return;
@@ -415,7 +416,10 @@ void Hachiko::Scripting::BossController::StartCocoon()
     time_elapse = 0.0;
     SetUpCocoon();
     FocusCameraOnBoss(true);
+
+    //Remove all stalactites and enemies
     _stalagmite_manager->DestroyAllStalagmites();
+    KillEnemies();
 
     // Direct boss to intial position
     moving_to_initial_pos = true;
