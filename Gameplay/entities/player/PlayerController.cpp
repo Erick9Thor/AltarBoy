@@ -385,9 +385,13 @@ math::float3 Hachiko::Scripting::PlayerController::GetRaycastPosition(
 
 	if (Input::IsGamepadModeOn())
 	{
-		// TODO: Check the Look at of the player to not force the user move the stick because it's not accurate
 		const math::float2 gamepad_normalized_position =
 			math::float2(Input::GetAxisNormalized(Input::GameControllerAxis::CONTROLLER_AXIS_LEFTX), Input::GetAxisNormalized(Input::GameControllerAxis::CONTROLLER_AXIS_LEFTY));
+
+		if (gamepad_normalized_position.x <= 0.2 && gamepad_normalized_position.x >= -0.2 && gamepad_normalized_position.y <= 0.2 && gamepad_normalized_position.y >= -0.2)
+		{
+			return current_position + _player_transform->GetFront();
+		}
 
 		const math::float2 gamepad_position_view =
 			ComponentCamera::ScreenPositionToView(gamepad_normalized_position);
