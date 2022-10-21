@@ -549,9 +549,6 @@ void Hachiko::Scripting::BossController::FinishCocoon()
         laser->GetComponent<LaserController>()->_toggle_activation = false;
     }
 
-    // Gauntlet Starts once the camera is unlocked
-    gauntlet->StartGauntlet();
-
     ChangeStateText("Finished Cocoon.");
 
     state = BossState::COMBAT_FORM;
