@@ -18,7 +18,7 @@ void Hachiko::Scripting::Stalagmite::ActiveEffects()
 	_explosion_effect->SetActive(true);
 }
 
-void Hachiko::Scripting::Stalagmite::Falling(float fall_progress, GameObject* player)
+void Hachiko::Scripting::Stalagmite::Falling(float fall_progress, const GameObject* player)
 {
 	float3 _stalagmite_position = GEO->GetTransform()->GetLocalPosition();
 
