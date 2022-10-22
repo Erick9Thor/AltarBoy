@@ -5,7 +5,8 @@ Hachiko is a custom built C++ Game Engine developed by Akita Interactive.
 
 ![engine screnshot](Screenshots/example.PNG)
 
-## Team 💻
+## The Team ✨
+### Programmers💻
 * **Alvaro** - [alvarosoppelsa](https://github.com/alvarosoppelsa)
 * **Armando** - [armandojaga](https://github.com/armandojaga)
 * **Baran** - [baransrc](https://github.com/baransrc)
@@ -14,12 +15,76 @@ Hachiko is a custom built C++ Game Engine developed by Akita Interactive.
 * **Edward** - [EdwardRegasDuncan](https://github.com/EdwardRegasDuncan)
 * **Eric** - [Erick9Thor](https://github.com/Erick9Thor)
 * **Joel** - [Izenz](https://github.com/Izenz)
-* **Kike** - [OGKoko](https://github.com/OGKoko)
 * **Marius** - [ermario](https://github.com/ermario)
 * **Miquel** - [miquelmiro3](https://github.com/miquelmiro3)
 * **Mónica** - [monikamnc](https://github.com/monikamnc)
 * **Vicenç** - [VBoschMatas](https://github.com/VBoschMatas)
 
+### Artists 🎨
+* **Clàudia E** - [fill](https://github.com/alvarosoppelsa)
+* **Claudia M** - [fill](https://github.com/alvarosoppelsa)
+* **Eduard** - [fill](https://github.com/alvarosoppelsa)
+* **Eduardo** - [fill](https://github.com/alvarosoppelsa)
+* **Ehsan** - [fill](https://github.com/alvarosoppelsa)
+* **Isabel** - [fill](https://github.com/alvarosoppelsa)
+* **Phan** - [fill](https://github.com/alvarosoppelsa)
+
+## Main Features
+- Unity like camera controls
+- Scene serialization (loading & saving)
+- Scene creation with gameobjects & components.
+- Scene edition via hierarchy, guizmos, inspector & configuration
+- Unity like play stop pause controls, scene returns to its original state on stop
+- Asset management system
+- Navigation system
+- Advanced render pipeline:
+    - Mesh & texture batching
+    - Deferred rendering
+    - PBR Lighting with skybox IBL
+    - Exponential height Fog
+    - Ambient occlusion
+    - Particle & billboards with instance rendering
+    - Unity like materials
+- C++ based scripting system with hot reload
+
+### Components
+Blocks used to extend all gameobjects and build all the game features.
+
+- Transform
+- Mesh Renderer (Mesh + Material)
+- Camera
+- Lights (Direcional, Point, Spot)
+- UI (Canvas, Renderer, Transform 2D, Image, Text, Button, Progress Bar)
+- Script
+- Navigation (Agent, Obstacle)
+- Audio (Listener, Source)
+- Billboard
+- Particle System
+- Video
+
+## Built with 🛠️
+
+* [OpenGL](https://www.opengl.org//) - A cross-language, cross-platform application programming interface (API) for rendering 2D and 3D vector graphics.
+* [SDL](https://www.libsdl.org/) - Simple DirectMedia Layer to interact with hardware via OpenGL.
+* [DevIL](http://openil.sourceforge.net/about.php) - A programmer's library to develop applications with very powerful image loading capabilities.
+* [Assimp](https://www.assimp.org/) - portable Open-Source library to import various well-known 3D model formats in a uniform manner.
+* [ImGui](https://github.com/ocornut/imgui) - A bloat-free graphical user interface library for C++.
+* [MathGeoLib](https://github.com/juj/MathGeoLib) - A library for linear algebra and geometry manipulation for computer graphics.
+* [PhysicsFS](https://github.com/icculus/physfs) - A portable, flexible file i/o abstraction.
+* [ImGuizmo](https://github.com/CedricGuillemet/ImGuizmo) - Colletion of useful ImGui widgets.
+* [ImGuiFileDialog](https://github.com/aiekick/ImGuiFileDialog) - File selection dialog built in ImGui.
+* [YamlCpp](https://github.com/jbeder/yaml-cpp) - A fast YAML parser/generator for C++.
+* [Recast & Detour](https://github.com/recastnavigation/recastnavigation) - State of the art navigation mesh construction toolset for games and path-fiding toolkit.
+* [Freetype](https://gitlab.freedesktop.org/freetype/freetype) - Library to load & render fonts.
+* [GLFont](https://github.com/jtberglund/GLFont) - GLFont is a text-rendering library written in C++ for OpenGL, using FreeType.
+* [Libav](https://github.com/libav/libav) - Collection of libraries and tools to process multimedia content such as audio, video, subtitles and related metadata.
+* [Xxhash](https://github.com/Cyan4973/xxHash) - Extremely fast Hash algorithm.
+* [Optik Profiler](https://github.com/bombomby/optick) - A super-lightweight C++ profiler for Games.
+
+## License 📄
+This project is under the MIT License [LICENSE](LICENSE).
+
+# Tutorials (Outdated)
 ## How to use 🔧
 
 ### Using a scene
@@ -49,54 +114,7 @@ Alternatively you can modify the transform using the **guizmo**, to change its c
 
 ![guimzo](Screenshots/guizmo.PNG)
 
-## Features
-Based on the second assignment requirements
-- Unity like camera controls
-- Previous menus (Altar Boy + UPC-Engine) and new ones for the new features
-- Engine loads with survival shooter scene
-- Scene serialization (loading & saving)
-- Quadtree frustum culling
-- Editable scene with guizmos
-- Editable materials that support diffuse and specular maps
-- PBR Phong shader with support for a directional light and multiple point & spot lights
-- Unity like play stop pause controls, scene returns to its original state on stop
-
-### Extra features
-- Raycast selection
-- Stencil of the selected object
-- Scene configuration
-    - Ambient light
-    - Toggleable skybox & background color
-    - Toggleable Debug Draw & gui information
-        - Transform & Camera debug information
-        - Quadtree debug draw
-        - Bounding boxes drawing
-        - Light components debug draw (Needs to be tunned)
-- Configurable Components
-    - Lights parameters
-    - Materials properties
-    - Camera configuration
-        - Any camera can be set as culling camera
-- Timers window
-
-![stencil](Screenshots/stencil.PNG)
-![scene configuration](Screenshots/scene_config.PNG)
-![timers](Screenshots/timers.PNG)
 
 
-## Built with 🛠️
 
-* [OpenGL](https://www.opengl.org//) - A cross-language, cross-platform application programming interface (API) for rendering 2D and 3D vector graphics.
-* [SDL](https://www.libsdl.org/) - Simple DirectMedia Layer to interact with hardware via OpenGL.
-* [DevIL](http://openil.sourceforge.net/about.php) - A programmer's library to develop applications with very powerful image loading capabilities.
-* [Assimp](https://www.assimp.org/) - portable Open-Source library to import various well-known 3D model formats in a uniform manner.
-* [ImGui](https://github.com/ocornut/imgui) - A bloat-free graphical user interface library for C++.
-* [MathGeoLib](https://github.com/juj/MathGeoLib) - A library for linear algebra and geometry manipulation for computer graphics.
-* [PhysicsFS](https://github.com/icculus/physfs) - A portable, flexible file i/o abstraction.
-* [ImGuizmo](https://github.com/CedricGuillemet/ImGuizmo) - Colletion of useful ImGui widgets.
-* [ImGuiFileDialog](https://github.com/aiekick/ImGuiFileDialog) - File selection dialog built in ImGui.
-* [RapidJSON](https://github.com/Tencent/rapidjson/) - A fast JSON parser/generator for C++.
-* [Optik Profiler](https://github.com/bombomby/optick) - A super-lightweight C++ profiler for Games.
 
-## License 📄
-This project is under the MIT License [LICENSE](LICENSE).
