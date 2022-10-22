@@ -25,6 +25,7 @@ Hachiko::Scripting::CrystalExplosion::CrystalExplosion(GameObject* game_object)
 	, _shake_intensity(0.1f)
 	, _seconds_shaking(0.8f)
 	, _should_regen(true)
+	, damage_effect_duration(0.5f)
 {
 }
 
@@ -38,6 +39,7 @@ void Hachiko::Scripting::CrystalExplosion::OnAwake()
 	obstacle = game_object->GetComponent<ComponentObstacle>();
 
 	_initial_transform = game_object->GetTransform()->GetGlobalMatrix();
+	crystal_geometry = game_object->FindDescendantWithName("Geo");
 }
 
 void Hachiko::Scripting::CrystalExplosion::OnStart()
@@ -51,6 +53,22 @@ void Hachiko::Scripting::CrystalExplosion::OnUpdate()
 	{
 		return;
 	}
+
+	if (damage_effect_remaining_time >= 0.0f)
+	{
+		damage_effect_remaining_time -= Time::DeltaTime();
+	}
+
+	if (damage_effect_remaining_time >= 0.0f)
+	{
+		float progress = damage_effect_remaining_time / damage_effect_duration;
+		crystal_geometry->ChangeEmissiveColor(float4(1.0f, 1.0f, 1.0f, progress), true);
+	}
+	else
+	{
+		crystal_geometry->ResetEmissive(true);
+	}
+	
 	
 	if (!_stats->IsAlive())
 	{
@@ -201,6 +219,8 @@ float3 Hachiko::Scripting::CrystalExplosion::GetShakeOffset()
 void Hachiko::Scripting::CrystalExplosion::RegisterHit(int damage)
 {
 	if (!_stats) return;
+
+	damage_effect_remaining_time = damage_effect_duration;
 
 	_stats->ReceiveDamage(damage);
 
