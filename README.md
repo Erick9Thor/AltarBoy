@@ -1,4 +1,4 @@
-**Large Files** https://drive.google.com/drive/folders/1Byno0EpZmpJipA2klS0w_CSnN3oMzuFw?usp=sharing
+**Large Files (Place In Assets/Models/Large)** https://drive.google.com/drive/folders/1Byno0EpZmpJipA2klS0w_CSnN3oMzuFw?usp=sharing
 
 # Hachiko Engine 🐕
 Hachiko is a custom built C++ Game Engine developed by Akita Interactive.
@@ -7,29 +7,32 @@ Hachiko is a custom built C++ Game Engine developed by Akita Interactive.
 
 ## The Team ✨
 ### Programmers💻
-* **Alvaro** - [alvarosoppelsa](https://github.com/alvarosoppelsa)
-* **Armando** - [armandojaga](https://github.com/armandojaga)
-* **Baran** - [baransrc](https://github.com/baransrc)
-* **Bernat G** - [bernatgb](https://github.com/bernatgb)
-* **Bernat M** - [Bernatmago](https://github.com/Bernatmago)
-* **Edward** - [EdwardRegasDuncan](https://github.com/EdwardRegasDuncan)
-* **Eric** - [Erick9Thor](https://github.com/Erick9Thor)
-* **Joel** - [Izenz](https://github.com/Izenz)
-* **Marius** - [ermario](https://github.com/ermario)
-* **Miquel** - [miquelmiro3](https://github.com/miquelmiro3)
-* **Mónica** - [monikamnc](https://github.com/monikamnc)
-* **Vicenç** - [VBoschMatas](https://github.com/VBoschMatas)
+* **Alvaro Soppelsa** - [alvarosoppelsa](https://github.com/alvarosoppelsa)
+* **Armando González** - [armandojaga](https://github.com/armandojaga)
+* **Baran Sürücü** - [baransrc](https://github.com/baransrc)
+* **Bernat Güell** - [bernatgb](https://github.com/bernatgb)
+* **Bernat Martínez** - [Bernatmago](https://github.com/Bernatmago)
+* **Edward Regas** - [EdwardRegasDuncan](https://github.com/EdwardRegasDuncan)
+* **Eric Torres** - [Erick9Thor](https://github.com/Erick9Thor)
+* **Joel Herraiz** - [Izenz](https://github.com/Izenz)
+* **Marius Dambean** - [ermario](https://github.com/ermario)
+* **Miquel Miró** - [miquelmiro3](https://github.com/miquelmiro3)
+* **Mónica Martín** - [monikamnc](https://github.com/monikamnc)
+* **Vicenç Bosch** - [VBoschMatas](https://github.com/VBoschMatas)
 
 ### Artists 🎨
-* **Clàudia E** - [fill](https://github.com/alvarosoppelsa)
-* **Claudia M** - [fill](https://github.com/alvarosoppelsa)
-* **Eduard** - [fill](https://github.com/alvarosoppelsa)
-* **Eduardo** - [fill](https://github.com/alvarosoppelsa)
-* **Ehsan** - [fill](https://github.com/alvarosoppelsa)
-* **Isabel** - [fill](https://github.com/alvarosoppelsa)
-* **Phan** - [fill](https://github.com/alvarosoppelsa)
+* **Clàudia Escuder** - [Linkedin](https://www.linkedin.com/in/claudia-escuder-b78b661bb)
+* **Claudia Martín** - [Linkedin](https://www.linkedin.com/in/claudia-martin-5848721b7)
+* **Eduard Gállego** - [Linkedin](https://www.linkedin.com/in/eduardgallegorodriguez)
+* **Eduardo Godoy** - [Linkedin](https://www.linkedin.com/in/eduardo-godoy-saavedra)
+* **Ehsan Ali** - [Linkedin](https://www.linkedin.com/in/ehsan-zareh-6497831b7)
+* **Isabel Augusta** - [Linkedin](https://www.linkedin.com/in/isabel-lammens-516bba1bb)
+* **Phan Minh Hieu** - [Linkedin](https://www.linkedin.com/in/hnguyen7596)
 
-## Main Features
+### Sound 🔊
+* **Marcio Echevarría** - [Linkedin](https://www.linkedin.com/in/marcio-echeverria-39b08241)
+
+## Main Features 🧪
 Brief summary of the engine main functionalities
 - Unity like camera controls
 - Scene serialization (loading & saving)
@@ -50,7 +53,7 @@ Brief summary of the engine main functionalities
     - UI Rendering with text
 - C++ based scripting system with hot reload
 
-### Components
+### Components 🔬
 Blocks used to extend all gameobjects and build all the game features.
 
 - Transform
@@ -87,22 +90,21 @@ Blocks used to extend all gameobjects and build all the game features.
 ## License 📄
 This project is under the MIT License [LICENSE](LICENSE).
 
-# Tutorials
-## How to use 🔧
+# First steps 📚
 
-### Using a scene
+## Using a scene 🌄
 To start seeing a model you can drop any file from ```Game/Assets/Models``` into the screen. Alternatively you can load a scene going to ``` File -> Load -> Scene ``` and choosing the ```.scene``` file you want to use.
 
 ![load menu](Screenshots/load_menu.PNG)
 
 
-### Navigation
+## Navigation 🚀
 Scene navigation controls resemble the ones from unity:
 * Move the camera as fps game using right click + W, A, S, D
 * Orbit the model using Alt + mouse motion
 * Pres F to focus on model
 
-### Game Objects & Components
+## Game Objects & Components 🗿
 The engine is based arround hierarchies of game objects that have a set of components asociated to them. All game objects will have at least a transform.
 
 You can edit the game objects distribution via the **scene hierarchy** by dragging them or using the contextual menu that pops up with right click. You can also select objects by clicking them on the scene (As long as they have a mesh).
@@ -117,7 +119,14 @@ Alternatively you can modify the transform using the **guizmo**, to change its c
 
 ![guimzo](Screenshots/guizmo.PNG)
 
+# Project Érimos 🛸🏜️💎
+Game built while developing Hachiko Engine.
 
+## Narrative 📜
+Stranded on a mysterious planet during a reconnaissance mission gone astray, the Captain of Space Fleet AKT must find a way to fight through an infected horde of creatures to defeat their leader and return home. Ancient ruins, hellish canyons, and vicious parasites lie waiting for our lone survivor. 
+
+## Gameplay 🎮
+Érimos Project is a fast paced hack-and-slash that allows players to use the corpses of fallen enemies to enhance their character’s body. Discover the possibilities of your ever-shifting arsenal by acquiring parasites from your foes, allowing for engaging replayability. Dash across retracting platforms, navigate past lasers, evade enemy attacks, and slice your way to freedom in two distinct levels that culminate in an epic boss encounter. 
 
 
 
