@@ -114,6 +114,6 @@ void main()
     }
     else
     {
-        fragment_color = vec4(vec3(texture(ssao, texture_coords).r), 1.0f);
+        fragment_color = vec4(vec3(texture(ssao, texture_coords).r * 0.5 + 0.5), 1.0f);
     }
 }

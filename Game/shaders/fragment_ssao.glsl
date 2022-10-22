@@ -53,6 +53,8 @@ void main()
         float sample_depth = texture(g_position, offset.xy).z; // Get depth value of kernel sample
 
         // Range check & accumulate:
+        // float range_check = smoothstep(0.0, 1.0, radius / abs(sample_position.z - sample_depth));
+        // occlusion += (abs(sample_depth - sample_position.z) > bias ? 1.0 : 0.0) * range_check;
         occlusion += (abs(sample_depth - sample_position.z) > bias ? 1.0 : 0.0);
     }
 
