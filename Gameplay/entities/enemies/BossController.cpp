@@ -368,7 +368,6 @@ void Hachiko::Scripting::BossController::StartEncounter()
     RestoreCameraOffset();
 
     obstacle->RemoveObstacle();
-    agent->AddToCrowd();
 }
 
 void Hachiko::Scripting::BossController::StartEncounterController()
@@ -380,6 +379,7 @@ void Hachiko::Scripting::BossController::StartEncounterController()
         return;
     }
     SetHpBarActive(true);
+    agent->AddToCrowd();
 
     player_camera->SetDoLookAhead(true);
     BreakCocoon();
