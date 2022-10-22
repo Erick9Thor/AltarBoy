@@ -19,6 +19,7 @@ void Hachiko::Scripting::Centipedes::OnAwake()
 
 	animation->StartAnimating();
 	agent->SetMaxSpeed(3.0f);
+	agent->SetRadius(0.1f);
 }
 
 void Hachiko::Scripting::Centipedes::OnUpdate()
@@ -58,7 +59,7 @@ void Hachiko::Scripting::Centipedes::OnUpdate()
 		else
 		{
 			float3 new_destination = player_position + player_to_centipide.Normalized() * player_range;
-			Quat target_rotation = Quat::LookAt(float3(-1, 0, 0), player_transform->GetFront(), float3(0, 1, 0), float3(0, 1, 0));
+			Quat target_rotation = Quat::LookAt(float3(-1, 0, 0), (position - player_transform->GetGlobalPosition()).Normalized(), float3(0, 1, 0), float3(0, 1, 0));
 			Quat rotation = Quat::Slerp(game_object->GetTransform()->GetGlobalRotation(), target_rotation, Min(Time::DeltaTime() / Max(rotation_smoothness, 0.000001f), 1.0f));
 
 			game_object->GetTransform()->SetGlobalRotation(rotation);
