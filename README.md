@@ -86,6 +86,7 @@ Blocks used to extend all gameobjects and build all the game features.
 * [Libav](https://github.com/libav/libav) - Collection of libraries and tools to process multimedia content such as audio, video, subtitles and related metadata.
 * [Xxhash](https://github.com/Cyan4973/xxHash) - Extremely fast Hash algorithm.
 * [Optik Profiler](https://github.com/bombomby/optick) - A super-lightweight C++ profiler for Games.
+* [Wwise](https://www.audiokinetic.com) - Greatest Sound Engine feature-rich for interactive audio.
 
 ## License 📄
 This project is under the MIT License [LICENSE](LICENSE).
