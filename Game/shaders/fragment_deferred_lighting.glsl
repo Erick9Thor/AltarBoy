@@ -34,7 +34,7 @@ void main()
 {
     vec3  fragment_diffuse = (texture(g_diffuse, texture_coords)).rgb;
     vec4  fragment_specular_smoothness = texture(g_specular_smoothness, texture_coords);
-    vec3  fragment_normal = (texture(g_normal, texture_coords)).rgb;
+    vec3  fragment_normal = normalize((texture(g_normal, texture_coords)).rgb * 2.0 - 1.0);
     vec3  fragment_position = (texture(g_position, texture_coords)).rgb;
     vec4  fragment_position_from_light = light_projection * light_view * vec4(fragment_position, 1.0);
     vec3  fragment_emissive = (texture(g_emissive, texture_coords)).rgb;

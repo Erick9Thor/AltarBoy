@@ -19,6 +19,14 @@ namespace Hachiko
     class Scene;
     class StandaloneGLTexture;
 
+
+    struct BlurConfig
+    {
+        float intensity = 0.85f;
+        float sigma = 1.45f;
+        BlurPixelSize::Type size = BlurPixelSize::Type::Gaussian5x5;
+    };
+
     struct GpuData
     {
         unsigned char* name;
@@ -175,9 +183,11 @@ namespace Hachiko
         // SSAO Related stuff:
         void SetupSSAO();
         void ResizeSSAO(unsigned int width, unsigned int height);
+        void BlurSSAO();
         void DrawSSAO(Scene* scene, ComponentCamera* camera);
         void BindSSAOTexture();
         void UnbindSSAOTexture();
+        void FreeSSAO();
 
         float ssao_radius = 0.5f;
         float ssao_bias = 0.1f;
@@ -186,10 +196,13 @@ namespace Hachiko
         float3 ssao_kernel[ssao_kernel_size];
 
         StandaloneGLTexture* ssao_texture;
+        StandaloneGLTexture* ssao_blur_texture;
+        // TODO: Reuse this struct with other blur related stuff.
+        BlurConfig ssao_blur_config;
+
         unsigned int ssao_noise_texture = 0;
         bool ssao_enabled = true;
-
-        /*unsigned int ssao_fbo = 0;*/
+        bool ssao_blur_enabled = true;
 
 
         void SetRenderMode(bool is_deferred);

@@ -20,6 +20,7 @@
 #include "components/ComponentTransform2D.h"
 #include "components/ComponentDirLight.h"
 #include "components/ComponentImage.h"
+#include "components/ComponentTransform.h"
 #include "components/ComponentVideo.h"
 #include "core/rendering/StandaloneGLTexture.h"
 
@@ -633,6 +634,17 @@ void Hachiko::ModuleRender::SetupSSAO()
         GL_NEAREST, 
         true);
 
+    ssao_blur_texture = new StandaloneGLTexture(
+        fb_width, 
+        fb_height, 
+        GL_RED, 
+        0, 
+        GL_RED, 
+        GL_FLOAT, 
+        GL_NEAREST, 
+        GL_NEAREST, 
+        true);
+
     // We generate random kernel rotations that we're gonna tile around the
     // screen instead of generating a rotation from scratch for each pixel:
     constexpr size_t number_of_vecs = 16;
@@ -656,6 +668,27 @@ void Hachiko::ModuleRender::SetupSSAO()
 void Hachiko::ModuleRender::ResizeSSAO(unsigned width, unsigned height)
 {
     ssao_texture->Resize(width, height);
+    ssao_blur_texture->Resize(width, height);
+}
+
+void Hachiko::ModuleRender::BlurSSAO()
+{
+    if (!ssao_blur_enabled)
+    {
+        return;
+    }
+
+    ApplyGaussianFilter(
+        ssao_texture->GetFrameBufferId(),
+        ssao_texture->GetTextureId(),
+        ssao_blur_texture->GetFrameBufferId(),
+        ssao_blur_texture->GetTextureId(),
+        ssao_blur_config.intensity,
+        ssao_blur_config.sigma,
+        static_cast<int>(ssao_blur_config.size),
+        fb_width,
+        fb_height,
+        App->program->GetProgram(Program::Programs::GAUSSIAN_FILTERING));
 }
 
 void Hachiko::ModuleRender::DrawSSAO(Scene* scene, ComponentCamera* camera)
@@ -678,13 +711,14 @@ void Hachiko::ModuleRender::DrawSSAO(Scene* scene, ComponentCamera* camera)
             ("samples[" + std::to_string(i) + "]").c_str(), 
             ssao_kernel[i].ptr());
     }
+
+    ComponentCamera* used_camera = scene->GetCullingCamera();
+    float4x4 camera_view_proj = used_camera->GetFrustum().ViewProjMatrix();
+
     // Bind projection matrix:
     ssao_program->BindUniformFloat4x4(
-        "projection", 
-        scene->GetCullingCamera()->GetFrustum().ProjectionMatrix().ptr());
-    ssao_program->BindUniformFloat4x4(
-        "view", 
-        scene->GetCullingCamera()->GetFrustum().ViewMatrix().ptr());
+        "camera_view_projection", 
+        camera_view_proj.ptr());
     // Bind frame buffer sizes:
     // TODO: Make these uniforms used through variables.
     ssao_program->BindUniformFloat("frame_buffer_width", &frame_buffer_width);
@@ -711,6 +745,9 @@ void Hachiko::ModuleRender::DrawSSAO(Scene* scene, ComponentCamera* camera)
     g_buffer.UnbindSSAOTextures();
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+    // Blur SSAO texture:
+    BlurSSAO();
 }
 
 void Hachiko::ModuleRender::BindSSAOTexture()
@@ -721,6 +758,12 @@ void Hachiko::ModuleRender::BindSSAOTexture()
 void Hachiko::ModuleRender::UnbindSSAOTexture()
 {
     // TODO: Implement this.
+}
+
+void Hachiko::ModuleRender::FreeSSAO()
+{
+    delete ssao_texture;
+    delete ssao_blur_texture;
 }
 
 void Hachiko::ModuleRender::ApplyGaussianFilter(
@@ -879,6 +922,30 @@ void Hachiko::ModuleRender::OptionsMenu()
     ssao_config.speed = 0.01f;
     Widgets::DragFloat("Radius", ssao_radius, &ssao_config);
     Widgets::DragFloat("Bias", ssao_bias, &ssao_config);
+    Widgets::Checkbox("Blur SSAO texture", &ssao_blur_enabled);
+    if (ssao_blur_enabled)
+    {
+        // TODO: Reuse this for all blurs.
+
+        static Widgets::DragFloatConfig config_1;
+        config_1.format = "%.9f";
+        config_1.speed = 0.01f;
+        config_1.min = 0.0f;
+        config_1.max = FLT_MAX;
+
+        DragFloat("Gaussian blur intensity", ssao_blur_config.intensity, &config_1);
+        DragFloat("Gaussian blur sigma", ssao_blur_config.sigma, &config_1);
+
+        int current_index = BlurPixelSize::ToIndex(ssao_blur_config.size);
+        if (Widgets::Combo(
+            "Gaussian blur pixel size", 
+            &current_index, 
+            BlurPixelSize::blur_pixel_sizes_strings, 
+            BlurPixelSize::number_of_blur_pixel_sizes))
+        {
+            ssao_blur_config.size = BlurPixelSize::FromIndex(current_index);
+        }
+    }
 }
 
 void Hachiko::ModuleRender::LoadingScreenOptions() 
@@ -1149,6 +1216,8 @@ void Hachiko::ModuleRender::CreateNoiseTexture()
 
 bool Hachiko::ModuleRender::CleanUp()
 {
+    FreeSSAO();
+
     FreeFullScreenQuad();
 
     glDeleteTextures(1, &fb_texture);
