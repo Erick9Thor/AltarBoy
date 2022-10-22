@@ -770,6 +770,15 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
     {
         if (_jumping_timer < _jump_start_delay)
         {
+            if (_current_jumping_mode == JumpingMode::CRYSTAL)
+            {
+                game_object->GetTransform()->LookAtTarget(_crystal_jump_position);
+            }
+            else
+            {
+                game_object->GetTransform()->LookAtTarget(player->GetTransform()->GetGlobalPosition());
+            }
+
             // Boss is waiting for jump here:
             break;
         }
@@ -798,6 +807,7 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
                 _jump_end_position + jump_direction * _jump_offset;
             _jump_end_position.y = _jump_start_position.y;
         }
+        game_object->GetTransform()->LookAtTarget(_jump_end_position);
 
         // Calculate mid position (only x and z is significant, z is ignored as
         // height is calculated separately), to avoid recalculation each frame
