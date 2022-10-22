@@ -626,7 +626,7 @@ void Hachiko::ModuleRender::SetupSSAO()
     ssao_texture = new StandaloneGLTexture(
         fb_width, 
         fb_height, 
-        GL_RED, 
+        GL_R32F, 
         0, 
         GL_RED, 
         GL_FLOAT, 
@@ -637,7 +637,7 @@ void Hachiko::ModuleRender::SetupSSAO()
     ssao_blur_texture = new StandaloneGLTexture(
         fb_width, 
         fb_height, 
-        GL_RED, 
+        GL_R32F, 
         0, 
         GL_RED, 
         GL_FLOAT, 
