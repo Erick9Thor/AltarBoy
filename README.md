@@ -30,6 +30,7 @@ Hachiko is a custom built C++ Game Engine developed by Akita Interactive.
 * **Phan** - [fill](https://github.com/alvarosoppelsa)
 
 ## Main Features
+Brief summary of the engine main functionalities
 - Unity like camera controls
 - Scene serialization (loading & saving)
 - Scene creation with gameobjects & components.
@@ -45,6 +46,8 @@ Hachiko is a custom built C++ Game Engine developed by Akita Interactive.
     - Ambient occlusion
     - Particle & billboards with instance rendering
     - Unity like materials
+    - Video Rendering
+    - UI Rendering with text
 - C++ based scripting system with hot reload
 
 ### Components
@@ -84,7 +87,7 @@ Blocks used to extend all gameobjects and build all the game features.
 ## License 📄
 This project is under the MIT License [LICENSE](LICENSE).
 
-# Tutorials (Outdated)
+# Tutorials
 ## How to use 🔧
 
 ### Using a scene
