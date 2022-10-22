@@ -20,6 +20,7 @@ const vec2 noise_scale = vec2(
 
 uniform float radius;
 uniform float bias;
+uniform float power;
 uniform mat4 camera_view_projection;
 uniform vec3 samples[kernel_size];
 
@@ -58,5 +59,5 @@ void main()
         occlusion += (abs(sample_depth - sample_position.z) > bias ? 1.0 : 0.0);
     }
 
-    out_fragment_color = (1.0 - (occlusion / kernel_size));
+    out_fragment_color = pow(1.0 - (occlusion / kernel_size), power);
 }
