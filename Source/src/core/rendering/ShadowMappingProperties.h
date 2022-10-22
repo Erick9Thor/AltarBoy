@@ -60,9 +60,6 @@ private:
     float _light_bleeding_reduction_amount = 0.0f;
     float _bias = 0.0f;
     float _exponent = 0.0f;
-    //float _gaussian_filter_blur_amount = 0.0f;
-    //BlurPixelSize::Type _gaussian_blur_size = BlurPixelSize::Type::Gaussian5x5;
-    //float _gaussian_blur_sigma = 0.0f;
 };
 
 } // namespace Hachiko

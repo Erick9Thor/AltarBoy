@@ -243,9 +243,6 @@ void Hachiko::GBuffer::UnbindFogTextures() const
 
 void Hachiko::GBuffer::BindSSAOTextures() const
 {
-    //// Bind diffuse texture:
-    //glActiveTexture(GL_TEXTURE0);
-    //glBindTexture(GL_TEXTURE_2D, _diffuse_texture);
     // Bind normal texture:
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, _normal_texture);
