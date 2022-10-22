@@ -238,6 +238,7 @@
     <ClCompile Include="src\modules\ModuleUserInterface.cpp" />
     <ClCompile Include="src\core\particles\modifiers\AnimationParticleModifier.cpp" />
     <ClCompile Include="src\core\rendering\StandaloneGLTexture.cpp" />
+    <ClCompile Include="src\core\rendering\SSAOManager.cpp" />
     <ClCompile Include="vendors\GLFont\FontAtlas.cpp" />
     <ClCompile Include="vendors\GLFont\FTLabel.cpp" />
     <ClCompile Include="vendors\GLFont\GLFont.cpp" />
@@ -824,6 +825,7 @@
     <ClInclude Include="src\batching\TextureBatch.h" />
     <ClInclude Include="src\core\particles\modifiers\AnimationParticleModifier.h" />
     <ClInclude Include="src\core\rendering\StandaloneGLTexture.h" />
+    <ClInclude Include="src\core\rendering\SSAOManager.h" />
     <ClInclude Include="vendors\GLFont\FontAtlas.h" />
     <ClInclude Include="vendors\GLFont\FTLabel.h" />
     <ClInclude Include="vendors\GLFont\GLFont.h" />

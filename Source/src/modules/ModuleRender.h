@@ -6,10 +6,9 @@
 #include "core/rendering/GBuffer.h"
 #include "core/rendering/ShadowManager.h"
 #include "core/rendering/BloomManager.h"
+#include "core/rendering/SSAOManager.h"
 
 #include <vector>
-
-#include "core/rendering/BlurConfig.h"
 
 namespace Hachiko
 {
@@ -67,7 +66,7 @@ namespace Hachiko
 
         void OptionsMenu();
         void DeferredOptions();
-        void LoadingScreenOptions();
+        void LoadingScreenOptions() const;
         void PerformanceMenu();
         void FpsGraph() const;
         void AddFrame(float delta);
@@ -151,6 +150,11 @@ namespace Hachiko
         {
             return bloom_manager;
         };
+
+        SSAOManager& GetSSAOManager()
+        {
+            return ssao_manager;
+        }
     
         void LoadLoadingScreen();
         void DeleteLoadingScreen(); 
@@ -174,31 +178,6 @@ namespace Hachiko
             BatchManager* batch_manager, 
             DrawConfig draw_config);
 
-        // SSAO Related stuff:
-        void SetupSSAO();
-        void ResizeSSAO(unsigned int width, unsigned int height);
-        void BlurSSAO();
-        void DrawSSAO(Scene* scene, ComponentCamera* camera);
-        void BindSSAOTexture();
-        void UnbindSSAOTexture();
-        void FreeSSAO();
-
-        float ssao_radius = 0.5f;
-        float ssao_bias = 0.1f;
-
-        static const size_t ssao_kernel_size = 64; 
-        float3 ssao_kernel[ssao_kernel_size];
-
-        StandaloneGLTexture* ssao_texture;
-        StandaloneGLTexture* ssao_blur_texture;
-        // TODO: Reuse this struct with other blur related stuff.
-        BlurConfig ssao_blur_config;
-
-        unsigned int ssao_noise_texture = 0;
-        bool ssao_enabled = true;
-        bool ssao_blur_enabled = true;
-
-
         void SetRenderMode(bool is_deferred);
 
         void CreateContext();
@@ -211,6 +190,10 @@ namespace Hachiko
 
         void CreateNoiseTexture();
         void BindNoiseTexture(Program* program);
+
+    private:
+        SSAOManager ssao_manager;
+        bool ssao_enabled = true;
 
         void* context{};
 

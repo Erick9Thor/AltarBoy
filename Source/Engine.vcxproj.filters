@@ -687,6 +687,7 @@
     <ClCompile Include="src\core\rendering\BlurPixelSize.cpp">
       <Filter>Core\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\rendering\SSAOManager.cpp" />
     <ClCompile Include="src\core\rendering\BlurConfig.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -2577,6 +2578,7 @@
     <ClInclude Include="src\utils\ComponentUtility.h" />
     <ClInclude Include="src\components\TimeScaleMode.h" />
     <ClInclude Include="src\events\TimeScaleChangeEventPayload.h" />
+    <ClInclude Include="src\core\rendering\SSAOManager.h" />
     <ClInclude Include="src\core\rendering\BlurConfig.h" />
   </ItemGroup>
   <ItemGroup>

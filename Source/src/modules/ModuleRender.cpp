@@ -50,7 +50,7 @@ bool Hachiko::ModuleRender::Init()
 
     bloom_manager.Initialize();
 
-    SetupSSAO();
+    ssao_manager.SetupSSAO(fb_width, fb_height);
 
 #ifdef _DEBUG
     glEnable(GL_DEBUG_OUTPUT); // Enable output callback
@@ -62,12 +62,17 @@ bool Hachiko::ModuleRender::Init()
     fps_log = std::vector<float>(n_bins);
     ms_log = std::vector<float>(n_bins);
 
-    draw_skybox = App->preferences->GetEditorPreference()->GetDrawSkybox();
-    draw_navmesh = App->preferences->GetEditorPreference()->GetDrawNavmesh();
-    shadow_pass_enabled = App->preferences->GetEditorPreference()->GetShadowPassEnabled();
+    EditorPreferences* __restrict editor_preferences = 
+        App->preferences->GetEditorPreference();
+
+    draw_skybox = editor_preferences->GetDrawSkybox();
+    draw_navmesh = editor_preferences->GetDrawNavmesh();
+    shadow_pass_enabled = editor_preferences->GetShadowPassEnabled();
 
     shadow_manager.SetGaussianBlurringEnabled(
-        App->preferences->GetEditorPreference()->GetShadowMapGaussianBlurringEnabled());
+        editor_preferences->GetShadowMapGaussianBlurringEnabled());
+
+    ssao_enabled = editor_preferences->GetSSAOEnabled();
 
     // Create noise texture for general use (dissolve effect)
     CreateNoiseTexture();
@@ -156,7 +161,7 @@ void Hachiko::ModuleRender::ManageResolution(const ComponentCamera* camera)
     bloom_manager.Resize(fb_width, fb_height);
 
     // Resize SSAO texture:
-    ResizeSSAO(fb_width, fb_height);
+    ssao_manager.ResizeSSAO(fb_width, fb_height);
 }
 
 void Hachiko::ModuleRender::CreateContext()
@@ -325,7 +330,7 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
         batch_manager->AddDrawComponent(target.mesh_renderer);
     }
 
-    // Draw collected meshes with geometry pass rogram:
+    // Draw collected meshes with geometry pass program:
     program = App->program->GetProgram(Program::Programs::DEFERRED_GEOMETRY);
 
     program->Activate();
@@ -338,10 +343,13 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
 
     if (ssao_enabled)
     {
-        DrawSSAO(scene, camera);
+        const float4x4 camera_view_proj = 
+            scene->GetCullingCamera()->GetFrustum().ViewProjMatrix();
+        ssao_manager.DrawSSAO(g_buffer, camera_view_proj, fb_width, fb_height);
     }
 
-    // Read the emissive texture, copy it and blur it band write to another texture:
+    // Read the emissive texture, copy it and blur it band write to another
+    // texture:
     bloom_manager.ApplyBloom(g_buffer.GetEmissiveTexture());
 
     // ------------------------------ LIGHT PASS ------------------------------
@@ -375,8 +383,8 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
 
     if (ssao_enabled)
     {
-        // Bind SSAO texture:
-        BindSSAOTexture();
+        // Bind SSAO texture to texture slot 10:
+        ssao_manager.BindSSAOTexture(10);
     }
 
     // Bind deferred rendering mode. This can be configured from the editor,
@@ -407,8 +415,8 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
    
     // ----------------------------- FOG -----------------------------
 
-    // Fog is drawn before forward pass because it doesnt apply its values to
-    // gbuffer and we want to ensure that all the forward rendered objects are
+    // Fog is drawn before forward pass because it doesn't apply its values to
+    // g-buffer and we want to ensure that all the forward rendered objects are
     // properly visible.
 
     const Scene::FogConfig& fog = scene->GetFogConfig();
@@ -438,7 +446,7 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
     }
 
     // ----------------------------- FORWARD PASS -----------------------------
-    // 
+
     // Clear Transparent Batches:
     batch_manager->ClearTransparentBatchesDrawList();
 
@@ -446,7 +454,8 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
     if (render_forward_pass)
     {
         // Get transparent meshes:
-        const std::vector<RenderTarget>& transparent_targets = render_list.GetTransparentTargets();
+        const std::vector<RenderTarget>& transparent_targets = 
+            render_list.GetTransparentTargets();
 
         if (transparent_targets.size() > 0)
         {
@@ -469,7 +478,7 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
 
     DrawParticles(scene, camera);
       
-    // ----------------------------- POST PROCCESS -----------------------------
+    // ----------------------------- POST PROCCESS ----------------------------
 }
 
 void Hachiko::ModuleRender::DrawParticles(Scene* scene, ComponentCamera* camera) const
@@ -589,181 +598,6 @@ bool Hachiko::ModuleRender::DrawToShadowMap(
         App->program->GetProgram(Program::Programs::GAUSSIAN_FILTERING));
 
     return true;
-}
-
-void Hachiko::ModuleRender::SetupSSAO()
-{
-    // We gonna use the position, normal and  diffuse from g buffer inside the
-    // ssao shader.
-    constexpr float kernel_size_inverse = 
-        1.0f / static_cast<float>(ssao_kernel_size);
-    // We generate random direction vectors (normal oriented hemisphere) to
-    // mimic light occlusion for each pixel.
-    for (size_t i = 0; i < ssao_kernel_size; ++i)
-    {
-        float3& current_sample = ssao_kernel[i];
-
-        // Give x and y values between -1.0f and 1.0f:
-        current_sample.x = RandomUtil::RandomSigned();
-        current_sample.y = RandomUtil::RandomSigned();
-        // Give z value between 0.0f and 1.0f so that we have a hemisphere from
-        // surface, not a full sphere:
-        current_sample.z = RandomUtil::Random();
-
-        // Normalize and apply a random weight:
-        current_sample.Normalize();
-        current_sample *= RandomUtil::Random();
-
-        // Give more weight to the samples that are closer to the actual
-        // fragment:
-        float scale = kernel_size_inverse * i;
-        scale = math::Lerp(0.1f, 1.0f, scale * scale);
-        current_sample *= scale;
-
-        HE_LOG("Current Sample: %f, %f, %f", FLOAT3_TO_ARGS(current_sample));
-    }
-
-    ssao_texture = new StandaloneGLTexture(
-        fb_width, 
-        fb_height, 
-        GL_R32F, 
-        0, 
-        GL_RED, 
-        GL_FLOAT, 
-        GL_NEAREST, 
-        GL_NEAREST, 
-        true);
-
-    ssao_blur_texture = new StandaloneGLTexture(
-        fb_width, 
-        fb_height, 
-        GL_R32F, 
-        0, 
-        GL_RED, 
-        GL_FLOAT, 
-        GL_NEAREST, 
-        GL_NEAREST, 
-        true);
-
-    // We generate random kernel rotations that we're gonna tile around the
-    // screen instead of generating a rotation from scratch for each pixel:
-    constexpr size_t number_of_vecs = 16;
-    float3 ssao_noise[number_of_vecs];
-    for (float3& noise : ssao_noise)
-    {
-        noise.x = RandomUtil::RandomSigned();
-        noise.y = RandomUtil::RandomSigned();
-        noise.z = 0.0f;
-    }
-
-    glGenTextures(1, &ssao_noise_texture);
-    glBindTexture(GL_TEXTURE_2D, ssao_noise_texture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, 4, 4, 0, GL_RGB, GL_FLOAT, &ssao_noise[0]);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-}
-
-void Hachiko::ModuleRender::ResizeSSAO(unsigned width, unsigned height)
-{
-    ssao_texture->Resize(width, height);
-    ssao_blur_texture->Resize(width, height);
-}
-
-void Hachiko::ModuleRender::BlurSSAO()
-{
-    if (!ssao_blur_enabled)
-    {
-        return;
-    }
-
-    ApplyGaussianFilter(
-        ssao_texture->GetFrameBufferId(),
-        ssao_texture->GetTextureId(),
-        ssao_blur_texture->GetFrameBufferId(),
-        ssao_blur_texture->GetTextureId(),
-        ssao_blur_config.intensity,
-        ssao_blur_config.sigma,
-        static_cast<int>(ssao_blur_config.size),
-        fb_width,
-        fb_height,
-        App->program->GetProgram(Program::Programs::GAUSSIAN_FILTERING));
-}
-
-void Hachiko::ModuleRender::DrawSSAO(Scene* scene, ComponentCamera* camera)
-{
-    // Bind SSAO fbo for drawing:
-    ssao_texture->BindBuffer();
-
-    // Activate SSAO shader:
-    Program* ssao_program = App->program->GetProgram(Program::Programs::SSAO);
-    ssao_program->Activate();
-    
-    const float frame_buffer_width = static_cast<float>(fb_width);
-    const float frame_buffer_height = static_cast<float>(fb_height);
-
-    // Bind Uniforms:
-    // Bind samples array:
-    for (size_t i = 0; i < ssao_kernel_size; ++i)
-    {
-        ssao_program->BindUniformFloat3(
-            ("samples[" + std::to_string(i) + "]").c_str(), 
-            ssao_kernel[i].ptr());
-    }
-
-    ComponentCamera* used_camera = scene->GetCullingCamera();
-    float4x4 camera_view_proj = used_camera->GetFrustum().ViewProjMatrix();
-
-    // Bind projection matrix:
-    ssao_program->BindUniformFloat4x4(
-        "camera_view_projection", 
-        camera_view_proj.ptr());
-    // Bind frame buffer sizes:
-    // TODO: Make these uniforms used through variables.
-    ssao_program->BindUniformFloat("frame_buffer_width", &frame_buffer_width);
-    ssao_program->BindUniformFloat("frame_buffer_height", &frame_buffer_height);
-    // Bind ssao config related variables:
-    ssao_program->BindUniformUInt("kernel_size", ssao_kernel_size);
-    ssao_program->BindUniformFloat("radius", &ssao_radius);
-    ssao_program->BindUniformFloat("bias", &ssao_bias);
-    // Bind the generated noise texture:
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, ssao_noise_texture);
-    // Bind necessary G-Buffer textures:
-    g_buffer.BindSSAOTextures();
-
-    // Render Quad:
-    RenderFullScreenQuad();
-
-    // Deactivate SSAO shader:
-    Program::Deactivate();
-
-    // Unbind textures:
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, 0);
-    g_buffer.UnbindSSAOTextures();
-
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-    // Blur SSAO texture:
-    BlurSSAO();
-}
-
-void Hachiko::ModuleRender::BindSSAOTexture()
-{
-    ssao_texture->BindForReading(10);
-}
-
-void Hachiko::ModuleRender::UnbindSSAOTexture()
-{
-    // TODO: Implement this.
-}
-
-void Hachiko::ModuleRender::FreeSSAO()
-{
-    delete ssao_texture;
-    delete ssao_blur_texture;
 }
 
 void Hachiko::ModuleRender::ApplyGaussianFilter(
@@ -916,20 +750,18 @@ void Hachiko::ModuleRender::OptionsMenu()
     ImGui::NewLine();
     ImGui::TextWrapped("Ambient Occlusion");
     ImGui::Separator();
-    Widgets::Checkbox("SSAO enabled", &ssao_enabled);
-    Widgets::DragFloatConfig ssao_config;
-    ssao_config.min = 0.0f;
-    ssao_config.speed = 0.01f;
-    Widgets::DragFloat("Radius", ssao_radius, &ssao_config);
-    Widgets::DragFloat("Bias", ssao_bias, &ssao_config);
-    Widgets::Checkbox("Blur SSAO texture", &ssao_blur_enabled);
-    if (ssao_blur_enabled)
+    bool ssao_mode_changed = Widgets::Checkbox("SSAO enabled", &ssao_enabled);
+    if (ssao_mode_changed)
     {
-        BlurConfigUtil::ShowInEditorUI(&ssao_blur_config);
+        App->preferences->GetEditorPreference()->SetSSAOEnabled(ssao_enabled);
+    }
+    if (ssao_enabled)
+    {
+        ssao_manager.ShowInEditorUI();
     }
 }
 
-void Hachiko::ModuleRender::LoadingScreenOptions() 
+void Hachiko::ModuleRender::LoadingScreenOptions() const
 {
     ImGui::NewLine();
 
@@ -988,6 +820,11 @@ void Hachiko::ModuleRender::DeferredOptions()
     if (Widgets::RadioButton("Emissive", deferred_mode == 6))
     {
         deferred_mode = 6;
+    }
+
+    if (Widgets::RadioButton("SSAO Color", deferred_mode == 7))
+    {
+        deferred_mode = 7;
     }
 
     Widgets::Checkbox("Forward Rendering Pass", &render_forward_pass);
@@ -1197,8 +1034,6 @@ void Hachiko::ModuleRender::CreateNoiseTexture()
 
 bool Hachiko::ModuleRender::CleanUp()
 {
-    FreeSSAO();
-
     FreeFullScreenQuad();
 
     glDeleteTextures(1, &fb_texture);
