@@ -1,6 +1,6 @@
 #pragma once
 
-#include "BlurPixelSize.h"
+#include "BlurConfig.h"
 
 namespace Hachiko::ShadowMappingDefaults
 {
@@ -54,14 +54,15 @@ private:
     void BindCommon(const Program* program) const;
 
 private:
+    BlurConfig _blur_config;
     float _light_frustum_bounding_box_padding = 0.0f;
-    float _gaussian_filter_blur_amount = 0.0f;
     float _min_variance = 0.0f;
     float _light_bleeding_reduction_amount = 0.0f;
     float _bias = 0.0f;
     float _exponent = 0.0f;
-    BlurPixelSize::Type _gaussian_blur_size = BlurPixelSize::Type::Gaussian5x5;
-    float _gaussian_blur_sigma = 0.0f;
+    //float _gaussian_filter_blur_amount = 0.0f;
+    //BlurPixelSize::Type _gaussian_blur_size = BlurPixelSize::Type::Gaussian5x5;
+    //float _gaussian_blur_sigma = 0.0f;
 };
 
 } // namespace Hachiko

@@ -341,8 +341,8 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
         DrawSSAO(scene, camera);
     }
 
-    //// Read the emissive texture, copy it and blur it band write to another texture:
-    //bloom_manager.ApplyBloom(g_buffer.GetEmissiveTexture());
+    // Read the emissive texture, copy it and blur it band write to another texture:
+    bloom_manager.ApplyBloom(g_buffer.GetEmissiveTexture());
 
     // ------------------------------ LIGHT PASS ------------------------------
 
@@ -925,7 +925,7 @@ void Hachiko::ModuleRender::OptionsMenu()
     Widgets::Checkbox("Blur SSAO texture", &ssao_blur_enabled);
     if (ssao_blur_enabled)
     {
-        BlurConfigToEditorUI(&ssao_blur_config);
+        BlurConfigUtil::ShowInEditorUI(&ssao_blur_config);
     }
 }
 

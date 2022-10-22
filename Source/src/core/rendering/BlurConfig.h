@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/rendering/BloomManager.h"
+#include "BlurPixelSize.h"
 
 namespace Hachiko
 {
@@ -11,5 +11,9 @@ namespace Hachiko
         BlurPixelSize::Type size = BlurPixelSize::Type::Gaussian5x5;
     };
 
-    void BlurConfigToEditorUI(BlurConfig* blur_config);
+    namespace BlurConfigUtil
+    {
+        bool ShowInEditorUI(BlurConfig* blur_config);
+        int GetBlurPixelSizeInt(BlurConfig* blur_config);
+    }
 }
