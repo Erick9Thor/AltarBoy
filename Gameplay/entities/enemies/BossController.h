@@ -16,6 +16,7 @@ namespace Hachiko
     class ComponentParticleSystem;
     class ComponentBillboard;
     class ComponentProgressBar;
+    class ComponentObstacle;
 
     namespace Scripting
     {
@@ -168,6 +169,7 @@ namespace Hachiko
             void SetUpCocoon();
             void BreakCocoon();
 
+            void InitCocoonGauntlet();
             bool CocoonTrigger();
             void FinishCocoon();
 
@@ -183,6 +185,7 @@ namespace Hachiko
 
             void SpawnEnemy();
             void ResetEnemies();
+            void KillEnemies();
 
             bool ControlLasers();
 
@@ -221,6 +224,7 @@ namespace Hachiko
             ComponentTransform* transform = nullptr;
             ComponentProgressBar* hp_bar = nullptr;
             ComponentAgent* agent = nullptr;
+            ComponentObstacle* obstacle = nullptr;
             ComponentAnimation* animation = nullptr;
             GauntletManager* gauntlet = nullptr;
             CombatManager* combat_manager = nullptr;
@@ -232,6 +236,9 @@ namespace Hachiko
             bool hitable = true;
             std::vector<float> gauntlet_thresholds_percent{0.5f};
             float3 target_position = float3::zero;
+
+            float3 initial_position = float3::zero;
+            float3 initial_rotation = float3::zero;
             
             // Camera variables
             PlayerCamera* player_camera = nullptr; // It's found on scene based on name
@@ -314,6 +321,7 @@ namespace Hachiko
             float after_attack_wait_timer = 0.f;
             bool attacked = false;
 
+            bool moving_to_initial_pos = false;
             bool camera_focus_on_boss = false;
             float time_elapse = 0.0;
 
@@ -325,6 +333,9 @@ namespace Hachiko
             SERIALIZE_FIELD(float, damage_effect_duration);
             float damage_effect_progress = 0.0f;
 
+            SERIALIZE_FIELD(float, chasing_time_limit);
+            float chasing_start_time = 0.0f;
+            float chasing_timer = 0.0f;
 
             // It needs to start as true so the first normal jump sets it to false
             bool double_jump_toggle = true;
@@ -332,9 +343,13 @@ namespace Hachiko
             const float jump_placeholder_time = 5.f;
             float jump_placeholder_timer = 0.f;
 
+            // Lasers
+            SERIALIZE_FIELD(GameObject*, _rotating_lasers);
+            SERIALIZE_FIELD(float, _rotating_lasers_speed);
             SERIALIZE_FIELD(GameObject*, _laser_wall);
             SERIALIZE_FIELD(float, _laser_wall_duration);
             float _laser_wall_current_time = 0.0f;
+            const std::array<float, 4> _wall_dir_angles = { 0.f, 90.f, 180.f, 270.f};
             SERIALIZE_FIELD(float, _laser_jump_height);
         };
     } // namespace Scripting

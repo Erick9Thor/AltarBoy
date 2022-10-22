@@ -15,6 +15,7 @@ namespace Hachiko
         class PlayerController;
         class BossController;
         class CrystalExplosion;
+        class PlayerCamera;
 
         class CombatManager : public Script
         {
@@ -51,7 +52,8 @@ namespace Hachiko
             {
                 DEFAULT,
                 RIGHT,
-                LEFT
+                LEFT,
+                CENTER
             };
 
             struct AttackStats
@@ -64,7 +66,7 @@ namespace Hachiko
                 float width = 0.f;
                 float range = 0.f;
                 // Status effect
-                //Trail direction 1 for right and 2 for left
+                //Trail direction 1 for right, 2 for left and 3 for center
                 AttackTrail attack_trail = AttackTrail::DEFAULT;
             };
             
@@ -168,6 +170,7 @@ namespace Hachiko
             PlayerController* _player_controller;
             BossController* _boss_controller;
             TimeManager* _time_manager;
+            PlayerCamera* _camera;
 
             SERIALIZE_FIELD(GameObject*, _charge_vfx);
             SERIALIZE_FIELD(GameObject*, _shot_vfx);

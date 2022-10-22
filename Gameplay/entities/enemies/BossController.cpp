@@ -6,6 +6,7 @@
 #include "misc/StalagmiteManager.h"
 #include "entities/Stats.h"
 #include "constants/Scenes.h"
+#include "components/ComponentObstacle.h"
 
 Hachiko::Scripting::BossController::BossController(GameObject* game_object)
     : Script(game_object, "BossController")
@@ -46,10 +47,12 @@ Hachiko::Scripting::BossController::BossController(GameObject* game_object)
     , attack_current_cd(0.0f)
     , time_between_enemies(5.0)
     , enemy_pool(nullptr)
+    , _rotating_lasers(nullptr)
     , _laser_wall(nullptr)
     , _laser_wall_duration(2.0f)
     , _laser_jump_height(50.0f)
     , damage_effect_duration(1.0f)
+    , chasing_time_limit(3.0f)
 {
     CreateBossWeapons();
 }
@@ -89,6 +92,9 @@ void Hachiko::Scripting::BossController::OnAwake()
     combat_stats = game_object->GetComponent<Stats>();
     agent = game_object->GetComponent<ComponentAgent>();
     agent->SetMaxSpeed(combat_stats->_move_speed);
+    agent->RemoveFromCrowd();
+    obstacle = game_object->GetComponent<ComponentObstacle>();
+    obstacle->AddObstacle();
 
     animation = game_object->GetComponent<ComponentAnimation>();
 
@@ -122,11 +128,20 @@ void Hachiko::Scripting::BossController::OnAwake()
         laser->GetComponent<LaserController>()->ChangeState(LaserController::State::INACTIVE);
     }
 
+    for (GameObject* laser : _rotating_lasers->children)
+    {
+        laser->GetComponent<LaserController>()->ChangeState(LaserController::State::INACTIVE);
+        laser->GetComponent<LaserController>()->_toggle_activation = false;
+    }
+
     if (_stalagmite_manager_go)
     {
         _stalagmite_manager =
             _stalagmite_manager_go->GetComponent<StalagmiteManager>();
     }
+
+    initial_position = transform->GetGlobalPosition();
+    initial_rotation = transform->GetGlobalRotationEuler();
 }
 
 void Hachiko::Scripting::BossController::OnStart()
@@ -271,7 +286,8 @@ void Hachiko::Scripting::BossController::CombatController()
 
     if (combat_stats->_current_hp <= 0)
     {
-        level_manager->GoalReached();
+        KillEnemies();
+        level_manager->BossKilled();
         state = BossState::DEAD;
         return;
     }
@@ -350,6 +366,9 @@ void Hachiko::Scripting::BossController::StartEncounter()
 {
     encounter_start_timer = 0.f;
     RestoreCameraOffset();
+
+    obstacle->RemoveObstacle();
+    agent->AddToCrowd();
 }
 
 void Hachiko::Scripting::BossController::StartEncounterController()
@@ -398,11 +417,49 @@ void Hachiko::Scripting::BossController::StartCocoon()
     time_elapse = 0.0;
     SetUpCocoon();
     FocusCameraOnBoss(true);
+
+    //Remove all stalactites and enemies
     _stalagmite_manager->DestroyAllStalagmites();
+    KillEnemies();
+
+    // Direct boss to intial position
+    moving_to_initial_pos = true;
+    initial_position.y = transform->GetGlobalPosition().y;
+    transform->LookAtTarget(initial_position);
+    agent->SetTargetPosition(initial_position);
+
+    // Knockback player
+    float3 player_pos = player->GetTransform()->GetGlobalPosition();
+    if (Distance(player_pos, initial_position) <= 3)
+    {
+        float3 player_end_pos = player_pos + (player_pos - initial_position).Normalized() * 3;
+        player->GetTransform()->SetGlobalPosition(player_end_pos);
+    }
 }
 
 void Hachiko::Scripting::BossController::CocoonController()
 {
+    // Handle boss movement to initial position
+    if (moving_to_initial_pos)
+    {
+        float3 current_pos = transform->GetGlobalPosition();
+        if (Distance(current_pos, initial_position) <= 0.5f)
+        {
+            moving_to_initial_pos = false;
+            transform->SetGlobalPosition(initial_position);
+            transform->SetGlobalRotationEuler(initial_rotation);
+
+            agent->RemoveFromCrowd();
+            obstacle->AddObstacle();
+
+            if (cocoon_placeholder_go)
+            {
+                cocoon_placeholder_go->SetActive(true);
+            }
+        }
+        return;
+    }
+
     // Handle camera focus
     if (camera_focus_on_boss)
     {
@@ -411,7 +468,16 @@ void Hachiko::Scripting::BossController::CocoonController()
         if (time_elapse >= 2) // HARDCODED TIME FOR CAMERA FOCUS
         {
             FocusCameraOnBoss(false);
+            // Gauntlet Starts once the camera is unlocked
+            InitCocoonGauntlet();
         }
+    }
+
+    if (_rotating_lasers)
+    {
+        float3 rot_lasers_rotation = _rotating_lasers->GetTransform()->GetLocalRotationEuler();
+        rot_lasers_rotation.y += Time::DeltaTime() * 10;
+        _rotating_lasers->GetTransform()->SetLocalRotationEuler(rot_lasers_rotation);
     }
 
     // Replace with is gauntlet completed
@@ -424,10 +490,6 @@ void Hachiko::Scripting::BossController::CocoonController()
 void Hachiko::Scripting::BossController::SetUpCocoon()
 {
     hitable = false;
-    if (cocoon_placeholder_go)
-    {
-        cocoon_placeholder_go->SetActive(true);
-    }
 }
 
 void Hachiko::Scripting::BossController::BreakCocoon()
@@ -439,6 +501,16 @@ void Hachiko::Scripting::BossController::BreakCocoon()
     }
 }
 
+void Hachiko::Scripting::BossController::InitCocoonGauntlet()
+{
+    // Unlock the lasers
+    for (GameObject* laser : _rotating_lasers->children)
+    {
+        laser->GetComponent<LaserController>()->_toggle_activation = true;
+    }
+    // Start spawning enemies
+    gauntlet->StartGauntlet();
+}
 
 bool Hachiko::Scripting::BossController::CocoonTrigger()
 {
@@ -449,7 +521,6 @@ bool Hachiko::Scripting::BossController::CocoonTrigger()
     if (gauntlet_thresholds_percent.back() >= static_cast<float>(combat_stats->_current_hp) / combat_stats->_max_hp)
     {
         gauntlet_thresholds_percent.pop_back();
-        gauntlet->StartGauntlet();
 
         ChangeStateText("In Cocoon.");
 
@@ -464,11 +535,20 @@ void Hachiko::Scripting::BossController::FinishCocoon()
     second_phase = true;
     BreakCocoon();
 
+    obstacle->RemoveObstacle();
+    agent->AddToCrowd();
+
     // We change our jumping pattern to the second one and reset the index
     std::copy(_jumping_pattern_2, _jumping_pattern_2 + JumpUtil::JUMP_PATTERN_SIZE, _current_jumping_pattern);
     _jump_pattern_index = -1;
 
-    gauntlet->ResetGauntlet();
+    gauntlet->ResetGauntlet(true);
+
+    for (GameObject* laser : _rotating_lasers->children)
+    {
+        laser->GetComponent<LaserController>()->ChangeState(LaserController::State::INACTIVE);
+        laser->GetComponent<LaserController>()->_toggle_activation = false;
+    }
 
     ChangeStateText("Finished Cocoon.");
 
@@ -478,6 +558,7 @@ void Hachiko::Scripting::BossController::FinishCocoon()
 void Hachiko::Scripting::BossController::Chase()
 {
     ChangeStateText("Chasing player.");
+    chasing_timer = 0.0f;
     combat_state = CombatState::CHASING;
 }
 
@@ -486,7 +567,12 @@ void Hachiko::Scripting::BossController::ChaseController()
     const float3& player_position = player->GetTransform()->GetGlobalPosition();
     const BossAttack& boss_attack = GetCurrentAttack();
 
-    transform->LookAtTarget(player_position);
+    chasing_timer += Time::DeltaTimeScaled();
+    if (chasing_timer >= chasing_time_limit)
+    {
+        combat_state = CombatState::JUMPING;
+        return;
+    }
 
     transform->LookAtTarget(player_position);
 
@@ -762,6 +848,16 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
 
         if (_current_jumping_mode == JumpingMode::LASER)
         {
+            const int dir = RandomUtil::RandomIntBetween(0, 3);
+            
+            // Set a random direction for the lasers
+            float3 laser_wall_rot = _laser_wall->GetTransform()->GetLocalRotationEuler();
+            laser_wall_rot.y = _wall_dir_angles[dir];
+            _laser_wall->GetTransform()->SetLocalRotationEuler(laser_wall_rot);
+
+            // Kill all enemies before lasers
+            KillEnemies();
+
             for (GameObject* laser : _laser_wall->children)
             {
                 laser->GetComponent<LaserController>()->ChangeState(LaserController::State::ACTIVATING);
@@ -1245,8 +1341,9 @@ void Hachiko::Scripting::BossController::SpawnEnemy()
         }
 
         enemy->SetActive(true);
-        ComponentAgent* agent = enemy->GetComponent<ComponentAgent>();
+        enemy_controller->OnStart();
 
+        ComponentAgent* agent = enemy->GetComponent<ComponentAgent>();
         if (agent)
         {
             agent->AddToCrowd();
@@ -1280,6 +1377,14 @@ void Hachiko::Scripting::BossController::ResetEnemies()
         }
 
         enemy->SetActive(false);
+    }
+}
+
+void Hachiko::Scripting::BossController::KillEnemies()
+{
+    for (EnemyController* enemy_controller : enemies)
+    {
+        enemy_controller->SetDead();
     }
 }
 

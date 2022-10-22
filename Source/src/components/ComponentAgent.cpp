@@ -195,6 +195,17 @@ void Hachiko::ComponentAgent::SetAsPlayer(bool new_is_player)
     is_player = new_is_player;
 }
 
+bool Hachiko::ComponentAgent::CanReachTarget() const
+{
+    const dtCrowdAgent* ag = App->navigation->GetAgent(agent_id);
+    if (!ag)
+    {
+        return false;
+    }
+    return !ag->partial;
+}
+
+
 void Hachiko::ComponentAgent::RefreshSpeedAndAcceleration()
 {
     SetMaxAcceleration(max_acceleration);

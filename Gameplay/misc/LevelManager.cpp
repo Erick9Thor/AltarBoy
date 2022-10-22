@@ -7,12 +7,14 @@
 #include "Gameplay.h"
 #include "constants/Scenes.h"
 #include "AudioManager.h"
+#include "entities/player/PlayerSoundManager.h"
 
 Hachiko::Scripting::LevelManager::LevelManager(GameObject* game_object)
 	: Script(game_object, "LevelManager")
 	, _level(1)
 	, _respawn_position(float3::zero)
 	, _last_gauntlet(nullptr)
+	, _gauntlets_easy_mode(true)
 	, _modify_fog(false)
 	, _fog_frequency(0.1)
 	, _fog_max_density(0.015)
@@ -28,7 +30,18 @@ void Hachiko::Scripting::LevelManager::OnAwake()
 		_audio_manager->SetLevel(_level);
 	}
 
+	if (_player_sound_manager_go != nullptr)
+	{
+		_player_sound_manager = _player_sound_manager_go->GetComponent<PlayerSoundManager>();
+		_player_sound_manager->SetLevel(_level);
+	}
+
 	_gauntlet_ui_go->SetActive(false);
+
+	if (_victory_screen != nullptr)
+	{
+		_victory_screen->SetActive(false);
+	}
 
 	_time = 0;
 }
@@ -48,6 +61,11 @@ void Hachiko::Scripting::LevelManager::OnUpdate()
 	{
 		_gauntlet_ui_go->SetActive(_last_gauntlet && !_last_gauntlet->IsCompleted());
 	}
+
+	if (_victory && Input::IsKeyPressed(Input::KeyCode::KEY_SPACE))
+	{
+		SceneManagement::SwitchScene(Scenes::MAIN_MENU);
+	}
 }
 
 void Hachiko::Scripting::LevelManager::SetGauntlet(GauntletManager* last_gauntlet)
@@ -64,7 +82,9 @@ float3 Hachiko::Scripting::LevelManager::Respawn()
 {
 	if (_last_gauntlet != nullptr && !_last_gauntlet->IsCompleted())
 	{
-		_last_gauntlet->ResetGauntlet();
+		// If we play on easy mode do not reset gaunlets from first round
+		bool complete_reset_gauntlet = !_gauntlets_easy_mode;
+		_last_gauntlet->ResetGauntlet(complete_reset_gauntlet);
 	}
 
 	if (_audio_manager != nullptr)
@@ -75,6 +95,10 @@ float3 Hachiko::Scripting::LevelManager::Respawn()
 	return GetRespawnPosition();
 
 	//Disable gauntlet ui
+}
+
+void Hachiko::Scripting::LevelManager::ReloadBossScene() const {
+	SceneManagement::SwitchScene(Scenes::BOSS_LEVEL);
 }
 
 void Hachiko::Scripting::LevelManager::GoalReached() 
@@ -91,4 +115,13 @@ void Hachiko::Scripting::LevelManager::GoalReached()
 	{
 		SceneManagement::SwitchScene(Scenes::MAIN_MENU);
 	}
+}
+
+void Hachiko::Scripting::LevelManager::BossKilled()
+{
+	if (_victory_screen != nullptr)
+	{
+		_victory_screen->SetActive(true);
+	}
+	_victory = true;
 }

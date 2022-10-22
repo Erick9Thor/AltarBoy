@@ -208,6 +208,7 @@ bool Hachiko::Scripting::StalagmiteManager::CheckPreviousStalagmite(int idx)
 void Hachiko::Scripting::StalagmiteManager::DestroyAllStalagmites()
 {
 	_should_fall_stalagmites = false;
+
 	for (unsigned i = 0; i < _stalagmites.size(); ++i)
 	{
 		if (_stalagmites[i]->GetState() != StalagmiteState::COLLAPSED)
@@ -215,7 +216,9 @@ void Hachiko::Scripting::StalagmiteManager::DestroyAllStalagmites()
 			return;
 		}
 		_stalagmites[i]->SetNewState(StalagmiteState::DISSOLVING);
-		_stalagmites[i]->_dissolving_time = _total_dissolving_time;
+		// Set a random offset for the dissolving
+		const float offset = RandomUtil::RandomBetween(0, 3);
+		_stalagmites[i]->_dissolving_time = _total_dissolving_time + offset;
 	}
 }
 

@@ -33,7 +33,7 @@ void main()
         {
             discard;
         }
-        else if (noise_value >= material.dissolve_progress - 0.05)
+        else if (noise_value >= material.dissolve_progress - 0.03)
         {
             modify_emisive = true;
         }

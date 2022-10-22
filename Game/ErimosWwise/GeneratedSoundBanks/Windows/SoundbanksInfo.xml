@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="12" SoundbankVersion="140">
 	<RootPaths>
-		<ProjectRoot>C:\Users\MO\Documents\Hachiko-Engine\Game\ErimosWwise\</ProjectRoot>
-		<SourceFilesRoot>C:\Users\MO\Documents\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\</SourceFilesRoot>
-		<SoundBanksRoot>C:\Users\MO\Documents\Hachiko-Engine\Game\ErimosWwise\GeneratedSoundBanks\Windows\</SoundBanksRoot>
+		<ProjectRoot>C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\</ProjectRoot>
+		<SourceFilesRoot>C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\</SourceFilesRoot>
+		<SoundBanksRoot>C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\GeneratedSoundBanks\Windows\</SoundBanksRoot>
 		<ExternalSourcesInputFile></ExternalSourcesInputFile>
-		<ExternalSourcesOutputRoot>C:\Users\MO\Documents\Hachiko-Engine\Game\ErimosWwise\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
+		<ExternalSourcesOutputRoot>C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
 	</RootPaths>
 	<DialogueEvents/>
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="626769978" Language="SFX" Hash="1167542298">
+		<SoundBank Id="626769978" Language="SFX" Hash="4120172180">
 			<ObjectPath>\SoundBanks\Default Work Unit\BackgroundMusic</ObjectPath>
 			<ShortName>BackgroundMusic</ShortName>
 			<Path>BackgroundMusic.bnk</Path>
 			<IncludedEvents>
 				<Event Id="513571230" Name="Play_Combat" ObjectPath="\Events\Music\Play_Combat"/>
+				<Event Id="2953314807" Name="Play_IntroCinematic" ObjectPath="\Events\Default Work Unit\Play_IntroCinematic">
+					<IncludedMemoryFiles>
+						<File Id="1003919086" Language="SFX">
+							<ShortName>ER_cinematica_masterv2.wav</ShortName>
+							<Path>SFX\ER_cinematica_masterv2_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
 				<Event Id="3849525492" Name="Play_Navigation" ObjectPath="\Events\Music\Play_Navigation">
 					<IncludedMemoryFiles>
 						<File Id="31154168" Language="SFX">
@@ -170,7 +178,7 @@
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
 		</SoundBank>
-		<SoundBank Id="1551306167" Language="SFX" Hash="1933214614">
+		<SoundBank Id="1551306167" Language="SFX" Hash="1639464746">
 			<ObjectPath>\SoundBanks\Default Work Unit\UI</ObjectPath>
 			<ShortName>UI</ShortName>
 			<Path>UI.bnk</Path>
@@ -193,52 +201,16 @@
 				</Event>
 			</IncludedEvents>
 		</SoundBank>
-		<SoundBank Id="2385628198" Language="SFX" Hash="364181247">
+		<SoundBank Id="2385628198" Language="SFX" Hash="3950947451">
 			<ObjectPath>\SoundBanks\Default Work Unit\Footsteps</ObjectPath>
 			<ShortName>Footsteps</ShortName>
 			<Path>Footsteps.bnk</Path>
 			<IncludedEvents>
 				<Event Id="1602358412" Name="Play_Footstep" ObjectPath="\Events\Default Work Unit\Play_Footstep">
 					<IncludedMemoryFiles>
-						<File Id="48899789" Language="SFX">
-							<ShortName>Steps\Wood\Step_06Wood.wav</ShortName>
-							<Path>SFX\Steps\Wood\Step_06Wood_10C4C929.wem</Path>
-						</File>
-						<File Id="51288901" Language="SFX">
-							<ShortName>Steps\Wood\Step_07Wood.wav</ShortName>
-							<Path>SFX\Steps\Wood\Step_07Wood_10C4C929.wem</Path>
-						</File>
-						<File Id="53483494" Language="SFX">
-							<ShortName>Steps\Gravel\Step_45Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_45Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="54698883" Language="SFX">
-							<ShortName>Steps\Gravel\Step_59Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_59Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="72839060" Language="SFX">
-							<ShortName>Steps\Wood\Step_09Wood.wav</ShortName>
-							<Path>SFX\Steps\Wood\Step_09Wood_10C4C929.wem</Path>
-						</File>
 						<File Id="83818322" Language="SFX">
 							<ShortName>Steps\Gravel\Step_31Gravel.wav</ShortName>
 							<Path>SFX\Steps\Gravel\Step_31Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="118664291" Language="SFX">
-							<ShortName>Steps\Gravel\Step_49Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_49Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="122971765" Language="SFX">
-							<ShortName>Steps\Gravel\Step_35Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_35Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="129393656" Language="SFX">
-							<ShortName>Steps\Standard\Step_23Standard.wav</ShortName>
-							<Path>SFX\Steps\Standard\Step_23Standard_10C4C929.wem</Path>
-						</File>
-						<File Id="148813729" Language="SFX">
-							<ShortName>Steps\Gravel\Step_40Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_40Gravel_10C4C929.wem</Path>
 						</File>
 						<File Id="173851412" Language="SFX">
 							<ShortName>Steps\Standard\Step_26Standard.wav</ShortName>
@@ -252,262 +224,49 @@
 							<ShortName>Steps\Standard\Step_27Standard.wav</ShortName>
 							<Path>SFX\Steps\Standard\Step_27Standard_10C4C929.wem</Path>
 						</File>
-						<File Id="238004578" Language="SFX">
-							<ShortName>Steps\Gravel\Step_44Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_44Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="266760772" Language="SFX">
-							<ShortName>Steps\Gravel\Step_57Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_57Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="292151356" Language="SFX">
-							<ShortName>Steps\Gravel\Step_50Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_50Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="298631203" Language="SFX">
-							<ShortName>Steps\Wood\Step_10Wood.wav</ShortName>
-							<Path>SFX\Steps\Wood\Step_10Wood_10C4C929.wem</Path>
-						</File>
 						<File Id="358036158" Language="SFX">
 							<ShortName>Steps\Standard\Step_28Standard.wav</ShortName>
 							<Path>SFX\Steps\Standard\Step_28Standard_10C4C929.wem</Path>
-						</File>
-						<File Id="394815816" Language="SFX">
-							<ShortName>Steps\Gravel\Step_58Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_58Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="410464228" Language="SFX">
-							<ShortName>Steps\Gravel\Step_55Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_55Gravel_10C4C929.wem</Path>
 						</File>
 						<File Id="413866373" Language="SFX">
 							<ShortName>Steps\Gravel\Step_30Gravel.wav</ShortName>
 							<Path>SFX\Steps\Gravel\Step_30Gravel_10C4C929.wem</Path>
 						</File>
-						<File Id="427485899" Language="SFX">
-							<ShortName>Steps\Wood\Step_13Wood.wav</ShortName>
-							<Path>SFX\Steps\Wood\Step_13Wood_10C4C929.wem</Path>
-						</File>
-						<File Id="434537556" Language="SFX">
-							<ShortName>Steps\Wood\Step_04Wood.wav</ShortName>
-							<Path>SFX\Steps\Wood\Step_04Wood_10C4C929.wem</Path>
-						</File>
-						<File Id="459568182" Language="SFX">
-							<ShortName>Steps\Gravel\Step_41Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_41Gravel_10C4C929.wem</Path>
-						</File>
 						<File Id="485678867" Language="SFX">
 							<ShortName>Steps\Gravel\Step_29Gravel.wav</ShortName>
 							<Path>SFX\Steps\Gravel\Step_29Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="486383263" Language="SFX">
-							<ShortName>Steps\Gravel\Step_56Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_56Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="494968059" Language="SFX">
-							<ShortName>Steps\Wood\Step_03Wood.wav</ShortName>
-							<Path>SFX\Steps\Wood\Step_03Wood_10C4C929.wem</Path>
-						</File>
-						<File Id="554606686" Language="SFX">
-							<ShortName>Steps\Wood\Step_11Wood.wav</ShortName>
-							<Path>SFX\Steps\Wood\Step_11Wood_10C4C929.wem</Path>
-						</File>
-						<File Id="559398380" Language="SFX">
-							<ShortName>Steps\Wood\Step_02Wood.wav</ShortName>
-							<Path>SFX\Steps\Wood\Step_02Wood_10C4C929.wem</Path>
-						</File>
-						<File Id="576389374" Language="SFX">
-							<ShortName>Steps\Standard\Step_21Standard.wav</ShortName>
-							<Path>SFX\Steps\Standard\Step_21Standard_10C4C929.wem</Path>
-						</File>
-						<File Id="607001280" Language="SFX">
-							<ShortName>Steps\Gravel\Step_47Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_47Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="614908418" Language="SFX">
-							<ShortName>Steps\Wood\Step_08Wood.wav</ShortName>
-							<Path>SFX\Steps\Wood\Step_08Wood_10C4C929.wem</Path>
-						</File>
-						<File Id="629120236" Language="SFX">
-							<ShortName>Steps\Standard\Step_18Standard.wav</ShortName>
-							<Path>SFX\Steps\Standard\Step_18Standard_10C4C929.wem</Path>
-						</File>
-						<File Id="641829977" Language="SFX">
-							<ShortName>Steps\Gravel\Step_54Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_54Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="657974905" Language="SFX">
-							<ShortName>Steps\Wood\Step_12Wood.wav</ShortName>
-							<Path>SFX\Steps\Wood\Step_12Wood_10C4C929.wem</Path>
-						</File>
-						<File Id="665772693" Language="SFX">
-							<ShortName>Steps\Gravel\Step_42Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_42Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="714419186" Language="SFX">
-							<ShortName>Steps\Wood\Step_15Wood.wav</ShortName>
-							<Path>SFX\Steps\Wood\Step_15Wood_10C4C929.wem</Path>
-						</File>
-						<File Id="721761556" Language="SFX">
-							<ShortName>Steps\Gravel\Step_52Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_52Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="733912445" Language="SFX">
-							<ShortName>Steps\Standard\Step_17Standard.wav</ShortName>
-							<Path>SFX\Steps\Standard\Step_17Standard_10C4C929.wem</Path>
-						</File>
-						<File Id="745617401" Language="SFX">
-							<ShortName>Steps\Standard\Step_16Standard.wav</ShortName>
-							<Path>SFX\Steps\Standard\Step_16Standard_10C4C929.wem</Path>
-						</File>
-						<File Id="770293676" Language="SFX">
-							<ShortName>Steps\Wood\Step_14Wood.wav</ShortName>
-							<Path>SFX\Steps\Wood\Step_14Wood_10C4C929.wem</Path>
-						</File>
-						<File Id="786082910" Language="SFX">
-							<ShortName>Steps\Wood\Step_05Wood.wav</ShortName>
-							<Path>SFX\Steps\Wood\Step_05Wood_10C4C929.wem</Path>
-						</File>
-						<File Id="796728033" Language="SFX">
-							<ShortName>Steps\Standard\Step_22Standard.wav</ShortName>
-							<Path>SFX\Steps\Standard\Step_22Standard_10C4C929.wem</Path>
-						</File>
-						<File Id="826019934" Language="SFX">
-							<ShortName>Steps\Gravel\Step_43Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_43Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="826637502" Language="SFX">
-							<ShortName>Steps\Gravel\Step_46Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_46Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="843662702" Language="SFX">
-							<ShortName>Steps\Gravel\Step_34Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_34Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="845194166" Language="SFX">
-							<ShortName>Steps\Gravel\Step_36Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_36Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="852855157" Language="SFX">
-							<ShortName>Steps\Standard\Step_20Standard.wav</ShortName>
-							<Path>SFX\Steps\Standard\Step_20Standard_10C4C929.wem</Path>
-						</File>
-						<File Id="860091779" Language="SFX">
-							<ShortName>Steps\Gravel\Step_51Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_51Gravel_10C4C929.wem</Path>
 						</File>
 						<File Id="869379579" Language="SFX">
 							<ShortName>Steps\Gravel\Step_33Gravel.wav</ShortName>
 							<Path>SFX\Steps\Gravel\Step_33Gravel_10C4C929.wem</Path>
 						</File>
-						<File Id="871085966" Language="SFX">
-							<ShortName>Steps\Gravel\Step_38Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_38Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="903618395" Language="SFX">
-							<ShortName>Steps\Wood\Step_01Wood.wav</ShortName>
-							<Path>SFX\Steps\Wood\Step_01Wood_10C4C929.wem</Path>
-						</File>
 						<File Id="932264669" Language="SFX">
 							<ShortName>Steps\Standard\Step_25Standard.wav</ShortName>
 							<Path>SFX\Steps\Standard\Step_25Standard_10C4C929.wem</Path>
 						</File>
-						<File Id="945328830" Language="SFX">
-							<ShortName>Steps\Gravel\Step_48Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_48Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="1014601458" Language="SFX">
-							<ShortName>Steps\Gravel\Step_37Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_37Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="1041417094" Language="SFX">
-							<ShortName>Steps\Standard\Step_19Standard.wav</ShortName>
-							<Path>SFX\Steps\Standard\Step_19Standard_10C4C929.wem</Path>
-						</File>
 						<File Id="1068479001" Language="SFX">
 							<ShortName>Steps\Gravel\Step_32Gravel.wav</ShortName>
 							<Path>SFX\Steps\Gravel\Step_32Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="1069978422" Language="SFX">
-							<ShortName>Steps\Gravel\Step_53Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_53Gravel_10C4C929.wem</Path>
-						</File>
-						<File Id="1070030653" Language="SFX">
-							<ShortName>Steps\Gravel\Step_39Gravel.wav</ShortName>
-							<Path>SFX\Steps\Gravel\Step_39Gravel_10C4C929.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 					<DefaultSwitchValue>{F7D7D03C-0417-4D3E-9CEC-0FC5F71A0B58}</DefaultSwitchValue>
 					<SwitchContainers>
 						<SwitchContainer SwitchValue="{F7D7D03C-0417-4D3E-9CEC-0FC5F71A0B58}">
 							<Media>
-								<File Id="53483494"/>
-								<File Id="54698883"/>
 								<File Id="83818322"/>
-								<File Id="118664291"/>
-								<File Id="122971765"/>
-								<File Id="148813729"/>
-								<File Id="238004578"/>
-								<File Id="266760772"/>
-								<File Id="292151356"/>
-								<File Id="394815816"/>
-								<File Id="410464228"/>
 								<File Id="413866373"/>
-								<File Id="459568182"/>
 								<File Id="485678867"/>
-								<File Id="486383263"/>
-								<File Id="607001280"/>
-								<File Id="641829977"/>
-								<File Id="665772693"/>
-								<File Id="721761556"/>
-								<File Id="826019934"/>
-								<File Id="826637502"/>
-								<File Id="843662702"/>
-								<File Id="845194166"/>
-								<File Id="860091779"/>
 								<File Id="869379579"/>
-								<File Id="871085966"/>
-								<File Id="945328830"/>
-								<File Id="1014601458"/>
 								<File Id="1068479001"/>
-								<File Id="1069978422"/>
-								<File Id="1070030653"/>
-							</Media>
-						</SwitchContainer>
-						<SwitchContainer SwitchValue="{453FD6AC-2658-48CA-9152-F3C1A8A9CC4E}">
-							<Media>
-								<File Id="48899789"/>
-								<File Id="51288901"/>
-								<File Id="72839060"/>
-								<File Id="298631203"/>
-								<File Id="427485899"/>
-								<File Id="434537556"/>
-								<File Id="494968059"/>
-								<File Id="554606686"/>
-								<File Id="559398380"/>
-								<File Id="614908418"/>
-								<File Id="657974905"/>
-								<File Id="714419186"/>
-								<File Id="770293676"/>
-								<File Id="786082910"/>
-								<File Id="903618395"/>
 							</Media>
 						</SwitchContainer>
 						<SwitchContainer SwitchValue="{2C9ECBF8-7A64-4321-B615-F710DABFDE10}">
 							<Media>
-								<File Id="129393656"/>
 								<File Id="173851412"/>
 								<File Id="213768533"/>
 								<File Id="234756790"/>
 								<File Id="358036158"/>
-								<File Id="576389374"/>
-								<File Id="629120236"/>
-								<File Id="733912445"/>
-								<File Id="745617401"/>
-								<File Id="796728033"/>
-								<File Id="852855157"/>
 								<File Id="932264669"/>
-								<File Id="1041417094"/>
 							</Media>
 						</SwitchContainer>
 					</SwitchContainers>
@@ -523,32 +282,76 @@
 				</SwitchGroup>
 			</SwitchGroups>
 		</SoundBank>
-		<SoundBank Id="3768541028" Language="SFX" Hash="4210262672">
+		<SoundBank Id="3768541028" Language="SFX" Hash="3860751078">
 			<ObjectPath>\SoundBanks\Default Work Unit\Attacks</ObjectPath>
 			<ShortName>Attacks</ShortName>
 			<Path>Attacks.bnk</Path>
 			<IncludedEvents>
+				<Event Id="4275867775" Name="Play_BeetleAttack" ObjectPath="\Events\Default Work Unit\Play_BeetleAttack">
+					<IncludedMemoryFiles>
+						<File Id="53399867" Language="SFX">
+							<ShortName>ES_Punch 44 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Punch 44 - SFX Producer_10C4C929.wem</Path>
+						</File>
+						<File Id="132361843" Language="SFX">
+							<ShortName>ES_Punch Face 5 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Punch Face 5 - SFX Producer_10C4C929.wem</Path>
+						</File>
+						<File Id="170332924" Language="SFX">
+							<ShortName>ES_Insect Wings Fly 4 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Insect Wings Fly 4 - SFX Producer_C6DECE43.wem</Path>
+						</File>
+						<File Id="364841447" Language="SFX">
+							<ShortName>ES_Alien Chirp Critter 2 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Alien Chirp Critter 2 - SFX Producer_801B1EBA.wem</Path>
+						</File>
+						<File Id="519900430" Language="SFX">
+							<ShortName>ES_Alien Chirp Critter 1 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Alien Chirp Critter 1 - SFX Producer_4F1280FD.wem</Path>
+						</File>
+						<File Id="589813107" Language="SFX">
+							<ShortName>ES_Insect Wings Fly 9 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Insect Wings Fly 9 - SFX Producer_E577AAAE.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="3318027631" Name="Play_BeetleDeath" ObjectPath="\Events\Default Work Unit\Play_BeetleDeath">
+					<IncludedMemoryFiles>
+						<File Id="236324433" Language="SFX">
+							<ShortName>ES_Alien Chirp Critter 1 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Alien Chirp Critter 1 - SFX Producer_CC19F156.wem</Path>
+						</File>
+						<File Id="238216169" Language="SFX">
+							<ShortName>ES_Insect Squish 20 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Insect Squish 20 - SFX Producer_10C4C929.wem</Path>
+						</File>
+						<File Id="532585285" Language="SFX">
+							<ShortName>ES_Monster Snarl Growl 8 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Monster Snarl Growl 8 - SFX Producer_10C4C929.wem</Path>
+						</File>
+						<File Id="673438877" Language="SFX">
+							<ShortName>ES_Insect Squish 23 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Insect Squish 23 - SFX Producer_10C4C929.wem</Path>
+						</File>
+						<File Id="760142074" Language="SFX">
+							<ShortName>ES_Alien Chirp Critter 2 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Alien Chirp Critter 2 - SFX Producer_10C4C929.wem</Path>
+						</File>
+						<File Id="839850156" Language="SFX">
+							<ShortName>ES_Insect Squish 24 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Insect Squish 24 - SFX Producer_10C4C929.wem</Path>
+						</File>
+						<File Id="908863149" Language="SFX">
+							<ShortName>ES_Insect Squish 25 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Insect Squish 25 - SFX Producer_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
 				<Event Id="2211787386" Name="Play_Dash" ObjectPath="\Events\Default Work Unit\Play_Dash">
 					<IncludedMemoryFiles>
 						<File Id="977051301" Language="SFX">
 							<ShortName>Player\Dash\Impact - Cease Fire.wav</ShortName>
 							<Path>SFX\Player\Dash\Impact - Cease Fire_04610725.wem</Path>
-						</File>
-					</IncludedMemoryFiles>
-				</Event>
-				<Event Id="1824944578" Name="Play_EnemyAttack" ObjectPath="\Events\Default Work Unit\Play_EnemyAttack">
-					<IncludedMemoryFiles>
-						<File Id="116007299" Language="SFX">
-							<ShortName>slime-squish.wav</ShortName>
-							<Path>SFX\slime-squish_10C4C929.wem</Path>
-						</File>
-					</IncludedMemoryFiles>
-				</Event>
-				<Event Id="2402038236" Name="Play_EnemyDie" ObjectPath="\Events\Default Work Unit\Play_EnemyDie">
-					<IncludedMemoryFiles>
-						<File Id="719773623" Language="SFX">
-							<ShortName>monster-dying.wav</ShortName>
-							<Path>SFX\monster-dying_10C4C929.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -567,13 +370,17 @@
 				</Event>
 				<Event Id="2988676654" Name="Play_MeleeAttack" ObjectPath="\Events\Default Work Unit\Play_MeleeAttack">
 					<IncludedMemoryFiles>
-						<File Id="916160990" Language="SFX">
-							<ShortName>Player\Melee attack\Punch - Whack A Bot.wav</ShortName>
-							<Path>SFX\Player\Melee attack\Punch - Whack A Bot_10C4C929.wem</Path>
+						<File Id="132361843" Language="SFX">
+							<ShortName>ES_Punch Face 5 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Punch Face 5 - SFX Producer_10C4C929.wem</Path>
+						</File>
+						<File Id="433395220" Language="SFX">
+							<ShortName>ES_Punch Face 3 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Punch Face 3 - SFX Producer_10C4C929.wem</Path>
 						</File>
 						<File Id="944417870" Language="SFX">
 							<ShortName>Player\Melee attack\Punch - Pop.wav</ShortName>
-							<Path>SFX\Player\Melee attack\Punch - Pop_10C4C929.wem</Path>
+							<Path>SFX\Player\Melee attack\Punch - Pop_2CBD9A18.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -637,6 +444,50 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
+				<Event Id="1678827735" Name="Play_WormAttack" ObjectPath="\Events\Default Work Unit\Play_WormAttack">
+					<IncludedMemoryFiles>
+						<File Id="199242398" Language="SFX">
+							<ShortName>Dragon fire.wav</ShortName>
+							<Path>SFX\Dragon fire_2E70438E.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="1996518743" Name="Play_WormDeath" ObjectPath="\Events\Default Work Unit\Play_WormDeath">
+					<IncludedMemoryFiles>
+						<File Id="644673135" Language="SFX">
+							<ShortName>Dragon roar.wav</ShortName>
+							<Path>SFX\Dragon roar_6DDFAEFA.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="3900269399" Name="Play_WormHide" ObjectPath="\Events\Default Work Unit\Play_WormHide">
+					<IncludedMemoryFiles>
+						<File Id="142787767" Language="SFX">
+							<ShortName>Dragon roar.wav</ShortName>
+							<Path>SFX\Dragon roar_C54B14D7.wem</Path>
+						</File>
+						<File Id="668240954" Language="SFX">
+							<ShortName>WormGiantSpawn.wav</ShortName>
+							<Path>SFX\WormGiantSpawn_37332E10.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="4242710327" Name="Play_WormRoar" ObjectPath="\Events\Default Work Unit\Play_WormRoar">
+					<IncludedMemoryFiles>
+						<File Id="34852454" Language="SFX">
+							<ShortName>dragon-low-roar-mammel-growl-94668.wav</ShortName>
+							<Path>SFX\dragon-low-roar-mammel-growl-94668_F5743E19.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="3126715392" Name="Play_WormSpawn" ObjectPath="\Events\Default Work Unit\Play_WormSpawn">
+					<IncludedMemoryFiles>
+						<File Id="678769752" Language="SFX">
+							<ShortName>quake-and-break-99034.wav</ShortName>
+							<Path>SFX\quake-and-break-99034_C6668062.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
 			</IncludedEvents>
 			<StateGroups>
 				<StateGroup Id="2791675679" Name="Defeated" ObjectPath="\States\Default Work Unit\Player_Life\Defeated" GUID="{6D9231D6-6EC9-4CBF-8DA7-97EC649CB00E}">
@@ -644,7 +495,7 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="3909959462" Language="SFX" Hash="3859404213">
+		<SoundBank Id="3909959462" Language="SFX" Hash="117735521">
 			<ObjectPath>\SoundBanks\Default Work Unit\Enviroment</ObjectPath>
 			<ShortName>Enviroment</ShortName>
 			<Path>Enviroment.bnk</Path>
@@ -675,18 +526,18 @@
 				</Event>
 				<Event Id="2270376495" Name="Play_Laser" ObjectPath="\Events\Default Work Unit\Play_Laser">
 					<IncludedMemoryFiles>
-						<File Id="781381782" Language="SFX">
-							<ShortName>Laser\Noise - Swirly Spinner.wav</ShortName>
-							<Path>SFX\Laser\Noise - Swirly Spinner_86AE19BA.wem</Path>
-						</File>
-						<File Id="786404871" Language="SFX">
-							<ShortName>Laser\Sub - Sub Bees.wav</ShortName>
-							<Path>SFX\Laser\Sub - Sub Bees_AA994B59.wem</Path>
+						<File Id="1029896715" Language="SFX">
+							<ShortName>ES_Laser Sword Hum - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Laser Sword Hum - SFX Producer_10C4C929.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
 				<Event Id="4092857357" Name="Play_Laser_Hit" ObjectPath="\Events\Default Work Unit\Play_Laser_Hit">
 					<IncludedMemoryFiles>
+						<File Id="971224351" Language="SFX">
+							<ShortName>ES_MM Design Element 43 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_MM Design Element 43 - SFX Producer_10C4C929.wem</Path>
+						</File>
 						<File Id="1053424550" Language="SFX">
 							<ShortName>Laser\Swish - Call And Response.wav</ShortName>
 							<Path>SFX\Laser\Swish - Call And Response_EB955B5F.wem</Path>
@@ -729,7 +580,6 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="738066393" Name="Stop_Laser" ObjectPath="\Events\Default Work Unit\Stop_Laser"/>
 				<Event Id="707649828" Name="Stop_Pebble" ObjectPath="\Events\Default Work Unit\Stop_Pebble"/>
 				<Event Id="3173136834" Name="Stop_Wind" ObjectPath="\Events\Default Work Unit\Stop_Wind"/>
 			</IncludedEvents>
