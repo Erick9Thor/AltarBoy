@@ -62,7 +62,7 @@ void Hachiko::Scripting::LevelManager::OnUpdate()
 		_gauntlet_ui_go->SetActive(_last_gauntlet && !_last_gauntlet->IsCompleted());
 	}
 
-	if (_victory && Input::IsKeyPressed(Input::KeyCode::KEY_SPACE))
+	if (_victory && (Input::IsKeyPressed(Input::KeyCode::KEY_SPACE) || Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_A)))
 	{
 		SceneManagement::SwitchScene(Scenes::MAIN_MENU);
 	}
