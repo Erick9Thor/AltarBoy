@@ -37,7 +37,6 @@ void main()
 
     // iterate over the sample kernel and calculate occlusion factor
     float occlusion = 0.0;
-    float occluding_points = 0.0;
     for(int i = 0; i < kernel_size; ++i)
     {
         // Get sample position:
