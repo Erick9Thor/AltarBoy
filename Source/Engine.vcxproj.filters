@@ -687,6 +687,7 @@
     <ClCompile Include="src\core\rendering\BlurPixelSize.cpp">
       <Filter>Core\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\rendering\BlurConfig.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -2576,6 +2577,7 @@
     <ClInclude Include="src\utils\ComponentUtility.h" />
     <ClInclude Include="src\components\TimeScaleMode.h" />
     <ClInclude Include="src\events\TimeScaleChangeEventPayload.h" />
+    <ClInclude Include="src\core\rendering\BlurConfig.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">

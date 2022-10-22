@@ -9,6 +9,8 @@
 
 #include <vector>
 
+#include "core/rendering/BlurConfig.h"
+
 namespace Hachiko
 {
     class GameObject;
@@ -18,14 +20,6 @@ namespace Hachiko
     class ComponentVideo;
     class Scene;
     class StandaloneGLTexture;
-
-
-    struct BlurConfig
-    {
-        float intensity = 0.85f;
-        float sigma = 1.45f;
-        BlurPixelSize::Type size = BlurPixelSize::Type::Gaussian5x5;
-    };
 
     struct GpuData
     {
