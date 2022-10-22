@@ -18,7 +18,7 @@ vec3 CalculateNormal(uint normal_flag, sampler2DArray normal_texture, vec2 textu
         vec3 texture_normal_coords = texture(normal_texture, vec3(texture_coords, layer_index)).rgb;
         mat3 tbn = CreateTangentSpace(normal, normalize(fragment_tangent));
         vec3 texture_normal = normalize(texture_normal_coords.xyz);
-	    vec3 fragment_normal = tbn * (texture_normal * 0.5 + 0.5);
+	    vec3 fragment_normal = tbn * (texture_normal * 2.0 - 1.0);
 	    normal = normalize(fragment_normal);
     }
 

@@ -27,7 +27,7 @@ uniform vec3 samples[kernel_size];
 void main()
 {
     vec3 fragment_position = texture(g_position, texture_coords).xyz;
-    vec3 fragment_normal = normalize(texture(g_normal, texture_coords).xyz * 2.0 - 1.0);
+    vec3 fragment_normal = normalize(texture(g_normal, texture_coords).xyz);
     vec3 random_vec = normalize(texture(texture_noise, texture_coords * noise_scale).xyz);
 
     // Create TBN change-of-basis matrix. From tangent-space to view-space:
