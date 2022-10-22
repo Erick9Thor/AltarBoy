@@ -8,8 +8,8 @@
 #include "components/ComponentSpotLight.h"
 #include "components/ComponentMeshRenderer.h"
 #include "resources/ResourceMaterial.h"
-#include "batching/GeometryBatch.h"
-#include "batching/TextureBatch.h"
+#include "Batching/GeometryBatch.h"
+#include "Batching/TextureBatch.h"
 
 //TODO centralize cache on module program
 Hachiko::ModuleProgram::ModuleProgram() = default;
@@ -20,7 +20,6 @@ bool Hachiko::ModuleProgram::Init()
 {
     HE_LOG("INITIALIZING MODULE: PROGRAM");
 
-    CreateGLSLIncludes();
     CreatePrograms();
 
     for (unsigned i = 0; i < static_cast<int>(Program::Programs::COUNT); ++i)
@@ -190,6 +189,8 @@ void* Hachiko::ModuleProgram::CreatePersistentBuffers(unsigned& buffer_id, int b
 
 void Hachiko::ModuleProgram::CreatePrograms()
 {
+    CreateGLSLIncludes();
+
     programs[static_cast<int>(Program::Programs::FORWARD)] = CreateProgram(SHADERS_FOLDER "vertex.glsl", SHADERS_FOLDER "fragment_forward.glsl");
     programs[static_cast<int>(Program::Programs::GAUSSIAN_FILTERING)] = CreateProgram(SHADERS_FOLDER "vertex_gaussian_filter.glsl", SHADERS_FOLDER "fragment_gaussian_filter.glsl");
     programs[static_cast<int>(Program::Programs::DEFERRED_GEOMETRY)] = CreateProgram(SHADERS_FOLDER "vertex.glsl", SHADERS_FOLDER "fragment_deferred_geometry.glsl");
