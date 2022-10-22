@@ -2,6 +2,7 @@
 #include "SSAOManager.h"
 #include "StandaloneGLTexture.h"
 #include "modules/ModuleProgram.h"
+#include "Uniforms.h"
 
 constexpr const char* const CONFIG_GAUSSIAN_INTENSITY = "ssao_gaussian_intensity";
 constexpr const char* const CONFIG_GAUSSIAN_SIGMA = "ssao_gaussian_sigma";
@@ -133,22 +134,28 @@ void Hachiko::SSAOManager::DrawSSAO(
     for (size_t i = 0; i < SSAOConstants::KERNEL_SIZE; ++i)
     {
         ssao_program->BindUniformFloat3(
-            ("samples[" + std::to_string(i) + "]").c_str(), 
+            (Uniforms::SSAO::KERNEL_SAMPLES_PREFIX + 
+            std::to_string(i) + 
+            Uniforms::SSAO::KERNEL_SAMPLES_SUFFIX).c_str(), 
             _kernel[i].ptr());
     }
 
     // Bind projection matrix:
     ssao_program->BindUniformFloat4x4(
-        "camera_view_projection", 
+        Uniforms::SSAO::CAMERA_VIEW_PROJ, 
         camera_view_proj.ptr());
     // Bind frame buffer sizes:
     // TODO: Make these uniforms used through variables.
-    ssao_program->BindUniformFloat("frame_buffer_width", &frame_buffer_width);
-    ssao_program->BindUniformFloat("frame_buffer_height", &frame_buffer_height);
+    ssao_program->BindUniformFloat(
+        Uniforms::SSAO::FBO_WIDTH, 
+        &frame_buffer_width);
+    ssao_program->BindUniformFloat(
+        Uniforms::SSAO::FBO_HEIGHT, 
+        &frame_buffer_height);
     // Bind ssao config related variables:
-    ssao_program->BindUniformFloat("radius", &_radius);
-    ssao_program->BindUniformFloat("bias", &_bias);
-    ssao_program->BindUniformFloat("power", &_power);
+    ssao_program->BindUniformFloat(Uniforms::SSAO::RADIUS, &_radius);
+    ssao_program->BindUniformFloat(Uniforms::SSAO::BIAS, &_bias);
+    ssao_program->BindUniformFloat(Uniforms::SSAO::POWER, &_power);
     // Bind the generated noise texture:
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _noise_texture);
