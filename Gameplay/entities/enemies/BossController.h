@@ -333,6 +333,9 @@ namespace Hachiko
             SERIALIZE_FIELD(float, damage_effect_duration);
             float damage_effect_progress = 0.0f;
 
+            SERIALIZE_FIELD(float, chasing_time_limit);
+            float chasing_start_time = 0.0f;
+            float chasing_timer = 0.0f;
 
             // It needs to start as true so the first normal jump sets it to false
             bool double_jump_toggle = true;

@@ -52,6 +52,7 @@ Hachiko::Scripting::BossController::BossController(GameObject* game_object)
     , _laser_wall_duration(2.0f)
     , _laser_jump_height(50.0f)
     , damage_effect_duration(1.0f)
+    , chasing_time_limit(3.0f)
 {
     CreateBossWeapons();
 }
@@ -557,6 +558,7 @@ void Hachiko::Scripting::BossController::FinishCocoon()
 void Hachiko::Scripting::BossController::Chase()
 {
     ChangeStateText("Chasing player.");
+    chasing_timer = 0.0f;
     combat_state = CombatState::CHASING;
 }
 
@@ -564,6 +566,13 @@ void Hachiko::Scripting::BossController::ChaseController()
 {
     const float3& player_position = player->GetTransform()->GetGlobalPosition();
     const BossAttack& boss_attack = GetCurrentAttack();
+
+    chasing_timer += Time::DeltaTimeScaled();
+    if (chasing_timer >= chasing_time_limit)
+    {
+        combat_state = CombatState::JUMPING;
+        return;
+    }
 
     transform->LookAtTarget(player_position);
 

@@ -269,49 +269,38 @@ void Hachiko::TextureBatch::BindBatch(int segment, const Program* program, unsig
 
 void Hachiko::TextureBatch::ImGuiWindow()
 {
-    ImGui::Text("TEXTURE_BATCH");
+    ImGui::TextWrapped("- Amount of texture arrays: %i", texture_arrays.size());
 
-    for (unsigned i = 0; i < texture_arrays.size(); ++i)
+    if (ImGui::TreeNodeEx(&texture_arrays, ImGuiTreeNodeFlags_None, "Texture arrays"))
     {
-        ImGui::BulletText("TextureArray ");
-        ImGui::SameLine();
-        ImGui::Text(std::to_string(i).c_str());
-
-        ImGui::Text("Depth (number of textures): ");
-        ImGui::SameLine();
-        ImGui::Text(std::to_string(texture_arrays[i]->depth).c_str());
-
-        ImGui::Text("Width: ");
-        ImGui::SameLine();
-        ImGui::Text(std::to_string(texture_arrays[i]->width).c_str());
-
-        ImGui::Text("Height: ");
-        ImGui::SameLine();
-        ImGui::Text(std::to_string(texture_arrays[i]->height).c_str());
-
-        ImGui::Text("Format: ");
-        ImGui::SameLine();
-        ImGui::Text(std::to_string(texture_arrays[i]->format).c_str());
-        
-        ImGui::Text("Wrap Mode: ");
-        ImGui::SameLine();
-        ImGui::Text(std::to_string(texture_arrays[i]->wrap_mode).c_str());
-
-        ImGui::Text("Min Filter: ");
-        ImGui::SameLine();
-        ImGui::Text(std::to_string(texture_arrays[i]->min_filter).c_str());
-
-        ImGui::Text("Mag Filter: ");
-        ImGui::SameLine();
-        ImGui::Text(std::to_string(texture_arrays[i]->mag_filter).c_str());
-
-        for (auto& resource : resources)
+        for (unsigned i = 0; i < texture_arrays.size(); ++i)
         {
-            if (EqualLayout(*texture_arrays[i], *resource.first))
+            ImGui::TextWrapped("TextureArray %i", i);
+            ImGui::TextWrapped("- Amount of texture resources: %i", resources.size());
+
+            ImGui::TextWrapped("- Depth (number of textures): %i", texture_arrays[i]->depth);
+            ImGui::TextWrapped("- Width: %i", texture_arrays[i]->width);
+            ImGui::TextWrapped("- Height: %i", texture_arrays[i]->height);
+            ImGui::TextWrapped("- Format: %i", texture_arrays[i]->format);
+            ImGui::TextWrapped("- Wrap Mode: %i", texture_arrays[i]->wrap_mode);
+            ImGui::TextWrapped("- Min Filter: %i", texture_arrays[i]->min_filter);
+            ImGui::TextWrapped("- Mag Filter: %i", texture_arrays[i]->mag_filter);
+
+            if (ImGui::TreeNodeEx(&resources, ImGuiTreeNodeFlags_None, "Textures"))
             {
-                ImGui::Text(resource.first->path.c_str());
+                for (auto& resource : resources)
+                {
+                    if (EqualLayout(*texture_arrays[i], *resource.first))
+                    {
+                        ImGui::Text("%llu ", resource.first->GetID());
+                        ImGui::SameLine();
+                        ImGui::Text(resource.first->path.c_str());
+                    }
+                }
+                ImGui::TreePop();
             }
         }
+        ImGui::TreePop();
     }
 }
 
