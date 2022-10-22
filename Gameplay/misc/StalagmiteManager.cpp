@@ -187,7 +187,7 @@ void Hachiko::Scripting::StalagmiteManager::UpdateStalagmiteState(Stalagmite* st
 
 void Hachiko::Scripting::StalagmiteManager::FallingStalagmite(Stalagmite* stalagmite, float fall_progress)
 {
-	stalagmite->Falling(fall_progress);
+	stalagmite->Falling(fall_progress, _player);
 }
 
 void Hachiko::Scripting::StalagmiteManager::TriggerStalagmites()

@@ -550,6 +550,9 @@ bool Hachiko::ModuleRender::DrawToShadowMap(
     // Bind shadow map fbo for drawing and adjust viewport size etc.:
     shadow_manager.BindBufferForDrawing();
 
+    //Disable to cull for both faces
+    glDisable(GL_CULL_FACE);
+
     if ((draw_config & DRAW_CONFIG_OPAQUE) != 0)
     {
         // Collect and draw opaque meshes to shadow map:
@@ -587,6 +590,9 @@ bool Hachiko::ModuleRender::DrawToShadowMap(
 
         batch_manager->DrawTransparentBatches(program);
     }
+
+    //Enable back to face culling
+    glEnable(GL_CULL_FACE);
 
     // Unbind shadow map fbo:
     ShadowManager::UnbindBuffer();

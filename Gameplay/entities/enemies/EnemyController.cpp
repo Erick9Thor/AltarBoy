@@ -1101,7 +1101,7 @@ void Hachiko::Scripting::EnemyController::StartParasiteState()
 void Hachiko::Scripting::EnemyController::UpdateParasiteState()
 {
 	float transition = math::Sqrt(_parasite_dissolve_time - _parasite_dissolving_time_progress) * _parasite_dissolving;
-	_parasite->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, transition), true);
+	_parasite->ChangeDissolveProgress(transition, true);
 	_parasite_dissolving_time_progress += Time::DeltaTimeScaled();
 }
 
