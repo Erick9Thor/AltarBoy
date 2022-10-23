@@ -133,6 +133,7 @@ void Hachiko::Scripting::GauntletManager::CheckRoundStatus()
 	if (current_round >= _enemy_packs.size()) {
 		completed = true;
 		OpenDoors();
+		if (_closing_door) _closing_door->SetActive(false);
 		_audio_manager->UnregisterGaunlet();
 		_main_camera->ChangeRelativePosition(Scenes::GetPlayer()->GetComponent<PlayerController>()->GetCamBasicPos(), false, .2f, 0.0f);
 		_main_camera->SetObjective(Scenes::GetPlayer());
@@ -153,7 +154,6 @@ void Hachiko::Scripting::GauntletManager::CheckRoundStatus()
 		if (IsFinished())
 		{
 			remaining_between_round_time = _complete_wait_time;
-			if (_closing_door) _closing_door->SetActive(false);
 			return;
 		}
 		else
