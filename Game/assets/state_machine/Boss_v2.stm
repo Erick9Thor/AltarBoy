@@ -8,22 +8,22 @@ clips:
     clips_id: 15624865312698842939
     clips_loop: true
   - clip_name: PreJump
-    clips_id: 10910725092635872186
+    clips_id: 6103712202122124022
     clips_loop: false
   - clip_name: JumpLoop
     clips_id: 8472508599445821371
     clips_loop: true
   - clip_name: Landing
-    clips_id: 11198383016935898605
+    clips_id: 6458655694255360625
     clips_loop: false
   - clip_name: PreJumpCrystal
-    clips_id: 14368345415586632476
+    clips_id: 6103712202122124022
     clips_loop: false
   - clip_name: JumpLoopCrystal
     clips_id: 5087455231924682520
     clips_loop: true
   - clip_name: LandingCrystal
-    clips_id: 16795596219375804194
+    clips_id: 16680156801604147497
     clips_loop: false
   - clip_name: Summon_Crystal
     clips_id: 15715921008022030383

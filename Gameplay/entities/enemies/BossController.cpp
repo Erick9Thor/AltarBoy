@@ -104,6 +104,8 @@ void Hachiko::Scripting::BossController::OnAwake()
 void Hachiko::Scripting::BossController::OnStart()
 {
 	animation->StartAnimating();
+	animation->SendTrigger("isCacoonLoop");
+
 	OverrideCameraOffset();
 }
 
@@ -214,10 +216,9 @@ void Hachiko::Scripting::BossController::StateTransitionController()
 	switch (state)
 	{
 	case BossState::WAITING_ENCOUNTER:
-		// We already start in this state, no transition for now
-		// We can reset the scene on death here which will be easier
 		break;
 	case BossState::STARTING_ENCOUNTER:
+		animation->SendTrigger("isCacoonComingOut");
 		StartEncounter();
 		break;
 	case BossState::COMBAT_FORM:
@@ -382,6 +383,7 @@ void Hachiko::Scripting::BossController::CocoonController()
 
 		if (time_elapse >= 2) // HARDCODED TIME FOR CAMERA FOCUS
 		{
+			animation->SendTrigger("isCacoonLoop");
 			FocusCameraOnBoss(false);
 		}
 	}
@@ -408,6 +410,7 @@ void Hachiko::Scripting::BossController::BreakCocoon()
 	if (cocoon_placeholder_go)
 	{
 		cocoon_placeholder_go->SetActive(false);
+		animation->SendTrigger("isCacoonComingOut");
 	}
 }
 
@@ -504,6 +507,8 @@ void Hachiko::Scripting::BossController::MeleeAttackController()
 
 	if (!attacked)
 	{
+		animation->SendTrigger("isMelee");
+
 		CombatManager::AttackStats attack_stats;
 		attack_stats.damage = 2.0f;
 		attack_stats.knockback_distance = 0.0f;
@@ -656,14 +661,14 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
 	{
 	case JumpingState::WAITING_TO_JUMP:
 	{
+		const float3& player_position = player->GetTransform()->GetGlobalPosition();
+		transform->LookAtTarget(player_position);
+
 		if (_jumping_timer < _jump_start_delay)
 		{
 			// Boss is waiting for jump here:
 			break;
 		}
-
-		const float3& player_position = player->GetTransform()->GetGlobalPosition();
-		transform->LookAtTarget(player_position);
 
 		// Boss starts ascending here:
 		_jumping_state = JumpingState::ASCENDING;
@@ -706,7 +711,10 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
 			animation->SendTrigger("isJumpLoop");
 		}
 
-		break;
+		if (_jump_start_delay > 0.0f)
+		{
+			break;
+		}
 	}
 
 	case JumpingState::ASCENDING:
@@ -724,7 +732,11 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
 
 		ChangeStateText((jump_type + "Waiting for the delay before highest point.").c_str());
 
-		break;
+
+		if (_jump_ascending_duration > 0.0f)
+		{
+			break;
+		}
 	}
 
 	case JumpingState::POST_ASCENDING_DELAY:
@@ -753,7 +765,11 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
 			_laser_wall_current_time = 0.0f;
 		}
 
-		break;
+
+		if (_jump_post_ascending_delay > 0.0f)
+		{
+			break;
+		}
 	}
 
 	case JumpingState::ON_HIGHEST_POINT:
@@ -778,7 +794,10 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
 
 		ChangeStateText((jump_type + "Waiting before descending.").c_str());
 
-		break;
+		if (_jump_on_highest_point_duration > 0.0f)
+		{
+			break;
+		}
 	}
 
 	case JumpingState::POST_ON_HIGHEST_POINT:
@@ -795,7 +814,10 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
 
 		ChangeStateText((jump_type + "Descending.").c_str());
 
-		break;
+		if (_jump_post_on_highest_point_delay > 0.0f)
+		{
+			break;
+		}
 	}
 
 	case JumpingState::DESCENDING:
@@ -816,7 +838,11 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
 		// Boss is now hittable:			
 		hitable = true;
 
-		break;
+		if (_jump_descending_duration > 0.0f)
+		{
+			// Boss is only descending here, the update continues:
+			break;
+		}
 	}
 
 	case JumpingState::POST_DESCENDING_DELAY:
@@ -844,11 +870,16 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
 
 		ChangeStateText((jump_type + "Landed & waiting").c_str());
 
-		break;
+		if (_jump_post_descending_delay > 0.0f)
+		{
+			break;
+		}
 	}
 
 	case JumpingState::GETTING_UP:
 	{
+		player_camera->Shake(0.4f, 0.3f);
+
 		if (_jumping_timer < _jump_getting_up_duration)
 		{
 			// Boss is getting up here:
@@ -878,7 +909,10 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
 
 		// TODO: Trigger Getting ready for skill animation here.
 
-		break;
+		if (_jump_getting_up_duration > 0.0f)
+		{
+			break;
+		}
 	}
 
 
@@ -910,7 +944,10 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
 
 		ChangeStateText((jump_type + "Casting Skill.").c_str());
 
-		break;
+		if (_jump_skill_delay > 0.0f)
+		{
+			break;
+		}
 	}
 
 	case JumpingState::CASTING_SKILL:
@@ -938,7 +975,10 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
 
 		ChangeStateText((jump_type + "Casted Skill.").c_str());
 
-		break;
+		if (_jump_skill_duration > 0.0f)
+		{
+			break;
+		}
 	}
 
 	case JumpingState::POST_CAST_SKILL:
@@ -967,7 +1007,11 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
 			combat_state = CombatState::SPAWNING_CRYSTALS;
 		}
 
-		break;
+
+		if (_jump_post_skill_delay > 0.0f)
+		{
+			break;
+		}
 	}
 
 	case JumpingState::NOT_TRIGGERED:
