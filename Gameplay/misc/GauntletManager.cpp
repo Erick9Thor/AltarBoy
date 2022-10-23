@@ -86,6 +86,7 @@ void Hachiko::Scripting::GauntletManager::OnUpdate()
 void Hachiko::Scripting::GauntletManager::ResetGauntlet(bool complete_reset)
 {
 	CloseDoors();
+	if (_closing_door) _closing_door->SetActive(false);
 	for (GameObject* enemy_pack : _enemy_packs)
 	{
 		_combat_manager->DeactivateEnemyPack(enemy_pack);
@@ -118,6 +119,8 @@ void Hachiko::Scripting::GauntletManager::StartGauntlet()
 		_main_camera->ChangeRelativePosition(_relative_position, false, .2f, 0.0f);
 		_main_camera->SetObjective(_camera_anchor);
 	}
+
+	if (_closing_door) _closing_door->SetActive(true);
 }
 
 bool Hachiko::Scripting::GauntletManager::IsFinished() const
@@ -150,6 +153,7 @@ void Hachiko::Scripting::GauntletManager::CheckRoundStatus()
 		if (IsFinished())
 		{
 			remaining_between_round_time = _complete_wait_time;
+			if (_closing_door) _closing_door->SetActive(false);
 			return;
 		}
 		else

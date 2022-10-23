@@ -39,6 +39,7 @@ namespace Hachiko
 
 			SERIALIZE_FIELD(GameObject*, _door_controller_1);
 			SERIALIZE_FIELD(GameObject*, _door_controller_2);
+			SERIALIZE_FIELD(GameObject*, _closing_door);
 
 			SERIALIZE_FIELD(GameObject*, _pack_1);
 			SERIALIZE_FIELD(GameObject*, _pack_2);
