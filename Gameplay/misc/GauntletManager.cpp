@@ -2,6 +2,7 @@
 
 #include "GauntletManager.h"
 
+#include "constants/Sounds.h"
 #include "misc/LevelManager.h"
 #include "misc/AudioManager.h"
 #include "entities/player/PlayerCamera.h"
@@ -111,6 +112,7 @@ void Hachiko::Scripting::GauntletManager::StartGauntlet()
 
 	// Notify audio manager
 	_audio_manager->RegisterGaunlet();
+	_audio_manager->GetAudioSource()->PostEvent(Sounds::GAUNTLET_START);
 
 	// Set the camera to its position if there is an anchor set
 	if (_camera_anchor && _central_anchor)
@@ -166,6 +168,7 @@ void Hachiko::Scripting::GauntletManager::CheckRoundStatus()
 		++current_round;
 		if (IsFinished())
 		{
+			_audio_manager->GetAudioSource()->PostEvent(Sounds::GAUNTLET_COMPLETE);
 			return;
 		}
 		SpawnRound(current_round);
@@ -190,6 +193,7 @@ void Hachiko::Scripting::GauntletManager::CloseDoors()
 
 void Hachiko::Scripting::GauntletManager::SpawnRound(unsigned round)
 {
+	_audio_manager->GetAudioSource()->PostEvent(Sounds::GAUNTLET_NEXT_ROUND);
 	if (round >= _enemy_packs.size()) return;
 	_combat_manager->ActivateEnemyPack(_enemy_packs[round]);
 	_combat_manager->ResetEnemyPack(_enemy_packs[round], true);
