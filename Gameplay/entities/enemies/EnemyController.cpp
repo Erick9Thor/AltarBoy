@@ -125,6 +125,11 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 			std::bind(&EnemyController::WormUpdateHitState, this),
 			std::bind(&EnemyController::WormEndHitState, this),
 			std::bind(&EnemyController::WormTransitionsHitState, this));
+		states_behaviour[static_cast<int>(EnemyState::HIDEN)] = StateBehaviour(
+			std::bind(&EnemyController::WormStartHidenState, this),
+			std::bind(&EnemyController::WormUpdateHidenState, this),
+			std::bind(&EnemyController::WormEndHidenState, this),
+			std::bind(&EnemyController::WormTransitionsHidenState, this));
 	}
 	states_behaviour[static_cast<int>(EnemyState::DEAD)] = StateBehaviour(
 		std::bind(&EnemyController::StartDeadState, this),
@@ -1207,7 +1212,11 @@ Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::WormTransiti
 {
 	if (!_combat_stats->IsAlive())
 	{
-		return EnemyState::DEAD;
+		if (_will_die)
+		{
+			return EnemyState::DEAD;
+		}
+		return EnemyState::HIDEN;
 	}
 
 	if (_attack_cooldown <= 0.0f && !_attack_landing && _current_pos.Distance(_player_pos) <= _attack_range && _player_controller->IsAlive())
@@ -1288,7 +1297,11 @@ Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::WormTransiti
 {
 	if (!_combat_stats->IsAlive())
 	{
-		return EnemyState::DEAD;
+		if (_will_die)
+		{
+			return EnemyState::DEAD;
+		}
+		return EnemyState::HIDEN;
 	}
 
 	if (_is_stunned)
@@ -1299,6 +1312,30 @@ Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::WormTransiti
 	if (animation->IsAnimationStopped())
 	{
 		return EnemyState::IDLE;
+	}
+
+	return EnemyState::INVALID;
+}
+
+void Hachiko::Scripting::EnemyController::WormStartHidenState()
+{
+	animation->SendTrigger("isHide");
+}
+
+void Hachiko::Scripting::EnemyController::WormUpdateHidenState()
+{
+}
+
+void Hachiko::Scripting::EnemyController::WormEndHidenState()
+{
+	_enemy_body->SetActive(false);
+}
+
+Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::WormTransitionsHidenState()
+{
+	if (animation->IsAnimationStopped())
+	{
+		return EnemyState::SUPER_DEAD;
 	}
 
 	return EnemyState::INVALID;

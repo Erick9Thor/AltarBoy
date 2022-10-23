@@ -181,6 +181,11 @@ namespace Hachiko
             void WormUpdateHitState();
             void WormEndHitState();
             EnemyState WormTransitionsHitState();
+            // HIDEN
+            void WormStartHidenState();
+            void WormUpdateHidenState();
+            void WormEndHidenState();
+            EnemyState WormTransitionsHidenState();
 
             bool forced_state = false;
             EnemyState _force_state = EnemyState::INVALID;
