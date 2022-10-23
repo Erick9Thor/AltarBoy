@@ -58,11 +58,7 @@ child:
         enabled: true
         class_name: CutsceneManager
         "'_cutscene@GameObject*'": 11284506405159390339
-        "'_audio_manager@GameObject*'": 3624912213330690370
         "'_next_level@unsigned'": 1
-      - id: 13316652282136130734
-        type: 20
-        enabled: true
     child:
       - id: 11284506405159390339
         name: Cutscene Video
