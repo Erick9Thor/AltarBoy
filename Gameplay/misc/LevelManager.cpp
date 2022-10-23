@@ -7,6 +7,7 @@
 #include "Gameplay.h"
 #include "constants/Scenes.h"
 #include "AudioManager.h"
+#include "entities/player/PlayerSoundManager.h"
 
 Hachiko::Scripting::LevelManager::LevelManager(GameObject* game_object)
 	: Script(game_object, "LevelManager")
@@ -29,7 +30,18 @@ void Hachiko::Scripting::LevelManager::OnAwake()
 		_audio_manager->SetLevel(_level);
 	}
 
+	if (_player_sound_manager_go != nullptr)
+	{
+		_player_sound_manager = _player_sound_manager_go->GetComponent<PlayerSoundManager>();
+		_player_sound_manager->SetLevel(_level);
+	}
+
 	_gauntlet_ui_go->SetActive(false);
+
+	if (_victory_screen != nullptr)
+	{
+		_victory_screen->SetActive(false);
+	}
 
 	_time = 0;
 }
@@ -48,6 +60,11 @@ void Hachiko::Scripting::LevelManager::OnUpdate()
 	if (_last_gauntlet) 
 	{
 		_gauntlet_ui_go->SetActive(_last_gauntlet && !_last_gauntlet->IsCompleted());
+	}
+
+	if (_victory && (Input::IsKeyPressed(Input::KeyCode::KEY_SPACE) || Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_A)))
+	{
+		SceneManagement::SwitchScene(Scenes::MAIN_MENU);
 	}
 }
 
@@ -80,6 +97,10 @@ float3 Hachiko::Scripting::LevelManager::Respawn()
 	//Disable gauntlet ui
 }
 
+void Hachiko::Scripting::LevelManager::ReloadBossScene() const {
+	SceneManagement::SwitchScene(Scenes::BOSS_LEVEL);
+}
+
 void Hachiko::Scripting::LevelManager::GoalReached() 
 {
 	if (_level == 1)
@@ -94,4 +115,13 @@ void Hachiko::Scripting::LevelManager::GoalReached()
 	{
 		SceneManagement::SwitchScene(Scenes::MAIN_MENU);
 	}
+}
+
+void Hachiko::Scripting::LevelManager::BossKilled()
+{
+	if (_victory_screen != nullptr)
+	{
+		_victory_screen->SetActive(true);
+	}
+	_victory = true;
 }

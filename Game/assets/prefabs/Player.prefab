@@ -5,8 +5,8 @@ component:
   - !<transform>
     type: 1
     enabled: true
-    position: [-84.74, 1.21, 10.57]
-    rotation: [-0, 45, -0]
+    position: [-84.74, 3.47, -56.32]
+    rotation: [180, -55.25, 180]
     scale: [0.44, 0.45, 0.44]
   - !<animation>
     type: 14
@@ -31,8 +31,8 @@ component:
     "'_claw_weapon@GameObject*'": 20
     "'_hammer_weapon@GameObject*'": 35
     "'_attack_indicator@GameObject*'": 214
-    "'_aim_indicator@GameObject*'": 243
-    "'_bullet_emitter@GameObject*'": 0
+    "'_aim_indicator@GameObject*'": 220
+    "'_combat_manager@GameObject*'": 0
     "'_goal@GameObject*'": 0
     "'_player_geometry@GameObject*'": 8
     "'_dash_duration@float'": 0.15
@@ -42,36 +42,45 @@ component:
     "'_dash_scaler@unsigned'": 3
     "'_max_dash_charges@unsigned'": 2
     "'_dash_trail@GameObject*'": 215
+    "'_dash_trail_vfx@GameObject*'": 225
     "'_trail_enlarger@float'": 8
     "'_falling_dust@GameObject*'": 218
     "'_walking_dust@GameObject*'": 217
-    "'_heal_effect@GameObject*'": 219
-    "'_damage_effect@GameObject*'": 242
+    "'_heal_effect@GameObject*'": 221
+    "'_damage_effect@GameObject*'": 219
     "'_parasite_pickup_effect@GameObject*'": 193
-    "'_melee_trail_right@GameObject*'": 246
-    "'_melee_trail_left@GameObject*'": 247
-    "'_claws_trail_right@GameObject*'": 249
-    "'_claws_trail_left@GameObject*'": 250
-    "'_sword_trail_right@GameObject*'": 252
-    "'_sword_trail_left@GameObject*'": 253
-    "'_hammer_trail_right@GameObject*'": 255
-    "'_hammer_trail_left@GameObject*'": 256
+    "'_melee_trail_right@GameObject*'": 251
+    "'_melee_trail_left@GameObject*'": 252
+    "'_melee_trail_center@GameObject*'": 253
+    "'_claws_trail_right@GameObject*'": 255
+    "'_claws_trail_left@GameObject*'": 256
+    "'_claws_trail_center@GameObject*'": 0
+    "'_sword_trail_right@GameObject*'": 258
+    "'_sword_trail_left@GameObject*'": 259
+    "'_sword_trail_center@GameObject*'": 0
+    "'_hammer_trail_right@GameObject*'": 261
+    "'_hammer_trail_left@GameObject*'": 262
+    "'_hammer_trail_center@GameObject*'": 0
     "'_rotation_duration@float'": 0.08
-    "'_death_screen@GameObject*'": 0
-    "'_hp_cell_1@GameObject*'": 233
-    "'_hp_cell_2@GameObject*'": 234
-    "'_hp_cell_3@GameObject*'": 235
-    "'_hp_cell_4@GameObject*'": 236
-    "'_ammo_cell_1@GameObject*'": 228
-    "'_ammo_cell_2@GameObject*'": 229
-    "'_ammo_cell_3@GameObject*'": 230
-    "'_ammo_cell_4@GameObject*'": 231
-    "'_sword_ui_addon@GameObject*'": 225
-    "'_maze_ui_addon@GameObject*'": 240
-    "'_claw_ui_addon@GameObject*'": 241
-    "'_weapon_charge_bar_go@GameObject*'": 237
+    "'_death_screen@GameObject*'": 248
+    "'_hp_cell_1@GameObject*'": 236
+    "'_hp_cell_2@GameObject*'": 237
+    "'_hp_cell_3@GameObject*'": 238
+    "'_hp_cell_4@GameObject*'": 239
+    "'_ammo_cell_1@GameObject*'": 231
+    "'_ammo_cell_2@GameObject*'": 232
+    "'_ammo_cell_3@GameObject*'": 233
+    "'_ammo_cell_4@GameObject*'": 234
+    "'_sword_ui_addon@GameObject*'": 228
+    "'_maze_ui_addon@GameObject*'": 243
+    "'_claw_ui_addon@GameObject*'": 244
+    "'_weapon_charge_bar_go@GameObject*'": 240
+    "'_keyboard_tooltip_display@GameObject*'": 245
+    "'_controller_tooltip_display@GameObject*'": 246
     "'_camera@GameObject*'": 0
-    "'_ui_damage@GameObject*'": 0
+    "'_ui_damage@GameObject*'": 247
+    "'_heal_effect_fade_duration@float'": 0.3
+    "'damage_effect_duration@float'": 1
   - !<script>
     type: 15
     enabled: true
@@ -169,7 +178,7 @@ child:
                                     type: 1
                                     enabled: true
                                     position: [0, 1.081, -1.753]
-                                    rotation: [180, 0, -0]
+                                    rotation: [-180, 0, -0]
                                     scale: [2.54, 2.54, 2.54]
                                 child:
                                   - name: mainCharacterEye_mesh_$AssimpFbx$_RotationPivot
@@ -556,8 +565,8 @@ child:
                                   - !<transform>
                                     type: 1
                                     enabled: true
-                                    position: [0, 0.1976, -0.1247]
-                                    rotation: [-0, 0, -0]
+                                    position: [0.006, -0.0798, -0.0559]
+                                    rotation: [-0, 52.78, -0]
                                     scale: [1, 1, 1]
                                 child:
                                   - name: CenterHip
@@ -567,7 +576,7 @@ child:
                                         type: 1
                                         enabled: true
                                         position: [0.0034, 0.0784, -0.0059]
-                                        rotation: [-0, 0, -0]
+                                        rotation: [-0, -22.41, -3.171]
                                         scale: [1, 1, 1]
                                     child:
                                       - name: LeftLeg_$AssimpFbx$_Translation
@@ -597,7 +606,7 @@ child:
                                                     type: 1
                                                     enabled: true
                                                     position: [0, 0, 0]
-                                                    rotation: [4.599, 10.51, 46.08]
+                                                    rotation: [25.86, 31.04, 79.88]
                                                     scale: [1, 1, 1]
                                                 child:
                                                   - name: LeftLeg
@@ -617,7 +626,7 @@ child:
                                                             type: 1
                                                             enabled: true
                                                             position: [0.4062, 0, -0.1398]
-                                                            rotation: [-13.15, -4.455, -28.97]
+                                                            rotation: [-30.59, 10.64, -66.7]
                                                             scale: [1, 1, 1]
                                                         child:
                                                           - name: LeftToe
@@ -627,7 +636,7 @@ child:
                                                                 type: 1
                                                                 enabled: true
                                                                 position: [0.547, -0.2996, -0.0779]
-                                                                rotation: [-3.437, 1.054, 0.8153]
+                                                                rotation: [-0, 0, -0]
                                                                 scale: [1, 1, 1]
                                                             child:
                                                               - name: LeftToe_MId
@@ -636,8 +645,8 @@ child:
                                                                   - !<transform>
                                                                     type: 1
                                                                     enabled: true
-                                                                    position: [0.0806, 0.1591, 0.014]
-                                                                    rotation: [5.26, 0.4901, -18.82]
+                                                                    position: [0.0644, 0.1486, 0.0774]
+                                                                    rotation: [18.77, -8.752, -13.78]
                                                                     scale: [1, 1, 1]
                                                                 child:
                                                                   - name: LeftToe_End
@@ -676,7 +685,7 @@ child:
                                                     type: 1
                                                     enabled: true
                                                     position: [0, 0, 0]
-                                                    rotation: [-16.16, 18.13, 12.04]
+                                                    rotation: [-33.38, 36.26, 9.374]
                                                     scale: [1, 1, 1]
                                                 child:
                                                   - name: RightLeg
@@ -696,7 +705,7 @@ child:
                                                             type: 1
                                                             enabled: true
                                                             position: [-0.4062, 0, 0.1398]
-                                                            rotation: [-12.99, -4.477, -28.65]
+                                                            rotation: [-26.61, 3.828, -56.18]
                                                             scale: [1, 1, 1]
                                                         child:
                                                           - name: RightToe
@@ -715,8 +724,8 @@ child:
                                                                   - !<transform>
                                                                     type: 1
                                                                     enabled: true
-                                                                    position: [0.0268, -0.1542, -0.0865]
-                                                                    rotation: [29.75, -3.006, 16.6]
+                                                                    position: [0.0786, -0.1591, -0.0224]
+                                                                    rotation: [17.99, -19.5, 35.75]
                                                                     scale: [1, 1, 1]
                                                                 child:
                                                                   - name: RightToe_End
@@ -765,7 +774,7 @@ child:
                                                     type: 1
                                                     enabled: true
                                                     position: [0.2502, 0, 0]
-                                                    rotation: [-3.386, -1.961, 2.576]
+                                                    rotation: [41.1, 20.25, -6.122]
                                                     scale: [1, 1, 1]
                                                 child:
                                                   - name: CenterNeck
@@ -774,7 +783,7 @@ child:
                                                       - !<transform>
                                                         type: 1
                                                         enabled: true
-                                                        position: [0.247, 0.2053, 0.0086]
+                                                        position: [0.2618, 0.1718, -0.0887]
                                                         rotation: [-0, 0, -0]
                                                         scale: [1, 1, 1]
                                                     child:
@@ -874,7 +883,7 @@ child:
                                                                 type: 1
                                                                 enabled: true
                                                                 position: [0, 0, 0]
-                                                                rotation: [10.86, -31.94, -8.724]
+                                                                rotation: [10.4, -28.95, -8.562]
                                                                 scale: [1, 1, 1]
                                                             child:
                                                               - name: LeftShoulder
@@ -893,7 +902,7 @@ child:
                                                                       - !<transform>
                                                                         type: 1
                                                                         enabled: true
-                                                                        position: [0.2661, 0.0097, 0.1466]
+                                                                        position: [0.2018, -0.0232, 0.0598]
                                                                         rotation: [-0, 0, -0]
                                                                         scale: [1, 1, 1]
                                                                     child:
@@ -914,7 +923,7 @@ child:
                                                                                 type: 1
                                                                                 enabled: true
                                                                                 position: [0, 0, 0]
-                                                                                rotation: [1.309, -11.37, -31.49]
+                                                                                rotation: [17.69, 33.1, 15.23]
                                                                                 scale: [1, 1, 1]
                                                                             child:
                                                                               - name: LeftArm
@@ -933,7 +942,7 @@ child:
                                                                                       - !<transform>
                                                                                         type: 1
                                                                                         enabled: true
-                                                                                        position: [0.373, 0.0162, 0.0133]
+                                                                                        position: [0.3733, 0.0162, 0.0137]
                                                                                         rotation: [-0, 0, -0]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
@@ -954,7 +963,7 @@ child:
                                                                                                 type: 1
                                                                                                 enabled: true
                                                                                                 position: [0, 0, 0]
-                                                                                                rotation: [0, -37.45, 0]
+                                                                                                rotation: [-0.0856, -26.3, -6.046]
                                                                                                 scale: [1, 1, 1]
                                                                                             child:
                                                                                               - name: LeftElbow
@@ -1231,7 +1240,7 @@ child:
                                                                 type: 1
                                                                 enabled: true
                                                                 position: [0, 0, 0]
-                                                                rotation: [0.3083, 2.253, -0.173]
+                                                                rotation: [5.386, -30.26, -4.658]
                                                                 scale: [1, 1, 1]
                                                             child:
                                                               - name: CenterShoulder
@@ -1250,7 +1259,7 @@ child:
                                                                       - !<transform>
                                                                         type: 1
                                                                         enabled: true
-                                                                        position: [-0.182, -0.0057, -0.0524]
+                                                                        position: [-0.3507, -0.0153, -0.1574]
                                                                         rotation: [-0, 0, -0]
                                                                         scale: [1, 1, 1]
                                                                     child:
@@ -1271,7 +1280,7 @@ child:
                                                                                 type: 1
                                                                                 enabled: true
                                                                                 position: [0, 0, 0]
-                                                                                rotation: [4.497, 11.46, -19.25]
+                                                                                rotation: [-85.95, -12.35, -68.21]
                                                                                 scale: [1, 1, 1]
                                                                             child:
                                                                               - name: RightElbow
@@ -1290,7 +1299,7 @@ child:
                                                                                       - !<transform>
                                                                                         type: 1
                                                                                         enabled: true
-                                                                                        position: [-0.2993, 0.0065, -0.009]
+                                                                                        position: [-0.2962, 0.0056, -0.0088]
                                                                                         rotation: [-0, 0, -0]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
@@ -1311,7 +1320,7 @@ child:
                                                                                                 type: 1
                                                                                                 enabled: true
                                                                                                 position: [0, 0, 0]
-                                                                                                rotation: [-0, 3.931, -0]
+                                                                                                rotation: [0.9125, 5.965, -30.3]
                                                                                                 scale: [1, 1, 1]
                                                                                             child:
                                                                                               - name: RightHand
@@ -1371,7 +1380,7 @@ child:
                                                                                                                         type: 1
                                                                                                                         enabled: true
                                                                                                                         position: [0, 0, 0]
-                                                                                                                        rotation: [-180, 0, -0]
+                                                                                                                        rotation: [180, 0, -0]
                                                                                                                         scale: [1, 1, 1]
                                                                                                                     child:
                                                                                                                       - name: MouthUp_$AssimpFbx$_Rotation
@@ -1401,7 +1410,7 @@ child:
                                                                                                                                     type: 1
                                                                                                                                     enabled: true
                                                                                                                                     position: [0.0944, 0.0526, -0.0407]
-                                                                                                                                    rotation: [-160, -16.38, -146.4]
+                                                                                                                                    rotation: [42.99, -2.104, 7.628]
                                                                                                                                     scale: [1, 1, 1]
                                                                                                               - name: MouthDown_$AssimpFbx$_Translation
                                                                                                                 enabled: true
@@ -1409,7 +1418,7 @@ child:
                                                                                                                   - !<transform>
                                                                                                                     type: 1
                                                                                                                     enabled: true
-                                                                                                                    position: [-0.4438, 0.1486, 0.0485]
+                                                                                                                    position: [-0.4554, 0.1141, 0.0322]
                                                                                                                     rotation: [-0, 0, -0]
                                                                                                                     scale: [1, 1, 1]
                                                                                                                 child:
@@ -1420,7 +1429,7 @@ child:
                                                                                                                         type: 1
                                                                                                                         enabled: true
                                                                                                                         position: [0, 0, 0]
-                                                                                                                        rotation: [-180, 0, -0]
+                                                                                                                        rotation: [180, 0, -0]
                                                                                                                         scale: [1, 1, 1]
                                                                                                                     child:
                                                                                                                       - name: MouthDown_$AssimpFbx$_Rotation
@@ -1430,7 +1439,7 @@ child:
                                                                                                                             type: 1
                                                                                                                             enabled: true
                                                                                                                             position: [0, 0, 0]
-                                                                                                                            rotation: [0.1725, -2.04, 4.414]
+                                                                                                                            rotation: [-0, 0, -0]
                                                                                                                             scale: [1, 1, 1]
                                                                                                                         child:
                                                                                                                           - name: MouthDown
@@ -1459,7 +1468,7 @@ child:
                                                                                                                         type: 1
                                                                                                                         enabled: true
                                                                                                                         position: [0, 0, 0]
-                                                                                                                        rotation: [-180, 0, -0]
+                                                                                                                        rotation: [180, 0, -0]
                                                                                                                         scale: [1, 1, 1]
                                                                                                                     child:
                                                                                                                       - name: Weapon
@@ -1489,7 +1498,7 @@ child:
                                                                                                                                     type: 1
                                                                                                                                     enabled: true
                                                                                                                                     position: [0, 0, 0]
-                                                                                                                                    rotation: [-180, 1.356, -180]
+                                                                                                                                    rotation: [180, 1.356, 180]
                                                                                                                                     scale: [1, 1, 1]
                                                                                                                                 child:
                                                                                                                                   - name: Claw_Jnt
@@ -1519,7 +1528,7 @@ child:
                                                                                                                                                 type: 1
                                                                                                                                                 enabled: true
                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                rotation: [-180, -1.356, -180]
+                                                                                                                                                rotation: [180, -1.356, 180]
                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                             child:
                                                                                                                                               - name: Claw_Mid_Jnt
@@ -1538,7 +1547,7 @@ child:
                                                                                                                                                       - !<transform>
                                                                                                                                                         type: 1
                                                                                                                                                         enabled: true
-                                                                                                                                                        position: [0.0614, 0, 0.3218]
+                                                                                                                                                        position: [0.0579, 0.0033, 0.3441]
                                                                                                                                                         rotation: [-0, 0, -0]
                                                                                                                                                         scale: [1, 1, 1]
                                                                                                                                                     child:
@@ -1549,7 +1558,7 @@ child:
                                                                                                                                                             type: 1
                                                                                                                                                             enabled: true
                                                                                                                                                             position: [0, 0, 0]
-                                                                                                                                                            rotation: [180, -85.75, 180]
+                                                                                                                                                            rotation: [-180, -85.75, -180]
                                                                                                                                                             scale: [1, 1, 1]
                                                                                                                                                         child:
                                                                                                                                                           - name: Thumb_Start_$AssimpFbx$_Rotation
@@ -1559,7 +1568,7 @@ child:
                                                                                                                                                                 type: 1
                                                                                                                                                                 enabled: true
                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                rotation: [-0, 0, -0]
+                                                                                                                                                                rotation: [-0.8011, -0.0693, 9.89]
                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                             child:
                                                                                                                                                               - name: Thumb_Start
@@ -1589,7 +1598,7 @@ child:
                                                                                                                                                                             type: 1
                                                                                                                                                                             enabled: true
                                                                                                                                                                             position: [0, 0, 0]
-                                                                                                                                                                            rotation: [180, -85.64, 180]
+                                                                                                                                                                            rotation: [-180, -85.64, -180]
                                                                                                                                                                             scale: [1, 1, 1]
                                                                                                                                                                         child:
                                                                                                                                                                           - name: Thumb_Mid
@@ -1608,7 +1617,7 @@ child:
                                                                                                                                                                                   - !<transform>
                                                                                                                                                                                     type: 1
                                                                                                                                                                                     enabled: true
-                                                                                                                                                                                    position: [0.164, 0, 0]
+                                                                                                                                                                                    position: [0.1863, 0.0021, -0.0055]
                                                                                                                                                                                     rotation: [-0, 0, -0]
                                                                                                                                                                                     scale: [1, 1, 1]
                                                                                                                                                                                 child:
@@ -1629,7 +1638,7 @@ child:
                                                                                                                                                                                             type: 1
                                                                                                                                                                                             enabled: true
                                                                                                                                                                                             position: [0, 0, 0]
-                                                                                                                                                                                            rotation: [-0, 0, -0]
+                                                                                                                                                                                            rotation: [3.016, 0.2614, 9.907]
                                                                                                                                                                                             scale: [1, 1, 1]
                                                                                                                                                                                         child:
                                                                                                                                                                                           - name: Thumb_Finish
@@ -1659,7 +1668,7 @@ child:
                                                                                                                                                                                                         type: 1
                                                                                                                                                                                                         enabled: true
                                                                                                                                                                                                         position: [0, 0, 0]
-                                                                                                                                                                                                        rotation: [-180, -11.85, -180]
+                                                                                                                                                                                                        rotation: [180, -11.85, 180]
                                                                                                                                                                                                         scale: [1, 1, 1]
                                                                                                                                                                                                     child:
                                                                                                                                                                                                       - name: Thumb_zero_$AssimpFbx$_Rotation
@@ -1687,7 +1696,7 @@ child:
                                                                                                                                                       - !<transform>
                                                                                                                                                         type: 1
                                                                                                                                                         enabled: true
-                                                                                                                                                        position: [-0.1965, 0.0468, 0.0442]
+                                                                                                                                                        position: [-0.2374, 0.0499, 0.0479]
                                                                                                                                                         rotation: [-0, 0, -0]
                                                                                                                                                         scale: [1, 1, 1]
                                                                                                                                                     child:
@@ -1698,7 +1707,7 @@ child:
                                                                                                                                                             type: 1
                                                                                                                                                             enabled: true
                                                                                                                                                             position: [0, 0, 0]
-                                                                                                                                                            rotation: [-180, -6.71, -180]
+                                                                                                                                                            rotation: [180, -6.71, 180]
                                                                                                                                                             scale: [1, 1, 1]
                                                                                                                                                         child:
                                                                                                                                                           - name: Middle_Start_$AssimpFbx$_Rotation
@@ -1708,7 +1717,7 @@ child:
                                                                                                                                                                 type: 1
                                                                                                                                                                 enabled: true
                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                rotation: [-0, 0, -0]
+                                                                                                                                                                rotation: [-0.2341, -0.0177, 8.631]
                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                             child:
                                                                                                                                                               - name: Middle_Start
@@ -1727,7 +1736,7 @@ child:
                                                                                                                                                                       - !<transform>
                                                                                                                                                                         type: 1
                                                                                                                                                                         enabled: true
-                                                                                                                                                                        position: [0.6727, 0.0941, 0]
+                                                                                                                                                                        position: [0.696, 0.0974, 0.0006]
                                                                                                                                                                         rotation: [-0, 0, -0]
                                                                                                                                                                         scale: [1, 1, 1]
                                                                                                                                                                     child:
@@ -1738,7 +1747,7 @@ child:
                                                                                                                                                                             type: 1
                                                                                                                                                                             enabled: true
                                                                                                                                                                             position: [0, 0, 0]
-                                                                                                                                                                            rotation: [-180, 6.71, -180]
+                                                                                                                                                                            rotation: [180, 6.71, 180]
                                                                                                                                                                             scale: [1, 1, 1]
                                                                                                                                                                         child:
                                                                                                                                                                           - name: Middle_Finish_$AssimpFbx$_Rotation
@@ -1748,7 +1757,7 @@ child:
                                                                                                                                                                                 type: 1
                                                                                                                                                                                 enabled: true
                                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                                rotation: [-0, 0, -0]
+                                                                                                                                                                                rotation: [-0.7722, 0.0581, -8.599]
                                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                                             child:
                                                                                                                                                                               - name: Middle_Finish
@@ -1766,7 +1775,7 @@ child:
                                                                                                                                                       - !<transform>
                                                                                                                                                         type: 1
                                                                                                                                                         enabled: true
-                                                                                                                                                        position: [-0.1646, 0.0964, -0.1916]
+                                                                                                                                                        position: [-0.1924, 0.0986, -0.194]
                                                                                                                                                         rotation: [-0, 0, -0]
                                                                                                                                                         scale: [1, 1, 1]
                                                                                                                                                     child:
@@ -1777,7 +1786,7 @@ child:
                                                                                                                                                             type: 1
                                                                                                                                                             enabled: true
                                                                                                                                                             position: [0, 0, 0]
-                                                                                                                                                            rotation: [-180, 7.352, -180]
+                                                                                                                                                            rotation: [180, 7.352, 180]
                                                                                                                                                             scale: [1, 1, 1]
                                                                                                                                                         child:
                                                                                                                                                           - name: Index_start_$AssimpFbx$_Rotation
@@ -1787,7 +1796,7 @@ child:
                                                                                                                                                                 type: 1
                                                                                                                                                                 enabled: true
                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                rotation: [-0, 0, -0]
+                                                                                                                                                                rotation: [0.3694, 0.0279, 8.626]
                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                             child:
                                                                                                                                                               - name: Index_start
@@ -1806,7 +1815,7 @@ child:
                                                                                                                                                                       - !<transform>
                                                                                                                                                                         type: 1
                                                                                                                                                                         enabled: true
-                                                                                                                                                                        position: [0.3839, 0.1321, 0]
+                                                                                                                                                                        position: [0.3936, 0.1393, -0.0004]
                                                                                                                                                                         rotation: [-0, 0, -0]
                                                                                                                                                                         scale: [1, 1, 1]
                                                                                                                                                                     child:
@@ -1817,7 +1826,7 @@ child:
                                                                                                                                                                             type: 1
                                                                                                                                                                             enabled: true
                                                                                                                                                                             position: [0, 0, 0]
-                                                                                                                                                                            rotation: [-180, -7.352, -180]
+                                                                                                                                                                            rotation: [180, -7.352, 180]
                                                                                                                                                                             scale: [1, 1, 1]
                                                                                                                                                                         child:
                                                                                                                                                                           - name: Index_finish_$AssimpFbx$_Rotation
@@ -1827,7 +1836,7 @@ child:
                                                                                                                                                                                 type: 1
                                                                                                                                                                                 enabled: true
                                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                                rotation: [-0, 0, -0]
+                                                                                                                                                                                rotation: [0.7334, -0.0552, -8.603]
                                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                                             child:
                                                                                                                                                                               - name: Index_finish
@@ -1845,7 +1854,7 @@ child:
                                                                                                                                                       - !<transform>
                                                                                                                                                         type: 1
                                                                                                                                                         enabled: true
-                                                                                                                                                        position: [0.0884, 0.0959, -0.2972]
+                                                                                                                                                        position: [0.0746, 0.0972, -0.3069]
                                                                                                                                                         rotation: [-0, 0, -0]
                                                                                                                                                         scale: [1, 1, 1]
                                                                                                                                                     child:
@@ -1856,7 +1865,7 @@ child:
                                                                                                                                                             type: 1
                                                                                                                                                             enabled: true
                                                                                                                                                             position: [0, 0, 0]
-                                                                                                                                                            rotation: [-180, 37.69, -180]
+                                                                                                                                                            rotation: [180, 37.69, 180]
                                                                                                                                                             scale: [1, 1, 1]
                                                                                                                                                         child:
                                                                                                                                                           - name: Pinky_start_$AssimpFbx$_Rotation
@@ -1866,7 +1875,7 @@ child:
                                                                                                                                                                 type: 1
                                                                                                                                                                 enabled: true
                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                rotation: [-0, 0, -0]
+                                                                                                                                                                rotation: [0.4291, 0.0324, 8.624]
                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                             child:
                                                                                                                                                               - name: Pinky_start
@@ -1885,7 +1894,7 @@ child:
                                                                                                                                                                       - !<transform>
                                                                                                                                                                         type: 1
                                                                                                                                                                         enabled: true
-                                                                                                                                                                        position: [0.3415, 0.0683, 0]
+                                                                                                                                                                        position: [0.3502, 0.069, -0.0004]
                                                                                                                                                                         rotation: [-0, 0, -0]
                                                                                                                                                                         scale: [1, 1, 1]
                                                                                                                                                                     child:
@@ -1896,7 +1905,7 @@ child:
                                                                                                                                                                             type: 1
                                                                                                                                                                             enabled: true
                                                                                                                                                                             position: [0, 0, 0]
-                                                                                                                                                                            rotation: [-180, -37.69, -180]
+                                                                                                                                                                            rotation: [180, -37.69, 180]
                                                                                                                                                                             scale: [1, 1, 1]
                                                                                                                                                                         child:
                                                                                                                                                                           - name: Pinky_finish_$AssimpFbx$_Rotation
@@ -1906,7 +1915,7 @@ child:
                                                                                                                                                                                 type: 1
                                                                                                                                                                                 enabled: true
                                                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                                                rotation: [-0, 0, -0]
+                                                                                                                                                                                rotation: [4.919, -0.3045, -7.078]
                                                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                                                             child:
                                                                                                                                                                               - name: Pinky_finish
@@ -1935,7 +1944,7 @@ child:
                                                                                                                                     type: 1
                                                                                                                                     enabled: true
                                                                                                                                     position: [0, 0, 0]
-                                                                                                                                    rotation: [-180, -0.4737, -180]
+                                                                                                                                    rotation: [180, -0.4737, 180]
                                                                                                                                     scale: [1, 1, 1]
                                                                                                                                 child:
                                                                                                                                   - name: Sword_start
@@ -1965,7 +1974,7 @@ child:
                                                                                                                                                 type: 1
                                                                                                                                                 enabled: true
                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                rotation: [-180, 0.4737, -180]
+                                                                                                                                                rotation: [180, 0.4737, 180]
                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                             child:
                                                                                                                                               - name: Sword_finish_$AssimpFbx$_Rotation
@@ -2042,8 +2051,8 @@ child:
                                                                                                                   - !<transform>
                                                                                                                     type: 1
                                                                                                                     enabled: true
-                                                                                                                    position: [-3.111, 0.1137, 2.574]
-                                                                                                                    rotation: [-0, 0, 0.0001]
+                                                                                                                    position: [-3.028, 0.7509, 2.553]
+                                                                                                                    rotation: [-0.0001, 0, 0]
                                                                                                                     scale: [1, 1, 1]
                                                                                                                   - !<billboard>
                                                                                                                     type: 21
@@ -2070,13 +2079,14 @@ child:
                                                                                                                     start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                                                                                                                     blend_factor: 0.1
                                                                                                                     projection: true
+                                                                                                                    randomize_tiles: false
                                                   - name: JetPack_$AssimpFbx$_Translation
                                                     enabled: true
                                                     component:
                                                       - !<transform>
                                                         type: 1
                                                         enabled: true
-                                                        position: [0.2477, 0.0006, 0.0094]
+                                                        position: [0.2625, -0.0328, -0.0879]
                                                         rotation: [-0, 0, -0]
                                                         scale: [1, 1, 1]
                                                     child:
@@ -2137,7 +2147,7 @@ child:
                                                                                 type: 1
                                                                                 enabled: true
                                                                                 position: [0, 0, 0]
-                                                                                rotation: [-2.855, 0.652, -4.781]
+                                                                                rotation: [-0, 0, -0]
                                                                                 scale: [1, 1, 1]
                                                                             child:
                                                                               - name: RightWing
@@ -2206,7 +2216,7 @@ child:
                                                                                 type: 1
                                                                                 enabled: true
                                                                                 position: [0, 0, 0]
-                                                                                rotation: [-2.855, 0.652, -4.781]
+                                                                                rotation: [-0, 0, -0]
                                                                                 scale: [1, 1, 1]
                                                                             child:
                                                                               - name: LefttWing
@@ -2254,8 +2264,8 @@ child:
                                       - !<transform>
                                         type: 1
                                         enabled: true
-                                        position: [-0.3263, -0.7714, -0.3238]
-                                        rotation: [-0, 0, -0]
+                                        position: [0.1116, -0.494, -0.5021]
+                                        rotation: [0, -82.78, 0]
                                         scale: [1, 1, 1]
                                   - name: ikHandle_L
                                     enabled: true
@@ -2263,8 +2273,8 @@ child:
                                       - !<transform>
                                         type: 1
                                         enabled: true
-                                        position: [0.3264, -0.7714, 0.3066]
-                                        rotation: [-0, 0, -0]
+                                        position: [0.0137, -0.4926, 0.4112]
+                                        rotation: [-0, -52.78, 5.212]
                                         scale: [1, 1, 1]
   - name: AttackIndicator
     enabled: false
@@ -2282,7 +2292,7 @@ child:
         type: 1
         enabled: true
         position: [0, 3.815, -0.75]
-        rotation: [-180, 89.98, -180]
+        rotation: [-0, 90, 0]
         scale: [2, 0.4164, 2.178]
     child:
       - name: Plane001
@@ -2447,14 +2457,83 @@ child:
             position: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             rotation: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             scale: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+  - name: Damage_VFX
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-4.635, -7.711, -231.2]
+        rotation: [180, 55.25, 180]
+        scale: [2.273, 2.222, 2.273]
+      - !<billboard>
+        type: 21
+        enabled: true
+        play_on_awake: false
+        tiles: [1, 1]
+        flip: [false, false]
+        billboard_lifetime: 0.5
+        properties: [1, 0, 0, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+        animation_speed: 0
+        total_tiles: 1
+        animation_loop: false
+        color_cycles: 1
+        color_gradient: [[0.3006, 0, 0, 0, 0], [0, 0, 0, 0, 0.9926]]
+        animation_section: false
+        color_section: true
+        size_section: false
+        size_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+        rotation_section: false
+        rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+        start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+        start_size: [true, true, 0, [1, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+        start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+        blend_factor: 0
+        projection: false
+        randomize_tiles: false
+  - name: AimIndicator
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [0, 0, 7]
+        rotation: [180, 89.98, 180]
+        scale: [2.5, 2.5, 2.5]
+      - !<billboard>
+        type: 21
+        enabled: true
+        play_on_awake: false
+        texture_id: 11589188989502843529
+        tiles: [1, 1]
+        flip: [false, true]
+        billboard_lifetime: 5
+        properties: [1, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+        animation_speed: 0
+        total_tiles: 1
+        animation_loop: true
+        color_cycles: 1
+        color_gradient: [[0, 0, 0, 0, 0], [1, 1, 1, 0, 1]]
+        animation_section: false
+        color_section: false
+        size_section: false
+        size_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+        rotation_section: false
+        rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+        start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+        start_size: [true, true, 0, [1, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+        start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+        blend_factor: 0
+        projection: true
+        randomize_tiles: false
   - name: Heal_VFX
     enabled: true
     component:
       - !<transform>
         type: 1
         enabled: true
-        position: [0, 0, 0]
-        rotation: [177.9, 64.98, -177.6]
+        position: [-0.025, 0.1275, 0.6702]
+        rotation: [3.483, -75.22, 3.864]
         scale: [2.008, 3.05, 2.008]
       - !<particle_system>
         type: 22
@@ -2598,8 +2677,8 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [0.101, 3.445, 4.403]
-        rotation: [-90, -0.0001, -0]
+        position: [0, 3.44, 4.4]
+        rotation: [-90, 0.0001, -0]
         scale: [3, 3, 3]
       - !<particle_system>
         type: 22
@@ -2670,8 +2749,8 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [0.0042, 3.193, 2.772]
-        rotation: [-90, 0, 180]
+        position: [0, 3.19, 2.77]
+        rotation: [-90, -0, -10.25]
         scale: [2, 2, 2]
       - !<particle_system>
         type: 22
@@ -2735,20 +2814,92 @@ child:
             position: [true, true, 0, [18.3, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             rotation: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             scale: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+  - name: DashParticles
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [0.1573, 3.977, -4.093]
+        rotation: [-0, 0, -0]
+        scale: [1, 1, 1]
+      - !<particle_system>
+        type: 22
+        enabled: true
+        sections:
+          parameters: true
+          emission: true
+          shape: true
+          lights: false
+          renderer: true
+          texture: false
+        parameters:
+          duration: 0.5
+          loop: false
+          life: [true, true, 0, [0.3, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+          speed: [true, true, 0, [2, 5], 0.5, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+          size: [true, true, 1, [0.1, 1], 0.25, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+          rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+          delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+          properties: [1, 2, 0, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+        emission:
+          rate: [true, true, 0, [70.8, 10], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+          rate_burst: [true, true, 0, [0, 10], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+          burst: false
+        emitter_shape:
+          type: 4
+          properties: [360, 0, [0, 0, 0], 0.3, 0, [0, -90, 0], [2.5, 1, 1.5], 0.3]
+        texture:
+          texture_id: 3291545039621372658
+          tiles: [2, 1]
+          flip: [true, true]
+          total_tiles: 2
+        modifiers:
+          velocity:
+            active: true
+            speed: [true, true, 0, [-1, 0], 0.001, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+          size:
+            active: false
+            size: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+          color:
+            active: true
+            color_gradient: [[1, 0, 0, 0, 0.0273], [0.2492, 0.0164, 0.474, 0, 0.622], [0, 0, 0, 0, 0.9854]]
+            color_cycles: 1
+          force:
+            active: true
+            rotation: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            x_force: [true, true, 0, [0.9, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            y_force: [true, true, 1, [0.1, 5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            z_force: [true, true, 1, [0, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+          animation:
+            active: true
+            animation_speed: 0.25
+            blend_factor: 0.5
+            fit_to_lifetime: false
+          noise:
+            active: true
+            separate_axes: false
+            strength:
+              x: [true, true, 0, [1.5, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+              y: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+              z: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            position: [true, true, 0, [2, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            scale: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
   - name: HUD_v2
     enabled: true
     component:
       - !<transform>
         type: 1
         enabled: true
-        position: [516.1, -19.8, -258.4]
-        rotation: [-0, 79.75, -0]
-        scale: [5.145, 4.938, 5.145]
+        position: [692.6, -62.89, 471.5]
+        rotation: [-0, 14.25, -0]
+        scale: [11.69, 10.97, 11.69]
       - !<transform_2d>
         type: 10
         enabled: true
         position: [0, 0, 0]
-        size: [1314, 767]
+        size: [1133, 630]
         scale: [1, 1]
         rotation: [0, 0, 0, 1]
         pivot: [0.5, 0.5]
@@ -3243,7 +3394,7 @@ child:
                         image_tiles_per_second: 14
                         fill_window: false
               - name: Stamina
-                enabled: true
+                enabled: false
                 component:
                   - !<transform>
                     type: 1
@@ -3256,7 +3407,7 @@ child:
                     enabled: true
                     params:
                       min: 0
-                      max: 1
+                      max: 0
                       filled: 1
                       direction: 0
                   - !<transform_2d>
@@ -3344,7 +3495,7 @@ child:
                         image_tiles_per_second: 1
                         fill_window: false
           - name: MAZE_ADDON
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 type: 1
@@ -3417,73 +3568,154 @@ child:
                 image_y_tiles: 1
                 image_tiles_per_second: 1
                 fill_window: false
-  - name: Damage_VFX
-    enabled: true
-    component:
-      - !<transform>
-        type: 1
+      - name: KeyboardTooltipDisplay
         enabled: true
-        position: [153.2, -2.689, 119.2]
-        rotation: [0, -45, 0]
-        scale: [2.273, 2.222, 2.273]
-      - !<billboard>
-        type: 21
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0, 0, -0]
+            scale: [0.4417, 0.45, 0.4417]
+          - !<transform_2d>
+            type: 10
+            enabled: true
+            position: [0, -150, 1]
+            size: [934, 148]
+            scale: [0.5, 0.5]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [0.5, 0.5]
+          - !<canvas_renderer>
+            type: 9
+            enabled: true
+            scale_ui: false
+            original_size_x: 0
+            original_size_y: 0
+          - !<image>
+            type: 11
+            enabled: true
+            image_id: 18000803453350606936
+            hover_image_id: 0
+            image_color: [1, 1, 1, 1]
+            hover_image_color: [1, 1, 1, 1]
+            image_is_tiled: false
+            image_randomize_initial_frame: false
+            image_x_tiles: 1
+            image_y_tiles: 1
+            image_tiles_per_second: 1
+            fill_window: false
+      - name: GamepadTooltipDisplay
         enabled: true
-        play_on_awake: false
-        tiles: [1, 1]
-        flip: [false, false]
-        billboard_lifetime: 0.5
-        properties: [1, 0, 0, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-        animation_speed: 0
-        total_tiles: 1
-        animation_loop: false
-        color_cycles: 1
-        color_gradient: [[0.3006, 0, 0, 0, 0], [0, 0, 0, 0, 0.9926]]
-        animation_section: false
-        color_section: true
-        size_section: false
-        size_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-        rotation_section: false
-        rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-        start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-        start_size: [true, true, 0, [1, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-        start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-        blend_factor: 0
-        projection: false
-  - name: AimIndicator
-    enabled: true
-    component:
-      - !<transform>
-        type: 1
-        enabled: true
-        position: [0, 0, 7]
-        rotation: [-0, 90, 0]
-        scale: [2.273, 2.222, 2.273]
-      - !<billboard>
-        type: 21
-        enabled: true
-        play_on_awake: false
-        texture_id: 11589188989502843529
-        tiles: [1, 1]
-        flip: [false, true]
-        billboard_lifetime: 5
-        properties: [1, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-        animation_speed: 0
-        total_tiles: 1
-        animation_loop: true
-        color_cycles: 1
-        color_gradient: [[0, 0, 0, 0, 0], [1, 1, 1, 0, 1]]
-        animation_section: false
-        color_section: false
-        size_section: false
-        size_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-        rotation_section: false
-        rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-        start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-        start_size: [true, true, 0, [1, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-        start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-        blend_factor: 0
-        projection: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [-0.7397, 3.369, -63.07]
+            rotation: [-0, 20.48, -0]
+            scale: [0.4417, 0.45, 0.4417]
+          - !<transform_2d>
+            type: 10
+            enabled: true
+            position: [0, -150, 0]
+            size: [934, 148]
+            scale: [0.5, 0.5]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [0.5, 0.5]
+          - !<canvas_renderer>
+            type: 9
+            enabled: true
+            scale_ui: false
+            original_size_x: 0
+            original_size_y: 0
+          - !<image>
+            type: 11
+            enabled: true
+            image_id: 407881782410796713
+            hover_image_id: 0
+            image_color: [1, 1, 1, 1]
+            hover_image_color: [1, 1, 1, 1]
+            image_is_tiled: false
+            image_randomize_initial_frame: false
+            image_x_tiles: 1
+            image_y_tiles: 1
+            image_tiles_per_second: 1
+            fill_window: false
+      - name: Vignette
+        enabled: false
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [-43.01, 5.03, -72.94]
+            rotation: [180, 69.5, -180]
+            scale: [0.1944, 0.2026, 0.1944]
+          - !<transform_2d>
+            type: 10
+            enabled: true
+            position: [0, 0, 0]
+            size: [1288, 696]
+            scale: [1, 1]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [0.5, 0.5]
+          - !<canvas_renderer>
+            type: 9
+            enabled: true
+            scale_ui: false
+            original_size_x: 0
+            original_size_y: 0
+          - !<image>
+            type: 11
+            enabled: true
+            image_id: 10523760409150182962
+            hover_image_id: 0
+            image_color: [1, 1, 1, 0.6078]
+            hover_image_color: [1, 1, 1, 1]
+            image_is_tiled: false
+            image_randomize_initial_frame: false
+            image_x_tiles: 1
+            image_y_tiles: 1
+            image_tiles_per_second: 1
+            fill_window: true
+      - name: DeathScreen
+        enabled: false
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [-43.01, 5.03, -72.94]
+            rotation: [180, 69.5, -180]
+            scale: [0.1944, 0.2026, 0.1944]
+          - !<transform_2d>
+            type: 10
+            enabled: true
+            position: [0, 0, 0]
+            size: [967, 317]
+            scale: [1, 1]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [0.5, 0.5]
+          - !<canvas_renderer>
+            type: 9
+            enabled: true
+            scale_ui: true
+            original_size_x: 1133
+            original_size_y: 630
+          - !<image>
+            type: 11
+            enabled: true
+            image_id: 4375169993337302887
+            hover_image_id: 0
+            image_color: [1, 1, 1, 1]
+            hover_image_color: [1, 1, 1, 1]
+            image_is_tiled: false
+            image_randomize_initial_frame: false
+            image_x_tiles: 1
+            image_y_tiles: 1
+            image_tiles_per_second: 1
+            fill_window: false
   - name: WeaponTrails
     enabled: true
     component:
@@ -3510,8 +3742,8 @@ child:
               - !<transform>
                 type: 1
                 enabled: true
-                position: [-2.788, 2.3, 2.145]
-                rotation: [-0, 13.9, -0]
+                position: [-0.79, 2.3, 3]
+                rotation: [-0, 56.3, -0]
                 scale: [1, 0.9999, 1]
               - !<billboard>
                 type: 21
@@ -3521,7 +3753,7 @@ child:
                 tiles: [3, 3]
                 flip: [false, false]
                 billboard_lifetime: 0.35
-                properties: [0.5, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                properties: [1, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
                 animation_speed: 0.05
                 total_tiles: 9
                 animation_loop: false
@@ -3534,17 +3766,18 @@ child:
                 rotation_section: false
                 rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                start_size: [true, true, 0, [3, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [5, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 0.1
                 projection: true
+                randomize_tiles: false
           - name: MeleeTrailLeft
             enabled: true
             component:
               - !<transform>
                 type: 1
                 enabled: true
-                position: [1.134, 2.3, 4.076]
+                position: [0.5, 2.3, 3]
                 rotation: [0, -80, 0]
                 scale: [1, 0.9999, 1]
               - !<billboard>
@@ -3555,7 +3788,7 @@ child:
                 tiles: [3, 3]
                 flip: [false, true]
                 billboard_lifetime: 0.55
-                properties: [0.5, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                properties: [1, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
                 animation_speed: 0.05
                 total_tiles: 9
                 animation_loop: false
@@ -3568,10 +3801,46 @@ child:
                 rotation_section: false
                 rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 start_delay: [true, false, 0, [0.2, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                start_size: [true, true, 0, [3, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [5, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 0.1
                 projection: true
+                randomize_tiles: false
+          - name: MeleeTrailCenter
+            enabled: true
+            component:
+              - !<transform>
+                type: 1
+                enabled: true
+                position: [-0.4282, 2.3, 4.81]
+                rotation: [-0, 17.5, -0]
+                scale: [1, 0.5, 0.6]
+              - !<billboard>
+                type: 21
+                enabled: true
+                play_on_awake: false
+                texture_id: 15300208463688155448
+                tiles: [3, 3]
+                flip: [false, false]
+                billboard_lifetime: 0.5
+                properties: [1, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 0.05
+                total_tiles: 9
+                animation_loop: false
+                color_cycles: 1
+                color_gradient: [[1, 0, 0, 0, 1]]
+                animation_section: true
+                color_section: true
+                size_section: false
+                size_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0.15, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [5, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 0.1
+                projection: true
+                randomize_tiles: false
       - name: ClawsTrail
         enabled: true
         component:
@@ -3588,8 +3857,8 @@ child:
               - !<transform>
                 type: 1
                 enabled: true
-                position: [-2.277, 2.3, 2.329]
-                rotation: [-0, 20, -0]
+                position: [-0.29, 2.3, 3]
+                rotation: [-0, 71.9, -0]
                 scale: [1, 0.9999, 1]
               - !<billboard>
                 type: 21
@@ -3599,7 +3868,7 @@ child:
                 tiles: [3, 3]
                 flip: [false, false]
                 billboard_lifetime: 0.35
-                properties: [0.5, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                properties: [1, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
                 animation_speed: 0.05
                 total_tiles: 9
                 animation_loop: false
@@ -3612,17 +3881,18 @@ child:
                 rotation_section: false
                 rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                start_size: [true, true, 0, [3, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [5, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 0.1
                 projection: true
+                randomize_tiles: false
           - name: ClawsTrailL
             enabled: true
             component:
               - !<transform>
                 type: 1
                 enabled: true
-                position: [0.293, 2.3, 4.746]
+                position: [0.293, 2.3, 3]
                 rotation: [0, -81.4, 0]
                 scale: [1, 0.9999, 1]
               - !<billboard>
@@ -3633,7 +3903,7 @@ child:
                 tiles: [3, 3]
                 flip: [false, true]
                 billboard_lifetime: 0.35
-                properties: [0.5, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                properties: [1, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
                 animation_speed: 0.05
                 total_tiles: 9
                 animation_loop: false
@@ -3646,10 +3916,11 @@ child:
                 rotation_section: false
                 rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                start_size: [true, true, 0, [3, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [5, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 0.1
                 projection: true
+                randomize_tiles: false
       - name: SwordTrail
         enabled: true
         component:
@@ -3666,8 +3937,8 @@ child:
               - !<transform>
                 type: 1
                 enabled: true
-                position: [-3.605, 2.3, 2.471]
-                rotation: [-0, 15, -0]
+                position: [-0.6, 2.3, 4.5]
+                rotation: [-0, 70, -0]
                 scale: [1, 0.9999, 1]
               - !<billboard>
                 type: 21
@@ -3677,7 +3948,7 @@ child:
                 tiles: [3, 3]
                 flip: [false, false]
                 billboard_lifetime: 0.5
-                properties: [0.5, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                properties: [1, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
                 animation_speed: 0.05
                 total_tiles: 9
                 animation_loop: false
@@ -3690,17 +3961,18 @@ child:
                 rotation_section: false
                 rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 start_delay: [true, false, 0, [0.15, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                start_size: [true, true, 0, [3.5, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [6.5, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 0.1
                 projection: true
+                randomize_tiles: false
           - name: SwordTrailL
             enabled: true
             component:
               - !<transform>
                 type: 1
                 enabled: true
-                position: [-1.428, 2.3, 5.03]
+                position: [-0.13, 2.3, 4.5]
                 rotation: [0, -88.6, 0]
                 scale: [1, 0.9999, 1]
               - !<billboard>
@@ -3711,7 +3983,7 @@ child:
                 tiles: [3, 3]
                 flip: [false, true]
                 billboard_lifetime: 0.65
-                properties: [0.5, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                properties: [1, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
                 animation_speed: 0.05
                 total_tiles: 9
                 animation_loop: false
@@ -3724,10 +3996,11 @@ child:
                 rotation_section: false
                 rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 start_delay: [true, false, 0, [0.3, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                start_size: [true, true, 0, [3.5, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [6.5, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 0.1
                 projection: true
+                randomize_tiles: false
       - name: HammerTrail
         enabled: true
         component:
@@ -3744,9 +4017,9 @@ child:
               - !<transform>
                 type: 1
                 enabled: true
-                position: [-3.442, 2.3, 2.703]
-                rotation: [-0, 23.2, -0]
-                scale: [1, 0.9999, 1]
+                position: [-0.74, 2.3, 4.5]
+                rotation: [-0, 70, -0]
+                scale: [1.1, 1, 1]
               - !<billboard>
                 type: 21
                 enabled: true
@@ -3755,7 +4028,7 @@ child:
                 tiles: [3, 3]
                 flip: [false, false]
                 billboard_lifetime: 0.4
-                properties: [0.5, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                properties: [1, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
                 animation_speed: 0.05
                 total_tiles: 9
                 animation_loop: false
@@ -3768,19 +4041,20 @@ child:
                 rotation_section: false
                 rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 start_delay: [true, false, 0, [0.05, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                start_size: [true, true, 0, [3.5, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [6.5, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 0.1
                 projection: true
+                randomize_tiles: false
           - name: HammerTrailL
             enabled: true
             component:
               - !<transform>
                 type: 1
                 enabled: true
-                position: [0.9854, 2.3, 4.502]
-                rotation: [0, -58.5, 0]
-                scale: [1, 0.9999, 1]
+                position: [-0.11, 2.3, 4.502]
+                rotation: [180, -89.98, 180]
+                scale: [1.1, 0.9999, 1]
               - !<billboard>
                 type: 21
                 enabled: true
@@ -3789,7 +4063,7 @@ child:
                 tiles: [3, 3]
                 flip: [false, true]
                 billboard_lifetime: 0.55
-                properties: [0.5, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                properties: [1, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
                 animation_speed: 0.05
                 total_tiles: 9
                 animation_loop: false
@@ -3802,7 +4076,8 @@ child:
                 rotation_section: false
                 rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 start_delay: [true, false, 0, [0.2, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                start_size: [true, true, 0, [3.5, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [6.5, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 blend_factor: 0.1
                 projection: true
+                randomize_tiles: false

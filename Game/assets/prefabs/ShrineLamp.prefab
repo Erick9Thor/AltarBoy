@@ -5,60 +5,34 @@ component:
   - !<transform>
     type: 1
     enabled: true
-    position: [-1.045, 1.026, -15.38]
-    rotation: [-90, 0, 0]
+    position: [-11, 1, -8.785]
+    rotation: [-90, -0, 45]
     scale: [1, 1, 1]
   - !<mesh_renderer>
     type: 2
     enabled: true
-    mesh_id: 5746596155727572461
+    mesh_id: 758734310977399032
     navigable: false
     visible: true
+    casting_shadow: true
     material_id: 16007776213478930409
     tint_color: [1, 1, 1, 1]
 child:
-  - name: Crystal_Floating_01
-    enabled: true
-    component:
-      - !<transform>
-        type: 1
-        enabled: true
-        position: [-0, -0, -1.785]
-        rotation: [90, 0, 0.0016]
-        scale: [1.7, 1.7, 1.7]
-    child:
-      - name: Crystal.001
-        enabled: true
-        component:
-          - !<transform>
-            type: 1
-            enabled: true
-            position: [0.0005, 0, -0.0006]
-            rotation: [-0, 0, -0]
-            scale: [150, 150, 150]
-          - !<mesh_renderer>
-            type: 2
-            enabled: true
-            mesh_id: 9697926766399336822
-            navigable: false
-            visible: true
-            material_id: 18249348712515306135
-            tint_color: [1, 1, 1, 1]
   - name: TopLight
     enabled: true
     component:
       - !<transform>
         type: 1
         enabled: true
-        position: [-0.0001, 0.0001, 3.255]
-        rotation: [90, -45, -0.0004]
+        position: [-0.3124, -1.38, 2.81]
+        rotation: [-90, -45, 180]
         scale: [1.5, 1.5, 1.5]
       - type: 6
         enabled: true
         light_type: 6
-        color: [0.3821, 0.9548, 1, 1]
-        intensity: 29.25
-        radius: 13
+        color: [0.9548, 0.3821, 1, 1]
+        intensity: 100
+        radius: 15
         draw_sphere: false
       - !<script>
         type: 15
@@ -88,13 +62,13 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [-0, 0, 0.4764]
-        rotation: [106.8, -3.514, 1.059]
+        position: [-0.3125, -1.38, 0.1374]
+        rotation: [-168, -72.85, 102.5]
         scale: [1, 1, 1]
       - type: 6
         enabled: true
         light_type: 6
-        color: [0.3821, 0.9548, 1, 1]
-        intensity: 20
-        radius: 13
+        color: [1, 0.3821, 0.9849, 1]
+        intensity: 100
+        radius: 15
         draw_sphere: false

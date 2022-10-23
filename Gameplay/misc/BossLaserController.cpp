@@ -97,7 +97,6 @@ void Hachiko::Scripting::BossLaserController::ChangeState(State new_state)
 		break;
 
 	case State::INACTIVE:
-		_audio_source->PostEvent(Hachiko::Sounds::STOP_LASER);
 		_elapsed_time = 0.0f;
 		_laser->SetActive(false);
 		break;

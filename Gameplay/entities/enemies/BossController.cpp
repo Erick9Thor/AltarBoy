@@ -6,63 +6,69 @@
 #include "misc/StalagmiteManager.h"
 #include "entities/Stats.h"
 #include "constants/Scenes.h"
+#include "components/ComponentObstacle.h"
 
 Hachiko::Scripting::BossController::BossController(GameObject* game_object)
-	: Script(game_object, "BossController")
-	, state_value(0)
-	, combat_state_value(0)
-	, second_phase(false)
-	, hp_bar_go(nullptr)
-	, crystal_target_go(nullptr)
-	, cocoon_placeholder_go(nullptr)
-	, gauntlet_go(nullptr)
-	, _explosive_crystals({})
-	, _current_index_crystals(0)
-	, start_encounter_range(0.0f)
-	, camera_transition_speed(2.0f)
-	, encounter_start_duration(2.0f)
-	, pre_combat_camera_offset(float3(0.f, 13.f, 8.f))
-	, _jump_start_delay(0.0f)
-	, _jump_ascending_duration(0.0f)
-	, _jump_post_ascending_delay(0.0f)
-	, _jump_on_highest_point_duration(0.0f)
-	, _jump_post_on_highest_point_delay(0.0f)
-	, _jump_descending_duration(0.0f)
-	, _jump_post_descending_delay(0.0f)
-	, _jump_getting_up_duration(0.0f)
-	, _jump_skill_delay(0.0f)
-	, _jump_skill_duration(0.0f)
-	, _jump_post_skill_delay(0.0f)
-	, _jump_height(0.0f)
-	, _jump_offset(0.0f)
-	, _jumping_state(JumpingState::NOT_TRIGGERED)
-	, _jump_start_position(float3::zero)
-	, _jump_end_position(float3::zero)
-	, _crystal_jump_position(float3::zero)
-	, _jumping_timer(0.0f)
-	, _jump_pattern_index(-1)
-	, _current_jumping_mode(JumpingMode::BASIC_ATTACK)
-	, _boss_state_text_ui(nullptr)
-	, attack_current_cd(0.0f)
-	, time_between_enemies(5.0)
-	, enemy_pool(nullptr)
-	, _laser_wall(nullptr)
-	, _laser_wall_duration(2.0f)
-	, _laser_jump_height(50.0f)
-	, damage_effect_duration(1.0f)
+    : Script(game_object, "BossController")
+    , state_value(0)
+    , combat_state_value(0)
+    , second_phase(false)
+    , hp_bar_go(nullptr)
+    , crystal_target_go(nullptr)
+    , cocoon_placeholder_go(nullptr)
+    , gauntlet_go(nullptr)
+    , _explosive_crystals({})
+    , _current_index_crystals(0)
+    , start_encounter_range(0.0f)
+    , camera_transition_speed(2.0f)
+    , encounter_start_duration(2.0f)
+    , pre_combat_camera_offset(float3(0.f, 13.f, 8.f))
+    , _jump_start_delay(0.0f)
+    , _jump_ascending_duration(0.0f)
+    , _jump_post_ascending_delay(0.0f)
+    , _jump_on_highest_point_duration(0.0f)
+    , _jump_post_on_highest_point_delay(0.0f)
+    , _jump_descending_duration(0.0f)
+    , _jump_post_descending_delay(0.0f)
+    , _jump_getting_up_duration(0.0f)
+    , _jump_skill_delay(0.0f)
+    , _jump_skill_duration(0.0f)
+    , _jump_post_skill_delay(0.0f)
+    , _jump_height(0.0f)
+    , _jump_offset(0.0f)
+    , _jumping_state(JumpingState::NOT_TRIGGERED)
+    , _jump_start_position(float3::zero)
+    , _jump_end_position(float3::zero)
+    , _crystal_jump_position(float3::zero)
+    , _jumping_timer(0.0f)
+    , _jump_pattern_index(-1)
+    , _current_jumping_mode(JumpingMode::BASIC_ATTACK)
+    , _boss_state_text_ui(nullptr)
+    , attack_current_cd(0.0f)
+    , time_between_enemies(5.0)
+    , enemy_pool(nullptr)
+    , _rotating_lasers(nullptr)
+    , _laser_wall(nullptr)
+    , _laser_wall_duration(2.0f)
+    , _laser_jump_height(50.0f)
+    , damage_effect_duration(1.0f)
+    , chasing_time_limit(3.0f)
 {
 }
 
 void Hachiko::Scripting::BossController::OnAwake()
 {
-	player = Scenes::GetPlayer();
-	level_manager = Scenes::GetLevelManager()->GetComponent<LevelManager>();
-	player_camera = Scenes::GetMainCamera()->GetComponent<PlayerCamera>();
-	combat_manager = Scenes::GetCombatManager()->GetComponent<CombatManager>();
-	transform = game_object->GetTransform();
-	combat_stats = game_object->GetComponent<Stats>();
-	agent = game_object->GetComponent<ComponentAgent>();
-	agent->SetMaxSpeed(combat_stats->_move_speed);
+    player = Scenes::GetPlayer();
+    level_manager = Scenes::GetLevelManager()->GetComponent<LevelManager>();
+    player_camera = Scenes::GetMainCamera()->GetComponent<PlayerCamera>();
+    combat_manager = Scenes::GetCombatManager()->GetComponent<CombatManager>();
+    transform = game_object->GetTransform();
+    combat_stats = game_object->GetComponent<Stats>();
+    agent = game_object->GetComponent<ComponentAgent>();
+    agent->SetMaxSpeed(combat_stats->_move_speed);
+    agent->RemoveFromCrowd();
+    obstacle = game_object->GetComponent<ComponentObstacle>();
+    obstacle->AddObstacle();
 
 	animation = game_object->GetComponent<ComponentAnimation>();
 
@@ -94,11 +100,20 @@ void Hachiko::Scripting::BossController::OnAwake()
 		laser->GetComponent<LaserController>()->ChangeState(LaserController::State::INACTIVE);
 	}
 
-	if (_stalagmite_manager_go)
-	{
-		_stalagmite_manager =
-			_stalagmite_manager_go->GetComponent<StalagmiteManager>();
-	}
+    for (GameObject* laser : _rotating_lasers->children)
+    {
+        laser->GetComponent<LaserController>()->ChangeState(LaserController::State::INACTIVE);
+        laser->GetComponent<LaserController>()->_toggle_activation = false;
+    }
+
+    if (_stalagmite_manager_go)
+    {
+        _stalagmite_manager =
+            _stalagmite_manager_go->GetComponent<StalagmiteManager>();
+    }
+
+    initial_position = transform->GetGlobalPosition();
+    initial_rotation = transform->GetGlobalRotationEuler();
 }
 
 void Hachiko::Scripting::BossController::OnStart()
@@ -242,12 +257,13 @@ void Hachiko::Scripting::BossController::CombatController()
 		return;
 	}
 
-	if (combat_stats->_current_hp <= 0)
-	{
-		level_manager->GoalReached();
-		state = BossState::DEAD;
-		return;
-	}
+    if (combat_stats->_current_hp <= 0)
+    {
+        KillEnemies();
+        level_manager->BossKilled();
+        state = BossState::DEAD;
+        return;
+    }
 
 	SpawnEnemy();
 
@@ -321,19 +337,22 @@ void Hachiko::Scripting::BossController::WaitingController()
 
 void Hachiko::Scripting::BossController::StartEncounter()
 {
-	encounter_start_timer = 0.f;
-	RestoreCameraOffset();
+    encounter_start_timer = 0.f;
+    RestoreCameraOffset();
+
+    obstacle->RemoveObstacle();
 }
 
 void Hachiko::Scripting::BossController::StartEncounterController()
 {
-	// Add any effects desired for combat start, for now it only delays while camera is transitioning
-	enemy_timer += Time::DeltaTime();
-	if (enemy_timer < encounter_start_duration)
-	{
-		return;
-	}
-	SetHpBarActive(true);
+    // Add any effects desired for combat start, for now it only delays while camera is transitioning
+    enemy_timer += Time::DeltaTime();
+    if (enemy_timer < encounter_start_duration)
+    {
+        return;
+    }
+    SetHpBarActive(true);
+    agent->AddToCrowd();
 
 	player_camera->SetDoLookAhead(true);
 	BreakCocoon();
@@ -368,40 +387,82 @@ float4x4 Hachiko::Scripting::BossController::GetMeleeAttackOrigin(float attack_r
 
 void Hachiko::Scripting::BossController::StartCocoon()
 {
-	time_elapse = 0.0;
-	SetUpCocoon();
-	FocusCameraOnBoss(true);
-	_stalagmite_manager->DestroyAllStalagmites();
+    time_elapse = 0.0;
+    SetUpCocoon();
+    FocusCameraOnBoss(true);
+
+    //Remove all stalactites and enemies
+    _stalagmite_manager->DestroyAllStalagmites();
+    KillEnemies();
+
+    // Direct boss to intial position
+    moving_to_initial_pos = true;
+    initial_position.y = transform->GetGlobalPosition().y;
+    transform->LookAtTarget(initial_position);
+    agent->SetTargetPosition(initial_position);
+
+    // Knockback player
+    float3 player_pos = player->GetTransform()->GetGlobalPosition();
+    if (Distance(player_pos, initial_position) <= 3)
+    {
+        float3 player_end_pos = player_pos + (player_pos - initial_position).Normalized() * 3;
+        player->GetTransform()->SetGlobalPosition(player_end_pos);
+    }
 }
 
 void Hachiko::Scripting::BossController::CocoonController()
 {
-	// Handle camera focus
-	if (camera_focus_on_boss)
-	{
-		time_elapse += Time::DeltaTime();
+    // Handle boss movement to initial position
+    if (moving_to_initial_pos)
+    {
+        float3 current_pos = transform->GetGlobalPosition();
+        if (Distance(current_pos, initial_position) <= 0.5f)
+        {
+            moving_to_initial_pos = false;
+            transform->SetGlobalPosition(initial_position);
+            transform->SetGlobalRotationEuler(initial_rotation);
 
-		if (time_elapse >= 2) // HARDCODED TIME FOR CAMERA FOCUS
-		{
-			animation->SendTrigger("isCacoonLoop");
-			FocusCameraOnBoss(false);
-		}
-	}
+            agent->RemoveFromCrowd();
+            obstacle->AddObstacle();
 
-	// Replace with is gauntlet completed
-	if (gauntlet->IsFinished() || Input::IsKeyDown(Input::KeyCode::KEY_J))
-	{
-		FinishCocoon();
-	}
+            if (cocoon_placeholder_go)
+            {
+                cocoon_placeholder_go->SetActive(true);
+            }
+        }
+        return;
+    }
+
+    // Handle camera focus
+    if (camera_focus_on_boss)
+    {
+        time_elapse += Time::DeltaTime();
+
+        if (time_elapse >= 2) // HARDCODED TIME FOR CAMERA FOCUS
+        {
+            FocusCameraOnBoss(false);
+            // Gauntlet Starts once the camera is unlocked
+            InitCocoonGauntlet();
+        }
+    }
+
+    if (_rotating_lasers)
+    {
+        float3 rot_lasers_rotation = _rotating_lasers->GetTransform()->GetLocalRotationEuler();
+        rot_lasers_rotation.y += Time::DeltaTime() * 10;
+        _rotating_lasers->GetTransform()->SetLocalRotationEuler(rot_lasers_rotation);
+    }
+
+    // Replace with is gauntlet completed
+    if (gauntlet->IsFinished() || Input::IsKeyDown(Input::KeyCode::KEY_J))
+    {
+        FinishCocoon();
+    }
 }
 
 void Hachiko::Scripting::BossController::SetUpCocoon()
 {
-	hitable = false;
-	if (cocoon_placeholder_go)
-	{
-		cocoon_placeholder_go->SetActive(true);
-	}
+    hitable = false;
 }
 
 void Hachiko::Scripting::BossController::BreakCocoon()
@@ -414,16 +475,26 @@ void Hachiko::Scripting::BossController::BreakCocoon()
 	}
 }
 
+void Hachiko::Scripting::BossController::InitCocoonGauntlet()
+{
+    // Unlock the lasers
+    for (GameObject* laser : _rotating_lasers->children)
+    {
+        laser->GetComponent<LaserController>()->_toggle_activation = true;
+    }
+    // Start spawning enemies
+    gauntlet->StartGauntlet();
+}
+
 bool Hachiko::Scripting::BossController::CocoonTrigger()
 {
-	if (gauntlet_thresholds_percent.empty())
-	{
-		return false;
-	}
-	if (gauntlet_thresholds_percent.back() >= static_cast<float>(combat_stats->_current_hp) / combat_stats->_max_hp)
-	{
-		gauntlet_thresholds_percent.pop_back();
-		gauntlet->StartGauntlet();
+    if (gauntlet_thresholds_percent.empty())
+    {
+        return false;
+    }
+    if (gauntlet_thresholds_percent.back() >= static_cast<float>(combat_stats->_current_hp) / combat_stats->_max_hp)
+    {
+        gauntlet_thresholds_percent.pop_back();
 
 		ChangeStateText("In Cocoon.");
 
@@ -438,21 +509,31 @@ void Hachiko::Scripting::BossController::FinishCocoon()
 	second_phase = true;
 	BreakCocoon();
 
-	// We change our jumping pattern to the second one and reset the index
-	std::copy(_jumping_pattern_2, _jumping_pattern_2 + JumpUtil::JUMP_PATTERN_SIZE, _current_jumping_pattern);
-	_jump_pattern_index = -1;
+    obstacle->RemoveObstacle();
+    agent->AddToCrowd();
+
+    // We change our jumping pattern to the second one and reset the index
+    std::copy(_jumping_pattern_2, _jumping_pattern_2 + JumpUtil::JUMP_PATTERN_SIZE, _current_jumping_pattern);
+    _jump_pattern_index = -1;
 
 	gauntlet->ResetGauntlet(true);
 
-	ChangeStateText("Finished Cocoon.");
+    for (GameObject* laser : _rotating_lasers->children)
+    {
+        laser->GetComponent<LaserController>()->ChangeState(LaserController::State::INACTIVE);
+        laser->GetComponent<LaserController>()->_toggle_activation = false;
+    }
+
+    ChangeStateText("Finished Cocoon.");
 
 	state = BossState::COMBAT_FORM;
 }
 
 void Hachiko::Scripting::BossController::Chase()
 {
-	ChangeStateText("Chasing player.");
-	combat_state = CombatState::CHASING;
+    ChangeStateText("Chasing player.");
+    chasing_timer = 0.0f;
+    combat_state = CombatState::CHASING;
 }
 
 void Hachiko::Scripting::BossController::ChaseController()
@@ -460,6 +541,12 @@ void Hachiko::Scripting::BossController::ChaseController()
 	const float3& player_position = player->GetTransform()->GetGlobalPosition();
 
 	transform->LookAtTarget(player_position);
+    chasing_timer += Time::DeltaTimeScaled();
+    if (chasing_timer >= chasing_time_limit)
+    {
+        combat_state = CombatState::JUMPING;
+        return;
+    }
 
 	// If player is very close change to attack mode
 	const float player_distance =
@@ -608,33 +695,35 @@ inline bool ShouldDealBasicAOE(Hachiko::Scripting::JumpingMode mode)
 
 void Hachiko::Scripting::BossController::ExecuteJumpingState()
 {
-	// TODO: This is for debug, delete this after adding the anims.
-	///////////////////////////////////////////////////////////////////////////
-	std::string jump_type;
+    // TODO: This is for debug, delete this after adding the anims.
+    ///////////////////////////////////////////////////////////////////////////
+    std::string jump_type;
 
-	if (_current_jumping_mode == JumpingMode::STALAGMITE)
-	{
-		jump_type = "(Stalagmite) ";
-	}
-	else if (_current_jumping_mode == JumpingMode::BASIC_ATTACK)
-	{
-		jump_type = "(Basic Attack)";
-	}
-	else if (_current_jumping_mode == JumpingMode::LASER)
-	{
-		jump_type = "(Laser)";
-	}
-	///////////////////////////////////////////////////////////////////////////
-	
-	
+    if (_current_jumping_mode == JumpingMode::STALAGMITE)
+    {
+        jump_type = "(Stalagmite) ";
+    }
+    else if (_current_jumping_mode == JumpingMode::BASIC_ATTACK)
+    {
+        jump_type = "(Basic Attack)";
+    }
+    else if (_current_jumping_mode == JumpingMode::CRYSTAL)
+    {
+        jump_type = "(Crystal)";
+    }
+    else if (_current_jumping_mode == JumpingMode::LASER)
+    {
+        jump_type = "(Laser)";
+    }
+    ///////////////////////////////////////////////////////////////////////////
 
-	if (_jumping_state == JumpingState::NOT_TRIGGERED)
-	{
-		_jumping_state = JumpingState::WAITING_TO_JUMP;
-		_jumping_timer = 0.0f;
-		hitable = false;
+    if (_jumping_state == JumpingState::NOT_TRIGGERED)
+    {
+        _jumping_state = JumpingState::WAITING_TO_JUMP;
+        _jumping_timer = 0.0f;
+        hitable = false;
 
-		ChangeStateText((jump_type + "Waiting to jump.").c_str());
+        ChangeStateText((jump_type + "Waiting to jump.").c_str());
 
 		if (_current_jumping_mode == JumpingMode::STALAGMITE)
 		{
@@ -644,66 +733,74 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
 			animation->SendTrigger("isPreJump");
 		}
 
-		// Disable the agent component, gets enabled back when boss lands back:
-		agent->RemoveFromCrowd();
-		agent->Disable();
+        animation->SendTrigger("isPreJump");
 
-		// TODO: Maybe calculate start, mid and end positions here instead.
-		// TODO: Maybe trigger rotating the boss to the jump direction here.
-	}
+        // Disable the agent component, gets enabled back when boss lands back:
+        agent->RemoveFromCrowd();
+        agent->Disable();
 
-	// It's important that we do the increment here, by this, if the duration
-	// of current state is set to < 0.0f, we don't need to have check for
-	// zero or negative conditions:
-	_jumping_timer += Time::DeltaTime();
+        // TODO: Maybe calculate start, mid and end positions here instead.
+        // TODO: Maybe trigger rotating the boss to the jump direction here.
+    }
 
-	switch (_jumping_state)
-	{
-	case JumpingState::WAITING_TO_JUMP:
-	{
-		const float3& player_position = player->GetTransform()->GetGlobalPosition();
-		transform->LookAtTarget(player_position);
+    // It's important that we do the increment here, by this, if the duration
+    // of current state is set to < 0.0f, we don't need to have check for
+    // zero or negative conditions:
+    _jumping_timer += Time::DeltaTime();
 
-		if (_jumping_timer < _jump_start_delay)
-		{
-			// Boss is waiting for jump here:
-			break;
-		}
+    switch (_jumping_state)
+    {
+    case JumpingState::WAITING_TO_JUMP:
+    {
+        if (_jumping_timer < _jump_start_delay)
+        {
+            if (_current_jumping_mode == JumpingMode::CRYSTAL)
+            {
+                game_object->GetTransform()->LookAtTarget(_crystal_jump_position);
+            }
+            else
+            {
+                game_object->GetTransform()->LookAtTarget(player->GetTransform()->GetGlobalPosition());
+            }
 
-		// Boss starts ascending here:
-		_jumping_state = JumpingState::ASCENDING;
-		_jumping_timer = 0.0f;
+            // Boss is waiting for jump here:
+            break;
+        }
 
-		// Set the start & end positions for the jump:
-		_jump_start_position = game_object->GetTransform()->GetGlobalPosition();
+        // Boss starts ascending here:
+        _jumping_state = JumpingState::ASCENDING;
+        _jumping_timer = 0.0f;
 
-		if (_current_jumping_mode == JumpingMode::CRYSTAL)
-		{
-			_jump_end_position = _crystal_jump_position;
-		}
-		else
-		{
-			_jump_end_position = player->GetTransform()->GetGlobalPosition();
+        // Set the start & end positions for the jump:
+        _jump_start_position = game_object->GetTransform()->GetGlobalPosition();
 
-			// Apply offset to the end position, if the offset is zero, the end
-			// position of the jump will be basically equal to the player
-			// position:
-			const float3 jump_direction(
-				(_jump_start_position - _jump_end_position).Normalized());
-			_jump_end_position =
-				_jump_end_position + jump_direction * _jump_offset;
-			_jump_end_position.y = _jump_start_position.y;
-		}
+        if (_current_jumping_mode == JumpingMode::CRYSTAL)
+        {
+            _jump_end_position = _crystal_jump_position;
+        }
+        else
+        {
+            _jump_end_position = player->GetTransform()->GetGlobalPosition();
 
-		// Calculate mid position (only x and z is significant, z is ignored as
-		// height is calculated separately), to avoid recalculation each frame
-		// during the position lerping:
-		_jump_mid_position = (_jump_start_position + _jump_end_position) * 0.5f;
+            // Apply offset to the end position, if the offset is zero, the end
+            // position of the jump will be basically equal to the player
+            // position:
+            const float3 jump_direction(
+                (_jump_start_position - _jump_end_position).Normalized());
+            _jump_end_position =
+                _jump_end_position + jump_direction * _jump_offset;
+            _jump_end_position.y = _jump_start_position.y;
+        }
+        game_object->GetTransform()->LookAtTarget(_jump_end_position);
 
-		ChangeStateText((jump_type + "Ascending").c_str());
+        // Calculate mid position (only x and z is significant, z is ignored as
+        // height is calculated separately), to avoid recalculation each frame
+        // during the position lerping:
+        _jump_mid_position = (_jump_start_position + _jump_end_position) * 0.5f;
 
+        ChangeStateText((jump_type + "Ascending").c_str());
 
-		if (_current_jumping_mode == JumpingMode::STALAGMITE)
+        if (_current_jumping_mode == JumpingMode::STALAGMITE)
 		{
 			animation->SendTrigger("isJumpLoopCrystal");
 		}
@@ -715,150 +812,167 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
 		{
 			break;
 		}
-	}
+    }
 
-	case JumpingState::ASCENDING:
-	{
-		if (_jumping_timer < _jump_ascending_duration)
-		{
-			// Boss is ascending here:
-			UpdateAscendingPosition();
-			break;
-		}
+    case JumpingState::ASCENDING:
+    {
+        if (_jumping_timer < _jump_ascending_duration)
+        {
+            // Boss is ascending here:
+            UpdateAscendingPosition();
+            break;
+        }
 
-		// Boss starts waiting on the highest point of jump here:
-		_jumping_state = JumpingState::POST_ASCENDING_DELAY;
-		_jumping_timer = 0.0f;
+        // Boss starts waiting on the highest point of jump here:
+        _jumping_state = JumpingState::POST_ASCENDING_DELAY;
+        _jumping_timer = 0.0f;
 
-		ChangeStateText((jump_type + "Waiting for the delay before highest point.").c_str());
+        ChangeStateText((jump_type + "Waiting for the delay before highest point.").c_str());
 
-
-		if (_jump_ascending_duration > 0.0f)
-		{
-			break;
-		}
-	}
-
-	case JumpingState::POST_ASCENDING_DELAY:
-	{
-		if (_jumping_timer < _jump_post_ascending_delay)
-		{
-			// Boss waiting on the highest point here:
-			break;
-		}
-
-		// Boss starts playing the highest point animation here:
-		_jumping_state = JumpingState::ON_HIGHEST_POINT;
-		_jumping_timer = 0.0f;
-
-		// TODO: Trigger highest point animation here.
-
-		ChangeStateText((jump_type + "On the highest point of the jump.").c_str());
-
-
-		if (_current_jumping_mode == JumpingMode::LASER)
-		{
-			for (GameObject* laser : _laser_wall->children)
-			{
-				laser->GetComponent<LaserController>()->ChangeState(LaserController::State::ACTIVATING);
-			}
-			_laser_wall_current_time = 0.0f;
-		}
-
-
-		if (_jump_post_ascending_delay > 0.0f)
+        if (_jump_ascending_duration > 0.0f)
 		{
 			break;
 		}
-	}
+    }
 
-	case JumpingState::ON_HIGHEST_POINT:
-	{
-		if (_current_jumping_mode == JumpingMode::LASER)
-		{
-			if (!ControlLasers())
-			{
-				break;
-			}
-		}
+    case JumpingState::POST_ASCENDING_DELAY:
+    {
+        if (_jumping_timer < _jump_post_ascending_delay)
+        {
+            // Boss waiting on the highest point here:
+            break;
+        }
 
-		if (_jumping_timer < _jump_on_highest_point_duration)
-		{
-			// Boss is on the highest point here:
-			break;
-		}
+        // Boss starts playing the highest point animation here:
+        _jumping_state = JumpingState::ON_HIGHEST_POINT;
+        _jumping_timer = 0.0f;
+       
+        // TODO: Trigger highest point animation here.
 
-		// Boss starts waiting after the highest point animation here:
-		_jumping_state = JumpingState::POST_ON_HIGHEST_POINT;
-		_jumping_timer = 0.0f;
+        ChangeStateText((jump_type + "On the highest point of the jump.").c_str());
 
-		ChangeStateText((jump_type + "Waiting before descending.").c_str());
 
-		if (_jump_on_highest_point_duration > 0.0f)
-		{
-			break;
-		}
-	}
+        if (_current_jumping_mode == JumpingMode::LASER)
+        {
+            const int dir = RandomUtil::RandomIntBetween(0, 3);
+            
+            // Set a random direction for the lasers
+            float3 laser_wall_rot = _laser_wall->GetTransform()->GetLocalRotationEuler();
+            laser_wall_rot.y = _wall_dir_angles[dir];
+            _laser_wall->GetTransform()->SetLocalRotationEuler(laser_wall_rot);
 
-	case JumpingState::POST_ON_HIGHEST_POINT:
-	{
-		if (_jumping_timer < _jump_post_on_highest_point_delay)
-		{
-			// Boss is waiting before descending here:
-			break;
-		}
+            // Kill all enemies before lasers
+            KillEnemies();
 
-		// Boss starts descending animation here:
-		_jumping_state = JumpingState::DESCENDING;
-		_jumping_timer = 0.0f;
+            for (GameObject* laser : _laser_wall->children)
+            {
+                laser->GetComponent<LaserController>()->ChangeState(LaserController::State::ACTIVATING);
+            }
+            _laser_wall_current_time = 0.0f;
+        }
 
-		ChangeStateText((jump_type + "Descending.").c_str());
-
-		if (_jump_post_on_highest_point_delay > 0.0f)
+        if (_jump_post_ascending_delay > 0.0f)
 		{
 			break;
 		}
-	}
+    }
 
-	case JumpingState::DESCENDING:
-	{
+    case JumpingState::ON_HIGHEST_POINT:
+    {
+        if (_current_jumping_mode == JumpingMode::LASER)
+        {
+            if (!ControlLasers())
+            {
+                break;
+            }
+        }
 
-		UpdateDescendingPosition();
+        if (_jumping_timer < _jump_on_highest_point_duration)
+        {
+            // Boss is on the highest point here:
+            break;
+        }
 
-		if (_jumping_timer < _jump_descending_duration)
+        // Boss starts waiting after the highest point animation here:
+        _jumping_state = JumpingState::POST_ON_HIGHEST_POINT;
+        _jumping_timer = 0.0f;
+
+        ChangeStateText((jump_type + "Waiting before descending.").c_str());
+
+        if (_jump_on_highest_point_duration > 0.0f)
+		{
+			break;
+		}
+    }
+
+    case JumpingState::POST_ON_HIGHEST_POINT:
+    {
+        if (_jumping_timer < _jump_post_on_highest_point_delay)
+        {
+            // Boss is waiting before descending here:
+            break;
+        }
+
+        // Boss starts descending animation here:
+        _jumping_state = JumpingState::DESCENDING;
+        _jumping_timer = 0.0f;
+
+        ChangeStateText((jump_type + "Descending.").c_str());
+
+        if (_jump_post_on_highest_point_delay > 0.0f)
+		{
+			break;
+		}
+    }
+
+    case JumpingState::DESCENDING:
+    {
+
+        UpdateDescendingPosition();
+
+        if (_jumping_timer < _jump_descending_duration)
+        {
+            // Boss is only descending here, the update continues:
+            break;
+        }
+
+        // Boss lands to the ground here:
+        _jumping_state = JumpingState::POST_DESCENDING_DELAY;
+        _jumping_timer = 0.0f;
+
+        // Boss is now hittable:			
+        hitable = true;
+
+        if (_jump_descending_duration > 0.0f)
 		{
 			// Boss is only descending here, the update continues:
 			break;
 		}
+    }
 
-		// Boss lands to the ground here:
-		_jumping_state = JumpingState::POST_DESCENDING_DELAY;
-		_jumping_timer = 0.0f;
+    case JumpingState::POST_DESCENDING_DELAY:
+    {
+        if (_jumping_timer < _jump_post_descending_delay)
+        {
+            // Boss is waiting to get up here:
+            break;
+        }
 
-		// Boss is now hittable:			
-		hitable = true;
-
-		if (_jump_descending_duration > 0.0f)
-		{
-			// Boss is only descending here, the update continues:
-			break;
-		}
-	}
-
-	case JumpingState::POST_DESCENDING_DELAY:
-	{
-		if (_jumping_timer < _jump_post_descending_delay)
-		{
-			// Boss is waiting to get up here:
-			break;
-		}
-
-		// Boss starts getting up here:
-		_jumping_state = JumpingState::GETTING_UP;
-		_jumping_timer = 0.0f;
+        // Boss starts getting up here:
+        _jumping_state = JumpingState::GETTING_UP;
+        _jumping_timer = 0.0f;
 
 
-		if (_current_jumping_mode == JumpingMode::STALAGMITE)
+        if (_current_jumping_mode == JumpingMode::STALAGMITE)
+        {
+            // TODO: Trigger special landing & getting up animation here.
+        }
+        else
+        {
+            // TODO: Trigger normal landing & getting up animation here.
+        }
+
+        if (_current_jumping_mode == JumpingMode::STALAGMITE)
 		{
 			animation->SendTrigger("isLandingCrystal");
 		}
@@ -868,156 +982,146 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
 		}
 
 
-		ChangeStateText((jump_type + "Landed & waiting").c_str());
+        ChangeStateText((jump_type + "Landed & waiting").c_str());
 
-		if (_jump_post_descending_delay > 0.0f)
+        if (_jump_post_descending_delay > 0.0f)
 		{
 			break;
 		}
-	}
+    }
 
-	case JumpingState::GETTING_UP:
-	{
-		player_camera->Shake(0.4f, 0.3f);
+    case JumpingState::GETTING_UP:
+    {
+		player_camera->Shake(0.8f, 2.f);
 
-		if (_jumping_timer < _jump_getting_up_duration)
-		{
-			// Boss is getting up here:
+        if (_jumping_timer < _jump_getting_up_duration)
+        {
+            // Boss is getting up here:
 
-			if (ShouldDealBasicAOE(_current_jumping_mode))
-			{
-				// TODO: Update basic attack AOE indicator & stuff here.
-			}
+            if (ShouldDealBasicAOE(_current_jumping_mode))
+            {
+                // TODO: Update basic attack AOE indicator & stuff here.
+            }
 
-			break;
-		}
+            break;
+        }
 
-		// Boss starts waiting for the skill here:
-		_jumping_state = JumpingState::WAITING_FOR_SKILL;
-		_jumping_timer = 0.0f;
+        // Boss starts waiting for the skill here:
+        _jumping_state = JumpingState::WAITING_FOR_SKILL;
+        _jumping_timer = 0.0f;
 
-		// Reset jump start and end positions to ensure correct & clean state:
-		_jump_end_position = float3::zero;
-		_jump_start_position = float3::zero;
+        // Reset jump start and end positions to ensure correct & clean state:
+        _jump_end_position = float3::zero;
+        _jump_start_position = float3::zero;
 
-		// Enable the agent component, it was disabled when the jumping was
-		// started:
-		agent->Enable();
-		agent->AddToCrowd();
+        // Enable the agent component, it was disabled when the jumping was
+        // started:
+        agent->Enable();
+        agent->AddToCrowd();
 
-		ChangeStateText((jump_type + "Waiting to cast skill").c_str());
+        ChangeStateText((jump_type + "Waiting to cast skill").c_str());
 
-		// TODO: Trigger Getting ready for skill animation here.
+        // TODO: Trigger Getting ready for skill animation here.
 
-		if (_jump_getting_up_duration > 0.0f)
-		{
-			break;
-		}
-	}
-
-
-	case JumpingState::WAITING_FOR_SKILL:
-	{
-		if (_jumping_timer < _jump_skill_delay)
-		{
-			// Boss is waiting to cast skill here:
-			break;
-		}
-
-		// Boss starts casting skill here:
-		_jumping_state = JumpingState::CASTING_SKILL;
-		_jumping_timer = 0.0f;
-
-		// TODO: Trigger skill casting animation here.
-
-		if (_current_jumping_mode == JumpingMode::STALAGMITE)
-		{
-			if (_stalagmite_manager)
-			{
-				_stalagmite_manager->TriggerStalagmites();
-			}
-		}
-		else if (_current_jumping_mode == JumpingMode::CRYSTAL)
-		{
-			// TODO: Trigger cocoon animation here.
-		}
-
-		ChangeStateText((jump_type + "Casting Skill.").c_str());
-
-		if (_jump_skill_delay > 0.0f)
+        if (_jump_getting_up_duration > 0.0f)
 		{
 			break;
 		}
-	}
-
-	case JumpingState::CASTING_SKILL:
-	{
-		if (_jumping_timer < _jump_skill_duration)
-		{
-			// Boss is casting skill here:
-			break;
-		}
-
-		if (_current_jumping_mode == JumpingMode::STALAGMITE)
-		{
-			if (_stalagmite_manager && !_stalagmite_manager->AllStalactitesCollapsed())
-			{
-				break;
-			}
-		}
-
-		// Boss deals the aoe damage here:
-		_jumping_state = JumpingState::POST_CAST_SKILL;
-		_jumping_timer = 0.0f;
-
-		// TODO: Deal skill damage here.
-		// TODO: Trigger post skill stuff here.
-
-		ChangeStateText((jump_type + "Casted Skill.").c_str());
-
-		if (_jump_skill_duration > 0.0f)
-		{
-			break;
-		}
-	}
-
-	case JumpingState::POST_CAST_SKILL:
-	{
-		if (_jumping_timer < _jump_post_skill_delay)
-		{
-			// Boss is doing whatever it's supposed to do after it casts aoe:
-			break;
-		}
-
-		// Boss finishes jump&aoe business here:
-		_jumping_state = JumpingState::NOT_TRIGGERED;
-		_jumping_timer = 0.0f;
-
-		// Transition to correct state:
-		if (ShouldDoAFollowUpJump())
-		{
-			// Set prev step something != JUMPING to ensure that state tree,
-			// runs TriggerJumping again:
-			prev_combat_state = CombatState::IDLE;
-			combat_state = CombatState::JUMPING;
-		}
-		else
-		{
-			prev_combat_state = CombatState::JUMPING;
-			combat_state = CombatState::SPAWNING_CRYSTALS;
-		}
+    }
 
 
-		if (_jump_post_skill_delay > 0.0f)
-		{
-			break;
-		}
-	}
+    case JumpingState::WAITING_FOR_SKILL:
+    {
+        if (_jumping_timer < _jump_skill_delay)
+        {
+            // Boss is waiting to cast skill here:
+            break;
+        }
 
-	case JumpingState::NOT_TRIGGERED:
-	case JumpingState::COUNT:
-		break;
-	}
+        // Boss starts casting skill here:
+        _jumping_state = JumpingState::CASTING_SKILL;
+        _jumping_timer = 0.0f;
+
+        // TODO: Trigger skill casting animation here.
+
+        if (_current_jumping_mode == JumpingMode::STALAGMITE)
+        {
+            if (_stalagmite_manager)
+            {
+                _stalagmite_manager->TriggerStalagmites();
+            }
+        }
+        else if (_current_jumping_mode == JumpingMode::CRYSTAL)
+        {
+            // TODO: Trigger cocoon animation here.
+        }
+
+        ChangeStateText((jump_type + "Casting Skill.").c_str());
+
+        break;
+    }
+
+    case JumpingState::CASTING_SKILL:
+    {
+        if (_jumping_timer < _jump_skill_duration)
+        {
+            // Boss is casting skill here:
+            break;
+        }
+
+        if (_current_jumping_mode == JumpingMode::STALAGMITE)
+        {
+            if (_stalagmite_manager && !_stalagmite_manager->AllStalactitesCollapsed())
+            {
+                break;
+            }
+        }
+
+        // Boss deals the aoe damage here:
+        _jumping_state = JumpingState::POST_CAST_SKILL;
+        _jumping_timer = 0.0f;
+
+        // TODO: Deal skill damage here.
+        // TODO: Trigger post skill stuff here.
+
+        ChangeStateText((jump_type + "Casted Skill.").c_str());
+
+        break;
+    }
+
+    case JumpingState::POST_CAST_SKILL:
+    {
+        if (_jumping_timer < _jump_post_skill_delay)
+        {
+            // Boss is doing whatever it's supposed to do after it casts aoe:
+            break;
+        }
+
+        // Boss finishes jump&aoe business here:
+        _jumping_state = JumpingState::NOT_TRIGGERED;
+        _jumping_timer = 0.0f;
+
+        // Transition to correct state:
+        if (ShouldDoAFollowUpJump())
+        {
+            // Set prev step something != JUMPING to ensure that state tree,
+            // runs TriggerJumping again:
+            prev_combat_state = CombatState::IDLE;
+            combat_state = CombatState::JUMPING;
+        }
+        else
+        {
+            prev_combat_state = CombatState::JUMPING;
+            combat_state = CombatState::SPAWNING_CRYSTALS;
+        }
+
+        break;
+    }
+
+    case JumpingState::NOT_TRIGGERED:
+    case JumpingState::COUNT:
+        break;
+    }
 }
 
 inline void LerpJump(
@@ -1204,6 +1308,14 @@ void Hachiko::Scripting::BossController::ResetEnemies()
 
 		enemy->SetActive(false);
 	}
+}
+
+void Hachiko::Scripting::BossController::KillEnemies()
+{
+    for (EnemyController* enemy_controller : enemies)
+    {
+        enemy_controller->SetDead();
+    }
 }
 
 /**

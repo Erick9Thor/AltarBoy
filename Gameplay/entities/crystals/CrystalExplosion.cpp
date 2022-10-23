@@ -25,6 +25,7 @@ Hachiko::Scripting::CrystalExplosion::CrystalExplosion(GameObject* game_object)
 	, _shake_intensity(0.1f)
 	, _seconds_shaking(0.8f)
 	, _should_regen(true)
+	, damage_effect_duration(0.5f)
 {
 }
 
@@ -38,6 +39,7 @@ void Hachiko::Scripting::CrystalExplosion::OnAwake()
 	obstacle = game_object->GetComponent<ComponentObstacle>();
 
 	_initial_transform = game_object->GetTransform()->GetGlobalMatrix();
+	crystal_geometry = game_object->FindDescendantWithName("Geo");
 }
 
 void Hachiko::Scripting::CrystalExplosion::OnStart()
@@ -51,6 +53,22 @@ void Hachiko::Scripting::CrystalExplosion::OnUpdate()
 	{
 		return;
 	}
+
+	if (damage_effect_remaining_time >= 0.0f)
+	{
+		damage_effect_remaining_time -= Time::DeltaTime();
+	}
+
+	if (damage_effect_remaining_time >= 0.0f)
+	{
+		float progress = damage_effect_remaining_time / damage_effect_duration;
+		crystal_geometry->ChangeEmissiveColor(float4(1.0f, 1.0f, 1.0f, progress), true);
+	}
+	else
+	{
+		crystal_geometry->ResetEmissive(true);
+	}
+	
 	
 	if (!_stats->IsAlive())
 	{
@@ -70,7 +88,6 @@ void Hachiko::Scripting::CrystalExplosion::OnUpdate()
 
 	if (_is_exploding)
 	{
-
 		if (_current_explosion_timer >= _timer_explosion)
 		{
 			ExplodeCrystal();
@@ -84,7 +101,7 @@ void Hachiko::Scripting::CrystalExplosion::OnUpdate()
 		}
 	}
 
-	if (_explosive_crystal)
+	if (_explosive_crystal && _stats->IsAlive() && !_is_exploding)
 	{
 		CheckRadiusExplosion();
 	}
@@ -103,16 +120,24 @@ void Hachiko::Scripting::CrystalExplosion::StartExplosion()
 
 void Hachiko::Scripting::CrystalExplosion::CheckRadiusExplosion()
 {
-	if (_detecting_radius >= game_object->GetTransform()->GetGlobalPosition().Distance(Scenes::GetPlayer()->GetTransform()->GetGlobalPosition()))
+	GameObject* player = Scenes::GetPlayer();
+	if (_detecting_radius >= game_object->GetTransform()->GetGlobalPosition().Distance(player->GetTransform()->GetGlobalPosition()) && player->GetComponent<PlayerController>()->IsAlive())
 	{
-		RegisterHit(_stats->_max_hp);
+		StartExplosion();
 	}
 }
 
 void Hachiko::Scripting::CrystalExplosion::ExplodeCrystal()
 {
 	_is_exploding = false;
+	_stats->ReceiveDamage(_stats->_max_hp);
 	
+	// Desable billboards
+	for (GameObject* child : _explosion_effect->children)
+	{
+		child->SetActive(false);
+	}
+
 	std::vector<GameObject*> check_hit = {};
 
 	if (enemies != nullptr)
@@ -193,16 +218,19 @@ float3 Hachiko::Scripting::CrystalExplosion::GetShakeOffset()
 
 void Hachiko::Scripting::CrystalExplosion::RegisterHit(int damage)
 {
-	if (!_stats)	return;
+	if (!_stats) return;
+
+	damage_effect_remaining_time = damage_effect_duration;
 
 	_stats->ReceiveDamage(damage);
-
 
 	if (!_stats->IsAlive() && !_is_destroyed)
 	{
 		if (_explosive_crystal)
 		{
-			StartExplosion();
+			//StartExplosion();
+			ExplodeCrystal();
+			DestroyCrystal();
 		}
 		else
 		{

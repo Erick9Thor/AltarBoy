@@ -1,6 +1,7 @@
 Event	ID	Name			Wwise Object Path	Notes
 	513571230	Play_Combat			\Music\Play_Combat	
 	913896232	Stop_Combat			\Music\Stop_Combat	
+	2953314807	Play_IntroCinematic			\Default Work Unit\Play_IntroCinematic	
 	3849525492	Play_Navigation			\Music\Play_Navigation	
 
 Switch Group	ID	Name			Wwise Object Path	Notes
@@ -27,17 +28,18 @@ Game Parameter	ID	Name			Wwise Object Path	Notes
 	3963624107	EnemyAware			\Music\EnemyAware	
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
-	31154168	Defeated-138bpm4-4_L4M-P0	D:\Erimos\Alpha2LastBuild\Alpha2LastBuild\Game\ErimosWwise\.cache\Windows\SFX\Defeated-138bpm4-4_L4M-P0_D79FB2B7.wem		\Interactive Music Hierarchy\Music\Erimos Music Switch Container\Defeated\Defeated-138bpm4-4_L4M-P0\Defeated-138bpm4-4_L4M-P0		1502676
-	126846833	Exp_b_108bpm	D:\Erimos\Alpha2LastBuild\Alpha2LastBuild\Game\ErimosWwise\.cache\Windows\SFX\Exp_b_108bpm_D79FB2B7.wem		\Interactive Music Hierarchy\Music\Erimos Music Switch Container\Exploracion A\Exp_b_108bpm\Exp_b_108bpm		3840256
-	181335723	Com_b_108bpm	D:\Erimos\Alpha2LastBuild\Alpha2LastBuild\Game\ErimosWwise\.cache\Windows\SFX\Com_b_108bpm_D79FB2B7.wem		\Interactive Music Hierarchy\Music\Erimos Music Switch Container\Combate A\Com_b_108bpm\Com_b_108bpm		3840240
-	220998542	Com_e_108bpm	D:\Erimos\Alpha2LastBuild\Alpha2LastBuild\Game\ErimosWwise\.cache\Windows\SFX\Com_e_108bpm_D79FB2B7.wem		\Interactive Music Hierarchy\Music\Erimos Music Switch Container\Combate A\Com_e_108bpm\Com_e_108bpm		3840240
-	283120831	Com_d_108bpm	D:\Erimos\Alpha2LastBuild\Alpha2LastBuild\Game\ErimosWwise\.cache\Windows\SFX\Com_d_108bpm_D79FB2B7.wem		\Interactive Music Hierarchy\Music\Erimos Music Switch Container\Combate A\Com_d_108bpm\Com_d_108bpm		3840240
-	341546302	Exp_a_108bpm	D:\Erimos\Alpha2LastBuild\Alpha2LastBuild\Game\ErimosWwise\.cache\Windows\SFX\Exp_a_108bpm_D79FB2B7.wem		\Interactive Music Hierarchy\Music\Erimos Music Switch Container\Exploracion A\Exp_a_108bpm\Exp_a_108bpm		3840256
-	503682454	Com_a_108bpm	D:\Erimos\Alpha2LastBuild\Alpha2LastBuild\Game\ErimosWwise\.cache\Windows\SFX\Com_a_108bpm_D79FB2B7.wem		\Interactive Music Hierarchy\Music\Erimos Music Switch Container\Combate A\Com_a_108bpm\Com_a_108bpm		3840240
-	715960795	Com_c_108bpm	D:\Erimos\Alpha2LastBuild\Alpha2LastBuild\Game\ErimosWwise\.cache\Windows\SFX\Com_c_108bpm_D79FB2B7.wem		\Interactive Music Hierarchy\Music\Erimos Music Switch Container\Combate A\Com_c_108bpm\Com_c_108bpm		3840240
-	718840818	Exp_d_108bpm	D:\Erimos\Alpha2LastBuild\Alpha2LastBuild\Game\ErimosWwise\.cache\Windows\SFX\Exp_d_108bpm_D79FB2B7.wem		\Interactive Music Hierarchy\Music\Erimos Music Switch Container\Exploracion A\Exp_d_108bpm\Exp_d_108bpm		3840256
-	759444810	Com_108bpm_full	D:\Erimos\Alpha2LastBuild\Alpha2LastBuild\Game\ErimosWwise\.cache\Windows\SFX\Com_108bpm_full_D79FB2B7.wem		\Interactive Music Hierarchy\Music\Erimos Music Switch Container\Combate A\Com_108bpm_full\Com_108bpm_full		19200240
-	854415901	Exp_c_108bpm	D:\Erimos\Alpha2LastBuild\Alpha2LastBuild\Game\ErimosWwise\.cache\Windows\SFX\Exp_c_108bpm_D79FB2B7.wem		\Interactive Music Hierarchy\Music\Erimos Music Switch Container\Exploracion A\Exp_c_108bpm\Exp_c_108bpm		3840256
-	903340460	Exp_108bpm_full	D:\Erimos\Alpha2LastBuild\Alpha2LastBuild\Game\ErimosWwise\.cache\Windows\SFX\Exp_108bpm_full_D79FB2B7.wem		\Interactive Music Hierarchy\Music\Erimos Music Switch Container\Exploracion A\Exp_108bpm_full\Exp_108bpm_full		19200256
-	988655692	Exp_e_108bpm	D:\Erimos\Alpha2LastBuild\Alpha2LastBuild\Game\ErimosWwise\.cache\Windows\SFX\Exp_e_108bpm_D79FB2B7.wem		\Interactive Music Hierarchy\Music\Erimos Music Switch Container\Exploracion A\Exp_e_108bpm\Exp_e_108bpm		3840256
+	31154168	Defeated-138bpm4-4_L4M-P0	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\Defeated-138bpm4-4_L4M-P0_D79FB2B7.wem		\Interactive Music Hierarchy\Music\Erimos Music Switch Container\Defeated\Defeated-138bpm4-4_L4M-P0\Defeated-138bpm4-4_L4M-P0		1502676
+	126846833	Exp_b_108bpm	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\Exp_b_108bpm_D79FB2B7.wem		\Interactive Music Hierarchy\Music\Erimos Music Switch Container\Exploracion A\Exp_b_108bpm\Exp_b_108bpm		3840256
+	181335723	Com_b_108bpm	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\Com_b_108bpm_D79FB2B7.wem		\Interactive Music Hierarchy\Music\Erimos Music Switch Container\Combate A\Com_b_108bpm\Com_b_108bpm		3840240
+	220998542	Com_e_108bpm	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\Com_e_108bpm_D79FB2B7.wem		\Interactive Music Hierarchy\Music\Erimos Music Switch Container\Combate A\Com_e_108bpm\Com_e_108bpm		3840240
+	283120831	Com_d_108bpm	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\Com_d_108bpm_D79FB2B7.wem		\Interactive Music Hierarchy\Music\Erimos Music Switch Container\Combate A\Com_d_108bpm\Com_d_108bpm		3840240
+	341546302	Exp_a_108bpm	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\Exp_a_108bpm_D79FB2B7.wem		\Interactive Music Hierarchy\Music\Erimos Music Switch Container\Exploracion A\Exp_a_108bpm\Exp_a_108bpm		3840256
+	503682454	Com_a_108bpm	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\Com_a_108bpm_D79FB2B7.wem		\Interactive Music Hierarchy\Music\Erimos Music Switch Container\Combate A\Com_a_108bpm\Com_a_108bpm		3840240
+	715960795	Com_c_108bpm	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\Com_c_108bpm_D79FB2B7.wem		\Interactive Music Hierarchy\Music\Erimos Music Switch Container\Combate A\Com_c_108bpm\Com_c_108bpm		3840240
+	718840818	Exp_d_108bpm	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\Exp_d_108bpm_D79FB2B7.wem		\Interactive Music Hierarchy\Music\Erimos Music Switch Container\Exploracion A\Exp_d_108bpm\Exp_d_108bpm		3840256
+	759444810	Com_108bpm_full	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\Com_108bpm_full_D79FB2B7.wem		\Interactive Music Hierarchy\Music\Erimos Music Switch Container\Combate A\Com_108bpm_full\Com_108bpm_full		19200240
+	854415901	Exp_c_108bpm	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\Exp_c_108bpm_D79FB2B7.wem		\Interactive Music Hierarchy\Music\Erimos Music Switch Container\Exploracion A\Exp_c_108bpm\Exp_c_108bpm		3840256
+	903340460	Exp_108bpm_full	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\Exp_108bpm_full_D79FB2B7.wem		\Interactive Music Hierarchy\Music\Erimos Music Switch Container\Exploracion A\Exp_108bpm_full\Exp_108bpm_full		19200256
+	988655692	Exp_e_108bpm	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\Exp_e_108bpm_D79FB2B7.wem		\Interactive Music Hierarchy\Music\Erimos Music Switch Container\Exploracion A\Exp_e_108bpm\Exp_e_108bpm		3840256
+	1003919086	Intro	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\ER_cinematica_masterv2_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Cinematics\Intro		3635564
 

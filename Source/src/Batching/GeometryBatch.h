@@ -11,7 +11,7 @@ namespace Hachiko
     class ComponentMeshRenderer;
     class TextureBatch;
 
-    enum class Program::PROGRAMS;
+    enum class Program::Programs;
 
     struct Material;
 
@@ -28,7 +28,7 @@ namespace Hachiko
         struct Layout
         {
             ResourceMesh::Layout mesh_layout;
-            Program::PROGRAMS shader;
+            Program::Programs shader;
         };
 
     public:

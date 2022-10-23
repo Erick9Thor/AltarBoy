@@ -67,6 +67,8 @@ namespace Hachiko
             void RegisterHit(int player_atk, math::float3 direction, float knockback, bool is_from_player, bool is_ranged);
             void GetParasite();
             bool ParasiteDropped() { return _parasite_dropped; };
+            // Instantly kill an enemy regardless of its state
+            void SetDead() { _force_state = EnemyState::DEAD; }
 
             void ResetEnemy();
             void ResetEnemyPosition();

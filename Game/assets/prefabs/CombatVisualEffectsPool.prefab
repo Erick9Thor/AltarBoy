@@ -6,7 +6,7 @@ component:
     type: 1
     enabled: true
     position: [0, 0, 0]
-    rotation: [-0, 0, -0]
+    rotation: [0, 0, 0]
     scale: [1, 1, 1]
   - !<script>
     type: 15
@@ -20,7 +20,7 @@ child:
         type: 1
         enabled: true
         position: [0, 0, 0]
-        rotation: [-0, 0, -0]
+        rotation: [0, 0, 0]
         scale: [1, 1, 1]
     child:
       - name: Claw_VFX
@@ -30,19 +30,19 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 8394830547045082758
-            tiles: [1, 1]
+            tiles: [4, 1]
             flip: [false, false]
-            billboard_lifetime: 0.5
+            billboard_lifetime: 0.4
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 1
+            animation_speed: 0.1
+            total_tiles: 4
             animation_loop: false
             color_cycles: 1
             color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7355], [0, 0, 0, 0, 0.9773]]
@@ -53,10 +53,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            blend_factor: 1
+            blend_factor: 0.9
             projection: true
+            randomize_tiles: false
       - name: Claw_VFX
         enabled: true
         component:
@@ -64,19 +65,19 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 8394830547045082758
-            tiles: [1, 1]
+            tiles: [4, 1]
             flip: [false, false]
-            billboard_lifetime: 0.5
+            billboard_lifetime: 0.4
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 1
+            animation_speed: 0.1
+            total_tiles: 4
             animation_loop: false
             color_cycles: 1
             color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7355], [0, 0, 0, 0, 0.9773]]
@@ -87,10 +88,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            blend_factor: 1
+            blend_factor: 0.9
             projection: true
+            randomize_tiles: false
       - name: Claw_VFX
         enabled: true
         component:
@@ -98,19 +100,19 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 8394830547045082758
-            tiles: [1, 1]
+            tiles: [4, 1]
             flip: [false, false]
-            billboard_lifetime: 0.5
+            billboard_lifetime: 0.4
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 1
+            animation_speed: 0.1
+            total_tiles: 4
             animation_loop: false
             color_cycles: 1
             color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7355], [0, 0, 0, 0, 0.9773]]
@@ -121,10 +123,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            blend_factor: 1
+            blend_factor: 0.9
             projection: true
+            randomize_tiles: false
       - name: Claw_VFX
         enabled: true
         component:
@@ -132,19 +135,19 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 8394830547045082758
-            tiles: [1, 1]
+            tiles: [4, 1]
             flip: [false, false]
-            billboard_lifetime: 0.5
+            billboard_lifetime: 0.4
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 1
+            animation_speed: 0.1
+            total_tiles: 4
             animation_loop: false
             color_cycles: 1
             color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7355], [0, 0, 0, 0, 0.9773]]
@@ -155,10 +158,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            blend_factor: 1
+            blend_factor: 0.9
             projection: true
+            randomize_tiles: false
       - name: Claw_VFX
         enabled: true
         component:
@@ -166,19 +170,19 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 8394830547045082758
-            tiles: [1, 1]
+            tiles: [4, 1]
             flip: [false, false]
-            billboard_lifetime: 0.5
+            billboard_lifetime: 0.4
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 1
+            animation_speed: 0.1
+            total_tiles: 4
             animation_loop: false
             color_cycles: 1
             color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7355], [0, 0, 0, 0, 0.9773]]
@@ -189,10 +193,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            blend_factor: 1
+            blend_factor: 0.9
             projection: true
+            randomize_tiles: false
       - name: Claw_VFX
         enabled: true
         component:
@@ -200,19 +205,19 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 8394830547045082758
-            tiles: [1, 1]
+            tiles: [4, 1]
             flip: [false, false]
-            billboard_lifetime: 0.5
+            billboard_lifetime: 0.4
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 1
+            animation_speed: 0.1
+            total_tiles: 4
             animation_loop: false
             color_cycles: 1
             color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7355], [0, 0, 0, 0, 0.9773]]
@@ -223,10 +228,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            blend_factor: 1
+            blend_factor: 0.9
             projection: true
+            randomize_tiles: false
       - name: Claw_VFX
         enabled: true
         component:
@@ -234,19 +240,19 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 8394830547045082758
-            tiles: [1, 1]
+            tiles: [4, 1]
             flip: [false, false]
-            billboard_lifetime: 0.5
+            billboard_lifetime: 0.4
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 1
+            animation_speed: 0.1
+            total_tiles: 4
             animation_loop: false
             color_cycles: 1
             color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7355], [0, 0, 0, 0, 0.9773]]
@@ -257,10 +263,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            blend_factor: 1
+            blend_factor: 0.9
             projection: true
+            randomize_tiles: false
       - name: Claw_VFX
         enabled: true
         component:
@@ -268,19 +275,19 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 8394830547045082758
-            tiles: [1, 1]
+            tiles: [4, 1]
             flip: [false, false]
-            billboard_lifetime: 0.5
+            billboard_lifetime: 0.4
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 1
+            animation_speed: 0.1
+            total_tiles: 4
             animation_loop: false
             color_cycles: 1
             color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7355], [0, 0, 0, 0, 0.9773]]
@@ -291,10 +298,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            blend_factor: 1
+            blend_factor: 0.9
             projection: true
+            randomize_tiles: false
       - name: Claw_VFX
         enabled: true
         component:
@@ -302,19 +310,19 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 8394830547045082758
-            tiles: [1, 1]
+            tiles: [4, 1]
             flip: [false, false]
-            billboard_lifetime: 0.5
+            billboard_lifetime: 0.4
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 1
+            animation_speed: 0.1
+            total_tiles: 4
             animation_loop: false
             color_cycles: 1
             color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7355], [0, 0, 0, 0, 0.9773]]
@@ -325,10 +333,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            blend_factor: 1
+            blend_factor: 0.9
             projection: true
+            randomize_tiles: false
       - name: Claw_VFX
         enabled: true
         component:
@@ -336,19 +345,19 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 8394830547045082758
-            tiles: [1, 1]
+            tiles: [4, 1]
             flip: [false, false]
-            billboard_lifetime: 0.5
+            billboard_lifetime: 0.4
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 1
+            animation_speed: 0.1
+            total_tiles: 4
             animation_loop: false
             color_cycles: 1
             color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7355], [0, 0, 0, 0, 0.9773]]
@@ -359,10 +368,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            blend_factor: 1
+            blend_factor: 0.9
             projection: true
+            randomize_tiles: false
   - name: Sword
     enabled: true
     component:
@@ -370,7 +380,7 @@ child:
         type: 1
         enabled: true
         position: [0, 0, 0]
-        rotation: [-0, 0, -0]
+        rotation: [0, 0, 0]
         scale: [1, 1, 1]
     child:
       - name: Sword_VFX
@@ -380,18 +390,18 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 2191468291253132004
-            tiles: [1, 1]
+            tiles: [4, 1]
             flip: [false, false]
-            billboard_lifetime: 1
+            billboard_lifetime: 0.4
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
+            animation_speed: 0.15
             total_tiles: 1
             animation_loop: false
             color_cycles: 1
@@ -403,10 +413,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Sword_VFX
         enabled: true
         component:
@@ -414,18 +425,18 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 2191468291253132004
-            tiles: [1, 1]
+            tiles: [4, 1]
             flip: [false, false]
-            billboard_lifetime: 1
+            billboard_lifetime: 0.4
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
+            animation_speed: 0.15
             total_tiles: 1
             animation_loop: false
             color_cycles: 1
@@ -437,10 +448,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Sword_VFX
         enabled: true
         component:
@@ -448,18 +460,18 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 2191468291253132004
-            tiles: [1, 1]
+            tiles: [4, 1]
             flip: [false, false]
-            billboard_lifetime: 1
+            billboard_lifetime: 0.4
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
+            animation_speed: 0.15
             total_tiles: 1
             animation_loop: false
             color_cycles: 1
@@ -471,10 +483,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Sword_VFX
         enabled: true
         component:
@@ -482,18 +495,18 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 2191468291253132004
-            tiles: [1, 1]
+            tiles: [4, 1]
             flip: [false, false]
-            billboard_lifetime: 1
+            billboard_lifetime: 0.4
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
+            animation_speed: 0.15
             total_tiles: 1
             animation_loop: false
             color_cycles: 1
@@ -505,10 +518,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Sword_VFX
         enabled: true
         component:
@@ -516,18 +530,18 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 2191468291253132004
-            tiles: [1, 1]
+            tiles: [4, 1]
             flip: [false, false]
-            billboard_lifetime: 1
+            billboard_lifetime: 0.4
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
+            animation_speed: 0.15
             total_tiles: 1
             animation_loop: false
             color_cycles: 1
@@ -539,10 +553,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Sword_VFX
         enabled: true
         component:
@@ -550,18 +565,18 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 2191468291253132004
-            tiles: [1, 1]
+            tiles: [4, 1]
             flip: [false, false]
-            billboard_lifetime: 1
+            billboard_lifetime: 0.4
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
+            animation_speed: 0.15
             total_tiles: 1
             animation_loop: false
             color_cycles: 1
@@ -573,10 +588,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Sword_VFX
         enabled: true
         component:
@@ -584,18 +600,18 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 2191468291253132004
-            tiles: [1, 1]
+            tiles: [4, 1]
             flip: [false, false]
-            billboard_lifetime: 1
+            billboard_lifetime: 0.4
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
+            animation_speed: 0.15
             total_tiles: 1
             animation_loop: false
             color_cycles: 1
@@ -607,10 +623,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Sword_VFX
         enabled: true
         component:
@@ -618,18 +635,18 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 2191468291253132004
-            tiles: [1, 1]
+            tiles: [4, 1]
             flip: [false, false]
-            billboard_lifetime: 1
+            billboard_lifetime: 0.4
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
+            animation_speed: 0.15
             total_tiles: 1
             animation_loop: false
             color_cycles: 1
@@ -641,10 +658,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Sword_VFX
         enabled: true
         component:
@@ -652,18 +670,18 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 2191468291253132004
-            tiles: [1, 1]
+            tiles: [4, 1]
             flip: [false, false]
-            billboard_lifetime: 1
+            billboard_lifetime: 0.4
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
+            animation_speed: 0.15
             total_tiles: 1
             animation_loop: false
             color_cycles: 1
@@ -675,10 +693,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Sword_VFX
         enabled: true
         component:
@@ -686,18 +705,18 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 2191468291253132004
-            tiles: [1, 1]
+            tiles: [4, 1]
             flip: [false, false]
-            billboard_lifetime: 1
+            billboard_lifetime: 0.4
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
+            animation_speed: 0.15
             total_tiles: 1
             animation_loop: false
             color_cycles: 1
@@ -709,10 +728,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
   - name: Melee
     enabled: true
     component:
@@ -720,7 +740,7 @@ child:
         type: 1
         enabled: true
         position: [0, 0, 0]
-        rotation: [-0, 0, -0]
+        rotation: [0, 0, 0]
         scale: [1, 1, 1]
     child:
       - name: Melee_VFX
@@ -730,19 +750,19 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 9492710251713022701
-            tiles: [1, 1]
+            tiles: [2, 1]
             flip: [false, false]
-            billboard_lifetime: 0.4
+            billboard_lifetime: 0.6
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 1
+            animation_speed: 0.3
+            total_tiles: 2
             animation_loop: false
             color_cycles: 1
             color_gradient: [[1, 1, 1, 0, 0.6426], [0, 0, 0, 0, 0.8905]]
@@ -753,10 +773,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Melee_VFX
         enabled: true
         component:
@@ -764,19 +785,19 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 9492710251713022701
-            tiles: [1, 1]
+            tiles: [2, 1]
             flip: [false, false]
-            billboard_lifetime: 0.4
+            billboard_lifetime: 0.6
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 1
+            animation_speed: 0.3
+            total_tiles: 2
             animation_loop: false
             color_cycles: 1
             color_gradient: [[1, 1, 1, 0, 0.6426], [0, 0, 0, 0, 0.8905]]
@@ -787,10 +808,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Melee_VFX
         enabled: true
         component:
@@ -798,19 +820,19 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 9492710251713022701
-            tiles: [1, 1]
+            tiles: [2, 1]
             flip: [false, false]
-            billboard_lifetime: 0.4
+            billboard_lifetime: 0.6
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 1
+            animation_speed: 0.3
+            total_tiles: 2
             animation_loop: false
             color_cycles: 1
             color_gradient: [[1, 1, 1, 0, 0.6426], [0, 0, 0, 0, 0.8905]]
@@ -821,10 +843,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Melee_VFX
         enabled: true
         component:
@@ -832,19 +855,19 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 9492710251713022701
-            tiles: [1, 1]
+            tiles: [2, 1]
             flip: [false, false]
-            billboard_lifetime: 0.4
+            billboard_lifetime: 0.6
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 1
+            animation_speed: 0.3
+            total_tiles: 2
             animation_loop: false
             color_cycles: 1
             color_gradient: [[1, 1, 1, 0, 0.6426], [0, 0, 0, 0, 0.8905]]
@@ -855,10 +878,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Melee_VFX
         enabled: true
         component:
@@ -866,19 +890,19 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 9492710251713022701
-            tiles: [1, 1]
+            tiles: [2, 1]
             flip: [false, false]
-            billboard_lifetime: 0.4
+            billboard_lifetime: 0.6
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 1
+            animation_speed: 0.3
+            total_tiles: 2
             animation_loop: false
             color_cycles: 1
             color_gradient: [[1, 1, 1, 0, 0.6426], [0, 0, 0, 0, 0.8905]]
@@ -889,10 +913,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Melee_VFX
         enabled: true
         component:
@@ -900,19 +925,19 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 9492710251713022701
-            tiles: [1, 1]
+            tiles: [2, 1]
             flip: [false, false]
-            billboard_lifetime: 0.4
+            billboard_lifetime: 0.6
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 1
+            animation_speed: 0.3
+            total_tiles: 2
             animation_loop: false
             color_cycles: 1
             color_gradient: [[1, 1, 1, 0, 0.6426], [0, 0, 0, 0, 0.8905]]
@@ -923,10 +948,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Melee_VFX
         enabled: true
         component:
@@ -934,19 +960,19 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 9492710251713022701
-            tiles: [1, 1]
+            tiles: [2, 1]
             flip: [false, false]
-            billboard_lifetime: 0.4
+            billboard_lifetime: 0.6
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 1
+            animation_speed: 0.3
+            total_tiles: 2
             animation_loop: false
             color_cycles: 1
             color_gradient: [[1, 1, 1, 0, 0.6426], [0, 0, 0, 0, 0.8905]]
@@ -957,10 +983,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Melee_VFX
         enabled: true
         component:
@@ -968,19 +995,19 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 9492710251713022701
-            tiles: [1, 1]
+            tiles: [2, 1]
             flip: [false, false]
-            billboard_lifetime: 0.4
+            billboard_lifetime: 0.6
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 1
+            animation_speed: 0.3
+            total_tiles: 2
             animation_loop: false
             color_cycles: 1
             color_gradient: [[1, 1, 1, 0, 0.6426], [0, 0, 0, 0, 0.8905]]
@@ -991,10 +1018,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Melee_VFX
         enabled: true
         component:
@@ -1002,19 +1030,19 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 9492710251713022701
-            tiles: [1, 1]
+            tiles: [2, 1]
             flip: [false, false]
-            billboard_lifetime: 0.4
+            billboard_lifetime: 0.6
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 1
+            animation_speed: 0.3
+            total_tiles: 2
             animation_loop: false
             color_cycles: 1
             color_gradient: [[1, 1, 1, 0, 0.6426], [0, 0, 0, 0, 0.8905]]
@@ -1025,10 +1053,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Melee_VFX
         enabled: true
         component:
@@ -1036,19 +1065,19 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 9492710251713022701
-            tiles: [1, 1]
+            tiles: [2, 1]
             flip: [false, false]
-            billboard_lifetime: 0.4
+            billboard_lifetime: 0.6
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 1
+            animation_speed: 0.3
+            total_tiles: 2
             animation_loop: false
             color_cycles: 1
             color_gradient: [[1, 1, 1, 0, 0.6426], [0, 0, 0, 0, 0.8905]]
@@ -1059,10 +1088,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
   - name: Hammer
     enabled: true
     component:
@@ -1070,7 +1100,7 @@ child:
         type: 1
         enabled: true
         position: [0, 0, 0]
-        rotation: [-0, 0, -0]
+        rotation: [0, 0, 0]
         scale: [1, 1, 1]
     child:
       - name: Hammer_VFX
@@ -1080,19 +1110,19 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 3019880384832892068
-            tiles: [1, 1]
+            tiles: [3, 1]
             flip: [false, false]
-            billboard_lifetime: 1
+            billboard_lifetime: 0.6
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 1
+            animation_speed: 0.2
+            total_tiles: 3
             animation_loop: false
             color_cycles: 1
             color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
@@ -1103,10 +1133,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Hammer_VFX
         enabled: true
         component:
@@ -1114,19 +1145,19 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 3019880384832892068
-            tiles: [1, 1]
+            tiles: [3, 1]
             flip: [false, false]
-            billboard_lifetime: 1
+            billboard_lifetime: 0.6
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 1
+            animation_speed: 0.2
+            total_tiles: 3
             animation_loop: false
             color_cycles: 1
             color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
@@ -1137,10 +1168,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Hammer_VFX
         enabled: true
         component:
@@ -1148,19 +1180,19 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 3019880384832892068
-            tiles: [1, 1]
+            tiles: [3, 1]
             flip: [false, false]
-            billboard_lifetime: 1
+            billboard_lifetime: 0.6
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 1
+            animation_speed: 0.2
+            total_tiles: 3
             animation_loop: false
             color_cycles: 1
             color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
@@ -1171,10 +1203,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Hammer_VFX
         enabled: true
         component:
@@ -1182,19 +1215,19 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 3019880384832892068
-            tiles: [1, 1]
+            tiles: [3, 1]
             flip: [false, false]
-            billboard_lifetime: 1
+            billboard_lifetime: 0.6
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 1
+            animation_speed: 0.2
+            total_tiles: 3
             animation_loop: false
             color_cycles: 1
             color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
@@ -1205,10 +1238,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Hammer_VFX
         enabled: true
         component:
@@ -1216,19 +1250,19 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 3019880384832892068
-            tiles: [1, 1]
+            tiles: [3, 1]
             flip: [false, false]
-            billboard_lifetime: 1
+            billboard_lifetime: 0.6
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 1
+            animation_speed: 0.2
+            total_tiles: 3
             animation_loop: false
             color_cycles: 1
             color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
@@ -1239,10 +1273,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Hammer_VFX
         enabled: true
         component:
@@ -1250,19 +1285,19 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 3019880384832892068
-            tiles: [1, 1]
+            tiles: [3, 1]
             flip: [false, false]
-            billboard_lifetime: 1
+            billboard_lifetime: 0.6
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 1
+            animation_speed: 0.2
+            total_tiles: 3
             animation_loop: false
             color_cycles: 1
             color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
@@ -1273,10 +1308,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Hammer_VFX
         enabled: true
         component:
@@ -1284,19 +1320,19 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 3019880384832892068
-            tiles: [1, 1]
+            tiles: [3, 1]
             flip: [false, false]
-            billboard_lifetime: 1
+            billboard_lifetime: 0.6
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 1
+            animation_speed: 0.2
+            total_tiles: 3
             animation_loop: false
             color_cycles: 1
             color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
@@ -1307,10 +1343,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Hammer_VFX
         enabled: true
         component:
@@ -1318,19 +1355,19 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 3019880384832892068
-            tiles: [1, 1]
+            tiles: [3, 1]
             flip: [false, false]
-            billboard_lifetime: 1
+            billboard_lifetime: 0.6
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 1
+            animation_speed: 0.2
+            total_tiles: 3
             animation_loop: false
             color_cycles: 1
             color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
@@ -1341,10 +1378,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Hammer_VFX
         enabled: true
         component:
@@ -1352,19 +1390,19 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 3019880384832892068
-            tiles: [1, 1]
+            tiles: [3, 1]
             flip: [false, false]
-            billboard_lifetime: 1
+            billboard_lifetime: 0.6
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 1
+            animation_speed: 0.2
+            total_tiles: 3
             animation_loop: false
             color_cycles: 1
             color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
@@ -1375,10 +1413,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Hammer_VFX
         enabled: true
         component:
@@ -1386,19 +1425,19 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
             enabled: true
             play_on_awake: false
             texture_id: 3019880384832892068
-            tiles: [1, 1]
+            tiles: [3, 1]
             flip: [false, false]
-            billboard_lifetime: 1
+            billboard_lifetime: 0.6
             properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            animation_speed: 1
-            total_tiles: 1
+            animation_speed: 0.2
+            total_tiles: 3
             animation_loop: false
             color_cycles: 1
             color_gradient: [[0.9884, 0.9884, 0.9884, 0, 0.7562], [0, 0, 0, 0, 0.9256]]
@@ -1409,10 +1448,11 @@ child:
             rotation_section: false
             rotation_over_time: [true, false, 1, [1, 2], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            start_size: [true, true, 0, [1, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 2.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
   - name: Worm
     enabled: true
     component:
@@ -1420,7 +1460,7 @@ child:
         type: 1
         enabled: true
         position: [0, 0, 0]
-        rotation: [-0, 0, -0]
+        rotation: [0, 0, 0]
         scale: [1, 1, 1]
     child:
       - name: Worm_VFX
@@ -1430,7 +1470,7 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
@@ -1457,6 +1497,7 @@ child:
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Worm_VFX
         enabled: true
         component:
@@ -1464,7 +1505,7 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
@@ -1491,6 +1532,7 @@ child:
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Worm_VFX
         enabled: true
         component:
@@ -1498,7 +1540,7 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
@@ -1525,6 +1567,7 @@ child:
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Worm_VFX
         enabled: true
         component:
@@ -1532,7 +1575,7 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
@@ -1559,6 +1602,7 @@ child:
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Worm_VFX
         enabled: true
         component:
@@ -1566,7 +1610,7 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
@@ -1593,6 +1637,7 @@ child:
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Worm_VFX
         enabled: true
         component:
@@ -1600,7 +1645,7 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
@@ -1627,6 +1672,7 @@ child:
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Worm_VFX
         enabled: true
         component:
@@ -1634,7 +1680,7 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
@@ -1661,6 +1707,7 @@ child:
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Worm_VFX
         enabled: true
         component:
@@ -1668,7 +1715,7 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
@@ -1695,6 +1742,7 @@ child:
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Worm_VFX
         enabled: true
         component:
@@ -1702,7 +1750,7 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
@@ -1729,6 +1777,7 @@ child:
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Worm_VFX
         enabled: true
         component:
@@ -1736,7 +1785,7 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
@@ -1763,6 +1812,7 @@ child:
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
   - name: Beetle
     enabled: true
     component:
@@ -1770,7 +1820,7 @@ child:
         type: 1
         enabled: true
         position: [0, 0, 0]
-        rotation: [-0, 0, -0]
+        rotation: [0, 0, 0]
         scale: [1, 1, 1]
     child:
       - name: Beetle_VFX
@@ -1780,7 +1830,7 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
@@ -1807,6 +1857,7 @@ child:
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Beetle_VFX
         enabled: true
         component:
@@ -1814,7 +1865,7 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
@@ -1841,6 +1892,7 @@ child:
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Beetle_VFX
         enabled: true
         component:
@@ -1848,7 +1900,7 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
@@ -1875,6 +1927,7 @@ child:
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Beetle_VFX
         enabled: true
         component:
@@ -1882,7 +1935,7 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
@@ -1909,6 +1962,7 @@ child:
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Beetle_VFX
         enabled: true
         component:
@@ -1916,7 +1970,7 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
@@ -1943,6 +1997,7 @@ child:
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Beetle_VFX
         enabled: true
         component:
@@ -1950,7 +2005,7 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
@@ -1977,6 +2032,7 @@ child:
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Beetle_VFX
         enabled: true
         component:
@@ -1984,7 +2040,7 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
@@ -2011,6 +2067,7 @@ child:
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Beetle_VFX
         enabled: true
         component:
@@ -2018,7 +2075,7 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
@@ -2045,6 +2102,7 @@ child:
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Beetle_VFX
         enabled: true
         component:
@@ -2052,7 +2110,7 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
@@ -2079,6 +2137,7 @@ child:
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false
       - name: Beetle_VFX
         enabled: true
         component:
@@ -2086,7 +2145,7 @@ child:
             type: 1
             enabled: true
             position: [-79.6, 9.48, -56.25]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<billboard>
             type: 21
@@ -2113,3 +2172,4 @@ child:
             start_rotation: [true, true, 1, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             blend_factor: 1
             projection: true
+            randomize_tiles: false

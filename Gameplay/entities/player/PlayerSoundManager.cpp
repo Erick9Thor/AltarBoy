@@ -21,6 +21,16 @@ void Hachiko::Scripting::PlayerSoundManager::OnAwake()
 	_player_controller = game_object->GetComponent<PlayerController>();
 }
 
+void Hachiko::Scripting::PlayerSoundManager::OnStart()
+{
+	if (_audio_source == nullptr)
+	{
+		return;
+	}
+
+	SetGroundEffect();
+}
+
 void Hachiko::Scripting::PlayerSoundManager::OnUpdate()
 {
 	PlayerState state = _player_controller->GetState();
@@ -128,5 +138,17 @@ void Hachiko::Scripting::PlayerSoundManager::OnUpdate()
 	if (_timer >= _current_frequency)
 	{
 		_timer = 0.0f;
+	}
+}
+
+void Hachiko::Scripting::PlayerSoundManager::SetGroundEffect()
+{
+	if (_level == 1)
+	{
+		_audio_source->SetSwitch(Sounds::SWITCH_GROUP_FOOTSTEPS, Sounds::SWITCH_STATE_FOOTSTEPS_GRAVEL);
+	}
+	else
+	{
+		_audio_source->SetSwitch(Sounds::SWITCH_GROUP_FOOTSTEPS, Sounds::SWITCH_STATE_FOOTSTEPS_STANDARD);
 	}
 }

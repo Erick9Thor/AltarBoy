@@ -29,7 +29,7 @@ void Hachiko::Scripting::BounceEffect::OnUpdate()
     }
     else if (_val < 0)
     {
-        _val = 0;
+        _value = 0;
         direction = 1.0f;
     }
 

@@ -170,6 +170,16 @@ namespace Hachiko
             loading_screen_config = node;
         }
 
+        [[nodiscard]] bool GetSSAOEnabled() const
+        {
+            return ssao_enabled;
+        }
+
+        void SetSSAOEnabled(bool enabled)
+        {
+            ssao_enabled = enabled;
+        }
+
     private:
         bool display_debug_draw = false;
 
@@ -186,6 +196,7 @@ namespace Hachiko
         bool draw_quadtree = false;
         bool shadow_mapping_gaussian_blurring_enabled = true;
         bool shadow_pass_enabled = true;
+        bool ssao_enabled = true;
         float fps_threshold = 1000.0f / max_fps;
         Editor::Theme::Type theme = Editor::Theme::Type::DARK;
         bool undo_redo_active = true;
