@@ -13,8 +13,13 @@ namespace Hachiko::Sounds
 	constexpr const wchar_t* PARASITE_PICKUP = L"Play_ParasitePickUp";
 
 	// Enemy
-	constexpr const wchar_t* ENEMY_ATTACK = L"Play_EnemyAttack";
-	constexpr const wchar_t* ENEMY_DIE = L"Play_EnemyDie";
+	constexpr const wchar_t* BEETLE_ATTACK = L"Play_BeetleAttack";
+	constexpr const wchar_t* BEETLE_DEATH = L"Play_BeetleDeath";
+	constexpr const wchar_t* WORM_SPAWN = L"Play_WormSpawn";
+	constexpr const wchar_t* WORM_ROAR = L"Play_WormRoar";
+	constexpr const wchar_t* WORM_ATTACK = L"Play_WormAttack";
+	constexpr const wchar_t* WORM_HIDE = L"Play_WormHide";
+	constexpr const wchar_t* WORM_DEATH = L"Play_WormDeath";
 
 	// Enviroment
 	constexpr const wchar_t* CRYSTAL = L"Play_Crystal";
@@ -23,7 +28,6 @@ namespace Hachiko::Sounds
 	constexpr const wchar_t* PLAY_PEBBLE = L"Play_Pebble";
 	constexpr const wchar_t* STOP_PEBBLE = L"Stop_Pebble";
 	constexpr const wchar_t* PLAY_LASER = L"Play_Laser";
-	constexpr const wchar_t* STOP_LASER = L"Stop_Laser";
 	constexpr const wchar_t* PLAY_LASER_HIT = L"Play_Laser_Hit";
 	constexpr const wchar_t* PLAY_SPLASH = L"Play_Splash";
 
@@ -43,8 +47,15 @@ namespace Hachiko::Sounds
 	//UI
 	constexpr const wchar_t* CLICK = L"Play_UIClick";
 	constexpr const wchar_t* HOVER = L"Play_UIHover";
+	constexpr const wchar_t* INTRO_CINEMATIC = L"Play_IntroCinematic";
 
 	// Wwise RTPC
 	// Enemy
 	constexpr const wchar_t* ENEMY_AWARE = L"EnemyAware";
+
+	// Wwise Switch
+	// Footsteps
+	constexpr const wchar_t* SWITCH_GROUP_FOOTSTEPS = L"Footsteps";
+	constexpr const wchar_t* SWITCH_STATE_FOOTSTEPS_GRAVEL = L"Gravel";
+	constexpr const wchar_t* SWITCH_STATE_FOOTSTEPS_STANDARD = L"Standard";
 } // namespace Hachiko::Sounds

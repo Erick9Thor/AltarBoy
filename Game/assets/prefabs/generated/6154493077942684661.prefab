@@ -1,0 +1,3594 @@
+prefab_name: Level2_1stPass
+name: RootNode
+enabled: true
+component:
+  - !<transform>
+    type: 1
+    enabled: true
+    position: [0, 0, 0]
+    rotation: [0, 0, 0]
+    scale: [1, 1, 1]
+child:
+  - name: trap_grp
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0]
+        scale: [0.01, 0.01, 0.01]
+    child:
+      - name: crystalPlatform_mesh
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [-5864, -166.8, -29.8]
+            rotation: [0, 0, 0]
+            scale: [92.13, 92.13, 92.13]
+          - !<mesh_renderer>
+            type: 2
+            enabled: true
+            mesh_id: 5801198398910514086
+            navigable: false
+            visible: true
+            casting_shadow: true
+            material_id: 2763340240390045342
+            tint_color: [1, 1, 1, 1]
+      - name: crystalPlatform_mesh001
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [-6480, -166.8, -1573]
+            rotation: [0, -89.98, 0]
+            scale: [92.13, 92.13, 92.13]
+          - !<mesh_renderer>
+            type: 2
+            enabled: true
+            mesh_id: 4452116195361882531
+            navigable: false
+            visible: true
+            casting_shadow: true
+            material_id: 2763340240390045342
+            tint_color: [1, 1, 1, 1]
+      - name: crystalPlatform_mesh002
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [-6497, -166.8, -2299]
+            rotation: [0, -89.98, 0]
+            scale: [92.13, 92.13, 92.13]
+          - !<mesh_renderer>
+            type: 2
+            enabled: true
+            mesh_id: 11191730112424390995
+            navigable: false
+            visible: true
+            casting_shadow: true
+            material_id: 2763340240390045342
+            tint_color: [1, 1, 1, 1]
+      - name: crystalPlatform_mesh003
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [-2022, -166.8, -31.17]
+            rotation: [0, 0, 0]
+            scale: [92.13, 92.13, 92.13]
+          - !<mesh_renderer>
+            type: 2
+            enabled: true
+            mesh_id: 13579512724767563362
+            navigable: false
+            visible: true
+            casting_shadow: true
+            material_id: 2763340240390045342
+            tint_color: [1, 1, 1, 1]
+      - name: crystalPlatform_mesh004
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [4384, -166.8, 9319]
+            rotation: [0, -89.98, 0]
+            scale: [92.13, 92.13, 92.13]
+          - !<mesh_renderer>
+            type: 2
+            enabled: true
+            mesh_id: 6301201344966988628
+            navigable: false
+            visible: true
+            casting_shadow: true
+            material_id: 2763340240390045342
+            tint_color: [1, 1, 1, 1]
+      - name: crystalPlatform_mesh005
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [4384, -166.8, 9939]
+            rotation: [0, -89.98, 0]
+            scale: [92.13, 92.13, 92.13]
+          - !<mesh_renderer>
+            type: 2
+            enabled: true
+            mesh_id: 9895536049781062075
+            navigable: false
+            visible: true
+            casting_shadow: true
+            material_id: 2763340240390045342
+            tint_color: [1, 1, 1, 1]
+      - name: crystalPlatform_mesh006
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [1.055e+04, -166.8, 9036]
+            rotation: [0, 0, 0]
+            scale: [92.13, 92.13, 92.13]
+          - !<mesh_renderer>
+            type: 2
+            enabled: true
+            mesh_id: 5072266446683899918
+            navigable: false
+            visible: true
+            casting_shadow: true
+            material_id: 2763340240390045342
+            tint_color: [1, 1, 1, 1]
+      - name: crystalPlatform_mesh007
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [1.133e+04, -166.8, 9036]
+            rotation: [0, 0, 0]
+            scale: [92.13, 92.13, 92.13]
+          - !<mesh_renderer>
+            type: 2
+            enabled: true
+            mesh_id: 2614211998973478724
+            navigable: false
+            visible: true
+            casting_shadow: true
+            material_id: 2763340240390045342
+            tint_color: [1, 1, 1, 1]
+  - name: colaiderPlane_mesh
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-70.58, 1.108, -56.97]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 8826932028410575835
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 6750369022920963075
+        tint_color: [1, 1, 1, 1]
+  - name: columBase_mesh
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-74.3, 14.84, -61.25]
+        rotation: [-90, 0, 0]
+        scale: [0.2206, 0.2206, 0.1682]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 9126159749518909213
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 6750369022920963075
+        tint_color: [1, 1, 1, 1]
+  - name: bridgeWhole_mesh
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-63.03, 1.574, -58.99]
+        rotation: [-90, 0, 0]
+        scale: [0.6506, 0.6506, 0.6506]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 7152389930754997767
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 18317123039148962586
+        tint_color: [1, 1, 1, 1]
+  - name: cristalEnergy_mesh
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [53.42, -29.93, -18.48]
+        rotation: [-90, 0, 0]
+        scale: [0.9965, 0.9965, 0.9965]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 11053386803510151315
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 6203751403559151145
+        tint_color: [1, 1, 1, 1]
+  - name: cristalEnergy_mesh001
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [21.3, -29.93, -32.24]
+        rotation: [-90, 0, 0]
+        scale: [0.9965, 0.9965, 0.9965]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 3924542912559651871
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 6203751403559151145
+        tint_color: [1, 1, 1, 1]
+  - name: cristalEnergy_mesh002
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-14.1, -30.75, -25.45]
+        rotation: [-90.28, 4.298, -103]
+        scale: [0.3814, 0.3483, 0.749]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 11730119046314080980
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 6203751403559151145
+        tint_color: [1, 1, 1, 1]
+  - name: cristalEnergy_mesh003
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-43.57, -22.87, -34.73]
+        rotation: [-90, 0, 0]
+        scale: [0.9965, 0.9965, 0.9965]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 4000576667980978453
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 6203751403559151145
+        tint_color: [1, 1, 1, 1]
+  - name: cristalEnergy_mesh004
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [2.019, -13.47, -40.93]
+        rotation: [-90, 0, 0]
+        scale: [0.5327, 0.5327, 0.5327]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 228950961493075494
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 6203751403559151145
+        tint_color: [1, 1, 1, 1]
+  - name: cristalEnergy_mesh005
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-23.37, -13.47, -44.34]
+        rotation: [-90, 0, 0]
+        scale: [0.5327, 0.5327, 0.5327]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 9050571410717723360
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 6203751403559151145
+        tint_color: [1, 1, 1, 1]
+  - name: cristalEnergy_mesh006
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-34.54, -13.71, -14.92]
+        rotation: [-90.28, -0.7618, -103]
+        scale: [0.2433, 0.2222, 0.4778]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 5410300326561724848
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 6203751403559151145
+        tint_color: [1, 1, 1, 1]
+  - name: cristalEnergy_mesh007
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [7.705, -11.87, -17.55]
+        rotation: [-90, 0, 0]
+        scale: [0.4229, 0.4229, 0.4229]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 18186000352271537908
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 6203751403559151145
+        tint_color: [1, 1, 1, 1]
+  - name: cristalEnergy_mesh008
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [33.52, -11.87, -17.55]
+        rotation: [-90, 0, 0]
+        scale: [0.4229, 0.4229, 0.4229]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 13827628769909330778
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 6203751403559151145
+        tint_color: [1, 1, 1, 1]
+  - name: cristalEnergy_mesh009
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [40.5, -11.87, -45.14]
+        rotation: [-90, 0, 0]
+        scale: [0.4229, 0.4229, 0.4229]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 15307162262964027094
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 6203751403559151145
+        tint_color: [1, 1, 1, 1]
+  - name: bridgeWhole_mesh001
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-60.93, 1.574, -4.074]
+        rotation: [-90, 0, 90]
+        scale: [0.6506, 0.6506, 0.6506]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 10153185614251137952
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 18317123039148962586
+        tint_color: [1, 1, 1, 1]
+  - name: bridgeBroken_mesh
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-52.77, 0.6588, 10.11]
+        rotation: [0, 90, 0]
+        scale: [0.6445, 0.6445, 0.6445]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 17018897535004580583
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 11703061343301313175
+        tint_color: [1, 1, 1, 1]
+  - name: bridgeBroken_mesh001
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-38.38, 1.852, 10.11]
+        rotation: [0, 90, 0]
+        scale: [0.6445, 0.6445, 0.6445]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 13979784767688056899
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 11703061343301313175
+        tint_color: [1, 1, 1, 1]
+  - name: bridgeBroken_mesh002
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-30.33, 0.9248, 10.11]
+        rotation: [0, 90, 0]
+        scale: [0.6445, 0.6445, 0.6445]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 15460366016565205545
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 11703061343301313175
+        tint_color: [1, 1, 1, 1]
+  - name: bridgeBroken_mesh003
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-75.43, 1.449, -34.01]
+        rotation: [0, 0, 0]
+        scale: [0.6445, 0.6445, 0.6445]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 13053013212568030875
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 11703061343301313175
+        tint_color: [1, 1, 1, 1]
+  - name: bridgeBroken_mesh004
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-75.43, 1.449, 4.935]
+        rotation: [0, -90, 0]
+        scale: [0.6445, 0.6445, 0.6445]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 17262012430312139958
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 11703061343301313175
+        tint_color: [1, 1, 1, 1]
+  - name: bridgeBroken_mesh005
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-62.99, 2.512, -9.65]
+        rotation: [-180, 0, 180]
+        scale: [0.6445, 0.6445, 0.6445]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 4189813157127927758
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 11703061343301313175
+        tint_color: [1, 1, 1, 1]
+  - name: bridgeWhole_mesh002
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [154.5, 1.182, 98.9]
+        rotation: [-90, 0, 90]
+        scale: [0.6506, 0.6506, 0.6506]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 5387353012942593815
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 11703061343301313175
+        tint_color: [1, 1, 1, 1]
+  - name: bridgeWhole_mesh003
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [154.5, 1.182, 86.51]
+        rotation: [-90, 0, 90]
+        scale: [0.6506, 0.6506, 0.6506]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 17037630693197110993
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 11703061343301313175
+        tint_color: [1, 1, 1, 1]
+  - name: bridgeBroken_mesh006
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-75.43, 2.601, -33.22]
+        rotation: [0, 0, 0]
+        scale: [0.6445, 0.6445, 0.6445]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 17251311290960467616
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 11472302246130122108
+        tint_color: [1, 1, 1, 1]
+  - name: bridgeBroken_mesh007
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-63.12, 3.763, -18.72]
+        rotation: [0, 0, 0]
+        scale: [0.6445, 0.6445, 0.6445]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 4715191498042182572
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 11472302246130122108
+        tint_color: [1, 1, 1, 1]
+  - name: bridgeBroken_mesh008
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-57.12, 3.763, -3.549]
+        rotation: [0, 90, 0]
+        scale: [0.6445, 0.6445, 0.6445]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 5965052196641712695
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 11472302246130122108
+        tint_color: [1, 1, 1, 1]
+  - name: bridgeBroken_mesh009
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-22.95, 3.763, -3.549]
+        rotation: [0, 90, 0]
+        scale: [0.6445, 0.6445, 0.6445]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 7128168826076968899
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 11472302246130122108
+        tint_color: [1, 1, 1, 1]
+  - name: bridgeBroken_mesh010
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-69.58, 2.543, 4.958]
+        rotation: [0, 90, 0]
+        scale: [0.6445, 0.6445, 0.6445]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 2188144749644008726
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 11472302246130122108
+        tint_color: [1, 1, 1, 1]
+  - name: bridgeBroken_mesh011
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-52.08, 2.649, 10.14]
+        rotation: [0, 90, 0]
+        scale: [0.6445, 0.6445, 0.6445]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 3132575299642884192
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 11472302246130122108
+        tint_color: [1, 1, 1, 1]
+  - name: bridgeBroken_mesh012
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-38.48, 2.871, 10.14]
+        rotation: [0, 90, 0]
+        scale: [0.6445, 0.6445, 0.6445]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 14210662672093724385
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 11472302246130122108
+        tint_color: [1, 1, 1, 1]
+  - name: bridgeBroken_mesh013
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-28.63, 2.871, 10.14]
+        rotation: [0, 90, 0]
+        scale: [0.6445, 0.6445, 0.6445]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 16840444456596429627
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 11472302246130122108
+        tint_color: [1, 1, 1, 1]
+  - name: bridgeBroken_mesh014
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-62.29, 16.21, -12]
+        rotation: [0, 0, 0]
+        scale: [0.6445, 0.6445, 0.6445]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 1332797941211314143
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 11472302246130122108
+        tint_color: [1, 1, 1, 1]
+  - name: bridgeBroken_mesh015
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [154.4, 3.252, 99.01]
+        rotation: [0, -90, 0]
+        scale: [0.6445, 0.6445, 0.6445]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 16861480319922676704
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 11472302246130122108
+        tint_color: [1, 1, 1, 1]
+  - name: bridgeBroken_mesh016
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [154.4, 3.252, 86.57]
+        rotation: [0, -90, 0]
+        scale: [0.6445, 0.6445, 0.6445]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 3372881374439913696
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 11472302246130122108
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-45.12, -7.861, 1.81]
+        rotation: [-90, 0, 90]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 12990450040937594274
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh001
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-49.38, -7.861, 1.107]
+        rotation: [-90, 0, 90]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 17398288090253098383
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh002
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-67.72, -7.861, -0.4551]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 492278939238071203
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh003
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-67.02, -7.861, -4.719]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 2188775247930263141
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh004
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-0.0133, -7.967, 15.6]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 5691391634445696326
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 5013511886932756240
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 1653963119651545497
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh005
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-3.013, -7.967, -12.5]
+        rotation: [-90, -0, -180]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 2166523893273964827
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 1653963119651545497
+        tint_color: [1, 1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 2079134775334814743
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh006
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-15.01, -7.967, 3.015]
+        rotation: [-90, 0, -90]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 8759856129831935817
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh007
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [12.1, -7.967, 3.015]
+        rotation: [-90, 0, -90]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 8162803585090927554
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 1653963119651545497
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh008
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [0.0431, -7.967, -2.913]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 18003780010806231762
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole01_mesh
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-3.088, -7.967, 0.0044]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 14069481389803837880
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 7100525532478954960
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh009
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-0.0884, -7.967, 0.0044]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 6753154916240159630
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh010
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-3.088, -7.967, 3.004]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 9556349943990143562
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole03_mesh
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-0.0884, -7.967, 3.004]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 3498929914574946142
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 9941088358221198828
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh011
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-0.0133, -7.967, 8.922]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 6269238611864906915
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh012
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [5.907, -7.967, 0.0155]
+        rotation: [-90, 0, 90]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 6971740846471879010
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh013
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-0.0171, -7.967, -8.996]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 4190889135076592596
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh014
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-12.01, -7.967, 0.0137]
+        rotation: [-90, 0, 90]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 7941468662374074278
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole01_mesh001
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [5.907, -7.967, -2.913]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 13252931500968648272
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 7100525532478954960
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole01_mesh002
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [5.907, -7.967, 5.921]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 15553911695695725103
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 7100525532478954960
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh015
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-8.931, -7.967, 5.921]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 16056163064038613051
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh016
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-8.931, -7.967, -2.913]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 986083220803535024
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole03_mesh001
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-5.931, -7.967, -5.913]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 7198391515500373658
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 9941088358221198828
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole03_mesh002
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [2.908, -7.967, 8.922]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 4017237218454355776
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 9941088358221198828
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole01_mesh003
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-5.931, -7.967, 8.922]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 13216185293704985620
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 7100525532478954960
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh017
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [2.908, -7.967, -5.913]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 16566763708959000776
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh018
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [6.676, -7.967, -3.759]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 17408000612291318294
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh019
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-8.886, -7.967, 11.89]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 15813452863213941779
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh020
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [8.848, -7.967, 8.938]
+        rotation: [-90, 0, 90]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 15050350955829903792
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh021
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-6.768, -7.967, -6.671]
+        rotation: [-90, 0, 90]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 13487135244552505338
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+  - name: shrine_mesh
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-1.282, 1.472, -15.37]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 533675277261049097
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 16007776213478930409
+        tint_color: [1, 1, 1, 1]
+  - name: crystalFloating01_mesh
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-12.73, -0.9177, -3.815]
+        rotation: [0, 90, 0]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 4010432608127235930
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 15757518705011541631
+        tint_color: [1, 1, 1, 1]
+  - name: crystalLazer01_mesh
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-12.65, 0.5434, -3.697]
+        rotation: [0, 90, 0]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 18023699077817930000
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 7226060010010998697
+        tint_color: [1, 1, 1, 1]
+  - name: crystalFloating01_mesh001
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-6.74, -0.9177, -9.787]
+        rotation: [0, 0, 0]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 952612229622006678
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 15757518705011541631
+        tint_color: [1, 1, 1, 1]
+  - name: crystalLazer01_mesh001
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-6.858, 0.5434, -9.707]
+        rotation: [0, 0, 0]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 18038357678523687755
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 7226060010010998697
+        tint_color: [1, 1, 1, 1]
+  - name: crystalFloating01_mesh002
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [3.821, -0.9177, -9.787]
+        rotation: [0, 0, 0]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 8361862704051560446
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 15757518705011541631
+        tint_color: [1, 1, 1, 1]
+  - name: crystalLazer01_mesh002
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [3.703, 0.5434, -9.707]
+        rotation: [0, 0, 0]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 3720704002118466121
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 7226060010010998697
+        tint_color: [1, 1, 1, 1]
+  - name: crystalFloating01_mesh003
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [9.647, -0.9177, -3.707]
+        rotation: [0, -90, 0]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 2810768225757367993
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 15757518705011541631
+        tint_color: [1, 1, 1, 1]
+  - name: crystalLazer01_mesh003
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [9.566, 0.5434, -3.825]
+        rotation: [0, -90, 0]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 14775630254053971151
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 7226060010010998697
+        tint_color: [1, 1, 1, 1]
+  - name: crystalFloating01_mesh004
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [9.647, -0.9177, 6.763]
+        rotation: [0, -90, 0]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 58615805710285061
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 15757518705011541631
+        tint_color: [1, 1, 1, 1]
+  - name: crystalLazer01_mesh004
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [9.566, 0.5434, 6.645]
+        rotation: [0, -90, 0]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 2611092732636087689
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 7226060010010998697
+        tint_color: [1, 1, 1, 1]
+  - name: crystalFloating01_mesh005
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-12.73, -0.9177, 6.727]
+        rotation: [0, 90, 0]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 8154554074367900496
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 15757518705011541631
+        tint_color: [1, 1, 1, 1]
+  - name: crystalLazer01_mesh005
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-12.65, 0.5434, 6.845]
+        rotation: [0, 90, 0]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 335341075232611600
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 7226060010010998697
+        tint_color: [1, 1, 1, 1]
+  - name: crystalFloating01_mesh006
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [3.63, -0.9177, 12.96]
+        rotation: [180, 0, 180]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 12214020725854925321
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 15757518705011541631
+        tint_color: [1, 1, 1, 1]
+  - name: crystalFloating01_mesh007
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-6.931, -0.9177, 12.96]
+        rotation: [180, 0, 180]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 13690892633694732645
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 15757518705011541631
+        tint_color: [1, 1, 1, 1]
+  - name: crystalLazer01_mesh006
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [3.747, 0.5434, 12.88]
+        rotation: [180, 0, 180]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 4141251296155701280
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 7226060010010998697
+        tint_color: [1, 1, 1, 1]
+  - name: crystalLazer01_mesh007
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-6.813, 0.5434, 12.88]
+        rotation: [180, 0, 180]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 14754261933335502181
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 7226060010010998697
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh022
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [18.95, -7.967, 3.33]
+        rotation: [-90, 0, -30]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 11322612901646115913
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh023
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [19.64, -7.967, 5.627]
+        rotation: [-90, 0, 150]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 9986582968610604001
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole01_mesh004
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [23.71, -7.967, 8.913]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 12313076493441141808
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 7100525532478954960
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole03_mesh003
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [23.71, -7.967, 5.913]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 14808727893348050903
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 9941088358221198828
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh024
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [37.92, -7.967, 9.958]
+        rotation: [-90, 0, -30]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 11403556129165165000
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole01_mesh005
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [29.62, -7.967, 5.86]
+        rotation: [-90, 0, 180]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 14950878869613185520
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 7100525532478954960
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole03_mesh004
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [29.62, -7.967, 8.86]
+        rotation: [-90, 0, 180]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 8953446539717700298
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 9941088358221198828
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh025
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [38.9, -7.967, 16.85]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 12483409834921654131
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole03_mesh005
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [41.9, -7.967, 16.85]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 10920812948343053288
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 9941088358221198828
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh026
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [38.9, -7.967, 21]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 4007284600816778796
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh027
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [41.9, -7.967, 21]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 12176248104352594261
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh028
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [41.91, -7.967, 30.07]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 7920070613853593660
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh029
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [32.94, -7.967, 30.07]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 3442320659443063471
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh030
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [35.1, -7.967, 26.31]
+        rotation: [-90, 0, 90]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 13838287562244556576
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh031
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [44.78, -7.967, 27.07]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 2821308942659248692
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh032
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [41.85, -7.967, 23.98]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 7474057996198205182
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh033
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [48.54, -7.967, 29.22]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 15384441939202062784
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole03_mesh006
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [35.94, -7.967, 27.07]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 17942849914435770766
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 9941088358221198828
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh034
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [47.76, -7.967, 30.07]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 2917559116055430260
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh035
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [41.78, -7.967, 33.07]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 2413074834838961500
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh036
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [41.91, -7.967, 45.07]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 9389304329027116826
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh037
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [32.94, -7.967, 45.07]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 7476060413383339316
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh038
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [47.76, -7.967, 45.07]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 16140536664975840249
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh039
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [41.78, -7.967, 48.07]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 10240685874141963966
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh040
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [41.78, -7.967, 69.1]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 7024570051538955380
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh041
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [41.78, -7.967, 57]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 2507055807826860615
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh042
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [47.87, -7.967, 77.98]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 9798234410904195577
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh043
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [44.89, -7.967, 86.97]
+        rotation: [-90, 0, -90]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 6579534247364400355
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole03_mesh007
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [38.97, -7.967, 86.96]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 17002578357075453393
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 9941088358221198828
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh044
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [41.83, -7.967, 111.1]
+        rotation: [-90, -0, -180]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 15414950214517453019
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh045
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [38.83, -7.967, 111.1]
+        rotation: [-90, -0, -180]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 7794226844469938997
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh046
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [35.96, -7.967, 105.1]
+        rotation: [-90, -0, -180]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 502803786767457806
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh047
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [38.89, -7.967, 108.1]
+        rotation: [-90, -0, -180]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 5586516889437728322
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh048
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [35.22, -7.967, 105.9]
+        rotation: [-90, -0, -180]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 3152435023520165546
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole03_mesh008
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [44.8, -7.967, 105.1]
+        rotation: [-90, -0, -180]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 15732697950033279762
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 9941088358221198828
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh049
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [45.44, -7.967, 105.7]
+        rotation: [-90, 0, -90]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 314387987835955536
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh050
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [40.71, -7.967, 119.6]
+        rotation: [-90, 0, 150]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 3037428682272963767
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh051
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [38.91, -7.967, 117.1]
+        rotation: [-90, 0, -90]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 11648681586955874383
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 1653963119651545497
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh052
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [44.84, -7.967, 116.9]
+        rotation: [-90, 0, 90]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 5040753400961647622
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh053
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [56.93, -7.967, 120]
+        rotation: [-90, 0, -90]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 13133723585576823948
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh054
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [56.93, -7.967, 123]
+        rotation: [-90, 0, -90]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 17904458355301028167
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh055
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [83.53, -7.967, 134]
+        rotation: [-90, -0, 31.02]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 16428711822846152003
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh056
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [59.82, -7.967, 125.6]
+        rotation: [-90, 0, -90]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 8380924757667235889
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh057
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [79.15, -7.967, 109.8]
+        rotation: [-90, 0, 149.6]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 9186208383363128732
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh058
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [73.81, -7.967, 131.2]
+        rotation: [-90, 0, -30.93]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 16577371782015539140
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh059
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [74.14, -7.967, 115.9]
+        rotation: [-90, 0, 148.4]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 18158467384628880719
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh060
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [77.28, -33.89, 137.3]
+        rotation: [-90, -0, 2.523]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 9816737782268728281
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh061
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [60.47, -33.89, 118.5]
+        rotation: [-90, 0, -118.5]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 10923847180092047850
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh062
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [84.98, -33.89, 113.9]
+        rotation: [-90, -0, 121.1]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 203178596322176548
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh063
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [68.52, -64.46, 136.5]
+        rotation: [-90, -0, -33.29]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 4110290214193708793
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh064
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [65.86, -64.46, 111.5]
+        rotation: [-90, -0, -154.3]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 13588728749838768934
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh065
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [88.44, -64.46, 122.1]
+        rotation: [-90, -0, 85.33]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 5731857832479758746
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh066
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [98.68, -7.967, 95.16]
+        rotation: [-90, 0, 90.17]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 11183143039389031504
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh067
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [98.67, -7.967, 92.16]
+        rotation: [-90, 0, 90.17]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 13665557015341451366
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh068
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [90.96, -7.967, 94.31]
+        rotation: [-90, -0, 30.3]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 910596589663372243
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh069
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [92.74, -7.967, 92.26]
+        rotation: [-90, -0, -179.8]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 3495482087032987087
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 1653963119651545497
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh070
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [91.25, -7.967, 99.24]
+        rotation: [-90, 0, -29.7]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 13915955015385582783
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh071
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [82.63, -7.967, 108.2]
+        rotation: [-90, 0, 150.3]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 13429759442948896473
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh072
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [80.03, -7.967, 106.7]
+        rotation: [-90, 0, 150.3]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 15311605892344737851
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh073
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [119.5, -7.967, 88.47]
+        rotation: [-90, 0, 90]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 10945164493976491097
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh074
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [149.5, -7.967, 91.49]
+        rotation: [-90, 0, -90]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 7497927795531550150
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh075
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [149.5, -7.967, 94.49]
+        rotation: [-90, 0, -90]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 14416883398078086316
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh076
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [192.1, -7.967, 91.15]
+        rotation: [-90, 0, 90]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 1887468929434199850
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh077
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [195.1, -7.967, 91.28]
+        rotation: [-90, 0, 90]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 10106187724387553946
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh078
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [216.2, -7.967, 91.28]
+        rotation: [-90, 0, 90]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 10850502217382761037
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh079
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [204.1, -7.967, 91.28]
+        rotation: [-90, 0, 90]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 4923047137026535378
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: crystalFloating01_mesh008
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-46.03, -0.9177, 8.285]
+        rotation: [180, 0, 180]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 902068883219191537
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 15757518705011541631
+        tint_color: [1, 1, 1, 1]
+  - name: crystalLazer01_mesh008
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-45.91, 0.5434, 8.745]
+        rotation: [180, 0, 180]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 1251448359381065985
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 7226060010010998697
+        tint_color: [1, 1, 1, 1]
+  - name: crystalFloating01_mesh009
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-45.92, -0.9177, -0.2382]
+        rotation: [0, 0, -0]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 12397896815216841251
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 15757518705011541631
+        tint_color: [1, 1, 1, 1]
+  - name: crystalLazer01_mesh009
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-46.04, 0.5434, -0.6288]
+        rotation: [0, 0, -0]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 13298605744577448041
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 7226060010010998697
+        tint_color: [1, 1, 1, 1]
+  - name: crystalFloating01_mesh010
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-31.86, -0.9177, 8.285]
+        rotation: [180, 0, 180]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 1749746068457912977
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 15757518705011541631
+        tint_color: [1, 1, 1, 1]
+  - name: crystalFloating01_mesh011
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-31.75, -0.9177, -0.2382]
+        rotation: [0, 0, -0]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 1236891682586134011
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 15757518705011541631
+        tint_color: [1, 1, 1, 1]
+  - name: crystalLazer01_mesh010
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-31.74, 0.5434, 8.745]
+        rotation: [180, 0, 180]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 12418022918077922564
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 7226060010010998697
+        tint_color: [1, 1, 1, 1]
+  - name: crystalLazer01_mesh011
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-31.87, 0.5434, -0.6288]
+        rotation: [0, 0, -0]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 102006804678629080
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 7226060010010998697
+        tint_color: [1, 1, 1, 1]
+  - name: crystalFloating01_mesh012
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [47.24, -0.9177, 35.93]
+        rotation: [0, -90, 0]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 15816584547815531509
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 15757518705011541631
+        tint_color: [1, 1, 1, 1]
+  - name: crystalFloating01_mesh013
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [33.57, -0.9177, 35.83]
+        rotation: [0, 90, 0]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 8985865813472487050
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 15757518705011541631
+        tint_color: [1, 1, 1, 1]
+  - name: crystalLazer01_mesh012
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [47.63, 0.5434, 35.82]
+        rotation: [0, -90, 0]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 8144302264028942013
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 7226060010010998697
+        tint_color: [1, 1, 1, 1]
+  - name: crystalLazer01_mesh013
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [33.11, 0.5434, 35.94]
+        rotation: [0, 90, 0]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 5794274098046862457
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 7226060010010998697
+        tint_color: [1, 1, 1, 1]
+  - name: crystalFloating01_mesh014
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [55.55, -0.9177, 125.2]
+        rotation: [180, 0, 180]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 15916758290168424990
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 15757518705011541631
+        tint_color: [1, 1, 1, 1]
+  - name: crystalFloating01_mesh015
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [55.66, -0.9177, 117.8]
+        rotation: [0, 0, -0]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 4754039002390862588
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 15757518705011541631
+        tint_color: [1, 1, 1, 1]
+  - name: crystalLazer01_mesh014
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [55.67, 0.5434, 125.6]
+        rotation: [180, 0, 180]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 16051987085391325026
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 7226060010010998697
+        tint_color: [1, 1, 1, 1]
+  - name: crystalLazer01_mesh015
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [55.54, 0.5434, 117.4]
+        rotation: [0, 0, -0]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 13999716088872448189
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 7226060010010998697
+        tint_color: [1, 1, 1, 1]
+  - name: crystalFloating01_mesh016
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [79.11, -0.9177, 104.1]
+        rotation: [0, 60, -0]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 15832073882762215986
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 15757518705011541631
+        tint_color: [1, 1, 1, 1]
+  - name: crystalFloating01_mesh017
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [85.46, -0.9177, 107.9]
+        rotation: [180, -60, 180]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 6342616811697682487
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 15757518705011541631
+        tint_color: [1, 1, 1, 1]
+  - name: crystalLazer01_mesh016
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [78.65, 0.5434, 103.9]
+        rotation: [0, 60, -0]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 9446490391701689718
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 7226060010010998697
+        tint_color: [1, 1, 1, 1]
+  - name: crystalLazer01_mesh017
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [85.86, 0.5434, 108]
+        rotation: [180, -60, 180]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 4378157858660313490
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 7226060010010998697
+        tint_color: [1, 1, 1, 1]
+  - name: crystalLazer02_mesh
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [29.71, 1.515, 48.28]
+        rotation: [0, -30, 0]
+        scale: [2.395, 4.308, 3.225]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 3356050088664980028
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 5020567223825987701
+        tint_color: [1, 1, 1, 1]
+  - name: crystalFloating01_mesh018
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [29.74, -0.9177, 48.09]
+        rotation: [0, 90, 0]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 9175749182719960726
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 15757518705011541631
+        tint_color: [1, 1, 1, 1]
+  - name: crystalLazer02_mesh001
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [29.77, 1.515, 72.23]
+        rotation: [0, -30, 0]
+        scale: [2.395, 4.308, 3.225]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 1708583719288396444
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 5020567223825987701
+        tint_color: [1, 1, 1, 1]
+  - name: crystalFloating01_mesh019
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [29.8, -0.9177, 72.04]
+        rotation: [0, 90, 0]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 9067544423404931141
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 15757518705011541631
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh080
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [55.54, -7.967, 117.2]
+        rotation: [-90, 0, -90]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 9154847997030395417
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh081
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [55.68, -7.967, 125.7]
+        rotation: [-90, 0, -90]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 7572866988047598458
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh082
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [78.54, -7.967, 103.9]
+        rotation: [-90, 0, -30]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 13717642203885884393
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh083
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [85.99, -7.967, 108]
+        rotation: [-90, 0, -30]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 17073460817799456549
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: crystalLazer02_mesh002
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [73.98, 0.742, 123.7]
+        rotation: [0, -30, 0]
+        scale: [2.395, 4.308, 3.225]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 1321453508267500816
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 5020567223825987701
+        tint_color: [1, 1, 1, 1]
+  - name: crystalFloating01_mesh020
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [74.02, -1.419, 123.5]
+        rotation: [0, 90, 0]
+        scale: [2.741, 2.741, 2.741]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 16134191950843205777
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 15757518705011541631
+        tint_color: [1, 1, 1, 1]
+  - name: wallStatementDoor_mesh
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-72.58, 1.085, -61.7]
+        rotation: [-90, 0, 0]
+        scale: [0.0692, 0.059, 0.0692]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 7661109514096132057
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 7972135461413650396
+        tint_color: [1, 1, 1, 1]
+  - name: wallStatementDoor_mesh001
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [224.1, 1.085, 95.57]
+        rotation: [-90, 0, 90]
+        scale: [0.0692, 0.059, 0.0692]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 16052035683542377031
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 7972135461413650396
+        tint_color: [1, 1, 1, 1]
+  - name: wallStatementTile01_mesh
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-63.24, 4.708, -59.15]
+        rotation: [-90, 0, -90]
+        scale: [0.0336, 0.0286, 0.0336]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 9467127931260482701
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 1602815782701709871
+        tint_color: [1, 1, 1, 1]
+  - name: wallStatementTile02_mesh
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-63.37, 4.79, -7.977]
+        rotation: [-90, 0, -90]
+        scale: [0.033, 0.0282, 0.033]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 9469062593921733828
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 4681365883756121416
+        tint_color: [1, 1, 1, 1]
+  - name: floorTilePlain01_mesh
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-61.28, 9.276, -59.73]
+        rotation: [-90, -90, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 5375083852857812663
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 2877723901879540075
+        tint_color: [1, 1, 1, 1]
+  - name: floorTilePlain01_mesh001
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-61.28, 15.57, -59.73]
+        rotation: [-90, -90, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 9708459369882563012
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 2877723901879540075
+        tint_color: [1, 1, 1, 1]
+  - name: floorTilePlain01_mesh002
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-59.8, 4.292, -3.18]
+        rotation: [0, 0, 90]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 16072968151404488396
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 2877723901879540075
+        tint_color: [1, 1, 1, 1]
+  - name: floorTilePlain01_mesh003
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-59.8, 9.276, -3.18]
+        rotation: [0, 0, 90]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 11066958984327351764
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 2877723901879540075
+        tint_color: [1, 1, 1, 1]
+  - name: floorTilePlain01_mesh004
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-59.8, 15.57, -3.18]
+        rotation: [0, 0, 90]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 12939642443551917009
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 2877723901879540075
+        tint_color: [1, 1, 1, 1]
+  - name: floorTileBroken01_mesh
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-54.71, 5.419, -3.051]
+        rotation: [0, 0, 90]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 2460927812838945006
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 2300243673058527724
+        tint_color: [1, 1, 1, 1]
+  - name: floorTileBroken01_mesh001
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-54.71, 7.263, -3.051]
+        rotation: [0, 0, 90]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 10844923491316252811
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 2300243673058527724
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh084
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-67.64, -7.967, -37.58]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+  - name: tileWhole02_mesh085
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-67.64, -7.967, -49.68]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 11592435056856707943
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh086
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-67.5, -7.967, -61.62]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 15275202055531214730
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 13169960043478831330
+        tint_color: [1, 1, 1, 1]
+  - name: tileWhole02_mesh087
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-67.64, -7.967, -58.62]
+        rotation: [-90, 0, 0]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 4669700688574530513
+        navigable: false
+        visible: true
+        casting_shadow: true
+        material_id: 14695989268197528901
+        tint_color: [1, 1, 1, 1]

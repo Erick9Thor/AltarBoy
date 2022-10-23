@@ -18,6 +18,7 @@ namespace Hachiko
 
         HACHIKO_API void PostEvent(const wchar_t* name_event) const;
         HACHIKO_API void SetRTPCValue(const wchar_t* rtpc_name, const float value);
+        HACHIKO_API void SetSwitch(const wchar_t* rtpc_name, const wchar_t* value);
 
         void DrawGui() override;
 

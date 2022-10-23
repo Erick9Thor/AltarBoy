@@ -7,7 +7,6 @@
 					<ChildrenList>
 						<Switch Name="Standard" ID="{2C9ECBF8-7A64-4321-B615-F710DABFDE10}"/>
 						<Switch Name="Gravel" ID="{F7D7D03C-0417-4D3E-9CEC-0FC5F71A0B58}"/>
-						<Switch Name="Wood" ID="{453FD6AC-2658-48CA-9152-F3C1A8A9CC4E}"/>
 					</ChildrenList>
 				</SwitchGroup>
 			</ChildrenList>
