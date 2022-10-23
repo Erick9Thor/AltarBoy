@@ -5,6 +5,7 @@
 #include "ModuleRender.h"
 #include "ModuleSceneManager.h"
 #include "ModuleEvent.h"
+#include "ModuleProgram.h"
 #include "core/preferences/src/EditorPreferences.h"
 #include "ModuleResources.h"
 
@@ -274,7 +275,6 @@ void Hachiko::ModuleEditor::MainMenuBar()
             {
                 Application::RequestBrowser("https://github.com/AkitaInteractive/Hachiko-Engine/archive/refs/heads/main.zip");
             }
-
             ImGui::EndMenu();
         }
 
@@ -289,6 +289,16 @@ void Hachiko::ModuleEditor::MainMenuBar()
             ImGui::EndMenu();
         }
 #endif
+
+        if (ImGui::BeginMenu("Shaders"))
+        {
+            if (ImGui::MenuItem("Recompile"))
+            {
+                App->program->RecompilePrograms();
+            }
+
+            ImGui::EndMenu();
+        }
 
         ImGui::PopStyleVar(2);
         ImGui::EndMainMenuBar();

@@ -8,8 +8,8 @@
 #include "components/ComponentSpotLight.h"
 #include "components/ComponentMeshRenderer.h"
 #include "resources/ResourceMaterial.h"
-#include "batching/GeometryBatch.h"
-#include "batching/TextureBatch.h"
+#include "Batching/GeometryBatch.h"
+#include "Batching/TextureBatch.h"
 
 //TODO centralize cache on module program
 Hachiko::ModuleProgram::ModuleProgram() = default;
@@ -20,26 +20,9 @@ bool Hachiko::ModuleProgram::Init()
 {
     HE_LOG("INITIALIZING MODULE: PROGRAM");
 
-    CreateGLSLIncludes();
+    CreatePrograms();
 
-    programs[static_cast<int>(Program::PROGRAMS::FORWARD)] = CreateProgram(SHADERS_FOLDER "vertex.glsl", SHADERS_FOLDER "fragment_forward.glsl");
-    programs[static_cast<int>(Program::PROGRAMS::GAUSSIAN_FILTERING)] = CreateProgram(SHADERS_FOLDER "vertex_gaussian_filter.glsl", SHADERS_FOLDER "fragment_gaussian_filter.glsl");
-    programs[static_cast<int>(Program::PROGRAMS::DEFERRED_GEOMETRY)] = CreateProgram(SHADERS_FOLDER "vertex.glsl", SHADERS_FOLDER "fragment_deferred_geometry.glsl");
-    programs[static_cast<int>(Program::PROGRAMS::DEFERRED_LIGHTING)] = CreateProgram(SHADERS_FOLDER "vertex_deferred_lighting.glsl", SHADERS_FOLDER "fragment_deferred_lighting.glsl");
-    programs[static_cast<int>(Program::PROGRAMS::SHADOW_MAPPING)] = CreateProgram(SHADERS_FOLDER "vertex_shadow_mapping.glsl", SHADERS_FOLDER "fragment_shadow_mapping.glsl");
-    programs[static_cast<int>(Program::PROGRAMS::SKYBOX)] = CreateProgram(SHADERS_FOLDER "vertex_skybox.glsl", SHADERS_FOLDER "fragment_skybox.glsl");
-    programs[static_cast<int>(Program::PROGRAMS::DIFFUSE_IBL)] = CreateProgram(SHADERS_FOLDER "vertex_diffuseIBL.glsl", SHADERS_FOLDER "fragment_diffuseIBL.glsl");
-    programs[static_cast<int>(Program::PROGRAMS::PREFILTERED_IBL)] = CreateProgram(SHADERS_FOLDER "vertex_prefilteredIBL.glsl", SHADERS_FOLDER "fragment_prefilteredIBL.glsl");
-    programs[static_cast<int>(Program::PROGRAMS::ENVIRONMENT_BRDF)] = CreateProgram(SHADERS_FOLDER "vertex_environmentBRDF.glsl", SHADERS_FOLDER "fragment_environmentBRDF.glsl");
-    programs[static_cast<int>(Program::PROGRAMS::STENCIL)] = CreateProgram(SHADERS_FOLDER "vertex_stencil.glsl", SHADERS_FOLDER "fragment_stencil.glsl");
-    programs[static_cast<int>(Program::PROGRAMS::UI_IMAGE)] = CreateProgram(SHADERS_FOLDER "vertex_ui.glsl", SHADERS_FOLDER "fragment_ui.glsl");
-    programs[static_cast<int>(Program::PROGRAMS::UI_TEXT)] = CreateProgram(SHADERS_FOLDER "vertex_font.glsl", SHADERS_FOLDER "fragment_font.glsl");
-    programs[static_cast<int>(Program::PROGRAMS::PARTICLE)] = CreateProgram(SHADERS_FOLDER "vertex_particle.glsl", SHADERS_FOLDER "fragment_particle.glsl");
-    programs[static_cast<int>(Program::PROGRAMS::VIDEO)] = CreateProgram(SHADERS_FOLDER "vertex_video.glsl", SHADERS_FOLDER "fragment_video.glsl");
-    programs[static_cast<int>(Program::PROGRAMS::FOG_PROGRAM)] = CreateProgram(SHADERS_FOLDER "vertex_deferred_lighting.glsl", SHADERS_FOLDER "fragment_fog.glsl");
-    programs[static_cast<int>(Program::PROGRAMS::TEXTURE_COPY)] = CreateProgram(SHADERS_FOLDER "vertex_texture_copy.glsl", SHADERS_FOLDER "fragment_texture_copy.glsl");
-
-    for (unsigned i = 0; i < static_cast<int>(Program::PROGRAMS::COUNT); ++i)
+    for (unsigned i = 0; i < static_cast<int>(Program::Programs::COUNT); ++i)
     {
         if (!programs[i])
         {
@@ -204,13 +187,48 @@ void* Hachiko::ModuleProgram::CreatePersistentBuffers(unsigned& buffer_id, int b
     return glMapBufferRange(GL_ARRAY_BUFFER, 0, size, flags);
 }
 
-bool Hachiko::ModuleProgram::CleanUp()
+void Hachiko::ModuleProgram::CreatePrograms()
 {
-    for (unsigned i = 0; i < static_cast<int>(Program::PROGRAMS::COUNT); ++i)
+    CreateGLSLIncludes();
+
+    programs[static_cast<int>(Program::Programs::FORWARD)] = CreateProgram(SHADERS_FOLDER "vertex.glsl", SHADERS_FOLDER "fragment_forward.glsl");
+    programs[static_cast<int>(Program::Programs::GAUSSIAN_FILTERING)] = CreateProgram(SHADERS_FOLDER "vertex_gaussian_filter.glsl", SHADERS_FOLDER "fragment_gaussian_filter.glsl");
+    programs[static_cast<int>(Program::Programs::DEFERRED_GEOMETRY)] = CreateProgram(SHADERS_FOLDER "vertex.glsl", SHADERS_FOLDER "fragment_deferred_geometry.glsl");
+    programs[static_cast<int>(Program::Programs::DEFERRED_LIGHTING)] = CreateProgram(SHADERS_FOLDER "vertex_deferred_lighting.glsl", SHADERS_FOLDER "fragment_deferred_lighting.glsl");
+    programs[static_cast<int>(Program::Programs::SHADOW_MAPPING)] = CreateProgram(SHADERS_FOLDER "vertex_shadow_mapping.glsl", SHADERS_FOLDER "fragment_shadow_mapping.glsl");
+    programs[static_cast<int>(Program::Programs::SKYBOX)] = CreateProgram(SHADERS_FOLDER "vertex_skybox.glsl", SHADERS_FOLDER "fragment_skybox.glsl");
+    programs[static_cast<int>(Program::Programs::DIFFUSE_IBL)] = CreateProgram(SHADERS_FOLDER "vertex_diffuseIBL.glsl", SHADERS_FOLDER "fragment_diffuseIBL.glsl");
+    programs[static_cast<int>(Program::Programs::PREFILTERED_IBL)] = CreateProgram(SHADERS_FOLDER "vertex_prefilteredIBL.glsl", SHADERS_FOLDER "fragment_prefilteredIBL.glsl");
+    programs[static_cast<int>(Program::Programs::ENVIRONMENT_BRDF)] = CreateProgram(SHADERS_FOLDER "vertex_environmentBRDF.glsl", SHADERS_FOLDER "fragment_environmentBRDF.glsl");
+    programs[static_cast<int>(Program::Programs::STENCIL)] = CreateProgram(SHADERS_FOLDER "vertex_stencil.glsl", SHADERS_FOLDER "fragment_stencil.glsl");
+    programs[static_cast<int>(Program::Programs::UI_IMAGE)] = CreateProgram(SHADERS_FOLDER "vertex_ui.glsl", SHADERS_FOLDER "fragment_ui.glsl");
+    programs[static_cast<int>(Program::Programs::UI_TEXT)] = CreateProgram(SHADERS_FOLDER "vertex_font.glsl", SHADERS_FOLDER "fragment_font.glsl");
+    programs[static_cast<int>(Program::Programs::PARTICLE)] = CreateProgram(SHADERS_FOLDER "vertex_particle.glsl", SHADERS_FOLDER "fragment_particle.glsl");
+    programs[static_cast<int>(Program::Programs::VIDEO)] = CreateProgram(SHADERS_FOLDER "vertex_video.glsl", SHADERS_FOLDER "fragment_video.glsl");
+    programs[static_cast<int>(Program::Programs::FOG)] = CreateProgram(SHADERS_FOLDER "vertex_deferred_lighting.glsl", SHADERS_FOLDER "fragment_fog.glsl");
+    programs[static_cast<int>(Program::Programs::TEXTURE_COPY)] = CreateProgram(SHADERS_FOLDER "vertex_texture_copy.glsl", SHADERS_FOLDER "fragment_texture_copy.glsl");
+    programs[static_cast<int>(Program::Programs::SSAO)] = CreateProgram(SHADERS_FOLDER "vertex_ssao.glsl", SHADERS_FOLDER "fragment_ssao.glsl");
+}
+
+void Hachiko::ModuleProgram::DeletePrograms()
+{
+    for (unsigned i = 0; i < static_cast<int>(Program::Programs::COUNT); ++i)
     {
         programs[i]->CleanUp();
         delete programs[i];
     }
+}
+
+void Hachiko::ModuleProgram::RecompilePrograms()
+{
+    DeletePrograms();
+    CreatePrograms();
+}
+
+bool Hachiko::ModuleProgram::CleanUp()
+{
+    DeletePrograms();
+
     return true;
 }
 
