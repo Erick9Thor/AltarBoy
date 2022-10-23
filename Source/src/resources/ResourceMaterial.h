@@ -111,14 +111,14 @@ namespace Hachiko
         int is_metallic = 1;
         int is_transparent = 0;
 
-        Program::PROGRAMS shader;
+        Program::Programs shader;
 
     private:
         void AddTexture(ResourceTexture::Type type);
         void RemoveTexture(ResourceTexture::Type type);
         void UpdateMaterial();
-        void ShaderOption(Program::PROGRAMS value);
-        const char* ShaderName(Program::PROGRAMS value);
+        void ShaderOption(Program::Programs value);
+        const char* ShaderName(Program::Programs value);
         std::string name;
 
         inline static const char* transparency[]{"Opaque", "Transparent"};

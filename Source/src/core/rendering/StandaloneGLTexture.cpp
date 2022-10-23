@@ -1,9 +1,16 @@
 #include "core/hepch.h"
 #include "StandaloneGLTexture.h"
 
-Hachiko::StandaloneGLTexture::StandaloneGLTexture(unsigned int width, 
-    unsigned int height, unsigned int internal_format, int border, unsigned int format, 
-    unsigned int type, int min_filter, int mag_filter, bool generate_depth) 
+Hachiko::StandaloneGLTexture::StandaloneGLTexture(
+    int width, 
+    int height, 
+    int internal_format, 
+    int border, 
+    int format, 
+    unsigned int type, 
+    int min_filter, 
+    int mag_filter, 
+    bool generate_depth) 
     : _width(width) 
     , _height(height) 
     , _internal_format(internal_format)
@@ -38,6 +45,11 @@ Hachiko::StandaloneGLTexture::StandaloneGLTexture(unsigned int width,
         glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, _width, _height);
         glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depth_id);
         glBindFramebuffer(GL_RENDERBUFFER, 0);
+    }
+
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+    {
+        HE_ERROR("Framebuffer incomplete.");
     }
 
     // Unbind the frame buffer:
@@ -82,7 +94,7 @@ void Hachiko::StandaloneGLTexture::Unbind() const
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void Hachiko::StandaloneGLTexture::Resize(unsigned int width, unsigned int height) 
+void Hachiko::StandaloneGLTexture::Resize(int width, int height) 
 {
     _width = width;
     _height = height;
