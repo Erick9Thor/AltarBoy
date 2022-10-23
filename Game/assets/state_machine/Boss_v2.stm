@@ -5,28 +5,37 @@ clips:
     clips_id: 0
     clips_loop: false
   - clip_name: Idle
-    clips_id: 6491281157354455657
+    clips_id: 15624865312698842939
     clips_loop: true
   - clip_name: PreJump
-    clips_id: 15576105046632466391
+    clips_id: 10910725092635872186
     clips_loop: false
   - clip_name: JumpLoop
-    clips_id: 13438794135290278430
+    clips_id: 8472508599445821371
     clips_loop: true
   - clip_name: Landing
-    clips_id: 13410190010720844936
+    clips_id: 11198383016935898605
     clips_loop: false
   - clip_name: PreJumpCrystal
-    clips_id: 1796013135954871431
+    clips_id: 14368345415586632476
     clips_loop: false
   - clip_name: JumpLoopCrystal
-    clips_id: 4452019886981331497
+    clips_id: 5087455231924682520
     clips_loop: true
   - clip_name: LandingCrystal
-    clips_id: 2926438496483968145
+    clips_id: 16795596219375804194
     clips_loop: false
   - clip_name: Summon_Crystal
     clips_id: 15715921008022030383
+    clips_loop: false
+  - clip_name: Melee
+    clips_id: 3826725608397155219
+    clips_loop: false
+  - clip_name: CacoonLoop
+    clips_id: 10885988367813539343
+    clips_loop: true
+  - clip_name: CacoonComingOut
+    clips_id: 10208218159186516886
     clips_loop: false
 nodes:
   - node_name: Idle
@@ -47,6 +56,12 @@ nodes:
     node_clip_name: LandingCrystal
   - node_name: Summon_Crystal
     node_clip_name: Summon_Crystal
+  - node_name: Melee
+    node_clip_name: Melee
+  - node_name: CacoonLoop
+    node_clip_name: CacoonLoop
+  - node_name: CacoonComingOut
+    node_clip_name: CacoonComingOut
 transitions:
   - transition_source: ANY
     transition_target: Idle
@@ -107,4 +122,32 @@ transitions:
   - transition_source: ANY
     transition_target: LandingCrystal
     transition_trigger: isLandingCrystal
+    transition_blend: 300
+  - transition_source: Idle
+    transition_target: Melee
+    transition_trigger: isMelee
+    transition_blend: 300
+  - transition_source: Idle
+    transition_target: CacoonLoop
+    transition_trigger: isCacoonLoop
+    transition_blend: 300
+  - transition_source: Idle
+    transition_target: CacoonComingOut
+    transition_trigger: isCacoonComingOut
+    transition_blend: 300
+  - transition_source: ANY
+    transition_target: Melee
+    transition_trigger: isMelee
+    transition_blend: 300
+  - transition_source: ANY
+    transition_target: CacoonComingOut
+    transition_trigger: isCacoonComingOut
+    transition_blend: 300
+  - transition_source: ANY
+    transition_target: CacoonLoop
+    transition_trigger: isCacoonLoop
+    transition_blend: 300
+  - transition_source: CacoonLoop
+    transition_target: CacoonComingOut
+    transition_trigger: isCacoonComingOut
     transition_blend: 300
