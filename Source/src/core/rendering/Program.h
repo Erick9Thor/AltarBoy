@@ -6,7 +6,7 @@ namespace Hachiko
     class Program
     {
     public:
-        enum class PROGRAMS
+        enum class Programs
         {
             FORWARD = 0,
             GAUSSIAN_FILTERING,
@@ -22,8 +22,9 @@ namespace Hachiko
             UI_TEXT,
             PARTICLE,
             VIDEO,
-            FOG_PROGRAM,
+            FOG,
             TEXTURE_COPY,
+            SSAO,
             COUNT,
         };
 
