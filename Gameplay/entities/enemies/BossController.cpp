@@ -77,11 +77,6 @@ void Hachiko::Scripting::BossController::OnAwake()
         _weapon_trail_billboard_right = _melee_trail_right->GetComponent<ComponentBillboard>();
     }
 
-    if (_cracked_floor)
-    {
-        _cracked_trail = _cracked_floor->GetComponent<ComponentBillboard>();
-    }
-
 	SetUpHpBar();
 	// Hp bar starts hidden until encounter starts
 	SetHpBarActive(false);
@@ -1018,8 +1013,6 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
     case JumpingState::GETTING_UP:
     {
 		player_camera->Shake(0.8f, 2.f);
-
-        _cracked_trail->Play();
 
         if (_jumping_timer < _jump_getting_up_duration)
         {
