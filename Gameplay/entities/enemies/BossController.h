@@ -304,6 +304,9 @@ namespace Hachiko
 
 			ComponentBillboard* _weapon_trail_billboard_right;
 			SERIALIZE_FIELD(GameObject*, _melee_trail_right);
+
+			// Visual Effects:
+			CombatVisualEffectsPool* combat_visual_effects_pool;
         };
     } // namespace Scripting
 } // namespace Hachiko

@@ -45,6 +45,14 @@ void Hachiko::Scripting::CombatVisualEffectsPool::OnAwake()
 	beetle_vfxes.clear();
 	beetle_vfxes.reserve(10);
 	beetle_vfxes = game_object->children[5]->children;
+
+	// 5 - Ground
+	if (game_object->children.size() > 5)
+	{
+		ground_vfxes.clear();
+		ground_vfxes.reserve(10);
+		ground_vfxes = game_object->children[6]->children;
+	}
 }
 
 void Hachiko::Scripting::CombatVisualEffectsPool::PlayPlayerAttackEffect(PlayerController::WeaponUsed weapon_type, int attack_index, float3 position)
@@ -117,6 +125,16 @@ void Hachiko::Scripting::CombatVisualEffectsPool::PlayEnemyAttackEffect(EnemyTyp
 	float3 main_camera_direction = (Scenes::GetMainCamera()->GetTransform()->GetGlobalPosition() - position).Normalized() * 1.5f;
 
 	current_attack_billboard->GetGameObject()->GetTransform()->SetGlobalPosition(main_camera_direction + position + float3::unitY * 1.5f);
+
+	current_attack_billboard->Restart();
+}
+
+void Hachiko::Scripting::CombatVisualEffectsPool::PlayGroundCrackEffect(float3 position)
+{
+
+	ComponentBillboard* current_attack_billboard = GetCurrentGroundVfx();
+
+	current_attack_billboard->GetGameObject()->GetTransform()->SetGlobalPosition(position + float3::unitX * 2.0f);
 
 	current_attack_billboard->Restart();
 }

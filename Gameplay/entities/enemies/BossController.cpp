@@ -8,6 +8,8 @@
 #include "constants/Scenes.h"
 #include "components/ComponentObstacle.h"
 
+#include "entities/player/CombatVisualEffectsPool.h"
+
 Hachiko::Scripting::BossController::BossController(GameObject* game_object)
     : Script(game_object, "BossController")
     , state_value(0)
@@ -62,6 +64,7 @@ void Hachiko::Scripting::BossController::OnAwake()
     level_manager = Scenes::GetLevelManager()->GetComponent<LevelManager>();
     player_camera = Scenes::GetMainCamera()->GetComponent<PlayerCamera>();
     combat_manager = Scenes::GetCombatManager()->GetComponent<CombatManager>();
+    combat_visual_effects_pool = Scenes::GetCombatVisualEffectsPool()->GetComponent<CombatVisualEffectsPool>();
     transform = game_object->GetTransform();
     combat_stats = game_object->GetComponent<Stats>();
     agent = game_object->GetComponent<ComponentAgent>();
@@ -1013,6 +1016,8 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
     case JumpingState::GETTING_UP:
     {
 		player_camera->Shake(0.8f, 2.f);
+
+        combat_visual_effects_pool->PlayGroundCrackEffect(transform->GetGlobalPosition());
 
         if (_jumping_timer < _jump_getting_up_duration)
         {
