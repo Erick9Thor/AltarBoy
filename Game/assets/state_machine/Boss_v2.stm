@@ -37,6 +37,12 @@ clips:
   - clip_name: CacoonComingOut
     clips_id: 10208218159186516886
     clips_loop: false
+  - clip_name: Walk
+    clips_id: 16583312635619257915
+    clips_loop: true
+  - clip_name: Death
+    clips_id: 7835439742651384905
+    clips_loop: false
 nodes:
   - node_name: Idle
     node_clip_name: Idle
@@ -62,6 +68,10 @@ nodes:
     node_clip_name: CacoonLoop
   - node_name: CacoonComingOut
     node_clip_name: CacoonComingOut
+  - node_name: Walk
+    node_clip_name: Walk
+  - node_name: Death
+    node_clip_name: Death
 transitions:
   - transition_source: ANY
     transition_target: Idle
@@ -150,4 +160,20 @@ transitions:
   - transition_source: CacoonLoop
     transition_target: CacoonComingOut
     transition_trigger: isCacoonComingOut
+    transition_blend: 300
+  - transition_source: Idle
+    transition_target: Walk
+    transition_trigger: isWalk
+    transition_blend: 300
+  - transition_source: Idle
+    transition_target: Death
+    transition_trigger: isDeath
+    transition_blend: 300
+  - transition_source: ANY
+    transition_target: Walk
+    transition_trigger: isWalk
+    transition_blend: 300
+  - transition_source: ANY
+    transition_target: Death
+    transition_trigger: isDeath
     transition_blend: 300

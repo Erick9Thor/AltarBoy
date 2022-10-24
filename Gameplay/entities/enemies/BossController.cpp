@@ -215,6 +215,10 @@ void Hachiko::Scripting::BossController::StateController()
 		CocoonController();
 		break;
 	case BossState::DEAD:
+        if (animation->IsAnimationStopped())
+        {
+            level_manager->BossKilled();
+        }
 		break;
 	}
 }
@@ -260,7 +264,7 @@ void Hachiko::Scripting::BossController::CombatController()
     if (combat_stats->_current_hp <= 0)
     {
         KillEnemies();
-        level_manager->BossKilled();
+        animation->SendTrigger("isDeath");
         state = BossState::DEAD;
         return;
     }
@@ -387,6 +391,8 @@ float4x4 Hachiko::Scripting::BossController::GetMeleeAttackOrigin(float attack_r
 
 void Hachiko::Scripting::BossController::StartCocoon()
 {
+    
+
     time_elapse = 0.0;
     SetUpCocoon();
     FocusCameraOnBoss(true);
@@ -415,9 +421,12 @@ void Hachiko::Scripting::BossController::CocoonController()
     // Handle boss movement to initial position
     if (moving_to_initial_pos)
     {
+
         float3 current_pos = transform->GetGlobalPosition();
         if (Distance(current_pos, initial_position) <= 0.5f)
         {
+            animation->SendTrigger("isCacoonLoop");
+
             moving_to_initial_pos = false;
             transform->SetGlobalPosition(initial_position);
             transform->SetGlobalRotationEuler(initial_rotation);
@@ -468,10 +477,10 @@ void Hachiko::Scripting::BossController::SetUpCocoon()
 void Hachiko::Scripting::BossController::BreakCocoon()
 {
 	hitable = true;
+    animation->SendTrigger("isCacoonComingOut");
 	if (cocoon_placeholder_go)
 	{
 		cocoon_placeholder_go->SetActive(false);
-		animation->SendTrigger("isCacoonComingOut");
 	}
 }
 
@@ -532,6 +541,7 @@ void Hachiko::Scripting::BossController::FinishCocoon()
 void Hachiko::Scripting::BossController::Chase()
 {
     ChangeStateText("Chasing player.");
+    animation->SendTrigger("isWalk");
     chasing_timer = 0.0f;
     combat_state = CombatState::CHASING;
 }
@@ -541,6 +551,7 @@ void Hachiko::Scripting::BossController::ChaseController()
 	const float3& player_position = player->GetTransform()->GetGlobalPosition();
 
 	transform->LookAtTarget(player_position);
+
     chasing_timer += Time::DeltaTimeScaled();
     if (chasing_timer >= chasing_time_limit)
     {

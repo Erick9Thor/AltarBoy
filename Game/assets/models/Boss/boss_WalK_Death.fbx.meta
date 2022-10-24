@@ -1,0 +1,33 @@
+asset_hash: 10422600770040918689
+model_name: boss_WalK_Death
+meshes:
+  - 946983847249978270
+  - 8095809743978175269
+materials:
+  - 15519633214936857123
+animations:
+  - 16583312635619257915
+  - 7835439742651384905
+animation_names:
+  - Walk
+  - Death
+prefab_id: 6495881537354019693
+resources:
+  - resource_id: 946983847249978270
+    resource_type: 3
+    resource_hash: 16006321265668197934
+  - resource_id: 8095809743978175269
+    resource_type: 3
+    resource_hash: 13392953450571354216
+  - resource_id: 15519633214936857123
+    resource_type: 1
+    resource_hash: 9259680398372291286
+  - resource_id: 16583312635619257915
+    resource_type: 7
+    resource_hash: 14353390716185977312
+  - resource_id: 7835439742651384905
+    resource_type: 7
+    resource_hash: 18175228938182590471
+  - resource_id: 6495881537354019693
+    resource_type: 13
+    resource_hash: 18273242411228984579
