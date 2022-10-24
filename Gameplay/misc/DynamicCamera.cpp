@@ -25,13 +25,12 @@ void Hachiko::Scripting::DynamicCamera::OnAwake()
     _level_manager = Scenes::GetLevelManager()->GetComponent<LevelManager>();
     _player_camera = Scenes::GetMainCamera()->GetComponent<PlayerCamera>();
 
-
     _camera_go = game_object->children[0];
     _player_camera->SetObjective(_camera_go);
     _player_camera->ChangeRelativePosition(float3(0.0f, 30.0f, 20.0f));
 
     // Use all children except first as camera positions
-    _camera_positions = std::vector<GameObject*>(game_object->children.begin() + 1, game_object->children.end());
+    _camera_positions = std::vector(game_object->children.begin() + 1, game_object->children.end());
 
     // Make all cameras inactive
     for (GameObject* _camera_position : _camera_positions)
@@ -49,7 +48,7 @@ void Hachiko::Scripting::DynamicCamera::OnAwake()
 
 void Hachiko::Scripting::DynamicCamera::OnUpdate()
 {
-    if (!_playing || _level_manager->IsTutorialActive()) return;
+    if (!_playing) return;
 
     _level_manager->BlockInputs(true);
 
@@ -111,4 +110,8 @@ void Hachiko::Scripting::DynamicCamera::OnFinish()
     _level_manager->BlockInputs(false);
     _player_camera->SetObjective(Scenes::GetPlayer());
     _player_camera->RevertRelativePosition(0.05f);
+    if(_enable_after)
+    {
+        _enable_after->SetActive(true);    
+    }
 }

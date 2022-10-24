@@ -33,6 +33,8 @@ namespace Hachiko
             void SetTravelTarget(unsigned target_idx);
             void ComputeTransition(unsigned target_idx);
             SERIALIZE_FIELD(float, _speed);
+            SERIALIZE_FIELD(GameObject*, _enable_after);
+
             GameObject* _camera_go = nullptr;
             std::vector<GameObject*> _camera_positions;
             ComponentTransform* _camera_transform{};

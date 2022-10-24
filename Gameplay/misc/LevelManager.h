@@ -51,16 +51,6 @@ namespace Hachiko
 				return _inputs_blocked;
 			}
 
-            [[nodiscard]] bool IsTutorialActive() const
-            {
-                return _tutorial_active;
-            }
-
-            void SetTutorialActive(const bool tutorial_active)
-            {
-                _tutorial_active = tutorial_active;
-            }
-
             void BossKilled();
 
 			SERIALIZE_FIELD(unsigned, _level);
@@ -83,7 +73,6 @@ namespace Hachiko
 			PlayerSoundManager* _player_sound_manager = nullptr;
 			bool _inputs_blocked = false;
 			bool _victory = false;
-			bool _tutorial_active = false;
 
 			float _time;
 		};
