@@ -125,6 +125,11 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 			std::bind(&EnemyController::WormUpdateHitState, this),
 			std::bind(&EnemyController::WormEndHitState, this),
 			std::bind(&EnemyController::WormTransitionsHitState, this));
+		states_behaviour[static_cast<int>(EnemyState::HIDEN)] = StateBehaviour(
+			std::bind(&EnemyController::WormStartHidenState, this),
+			std::bind(&EnemyController::WormUpdateHidenState, this),
+			std::bind(&EnemyController::WormEndHidenState, this),
+			std::bind(&EnemyController::WormTransitionsHidenState, this));
 	}
 	states_behaviour[static_cast<int>(EnemyState::DEAD)] = StateBehaviour(
 		std::bind(&EnemyController::StartDeadState, this),
@@ -465,6 +470,7 @@ void Hachiko::Scripting::EnemyController::ResetEnemy()
 	_parasite_dissolving_time_progress = 0.f;
 	_enemy_dissolving_time_progress = 0.f;
 	_parasite_dropped = false;
+	_spit_shot = false;
 
 	animation->ResetState();
 
@@ -566,6 +572,8 @@ void Hachiko::Scripting::EnemyController::WormUpdate()
 
 	_player_pos = _player_controller->GetGameObject()->GetTransform()->GetGlobalPosition();
 	_current_pos = transform->GetGlobalPosition();
+
+	SpitController();
 
 	if (GetState() != EnemyState::DEAD && GetState() != EnemyState::PARASITE) {
 		_enemy_body->GetTransform()->LookAtTarget(_player_pos);
@@ -1139,7 +1147,7 @@ void Hachiko::Scripting::EnemyController::WormStartSpawningState()
 	}
 	_small_dust_particles->Restart();
 	_current_spawning_time = _spawning_time;
-	_player_camera->Shake(_spawning_time, 0.8f);
+	_player_camera->Shake(_spawning_time, 0.6f);
 	_audio_manager->PlaySpawnWorm();
 	animation->SendTrigger("isAppear");
 }
@@ -1148,13 +1156,10 @@ void Hachiko::Scripting::EnemyController::WormUpdateSpawningState()
 {
 	if (_current_spawning_time > 0.0f)
 	{
-		spawn_progress += spawn_rate * Time::DeltaTimeScaled();
-
-		_enemy_body->ChangeDissolveProgress(spawn_progress, true);
 
 		if (_state == EnemyState::SPAWNING && _enemy_body)
 		{
-			_player_camera->Shake(0.5f, 0.8f);
+			_player_camera->Shake(0.5f, 0.6f);
 			_enemy_body->SetActive(true);
 			_big_dust_particles->Restart();
 			//Push the player back
@@ -1207,7 +1212,11 @@ Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::WormTransiti
 {
 	if (!_combat_stats->IsAlive())
 	{
-		return EnemyState::DEAD;
+		if (_will_die)
+		{
+			return EnemyState::DEAD;
+		}
+		return EnemyState::HIDEN;
 	}
 
 	if (_attack_cooldown <= 0.0f && !_attack_landing && _current_pos.Distance(_player_pos) <= _attack_range && _player_controller->IsAlive())
@@ -1216,7 +1225,7 @@ Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::WormTransiti
 		return EnemyState::ATTACKING;
 	}
 
-	return EnemyState::IDLE;
+	return EnemyState::INVALID;
 }
 
 // ATTACKING
@@ -1232,6 +1241,7 @@ void Hachiko::Scripting::EnemyController::WormStartAttackingState()
 	_attack_animation_timer = 0.0f;
 	_attack_current_delay = _attack_delay;
 	_attack_landing = false;
+	_spit_shot = true;
 
 	_audio_source->PostEvent(Sounds::WORM_ATTACK);
 	animation->SendTrigger("isAttacking");
@@ -1239,58 +1249,7 @@ void Hachiko::Scripting::EnemyController::WormStartAttackingState()
 
 void Hachiko::Scripting::EnemyController::WormUpdateAttackingState()
 {
-	_attack_current_delay -= Time::DeltaTimeScaled();
-
-	if (_attack_landing)
-	{
-		_attack_animation_timer += Time::DeltaTimeScaled();
-		if (_attack_animation_timer >= 1.0f)
-		{
-			CombatManager::AttackStats attack_stats;
-			attack_stats.damage = _combat_stats->_attack_power;
-			attack_stats.knockback_distance = 0.0f;
-			attack_stats.width = 0.f;
-			attack_stats.range = 2.5; // a bit bigger than its attack activation range
-			attack_stats.type = CombatManager::AttackType::CIRCLE;
-
-			int hit = _combat_manager->EnemyMeleeAttack(_attack_zone->GetTransform()->GetGlobalMatrix(), attack_stats);
-
-			if (hit > 0)
-			{
-				_combat_visual_effects_pool->PlayEnemyAttackEffect(_enemy_type, _player_pos);
-			}
-
-			_attack_landing = false;
-			_attack_cooldown = _combat_stats->_attack_cd;
-
-			_explosion_particles->GetTransform()->SetGlobalPosition(_attack_zone->GetTransform()->GetGlobalPosition());
-			_explosion_particles_comp->Play();
-
-			_projectile_particles_comp->Stop();
-		}
-		else if (_attack_animation_timer >= 0.5f)
-		{
-			float3 offset_attack_pos = _attack_zone->GetTransform()->GetGlobalPosition();
-			offset_attack_pos.y += 50;
-			_projectile_particles->GetTransform()->SetGlobalPosition(math::float3::Lerp(offset_attack_pos, _attack_zone->GetTransform()->GetGlobalPosition(), _attack_animation_timer));
-		}
-		else
-		{
-			float3 offset_worm_pos = transform->GetGlobalPosition();
-			offset_worm_pos.y += 50;
-			_projectile_particles->GetTransform()->SetGlobalPosition(math::float3::Lerp(transform->GetGlobalPosition(), offset_worm_pos, _attack_animation_timer));
-		}
-	}
-	else if (_attack_current_delay <= 0.0f)
-	{
-		// We create the attack zone after the delay
-		_attack_zone->GetTransform()->SetGlobalPosition(_player_pos);
-		_attack_landing = true;
-		_inner_indicator_billboard->Play();
-		_outer_indicator_billboard->Play();
-		_attack_animation_timer = 0.0f;
-		_projectile_particles_comp->Play();
-	}
+	// Worm spit attack is independent to his state
 }
 
 void Hachiko::Scripting::EnemyController::WormEndAttackingState()
@@ -1299,7 +1258,7 @@ void Hachiko::Scripting::EnemyController::WormEndAttackingState()
 
 Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::WormTransitionsAttackingState()
 {
-	if (_attack_current_delay <= 0.0f && !_attack_landing)
+	if (animation->IsAnimationStopped())
 	{
 		return EnemyState::IDLE;
 	}
@@ -1338,7 +1297,11 @@ Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::WormTransiti
 {
 	if (!_combat_stats->IsAlive())
 	{
-		return EnemyState::DEAD;
+		if (_will_die)
+		{
+			return EnemyState::DEAD;
+		}
+		return EnemyState::HIDEN;
 	}
 
 	if (_is_stunned)
@@ -1352,4 +1315,90 @@ Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::WormTransiti
 	}
 
 	return EnemyState::INVALID;
+}
+
+void Hachiko::Scripting::EnemyController::WormStartHidenState()
+{
+	animation->SendTrigger("isHide");
+}
+
+void Hachiko::Scripting::EnemyController::WormUpdateHidenState()
+{
+}
+
+void Hachiko::Scripting::EnemyController::WormEndHidenState()
+{
+	_enemy_body->SetActive(false);
+}
+
+Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::WormTransitionsHidenState()
+{
+	if (animation->IsAnimationStopped())
+	{
+		return EnemyState::SUPER_DEAD;
+	}
+
+	return EnemyState::INVALID;
+}
+
+void Hachiko::Scripting::EnemyController::SpitController()
+{
+	if (!_spit_shot)
+	{
+		return;
+	}
+
+	_attack_current_delay -= Time::DeltaTime();
+
+	if (_attack_landing)
+	{
+		_attack_animation_timer += Time::DeltaTimeScaled();
+		if (_attack_animation_timer >= 1.0f)
+		{
+			CombatManager::AttackStats attack_stats;
+			attack_stats.damage = _combat_stats->_attack_power;
+			attack_stats.knockback_distance = 0.0f;
+			attack_stats.width = 0.f;
+			attack_stats.range = 2.5; // a bit bigger than its attack activation range
+			attack_stats.type = CombatManager::AttackType::CIRCLE;
+
+			int hit = _combat_manager->EnemyMeleeAttack(_attack_zone->GetTransform()->GetGlobalMatrix(), attack_stats);
+
+			if (hit > 0)
+			{
+				_combat_visual_effects_pool->PlayEnemyAttackEffect(_enemy_type, _player_pos);
+			}
+
+			_spit_shot = false;
+			_attack_landing = false;
+			_attack_cooldown = _combat_stats->_attack_cd;
+
+			_explosion_particles->GetTransform()->SetGlobalPosition(_attack_zone->GetTransform()->GetGlobalPosition());
+			_explosion_particles_comp->Play();
+
+			_projectile_particles_comp->Stop();
+		}
+		else if (_attack_animation_timer >= 0.5f)
+		{
+			float3 offset_attack_pos = _attack_zone->GetTransform()->GetGlobalPosition();
+			offset_attack_pos.y += 50;
+			_projectile_particles->GetTransform()->SetGlobalPosition(math::float3::Lerp(offset_attack_pos, _attack_zone->GetTransform()->GetGlobalPosition(), _attack_animation_timer));
+		}
+		else
+		{
+			float3 offset_worm_pos = transform->GetGlobalPosition();
+			offset_worm_pos.y += 50;
+			_projectile_particles->GetTransform()->SetGlobalPosition(math::float3::Lerp(transform->GetGlobalPosition(), offset_worm_pos, _attack_animation_timer));
+		}
+	}
+	else if (_attack_current_delay <= 0.0f)
+	{
+		// We create the attack zone after the delay
+		_attack_zone->GetTransform()->SetGlobalPosition(_player_pos);
+		_attack_landing = true;
+		_inner_indicator_billboard->Play();
+		_outer_indicator_billboard->Play();
+		_attack_animation_timer = 0.0f;
+		_projectile_particles_comp->Play();
+	}
 }

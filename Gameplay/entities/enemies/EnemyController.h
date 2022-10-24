@@ -89,6 +89,9 @@ namespace Hachiko
 
             bool IsAttacking() const { return _state == EnemyState::ATTACKING; }
 
+            // The worm attack is completely separated from the worm itself once its shot
+            void SpitController();
+
         private:
             struct StateBehaviour {
                 std::function<void()> Start = nullptr;
@@ -178,6 +181,11 @@ namespace Hachiko
             void WormUpdateHitState();
             void WormEndHitState();
             EnemyState WormTransitionsHitState();
+            // HIDEN
+            void WormStartHidenState();
+            void WormUpdateHidenState();
+            void WormEndHidenState();
+            EnemyState WormTransitionsHidenState();
 
             bool forced_state = false;
             EnemyState _force_state = EnemyState::INVALID;
@@ -271,6 +279,7 @@ namespace Hachiko
 
             bool _immune = false;
             bool _attack_landing = false;
+            bool _spit_shot = false;
             bool _attack_alt = false;
 
             SERIALIZE_FIELD(float, damage_effect_duration);
