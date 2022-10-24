@@ -301,6 +301,9 @@ namespace Hachiko
             float _laser_wall_current_time = 0.0f;
             const std::array<float, 4> _wall_dir_angles = { 0.f, 90.f, 180.f, 270.f};
             SERIALIZE_FIELD(float, _laser_jump_height);
+
+			ComponentBillboard* _weapon_trail_billboard_right;
+			SERIALIZE_FIELD(GameObject*, _melee_trail_right);
         };
     } // namespace Scripting
 } // namespace Hachiko

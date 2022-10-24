@@ -72,6 +72,16 @@ void Hachiko::Scripting::BossController::OnAwake()
 
 	animation = game_object->GetComponent<ComponentAnimation>();
 
+    if (_melee_trail_right != nullptr)
+    {
+        _weapon_trail_billboard_right = _melee_trail_right->GetComponent<ComponentBillboard>();
+    }
+
+    if (_cracked_floor)
+    {
+        _cracked_trail = _cracked_floor->GetComponent<ComponentBillboard>();
+    }
+
 	SetUpHpBar();
 	// Hp bar starts hidden until encounter starts
 	SetHpBarActive(false);
@@ -391,8 +401,6 @@ float4x4 Hachiko::Scripting::BossController::GetMeleeAttackOrigin(float attack_r
 
 void Hachiko::Scripting::BossController::StartCocoon()
 {
-    
-
     time_elapse = 0.0;
     SetUpCocoon();
     FocusCameraOnBoss(true);
@@ -466,6 +474,7 @@ void Hachiko::Scripting::BossController::CocoonController()
     if (gauntlet->IsFinished() || Input::IsKeyDown(Input::KeyCode::KEY_J))
     {
         FinishCocoon();
+        animation->SendTrigger("isWalk");
     }
 }
 
@@ -591,6 +600,7 @@ void Hachiko::Scripting::BossController::MeleeAttack()
 	attack_delay_timer = 0.f;
 	after_attack_wait_timer = 0.f;
 	attacked = false;
+
 	ChangeStateText("Melee attacking.");
 }
 
@@ -603,24 +613,28 @@ void Hachiko::Scripting::BossController::MeleeAttackController()
 		return;
 	}
 
-	if (!attacked)
-	{
-		animation->SendTrigger("isMelee");
+    if (!attacked)
+    {
+        animation->SendTrigger("isMelee");
 
-		CombatManager::AttackStats attack_stats;
-		attack_stats.damage = 2.0f;
-		attack_stats.knockback_distance = 0.0f;
-		attack_stats.width = 4.f;
-		attack_stats.range = combat_stats->_attack_range * 1.3f;
-		attack_stats.type = CombatManager::AttackType::RECTANGLE;
+        CombatManager::AttackStats attack_stats;
+        attack_stats.damage = 1.0f;
+        attack_stats.knockback_distance = 0.0f;
+        attack_stats.width = 4.f;
+        attack_stats.range = combat_stats->_attack_range * 1.3f;
+        attack_stats.type = CombatManager::AttackType::RECTANGLE;
 
 
-		// Debug::DebugDraw(combat_manager->CreateAttackHitbox(GetMeleeAttackOrigin(boss_attack.stats.range), boss_attack.stats), weapon.color.Float3Part());
-		combat_manager->EnemyMeleeAttack(GetMeleeAttackOrigin(attack_stats.range), attack_stats);
-		attacked = true;
-	}
+        // Debug::DebugDraw(combat_manager->CreateAttackHitbox(GetMeleeAttackOrigin(boss_attack.stats.range), boss_attack.stats), weapon.color.Float3Part());
+        combat_manager->EnemyMeleeAttack(GetMeleeAttackOrigin(attack_stats.range), attack_stats);
+        attacked = true;
+    }
+	
+    after_attack_wait_timer += Time::DeltaTime();
 
-	after_attack_wait_timer += Time::DeltaTime();
+    if (after_attack_wait_timer > .8f) { // MIDLE animation
+        _weapon_trail_billboard_right->Play();
+    }
 
 	if (after_attack_wait_timer < after_attack_wait)
 	{
@@ -1004,6 +1018,8 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
     case JumpingState::GETTING_UP:
     {
 		player_camera->Shake(0.8f, 2.f);
+
+        _cracked_trail->Play();
 
         if (_jumping_timer < _jump_getting_up_duration)
         {
