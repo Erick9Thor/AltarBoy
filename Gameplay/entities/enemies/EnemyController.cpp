@@ -865,12 +865,13 @@ void Hachiko::Scripting::EnemyController::StartMovingBackState()
 	_speed = 3.0f;
 	_component_agent->SetMaxSpeed(_speed);
 
+	MoveInNavmesh(_spawn_pos);
+	
 	animation->SendTrigger("idle");
 }
 
 void Hachiko::Scripting::EnemyController::UpdateMovingBackState()
 {
-	MoveInNavmesh(_spawn_pos);
 }
 
 void Hachiko::Scripting::EnemyController::EndMovingBackState()
