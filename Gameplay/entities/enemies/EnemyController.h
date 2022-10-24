@@ -189,6 +189,7 @@ namespace Hachiko
             SERIALIZE_FIELD(float, _attack_range);
             SERIALIZE_FIELD(float, _attack_delay);
             SERIALIZE_FIELD(float, _idle_cooldown);
+            SERIALIZE_FIELD(float, _patrol_cooldown);
             SERIALIZE_FIELD(float, _spawning_time);
             SERIALIZE_FIELD(float, _chase_cooldown);
             float _chase_remaining_cooldown;
@@ -252,6 +253,7 @@ namespace Hachiko
             float _acceleration = 0.0f;
             float _speed = 0.0f;
             float _current_idle_cooldown = 0.0f;
+            float _current_patrol_cooldown = 0.0f;
             float _enraged = 0.0f;
             float _enemy_dissolve_time = 1.0f;
             float _enemy_dissolving_time_progress = 0.0f;

@@ -24,6 +24,7 @@ Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 	, _attack_range(3.0f)
 	, _attack_delay(0.3f)
 	, _idle_cooldown(2.0f)
+	, _patrol_cooldown(3.0f)
 	, _spawn_pos(0.0f, 0.0f, 0.0f)
 	, _combat_stats()
 	, _enemy_body(nullptr)
@@ -864,13 +865,12 @@ void Hachiko::Scripting::EnemyController::StartMovingBackState()
 	_speed = 3.0f;
 	_component_agent->SetMaxSpeed(_speed);
 
-	MoveInNavmesh(_spawn_pos);
-
 	animation->SendTrigger("idle");
 }
 
 void Hachiko::Scripting::EnemyController::UpdateMovingBackState()
 {
+	MoveInNavmesh(_spawn_pos);
 }
 
 void Hachiko::Scripting::EnemyController::EndMovingBackState()
@@ -919,11 +919,17 @@ void Hachiko::Scripting::EnemyController::StartPatrolState()
 		_already_in_combat = false;
 	}
 
-	float random = ((float(rand()) / float(RAND_MAX)) * (5.0f - -5.0f)) + -5.0f;
+	float3 _new_pos;
+	float3 corrected_pos;
 
-	float3 _new_pos = float3(_spawn_pos.x + random, _spawn_pos.y, _spawn_pos.z + random);
+	const float2 random = float2(
+		RandomUtil::Random() * (10.0f - -10.0f) + -10.0f,  // x
+		RandomUtil::Random() * (10.0f - -10.0f) + -10.0f); // y
 
-	float3 corrected_pos = Navigation::GetCorrectedPosition(_new_pos, math::float3(10.0f, 10.0f, 10.0f));
+	_new_pos = float3(_spawn_pos.x + random.x, _spawn_pos.y, _spawn_pos.z + random.y);
+
+	corrected_pos = Navigation::GetCorrectedPosition(_new_pos, math::float3(10.0f, 10.0f, 10.0f));
+
 	if (corrected_pos.x < FLT_MAX)
 	{
 		_speed = 3.0f;
@@ -931,11 +937,15 @@ void Hachiko::Scripting::EnemyController::StartPatrolState()
 		MoveInNavmesh(corrected_pos);
 	}
 
+
+	_current_patrol_cooldown = _patrol_cooldown;
+
 	animation->SendTrigger("idle");
 }
 
 void Hachiko::Scripting::EnemyController::UpdatePatrolState()
 {
+	_current_patrol_cooldown -= Time::DeltaTimeScaled();
 }
 
 void Hachiko::Scripting::EnemyController::EndPatrolState()
@@ -959,7 +969,7 @@ Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::TransitionsP
 		}
 	}
 
-	if (_current_pos.Distance(_target_pos) <= 0.3f)
+	if (_current_patrol_cooldown <= 0.0f || _current_pos.Distance(_target_pos) < .5f || !_component_agent->CanReachTarget())
 	{
 		return EnemyState::IDLE;
 	}
