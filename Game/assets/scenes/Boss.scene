@@ -10054,7 +10054,7 @@ child:
             enabled: true
             class_name: CrystalExplosion
             "'_explosion_indicator_helper@GameObject*'": 7497158442283507747
-            "'_explosion_effect@GameObject*'": 6914375917543105381
+            "'_explosion_effect@GameObject*'": 7292783872095023154
             "'_shake_intensity@float'": 0.2
             "'_seconds_shaking@float'": 5
             "'_crashing_index@unsigned'": 0
@@ -10467,35 +10467,73 @@ child:
                     casting_shadow: true
                     material_id: 6462450398853139216
                     tint_color: [1, 1, 1, 1]
-          - id: 6914375917543105381
+          - id: 7292783872095023154
             name: ExplosionEffect
             enabled: true
             component:
               - !<transform>
-                id: 16052198194001773484
+                id: 16007936905279109121
                 type: 1
                 enabled: true
-                position: [0, 0.15, 0]
-                rotation: [0, 7.901, 0]
+                position: [0, 0.3, 0]
+                rotation: [0, 0.001, 0]
                 scale: [1, 1, 1]
             child:
-              - id: 1231546531832466471
-                name: InnerEffect
+              - id: 3048826351348920635
+                name: VFX_Crystal_AOE
                 enabled: true
                 component:
                   - !<transform>
-                    id: 17688938886282015163
+                    id: 5170419729777635217
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [0, 0, 0]
-                    scale: [1, 1, 1]
+                    rotation: [0, -15.8, 0]
+                    scale: [3.418, 3.418, 3.418]
                   - !<billboard>
-                    id: 6519299657576545846
+                    id: 3634628973529071394
                     type: 21
                     enabled: true
-                    play_on_awake: true
-                    texture_id: 15537058005441777461
+                    play_on_awake: false
+                    texture_id: 13797193746573438142
+                    tiles: [2, 2]
+                    flip: [false, false]
+                    billboard_lifetime: 1
+                    properties: [1, 2, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                    animation_speed: 0.2
+                    total_tiles: 4
+                    animation_loop: false
+                    color_cycles: 1
+                    color_gradient: [[0, 0, 0, 0, 0], [1, 1, 1, 0, 0.3814], [1, 0, 0, 0, 0.9619]]
+                    animation_section: true
+                    color_section: true
+                    size_section: false
+                    size_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    rotation_section: true
+                    rotation_over_time: [true, false, 0, [10, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_size: [true, true, 0, [1, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    blend_factor: 1
+                    projection: true
+                    randomize_tiles: false
+              - id: 6981943239453026585
+                name: VFX_Crystal_AOE_Inner
+                enabled: true
+                component:
+                  - !<transform>
+                    id: 13719890040443570894
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0]
+                    rotation: [0, -15.8, 0]
+                    scale: [3.172, 3.172, 3.172]
+                  - !<billboard>
+                    id: 9709046784377370841
+                    type: 21
+                    enabled: true
+                    play_on_awake: false
+                    texture_id: 5977712486753396843
                     tiles: [1, 1]
                     flip: [false, false]
                     billboard_lifetime: 1
@@ -10503,54 +10541,16 @@ child:
                     animation_speed: 0
                     total_tiles: 1
                     animation_loop: false
-                    color_cycles: 0
-                    color_gradient: [[0.763, 0, 0, 0, 0]]
+                    color_cycles: 1
+                    color_gradient: [[1, 1, 1, 0, 0.0169], [1, 0.9883, 0.9883, 0, 0.1059], [1, 0, 0, 0, 0.7542]]
                     animation_section: false
                     color_section: true
                     size_section: true
-                    size_over_time: [true, false, 0, [30, 5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                    rotation_section: false
-                    rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                    start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                    start_size: [true, true, 0, [0.5, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                    start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                    blend_factor: 0
-                    projection: true
-                    randomize_tiles: false
-              - id: 17784683407209329049
-                name: OuterEffect
-                enabled: true
-                component:
-                  - !<transform>
-                    id: 1405697735685040788
-                    type: 1
-                    enabled: true
-                    position: [0, 0, 0]
-                    rotation: [0, 0, 0]
-                    scale: [4.8, 4.8, 1]
-                  - !<billboard>
-                    id: 12841565179933045190
-                    type: 21
-                    enabled: true
-                    play_on_awake: true
-                    texture_id: 1822181409804484943
-                    tiles: [1, 1]
-                    flip: [false, false]
-                    billboard_lifetime: 1
-                    properties: [1, 2, 0, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-                    animation_speed: 0
-                    total_tiles: 1
-                    animation_loop: false
-                    color_cycles: 1
-                    color_gradient: [[0, 0, 0, 0, 0], [1, 1, 1, 0, 1]]
-                    animation_section: false
-                    color_section: false
-                    size_section: false
-                    size_over_time: [true, false, 0, [0.5, 0.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    size_over_time: [true, false, 0, [4, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                     rotation_section: true
-                    rotation_over_time: [true, false, 0, [5, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    rotation_over_time: [true, false, 0, [20, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                     start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                    start_size: [true, true, 0, [0.5, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_size: [true, true, 0, [0.7, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                     start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                     blend_factor: 0
                     projection: true
@@ -10597,7 +10597,7 @@ child:
             enabled: true
             class_name: CrystalExplosion
             "'_explosion_indicator_helper@GameObject*'": 6491141699502643473
-            "'_explosion_effect@GameObject*'": 12315641692032984796
+            "'_explosion_effect@GameObject*'": 11294282411467873841
             "'_shake_intensity@float'": 0.2
             "'_seconds_shaking@float'": 5
             "'_crashing_index@unsigned'": 0
@@ -11010,35 +11010,73 @@ child:
                     casting_shadow: true
                     material_id: 6462450398853139216
                     tint_color: [1, 1, 1, 1]
-          - id: 12315641692032984796
+          - id: 11294282411467873841
             name: ExplosionEffect
             enabled: true
             component:
               - !<transform>
-                id: 890618694369171813
+                id: 15855480869872693433
                 type: 1
                 enabled: true
-                position: [0, 0.15, 0]
-                rotation: [0, 7.901, 0]
+                position: [0, 0.3, 0]
+                rotation: [0, 0.001, 0]
                 scale: [1, 1, 1]
             child:
-              - id: 11120025530192161270
-                name: InnerEffect
+              - id: 14535149389607712888
+                name: VFX_Crystal_AOE
                 enabled: true
                 component:
                   - !<transform>
-                    id: 9664961832473445817
+                    id: 11086615854547674271
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [0, 0, 0]
-                    scale: [1, 1, 1]
+                    rotation: [0, -15.8, 0]
+                    scale: [3.418, 3.418, 3.418]
                   - !<billboard>
-                    id: 2709160829597243588
+                    id: 12733085426500028555
                     type: 21
                     enabled: true
-                    play_on_awake: true
-                    texture_id: 15537058005441777461
+                    play_on_awake: false
+                    texture_id: 13797193746573438142
+                    tiles: [2, 2]
+                    flip: [false, false]
+                    billboard_lifetime: 1
+                    properties: [1, 2, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                    animation_speed: 0.2
+                    total_tiles: 4
+                    animation_loop: false
+                    color_cycles: 1
+                    color_gradient: [[0, 0, 0, 0, 0], [1, 1, 1, 0, 0.3814], [1, 0, 0, 0, 0.9619]]
+                    animation_section: true
+                    color_section: true
+                    size_section: false
+                    size_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    rotation_section: true
+                    rotation_over_time: [true, false, 0, [10, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_size: [true, true, 0, [1, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    blend_factor: 1
+                    projection: true
+                    randomize_tiles: false
+              - id: 17283378310553998620
+                name: VFX_Crystal_AOE_Inner
+                enabled: true
+                component:
+                  - !<transform>
+                    id: 6795947377150076119
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0]
+                    rotation: [0, -15.8, 0]
+                    scale: [3.172, 3.172, 3.172]
+                  - !<billboard>
+                    id: 5004197477506929353
+                    type: 21
+                    enabled: true
+                    play_on_awake: false
+                    texture_id: 5977712486753396843
                     tiles: [1, 1]
                     flip: [false, false]
                     billboard_lifetime: 1
@@ -11046,54 +11084,16 @@ child:
                     animation_speed: 0
                     total_tiles: 1
                     animation_loop: false
-                    color_cycles: 0
-                    color_gradient: [[0.763, 0, 0, 0, 0]]
+                    color_cycles: 1
+                    color_gradient: [[1, 1, 1, 0, 0.0169], [1, 0.9883, 0.9883, 0, 0.1059], [1, 0, 0, 0, 0.7542]]
                     animation_section: false
                     color_section: true
                     size_section: true
-                    size_over_time: [true, false, 0, [30, 5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                    rotation_section: false
-                    rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                    start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                    start_size: [true, true, 0, [0.5, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                    start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                    blend_factor: 0
-                    projection: true
-                    randomize_tiles: false
-              - id: 17982690388293093191
-                name: OuterEffect
-                enabled: true
-                component:
-                  - !<transform>
-                    id: 4763302591674330453
-                    type: 1
-                    enabled: true
-                    position: [0, 0, 0]
-                    rotation: [0, 0, 0]
-                    scale: [4.8, 4.8, 1]
-                  - !<billboard>
-                    id: 2485500052366917985
-                    type: 21
-                    enabled: true
-                    play_on_awake: true
-                    texture_id: 1822181409804484943
-                    tiles: [1, 1]
-                    flip: [false, false]
-                    billboard_lifetime: 1
-                    properties: [1, 2, 0, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-                    animation_speed: 0
-                    total_tiles: 1
-                    animation_loop: false
-                    color_cycles: 1
-                    color_gradient: [[0, 0, 0, 0, 0], [1, 1, 1, 0, 1]]
-                    animation_section: false
-                    color_section: false
-                    size_section: false
-                    size_over_time: [true, false, 0, [0.5, 0.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    size_over_time: [true, false, 0, [4, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                     rotation_section: true
-                    rotation_over_time: [true, false, 0, [5, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    rotation_over_time: [true, false, 0, [20, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                     start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                    start_size: [true, true, 0, [0.5, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_size: [true, true, 0, [0.7, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                     start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                     blend_factor: 0
                     projection: true
@@ -11140,7 +11140,7 @@ child:
             enabled: true
             class_name: CrystalExplosion
             "'_explosion_indicator_helper@GameObject*'": 17534334734055269850
-            "'_explosion_effect@GameObject*'": 14637631407858973769
+            "'_explosion_effect@GameObject*'": 6695900584103861113
             "'_shake_intensity@float'": 0.2
             "'_seconds_shaking@float'": 5
             "'_crashing_index@unsigned'": 0
@@ -11553,35 +11553,73 @@ child:
                     casting_shadow: true
                     material_id: 6462450398853139216
                     tint_color: [1, 1, 1, 1]
-          - id: 14637631407858973769
+          - id: 6695900584103861113
             name: ExplosionEffect
             enabled: true
             component:
               - !<transform>
-                id: 15482396775808158935
+                id: 8738761953089032921
                 type: 1
                 enabled: true
-                position: [0, 0.15, 0]
-                rotation: [0, 7.901, 0]
+                position: [0, 0.3, 0]
+                rotation: [0, 0.001, 0]
                 scale: [1, 1, 1]
             child:
-              - id: 1777460472410277879
-                name: InnerEffect
+              - id: 6444182164949440589
+                name: VFX_Crystal_AOE
                 enabled: true
                 component:
                   - !<transform>
-                    id: 11583918913521720141
+                    id: 17033308045812002473
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [0, 0, 0]
-                    scale: [1, 1, 1]
+                    rotation: [0, -15.8, 0]
+                    scale: [3.418, 3.418, 3.418]
                   - !<billboard>
-                    id: 8810971211107207403
+                    id: 13134551749976364192
                     type: 21
                     enabled: true
-                    play_on_awake: true
-                    texture_id: 15537058005441777461
+                    play_on_awake: false
+                    texture_id: 13797193746573438142
+                    tiles: [2, 2]
+                    flip: [false, false]
+                    billboard_lifetime: 1
+                    properties: [1, 2, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                    animation_speed: 0.2
+                    total_tiles: 4
+                    animation_loop: false
+                    color_cycles: 1
+                    color_gradient: [[0, 0, 0, 0, 0], [1, 1, 1, 0, 0.3814], [1, 0, 0, 0, 0.9619]]
+                    animation_section: true
+                    color_section: true
+                    size_section: false
+                    size_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    rotation_section: true
+                    rotation_over_time: [true, false, 0, [10, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_size: [true, true, 0, [1, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    blend_factor: 1
+                    projection: true
+                    randomize_tiles: false
+              - id: 2369297498102372150
+                name: VFX_Crystal_AOE_Inner
+                enabled: true
+                component:
+                  - !<transform>
+                    id: 5253554177091446662
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0]
+                    rotation: [0, -15.8, 0]
+                    scale: [3.172, 3.172, 3.172]
+                  - !<billboard>
+                    id: 9345898178982251213
+                    type: 21
+                    enabled: true
+                    play_on_awake: false
+                    texture_id: 5977712486753396843
                     tiles: [1, 1]
                     flip: [false, false]
                     billboard_lifetime: 1
@@ -11589,54 +11627,16 @@ child:
                     animation_speed: 0
                     total_tiles: 1
                     animation_loop: false
-                    color_cycles: 0
-                    color_gradient: [[0.763, 0, 0, 0, 0]]
+                    color_cycles: 1
+                    color_gradient: [[1, 1, 1, 0, 0.0169], [1, 0.9883, 0.9883, 0, 0.1059], [1, 0, 0, 0, 0.7542]]
                     animation_section: false
                     color_section: true
                     size_section: true
-                    size_over_time: [true, false, 0, [30, 5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                    rotation_section: false
-                    rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                    start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                    start_size: [true, true, 0, [0.5, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                    start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                    blend_factor: 0
-                    projection: true
-                    randomize_tiles: false
-              - id: 10051214987329786535
-                name: OuterEffect
-                enabled: true
-                component:
-                  - !<transform>
-                    id: 8737728929970580287
-                    type: 1
-                    enabled: true
-                    position: [0, 0, 0]
-                    rotation: [0, 0, 0]
-                    scale: [4.8, 4.8, 1]
-                  - !<billboard>
-                    id: 12154486289324446237
-                    type: 21
-                    enabled: true
-                    play_on_awake: true
-                    texture_id: 1822181409804484943
-                    tiles: [1, 1]
-                    flip: [false, false]
-                    billboard_lifetime: 1
-                    properties: [1, 2, 0, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-                    animation_speed: 0
-                    total_tiles: 1
-                    animation_loop: false
-                    color_cycles: 1
-                    color_gradient: [[0, 0, 0, 0, 0], [1, 1, 1, 0, 1]]
-                    animation_section: false
-                    color_section: false
-                    size_section: false
-                    size_over_time: [true, false, 0, [0.5, 0.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    size_over_time: [true, false, 0, [4, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                     rotation_section: true
-                    rotation_over_time: [true, false, 0, [5, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    rotation_over_time: [true, false, 0, [20, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                     start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                    start_size: [true, true, 0, [0.5, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_size: [true, true, 0, [0.7, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                     start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                     blend_factor: 0
                     projection: true
@@ -11683,7 +11683,7 @@ child:
             enabled: true
             class_name: CrystalExplosion
             "'_explosion_indicator_helper@GameObject*'": 12626809251077411762
-            "'_explosion_effect@GameObject*'": 4211619609436505027
+            "'_explosion_effect@GameObject*'": 10056846669475097863
             "'_shake_intensity@float'": 0.2
             "'_seconds_shaking@float'": 5
             "'_crashing_index@unsigned'": 0
@@ -12096,35 +12096,73 @@ child:
                     casting_shadow: true
                     material_id: 6462450398853139216
                     tint_color: [1, 1, 1, 1]
-          - id: 4211619609436505027
+          - id: 10056846669475097863
             name: ExplosionEffect
             enabled: true
             component:
               - !<transform>
-                id: 8677871857643936243
+                id: 11761611968769727379
                 type: 1
                 enabled: true
-                position: [0, 0.15, 0]
-                rotation: [0, 7.901, 0]
+                position: [0, 0.3, 0]
+                rotation: [0, 0.001, 0]
                 scale: [1, 1, 1]
             child:
-              - id: 12869662226153457652
-                name: InnerEffect
+              - id: 8695774695754424374
+                name: VFX_Crystal_AOE
                 enabled: true
                 component:
                   - !<transform>
-                    id: 3609411745060051016
+                    id: 2456891644733227202
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [0, 0, 0]
-                    scale: [1, 1, 1]
+                    rotation: [0, -15.8, 0]
+                    scale: [3.418, 3.418, 3.418]
                   - !<billboard>
-                    id: 8475245656277741356
+                    id: 5036515349500762944
                     type: 21
                     enabled: true
-                    play_on_awake: true
-                    texture_id: 15537058005441777461
+                    play_on_awake: false
+                    texture_id: 13797193746573438142
+                    tiles: [2, 2]
+                    flip: [false, false]
+                    billboard_lifetime: 1
+                    properties: [1, 2, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                    animation_speed: 0.2
+                    total_tiles: 4
+                    animation_loop: false
+                    color_cycles: 1
+                    color_gradient: [[0, 0, 0, 0, 0], [1, 1, 1, 0, 0.3814], [1, 0, 0, 0, 0.9619]]
+                    animation_section: true
+                    color_section: true
+                    size_section: false
+                    size_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    rotation_section: true
+                    rotation_over_time: [true, false, 0, [10, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_size: [true, true, 0, [1, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    blend_factor: 1
+                    projection: true
+                    randomize_tiles: false
+              - id: 6744482727660623927
+                name: VFX_Crystal_AOE_Inner
+                enabled: true
+                component:
+                  - !<transform>
+                    id: 357460079203655910
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0]
+                    rotation: [0, -15.8, 0]
+                    scale: [3.172, 3.172, 3.172]
+                  - !<billboard>
+                    id: 6100941654591720999
+                    type: 21
+                    enabled: true
+                    play_on_awake: false
+                    texture_id: 5977712486753396843
                     tiles: [1, 1]
                     flip: [false, false]
                     billboard_lifetime: 1
@@ -12132,54 +12170,16 @@ child:
                     animation_speed: 0
                     total_tiles: 1
                     animation_loop: false
-                    color_cycles: 0
-                    color_gradient: [[0.763, 0, 0, 0, 0]]
+                    color_cycles: 1
+                    color_gradient: [[1, 1, 1, 0, 0.0169], [1, 0.9883, 0.9883, 0, 0.1059], [1, 0, 0, 0, 0.7542]]
                     animation_section: false
                     color_section: true
                     size_section: true
-                    size_over_time: [true, false, 0, [30, 5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                    rotation_section: false
-                    rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                    start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                    start_size: [true, true, 0, [0.5, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                    start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                    blend_factor: 0
-                    projection: true
-                    randomize_tiles: false
-              - id: 2658060752243991369
-                name: OuterEffect
-                enabled: true
-                component:
-                  - !<transform>
-                    id: 12800188951483886824
-                    type: 1
-                    enabled: true
-                    position: [0, 0, 0]
-                    rotation: [0, 0, 0]
-                    scale: [4.8, 4.8, 1]
-                  - !<billboard>
-                    id: 5360255557794864605
-                    type: 21
-                    enabled: true
-                    play_on_awake: true
-                    texture_id: 1822181409804484943
-                    tiles: [1, 1]
-                    flip: [false, false]
-                    billboard_lifetime: 1
-                    properties: [1, 2, 0, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-                    animation_speed: 0
-                    total_tiles: 1
-                    animation_loop: false
-                    color_cycles: 1
-                    color_gradient: [[0, 0, 0, 0, 0], [1, 1, 1, 0, 1]]
-                    animation_section: false
-                    color_section: false
-                    size_section: false
-                    size_over_time: [true, false, 0, [0.5, 0.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    size_over_time: [true, false, 0, [4, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                     rotation_section: true
-                    rotation_over_time: [true, false, 0, [5, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    rotation_over_time: [true, false, 0, [20, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                     start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                    start_size: [true, true, 0, [0.5, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_size: [true, true, 0, [0.7, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                     start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                     blend_factor: 0
                     projection: true
@@ -12226,7 +12226,7 @@ child:
             enabled: true
             class_name: CrystalExplosion
             "'_explosion_indicator_helper@GameObject*'": 13243594479836647465
-            "'_explosion_effect@GameObject*'": 9246858334661810244
+            "'_explosion_effect@GameObject*'": 11579925371664770972
             "'_shake_intensity@float'": 0.2
             "'_seconds_shaking@float'": 5
             "'_crashing_index@unsigned'": 0
@@ -12639,35 +12639,73 @@ child:
                     casting_shadow: true
                     material_id: 6462450398853139216
                     tint_color: [1, 1, 1, 1]
-          - id: 9246858334661810244
+          - id: 11579925371664770972
             name: ExplosionEffect
             enabled: true
             component:
               - !<transform>
-                id: 16962174545660281079
+                id: 7497345749725606283
                 type: 1
                 enabled: true
-                position: [0, 0.15, 0]
-                rotation: [0, 7.901, 0]
+                position: [0, 0.3, 0]
+                rotation: [0, 0.001, 0]
                 scale: [1, 1, 1]
             child:
-              - id: 13298546299957266096
-                name: InnerEffect
+              - id: 1329978742373653685
+                name: VFX_Crystal_AOE
                 enabled: true
                 component:
                   - !<transform>
-                    id: 197908720420481088
+                    id: 15709893696683083540
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [0, 0, 0]
-                    scale: [1, 1, 1]
+                    rotation: [0, -15.8, 0]
+                    scale: [3.418, 3.418, 3.418]
                   - !<billboard>
-                    id: 11862521165612492437
+                    id: 17896094305755991173
                     type: 21
                     enabled: true
-                    play_on_awake: true
-                    texture_id: 15537058005441777461
+                    play_on_awake: false
+                    texture_id: 13797193746573438142
+                    tiles: [2, 2]
+                    flip: [false, false]
+                    billboard_lifetime: 1
+                    properties: [1, 2, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                    animation_speed: 0.2
+                    total_tiles: 4
+                    animation_loop: false
+                    color_cycles: 1
+                    color_gradient: [[0, 0, 0, 0, 0], [1, 1, 1, 0, 0.3814], [1, 0, 0, 0, 0.9619]]
+                    animation_section: true
+                    color_section: true
+                    size_section: false
+                    size_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    rotation_section: true
+                    rotation_over_time: [true, false, 0, [10, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_size: [true, true, 0, [1, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    blend_factor: 1
+                    projection: true
+                    randomize_tiles: false
+              - id: 15759752649019181666
+                name: VFX_Crystal_AOE_Inner
+                enabled: true
+                component:
+                  - !<transform>
+                    id: 7657565138578163403
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0]
+                    rotation: [0, -15.8, 0]
+                    scale: [3.172, 3.172, 3.172]
+                  - !<billboard>
+                    id: 13895889352000197406
+                    type: 21
+                    enabled: true
+                    play_on_awake: false
+                    texture_id: 5977712486753396843
                     tiles: [1, 1]
                     flip: [false, false]
                     billboard_lifetime: 1
@@ -12675,54 +12713,16 @@ child:
                     animation_speed: 0
                     total_tiles: 1
                     animation_loop: false
-                    color_cycles: 0
-                    color_gradient: [[0.763, 0, 0, 0, 0]]
+                    color_cycles: 1
+                    color_gradient: [[1, 1, 1, 0, 0.0169], [1, 0.9883, 0.9883, 0, 0.1059], [1, 0, 0, 0, 0.7542]]
                     animation_section: false
                     color_section: true
                     size_section: true
-                    size_over_time: [true, false, 0, [30, 5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                    rotation_section: false
-                    rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                    start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                    start_size: [true, true, 0, [0.5, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                    start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                    blend_factor: 0
-                    projection: true
-                    randomize_tiles: false
-              - id: 1396663883301844509
-                name: OuterEffect
-                enabled: true
-                component:
-                  - !<transform>
-                    id: 16835004795325594411
-                    type: 1
-                    enabled: true
-                    position: [0, 0, 0]
-                    rotation: [0, 0, 0]
-                    scale: [4.8, 4.8, 1]
-                  - !<billboard>
-                    id: 5047836140736653046
-                    type: 21
-                    enabled: true
-                    play_on_awake: true
-                    texture_id: 1822181409804484943
-                    tiles: [1, 1]
-                    flip: [false, false]
-                    billboard_lifetime: 1
-                    properties: [1, 2, 0, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-                    animation_speed: 0
-                    total_tiles: 1
-                    animation_loop: false
-                    color_cycles: 1
-                    color_gradient: [[0, 0, 0, 0, 0], [1, 1, 1, 0, 1]]
-                    animation_section: false
-                    color_section: false
-                    size_section: false
-                    size_over_time: [true, false, 0, [0.5, 0.5], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    size_over_time: [true, false, 0, [4, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                     rotation_section: true
-                    rotation_over_time: [true, false, 0, [5, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    rotation_over_time: [true, false, 0, [20, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                     start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                    start_size: [true, true, 0, [0.5, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                    start_size: [true, true, 0, [0.7, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                     start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                     blend_factor: 0
                     projection: true
