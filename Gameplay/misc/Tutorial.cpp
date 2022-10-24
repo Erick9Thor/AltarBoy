@@ -138,5 +138,10 @@ void Hachiko::Scripting::Tutorial::ShowTutorialScreen(bool show, GameObject* key
 
 bool Hachiko::Scripting::Tutorial::TutorialButtonPressed()
 {
-	return Input::IsKeyDown(Input::KeyCode::KEY_Y) || Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_Y);
+	return Input::IsKeyDown(Input::KeyCode::KEY_Y) ||
+		Input::IsKeyDown(Input::KeyCode::KEY_F) ||
+		Input::IsKeyDown(Input::KeyCode::KEY_SPACE) ||
+		Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_Y) ||
+		Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_A) ||
+		Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_B);
 }
