@@ -68,6 +68,7 @@ namespace Hachiko
 			AudioManager* _audio_manager = nullptr;
 			std::vector<GameObject*> _enemy_packs{};
 			std::vector<DoorController*> _doors{};
+			float _elapsed_time = 0.0f;
 			// Camera change values
 			PlayerCamera* _main_camera = nullptr;
 		};
