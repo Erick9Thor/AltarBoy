@@ -310,7 +310,7 @@ void Hachiko::Scripting::BossController::CombatTransitionController()
 	switch (combat_state)
 	{
 	case CombatState::IDLE:
-		animation->SendTrigger("isIdle");
+		animation->SendTrigger("isWalk");
 		combat_state = CombatState::CHASING;
 		break;
 	case CombatState::CHASING:
