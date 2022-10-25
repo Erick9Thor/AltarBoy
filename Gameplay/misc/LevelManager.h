@@ -65,6 +65,8 @@ namespace Hachiko
 			SERIALIZE_FIELD(GameObject*, _audio_manager_go);
 			SERIALIZE_FIELD(GameObject*, _player_sound_manager_go);
 			SERIALIZE_FIELD(GameObject*, _victory_screen);
+
+			static bool increased_health;
 			
 		private:
 			GauntletManager* _last_gauntlet = nullptr;

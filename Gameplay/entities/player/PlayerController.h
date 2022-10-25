@@ -224,7 +224,7 @@ namespace Hachiko
 			void AttackController();
 
 			void CheckNearbyParasytes(const math::float3& current_position);
-			void PickupParasite(EnemyController* enemy_contr);
+			void PickupParasite(EnemyController* enemy_contr, bool magic_parasyte = false);
 			void RecieveKnockback(const math::float3 direction);
 
 			void CheckState();
@@ -233,6 +233,8 @@ namespace Hachiko
 			void StopParticles();
 			void UpdateEmissives();
 			void UpdateVignete();
+
+			void IncreaseHealth();
 
 		public:
 			SERIALIZE_FIELD(PlayerState, _state);
@@ -296,6 +298,8 @@ namespace Hachiko
 			SERIALIZE_FIELD(GameObject*, _hp_cell_2);
 			SERIALIZE_FIELD(GameObject*, _hp_cell_3);
 			SERIALIZE_FIELD(GameObject*, _hp_cell_4);
+			SERIALIZE_FIELD(GameObject*, _hp_cell_extra);
+			SERIALIZE_FIELD(GameObject*, _magic_parasyte);
 			std::vector<GameObject*> hp_cells;
 
 			SERIALIZE_FIELD(GameObject*, _ammo_cell_1);
