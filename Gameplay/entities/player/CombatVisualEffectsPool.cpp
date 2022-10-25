@@ -134,7 +134,7 @@ void Hachiko::Scripting::CombatVisualEffectsPool::PlayGroundCrackEffect(float3 p
 
 	ComponentBillboard* current_attack_billboard = GetCurrentGroundVfx();
 
-	current_attack_billboard->GetGameObject()->GetTransform()->SetGlobalPosition(position + float3::unitX * 2.0f);
+	current_attack_billboard->GetGameObject()->GetTransform()->SetGlobalPosition(position);
 
 	current_attack_billboard->Restart();
 }

@@ -79,7 +79,7 @@ namespace Hachiko
 			constexpr int JUMP_PATTERN_SIZE = 6;
 		}
 
-		class BossController : public Script
+		class BossController : public Script 
 		{
 			SERIALIZATION_METHODS(false)
 
