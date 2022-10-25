@@ -557,7 +557,7 @@
 								<Property Name="MaxReachedBehavior" Type="int16" Value="1"/>
 								<Property Name="MaxSoundPerInstance" Type="int16">
 									<ValueList>
-										<Value>5</Value>
+										<Value>3</Value>
 									</ValueList>
 								</Property>
 								<Property Name="Pitch" Type="int32">
@@ -577,7 +577,7 @@
 								<Property Name="PlayMechanismLoop" Type="bool" Value="True"/>
 								<Property Name="PlayMechanismLoopCount" Type="int32" Value="1"/>
 								<Property Name="PlayMechanismSpecialTransitions" Type="bool" Value="True"/>
-								<Property Name="PlayMechanismSpecialTransitionsValue" Type="Real64" Value="2"/>
+								<Property Name="PlayMechanismSpecialTransitionsValue" Type="Real64" Value="6"/>
 								<Property Name="PlayMechanismStepOrContinuous" Type="int16" Value="0"/>
 								<Property Name="RandomOrSequence" Type="int16" Value="0"/>
 								<Property Name="UseMaxSoundPerInstance" Type="bool">
@@ -603,7 +603,7 @@
 													<Modifier Name="" ID="{57172CAB-EDD9-454C-89F9-6DB319B2819C}">
 														<PropertyList>
 															<Property Name="Enabled" Type="bool" Value="True"/>
-															<Property Name="Max" Type="Real64" Value="200"/>
+															<Property Name="Max" Type="Real64" Value="300"/>
 														</PropertyList>
 													</Modifier>
 												</ModifierInfo>
@@ -638,6 +638,15 @@
 									</ActiveSourceList>
 								</Sound>
 								<Sound Name="ES_Sci Fi Spaceship 36 - SFX Producer" ID="{020CF240-E236-42C9-B15B-109FCE671222}" ShortID="130733001">
+									<PropertyList>
+										<Property Name="Pitch" Type="int32">
+											<ModifierList>
+												<ModifierInfo>
+													<Modifier Name="" ID="{2C5F9016-C05B-4F5C-88A5-98A242990A4B}"/>
+												</ModifierInfo>
+											</ModifierList>
+										</Property>
+									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
@@ -649,7 +658,9 @@
 									<ChildrenList>
 										<AudioFileSource Name="ES_Sci Fi Spaceship 36 - SFX Producer" ID="{1BA74338-3EB2-4FCD-B385-3B5853A1F886}">
 											<PropertyList>
+												<Property Name="FadeInDuration" Type="Real64" Value="0.871916010498687"/>
 												<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+												<Property Name="TrimBegin" Type="Real64" Value="2.98036745406824"/>
 												<Property Name="TrimEnd" Type="Real64" Value="6.4997375328084"/>
 											</PropertyList>
 											<Language>SFX</Language>
