@@ -76,7 +76,7 @@ void Hachiko::ModuleCamera::OnResize(unsigned int screen_width, unsigned int scr
 void Hachiko::ModuleCamera::Controller(const float delta)
 {
     static const float zoom_speed = 3.0f;
-    static const float rot_speed = 0.15f;
+    static const float rot_speed = 2.0f;
     static const float perpendicular_movement_speed = 2.0f;
 
 #ifndef PLAY_BUILD
