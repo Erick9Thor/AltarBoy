@@ -52,6 +52,7 @@ namespace Hachiko
 
 			SERIALIZE_FIELD(int, _tutorials_screen_shown);
 			bool showing_screen = false;
+			bool first_active_frame = true;
 		};
 	} // namespace Scripting
 } // namespace Hachiko

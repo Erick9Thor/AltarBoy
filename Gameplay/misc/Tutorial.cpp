@@ -85,6 +85,8 @@ void Hachiko::Scripting::Tutorial::OnUpdate()
 			return;
 		}
 	}
+
+	first_active_frame = false;
 }
 
 
@@ -138,6 +140,10 @@ void Hachiko::Scripting::Tutorial::ShowTutorialScreen(bool show, GameObject* key
 
 bool Hachiko::Scripting::Tutorial::TutorialButtonPressed()
 {
+	if (first_active_frame)
+	{
+		return false;
+	}
 	return Input::IsKeyDown(Input::KeyCode::KEY_Y) ||
 		Input::IsKeyDown(Input::KeyCode::KEY_F) ||
 		Input::IsKeyDown(Input::KeyCode::KEY_SPACE) ||

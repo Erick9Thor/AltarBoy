@@ -27,7 +27,7 @@ void Hachiko::Scripting::DynamicCamera::OnAwake()
 
     _camera_go = game_object->children[0];
     // Initially teleport camera to sequence start
-    _player_camera->SetObjective(_camera_go, true);
+    _player_camera->SetObjective(_camera_go, false);
     _player_camera->ChangeRelativePosition(float3(0.0f, 30.0f, 20.0f));
 
     // Use all children except first as camera positions

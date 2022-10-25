@@ -348,6 +348,7 @@ void Hachiko::Scripting::PlayerCamera::SetObjective(GameObject* objective, bool 
 	if (teleport)
 	{
 		_current_objective = objective;
+		game_object->GetTransform()->SetGlobalPosition(objective->GetTransform()->GetGlobalPosition());
 	}
 }
 
