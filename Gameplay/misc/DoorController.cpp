@@ -13,10 +13,6 @@ void Hachiko::Scripting::DoorController::OnAwake()
 	door_obstacle = _door_prefab->GetComponent<ComponentObstacle>();
 	_closed_door_mesh = _door_prefab->children[0];
 	_open_door_mesh = _door_prefab->children[1];
-	if (_audio_manager_go != nullptr)
-	{
-		_audio_manager = _audio_manager_go->GetComponent<AudioManager>();
-	}
 	Close();
 }
 
@@ -27,7 +23,6 @@ void Hachiko::Scripting::DoorController::OnUpdate()
 		_elapsed_time += Time::DeltaTime();
 		if (_elapsed_time < 2.0f)
 		{
-			_audio_manager->PlayDoorOpening();
 			_closed_door_mesh->ChangeDissolveProgress(1 - (_elapsed_time / 2.0f));
 		}
 		else
