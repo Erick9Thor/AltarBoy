@@ -18,9 +18,11 @@ namespace AK
         static const AkUniqueID PLAY_COMBAT = 513571230U;
         static const AkUniqueID PLAY_CRYSTAL = 2035174344U;
         static const AkUniqueID PLAY_DASH = 2211787386U;
-        static const AkUniqueID PLAY_DOOROPENING = 1784075418U;
         static const AkUniqueID PLAY_FOOTSTEP = 1602358412U;
         static const AkUniqueID PLAY_GAMEOVER = 3174629258U;
+        static const AkUniqueID PLAY_GAUNLETDOOROPENING = 2988819998U;
+        static const AkUniqueID PLAY_GAUNLETNEXTROUND = 1126614951U;
+        static const AkUniqueID PLAY_GAUNLETSTART = 478842326U;
         static const AkUniqueID PLAY_INTROCINEMATIC = 2953314807U;
         static const AkUniqueID PLAY_LASER = 2270376495U;
         static const AkUniqueID PLAY_LASER_HIT = 4092857357U;
@@ -48,6 +50,19 @@ namespace AK
 
     namespace STATES
     {
+        namespace BOSS_BATTLE_STATES
+        {
+            static const AkUniqueID GROUP = 2746189348U;
+
+            namespace STATE
+            {
+                static const AkUniqueID NONE = 748895195U;
+                static const AkUniqueID STAGE1 = 936729722U;
+                static const AkUniqueID STAGE2 = 936729721U;
+                static const AkUniqueID STAGE3 = 936729720U;
+            } // namespace STATE
+        } // namespace BOSS_BATTLE_STATES
+
         namespace MUSIC_STATES
         {
             static const AkUniqueID GROUP = 1690668539U;

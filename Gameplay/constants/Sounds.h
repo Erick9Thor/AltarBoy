@@ -22,9 +22,9 @@ namespace Hachiko::Sounds
 	constexpr const wchar_t* WORM_DEATH = L"Play_WormDeath";
 
 	// Gauntlet
-	constexpr const wchar_t* GAUNTLET_START = L"Play_WormSpawn";
-	constexpr const wchar_t* GAUNTLET_NEXT_ROUND = L"Play_WormRoar";
-	constexpr const wchar_t* GAUNTLET_COMPLETE = L"Play_WormDeath";
+	constexpr const wchar_t* GAUNTLET_START = L"Play_GaunletStart";
+	constexpr const wchar_t* GAUNTLET_NEXT_ROUND = L"Play_GaunletNextRound";
+	constexpr const wchar_t* GAUNTLET_COMPLETE = L"Play_GaunletDoorOpening";
 
 	// Enviroment
 	constexpr const wchar_t* CRYSTAL = L"Play_Crystal";

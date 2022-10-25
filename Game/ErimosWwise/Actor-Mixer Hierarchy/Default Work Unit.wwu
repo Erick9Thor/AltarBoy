@@ -551,67 +551,40 @@
 								<ActiveSource Name="Splash-centipede" ID="{46B0591E-2673-4277-93AA-9F17B5C324F1}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
-						<RandomSequenceContainer Name="DoorOpening" ID="{2811ECF1-D603-402F-975D-4E67774FD1BF}" ShortID="499877962">
-							<PropertyList>
-								<Property Name="3DSpatialization" Type="int16" Value="1"/>
-								<Property Name="MaxReachedBehavior" Type="int16" Value="1"/>
-								<Property Name="MaxSoundPerInstance" Type="int16">
-									<ValueList>
-										<Value>3</Value>
-									</ValueList>
-								</Property>
-								<Property Name="Pitch" Type="int32">
-									<ModifierList>
-										<ModifierInfo>
-											<Modifier Name="" ID="{1D04F825-7B27-4E20-BAC1-9EDB041371CA}">
-												<PropertyList>
-													<Property Name="Enabled" Type="bool" Value="True"/>
-													<Property Name="Max" Type="Real64" Value="200"/>
-													<Property Name="Min" Type="Real64" Value="-100"/>
-												</PropertyList>
-											</Modifier>
-										</ModifierInfo>
-									</ModifierList>
-								</Property>
-								<Property Name="PlayMechanismInfiniteOrNumberOfLoops" Type="int16" Value="0"/>
-								<Property Name="PlayMechanismLoop" Type="bool" Value="True"/>
-								<Property Name="PlayMechanismLoopCount" Type="int32" Value="1"/>
-								<Property Name="PlayMechanismSpecialTransitions" Type="bool" Value="True"/>
-								<Property Name="PlayMechanismSpecialTransitionsValue" Type="Real64" Value="6"/>
-								<Property Name="PlayMechanismStepOrContinuous" Type="int16" Value="0"/>
-								<Property Name="RandomOrSequence" Type="int16" Value="0"/>
-								<Property Name="UseMaxSoundPerInstance" Type="bool">
-									<ValueList>
-										<Value>True</Value>
-									</ValueList>
-								</Property>
-							</PropertyList>
-							<ReferenceList>
-								<Reference Name="Conversion">
-									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
-								</Reference>
-								<Reference Name="OutputBus">
-									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
-								</Reference>
-							</ReferenceList>
+						<Folder Name="Gaunlet" ID="{6CD25879-AEDF-402E-B9B6-E4CCD4272A23}" ShortID="819421566">
 							<ChildrenList>
-								<Sound Name="ES_Sci Fi Portal Warp - SFX Producer" ID="{3B7224C2-953A-4C51-8624-0A19082CAA7B}" ShortID="293764039">
+								<RandomSequenceContainer Name="DoorOpening" ID="{2811ECF1-D603-402F-975D-4E67774FD1BF}" ShortID="499877962">
 									<PropertyList>
+										<Property Name="3DSpatialization" Type="int16" Value="1"/>
+										<Property Name="MaxReachedBehavior" Type="int16" Value="1"/>
+										<Property Name="MaxSoundPerInstance" Type="int16">
+											<ValueList>
+												<Value>3</Value>
+											</ValueList>
+										</Property>
 										<Property Name="Pitch" Type="int32">
 											<ModifierList>
 												<ModifierInfo>
-													<Modifier Name="" ID="{57172CAB-EDD9-454C-89F9-6DB319B2819C}">
+													<Modifier Name="" ID="{1D04F825-7B27-4E20-BAC1-9EDB041371CA}">
 														<PropertyList>
 															<Property Name="Enabled" Type="bool" Value="True"/>
-															<Property Name="Max" Type="Real64" Value="300"/>
+															<Property Name="Max" Type="Real64" Value="200"/>
+															<Property Name="Min" Type="Real64" Value="-100"/>
 														</PropertyList>
 													</Modifier>
 												</ModifierInfo>
 											</ModifierList>
 										</Property>
-										<Property Name="Volume" Type="Real64">
+										<Property Name="PlayMechanismInfiniteOrNumberOfLoops" Type="int16" Value="0"/>
+										<Property Name="PlayMechanismLoop" Type="bool" Value="True"/>
+										<Property Name="PlayMechanismLoopCount" Type="int32" Value="1"/>
+										<Property Name="PlayMechanismSpecialTransitions" Type="bool" Value="True"/>
+										<Property Name="PlayMechanismSpecialTransitionsValue" Type="Real64" Value="6"/>
+										<Property Name="PlayMechanismStepOrContinuous" Type="int16" Value="0"/>
+										<Property Name="RandomOrSequence" Type="int16" Value="0"/>
+										<Property Name="UseMaxSoundPerInstance" Type="bool">
 											<ValueList>
-												<Value>5</Value>
+												<Value>True</Value>
 											</ValueList>
 										</Property>
 									</PropertyList>
@@ -624,29 +597,94 @@
 										</Reference>
 									</ReferenceList>
 									<ChildrenList>
-										<AudioFileSource Name="ES_Sci Fi Portal Warp - SFX Producer" ID="{8FFC7363-C206-4ED0-A0FC-0CD29284B78C}">
-											<Language>SFX</Language>
-											<AudioFile>ES_Sci Fi Portal Warp - SFX Producer.wav</AudioFile>
-											<MediaIDList>
-												<MediaID ID="459435838"/>
-											</MediaIDList>
-										</AudioFileSource>
+										<Sound Name="ES_Sci Fi Portal Warp - SFX Producer" ID="{3B7224C2-953A-4C51-8624-0A19082CAA7B}" ShortID="293764039">
+											<PropertyList>
+												<Property Name="Pitch" Type="int32">
+													<ModifierList>
+														<ModifierInfo>
+															<Modifier Name="" ID="{57172CAB-EDD9-454C-89F9-6DB319B2819C}">
+																<PropertyList>
+																	<Property Name="Enabled" Type="bool" Value="True"/>
+																	<Property Name="Max" Type="Real64" Value="300"/>
+																</PropertyList>
+															</Modifier>
+														</ModifierInfo>
+													</ModifierList>
+												</Property>
+												<Property Name="Volume" Type="Real64">
+													<ValueList>
+														<Value>5</Value>
+													</ValueList>
+												</Property>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="ES_Sci Fi Portal Warp - SFX Producer" ID="{8FFC7363-C206-4ED0-A0FC-0CD29284B78C}">
+													<Language>SFX</Language>
+													<AudioFile>ES_Sci Fi Portal Warp - SFX Producer.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="459435838"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ObjectLists/>
+											<ActiveSourceList>
+												<ActiveSource Name="ES_Sci Fi Portal Warp - SFX Producer" ID="{8FFC7363-C206-4ED0-A0FC-0CD29284B78C}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="ES_Sci Fi Spaceship 36 - SFX Producer" ID="{020CF240-E236-42C9-B15B-109FCE671222}" ShortID="130733001">
+											<PropertyList>
+												<Property Name="Pitch" Type="int32">
+													<ModifierList>
+														<ModifierInfo>
+															<Modifier Name="" ID="{2C5F9016-C05B-4F5C-88A5-98A242990A4B}"/>
+														</ModifierInfo>
+													</ModifierList>
+												</Property>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="ES_Sci Fi Spaceship 36 - SFX Producer" ID="{1BA74338-3EB2-4FCD-B385-3B5853A1F886}">
+													<PropertyList>
+														<Property Name="FadeInDuration" Type="Real64" Value="0.871916010498687"/>
+														<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+														<Property Name="TrimBegin" Type="Real64" Value="2.98036745406824"/>
+														<Property Name="TrimEnd" Type="Real64" Value="6.4997375328084"/>
+													</PropertyList>
+													<Language>SFX</Language>
+													<AudioFile>ES_Sci Fi Spaceship 36 - SFX Producer.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="557030509"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ObjectLists/>
+											<ActiveSourceList>
+												<ActiveSource Name="ES_Sci Fi Spaceship 36 - SFX Producer" ID="{1BA74338-3EB2-4FCD-B385-3B5853A1F886}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
 									</ChildrenList>
 									<ObjectLists/>
-									<ActiveSourceList>
-										<ActiveSource Name="ES_Sci Fi Portal Warp - SFX Producer" ID="{8FFC7363-C206-4ED0-A0FC-0CD29284B78C}" Platform="Linked"/>
-									</ActiveSourceList>
-								</Sound>
-								<Sound Name="ES_Sci Fi Spaceship 36 - SFX Producer" ID="{020CF240-E236-42C9-B15B-109FCE671222}" ShortID="130733001">
-									<PropertyList>
-										<Property Name="Pitch" Type="int32">
-											<ModifierList>
-												<ModifierInfo>
-													<Modifier Name="" ID="{2C5F9016-C05B-4F5C-88A5-98A242990A4B}"/>
-												</ModifierInfo>
-											</ModifierList>
-										</Property>
-									</PropertyList>
+									<Playlist>
+										<ItemRef Name="ES_Sci Fi Spaceship 36 - SFX Producer" ID="{020CF240-E236-42C9-B15B-109FCE671222}"/>
+										<ItemRef Name="ES_Sci Fi Portal Warp - SFX Producer" ID="{3B7224C2-953A-4C51-8624-0A19082CAA7B}"/>
+									</Playlist>
+								</RandomSequenceContainer>
+								<Sound Name="NextRound" ID="{DAB6DE0F-7DDD-4DD8-BE2E-61ABA7CFABB1}" ShortID="1073127911">
 									<ReferenceList>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
@@ -656,32 +694,21 @@
 										</Reference>
 									</ReferenceList>
 									<ChildrenList>
-										<AudioFileSource Name="ES_Sci Fi Spaceship 36 - SFX Producer" ID="{1BA74338-3EB2-4FCD-B385-3B5853A1F886}">
-											<PropertyList>
-												<Property Name="FadeInDuration" Type="Real64" Value="0.871916010498687"/>
-												<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
-												<Property Name="TrimBegin" Type="Real64" Value="2.98036745406824"/>
-												<Property Name="TrimEnd" Type="Real64" Value="6.4997375328084"/>
-											</PropertyList>
+										<AudioFileSource Name="ES_Gong Cymbal Crash 1 - SFX Producer" ID="{A5986A2C-19C9-4AB7-A3F2-C215B7453B53}">
 											<Language>SFX</Language>
-											<AudioFile>ES_Sci Fi Spaceship 36 - SFX Producer.wav</AudioFile>
+											<AudioFile>ES_Gong Cymbal Crash 1 - SFX Producer.wav</AudioFile>
 											<MediaIDList>
-												<MediaID ID="557030509"/>
+												<MediaID ID="887762306"/>
 											</MediaIDList>
 										</AudioFileSource>
 									</ChildrenList>
 									<ObjectLists/>
 									<ActiveSourceList>
-										<ActiveSource Name="ES_Sci Fi Spaceship 36 - SFX Producer" ID="{1BA74338-3EB2-4FCD-B385-3B5853A1F886}" Platform="Linked"/>
+										<ActiveSource Name="ES_Gong Cymbal Crash 1 - SFX Producer" ID="{A5986A2C-19C9-4AB7-A3F2-C215B7453B53}" Platform="Linked"/>
 									</ActiveSourceList>
 								</Sound>
 							</ChildrenList>
-							<ObjectLists/>
-							<Playlist>
-								<ItemRef Name="ES_Sci Fi Spaceship 36 - SFX Producer" ID="{020CF240-E236-42C9-B15B-109FCE671222}"/>
-								<ItemRef Name="ES_Sci Fi Portal Warp - SFX Producer" ID="{3B7224C2-953A-4C51-8624-0A19082CAA7B}"/>
-							</Playlist>
-						</RandomSequenceContainer>
+						</Folder>
 					</ChildrenList>
 				</Folder>
 				<Folder Name="UI" ID="{C0368863-E296-4CEF-8414-B7D2D6740F0E}" ShortID="637683217">

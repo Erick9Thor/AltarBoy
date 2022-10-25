@@ -2,9 +2,9 @@ Event	ID	Name			Wwise Object Path	Notes
 	707649828	Stop_Pebble			\Default Work Unit\Stop_Pebble	
 	1020223172	Play_Wind			\Default Work Unit\Play_Wind	
 	1157125118	Play_Pebble			\Default Work Unit\Play_Pebble	
-	1784075418	Play_DoorOpening			\Default Work Unit\Play_DoorOpening	
 	2035174344	Play_Crystal			\Default Work Unit\Play_Crystal	
 	2270376495	Play_Laser			\Default Work Unit\Play_Laser	
+	2988819998	Play_GaunletDoorOpening			\Default Work Unit\Play_GaunletDoorOpening	
 	3173136834	Stop_Wind			\Default Work Unit\Stop_Wind	
 	3948925255	Play_Splash			\Default Work Unit\Play_Splash	
 	4092857357	Play_Laser_Hit			\Default Work Unit\Play_Laser_Hit	
@@ -20,8 +20,8 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	244703648	Wind	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\Ambient\Desert_D79FB2B7.wem		\Actor-Mixer Hierarchy\Default Work Unit\Environment\Wind		22579344
 	293397634	SplashCentipede	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\Splash-centipede_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Environment\SplashCentipede		97780
 	376669262	Pebbles 1	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\Ambient\Pebbles 1_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Environment\Pebbles\Pebbles 1		1146744
-	459435838	ES_Sci Fi Portal Warp - SFX Producer	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\ES_Sci Fi Portal Warp - SFX Producer_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Environment\DoorOpening\ES_Sci Fi Portal Warp - SFX Producer		337984
-	557030509	ES_Sci Fi Spaceship 36 - SFX Producer	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\ES_Sci Fi Spaceship 36 - SFX Producer_571BA504.wem		\Actor-Mixer Hierarchy\Default Work Unit\Environment\DoorOpening\ES_Sci Fi Spaceship 36 - SFX Producer		1248012
+	459435838	ES_Sci Fi Portal Warp - SFX Producer	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\ES_Sci Fi Portal Warp - SFX Producer_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Environment\Gaunlet\DoorOpening\ES_Sci Fi Portal Warp - SFX Producer		337984
+	557030509	ES_Sci Fi Spaceship 36 - SFX Producer	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\ES_Sci Fi Spaceship 36 - SFX Producer_13662AA0.wem		\Actor-Mixer Hierarchy\Default Work Unit\Environment\Gaunlet\DoorOpening\ES_Sci Fi Spaceship 36 - SFX Producer		675780
 	706795758	cristal broken 3	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\Crystal\cristal broken 3_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Environment\Crystals\cristal broken 3		330896
 	857441310	Pebbles 4	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\Ambient\Pebbles 4_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Environment\Pebbles\Pebbles 4		661644
 	971224351	Hit2	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\ES_MM Design Element 43 - SFX Producer_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Environment\Lasers\LaserHit\Hit2		165952

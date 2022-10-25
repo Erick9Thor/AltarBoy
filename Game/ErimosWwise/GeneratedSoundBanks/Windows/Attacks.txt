@@ -1,5 +1,7 @@
 Event	ID	Name			Wwise Object Path	Notes
+	478842326	Play_GaunletStart			\Default Work Unit\Play_GaunletStart	
 	998505444	Play_LoadingAmmo			\Default Work Unit\Play_LoadingAmmo	
+	1126614951	Play_GaunletNextRound			\Default Work Unit\Play_GaunletNextRound	
 	1388583332	Play_ShootNoAmmo			\Default Work Unit\Play_ShootNoAmmo	
 	1678827735	Play_WormAttack			\Default Work Unit\Play_WormAttack	
 	1996518743	Play_WormDeath			\Default Work Unit\Play_WormDeath	
@@ -45,6 +47,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	760142074	ES_Alien Chirp Critter 2 - SFX Producer	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\ES_Alien Chirp Critter 2 - SFX Producer_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Enemies\BeetleDie\BeetleVoice\High\ES_Alien Chirp Critter 2 - SFX Producer		127040
 	825601952	Damage 8	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\Player\Damage\Damage 8_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Player\ReceiveDamage\Damage 8		67856
 	839850156	ES_Insect Squish 24 - SFX Producer	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\ES_Insect Squish 24 - SFX Producer_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Enemies\BeetleDie\Body\ES_Insect Squish 24 - SFX Producer		77888
+	887762306	NextRound	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\ES_Gong Cymbal Crash 1 - SFX Producer_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Environment\Gaunlet\NextRound		3045440
 	908863149	ES_Insect Squish 25 - SFX Producer	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\ES_Insect Squish 25 - SFX Producer_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Enemies\BeetleDie\Body\ES_Insect Squish 25 - SFX Producer		272448
 	944417870	Punch - Pop	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\Player\Melee attack\Punch - Pop_2CBD9A18.wem		\Actor-Mixer Hierarchy\Default Work Unit\Player\MeleeAttack\Punch - Pop		95116
 	977051301	Dash	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\Player\Dash\Impact - Cease Fire_04610725.wem		\Actor-Mixer Hierarchy\Default Work Unit\Player\Dash		116408

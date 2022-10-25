@@ -11,7 +11,7 @@
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="626769978" Language="SFX" Hash="1934351260">
+		<SoundBank Id="626769978" Language="SFX" Hash="3936206385">
 			<ObjectPath>\SoundBanks\Default Work Unit\BackgroundMusic</ObjectPath>
 			<ShortName>BackgroundMusic</ShortName>
 			<Path>BackgroundMusic.bnk</Path>
@@ -173,7 +173,7 @@
 				</SwitchGroup>
 			</SwitchGroups>
 		</SoundBank>
-		<SoundBank Id="1355168291" Language="SFX" Hash="3716961101">
+		<SoundBank Id="1355168291" Language="SFX" Hash="252012875">
 			<ObjectPath>Init</ObjectPath>
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
@@ -281,7 +281,7 @@
 				</SwitchGroup>
 			</SwitchGroups>
 		</SoundBank>
-		<SoundBank Id="3768541028" Language="SFX" Hash="575919304">
+		<SoundBank Id="3768541028" Language="SFX" Hash="3628495437">
 			<ObjectPath>\SoundBanks\Default Work Unit\Attacks</ObjectPath>
 			<ShortName>Attacks</ShortName>
 			<Path>Attacks.bnk</Path>
@@ -358,6 +358,22 @@
 					<ActionSetState>
 						<ActionSetStateEntry Id="2791675679" Name="Defeated" ObjectPath="\States\Default Work Unit\Player_Life\Defeated"/>
 					</ActionSetState>
+				</Event>
+				<Event Id="1126614951" Name="Play_GaunletNextRound" ObjectPath="\Events\Default Work Unit\Play_GaunletNextRound">
+					<IncludedMemoryFiles>
+						<File Id="887762306" Language="SFX">
+							<ShortName>ES_Gong Cymbal Crash 1 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Gong Cymbal Crash 1 - SFX Producer_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="478842326" Name="Play_GaunletStart" ObjectPath="\Events\Default Work Unit\Play_GaunletStart">
+					<IncludedMemoryFiles>
+						<File Id="887762306" Language="SFX">
+							<ShortName>ES_Gong Cymbal Crash 1 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Gong Cymbal Crash 1 - SFX Producer_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
 				</Event>
 				<Event Id="998505444" Name="Play_LoadingAmmo" ObjectPath="\Events\Default Work Unit\Play_LoadingAmmo">
 					<IncludedMemoryFiles>
@@ -494,7 +510,7 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="3909959462" Language="SFX" Hash="2265409108">
+		<SoundBank Id="3909959462" Language="SFX" Hash="1394730221">
 			<ObjectPath>\SoundBanks\Default Work Unit\Enviroment</ObjectPath>
 			<ShortName>Enviroment</ShortName>
 			<Path>Enviroment.bnk</Path>
@@ -515,7 +531,7 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="1784075418" Name="Play_DoorOpening" ObjectPath="\Events\Default Work Unit\Play_DoorOpening">
+				<Event Id="2988819998" Name="Play_GaunletDoorOpening" ObjectPath="\Events\Default Work Unit\Play_GaunletDoorOpening">
 					<IncludedMemoryFiles>
 						<File Id="459435838" Language="SFX">
 							<ShortName>ES_Sci Fi Portal Warp - SFX Producer.wav</ShortName>
@@ -523,7 +539,7 @@
 						</File>
 						<File Id="557030509" Language="SFX">
 							<ShortName>ES_Sci Fi Spaceship 36 - SFX Producer.wav</ShortName>
-							<Path>SFX\ES_Sci Fi Spaceship 36 - SFX Producer_571BA504.wem</Path>
+							<Path>SFX\ES_Sci Fi Spaceship 36 - SFX Producer_13662AA0.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>

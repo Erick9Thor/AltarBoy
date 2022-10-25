@@ -1363,7 +1363,6 @@
 								<MusicTransition Name="Transition" ID="{897F64CF-E2A9-4620-8A9B-B61E9627322E}">
 									<PropertyList>
 										<Property Name="DestinationContextType" Type="int16" Value="2"/>
-										<Property Name="DestinationJumpPositionPreset" Type="int16" Value="1"/>
 										<Property Name="SourceContextType" Type="int16" Value="2"/>
 									</PropertyList>
 									<ReferenceList>
@@ -1454,46 +1453,23 @@
 								</Reference>
 							</ReferenceList>
 							<ChildrenList>
-								<MusicTrack Name="ER_Boss_steps 2+3" ID="{A63D5D32-4E71-4932-91B9-8B60758E20C9}" ShortID="121958753">
+								<MusicTrack Name="ER_Boss_steps 2+3" ID="{31BB1C13-3CEE-45B8-906D-A58903E2ABBF}" ShortID="491686932">
 									<ReferenceList>
 										<Reference Name="OutputBus">
 											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
 										</Reference>
 									</ReferenceList>
 									<ChildrenList>
-										<AudioFileSource Name="ER_Boss_steps 2+3" ID="{EB49E457-B35F-4605-AE0F-15CFCFB32CE5}">
-											<PropertyList>
-												<Property Name="MarkerInputMode" Type="int16" Value="2"/>
-											</PropertyList>
+										<AudioFileSource Name="ER_Boss_steps 2+3" ID="{19F5B599-C998-4F8A-B79E-16F86D6ABD92}">
 											<Language>SFX</Language>
 											<AudioFile>ER_Boss_steps 2+3.wav</AudioFile>
 											<MediaIDList>
 												<MediaID ID="491649360"/>
 											</MediaIDList>
-											<PluginInnerObjectList>
-												<List Name="Markers">
-													<PluginInnerObject Name="" ID="{D1640557-44A1-4EBA-8529-045B2AE7C083}" PluginName="Marker" CompanyID="0" PluginID="993">
-														<PropertyList>
-															<Property Name="Label" Type="string" Value="Tempo: 155.0"/>
-														</PropertyList>
-													</PluginInnerObject>
-													<PluginInnerObject Name="" ID="{2308A17D-D325-4E1B-9FF0-C07AD532FBFD}" PluginName="Marker" CompanyID="0" PluginID="993">
-														<PropertyList>
-															<Property Name="Label" Type="string" Value="Marker 9 - BOSS"/>
-														</PropertyList>
-													</PluginInnerObject>
-													<PluginInnerObject Name="" ID="{04D1FFB0-C662-431F-AC4B-2BE22423DA13}" PluginName="Marker" CompanyID="0" PluginID="993">
-														<PropertyList>
-															<Property Name="Label" Type="string" Value="Tempo: 155.0"/>
-															<Property Name="Time" Type="Real64" Value="113.032270833333"/>
-														</PropertyList>
-													</PluginInnerObject>
-												</List>
-											</PluginInnerObjectList>
 										</AudioFileSource>
 									</ChildrenList>
 									<TransitionList>
-										<MusicTransition Name="Root" ID="{2602BCC3-C204-4E1D-B993-136049FBA53F}">
+										<MusicTransition Name="Root" ID="{32C584A6-FA88-4B87-9000-9C2D99538466}">
 											<PropertyList>
 												<Property Name="IsFolder" Type="bool" Value="True"/>
 											</PropertyList>
@@ -1504,18 +1480,18 @@
 										<ObjectList Name="Sequences">
 											<Reference>
 												<Local>
-													<MusicTrackSequence Name="" ID="{666E2347-CD12-4CBC-8489-2E45CD5FC088}">
+													<MusicTrackSequence Name="" ID="{3D370A57-8578-4F5A-AA8A-53C6076EC30E}">
 														<ObjectLists>
 															<ObjectList Name="Clips">
 																<Reference>
 																	<Local>
-																		<MusicClip Name="ER_Boss_steps 2+3" ID="{00A680B2-3170-446F-A9C6-1C2CD0E4360F}">
+																		<MusicClip Name="ER_Boss_steps 2+3" ID="{2D096599-9846-489C-86C8-146A91B9A937}">
 																			<PropertyList>
 																				<Property Name="EndTrimOffset" Type="Real64" Value="113032.270833333"/>
 																				<Property Name="FadeInMode" Type="int16" Value="0"/>
-																				<Property Name="PlayAt" Type="Real64" Value="47621.0526315789"/>
+																				<Property Name="FadeOutMode" Type="int16" Value="0"/>
 																			</PropertyList>
-																			<AudioSourceRef Name="ER_Boss_steps 2+3" ID="{EB49E457-B35F-4605-AE0F-15CFCFB32CE5}"/>
+																			<AudioSourceRef Name="ER_Boss_steps 2+3" ID="{19F5B599-C998-4F8A-B79E-16F86D6ABD92}"/>
 																		</MusicClip>
 																	</Local>
 																</Reference>
@@ -1645,49 +1621,23 @@
 								</Reference>
 							</ReferenceList>
 							<ChildrenList>
-								<MusicTrack Name="ER_Boss_steps 2+3" ID="{680F3840-9AA4-4A79-9EAB-B2FFF4118358}" ShortID="377109700">
+								<MusicTrack Name="ER_Boss_steps 2+3" ID="{7D6B2A55-5A25-4BDF-9196-0E6875451739}" ShortID="594951533">
 									<ReferenceList>
-										<Reference Name="Conversion">
-											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
-										</Reference>
 										<Reference Name="OutputBus">
 											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
 										</Reference>
 									</ReferenceList>
 									<ChildrenList>
-										<AudioFileSource Name="ER_Boss_steps 2+3" ID="{29638F17-22EF-4206-9A63-B64A35163B36}">
-											<PropertyList>
-												<Property Name="MarkerInputMode" Type="int16" Value="2"/>
-											</PropertyList>
+										<AudioFileSource Name="ER_Boss_steps 2+3" ID="{CE024F7D-4FE6-4494-B4EE-C531EC5E567D}">
 											<Language>SFX</Language>
 											<AudioFile>ER_Boss_steps 2+3.wav</AudioFile>
 											<MediaIDList>
 												<MediaID ID="491649360"/>
 											</MediaIDList>
-											<PluginInnerObjectList>
-												<List Name="Markers">
-													<PluginInnerObject Name="" ID="{C6B0B715-3795-4347-BB6E-86BD2C39010F}" PluginName="Marker" CompanyID="0" PluginID="993">
-														<PropertyList>
-															<Property Name="Label" Type="string" Value="Tempo: 155.0"/>
-														</PropertyList>
-													</PluginInnerObject>
-													<PluginInnerObject Name="" ID="{EA9BE94C-E88A-44BD-BC05-5F9DB651109A}" PluginName="Marker" CompanyID="0" PluginID="993">
-														<PropertyList>
-															<Property Name="Label" Type="string" Value="Marker 9 - BOSS"/>
-														</PropertyList>
-													</PluginInnerObject>
-													<PluginInnerObject Name="" ID="{2A7F31E8-4ABF-4A16-9F96-3FB22F0D1FDF}" PluginName="Marker" CompanyID="0" PluginID="993">
-														<PropertyList>
-															<Property Name="Label" Type="string" Value="Tempo: 155.0"/>
-															<Property Name="Time" Type="Real64" Value="113.032270833333"/>
-														</PropertyList>
-													</PluginInnerObject>
-												</List>
-											</PluginInnerObjectList>
 										</AudioFileSource>
 									</ChildrenList>
 									<TransitionList>
-										<MusicTransition Name="Root" ID="{3C3A23BA-078E-4FC6-B6B7-672BB7246B41}">
+										<MusicTransition Name="Root" ID="{6E97864A-F40B-4E30-817D-701E65051495}">
 											<PropertyList>
 												<Property Name="IsFolder" Type="bool" Value="True"/>
 											</PropertyList>
@@ -1698,18 +1648,18 @@
 										<ObjectList Name="Sequences">
 											<Reference>
 												<Local>
-													<MusicTrackSequence Name="" ID="{D28A6739-26B8-4E9C-B1FC-A3C3A79C5706}">
+													<MusicTrackSequence Name="" ID="{A9CD898D-D947-4E57-BA7A-DF10CA3E8A94}">
 														<ObjectLists>
 															<ObjectList Name="Clips">
 																<Reference>
 																	<Local>
-																		<MusicClip Name="ER_Boss_steps 2+3" ID="{A1B50728-E14D-4B25-A4BA-CA69861BB938}">
+																		<MusicClip Name="ER_Boss_steps 2+3" ID="{B902E6D2-E14A-4F1D-99B5-BA88E837779A}">
 																			<PropertyList>
 																				<Property Name="EndTrimOffset" Type="Real64" Value="113032.270833333"/>
 																				<Property Name="FadeInMode" Type="int16" Value="0"/>
-																				<Property Name="PlayAt" Type="Real64" Value="47621.0526315789"/>
+																				<Property Name="FadeOutMode" Type="int16" Value="0"/>
 																			</PropertyList>
-																			<AudioSourceRef Name="ER_Boss_steps 2+3" ID="{29638F17-22EF-4206-9A63-B64A35163B36}"/>
+																			<AudioSourceRef Name="ER_Boss_steps 2+3" ID="{CE024F7D-4FE6-4494-B4EE-C531EC5E567D}"/>
 																		</MusicClip>
 																	</Local>
 																</Reference>
@@ -1750,6 +1700,10 @@
 							</PropertyList>
 							<ChildrenList>
 								<MusicTransition Name="Transition" ID="{498F7569-2343-4A20-A5B8-5991B9940329}">
+									<PropertyList>
+										<Property Name="EnableDestinationFadeIn" Type="bool" Value="True"/>
+										<Property Name="EnableSourceFadeOut" Type="bool" Value="True"/>
+									</PropertyList>
 									<TransitionInfo/>
 								</MusicTransition>
 							</ChildrenList>
