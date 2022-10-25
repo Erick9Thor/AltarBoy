@@ -60,7 +60,7 @@ namespace Hachiko
 			SERIALIZE_FIELD(float, _falling_cooldown);
 
 
-			float _stalactites_life = 25.0f;
+			float _stalactites_life = 35.0f;
 			float _stalactites_timer = 0.0f;
 
 			// STALAGMITE

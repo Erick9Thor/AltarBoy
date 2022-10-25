@@ -248,7 +248,7 @@ namespace Hachiko
 				JumpingMode::BASIC_ATTACK,
 				JumpingMode::STALAGMITE,   // 1
 				JumpingMode::LASER,
-				JumpingMode::BASIC_ATTACK, // 4
+				JumpingMode::LASER, // 4
 				JumpingMode::BASIC_ATTACK,
 			};
 

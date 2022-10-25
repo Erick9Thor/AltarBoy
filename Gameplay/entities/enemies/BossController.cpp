@@ -464,7 +464,7 @@ void Hachiko::Scripting::BossController::CocoonController()
     if (_rotating_lasers)
     {
         float3 rot_lasers_rotation = _rotating_lasers->GetTransform()->GetLocalRotationEuler();
-        rot_lasers_rotation.y += Time::DeltaTime() * 10;
+        rot_lasers_rotation.y += Time::DeltaTime() * 25;
         _rotating_lasers->GetTransform()->SetLocalRotationEuler(rot_lasers_rotation);
     }
 
@@ -744,7 +744,6 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
     {
         _jumping_state = JumpingState::WAITING_TO_JUMP;
         _jumping_timer = 0.0f;
-        hitable = false;
 
         ChangeStateText((jump_type + "Waiting to jump.").c_str());
 
@@ -793,6 +792,8 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
         // Boss starts ascending here:
         _jumping_state = JumpingState::ASCENDING;
         _jumping_timer = 0.0f;
+
+        hitable = false;
 
         // Set the start & end positions for the jump:
         _jump_start_position = game_object->GetTransform()->GetGlobalPosition();
