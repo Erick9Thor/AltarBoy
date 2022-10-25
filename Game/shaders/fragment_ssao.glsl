@@ -46,16 +46,19 @@ void main()
         // Project sample position (to sample texture) (to get position on screen/texture):
         vec4 offset = vec4(sample_position, 1.0);
         offset = camera_view_projection * offset; // From view to clip-space
+        
+        // Save check position before interval mapping and perspective division for the comparison
+        // at the end of the loop:
+        vec4 check_position = offset;
+        
         offset.xyz /= offset.w; // Perspective division
         offset.xyz = offset.xyz * 0.5 + 0.5; // Transform to range 0.0 - 1.0
         
         // Get sample depth:
-        float sample_depth = texture(g_position, offset.xy).z; // Get depth value of kernel sample
+        float sample_depth = (camera_view_projection * texture(g_position, offset.xy)).z; // Get depth value of kernel sample
 
         // Range check & accumulate:
-        // float range_check = smoothstep(0.0, 1.0, radius / abs(sample_position.z - sample_depth));
-        // occlusion += (abs(sample_depth - sample_position.z) > bias ? 1.0 : 0.0) * range_check;
-        occlusion += (abs(sample_depth - sample_position.z) > bias ? 1.0 : 0.0);
+        occlusion += (abs(sample_depth - check_position.z) > bias ? 1.0 : 0.0);
     }
 
     out_fragment_color = pow(1.0 - (occlusion / kernel_size), power);
