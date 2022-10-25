@@ -340,6 +340,17 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Play_BossBattle" ID="{93BAF0FF-2F54-4345-BAB0-7FBDABDE2904}">
+					<ChildrenList>
+						<Action Name="" ID="{93B8A0BC-3101-4AB7-8F23-DC3A23A58EE9}" ShortID="999583897">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Boss Battle Music Switch" ID="{BFF6C137-60FD-4250-A8F8-BDFDB230CD47}" WorkUnitID="{9B3979AF-6373-40FD-A6FD-C5074B4E0B6D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>
