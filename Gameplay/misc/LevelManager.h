@@ -51,7 +51,7 @@ namespace Hachiko
 				return _inputs_blocked;
 			}
 
-			void BossKilled();
+            void BossKilled();
 
 			SERIALIZE_FIELD(unsigned, _level);
 			SERIALIZE_FIELD(float3, _respawn_position);
