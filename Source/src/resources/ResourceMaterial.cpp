@@ -9,7 +9,7 @@
 Hachiko::ResourceMaterial::ResourceMaterial(UID uid) :
     Resource(uid, Type::MATERIAL)
 {
-    shader = Program::PROGRAMS::DEFERRED_GEOMETRY;
+    shader = Program::Programs::DEFERRED_GEOMETRY;
 }
 
 Hachiko::ResourceMaterial::~ResourceMaterial()
@@ -181,7 +181,7 @@ void Hachiko::ResourceMaterial::DrawGui()
 
     if (ImGui::BeginCombo("Shader", ShaderName(shader)))
     {
-        ShaderOption(Program::PROGRAMS::DEFERRED_GEOMETRY);
+        ShaderOption(Program::Programs::DEFERRED_GEOMETRY);
 
         ImGui::EndCombo();
     }
@@ -312,7 +312,7 @@ void Hachiko::ResourceMaterial::UpdateMaterial()
     App->scene_manager->GetActiveScene()->RebuildBatches();
 }
 
-void Hachiko::ResourceMaterial::ShaderOption(Program::PROGRAMS value)
+void Hachiko::ResourceMaterial::ShaderOption(Program::Programs value)
 {
     bool is_selected = (shader == value);
     if (ImGui::Selectable(ShaderName(value), is_selected))
@@ -325,11 +325,11 @@ void Hachiko::ResourceMaterial::ShaderOption(Program::PROGRAMS value)
     }
 }
 
-const char* Hachiko::ResourceMaterial::ShaderName(Program::PROGRAMS value) 
+const char* Hachiko::ResourceMaterial::ShaderName(Program::Programs value) 
 {
     switch (value)
     {
-        case Hachiko::Program::PROGRAMS::DEFERRED_GEOMETRY:
+        case Hachiko::Program::Programs::DEFERRED_GEOMETRY:
             return "STANDARD";
     }
     return nullptr;

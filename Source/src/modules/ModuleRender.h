@@ -6,6 +6,7 @@
 #include "core/rendering/GBuffer.h"
 #include "core/rendering/ShadowManager.h"
 #include "core/rendering/BloomManager.h"
+#include "core/rendering/SSAOManager.h"
 
 #include <vector>
 
@@ -65,7 +66,7 @@ namespace Hachiko
 
         void OptionsMenu();
         void DeferredOptions();
-        void LoadingScreenOptions();
+        void LoadingScreenOptions() const;
         void PerformanceMenu();
         void FpsGraph() const;
         void AddFrame(float delta);
@@ -149,6 +150,11 @@ namespace Hachiko
         {
             return bloom_manager;
         };
+
+        SSAOManager& GetSSAOManager()
+        {
+            return ssao_manager;
+        }
     
         void LoadLoadingScreen();
         void DeleteLoadingScreen(); 
@@ -158,10 +164,19 @@ namespace Hachiko
         void GenerateFrameBuffer();
         void ResizeFrameBuffer(int width, int height) const;
         void ManageResolution(const ComponentCamera* camera);
-        void Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* culling);
-        void DrawDeferred(Scene* scene, ComponentCamera* camera, BatchManager* batch_manager);
+        void Draw(
+            Scene* scene, 
+            ComponentCamera* camera, 
+            ComponentCamera* culling);
+        void DrawDeferred(
+            Scene* scene, 
+            ComponentCamera* camera, 
+            BatchManager* batch_manager);
         void DrawParticles(Scene* scene, ComponentCamera* camera) const;
-        bool DrawToShadowMap(Scene* scene, BatchManager* batch_manager, DrawConfig draw_config);
+        bool DrawToShadowMap(
+            Scene* scene, 
+            BatchManager* batch_manager, 
+            DrawConfig draw_config);
 
         void SetRenderMode(bool is_deferred);
 
@@ -175,6 +190,10 @@ namespace Hachiko
 
         void CreateNoiseTexture();
         void BindNoiseTexture(Program* program);
+
+    private:
+        SSAOManager ssao_manager;
+        bool ssao_enabled = true;
 
         void* context{};
 

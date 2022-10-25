@@ -61,6 +61,10 @@ namespace Hachiko
 			SERIALIZE_FIELD(float, _regen_time);
 			SERIALIZE_FIELD(bool, _should_regen);
 
+			SERIALIZE_FIELD(float, damage_effect_duration);
+			GameObject* crystal_geometry = nullptr;
+			float damage_effect_remaining_time = 0.0f;
+
 			ComponentAudioSource* _audio_source;
 			bool _is_destroyed = false;
 			bool _is_exploding = false;

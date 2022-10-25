@@ -335,13 +335,13 @@ void Hachiko::Scene::AmbientLightConfig::SaveAmbientParams(YAML::Node& node)
 
 void Hachiko::Scene::FogConfig::LoadFogParams(const YAML::Node& node)
 {
-    if (!node[FOG].IsDefined())
+    if (!node[FOG_PROPERTY].IsDefined())
     {
         return;
     }
     
-    YAML::Node fog_node = node[FOG];
-    enabled = fog_node[FOG].as<bool>();
+    YAML::Node fog_node = node[FOG_PROPERTY];
+    enabled = fog_node[FOG_PROPERTY].as<bool>();
     color = fog_node[FOG_COLOR].as<float3>();
     global_density = fog_node[FOG_GLOBAL_DENSITY].as<float>();
     height_falloff = fog_node[FOG_HEIGHT_FALLOFF].as<float>();
@@ -349,8 +349,8 @@ void Hachiko::Scene::FogConfig::LoadFogParams(const YAML::Node& node)
 
 void Hachiko::Scene::FogConfig::SaveFogParams(YAML::Node& node)
 {
-    YAML::Node fog_node = node[FOG];
-    fog_node[FOG] = enabled;
+    YAML::Node fog_node = node[FOG_PROPERTY];
+    fog_node[FOG_PROPERTY] = enabled;
     fog_node[FOG_COLOR] = color;
     fog_node[FOG_GLOBAL_DENSITY] = global_density;
     fog_node[FOG_HEIGHT_FALLOFF] = height_falloff;

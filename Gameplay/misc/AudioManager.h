@@ -39,6 +39,7 @@ namespace Hachiko
 
 			// Environment
 			void PlayDoorOpening();
+			ComponentAudioSource* GetAudioSource() { return _audio_source; }
 		private:
 			bool updated = false;
 			bool _in_combat = false;

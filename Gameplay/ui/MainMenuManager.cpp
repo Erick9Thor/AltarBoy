@@ -104,13 +104,13 @@ void Hachiko::Scripting::MainMenuManager::OnUpdate()
 	
 	if (Input::IsGamepadModeOn())
 	{
-		if(Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_DPAD_RIGHT) && _state == State::MAIN)
+		if(Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_DPAD_DOWN) && _state == State::MAIN)
 		{
 			_buttons_gamepad[_option_selected]->OnPointerExit();
 			_option_selected = (_option_selected + 1) % _buttons_gamepad.size();
 			_buttons_gamepad[_option_selected]->OnPointerEnter();
 		}
-		if (Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_DPAD_LEFT) && _state == State::MAIN)
+		if (Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_DPAD_UP) && _state == State::MAIN)
 		{
 			_buttons_gamepad[_option_selected]->OnPointerExit();
 			_option_selected = (_option_selected - 1) % _buttons_gamepad.size();

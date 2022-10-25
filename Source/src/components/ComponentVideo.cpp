@@ -115,7 +115,7 @@ void Hachiko::ComponentVideo::Draw(ComponentCamera* camera, Program* /*program*/
         return;
     }
     
-    const Hachiko::Program* program = App->program->GetProgram(Program::PROGRAMS::VIDEO);
+    const Hachiko::Program* program = App->program->GetProgram(Program::Programs::VIDEO);
     program->Activate();
     glDepthMask(GL_FALSE);
 
