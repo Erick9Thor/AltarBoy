@@ -494,7 +494,7 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="3909959462" Language="SFX" Hash="767608571">
+		<SoundBank Id="3909959462" Language="SFX" Hash="2265409108">
 			<ObjectPath>\SoundBanks\Default Work Unit\Enviroment</ObjectPath>
 			<ShortName>Enviroment</ShortName>
 			<Path>Enviroment.bnk</Path>
@@ -517,13 +517,13 @@
 				</Event>
 				<Event Id="1784075418" Name="Play_DoorOpening" ObjectPath="\Events\Default Work Unit\Play_DoorOpening">
 					<IncludedMemoryFiles>
-						<File Id="2294738" Language="SFX">
-							<ShortName>ES_Sci Fi Warp Airy - SFX Producer.wav</ShortName>
-							<Path>SFX\ES_Sci Fi Warp Airy - SFX Producer_10C4C929.wem</Path>
-						</File>
 						<File Id="459435838" Language="SFX">
 							<ShortName>ES_Sci Fi Portal Warp - SFX Producer.wav</ShortName>
 							<Path>SFX\ES_Sci Fi Portal Warp - SFX Producer_10C4C929.wem</Path>
+						</File>
+						<File Id="557030509" Language="SFX">
+							<ShortName>ES_Sci Fi Spaceship 36 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Sci Fi Spaceship 36 - SFX Producer_571BA504.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
