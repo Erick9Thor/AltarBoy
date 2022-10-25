@@ -15,22 +15,23 @@ void Hachiko::Scripting::Stalagmite::ActiveStalagmite()
 
 void Hachiko::Scripting::Stalagmite::ActiveEffects()
 {
-	_explosion_effect->SetActive(true);
+	_explosion_effect->SetActive(false);
+	_area_indicator->SetActive(true);
+	_area_indicator->GetComponent<ComponentBillboard>()->Restart();
 }
 
 void Hachiko::Scripting::Stalagmite::Falling(float fall_progress, const GameObject* player)
 {
 	float3 _stalagmite_position = GEO->GetTransform()->GetLocalPosition();
-
 	_stalagmite_position.y = Lerp(50.f, 0.f, fall_progress);
-
-
+	_explosion_effect->SetActive(true);
+	_explosion_effect->ChangeTintColor(float4(1.0f, 0.0f, 0.0f, Lerp(1.0f, 0.0f, fall_progress)), true);
 	GEO->GetTransform()->SetLocalPosition(_stalagmite_position);
 
 	if (fall_progress == 1.f)
 	{
 		_obstacle_comp->AddObstacle();
-
+		_explosion_effect->SetActive(false);
 		float3 player_pos = player->GetTransform()->GetGlobalPosition();
 		float3 stalagmite_pos = _obstacle_comp->GetGameObject()->GetTransform()->GetGlobalPosition();
 		stalagmite_pos.y = player_pos.y;
@@ -46,9 +47,10 @@ void Hachiko::Scripting::Stalagmite::Falling(float fall_progress, const GameObje
 
 void Hachiko::Scripting::Stalagmite::Dissolved()
 {
-
-	_obstacle_comp->RemoveObstacle();
-
+	if (_obstacle_comp != NULL)
+	{
+		_obstacle_comp->RemoveObstacle();
+	}
 	_stalagmite_collapsed = false;
 
 	// After it being dissolved we move the GEO out of the way
