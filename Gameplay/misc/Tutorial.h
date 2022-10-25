@@ -22,10 +22,23 @@ namespace Hachiko
 			~Tutorial() override = default;
 
 			void OnAwake() override;
-			void OnStart() override;
 			void OnUpdate() override;
 
 		private:
+			void SetMovementScreen(bool show);
+			void ShowAttackScreen(bool show);
+			void ShowParasyteScreen(bool show);
+
+			void ShowTutorialScreen(bool show, GameObject* keyboard_screen, GameObject* controller_screen);
+			bool TutorialButtonPressed();
+
+		private:
+			SERIALIZE_FIELD(GameObject*, _tutorial_keyboard_movement);
+			SERIALIZE_FIELD(GameObject*, _tutorial_controller_movement);
+			SERIALIZE_FIELD(GameObject*, _tutorial_keyboard_attacks);
+			SERIALIZE_FIELD(GameObject*, _tutorial_controller_attacks);
+			SERIALIZE_FIELD(GameObject*, _tutorial_keyboard_pickup);
+			SERIALIZE_FIELD(GameObject*, _tutorial_controller_pickup);
 			SERIALIZE_FIELD(GameObject*, _first_enemy);
 
 			TimeManager* _time_manager;
@@ -35,8 +48,11 @@ namespace Hachiko
 			PlayerController* _player_controller;
 			EnemyController* _enemy_controller;
 			LevelManager* _level_manager;
+			ComponentAudioSource* _audio_source = nullptr;
 
-			bool _tutorial_showed = false;
+			SERIALIZE_FIELD(int, _tutorials_screen_shown);
+			bool showing_screen = false;
+			bool first_active_frame = true;
 		};
 	} // namespace Scripting
 } // namespace Hachiko

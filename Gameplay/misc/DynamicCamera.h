@@ -27,7 +27,7 @@ namespace Hachiko
             void OnUpdate() override;
 
         private:
-            void OnFinish();
+            void OnFinish(bool skipping);
             void MoveToCurrentTargetShot();
             void GetNextTargetShot();
             void SetTravelTarget(unsigned target_idx);

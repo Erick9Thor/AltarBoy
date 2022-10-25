@@ -26,7 +26,8 @@ void Hachiko::Scripting::DynamicCamera::OnAwake()
     _player_camera = Scenes::GetMainCamera()->GetComponent<PlayerCamera>();
 
     _camera_go = game_object->children[0];
-    _player_camera->SetObjective(_camera_go);
+    // Initially teleport camera to sequence start
+    _player_camera->SetObjective(_camera_go, false);
     _player_camera->ChangeRelativePosition(float3(0.0f, 30.0f, 20.0f));
 
     // Use all children except first as camera positions
@@ -51,6 +52,21 @@ void Hachiko::Scripting::DynamicCamera::OnUpdate()
     if (!_playing) return;
 
     _level_manager->BlockInputs(true);
+
+
+    bool skip = Input::IsKeyDown(Input::KeyCode::KEY_Y) ||
+        Input::IsKeyDown(Input::KeyCode::KEY_F) ||
+        Input::IsKeyDown(Input::KeyCode::KEY_SPACE) ||
+        Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_Y) ||
+        Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_A) ||
+        Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_B);
+    if (skip)
+    {
+        _playing = false;
+        _current_target = 0;
+        OnFinish(skip);
+        return;
+    }
 
     _transition_progress += Time::DeltaTime() / _transition_duration;
     if (_transition_progress >= 1.f)
@@ -83,7 +99,7 @@ void Hachiko::Scripting::DynamicCamera::GetNextTargetShot()
     {
         _current_target = 1;
         _playing = false;
-        OnFinish();
+        OnFinish(false);
         return;
     }
     SetTravelTarget(_current_target);
@@ -105,13 +121,14 @@ void Hachiko::Scripting::DynamicCamera::ComputeTransition(unsigned target_idx)
     _transition_duration = distance / _speed;
 }
 
-void Hachiko::Scripting::DynamicCamera::OnFinish()
+void Hachiko::Scripting::DynamicCamera::OnFinish(bool skipping)
 {
     _level_manager->BlockInputs(false);
-    _player_camera->SetObjective(Scenes::GetPlayer());
+    // If skipping teleport the camera
+    _player_camera->SetObjective(Scenes::GetPlayer(), skipping);
     _player_camera->RevertRelativePosition(0.05f);
     if(_enable_after)
     {
-        _enable_after->SetActive(true);    
+        _enable_after->SetActiveNonRecursive(true);
     }
 }
