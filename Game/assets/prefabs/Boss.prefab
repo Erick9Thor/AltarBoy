@@ -75,7 +75,6 @@ component:
     "'_laser_wall_duration@float'": 6
     "'_laser_jump_height@float'": 25
     "'_melee_trail_right@GameObject*'": 140
-    "'_cracked_floor@GameObject*'": 0
   - !<obstacle>
     type: 18
     enabled: true
@@ -98,8 +97,8 @@ child:
           - !<transform>
             type: 1
             enabled: true
-            position: [-0.0001, 0.0161, 0.0009]
-            rotation: [15.5, -14.48, 3.967]
+            position: [-0.0002, 0.0142, -0.0028]
+            rotation: [16.46, -14.18, 4.141]
             scale: [1, 1, 1]
         child:
           - name: CenterSpine_Jnt
@@ -119,7 +118,7 @@ child:
                     type: 1
                     enabled: true
                     position: [-0.0001, 0.0081, -0.0022]
-                    rotation: [-30.07, -43.05, -11.14]
+                    rotation: [-18.34, 14.69, 2.609]
                     scale: [1, 1, 1]
                 child:
                   - name: EndSpine_Jnt
@@ -138,7 +137,7 @@ child:
                           - !<transform>
                             type: 1
                             enabled: true
-                            position: [0.0035, -0.0004, 0.0028]
+                            position: [-0.001, 0, 0.0043]
                             rotation: [0, 0, 0]
                             scale: [1, 1, 1]
                         child:
@@ -159,7 +158,7 @@ child:
                                     type: 1
                                     enabled: true
                                     position: [0, 0, 0]
-                                    rotation: [-5.252, 5.855, 14.61]
+                                    rotation: [-0.0039, -0.7112, -0]
                                     scale: [1, 1, 1]
                                 child:
                                   - name: Neck_Jnt
@@ -207,7 +206,7 @@ child:
                       - !<transform>
                         type: 1
                         enabled: true
-                        position: [-0.0034, 0.0044, 0.0102]
+                        position: [-0.0079, 0.0047, 0.0117]
                         rotation: [0, 0, 0]
                         scale: [1, 1, 1]
                     child:
@@ -218,7 +217,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0, 0, 0]
-                            rotation: [180, 0, 0]
+                            rotation: [-180, 0, 0]
                             scale: [1, 1, 1]
                         child:
                           - name: RightPreShoulder_Jnt_$AssimpFbx$_Rotation
@@ -228,7 +227,7 @@ child:
                                 type: 1
                                 enabled: true
                                 position: [0, 0, 0]
-                                rotation: [-11.51, 25.71, 35.56]
+                                rotation: [-2.582, 11.48, 12.29]
                                 scale: [1, 1, 1]
                             child:
                               - name: RightPreShoulder_Jnt
@@ -268,7 +267,7 @@ child:
                                                 type: 1
                                                 enabled: true
                                                 position: [0, 0, 0]
-                                                rotation: [12.72, 15.07, -59.06]
+                                                rotation: [-2.609, -2.197, 0.0752]
                                                 scale: [1, 1, 1]
                                             child:
                                               - name: RightShoulder
@@ -308,7 +307,7 @@ child:
                                                                 type: 1
                                                                 enabled: true
                                                                 position: [0, 0, 0]
-                                                                rotation: [-45.65, -20.52, -5.376]
+                                                                rotation: [-42.38, -29.74, -0.6575]
                                                                 scale: [1, 1, 1]
                                                             child:
                                                               - name: RightElbow
@@ -327,8 +326,8 @@ child:
                                                                       - !<transform>
                                                                         type: 1
                                                                         enabled: true
-                                                                        position: [0.0146, 0.0001, 0]
-                                                                        rotation: [5.603, 11.06, 30.4]
+                                                                        position: [0.0145, 0, 0]
+                                                                        rotation: [8.416, 1.275, 16.69]
                                                                         scale: [1, 1, 1]
                                                                     child:
                                                                       - name: RightFinger_Index_Jnt_$AssimpFbx$_Translation
@@ -358,7 +357,7 @@ child:
                                                                                     type: 1
                                                                                     enabled: true
                                                                                     position: [0, 0, 0]
-                                                                                    rotation: [0.8862, 0.6523, 14.95]
+                                                                                    rotation: [0.8736, 0.6403, 14.72]
                                                                                     scale: [1, 1, 1]
                                                                                 child:
                                                                                   - name: RightFinger_Index_Jnt
@@ -398,7 +397,7 @@ child:
                                                                                                     type: 1
                                                                                                     enabled: true
                                                                                                     position: [0, 0, 0]
-                                                                                                    rotation: [-0.5358, -0.0705, 14.99]
+                                                                                                    rotation: [-0.511, -0.064, 14.28]
                                                                                                     scale: [1, 1, 1]
                                                                                                 child:
                                                                                                   - name: RightFinger_index_middle_Jnt
@@ -467,7 +466,7 @@ child:
                                                                                     type: 1
                                                                                     enabled: true
                                                                                     position: [0, 0, 0]
-                                                                                    rotation: [0.8862, 0.6523, 14.95]
+                                                                                    rotation: [0.861, 0.6283, 14.48]
                                                                                     scale: [1, 1, 1]
                                                                                 child:
                                                                                   - name: RightFinger_Middle_Jnt
@@ -507,7 +506,7 @@ child:
                                                                                                     type: 1
                                                                                                     enabled: true
                                                                                                     position: [0, 0, 0]
-                                                                                                    rotation: [-0.5358, -0.0705, 14.99]
+                                                                                                    rotation: [-0.5275, -0.0683, 14.75]
                                                                                                     scale: [1, 1, 1]
                                                                                                 child:
                                                                                                   - name: RightFinger_Middle_middle__Jnt
@@ -555,7 +554,7 @@ child:
                                                                           - !<transform>
                                                                             type: 1
                                                                             enabled: true
-                                                                            position: [0.0024, 0.0018, 0.0038]
+                                                                            position: [0.0023, 0.0018, 0.0038]
                                                                             rotation: [0, 0, 0]
                                                                             scale: [1, 1, 1]
                                                                         child:
@@ -576,7 +575,7 @@ child:
                                                                                     type: 1
                                                                                     enabled: true
                                                                                     position: [0, 0, 0]
-                                                                                    rotation: [13.13, 7.319, -15.84]
+                                                                                    rotation: [-0.1999, -0.123, -14.99]
                                                                                     scale: [1, 1, 1]
                                                                                 child:
                                                                                   - name: RightFinger_thumb_Jnt
@@ -616,7 +615,7 @@ child:
                                                                                                     type: 1
                                                                                                     enabled: true
                                                                                                     position: [0, 0, 0]
-                                                                                                    rotation: [0, 0, -15]
+                                                                                                    rotation: [0, 0, 0]
                                                                                                     scale: [1, 1, 1]
                                                                                                 child:
                                                                                                   - name: RightFinger_thumb_middle_Jnt
@@ -664,8 +663,8 @@ child:
                       - !<transform>
                         type: 1
                         enabled: true
-                        position: [0.0099, 0.0044, 0.0102]
-                        rotation: [4.411, -29.44, 16.68]
+                        position: [0.0054, 0.0047, 0.0117]
+                        rotation: [0.0727, -15.01, -2.93]
                         scale: [1, 1, 1]
                     child:
                       - name: LeftShoulder_$AssimpFbx$_Translation
@@ -695,7 +694,7 @@ child:
                                     type: 1
                                     enabled: true
                                     position: [0, 0, 0]
-                                    rotation: [51.1, 8.975, 51.54]
+                                    rotation: [6.925, -12.38, -0.8201]
                                     scale: [1, 1, 1]
                                 child:
                                   - name: LeftShoulder
@@ -714,7 +713,7 @@ child:
                                           - !<transform>
                                             type: 1
                                             enabled: true
-                                            position: [-0.0166, 0, 0]
+                                            position: [-0.0167, 0.0001, 0]
                                             rotation: [0, 0, 0]
                                             scale: [1, 1, 1]
                                         child:
@@ -735,7 +734,7 @@ child:
                                                     type: 1
                                                     enabled: true
                                                     position: [0, 0, 0]
-                                                    rotation: [-11.91, -23.19, 51.45]
+                                                    rotation: [-72.25, -15.81, -5.655]
                                                     scale: [1, 1, 1]
                                                 child:
                                                   - name: LeftElbow
@@ -755,7 +754,7 @@ child:
                                                             type: 1
                                                             enabled: true
                                                             position: [-0.0145, 0, 0]
-                                                            rotation: [-41.28, -24.63, 0.0601]
+                                                            rotation: [0.4649, -11.02, 29.65]
                                                             scale: [1, 1, 1]
                                                         child:
                                                           - name: LefFinger_Index_Jnt_$AssimpFbx$_Translation
@@ -785,7 +784,7 @@ child:
                                                                         type: 1
                                                                         enabled: true
                                                                         position: [0, 0, 0]
-                                                                        rotation: [1.574, 1.511, 29.9]
+                                                                        rotation: [0.8794, 0.3749, 14.55]
                                                                         scale: [1, 1, 1]
                                                                     child:
                                                                       - name: LefFinger_Index_Jnt
@@ -825,7 +824,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [-0.5358, -0.0705, 14.99]
+                                                                                        rotation: [-0.538, -0.0622, 14.55]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - name: LefFinger_Index_middle_Jnt
@@ -894,7 +893,7 @@ child:
                                                                         type: 1
                                                                         enabled: true
                                                                         position: [0, 0, 0]
-                                                                        rotation: [1.574, 1.511, 29.9]
+                                                                        rotation: [0.8094, 0.6046, 14.52]
                                                                         scale: [1, 1, 1]
                                                                     child:
                                                                       - name: LefFinger_Middle_Jnt
@@ -934,7 +933,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [-0.5358, -0.0705, 14.99]
+                                                                                        rotation: [-0.538, -0.0622, 14.55]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - name: LefFinger_Middle_middle_Jnt
@@ -1003,7 +1002,7 @@ child:
                                                                         type: 1
                                                                         enabled: true
                                                                         position: [0, 0, 0]
-                                                                        rotation: [-6.24, 13.67, -19.65]
+                                                                        rotation: [-0.1975, -0.2118, -19.87]
                                                                         scale: [1, 1, 1]
                                                                     child:
                                                                       - name: LefFinger_thumb_Jnt
@@ -1043,7 +1042,7 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [0, 0, -15]
+                                                                                        rotation: [0, 0, -14.53]
                                                                                         scale: [1, 1, 1]
                                                                                     child:
                                                                                       - name: LeftFinger_thumb_Middle_Jnt
@@ -1092,7 +1091,7 @@ child:
                         type: 1
                         enabled: true
                         position: [0.0001, 0.011, 0.0019]
-                        rotation: [-12, -13.87, -5.067]
+                        rotation: [-5.771, 8.841, -0.744]
                         scale: [1, 1, 1]
               - name: Belly_jnt
                 enabled: true
@@ -1110,7 +1109,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0, -0.0011, 0]
-                rotation: [1.311, -14.94, 15.17]
+                rotation: [1.248, -14.25, 5.055]
                 scale: [1, 1, 1]
             child:
               - name: LeftLeg_jnt
@@ -1120,7 +1119,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0.0066, -0.0007, 0]
-                    rotation: [-30.63, 35.51, -1.131]
+                    rotation: [-50.96, 24.58, 36.86]
                     scale: [1, 1, 1]
                 child:
                   - name: LeftKnee_jnt
@@ -1130,7 +1129,7 @@ child:
                         type: 1
                         enabled: true
                         position: [0.0004, -0.0068, 0.002]
-                        rotation: [16.98, 0.5756, -1.027]
+                        rotation: [54.74, -0.5469, -3.755]
                         scale: [1, 1, 1]
                     child:
                       - name: LeftFoot_jnt
@@ -1150,7 +1149,7 @@ child:
                                 type: 1
                                 enabled: true
                                 position: [0, -0.0023, 0.0016]
-                                rotation: [0.4478, 13.94, 1.973]
+                                rotation: [-20.56, 3.393, -14.74]
                                 scale: [1, 1, 1]
                             child:
                               - name: LeftZeroToe_jnt
@@ -1179,7 +1178,7 @@ child:
                         type: 1
                         enabled: true
                         position: [0, 0, 0]
-                        rotation: [180, 0, 0]
+                        rotation: [-180, 0, 0]
                         scale: [1, 1, 1]
                     child:
                       - name: RightLeg_jnt_$AssimpFbx$_Rotation
@@ -1189,7 +1188,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0, 0, 0]
-                            rotation: [-39.02, -9.6, 28.65]
+                            rotation: [-60.35, -7.465, 7.943]
                             scale: [1, 1, 1]
                         child:
                           - name: RightLeg_jnt
@@ -1209,7 +1208,7 @@ child:
                                     type: 1
                                     enabled: true
                                     position: [-0.0004, 0.0068, -0.002]
-                                    rotation: [45.67, 0.0421, -3.165]
+                                    rotation: [57.31, -0.7483, -3.902]
                                     scale: [1, 1, 1]
                                 child:
                                   - name: RighFoot_Jnt
@@ -1229,7 +1228,7 @@ child:
                                             type: 1
                                             enabled: true
                                             position: [0, 0.0023, -0.0016]
-                                            rotation: [-17.6, 6.643, -16.63]
+                                            rotation: [-10.91, 14.53, -5.92]
                                             scale: [1, 1, 1]
                                         child:
                                           - name: RightZeroToe_Jnt
@@ -1247,8 +1246,8 @@ child:
               - !<transform>
                 type: 1
                 enabled: true
-                position: [0.0072, -0.0114, 0.0067]
-                rotation: [-15, 30, 0]
+                position: [0.01, -0.0101, 0.0038]
+                rotation: [-15.96, 29.74, 0.0517]
                 scale: [1, 1, 1]
           - name: ikHandle1
             enabled: true
@@ -1256,8 +1255,8 @@ child:
               - !<transform>
                 type: 1
                 enabled: true
-                position: [-0.0097, -0.0131, 0.0001]
-                rotation: [-15, -30, -0]
+                position: [-0.0088, -0.0104, 0.0029]
+                rotation: [-15.35, -30.25, -0.3696]
                 scale: [1, 1, 1]
   - name: boss_low_grp_v05
     enabled: true
@@ -1321,7 +1320,7 @@ child:
                           - !<mesh_renderer>
                             type: 2
                             enabled: true
-                            mesh_id: 853190559178381670
+                            mesh_id: 5987627280645728136
                             navigable: false
                             visible: true
                             casting_shadow: true
@@ -1379,7 +1378,7 @@ child:
                           - !<mesh_renderer>
                             type: 2
                             enabled: true
-                            mesh_id: 13715905036551950860
+                            mesh_id: 4924040940596328732
                             navigable: false
                             visible: true
                             casting_shadow: true
@@ -1391,7 +1390,7 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [36.3, -18.34, 7.752]
+        position: [29.69, -18.34, 7.752]
         rotation: [90, 0, 0]
         scale: [1, 0.9998, 0.9998]
       - !<transform_2d>
@@ -1545,7 +1544,7 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [0, 0.002, 0]
+        position: [-6.615, 0.002, 0]
         rotation: [90, 0, 0]
         scale: [1, 0.9998, 0.9998]
       - !<script>
@@ -1620,38 +1619,3 @@ child:
                 blend_factor: 0.1
                 projection: true
                 randomize_tiles: false
-  - name: CrackGround
-    enabled: true
-    component:
-      - !<transform>
-        type: 1
-        enabled: true
-        position: [0, 0, 0]
-        rotation: [0, 0, 0]
-        scale: [1, 1, 1]
-      - !<billboard>
-        type: 21
-        enabled: true
-        play_on_awake: false
-        texture_id: 5088586167020234748
-        tiles: [1, 1]
-        flip: [false, false]
-        billboard_lifetime: 3
-        properties: [1, 2, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-        animation_speed: 0
-        total_tiles: 1
-        animation_loop: false
-        color_cycles: 1
-        color_gradient: [[0.9827, 0.9827, 0.9827, 0, 0], [0, 0, 0, 0, 1]]
-        animation_section: false
-        color_section: true
-        size_section: false
-        size_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-        rotation_section: false
-        rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-        start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-        start_size: [true, true, 0, [5, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-        start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-        blend_factor: 0
-        projection: true
-        randomize_tiles: false
