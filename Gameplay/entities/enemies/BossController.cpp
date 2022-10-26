@@ -1016,7 +1016,7 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
 
     case JumpingState::GETTING_UP:
     {
-		player_camera->Shake(0.8f, 2.f);
+		player_camera->Shake(0.5f, 2.f);
 
         combat_visual_effects_pool->PlayGroundCrackEffect(transform->GetGlobalPosition());
 

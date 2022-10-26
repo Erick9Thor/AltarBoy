@@ -46,8 +46,8 @@ void Hachiko::Scripting::CombatVisualEffectsPool::OnAwake()
 	beetle_vfxes.reserve(10);
 	beetle_vfxes = game_object->children[5]->children;
 
-	// 5 - Ground
-	if (game_object->children.size() > 5)
+	// 6 - Ground
+	if (game_object->children.size() > 6)
 	{
 		ground_vfxes.clear();
 		ground_vfxes.reserve(10);
