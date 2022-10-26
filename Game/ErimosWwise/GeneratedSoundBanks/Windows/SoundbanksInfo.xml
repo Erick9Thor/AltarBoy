@@ -275,7 +275,7 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="2385628198" Language="SFX" Hash="1074077170">
+		<SoundBank Id="2385628198" Language="SFX" Hash="2824129226">
 			<ObjectPath>\SoundBanks\Default Work Unit\Footsteps</ObjectPath>
 			<ShortName>Footsteps</ShortName>
 			<Path>Footsteps.bnk</Path>
@@ -576,7 +576,7 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="3909959462" Language="SFX" Hash="1333915363">
+		<SoundBank Id="3909959462" Language="SFX" Hash="282912242">
 			<ObjectPath>\SoundBanks\Default Work Unit\Enviroment</ObjectPath>
 			<ShortName>Enviroment</ShortName>
 			<Path>Enviroment.bnk</Path>
@@ -589,7 +589,7 @@
 						</File>
 						<File Id="326766638" Language="SFX">
 							<ShortName>ES_Swoosh 12 Short - Jon Bjork.wav</ShortName>
-							<Path>SFX\ES_Swoosh 12 Short - Jon Bjork_10C4C929.wem</Path>
+							<Path>SFX\ES_Swoosh 12 Short - Jon Bjork_2D555150.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -613,7 +613,7 @@
 					<IncludedMemoryFiles>
 						<File Id="557030509" Language="SFX">
 							<ShortName>ES_Sci Fi Spaceship 36 - SFX Producer.wav</ShortName>
-							<Path>SFX\ES_Sci Fi Spaceship 36 - SFX Producer_C5F4F676.wem</Path>
+							<Path>SFX\ES_Sci Fi Spaceship 36 - SFX Producer_6EF19896.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>

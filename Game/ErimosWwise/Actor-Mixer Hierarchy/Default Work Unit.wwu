@@ -615,6 +615,11 @@
 												<Value>True</Value>
 											</ValueList>
 										</Property>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>3</Value>
+											</ValueList>
+										</Property>
 									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Conversion">
@@ -629,7 +634,7 @@
 											<PropertyList>
 												<Property Name="FadeInDuration" Type="Real64" Value="0.871916010498687"/>
 												<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
-												<Property Name="TrimBegin" Type="Real64" Value="2.98036745406824"/>
+												<Property Name="TrimBegin" Type="Real64" Value="3.51451711393218"/>
 												<Property Name="TrimEnd" Type="Real64" Value="6.4997375328084"/>
 											</PropertyList>
 											<Language>SFX</Language>
@@ -697,6 +702,11 @@
 									</ReferenceList>
 									<ChildrenList>
 										<AudioFileSource Name="ES_Swoosh 12 Short - Jon Bjork" ID="{A5CC32F6-56D8-47B5-97CE-D2D99FE70E6D}">
+											<PropertyList>
+												<Property Name="FadeOutDuration" Type="Real64" Value="2.2976525297619"/>
+												<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+												<Property Name="TrimEnd" Type="Real64" Value="4.03172991071429"/>
+											</PropertyList>
 											<Language>SFX</Language>
 											<AudioFile>ES_Swoosh 12 Short - Jon Bjork.wav</AudioFile>
 											<MediaIDList>
@@ -2052,7 +2062,7 @@
 										</Property>
 										<Property Name="Volume" Type="Real64">
 											<ValueList>
-												<Value>5</Value>
+												<Value>10</Value>
 											</ValueList>
 										</Property>
 									</PropertyList>
