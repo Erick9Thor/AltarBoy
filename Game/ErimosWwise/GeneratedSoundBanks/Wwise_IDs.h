@@ -15,6 +15,8 @@ namespace AK
     {
         static const AkUniqueID PLAY_BEETLEATTACK = 4275867775U;
         static const AkUniqueID PLAY_BEETLEDEATH = 3318027631U;
+        static const AkUniqueID PLAY_BOSSMUSIC = 3463024606U;
+        static const AkUniqueID PLAY_CHECKPOINT = 2962822744U;
         static const AkUniqueID PLAY_COMBAT = 513571230U;
         static const AkUniqueID PLAY_CRYSTAL = 2035174344U;
         static const AkUniqueID PLAY_DASH = 2211787386U;
@@ -22,7 +24,6 @@ namespace AK
         static const AkUniqueID PLAY_GAMEOVER = 3174629258U;
         static const AkUniqueID PLAY_GAUNLETDOOROPENING = 2988819998U;
         static const AkUniqueID PLAY_GAUNLETNEXTROUND = 1126614951U;
-        static const AkUniqueID PLAY_GAUNLETSTART = 478842326U;
         static const AkUniqueID PLAY_INTROCINEMATIC = 2953314807U;
         static const AkUniqueID PLAY_LASER = 2270376495U;
         static const AkUniqueID PLAY_LASER_HIT = 4092857357U;
@@ -43,7 +44,11 @@ namespace AK
         static const AkUniqueID PLAY_WORMHIDE = 3900269399U;
         static const AkUniqueID PLAY_WORMROAR = 4242710327U;
         static const AkUniqueID PLAY_WORMSPAWN = 3126715392U;
+        static const AkUniqueID SET_STATE1_BOSSFIGHT = 3129492764U;
+        static const AkUniqueID SET_STATE2_BOSSFIGHT = 422367531U;
+        static const AkUniqueID SET_STATE3_BOSSFIGHT = 129783526U;
         static const AkUniqueID STOP_COMBAT = 913896232U;
+        static const AkUniqueID STOP_NAVIGATION = 445689598U;
         static const AkUniqueID STOP_PEBBLE = 707649828U;
         static const AkUniqueID STOP_WIND = 3173136834U;
     } // namespace EVENTS
@@ -156,6 +161,7 @@ namespace AK
         static const AkUniqueID INIT = 1355168291U;
         static const AkUniqueID ATTACKS = 3768541028U;
         static const AkUniqueID BACKGROUNDMUSIC = 626769978U;
+        static const AkUniqueID BOSS = 1560169506U;
         static const AkUniqueID ENVIROMENT = 3909959462U;
         static const AkUniqueID FOOTSTEPS = 2385628198U;
         static const AkUniqueID UI = 1551306167U;

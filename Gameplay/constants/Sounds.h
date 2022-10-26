@@ -36,16 +36,20 @@ namespace Hachiko::Sounds
 	constexpr const wchar_t* PLAY_LASER_HIT = L"Play_Laser_Hit";
 	constexpr const wchar_t* PLAY_SPLASH = L"Play_Splash";
 	constexpr const wchar_t* PLAY_DOOR_OPENING = L"Play_DoorOpening";
+	constexpr const wchar_t* PLAY_CHECKPOINT = L"Play_Checkpoint";
 
 	// Background Music
 	// TODO: Rename this events in wwise
 	constexpr const wchar_t* PLAY_BACKGROUND_MUSIC_LVL1 = L"Play_Navigation";
 	constexpr const wchar_t* PLAY_BACKGROUND_MUSIC_LVL2 = L"Play_Navigation";
-	constexpr const wchar_t* PLAY_BACKGROUND_MUSIC_BOSS = L"Play_Navigation";
+	constexpr const wchar_t* PLAY_BACKGROUND_MUSIC_BOSS = L"Play_BossMusic";
 	constexpr const wchar_t* STOP_BACKGROUND_MUSIC_LVL1 = L"Stop_Navigation";
 	constexpr const wchar_t* STOP_BACKGROUND_MUSIC_LVL2 = L"Stop_Navigation";
 	constexpr const wchar_t* STOP_BACKGROUND_MUSIC_BOSS = L"Stop_Navigation";
 	constexpr const wchar_t* PLAY_DEAD_MUSIC = L"Play_GameOver";
+	constexpr const wchar_t* SET_STATE1_BOSS_FIGHT = L"Set_State1_BossFight";
+	constexpr const wchar_t* SET_STATE2_BOSS_FIGHT = L"Set_State2_BossFight";
+	constexpr const wchar_t* SET_STATE3_BOSS_FIGHT = L"Set_State3_BossFight";
 
 	constexpr const wchar_t* PLAY_COMBAT_MUSIC = L"Play_Combat"; // Deprecated
 	constexpr const wchar_t* STOP_COMBAT_MUSIC = L"Stop_Combat"; // Deprecated

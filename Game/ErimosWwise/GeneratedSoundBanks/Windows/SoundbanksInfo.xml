@@ -11,7 +11,7 @@
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="626769978" Language="SFX" Hash="3936206385">
+		<SoundBank Id="626769978" Language="SFX" Hash="3354474868">
 			<ObjectPath>\SoundBanks\Default Work Unit\BackgroundMusic</ObjectPath>
 			<ShortName>BackgroundMusic</ShortName>
 			<Path>BackgroundMusic.bnk</Path>
@@ -137,6 +137,7 @@
 					</ActionSetState>
 				</Event>
 				<Event Id="913896232" Name="Stop_Combat" ObjectPath="\Events\Music\Stop_Combat"/>
+				<Event Id="445689598" Name="Stop_Navigation" ObjectPath="\Events\Music\Stop_Navigation"/>
 			</IncludedEvents>
 			<GameParameters>
 				<GameParameter Id="3963624107" Name="EnemyAware" ObjectPath="\Game Parameters\Music\EnemyAware"/>
@@ -178,7 +179,7 @@
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
 		</SoundBank>
-		<SoundBank Id="1551306167" Language="SFX" Hash="1639464746">
+		<SoundBank Id="1551306167" Language="SFX" Hash="2053829433">
 			<ObjectPath>\SoundBanks\Default Work Unit\UI</ObjectPath>
 			<ShortName>UI</ShortName>
 			<Path>UI.bnk</Path>
@@ -201,7 +202,80 @@
 				</Event>
 			</IncludedEvents>
 		</SoundBank>
-		<SoundBank Id="2385628198" Language="SFX" Hash="270110705">
+		<SoundBank Id="1560169506" Language="SFX" Hash="3335661806">
+			<ObjectPath>\SoundBanks\Default Work Unit\Boss</ObjectPath>
+			<ShortName>Boss</ShortName>
+			<Path>Boss.bnk</Path>
+			<IncludedEvents>
+				<Event Id="3463024606" Name="Play_BossMusic" ObjectPath="\Events\Default Work Unit\Play_BossMusic">
+					<IncludedMemoryFiles>
+						<File Id="491649360" Language="SFX">
+							<ShortName>ER_Boss_steps 2+3.wav</ShortName>
+							<Path>SFX\ER_Boss_steps 2+3_D79FB2B7.wem</Path>
+						</File>
+						<File Id="742142085" Language="SFX">
+							<ShortName>ER_Boss_Step 1.wav</ShortName>
+							<Path>SFX\ER_Boss_Step 1_D79FB2B7.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+					<SwitchContainers>
+						<SwitchContainer SwitchValue="{1AC76792-AD16-42E6-B27B-0D03BCBF9474}">
+							<Media>
+								<File Id="742142085"/>
+							</Media>
+						</SwitchContainer>
+						<SwitchContainer SwitchValue="{B7696B1A-498C-46A0-B1CA-1EFD809FE3AE}">
+							<Media>
+								<File Id="491649360"/>
+							</Media>
+						</SwitchContainer>
+						<SwitchContainer SwitchValue="{1B3F4FD0-8F6D-4FE2-81DE-74BCEDF83928}">
+							<Media>
+								<File Id="491649360"/>
+							</Media>
+						</SwitchContainer>
+					</SwitchContainers>
+					<ActionSetState>
+						<ActionSetStateEntry Id="936729722" Name="Stage1" ObjectPath="\States\Default Work Unit\Boss_battle_states\Stage1"/>
+					</ActionSetState>
+				</Event>
+				<Event Id="3129492764" Name="Set_State1_BossFight" ObjectPath="\Events\Default Work Unit\Set_State1_BossFight">
+					<ActionSetState>
+						<ActionSetStateEntry Id="936729722" Name="Stage1" ObjectPath="\States\Default Work Unit\Boss_battle_states\Stage1"/>
+					</ActionSetState>
+				</Event>
+				<Event Id="422367531" Name="Set_State2_BossFight" ObjectPath="\Events\Default Work Unit\Set_State2_BossFight">
+					<ActionSetState>
+						<ActionSetStateEntry Id="936729721" Name="Stage2" ObjectPath="\States\Default Work Unit\Boss_battle_states\Stage2"/>
+					</ActionSetState>
+				</Event>
+				<Event Id="129783526" Name="Set_State3_BossFight" ObjectPath="\Events\Default Work Unit\Set_State3_BossFight">
+					<ActionSetState>
+						<ActionSetStateEntry Id="936729720" Name="Stage3" ObjectPath="\States\Default Work Unit\Boss_battle_states\Stage3"/>
+					</ActionSetState>
+				</Event>
+			</IncludedEvents>
+			<StateGroups>
+				<StateGroup Id="936729720" Name="Stage3" ObjectPath="\States\Default Work Unit\Boss_battle_states\Stage3" GUID="{1B3F4FD0-8F6D-4FE2-81DE-74BCEDF83928}">
+					<States/>
+				</StateGroup>
+				<StateGroup Id="936729721" Name="Stage2" ObjectPath="\States\Default Work Unit\Boss_battle_states\Stage2" GUID="{B7696B1A-498C-46A0-B1CA-1EFD809FE3AE}">
+					<States/>
+				</StateGroup>
+				<StateGroup Id="936729722" Name="Stage1" ObjectPath="\States\Default Work Unit\Boss_battle_states\Stage1" GUID="{1AC76792-AD16-42E6-B27B-0D03BCBF9474}">
+					<States/>
+				</StateGroup>
+				<StateGroup Id="2746189348" Name="Boss_battle_states" ObjectPath="\States\Default Work Unit\Boss_battle_states" GUID="{0E9BFD09-6921-4435-A7C0-6A8BD48A118D}">
+					<States>
+						<State Id="748895195" Name="None" ObjectPath="\States\Default Work Unit\Boss_battle_states\None" GUID="{71A1CF18-27A5-411F-A124-A11DDA8B758C}"/>
+						<State Id="936729722" Name="Stage1" ObjectPath="\States\Default Work Unit\Boss_battle_states\Stage1" GUID="{1AC76792-AD16-42E6-B27B-0D03BCBF9474}"/>
+						<State Id="936729721" Name="Stage2" ObjectPath="\States\Default Work Unit\Boss_battle_states\Stage2" GUID="{B7696B1A-498C-46A0-B1CA-1EFD809FE3AE}"/>
+						<State Id="936729720" Name="Stage3" ObjectPath="\States\Default Work Unit\Boss_battle_states\Stage3" GUID="{1B3F4FD0-8F6D-4FE2-81DE-74BCEDF83928}"/>
+					</States>
+				</StateGroup>
+			</StateGroups>
+		</SoundBank>
+		<SoundBank Id="2385628198" Language="SFX" Hash="1074077170">
 			<ObjectPath>\SoundBanks\Default Work Unit\Footsteps</ObjectPath>
 			<ShortName>Footsteps</ShortName>
 			<Path>Footsteps.bnk</Path>
@@ -281,7 +355,7 @@
 				</SwitchGroup>
 			</SwitchGroups>
 		</SoundBank>
-		<SoundBank Id="3768541028" Language="SFX" Hash="3628495437">
+		<SoundBank Id="3768541028" Language="SFX" Hash="765205705">
 			<ObjectPath>\SoundBanks\Default Work Unit\Attacks</ObjectPath>
 			<ShortName>Attacks</ShortName>
 			<Path>Attacks.bnk</Path>
@@ -363,15 +437,7 @@
 					<IncludedMemoryFiles>
 						<File Id="887762306" Language="SFX">
 							<ShortName>ES_Gong Cymbal Crash 1 - SFX Producer.wav</ShortName>
-							<Path>SFX\ES_Gong Cymbal Crash 1 - SFX Producer_10C4C929.wem</Path>
-						</File>
-					</IncludedMemoryFiles>
-				</Event>
-				<Event Id="478842326" Name="Play_GaunletStart" ObjectPath="\Events\Default Work Unit\Play_GaunletStart">
-					<IncludedMemoryFiles>
-						<File Id="887762306" Language="SFX">
-							<ShortName>ES_Gong Cymbal Crash 1 - SFX Producer.wav</ShortName>
-							<Path>SFX\ES_Gong Cymbal Crash 1 - SFX Producer_10C4C929.wem</Path>
+							<Path>SFX\ES_Gong Cymbal Crash 1 - SFX Producer_00CDCE25.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -510,11 +576,23 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="3909959462" Language="SFX" Hash="1394730221">
+		<SoundBank Id="3909959462" Language="SFX" Hash="1333915363">
 			<ObjectPath>\SoundBanks\Default Work Unit\Enviroment</ObjectPath>
 			<ShortName>Enviroment</ShortName>
 			<Path>Enviroment.bnk</Path>
 			<IncludedEvents>
+				<Event Id="2962822744" Name="Play_Checkpoint" ObjectPath="\Events\Default Work Unit\Play_Checkpoint">
+					<IncludedMemoryFiles>
+						<File Id="223665965" Language="SFX">
+							<ShortName>ES_Swoosh 02 Short - Jon Bjork.wav</ShortName>
+							<Path>SFX\ES_Swoosh 02 Short - Jon Bjork_10C4C929.wem</Path>
+						</File>
+						<File Id="326766638" Language="SFX">
+							<ShortName>ES_Swoosh 12 Short - Jon Bjork.wav</ShortName>
+							<Path>SFX\ES_Swoosh 12 Short - Jon Bjork_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
 				<Event Id="2035174344" Name="Play_Crystal" ObjectPath="\Events\Default Work Unit\Play_Crystal">
 					<IncludedMemoryFiles>
 						<File Id="101284139" Language="SFX">
@@ -533,13 +611,9 @@
 				</Event>
 				<Event Id="2988819998" Name="Play_GaunletDoorOpening" ObjectPath="\Events\Default Work Unit\Play_GaunletDoorOpening">
 					<IncludedMemoryFiles>
-						<File Id="459435838" Language="SFX">
-							<ShortName>ES_Sci Fi Portal Warp - SFX Producer.wav</ShortName>
-							<Path>SFX\ES_Sci Fi Portal Warp - SFX Producer_10C4C929.wem</Path>
-						</File>
 						<File Id="557030509" Language="SFX">
 							<ShortName>ES_Sci Fi Spaceship 36 - SFX Producer.wav</ShortName>
-							<Path>SFX\ES_Sci Fi Spaceship 36 - SFX Producer_13662AA0.wem</Path>
+							<Path>SFX\ES_Sci Fi Spaceship 36 - SFX Producer_C5F4F676.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>

@@ -7,6 +7,8 @@
 #include "entities/Stats.h"
 #include "constants/Scenes.h"
 #include "components/ComponentObstacle.h"
+#include "components/ComponentAudioSource.h"
+#include "constants/Sounds.h"
 
 Hachiko::Scripting::BossController::BossController(GameObject* game_object)
     : Script(game_object, "BossController")
@@ -68,6 +70,7 @@ void Hachiko::Scripting::BossController::OnAwake()
     agent->SetMaxSpeed(combat_stats->_move_speed);
     agent->RemoveFromCrowd();
     obstacle = game_object->GetComponent<ComponentObstacle>();
+    audio_source = game_object->GetComponent<ComponentAudioSource>();
     obstacle->AddObstacle();
 
 	animation = game_object->GetComponent<ComponentAnimation>();
@@ -356,6 +359,7 @@ void Hachiko::Scripting::BossController::StartEncounterController()
 
 	player_camera->SetDoLookAhead(true);
 	BreakCocoon();
+    audio_source->PostEvent(Sounds::SET_STATE2_BOSS_FIGHT);
 	std::copy(_jumping_pattern_1, _jumping_pattern_1 + JumpUtil::JUMP_PATTERN_SIZE, _current_jumping_pattern);
 
 	state = BossState::COMBAT_FORM;
@@ -390,7 +394,7 @@ void Hachiko::Scripting::BossController::StartCocoon()
     time_elapse = 0.0;
     SetUpCocoon();
     FocusCameraOnBoss(true);
-
+    audio_source->PostEvent(Sounds::SET_STATE1_BOSS_FIGHT);
     //Remove all stalactites and enemies
     _stalagmite_manager->DestroyAllStalagmites();
     KillEnemies();

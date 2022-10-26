@@ -93,6 +93,7 @@ void Hachiko::Scripting::AudioManager::Restart()
 
 void Hachiko::Scripting::AudioManager::SetLevel(unsigned level)
 {
+	HE_LOG("AudioManager - Setting Level: %ud", level);
 	_level = level;
 }
 
@@ -141,9 +142,6 @@ const wchar_t* Hachiko::Scripting::AudioManager::GetPlayMusicEventName(unsigned 
 
 	case 3:
 		return Sounds::PLAY_BACKGROUND_MUSIC_BOSS;
-
-	default:
-		return Sounds::PLAY_BACKGROUND_MUSIC_LVL1;
 	}
 }
 
@@ -159,9 +157,6 @@ const wchar_t* Hachiko::Scripting::AudioManager::GetStopMusicEventName(unsigned 
 
 	case 3:
 		return Sounds::STOP_BACKGROUND_MUSIC_BOSS;
-
-	default:
-		return Sounds::STOP_BACKGROUND_MUSIC_LVL1;
 	}
 }
 

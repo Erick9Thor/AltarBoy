@@ -1,0 +1,19 @@
+Event	ID	Name			Wwise Object Path	Notes
+	129783526	Set_State3_BossFight			\Default Work Unit\Set_State3_BossFight	
+	422367531	Set_State2_BossFight			\Default Work Unit\Set_State2_BossFight	
+	3129492764	Set_State1_BossFight			\Default Work Unit\Set_State1_BossFight	
+	3463024606	Play_BossMusic			\Default Work Unit\Play_BossMusic	
+
+State Group	ID	Name			Wwise Object Path	Notes
+	2746189348	Boss_battle_states			\Default Work Unit\Boss_battle_states	
+
+State	ID	Name	State Group			Notes
+	748895195	None	Boss_battle_states			
+	936729720	Stage3	Boss_battle_states			
+	936729721	Stage2	Boss_battle_states			
+	936729722	Stage1	Boss_battle_states			
+
+In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	491649360	ER_Boss_steps 2+3	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\ER_Boss_steps 2+3_D79FB2B7.wem		\Interactive Music Hierarchy\Music\Boss Battle Music Switch\Fight\ER_Boss_steps 2+3		21702484
+	742142085	ER_Boss_Step 1	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\ER_Boss_Step 1_D79FB2B7.wem		\Interactive Music Hierarchy\Music\Boss Battle Music Switch\Cocoon\ER_Boss_Step 1		10110860
+

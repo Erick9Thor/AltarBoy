@@ -1362,13 +1362,11 @@
 								</MusicTransition>
 								<MusicTransition Name="Transition" ID="{897F64CF-E2A9-4620-8A9B-B61E9627322E}">
 									<PropertyList>
-										<Property Name="DestinationContextType" Type="int16" Value="2"/>
+										<Property Name="DestinationPlaylistJumpTo" Type="int16" Value="3"/>
+										<Property Name="PlayDestinationPreEntry" Type="bool" Value="False"/>
 										<Property Name="SourceContextType" Type="int16" Value="2"/>
 									</PropertyList>
 									<ReferenceList>
-										<Reference Name="DestinationContextObject">
-											<ObjectRef Name="Exploracion A" ID="{5B57C681-1577-4D3C-9AE0-B128CF44FA34}" WorkUnitID="{9B3979AF-6373-40FD-A6FD-C5074B4E0B6D}"/>
-										</Reference>
 										<Reference Name="SourceContextObject">
 											<ObjectRef Name="Defeated" ID="{ABCC956F-7BE0-45DB-A40C-4724CF1D683E}" WorkUnitID="{9B3979AF-6373-40FD-A6FD-C5074B4E0B6D}"/>
 										</Reference>
@@ -1701,8 +1699,8 @@
 							<ChildrenList>
 								<MusicTransition Name="Transition" ID="{498F7569-2343-4A20-A5B8-5991B9940329}">
 									<PropertyList>
-										<Property Name="EnableDestinationFadeIn" Type="bool" Value="True"/>
-										<Property Name="EnableSourceFadeOut" Type="bool" Value="True"/>
+										<Property Name="PlayDestinationPreEntry" Type="bool" Value="False"/>
+										<Property Name="PlaySourcePostExit" Type="bool" Value="False"/>
 									</PropertyList>
 									<TransitionInfo/>
 								</MusicTransition>

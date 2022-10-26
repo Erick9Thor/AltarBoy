@@ -203,6 +203,7 @@ void Hachiko::Scripting::GauntletManager::CheckRoundStatus()
 			_audio_manager->GetAudioSource()->PostEvent(Sounds::GAUNTLET_COMPLETE);
 			return;
 		}
+		_audio_manager->GetAudioSource()->PostEvent(Sounds::GAUNTLET_NEXT_ROUND);
 		SpawnRound(current_round);
 	}	
 }
@@ -225,7 +226,6 @@ void Hachiko::Scripting::GauntletManager::CloseDoors()
 
 void Hachiko::Scripting::GauntletManager::SpawnRound(unsigned round)
 {
-	_audio_manager->GetAudioSource()->PostEvent(Sounds::GAUNTLET_NEXT_ROUND);
 	if (round >= _enemy_packs.size()) return;
 	_combat_manager->ActivateEnemyPack(_enemy_packs[round]);
 	_combat_manager->ResetEnemyPack(_enemy_packs[round], true);

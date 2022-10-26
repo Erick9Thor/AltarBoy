@@ -169,7 +169,7 @@
 						<Action Name="" ID="{346893F6-5F5E-4481-B530-5DC45FA84D29}" ShortID="845073425">
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="DoorOpening" ID="{2811ECF1-D603-402F-975D-4E67774FD1BF}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+									<ObjectRef Name="End" ID="{020CF240-E236-42C9-B15B-109FCE671222}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
@@ -349,14 +349,13 @@
 								</Reference>
 							</ReferenceList>
 						</Action>
-					</ChildrenList>
-				</Event>
-				<Event Name="Play_GaunletStart" ID="{19FA5BBD-8660-46EC-82B7-9EED8756ECC4}">
-					<ChildrenList>
-						<Action Name="" ID="{423F9702-DC13-4F2C-BD9C-834C5558DA2B}" ShortID="766512505">
+						<Action Name="" ID="{849F7672-9076-438D-98DF-54002E17F1A6}" ShortID="380073798">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="22"/>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="NextRound" ID="{DAB6DE0F-7DDD-4DD8-BE2E-61ABA7CFABB1}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+									<ObjectRef Name="Stage1" ID="{1AC76792-AD16-42E6-B27B-0D03BCBF9474}" WorkUnitID="{58D3A6EC-B8FF-4FD8-B774-6F4619FF9B9B}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
@@ -368,6 +367,59 @@
 							<ReferenceList>
 								<Reference Name="Target">
 									<ObjectRef Name="NextRound" ID="{DAB6DE0F-7DDD-4DD8-BE2E-61ABA7CFABB1}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_Checkpoint" ID="{B28BAE08-CDD5-4CD0-84F8-CF5D4D8C0144}">
+					<ChildrenList>
+						<Action Name="" ID="{55E30058-9D01-4C88-BF9C-03328B1C43F5}" ShortID="337994582">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Checkpoint" ID="{48FB85E1-82F2-47B9-B746-686CD8D02BCB}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Set_State2_BossFight" ID="{567DC4F3-C692-45DC-A7B6-4CFBE9E66346}">
+					<ChildrenList>
+						<Action Name="" ID="{9C360DEF-BD96-4102-9310-A20A0AE16727}" ShortID="1026323228">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="22"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Stage2" ID="{B7696B1A-498C-46A0-B1CA-1EFD809FE3AE}" WorkUnitID="{58D3A6EC-B8FF-4FD8-B774-6F4619FF9B9B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Set_State3_BossFight" ID="{5208E28A-D477-4010-BB0B-C66E6240293E}">
+					<ChildrenList>
+						<Action Name="" ID="{868BDA25-D5A5-4AE1-B7B7-1A0E59F8432C}" ShortID="984974703">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="22"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Stage3" ID="{1B3F4FD0-8F6D-4FE2-81DE-74BCEDF83928}" WorkUnitID="{58D3A6EC-B8FF-4FD8-B774-6F4619FF9B9B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Set_State1_BossFight" ID="{FE322C64-0026-4C6E-92A8-DCABFA3366B0}">
+					<ChildrenList>
+						<Action Name="" ID="{19694BBC-0AB9-4E28-BDDD-153AF7B24298}" ShortID="901495245">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="22"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Stage1" ID="{1AC76792-AD16-42E6-B27B-0D03BCBF9474}" WorkUnitID="{58D3A6EC-B8FF-4FD8-B774-6F4619FF9B9B}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>

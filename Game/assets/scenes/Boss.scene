@@ -220,6 +220,7 @@ child:
                 "'_attack_range@float'": 3
                 "'_attack_delay@float'": 0.3
                 "'_idle_cooldown@float'": 2
+                "'_patrol_cooldown@float'": 3
                 "'_spawning_time@float'": 2
                 "'_chase_cooldown@float'": 2
                 "'_spawn_pos@float3'": [-84.25, 1.615, -45.56]
@@ -1510,6 +1511,7 @@ child:
                 "'_attack_range@float'": 3
                 "'_attack_delay@float'": 0.3
                 "'_idle_cooldown@float'": 2
+                "'_patrol_cooldown@float'": 3
                 "'_spawning_time@float'": 2
                 "'_chase_cooldown@float'": 2
                 "'_spawn_pos@float3'": [-74.3, 1.651, -45.88]
@@ -2800,6 +2802,7 @@ child:
                 "'_attack_range@float'": 3
                 "'_attack_delay@float'": 0.3
                 "'_idle_cooldown@float'": 2
+                "'_patrol_cooldown@float'": 3
                 "'_spawning_time@float'": 2
                 "'_chase_cooldown@float'": 2
                 "'_spawn_pos@float3'": [-76.67, 1.453, -59.54]
@@ -4102,6 +4105,7 @@ child:
                 "'_attack_range@float'": 3
                 "'_attack_delay@float'": 0.3
                 "'_idle_cooldown@float'": 2
+                "'_patrol_cooldown@float'": 3
                 "'_spawning_time@float'": 2
                 "'_chase_cooldown@float'": 2
                 "'_spawn_pos@float3'": [0, 0, 0]
@@ -5392,6 +5396,7 @@ child:
                 "'_attack_range@float'": 3
                 "'_attack_delay@float'": 0.3
                 "'_idle_cooldown@float'": 2
+                "'_patrol_cooldown@float'": 3
                 "'_spawning_time@float'": 2
                 "'_chase_cooldown@float'": 2
                 "'_spawn_pos@float3'": [0, 0, 0]
@@ -6682,6 +6687,7 @@ child:
                 "'_attack_range@float'": 3
                 "'_attack_delay@float'": 0.3
                 "'_idle_cooldown@float'": 2
+                "'_patrol_cooldown@float'": 3
                 "'_spawning_time@float'": 2
                 "'_chase_cooldown@float'": 2
                 "'_spawn_pos@float3'": [0, 0, 0]
@@ -7961,6 +7967,15 @@ child:
             type: 14
             enabled: true
             state_machine: 14686609166423751852
+          - id: 7823335974626967079
+            type: 20
+            enabled: true
+          - !<obstacle>
+            id: 15995916168093124541
+            type: 18
+            enabled: true
+            obstacle_type: 0
+            obstacle_size: [1, 1, 1]
           - !<script>
             id: 14439582994899394700
             type: 15
@@ -7972,9 +7987,6 @@ child:
             "'_move_speed@float'": 0
             "'_max_hp@int'": 1
             "'_current_hp@int'": 3
-          - id: 7823335974626967079
-            type: 20
-            enabled: true
           - !<script>
             id: 9695845442311123959
             type: 15
@@ -7992,12 +8004,6 @@ child:
             "'_regen_time@float'": 5
             "'_should_regen@bool'": true
             "'damage_effect_duration@float'": 0.5
-          - !<obstacle>
-            id: 15995916168093124541
-            type: 18
-            enabled: true
-            obstacle_type: 0
-            obstacle_size: [1, 1, 1]
         child:
           - id: 5213186095063174052
             name: Geo
@@ -40213,7 +40219,7 @@ child:
         "'_fog_max_density@float'": 0.015
         "'_fog_min_density@float'": 0.005
         "'_audio_manager_go@GameObject*'": 3361489421654677551
-        "'_player_sound_manager_go@GameObject*'": 0
+        "'_player_sound_manager_go@GameObject*'": 16788642605404128480
         "'_victory_screen@GameObject*'": 11894863846231363565
       - !<script>
         id: 9673773846935216921
@@ -54180,6 +54186,12 @@ child:
         avoid_obstacles: false
         radius: 1
         is_player: false
+      - !<obstacle>
+        id: 10607482088056424360
+        type: 18
+        enabled: true
+        obstacle_type: 0
+        obstacle_size: [3, 1, 1]
       - !<script>
         id: 8044328302561142500
         type: 15
@@ -54236,12 +54248,9 @@ child:
         "'_laser_wall@GameObject*'": 15597409891583893852
         "'_laser_wall_duration@float'": 6
         "'_laser_jump_height@float'": 25
-      - !<obstacle>
-        id: 10607482088056424360
-        type: 18
+      - id: 2077916399870569819
+        type: 20
         enabled: true
-        obstacle_type: 0
-        obstacle_size: [3, 1, 1]
     child:
       - id: 18105050145982492954
         name: Bones2
@@ -56007,6 +56016,7 @@ child:
             "'_complete_wait_time@float'": 2
             "'_door_controller_1@GameObject*'": 0
             "'_door_controller_2@GameObject*'": 0
+            "'_closing_door@GameObject*'": 0
             "'_pack_1@GameObject*'": 1174210901548760683
             "'_pack_2@GameObject*'": 0
             "'_pack_3@GameObject*'": 0

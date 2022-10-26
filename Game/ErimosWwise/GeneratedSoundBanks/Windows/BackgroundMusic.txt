@@ -1,4 +1,5 @@
 Event	ID	Name			Wwise Object Path	Notes
+	445689598	Stop_Navigation			\Music\Stop_Navigation	
 	513571230	Play_Combat			\Music\Play_Combat	
 	913896232	Stop_Combat			\Music\Stop_Combat	
 	2953314807	Play_IntroCinematic			\Default Work Unit\Play_IntroCinematic	

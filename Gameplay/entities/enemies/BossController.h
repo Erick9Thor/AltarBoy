@@ -17,6 +17,7 @@ namespace Hachiko
     class ComponentBillboard;
     class ComponentProgressBar;
     class ComponentObstacle;
+    class ComponentAudioSource;
 
 	namespace Scripting
 	{
@@ -185,6 +186,7 @@ namespace Hachiko
             ComponentAnimation* animation = nullptr;
             GauntletManager* gauntlet = nullptr;
             CombatManager* combat_manager = nullptr;
+            ComponentAudioSource* audio_source = nullptr;
             Stats* combat_stats = nullptr;
             BossState state = BossState::WAITING_ENCOUNTER;
             BossState prev_state = state;
