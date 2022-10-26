@@ -548,7 +548,10 @@ void Hachiko::Scripting::BossController::FinishCocoon()
 void Hachiko::Scripting::BossController::Chase()
 {
     ChangeStateText("Chasing player.");
-    animation->SendTrigger("isWalk");
+    if (animation->IsAnimationStopped())
+    {
+        animation->SendTrigger("isWalk");
+    }
     chasing_timer = 0.0f;
     combat_state = CombatState::CHASING;
 }
@@ -645,8 +648,7 @@ void Hachiko::Scripting::BossController::MeleeAttackController()
 void Hachiko::Scripting::BossController::SpawnCrystals()
 {
 	ChangeStateText("Spawning crystals.");
-	animation->SendTrigger("isSummonCrystal");
-
+    animation->SendTrigger("isSummonCrystal");
 }
 
 void Hachiko::Scripting::BossController::SpawnCrystalsController()
@@ -676,6 +678,7 @@ void Hachiko::Scripting::BossController::SpawnCrystalsController()
 
 	_current_index_crystals = (_current_index_crystals + 1) % _explosive_crystals.size();
 
+    
 	combat_state = CombatState::CHASING;
 }
 
@@ -1032,6 +1035,15 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
             break;
         }
 
+        if (_current_jumping_mode == JumpingMode::STALAGMITE)
+        {
+            animation->SendTrigger("isGetingUpCrystalJump");
+        }
+        else
+        {
+            animation->SendTrigger("isGettingUpJump");
+        }
+
         // Boss starts waiting for the skill here:
         _jumping_state = JumpingState::WAITING_FOR_SKILL;
         _jumping_timer = 0.0f;
@@ -1077,10 +1089,7 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
                 _stalagmite_manager->TriggerStalagmites();
             }
         }
-        else if (_current_jumping_mode == JumpingMode::CRYSTAL)
-        {
-            // TODO: Trigger cocoon animation here.
-        }
+        
 
         ChangeStateText((jump_type + "Casting Skill.").c_str());
 

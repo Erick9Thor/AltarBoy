@@ -76,6 +76,7 @@ namespace Hachiko
 			
 
 			GameObject* enemies;
+			GameObject* boss;
 
 			ComponentAnimation* cp_animation;
 			ComponentObstacle* obstacle;

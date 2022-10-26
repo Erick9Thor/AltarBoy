@@ -43,6 +43,12 @@ clips:
   - clip_name: Death
     clips_id: 16654007059019933875
     clips_loop: false
+  - clip_name: GetingUpCrystalJump
+    clips_id: 15337879428432313686
+    clips_loop: false
+  - clip_name: GettingUpJump
+    clips_id: 4140608260917557051
+    clips_loop: false
 nodes:
   - node_name: Idle
     node_clip_name: Idle
@@ -72,6 +78,10 @@ nodes:
     node_clip_name: Walk
   - node_name: Death
     node_clip_name: Death
+  - node_name: GetingUpCrystalJump
+    node_clip_name: GetingUpCrystalJump
+  - node_name: GettingUpJump
+    node_clip_name: GettingUpJump
 transitions:
   - transition_source: ANY
     transition_target: Idle
@@ -176,4 +186,20 @@ transitions:
   - transition_source: ANY
     transition_target: Death
     transition_trigger: isDeath
+    transition_blend: 300
+  - transition_source: LandingCrystal
+    transition_target: GetingUpCrystalJump
+    transition_trigger: isGetingUpCrystalJump
+    transition_blend: 300
+  - transition_source: Landing
+    transition_target: GettingUpJump
+    transition_trigger: isGettingUpJump
+    transition_blend: 300
+  - transition_source: ANY
+    transition_target: GetingUpCrystalJump
+    transition_trigger: isGetingUpCrystalJump
+    transition_blend: 300
+  - transition_source: ANY
+    transition_target: GettingUpJump
+    transition_trigger: isGettingUpJump
     transition_blend: 300
