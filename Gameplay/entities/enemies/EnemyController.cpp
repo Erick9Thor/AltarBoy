@@ -1330,6 +1330,7 @@ Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::WormTransiti
 
 void Hachiko::Scripting::EnemyController::WormStartHidenState()
 {
+	_audio_source->PostEvent(Sounds::WORM_HIDE);
 	animation->SendTrigger("isHide");
 }
 
