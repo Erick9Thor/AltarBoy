@@ -68,7 +68,7 @@ void Hachiko::Scripting::PillarCheckpoint::ActivateCheckpoint()
 	AudioManager* audio_manager = Scenes::GetAudioManager()->GetComponent<AudioManager>();
 	if (audio_manager)
 	{
-		audio_manager->GetAudioSource()->PostEvent(Sounds::GAUNTLET_START);
+		audio_manager->GetAudioSource()->PostEvent(Sounds::CHECKPOINT_ACTIVATE);
 	}
 	// Save Checkpoint on player variable
 	_player->GetComponent<PlayerController>()->_initial_pos = _restart_position;
