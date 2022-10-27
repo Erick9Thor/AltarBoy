@@ -603,6 +603,8 @@ void Hachiko::Scripting::BossController::MeleeAttack()
 	attacked = false;
 
 	ChangeStateText("Melee attacking.");
+
+    animation->SendTrigger("isMelee");
 }
 
 void Hachiko::Scripting::BossController::MeleeAttackController()
@@ -616,7 +618,6 @@ void Hachiko::Scripting::BossController::MeleeAttackController()
 
     if (!attacked)
     {
-        animation->SendTrigger("isMelee");
 
         CombatManager::AttackStats attack_stats;
         attack_stats.damage = 1.0f;
@@ -625,17 +626,13 @@ void Hachiko::Scripting::BossController::MeleeAttackController()
         attack_stats.range = combat_stats->_attack_range * 1.3f;
         attack_stats.type = CombatManager::AttackType::RECTANGLE;
 
+        _weapon_trail_billboard_right->Play();
 
-        // Debug::DebugDraw(combat_manager->CreateAttackHitbox(GetMeleeAttackOrigin(boss_attack.stats.range), boss_attack.stats), weapon.color.Float3Part());
         combat_manager->EnemyMeleeAttack(GetMeleeAttackOrigin(attack_stats.range), attack_stats);
         attacked = true;
     }
 	
     after_attack_wait_timer += Time::DeltaTime();
-
-    if (after_attack_wait_timer > .8f) { // MIDLE animation
-        _weapon_trail_billboard_right->Play();
-    }
 
 	if (after_attack_wait_timer < after_attack_wait)
 	{
