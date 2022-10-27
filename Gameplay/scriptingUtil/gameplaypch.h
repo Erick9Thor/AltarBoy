@@ -26,6 +26,7 @@
 #include <components/ComponentTransform.h>
 #include <components/ComponentTransform2D.h>
 #include <components/ComponentPointLight.h>
+#include <components/ComponentSpotLight.h>
 #include <components/ComponentObstacle.h>
 #include <utils/Bool2.h>
 #include <core/particles/Particle.h>

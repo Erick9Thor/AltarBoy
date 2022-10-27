@@ -2,6 +2,9 @@
 #include "PillarCheckpoint.h"
 #include "entities/player/PlayerController.h"
 #include "constants/Scenes.h"
+#include "constants/Sounds.h"
+#include "misc/AudioManager.h"
+
 
 // TODO: This include must go
 #include <resources/ResourceAnimation.h>
@@ -27,6 +30,14 @@ void Hachiko::Scripting::PillarCheckpoint::OnAwake()
 	if (_obstacle != nullptr)
 	{
 		_obstacle->AddObstacle();
+	}
+	if (_light_go)
+	{
+		_spot_light = game_object->GetComponentInDescendants<ComponentSpotLight>();
+	}
+	if (_spot_light)
+	{
+		_spot_light->Disable();
 	}
 }
 
@@ -54,8 +65,18 @@ void Hachiko::Scripting::PillarCheckpoint::ActivateCheckpoint()
 		_level_manager->SetRespawnPosition(_restart_position);
 	}
 
+	AudioManager* audio_manager = Scenes::GetAudioManager()->GetComponent<AudioManager>();
+	if (audio_manager)
+	{
+		audio_manager->GetAudioSource()->PostEvent(Sounds::GAUNTLET_START);
+	}
 	// Save Checkpoint on player variable
 	_player->GetComponent<PlayerController>()->_initial_pos = _restart_position;
+
+	if (_spot_light)
+	{
+		_spot_light->Enable();
+	}
 
 	// Activate animation
 	if (!_animation)
