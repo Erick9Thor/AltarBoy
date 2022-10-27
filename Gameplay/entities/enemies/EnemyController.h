@@ -291,7 +291,7 @@ namespace Hachiko
             float damage_effect_progress = 0.0f;
 
             bool _valid_path = false;
-            int _timer_check_path = 0.0f;
+            float _timer_check_path = 0.0f;
 
             EnemyType _enemy_type = EnemyType::BEETLE;
 
