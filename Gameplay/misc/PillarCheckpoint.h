@@ -7,7 +7,7 @@ namespace Hachiko
     class GameObject;
     class ComponentTransform;
     class ComponentImage;
-    class ComponentSpotLight;
+    class ComponentPointLight;
     namespace Scripting
     {
         class LevelManager;
@@ -35,7 +35,7 @@ namespace Hachiko
             LevelManager* _level_manager = nullptr;
             ComponentAnimation* _animation = nullptr;
             ComponentObstacle* _obstacle = nullptr;
-            ComponentSpotLight* _spot_light = nullptr;
+            ComponentPointLight* _point_light = nullptr;
 
             float3 _restart_position;
             bool _used = false;

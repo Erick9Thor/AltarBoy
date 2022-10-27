@@ -33,11 +33,11 @@ void Hachiko::Scripting::PillarCheckpoint::OnAwake()
 	}
 	if (_light_go)
 	{
-		_spot_light = game_object->GetComponentInDescendants<ComponentSpotLight>();
+		_point_light = game_object->GetComponentInDescendants<ComponentPointLight>();
 	}
-	if (_spot_light)
+	if (_point_light)
 	{
-		_spot_light->Disable();
+		_point_light->Disable();
 	}
 }
 
@@ -73,9 +73,9 @@ void Hachiko::Scripting::PillarCheckpoint::ActivateCheckpoint()
 	// Save Checkpoint on player variable
 	_player->GetComponent<PlayerController>()->_initial_pos = _restart_position;
 
-	if (_spot_light)
+	if (_point_light)
 	{
-		_spot_light->Enable();
+		_point_light->Enable();
 	}
 
 	// Activate animation
