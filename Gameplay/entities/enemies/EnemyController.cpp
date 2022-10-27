@@ -1229,7 +1229,6 @@ Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::WormTransiti
 
 	if (_attack_cooldown <= 0.0f && !_attack_landing && _current_pos.Distance(_player_pos) <= _attack_range && _player_controller->IsAlive())
 	{
-
 		return EnemyState::ATTACKING;
 	}
 
@@ -1419,7 +1418,7 @@ bool Hachiko::Scripting::EnemyController::CheckValidPath()
 
 bool Hachiko::Scripting::EnemyController::CheckValidPath(float3 position)
 {
-	if (_timer_check_path > 0.0f)
+	if (_timer_check_path <= 0.0f)
 	{
 		_timer_check_path = 2.5f;
 
