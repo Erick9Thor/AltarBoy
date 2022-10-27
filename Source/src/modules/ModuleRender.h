@@ -177,6 +177,7 @@ namespace Hachiko
             Scene* scene, 
             BatchManager* batch_manager, 
             DrawConfig draw_config);
+        void CollectShadowMeshes(Scene* scene);
 
         void SetRenderMode(bool is_deferred);
 
@@ -198,6 +199,7 @@ namespace Hachiko
         void* context{};
 
         RenderList render_list;
+        RenderList shadow_render_list;
 
         unsigned frame_buffer = 0;
         unsigned depth_stencil_buffer = 0;
@@ -213,6 +215,11 @@ namespace Hachiko
         // Shadow Map related:
         ShadowManager shadow_manager;
         bool shadow_pass_enabled = true;
+
+        // Multithread
+        bool multithread = true;
+        std::thread shadowmeshes_thread;
+        std::thread meshes_thread;
 
         // Deferred rendering:
         GBuffer g_buffer;

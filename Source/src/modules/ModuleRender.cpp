@@ -1,3 +1,5 @@
+#include <thread>
+
 #include "core/hepch.h"
 #include "core/rendering/Uniforms.h"
 #include "core/preferences/src/EditorPreferences.h"
@@ -187,6 +189,7 @@ void Hachiko::ModuleRender::SetGLOptions()
 UpdateStatus Hachiko::ModuleRender::PreUpdate(const float delta)
 {
     render_list.PreUpdate();
+    shadow_render_list.PreUpdate();
 
     return UpdateStatus::UPDATE_CONTINUE;
 }
@@ -289,6 +292,7 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
                                          ComponentCamera* camera,
                                          BatchManager* batch_manager)
 {
+    
     Program* program = nullptr;
 
     if (App->input->GetKey(SDL_SCANCODE_F5) == KeyState::KEY_DOWN)
@@ -301,13 +305,49 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
         render_forward_pass = !render_forward_pass;
     }
 
-    if (shadow_pass_enabled)
+    // Refresh quadtree before threads so its only read inside them
+    scene->GetQuadtree()->Refresh();
+
+    if (multithread)
     {
-        // Generate shadow map from the scene:
-        DrawToShadowMap(scene, batch_manager, DRAW_CONFIG_OPAQUE | DRAW_CONFIG_TRANSPARENT);
+        // Collect shadow meshes
+        if (shadow_pass_enabled)
+        {
+            //CollectShadowMeshes(scene);
+            shadowmeshes_thread = std::thread([&] { CollectShadowMeshes(scene); });
+        }
+
+        // Collect normal meshes
+        
+        meshes_thread = std::thread([&] { render_list.Update(scene->GetCullingCamera()->GetFrustum(), scene->GetQuadtree()); });
+
+        if (shadow_pass_enabled)
+        {
+            shadowmeshes_thread.join();
+            // Generate shadow map from the scene:
+            DrawToShadowMap(scene, batch_manager, DRAW_CONFIG_OPAQUE | DRAW_CONFIG_TRANSPARENT);
+        }
+    }
+    else
+    {
+        // Collect shadow meshes
+        if (shadow_pass_enabled)
+        {
+            CollectShadowMeshes(scene);
+        }
+
+        // Collect normal meshes
+        render_list.Update(scene->GetCullingCamera()->GetFrustum(), scene->GetQuadtree());
+
+        if (shadow_pass_enabled)
+        {
+            // Generate shadow map from the scene:
+            DrawToShadowMap(scene, batch_manager, DRAW_CONFIG_OPAQUE | DRAW_CONFIG_TRANSPARENT);
+        }
     }
 
-    render_list.Update(scene->GetCullingCamera()->GetFrustum(), scene->GetQuadtree());
+    //unsigned n_meshes = scene->GetQuadtree()->GetRoot()->CountMeshes();
+    //HE_LOG("N MESHES WUWUWUWU %i", n_meshes);
 
     // ----------------------------- GEOMETRY PASS ----------------------------
 
@@ -324,6 +364,11 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
     // Clear Opaque Batches List:
     batch_manager->ClearOpaqueBatchesDrawList();
 
+    if (multithread)
+    {
+        meshes_thread.join();
+    }
+    
     // Send mesh renderers with opaque materials to batch manager draw list:
     for (const RenderTarget& target : render_list.GetOpaqueTargets())
     {
@@ -532,14 +577,6 @@ bool Hachiko::ModuleRender::DrawToShadowMap(
         return false;
     }
 
-    // Update directional light frustum if there are any changes:
-    shadow_manager.LazyCalculateLightFrustum();
-
-    // Cull the scene with directional light frustum:
-    render_list.Update(
-        shadow_manager.GetDirectionalLightFrustum(), 
-        scene->GetQuadtree());
-
     // Draw collected meshes with shadow mapping program:
     const Program* program = 
         App->program->GetProgram(Program::Programs::SHADOW_MAPPING);
@@ -604,6 +641,20 @@ bool Hachiko::ModuleRender::DrawToShadowMap(
         App->program->GetProgram(Program::Programs::GAUSSIAN_FILTERING));
 
     return true;
+}
+
+void Hachiko::ModuleRender::CollectShadowMeshes(Scene* scene)
+{
+    if (scene->dir_lights.empty())
+    {
+        return;
+    }
+
+    // Update directional light frustum if there are any changes:
+    shadow_manager.LazyCalculateLightFrustum();
+
+    // Cull the scene with directional light frustum:
+    shadow_render_list.Update(shadow_manager.GetDirectionalLightFrustum(), scene->GetQuadtree());
 }
 
 void Hachiko::ModuleRender::ApplyGaussianFilter(
@@ -839,6 +890,8 @@ void Hachiko::ModuleRender::DeferredOptions()
     {
         App->preferences->GetEditorPreference()->SetShadowPassEnabled(shadow_pass_enabled);
     }
+
+    Widgets::Checkbox("Multithread", &multithread);
 
     ImGui::PopID();
 }

@@ -24,6 +24,8 @@ namespace Hachiko
     {
         friend class Quadtree;
 
+    public:
+        unsigned CountMeshes();
     private:
         QuadtreeNode(const AABB& box, QuadtreeNode* parent, int depth);
         ~QuadtreeNode();
@@ -33,6 +35,7 @@ namespace Hachiko
         void CreateChildren();
         void DeleteChildren();
         unsigned RearangeChildren();
+
 
         [[nodiscard]] bool IsLeaf() const
         {
@@ -78,15 +81,10 @@ namespace Hachiko
         void SetBox(const AABB& box);
 
         void Reposition(ComponentMeshRenderer* mesh);
-        void Remove(ComponentMeshRenderer* mesh);
-        
+        void Remove(ComponentMeshRenderer* mesh);        
 
         [[nodiscard]] QuadtreeNode* GetRoot()
         {
-            if (root)
-            {
-                Refresh();
-            }
             return root;
         }
 
@@ -97,9 +95,11 @@ namespace Hachiko
         void GetIntersections(std::vector<ComponentMeshRenderer*>& intersected, const T& primitive);
 
         void DebugDraw();
-
-    private:
         void Refresh();
+
+        void DrawGui();
+    private:
+        bool dirty = true;
         std::unordered_set<ComponentMeshRenderer*> to_remove = {};
         std::unordered_set<ComponentMeshRenderer*> to_insert = {};
         QuadtreeNode* root = nullptr;
@@ -110,7 +110,6 @@ namespace Hachiko
     {
         if (root)
         {
-            Refresh();
             root->GetIntersections(intersected, primitive);
         }
         
@@ -121,7 +120,6 @@ namespace Hachiko
     {
         if (root)
         {
-            Refresh();
             root->GetIntersections(intersected, primitive);
         }
     }

@@ -180,6 +180,23 @@ unsigned Hachiko::QuadtreeNode::RearangeChildren()
     return children_meshes + meshes.size();
 }
 
+unsigned Hachiko::QuadtreeNode::CountMeshes()
+{
+    
+    if (IsLeaf())
+    {
+        return meshes.size();
+    }
+    unsigned n_meshes = meshes.size();
+
+    for (unsigned i = 0; i < static_cast<unsigned>(Quadrants::COUNT); ++i)
+    {
+        n_meshes += children[i]->CountMeshes();
+    }
+    
+    return n_meshes;
+}
+
 
 void Hachiko::QuadtreeNode::GetIntersections(std::vector<ComponentMeshRenderer*>& intersected, const Frustum& frustum)
 {
@@ -246,6 +263,7 @@ void Hachiko::Quadtree::SetBox(const AABB& box)
 
 void Hachiko::Quadtree::Reposition(ComponentMeshRenderer* mesh)
 {
+    dirty = true;
     if (root)
     {
         to_remove.insert(mesh);
@@ -256,6 +274,7 @@ void Hachiko::Quadtree::Reposition(ComponentMeshRenderer* mesh)
 void Hachiko::Quadtree::Remove(ComponentMeshRenderer* mesh)
 {
     // Removes the element from insert commands to make sure it doesnt stay on the quadtree if reposiiton was called
+    dirty = true;
     if (to_insert.find(mesh) != to_insert.end())
     {
         to_insert.erase(mesh);
@@ -267,26 +286,28 @@ void Hachiko::Quadtree::Remove(ComponentMeshRenderer* mesh)
 void Hachiko::Quadtree::Refresh()
 {
     // This method assumes root exists
-    bool dirty = false;
 
+    if (!dirty)
+    {
+        return;
+    }
+
+    dirty = false;
+
+    HE_LOG("Remove %i , Insert %i", to_remove.size(), to_insert.size());
     if (!to_remove.empty())
     {
         root->Remove(to_remove);
         to_remove.clear();
-        dirty = true;
     }
     if (!to_insert.empty())
     {
         root->Insert(to_insert);
         to_insert.clear();
-        dirty = true;
     }
-
-    if (dirty)
-    {
-        root->RearangeChildren();
-    }
+    root->RearangeChildren();
 }
+void Hachiko::Quadtree::DrawGui() {}
 void Hachiko::Quadtree::DebugDraw()
 {
     if (root)
