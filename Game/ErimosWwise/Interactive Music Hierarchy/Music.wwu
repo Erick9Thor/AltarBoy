@@ -1429,6 +1429,13 @@
 					</EntryList>
 				</MusicSwitchContainer>
 				<MusicSwitchContainer Name="Boss Battle Music Switch" ID="{BFF6C137-60FD-4250-A8F8-BDFDB230CD47}" ShortID="359735324">
+					<PropertyList>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-10</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Conversion">
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
@@ -1451,23 +1458,23 @@
 								</Reference>
 							</ReferenceList>
 							<ChildrenList>
-								<MusicTrack Name="ER_Boss_steps 2+3" ID="{31BB1C13-3CEE-45B8-906D-A58903E2ABBF}" ShortID="491686932">
+								<MusicTrack Name="Boss_Stage2_155bpm" ID="{4CE408DE-7799-4D3F-A4C5-0046EA6086A7}" ShortID="698726244">
 									<ReferenceList>
 										<Reference Name="OutputBus">
 											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
 										</Reference>
 									</ReferenceList>
 									<ChildrenList>
-										<AudioFileSource Name="ER_Boss_steps 2+3" ID="{19F5B599-C998-4F8A-B79E-16F86D6ABD92}">
+										<AudioFileSource Name="Boss_Stage2_155bpm" ID="{DDB514D4-8666-48FF-8EDF-CF153A45012C}">
 											<Language>SFX</Language>
-											<AudioFile>ER_Boss_steps 2+3.wav</AudioFile>
+											<AudioFile>Boss_Stage2_155bpm.wav</AudioFile>
 											<MediaIDList>
-												<MediaID ID="491649360"/>
+												<MediaID ID="482588252"/>
 											</MediaIDList>
 										</AudioFileSource>
 									</ChildrenList>
 									<TransitionList>
-										<MusicTransition Name="Root" ID="{32C584A6-FA88-4B87-9000-9C2D99538466}">
+										<MusicTransition Name="Root" ID="{6A4A74A4-1A0F-4873-AA93-1E45A6B8A3E1}">
 											<PropertyList>
 												<Property Name="IsFolder" Type="bool" Value="True"/>
 											</PropertyList>
@@ -1478,18 +1485,18 @@
 										<ObjectList Name="Sequences">
 											<Reference>
 												<Local>
-													<MusicTrackSequence Name="" ID="{3D370A57-8578-4F5A-AA8A-53C6076EC30E}">
+													<MusicTrackSequence Name="" ID="{4A9EDA3A-7D3F-4FC9-9692-3A8E048C5BCC}">
 														<ObjectLists>
 															<ObjectList Name="Clips">
 																<Reference>
 																	<Local>
-																		<MusicClip Name="ER_Boss_steps 2+3" ID="{2D096599-9846-489C-86C8-146A91B9A937}">
+																		<MusicClip Name="Boss_Stage2_155bpm" ID="{F96751CA-B1BA-40B1-B139-9518B64FB196}">
 																			<PropertyList>
-																				<Property Name="EndTrimOffset" Type="Real64" Value="113032.270833333"/>
+																				<Property Name="EndTrimOffset" Type="Real64" Value="102193.541666667"/>
 																				<Property Name="FadeInMode" Type="int16" Value="0"/>
 																				<Property Name="FadeOutMode" Type="int16" Value="0"/>
 																			</PropertyList>
-																			<AudioSourceRef Name="ER_Boss_steps 2+3" ID="{19F5B599-C998-4F8A-B79E-16F86D6ABD92}"/>
+																			<AudioSourceRef Name="Boss_Stage2_155bpm" ID="{DDB514D4-8666-48FF-8EDF-CF153A45012C}"/>
 																		</MusicClip>
 																	</Local>
 																</Reference>
@@ -1619,23 +1626,23 @@
 								</Reference>
 							</ReferenceList>
 							<ChildrenList>
-								<MusicTrack Name="ER_Boss_steps 2+3" ID="{7D6B2A55-5A25-4BDF-9196-0E6875451739}" ShortID="594951533">
+								<MusicTrack Name="Boss_Stage3_155bpm" ID="{22DC0103-FBA9-433D-B17E-FD45829B714A}" ShortID="100249269">
 									<ReferenceList>
 										<Reference Name="OutputBus">
 											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
 										</Reference>
 									</ReferenceList>
 									<ChildrenList>
-										<AudioFileSource Name="ER_Boss_steps 2+3" ID="{CE024F7D-4FE6-4494-B4EE-C531EC5E567D}">
+										<AudioFileSource Name="Boss_Stage3_155bpm" ID="{5D70736F-A0EF-4F06-B8E5-8F223537427C}">
 											<Language>SFX</Language>
-											<AudioFile>ER_Boss_steps 2+3.wav</AudioFile>
+											<AudioFile>Boss_Stage3_155bpm.wav</AudioFile>
 											<MediaIDList>
-												<MediaID ID="491649360"/>
+												<MediaID ID="101484339"/>
 											</MediaIDList>
 										</AudioFileSource>
 									</ChildrenList>
 									<TransitionList>
-										<MusicTransition Name="Root" ID="{6E97864A-F40B-4E30-817D-701E65051495}">
+										<MusicTransition Name="Root" ID="{011F5CFA-E5E4-4AA9-A231-0A18410E843B}">
 											<PropertyList>
 												<Property Name="IsFolder" Type="bool" Value="True"/>
 											</PropertyList>
@@ -1646,18 +1653,18 @@
 										<ObjectList Name="Sequences">
 											<Reference>
 												<Local>
-													<MusicTrackSequence Name="" ID="{A9CD898D-D947-4E57-BA7A-DF10CA3E8A94}">
+													<MusicTrackSequence Name="" ID="{61BFFC3D-D874-4994-933E-E657ED0AE407}">
 														<ObjectLists>
 															<ObjectList Name="Clips">
 																<Reference>
 																	<Local>
-																		<MusicClip Name="ER_Boss_steps 2+3" ID="{B902E6D2-E14A-4F1D-99B5-BA88E837779A}">
+																		<MusicClip Name="Boss_Stage3_155bpm" ID="{22049865-2A16-4C82-AD24-503CD20D4415}">
 																			<PropertyList>
-																				<Property Name="EndTrimOffset" Type="Real64" Value="113032.270833333"/>
+																				<Property Name="EndTrimOffset" Type="Real64" Value="148645.166666667"/>
 																				<Property Name="FadeInMode" Type="int16" Value="0"/>
 																				<Property Name="FadeOutMode" Type="int16" Value="0"/>
 																			</PropertyList>
-																			<AudioSourceRef Name="ER_Boss_steps 2+3" ID="{CE024F7D-4FE6-4494-B4EE-C531EC5E567D}"/>
+																			<AudioSourceRef Name="Boss_Stage3_155bpm" ID="{5D70736F-A0EF-4F06-B8E5-8F223537427C}"/>
 																		</MusicClip>
 																	</Local>
 																</Reference>
@@ -1735,6 +1742,14 @@
 							</Path>
 							<AudioNodeInfo>
 								<AudioNodeRef Name="Stalacmites" ID="{E64F0F2D-D4D6-4BC1-A953-F5B0268F44DD}" WorkUnitID="{9B3979AF-6373-40FD-A6FD-C5074B4E0B6D}" Platform="Linked"/>
+							</AudioNodeInfo>
+						</Entry>
+						<Entry>
+							<Path>
+								<PathElementRef Name="Dead" ID="{21CCAE23-5F45-4988-8F8A-80974A2F86EB}"/>
+							</Path>
+							<AudioNodeInfo>
+								<NoObject Platform="Linked"/>
 							</AudioNodeInfo>
 						</Entry>
 					</EntryList>

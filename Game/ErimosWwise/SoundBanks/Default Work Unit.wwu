@@ -114,6 +114,7 @@
 						<ObjectRef Name="Set_State3_BossFight" ID="{5208E28A-D477-4010-BB0B-C66E6240293E}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_BossMusic" ID="{93BAF0FF-2F54-4345-BAB0-7FBDABDE2904}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Set_State2_BossFight" ID="{567DC4F3-C692-45DC-A7B6-4CFBE9E66346}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Set_State_Defeated" ID="{36DCBD87-7AD2-46C4-A983-939230547915}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Set_State1_BossFight" ID="{FE322C64-0026-4C6E-92A8-DCABFA3366B0}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
 					</ObjectInclusionList>
 					<ObjectExclusionList/>

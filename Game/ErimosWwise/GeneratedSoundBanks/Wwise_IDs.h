@@ -47,6 +47,7 @@ namespace AK
         static const AkUniqueID SET_STATE1_BOSSFIGHT = 3129492764U;
         static const AkUniqueID SET_STATE2_BOSSFIGHT = 422367531U;
         static const AkUniqueID SET_STATE3_BOSSFIGHT = 129783526U;
+        static const AkUniqueID SET_STATE_DEFEATED = 1482465818U;
         static const AkUniqueID STOP_COMBAT = 913896232U;
         static const AkUniqueID STOP_NAVIGATION = 445689598U;
         static const AkUniqueID STOP_PEBBLE = 707649828U;
@@ -61,6 +62,7 @@ namespace AK
 
             namespace STATE
             {
+                static const AkUniqueID DEAD = 2044049779U;
                 static const AkUniqueID NONE = 748895195U;
                 static const AkUniqueID STAGE1 = 936729722U;
                 static const AkUniqueID STAGE2 = 936729721U;

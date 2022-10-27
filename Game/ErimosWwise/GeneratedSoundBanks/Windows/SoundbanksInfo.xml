@@ -202,16 +202,20 @@
 				</Event>
 			</IncludedEvents>
 		</SoundBank>
-		<SoundBank Id="1560169506" Language="SFX" Hash="3335661806">
+		<SoundBank Id="1560169506" Language="SFX" Hash="3279639921">
 			<ObjectPath>\SoundBanks\Default Work Unit\Boss</ObjectPath>
 			<ShortName>Boss</ShortName>
 			<Path>Boss.bnk</Path>
 			<IncludedEvents>
 				<Event Id="3463024606" Name="Play_BossMusic" ObjectPath="\Events\Default Work Unit\Play_BossMusic">
 					<IncludedMemoryFiles>
-						<File Id="491649360" Language="SFX">
-							<ShortName>ER_Boss_steps 2+3.wav</ShortName>
-							<Path>SFX\ER_Boss_steps 2+3_D79FB2B7.wem</Path>
+						<File Id="101484339" Language="SFX">
+							<ShortName>Boss_Stage3_155bpm.wav</ShortName>
+							<Path>SFX\Boss_Stage3_155bpm_D79FB2B7.wem</Path>
+						</File>
+						<File Id="482588252" Language="SFX">
+							<ShortName>Boss_Stage2_155bpm.wav</ShortName>
+							<Path>SFX\Boss_Stage2_155bpm_D79FB2B7.wem</Path>
 						</File>
 						<File Id="742142085" Language="SFX">
 							<ShortName>ER_Boss_Step 1.wav</ShortName>
@@ -226,12 +230,12 @@
 						</SwitchContainer>
 						<SwitchContainer SwitchValue="{B7696B1A-498C-46A0-B1CA-1EFD809FE3AE}">
 							<Media>
-								<File Id="491649360"/>
+								<File Id="482588252"/>
 							</Media>
 						</SwitchContainer>
 						<SwitchContainer SwitchValue="{1B3F4FD0-8F6D-4FE2-81DE-74BCEDF83928}">
 							<Media>
-								<File Id="491649360"/>
+								<File Id="101484339"/>
 							</Media>
 						</SwitchContainer>
 					</SwitchContainers>
@@ -254,7 +258,21 @@
 						<ActionSetStateEntry Id="936729720" Name="Stage3" ObjectPath="\States\Default Work Unit\Boss_battle_states\Stage3"/>
 					</ActionSetState>
 				</Event>
+				<Event Id="1482465818" Name="Set_State_Defeated" ObjectPath="\Events\Default Work Unit\Set_State_Defeated">
+					<IncludedMemoryFiles>
+						<File Id="31154168" Language="SFX">
+							<ShortName>Defeated-138bpm4-4_L4M-P0.wav</ShortName>
+							<Path>SFX\Defeated-138bpm4-4_L4M-P0_D79FB2B7.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+					<ActionSetState>
+						<ActionSetStateEntry Id="2044049779" Name="Dead" ObjectPath="\States\Default Work Unit\Boss_battle_states\Dead"/>
+					</ActionSetState>
+				</Event>
 			</IncludedEvents>
+			<GameParameters>
+				<GameParameter Id="3963624107" Name="EnemyAware" ObjectPath="\Game Parameters\Music\EnemyAware"/>
+			</GameParameters>
 			<StateGroups>
 				<StateGroup Id="936729720" Name="Stage3" ObjectPath="\States\Default Work Unit\Boss_battle_states\Stage3" GUID="{1B3F4FD0-8F6D-4FE2-81DE-74BCEDF83928}">
 					<States/>
@@ -265,12 +283,16 @@
 				<StateGroup Id="936729722" Name="Stage1" ObjectPath="\States\Default Work Unit\Boss_battle_states\Stage1" GUID="{1AC76792-AD16-42E6-B27B-0D03BCBF9474}">
 					<States/>
 				</StateGroup>
+				<StateGroup Id="2044049779" Name="Dead" ObjectPath="\States\Default Work Unit\Boss_battle_states\Dead" GUID="{21CCAE23-5F45-4988-8F8A-80974A2F86EB}">
+					<States/>
+				</StateGroup>
 				<StateGroup Id="2746189348" Name="Boss_battle_states" ObjectPath="\States\Default Work Unit\Boss_battle_states" GUID="{0E9BFD09-6921-4435-A7C0-6A8BD48A118D}">
 					<States>
 						<State Id="748895195" Name="None" ObjectPath="\States\Default Work Unit\Boss_battle_states\None" GUID="{71A1CF18-27A5-411F-A124-A11DDA8B758C}"/>
 						<State Id="936729722" Name="Stage1" ObjectPath="\States\Default Work Unit\Boss_battle_states\Stage1" GUID="{1AC76792-AD16-42E6-B27B-0D03BCBF9474}"/>
 						<State Id="936729721" Name="Stage2" ObjectPath="\States\Default Work Unit\Boss_battle_states\Stage2" GUID="{B7696B1A-498C-46A0-B1CA-1EFD809FE3AE}"/>
 						<State Id="936729720" Name="Stage3" ObjectPath="\States\Default Work Unit\Boss_battle_states\Stage3" GUID="{1B3F4FD0-8F6D-4FE2-81DE-74BCEDF83928}"/>
+						<State Id="2044049779" Name="Dead" ObjectPath="\States\Default Work Unit\Boss_battle_states\Dead" GUID="{21CCAE23-5F45-4988-8F8A-80974A2F86EB}"/>
 					</States>
 				</StateGroup>
 			</StateGroups>
@@ -576,7 +598,7 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="3909959462" Language="SFX" Hash="282912242">
+		<SoundBank Id="3909959462" Language="SFX" Hash="276777983">
 			<ObjectPath>\SoundBanks\Default Work Unit\Enviroment</ObjectPath>
 			<ShortName>Enviroment</ShortName>
 			<Path>Enviroment.bnk</Path>
@@ -589,7 +611,7 @@
 						</File>
 						<File Id="326766638" Language="SFX">
 							<ShortName>ES_Swoosh 12 Short - Jon Bjork.wav</ShortName>
-							<Path>SFX\ES_Swoosh 12 Short - Jon Bjork_2D555150.wem</Path>
+							<Path>SFX\ES_Swoosh 12 Short - Jon Bjork_5656B412.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -613,7 +635,7 @@
 					<IncludedMemoryFiles>
 						<File Id="557030509" Language="SFX">
 							<ShortName>ES_Sci Fi Spaceship 36 - SFX Producer.wav</ShortName>
-							<Path>SFX\ES_Sci Fi Spaceship 36 - SFX Producer_6EF19896.wem</Path>
+							<Path>SFX\ES_Sci Fi Spaceship 36 - SFX Producer_CBF79404.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>

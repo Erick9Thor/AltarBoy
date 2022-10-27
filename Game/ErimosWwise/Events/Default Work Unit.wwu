@@ -425,6 +425,27 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Set_State_Defeated" ID="{36DCBD87-7AD2-46C4-A983-939230547915}">
+					<ChildrenList>
+						<Action Name="" ID="{7327B3AA-AAC9-465D-9E64-86372D0067D7}" ShortID="429874090">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="22"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Dead" ID="{21CCAE23-5F45-4988-8F8A-80974A2F86EB}" WorkUnitID="{58D3A6EC-B8FF-4FD8-B774-6F4619FF9B9B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{53FC85B4-C8DD-469F-BEFB-CB5F8EED9D96}" ShortID="158870213">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Defeated-138bpm4-4_L4M-P0" ID="{0B764A4B-A401-40FF-9137-FA4AC5E8E885}" WorkUnitID="{9B3979AF-6373-40FD-A6FD-C5074B4E0B6D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>
