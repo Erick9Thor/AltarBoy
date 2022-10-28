@@ -27,7 +27,7 @@ namespace Hachiko::Sounds
 	constexpr const wchar_t* GAUNTLET_COMPLETE = L"Play_WormDeath";
 
 	// Checkpoint
-	constexpr const wchar_t* GAUNTLET_START = L"Play_Dash";
+	constexpr const wchar_t* CHECKPOINT_ACTIVATE = L"Play_Dash";
 
 	// Enviroment
 	constexpr const wchar_t* CRYSTAL = L"Play_Crystal";
