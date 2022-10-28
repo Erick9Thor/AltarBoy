@@ -224,6 +224,7 @@ void Hachiko::Scripting::BossController::StateController()
 		CocoonController();
 		break;
 	case BossState::DEAD:
+        _stalagmite_manager->DestroyAllStalagmites();
         if (animation->IsAnimationStopped())
         {
             level_manager->BossKilled();

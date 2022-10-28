@@ -210,10 +210,6 @@ void Hachiko::Scripting::StalagmiteManager::DestroyAllStalagmites(bool force)
 
 	for (unsigned i = 0; i < _stalagmites.size(); ++i)
 	{
-		if (_stalagmites[i]->GetState() != StalagmiteState::COLLAPSED)
-		{
-			return;
-		}
 		_stalagmites[i]->SetNewState(StalagmiteState::DISSOLVING);
 		// Set a random offset for the dissolving
 		const float offset = force ? 0 : RandomUtil::RandomBetween(0, 3);
