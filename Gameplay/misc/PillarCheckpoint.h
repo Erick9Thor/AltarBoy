@@ -35,7 +35,6 @@ namespace Hachiko
             LevelManager* _level_manager = nullptr;
             ComponentAnimation* _animation = nullptr;
             ComponentObstacle* _obstacle = nullptr;
-            ComponentPointLight* _point_light = nullptr;
 
             float3 _restart_position;
             bool _used = false;
