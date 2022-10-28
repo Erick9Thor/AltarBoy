@@ -1423,9 +1423,9 @@ bool Hachiko::Scripting::EnemyController::CheckValidPath(float3 position)
 		//_timer_check_path = 2.5f;
 		_timer_check_path = 0.0f;
 
-		_component_agent->SetTargetPosition(position);
-		_valid_path = _component_agent->CanReachTarget();
-		_component_agent->SetTargetPosition(_target_pos);
+		Navigation::ValidPath(_current_pos, position);
+
+		_valid_path = Navigation::ValidPath(_current_pos, position);
 	}
 	_timer_check_path -= Time::DeltaTime();
 	return _valid_path;
