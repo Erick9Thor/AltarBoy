@@ -80,7 +80,7 @@ namespace Hachiko
 			constexpr int JUMP_PATTERN_SIZE = 6;
 		}
 
-		class BossController : public Script
+		class BossController : public Script 
 		{
 			SERIALIZATION_METHODS(false)
 
@@ -226,6 +226,10 @@ namespace Hachiko
 			// The offset relative to the player position where the boss should
 			// land:
 			SERIALIZE_FIELD(float, _jump_offset);
+
+			SERIALIZE_FIELD(float, _damage_AOE);
+
+
 			JumpingState _jumping_state;
 			float3 _jump_start_position;
 			float3 _jump_mid_position;
@@ -250,7 +254,7 @@ namespace Hachiko
 				JumpingMode::BASIC_ATTACK,
 				JumpingMode::STALAGMITE,   // 1
 				JumpingMode::LASER,
-				JumpingMode::BASIC_ATTACK, // 4
+				JumpingMode::LASER, // 4
 				JumpingMode::BASIC_ATTACK,
 			};
 
@@ -303,6 +307,12 @@ namespace Hachiko
             float _laser_wall_current_time = 0.0f;
             const std::array<float, 4> _wall_dir_angles = { 0.f, 90.f, 180.f, 270.f};
             SERIALIZE_FIELD(float, _laser_jump_height);
+
+			ComponentBillboard* _weapon_trail_billboard_right;
+			SERIALIZE_FIELD(GameObject*, _melee_trail_right);
+
+			// Visual Effects:
+			CombatVisualEffectsPool* combat_visual_effects_pool;
         };
     } // namespace Scripting
 } // namespace Hachiko

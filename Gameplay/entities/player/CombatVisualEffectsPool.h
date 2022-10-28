@@ -22,6 +22,7 @@ namespace Hachiko
 
 			void PlayPlayerAttackEffect(PlayerController::WeaponUsed weapon_type, int attack_index, float3 position);
 			void PlayEnemyAttackEffect(EnemyType _enemy_type, float3 position);
+			void PlayGroundCrackEffect(float3 position);
 
 			ComponentBillboard* GetCurrentClawVfx()
 			{
@@ -71,6 +72,14 @@ namespace Hachiko
 				return current->GetComponent<ComponentBillboard>();
 			}
 
+			ComponentBillboard* GetCurrentGroundVfx()
+			{
+				auto current = ground_vfxes[current_ground_vfx_index];
+				current_ground_vfx_index = (current_ground_vfx_index + 1) % ground_vfxes.size();
+
+				return current->GetComponent<ComponentBillboard>();
+			}
+
 		private:
 			int current_claw_vfx_index = 0;
 			std::vector<GameObject*> claw_vfxes;
@@ -89,6 +98,9 @@ namespace Hachiko
 
 			int current_beetle_vfx_index = 0;
 			std::vector<GameObject*> beetle_vfxes;
+
+			int current_ground_vfx_index = 0;
+			std::vector<GameObject*> ground_vfxes;
 		};
 	} // namespace Scripting
 } // namespace Hachiko

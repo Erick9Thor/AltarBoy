@@ -36,11 +36,12 @@ namespace Hachiko
 			bool IsAlive() { return _stats->IsAlive(); };
 			bool IsDestroyed() { return _is_destroyed; };
 
+			void DestroyCrystal();
+			void RegenCrystal();
 		private:
 			void SetVisible(bool v);
 			void ResetCrystal();
-			void DestroyCrystal();
-			void RegenCrystal();
+
 
 		public:
 			Stats* _stats;
@@ -76,6 +77,7 @@ namespace Hachiko
 			
 
 			GameObject* enemies;
+			GameObject* boss;
 
 			ComponentAnimation* cp_animation;
 			ComponentObstacle* obstacle;

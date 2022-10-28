@@ -296,13 +296,21 @@ bool Hachiko::Scripting::CombatManager::CheckBulletCollisions(unsigned bullet_id
 	EnemyController* hit_enemy = FindBulletClosestEnemyHit(bullet, stats.size, trajectory, closest_enemy_hit);
 	float closest_obstacle_hit = FLT_MAX;
 	GameObject* hit_obstacle = FindBulletClosestObstacleHit(bullet, stats.size, trajectory, closest_obstacle_hit);
+	float closest_boss_hit = FLT_MAX;
+	BossController* hit_boss = FindBulletClosestBoss(bullet, stats.size, trajectory, closest_boss_hit);
 	
-	if (closest_enemy_hit < closest_obstacle_hit)
+	if ((closest_enemy_hit || closest_boss_hit) < closest_obstacle_hit)
 	{
 		if (hit_enemy && hit_enemy->IsAlive())
 		{
 			float3 knockback_dir = hit_enemy->GetGameObject()->GetTransform()->GetGlobalPosition() - bullet->GetTransform()->GetGlobalPosition();
 			HitEnemy(hit_enemy, stats.damage, 0.f, knockback_dir, true, true);
+			return true;
+		}
+		else if (hit_boss && hit_boss->IsAlive())
+		{
+			float3 knockback_dir = hit_boss->GetGameObject()->GetTransform()->GetGlobalPosition() - bullet->GetTransform()->GetGlobalPosition();
+			HitEnemy(hit_boss, stats.damage, 0.f, knockback_dir, true, true);
 			return true;
 		}
 	}
@@ -405,6 +413,28 @@ Hachiko::Scripting::EnemyController* Hachiko::Scripting::CombatManager::FindBull
 			}
 		}
 	}
+	return hit_target;
+}
+
+Hachiko::Scripting::BossController* Hachiko::Scripting::CombatManager::FindBulletClosestBoss(GameObject* bullet, float bullet_size, LineSegment& trajectory, float& closest_hit)
+{
+	BossController* hit_target = nullptr;
+	float3 bullet_position = bullet->GetTransform()->GetGlobalPosition();
+
+	float3 boss_position = _boss_controller->GetGameObject()->GetTransform()->GetGlobalPosition();
+	ComponentAgent* agent = _boss_controller->GetGameObject()->GetComponent<ComponentAgent>();
+
+	Sphere hitbox = Sphere(boss_position, agent->GetRadius() + bullet_size);
+	if (trajectory.Intersects(hitbox)) {
+		float hit_distance = bullet_position.Distance(boss_position);
+		if (_boss_controller && hit_distance < closest_hit)
+		{
+
+			closest_hit = hit_distance;
+			hit_target = _boss_controller;
+		}
+	}
+
 	return hit_target;
 }
 
@@ -1071,6 +1101,11 @@ void Hachiko::Scripting::CombatManager::HitObstacle(GameObject* obstacle, float 
 void Hachiko::Scripting::CombatManager::HitEnemy(EnemyController* enemy, int damage, float knockback, float3 knockback_dir, bool is_from_player, bool is_ranged)
 {
 	enemy->RegisterHit(damage, knockback_dir, knockback, is_from_player, is_ranged);
+}
+
+void Hachiko::Scripting::CombatManager::HitEnemy(BossController* enemy, int damage, float knockback, float3 knockback_dir, bool is_from_player, bool is_ranged)
+{
+	enemy->RegisterHit(damage * 2); // Damage by default is 1, Boss needs an equivalent damage cause he has more life than basic enemies
 }
 
 void Hachiko::Scripting::CombatManager::HitPlayer(int damage, float knockback, float3 knockback_dir)
