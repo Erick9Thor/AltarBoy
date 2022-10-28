@@ -709,6 +709,7 @@
   <ItemGroup>
     <ClInclude Include="src\components\TimeScaleMode.h" />
     <ClInclude Include="src\core\rendering\BlurConfig.h" />
+    <ClInclude Include="src\core\rendering\OutlineType.h" />
     <ClInclude Include="src\events\TimeScaleChangeEventPayload.h" />
     <ClInclude Include="src\resources\ResourceVideo.h" />
     <ClInclude Include="src\components\ComponentVideo.h" />
