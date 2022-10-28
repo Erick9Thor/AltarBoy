@@ -102,9 +102,6 @@ void Hachiko::Scripting::StalagmiteManager::OnUpdate()
 				_stalagmites[i]->SetNewState(StalagmiteState::FALLING);
 				cooldown_elapsed = 0.f;
 			}
-			else {
-				_player_camera->Shake(0.3f, 0.2f);
-			}
 		}
 		else {
 			if (_stalagmites[i]->GetState() == StalagmiteState::FALLING)
@@ -115,6 +112,8 @@ void Hachiko::Scripting::StalagmiteManager::OnUpdate()
 					FallingStalagmite(_stalagmites[i], 1.0f);
 
 					// AOE PLAYER DAMAGE
+
+					_player_camera->Shake(1.5f, 2.f);
 					 
 					CombatManager::AttackStats attack_stats;
 					attack_stats.damage = 1;
@@ -205,19 +204,15 @@ bool Hachiko::Scripting::StalagmiteManager::CheckPreviousStalagmite(int idx)
     return (idx == 0) ? true : _stalagmites[static_cast<size_t>(idx - 1)]->IsStalagmiteCollapsed();
 }
 
-void Hachiko::Scripting::StalagmiteManager::DestroyAllStalagmites()
+void Hachiko::Scripting::StalagmiteManager::DestroyAllStalagmites(bool force)
 {
 	_should_fall_stalagmites = false;
 
 	for (unsigned i = 0; i < _stalagmites.size(); ++i)
 	{
-		if (_stalagmites[i]->GetState() != StalagmiteState::COLLAPSED)
-		{
-			return;
-		}
 		_stalagmites[i]->SetNewState(StalagmiteState::DISSOLVING);
 		// Set a random offset for the dissolving
-		const float offset = RandomUtil::RandomBetween(0, 3);
+		const float offset = force ? 0 : RandomUtil::RandomBetween(0, 3);
 		_stalagmites[i]->_dissolving_time = _total_dissolving_time + offset;
 	}
 }

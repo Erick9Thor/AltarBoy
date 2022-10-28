@@ -47,7 +47,10 @@ void Hachiko::Scripting::Stalagmite::Falling(float fall_progress, const GameObje
 void Hachiko::Scripting::Stalagmite::Dissolved()
 {
 
-	_obstacle_comp->RemoveObstacle();
+	if (_obstacle && _obstacle_comp)
+	{
+		_obstacle_comp->RemoveObstacle();
+	}
 
 	_stalagmite_collapsed = false;
 
