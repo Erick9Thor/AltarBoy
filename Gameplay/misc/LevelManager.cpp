@@ -9,6 +9,8 @@
 #include "AudioManager.h"
 #include "entities/player/PlayerSoundManager.h"
 
+bool Hachiko::Scripting::LevelManager::increased_health = false;
+
 Hachiko::Scripting::LevelManager::LevelManager(GameObject* game_object)
 	: Script(game_object, "LevelManager")
 	, _level(1)
@@ -41,6 +43,12 @@ void Hachiko::Scripting::LevelManager::OnAwake()
 	if (_victory_screen != nullptr)
 	{
 		_victory_screen->SetActive(false);
+	}
+
+	if (_level == 1)
+	{
+		// Reset player extra health when loading level 1
+		increased_health = false;
 	}
 
 	_time = 0;
