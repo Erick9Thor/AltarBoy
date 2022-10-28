@@ -1202,6 +1202,15 @@ void Hachiko::Scripting::EnemyController::DeserializeFrom(std::unordered_map<std
 		}
 	}
 
+	if(serialized_fields.find("_patrol_cooldown") != serialized_fields.end())
+	{
+		const SerializedField& _patrol_cooldown_sf = serialized_fields["_patrol_cooldown"];
+		if (_patrol_cooldown_sf.type_name == "float")
+		{
+			_patrol_cooldown = std::any_cast<float>(_patrol_cooldown_sf.copy);
+		}
+	}
+
 	if(serialized_fields.find("_spawning_time") != serialized_fields.end())
 	{
 		const SerializedField& _spawning_time_sf = serialized_fields["_spawning_time"];
@@ -1398,6 +1407,8 @@ void Hachiko::Scripting::EnemyController::SerializeTo(std::unordered_map<std::st
 	serialized_fields["_attack_delay"] = SerializedField(std::string("_attack_delay"), std::make_any<float>(_attack_delay), std::string("float"));
 
 	serialized_fields["_idle_cooldown"] = SerializedField(std::string("_idle_cooldown"), std::make_any<float>(_idle_cooldown), std::string("float"));
+
+	serialized_fields["_patrol_cooldown"] = SerializedField(std::string("_patrol_cooldown"), std::make_any<float>(_patrol_cooldown), std::string("float"));
 
 	serialized_fields["_spawning_time"] = SerializedField(std::string("_spawning_time"), std::make_any<float>(_spawning_time), std::string("float"));
 
@@ -2988,6 +2999,15 @@ void Hachiko::Scripting::DynamicCamera::DeserializeFrom(std::unordered_map<std::
 			_speed = std::any_cast<float>(_speed_sf.copy);
 		}
 	}
+
+	if(serialized_fields.find("_enable_after") != serialized_fields.end())
+	{
+		const SerializedField& _enable_after_sf = serialized_fields["_enable_after"];
+		if (_enable_after_sf.type_name == "GameObject*")
+		{
+			_enable_after = std::any_cast<GameObject*>(_enable_after_sf.copy);
+		}
+	}
 }
 
 void Hachiko::Scripting::DynamicCamera::SerializeTo(std::unordered_map<std::string, SerializedField>& serialized_fields)
@@ -2995,6 +3015,8 @@ void Hachiko::Scripting::DynamicCamera::SerializeTo(std::unordered_map<std::stri
 	Hachiko::Scripting::Script::SerializeTo(serialized_fields);
 
 	serialized_fields["_speed"] = SerializedField(std::string("_speed"), std::make_any<float>(_speed), std::string("float"));
+
+	serialized_fields["_enable_after"] = SerializedField(std::string("_enable_after"), std::make_any<GameObject*>(_enable_after), std::string("GameObject*"));
 }
 
 void Hachiko::Scripting::FancyLights::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
@@ -3087,6 +3109,15 @@ void Hachiko::Scripting::GauntletManager::DeserializeFrom(std::unordered_map<std
 		}
 	}
 
+	if(serialized_fields.find("_closing_door") != serialized_fields.end())
+	{
+		const SerializedField& _closing_door_sf = serialized_fields["_closing_door"];
+		if (_closing_door_sf.type_name == "GameObject*")
+		{
+			_closing_door = std::any_cast<GameObject*>(_closing_door_sf.copy);
+		}
+	}
+
 	if(serialized_fields.find("_pack_1") != serialized_fields.end())
 	{
 		const SerializedField& _pack_1_sf = serialized_fields["_pack_1"];
@@ -3166,6 +3197,8 @@ void Hachiko::Scripting::GauntletManager::SerializeTo(std::unordered_map<std::st
 	serialized_fields["_door_controller_1"] = SerializedField(std::string("_door_controller_1"), std::make_any<GameObject*>(_door_controller_1), std::string("GameObject*"));
 
 	serialized_fields["_door_controller_2"] = SerializedField(std::string("_door_controller_2"), std::make_any<GameObject*>(_door_controller_2), std::string("GameObject*"));
+
+	serialized_fields["_closing_door"] = SerializedField(std::string("_closing_door"), std::make_any<GameObject*>(_closing_door), std::string("GameObject*"));
 
 	serialized_fields["_pack_1"] = SerializedField(std::string("_pack_1"), std::make_any<GameObject*>(_pack_1), std::string("GameObject*"));
 
@@ -3587,6 +3620,60 @@ void Hachiko::Scripting::Tutorial::DeserializeFrom(std::unordered_map<std::strin
 {
 	Hachiko::Scripting::Script::DeserializeFrom(serialized_fields);
 
+	if(serialized_fields.find("_tutorial_keyboard_movement") != serialized_fields.end())
+	{
+		const SerializedField& _tutorial_keyboard_movement_sf = serialized_fields["_tutorial_keyboard_movement"];
+		if (_tutorial_keyboard_movement_sf.type_name == "GameObject*")
+		{
+			_tutorial_keyboard_movement = std::any_cast<GameObject*>(_tutorial_keyboard_movement_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_tutorial_controller_movement") != serialized_fields.end())
+	{
+		const SerializedField& _tutorial_controller_movement_sf = serialized_fields["_tutorial_controller_movement"];
+		if (_tutorial_controller_movement_sf.type_name == "GameObject*")
+		{
+			_tutorial_controller_movement = std::any_cast<GameObject*>(_tutorial_controller_movement_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_tutorial_keyboard_attacks") != serialized_fields.end())
+	{
+		const SerializedField& _tutorial_keyboard_attacks_sf = serialized_fields["_tutorial_keyboard_attacks"];
+		if (_tutorial_keyboard_attacks_sf.type_name == "GameObject*")
+		{
+			_tutorial_keyboard_attacks = std::any_cast<GameObject*>(_tutorial_keyboard_attacks_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_tutorial_controller_attacks") != serialized_fields.end())
+	{
+		const SerializedField& _tutorial_controller_attacks_sf = serialized_fields["_tutorial_controller_attacks"];
+		if (_tutorial_controller_attacks_sf.type_name == "GameObject*")
+		{
+			_tutorial_controller_attacks = std::any_cast<GameObject*>(_tutorial_controller_attacks_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_tutorial_keyboard_pickup") != serialized_fields.end())
+	{
+		const SerializedField& _tutorial_keyboard_pickup_sf = serialized_fields["_tutorial_keyboard_pickup"];
+		if (_tutorial_keyboard_pickup_sf.type_name == "GameObject*")
+		{
+			_tutorial_keyboard_pickup = std::any_cast<GameObject*>(_tutorial_keyboard_pickup_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_tutorial_controller_pickup") != serialized_fields.end())
+	{
+		const SerializedField& _tutorial_controller_pickup_sf = serialized_fields["_tutorial_controller_pickup"];
+		if (_tutorial_controller_pickup_sf.type_name == "GameObject*")
+		{
+			_tutorial_controller_pickup = std::any_cast<GameObject*>(_tutorial_controller_pickup_sf.copy);
+		}
+	}
+
 	if(serialized_fields.find("_first_enemy") != serialized_fields.end())
 	{
 		const SerializedField& _first_enemy_sf = serialized_fields["_first_enemy"];
@@ -3595,13 +3682,36 @@ void Hachiko::Scripting::Tutorial::DeserializeFrom(std::unordered_map<std::strin
 			_first_enemy = std::any_cast<GameObject*>(_first_enemy_sf.copy);
 		}
 	}
+
+	if(serialized_fields.find("_tutorials_screen_shown") != serialized_fields.end())
+	{
+		const SerializedField& _tutorials_screen_shown_sf = serialized_fields["_tutorials_screen_shown"];
+		if (_tutorials_screen_shown_sf.type_name == "int")
+		{
+			_tutorials_screen_shown = std::any_cast<int>(_tutorials_screen_shown_sf.copy);
+		}
+	}
 }
 
 void Hachiko::Scripting::Tutorial::SerializeTo(std::unordered_map<std::string, SerializedField>& serialized_fields)
 {
 	Hachiko::Scripting::Script::SerializeTo(serialized_fields);
 
+	serialized_fields["_tutorial_keyboard_movement"] = SerializedField(std::string("_tutorial_keyboard_movement"), std::make_any<GameObject*>(_tutorial_keyboard_movement), std::string("GameObject*"));
+
+	serialized_fields["_tutorial_controller_movement"] = SerializedField(std::string("_tutorial_controller_movement"), std::make_any<GameObject*>(_tutorial_controller_movement), std::string("GameObject*"));
+
+	serialized_fields["_tutorial_keyboard_attacks"] = SerializedField(std::string("_tutorial_keyboard_attacks"), std::make_any<GameObject*>(_tutorial_keyboard_attacks), std::string("GameObject*"));
+
+	serialized_fields["_tutorial_controller_attacks"] = SerializedField(std::string("_tutorial_controller_attacks"), std::make_any<GameObject*>(_tutorial_controller_attacks), std::string("GameObject*"));
+
+	serialized_fields["_tutorial_keyboard_pickup"] = SerializedField(std::string("_tutorial_keyboard_pickup"), std::make_any<GameObject*>(_tutorial_keyboard_pickup), std::string("GameObject*"));
+
+	serialized_fields["_tutorial_controller_pickup"] = SerializedField(std::string("_tutorial_controller_pickup"), std::make_any<GameObject*>(_tutorial_controller_pickup), std::string("GameObject*"));
+
 	serialized_fields["_first_enemy"] = SerializedField(std::string("_first_enemy"), std::make_any<GameObject*>(_first_enemy), std::string("GameObject*"));
+
+	serialized_fields["_tutorials_screen_shown"] = SerializedField(std::string("_tutorials_screen_shown"), std::make_any<int>(_tutorials_screen_shown), std::string("int"));
 }
 
 void Hachiko::Scripting::BackToMainMenu::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)

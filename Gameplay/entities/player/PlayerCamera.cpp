@@ -342,6 +342,16 @@ void Hachiko::Scripting::PlayerCamera::RotateCameraTo(math::float3 new_rotation,
 	}
 }
 
+void Hachiko::Scripting::PlayerCamera::SetObjective(GameObject* objective, bool teleport)
+{
+	_objective = objective;
+	if (teleport)
+	{
+		_current_objective = objective;
+		game_object->GetTransform()->SetGlobalPosition(objective->GetTransform()->GetGlobalPosition());
+	}
+}
+
 void Hachiko::Scripting::PlayerCamera::RecalculateRotation()
 {
 	if (!_is_in_rotation)
