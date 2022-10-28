@@ -36,11 +36,12 @@ namespace Hachiko
 			bool IsAlive() { return _stats->IsAlive(); };
 			bool IsDestroyed() { return _is_destroyed; };
 
+			void DestroyCrystal();
+			void RegenCrystal();
 		private:
 			void SetVisible(bool v);
 			void ResetCrystal();
-			void DestroyCrystal();
-			void RegenCrystal();
+
 
 		public:
 			Stats* _stats;

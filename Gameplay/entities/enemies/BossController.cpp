@@ -4,6 +4,7 @@
 #include "entities/enemies/EnemyController.h"
 #include "misc/LaserController.h"
 #include "misc/StalagmiteManager.h"
+#include "entities/crystals/CrystalExplosion.h"
 #include "entities/Stats.h"
 #include "constants/Scenes.h"
 #include "components/ComponentObstacle.h"
@@ -351,23 +352,29 @@ void Hachiko::Scripting::BossController::StartEncounter()
 {
     encounter_start_timer = 0.f;
     RestoreCameraOffset();
+    BreakCocoon();
 
     obstacle->RemoveObstacle();
 }
 
 void Hachiko::Scripting::BossController::StartEncounterController()
 {
+
+
     // Add any effects desired for combat start, for now it only delays while camera is transitioning
     enemy_timer += Time::DeltaTime();
     if (enemy_timer < encounter_start_duration)
     {
+        cocoon_placeholder_go->ChangeDissolveProgress(1 - enemy_timer / encounter_start_duration, true);
         return;
     }
+    cocoon_placeholder_go->SetActive(false);
     SetHpBarActive(true);
     agent->AddToCrowd();
 
 	player_camera->SetDoLookAhead(true);
-	BreakCocoon();
+
+    hitable = true;
 	std::copy(_jumping_pattern_1, _jumping_pattern_1 + JumpUtil::JUMP_PATTERN_SIZE, _current_jumping_pattern);
 
 	state = BossState::COMBAT_FORM;
@@ -415,13 +422,7 @@ void Hachiko::Scripting::BossController::StartCocoon()
     transform->LookAtTarget(initial_position);
     agent->SetTargetPosition(initial_position);
 
-    // Knockback player
-    float3 player_pos = player->GetTransform()->GetGlobalPosition();
-    if (Distance(player_pos, transform->GetGlobalPosition()) <= 3)
-    {
-        float3 player_end_pos = player_pos + (player_pos - transform->GetGlobalPosition()).Normalized() * 3;
-        player->GetTransform()->SetGlobalPosition(player_end_pos);
-    }
+    
 }
 
 void Hachiko::Scripting::BossController::CocoonController()
@@ -430,6 +431,14 @@ void Hachiko::Scripting::BossController::CocoonController()
     if (moving_to_initial_pos)
     {
         agent->SetTargetPosition(initial_position);
+
+        // Knockback player
+        float3 player_pos = player->GetTransform()->GetGlobalPosition();
+        if (Distance(player_pos, transform->GetGlobalPosition()) <= 3)
+        {
+            float3 player_end_pos = player_pos + (player_pos - transform->GetGlobalPosition()).Normalized() * 3;
+            player->GetTransform()->SetGlobalPosition(player_end_pos);
+        }
 
         float3 current_pos = transform->GetGlobalPosition();
         if (Distance(current_pos, initial_position) <= agent->GetRadius())
@@ -443,10 +452,9 @@ void Hachiko::Scripting::BossController::CocoonController()
             agent->RemoveFromCrowd();
             obstacle->AddObstacle();
 
-            if (cocoon_placeholder_go)
-            {
-                cocoon_placeholder_go->SetActive(true);
-            }
+            cocoon_placeholder_go->SetActive(true);
+            cocoon_placeholder_go->ChangeDissolveProgress(1.f, true);
+            cocoon_placeholder_go->GetComponent<CrystalExplosion>()->RegenCrystal();
         }
         return;
     }
@@ -475,7 +483,7 @@ void Hachiko::Scripting::BossController::CocoonController()
     if (gauntlet->IsFinished() || Input::IsKeyDown(Input::KeyCode::KEY_J))
     {
         FinishCocoon();
-        animation->SendTrigger("isWalk");
+        BreakCocoon();
     }
 }
 
@@ -486,12 +494,8 @@ void Hachiko::Scripting::BossController::SetUpCocoon()
 
 void Hachiko::Scripting::BossController::BreakCocoon()
 {
-	hitable = true;
+    cocoon_placeholder_go->GetComponent<CrystalExplosion>()->DestroyCrystal();
     animation->SendTrigger("isCacoonComingOut");
-	if (cocoon_placeholder_go)
-	{
-		cocoon_placeholder_go->SetActive(false);
-	}
 }
 
 void Hachiko::Scripting::BossController::InitCocoonGauntlet()
