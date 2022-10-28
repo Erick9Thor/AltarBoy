@@ -15,6 +15,7 @@ namespace AK
     {
         static const AkUniqueID PLAY_BEETLEATTACK = 4275867775U;
         static const AkUniqueID PLAY_BEETLEDEATH = 3318027631U;
+        static const AkUniqueID PLAY_BOSSBREATHE = 1064356868U;
         static const AkUniqueID PLAY_BOSSMELEESTAND = 866952685U;
         static const AkUniqueID PLAY_BOSSMUSIC = 3463024606U;
         static const AkUniqueID PLAY_BOSSROAR = 1490429921U;

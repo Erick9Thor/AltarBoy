@@ -448,6 +448,16 @@
 				</Event>
 				<Event Name="Play_BossRoar" ID="{2AAEC1AA-3C8F-4D16-BE79-2F8D1F384AB3}">
 					<ChildrenList>
+						<Action Name="" ID="{616917A5-ECB2-4975-9852-DCA1A82462F4}" ShortID="869436851">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="IdleBreathe" ID="{9C048A04-A9CE-4198-BA16-8C204991CC2A}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
 						<Action Name="" ID="{37F350D7-F747-40AE-B538-E2E5F11A9411}" ShortID="560791302">
 							<ReferenceList>
 								<Reference Name="Target">
@@ -463,6 +473,17 @@
 							<ReferenceList>
 								<Reference Name="Target">
 									<ObjectRef Name="MeleeStand" ID="{96F91E02-3963-4C24-84FB-0414DB0FDF0E}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_BossBreathe" ID="{6D7BC92C-033E-40E9-AB9E-CF8E1959E2CD}">
+					<ChildrenList>
+						<Action Name="" ID="{A3B293B2-8D5E-4729-A292-5CAC45126580}" ShortID="504258592">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="IdleBreathe" ID="{9C048A04-A9CE-4198-BA16-8C204991CC2A}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>

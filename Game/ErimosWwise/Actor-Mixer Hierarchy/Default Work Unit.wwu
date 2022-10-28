@@ -1845,6 +1845,7 @@
 							<ChildrenList>
 								<Sound Name="Roar" ID="{A63F4444-4040-46C8-B77B-1F7F8D6ED935}" ShortID="827593466">
 									<PropertyList>
+										<Property Name="3DSpatialization" Type="int16" Value="1"/>
 										<Property Name="IsGlobalLimit" Type="int16" Value="1"/>
 										<Property Name="MakeUpGain" Type="Real64">
 											<ValueList>
@@ -1922,6 +1923,7 @@
 								</Sound>
 								<Sound Name="MeleeStand" ID="{96F91E02-3963-4C24-84FB-0414DB0FDF0E}" ShortID="75207228">
 									<PropertyList>
+										<Property Name="3DSpatialization" Type="int16" Value="1"/>
 										<Property Name="MakeUpGain" Type="Real64">
 											<ValueList>
 												<Value>15</Value>
@@ -2002,6 +2004,66 @@
 									<ObjectLists/>
 								</Sound>
 								<Sound Name="IdleBreathe" ID="{9C048A04-A9CE-4198-BA16-8C204991CC2A}" ShortID="810700582">
+									<PropertyList>
+										<Property Name="3DSpatialization" Type="int16" Value="1"/>
+										<Property Name="InitialDelay" Type="Real64">
+											<ValueList>
+												<Value>2</Value>
+											</ValueList>
+											<ModifierList>
+												<ModifierInfo>
+													<Modifier Name="" ID="{08C7CDCF-D42E-40BF-8456-D41C1305ADA1}">
+														<PropertyList>
+															<Property Name="Enabled" Type="bool" Value="True"/>
+															<Property Name="Max" Type="Real64" Value="7"/>
+															<Property Name="Min" Type="Real64" Value="-2"/>
+														</PropertyList>
+													</Modifier>
+												</ModifierInfo>
+											</ModifierList>
+										</Property>
+										<Property Name="IsGlobalLimit" Type="int16" Value="1"/>
+										<Property Name="MaxReachedBehavior" Type="int16" Value="1"/>
+										<Property Name="MaxSoundPerInstance" Type="int16">
+											<ValueList>
+												<Value>1</Value>
+											</ValueList>
+										</Property>
+										<Property Name="Pitch" Type="int32">
+											<ModifierList>
+												<ModifierInfo>
+													<Modifier Name="" ID="{EBB53E59-84D4-4592-ACD7-D36D5CDF5655}">
+														<PropertyList>
+															<Property Name="Enabled" Type="bool" Value="True"/>
+															<Property Name="Max" Type="Real64" Value="450"/>
+															<Property Name="Min" Type="Real64" Value="-200"/>
+														</PropertyList>
+													</Modifier>
+												</ModifierInfo>
+											</ModifierList>
+										</Property>
+										<Property Name="UseMaxSoundPerInstance" Type="bool">
+											<ValueList>
+												<Value>True</Value>
+											</ValueList>
+										</Property>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>5</Value>
+											</ValueList>
+											<ModifierList>
+												<ModifierInfo>
+													<Modifier Name="" ID="{3236F474-22C4-41BD-BBDC-68D29E38BFB0}">
+														<PropertyList>
+															<Property Name="Enabled" Type="bool" Value="True"/>
+															<Property Name="Max" Type="Real64" Value="3"/>
+															<Property Name="Min" Type="Real64" Value="-3"/>
+														</PropertyList>
+													</Modifier>
+												</ModifierInfo>
+											</ModifierList>
+										</Property>
+									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
@@ -2010,7 +2072,25 @@
 											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
 										</Reference>
 									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="ES_Creature Growl - SFX Producer" ID="{2ECD86A3-B181-418C-8CE8-FDC2E28B225F}">
+											<PropertyList>
+												<Property Name="FadeOutDuration" Type="Real64" Value="6.11480701754386"/>
+												<Property Name="FadeOutShape" Type="int16" Value="0"/>
+												<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+												<Property Name="TrimEnd" Type="Real64" Value="7.62365550239234"/>
+											</PropertyList>
+											<Language>SFX</Language>
+											<AudioFile>ES_Creature Growl - SFX Producer.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="97924898"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
 									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="ES_Creature Growl - SFX Producer" ID="{2ECD86A3-B181-418C-8CE8-FDC2E28B225F}" Platform="Linked"/>
+									</ActiveSourceList>
 								</Sound>
 							</ChildrenList>
 						</Folder>

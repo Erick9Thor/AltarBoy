@@ -123,7 +123,7 @@ void Hachiko::Scripting::BossController::OnStart()
 {
 	animation->StartAnimating();
 	animation->SendTrigger("isCacoonLoop");
-
+    audio_source->PostEvent(Sounds::BOSS_BREATHE);
 	OverrideCameraOffset();
 }
 
