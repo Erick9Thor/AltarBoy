@@ -446,6 +446,28 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Play_BossRoar" ID="{2AAEC1AA-3C8F-4D16-BE79-2F8D1F384AB3}">
+					<ChildrenList>
+						<Action Name="" ID="{37F350D7-F747-40AE-B538-E2E5F11A9411}" ShortID="560791302">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Roar" ID="{A63F4444-4040-46C8-B77B-1F7F8D6ED935}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_BossMeleeStand" ID="{5723808B-C20C-4F26-936E-6D6CB2C6D340}">
+					<ChildrenList>
+						<Action Name="" ID="{2B3BD49B-D39A-45E7-856D-DB7DB8D15356}" ShortID="227754355">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="MeleeStand" ID="{96F91E02-3963-4C24-84FB-0414DB0FDF0E}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

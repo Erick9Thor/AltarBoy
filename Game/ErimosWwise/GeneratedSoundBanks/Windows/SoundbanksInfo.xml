@@ -206,11 +206,19 @@
 				</Event>
 			</IncludedEvents>
 		</SoundBank>
-		<SoundBank Id="1560169506" Language="SFX" Hash="904446384">
+		<SoundBank Id="1560169506" Language="SFX" Hash="2321265284">
 			<ObjectPath>\SoundBanks\Default Work Unit\Boss</ObjectPath>
 			<ShortName>Boss</ShortName>
 			<Path>Boss.bnk</Path>
 			<IncludedEvents>
+				<Event Id="866952685" Name="Play_BossMeleeStand" ObjectPath="\Events\Default Work Unit\Play_BossMeleeStand">
+					<IncludedMemoryFiles>
+						<File Id="144556513" Language="SFX">
+							<ShortName>ES_Monster Growl 11 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Monster Growl 11 - SFX Producer_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
 				<Event Id="3463024606" Name="Play_BossMusic" ObjectPath="\Events\Default Work Unit\Play_BossMusic">
 					<IncludedMemoryFiles>
 						<File Id="101484339" Language="SFX">
@@ -246,6 +254,14 @@
 					<ActionSetState>
 						<ActionSetStateEntry Id="936729722" Name="Stage1" ObjectPath="\States\Default Work Unit\Boss_battle_states\Stage1"/>
 					</ActionSetState>
+				</Event>
+				<Event Id="1490429921" Name="Play_BossRoar" ObjectPath="\Events\Default Work Unit\Play_BossRoar">
+					<IncludedMemoryFiles>
+						<File Id="929986589" Language="SFX">
+							<ShortName>249686__cylon8472__cthulhu-growl.wav</ShortName>
+							<Path>SFX\249686__cylon8472__cthulhu-growl_5C46884A.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
 				</Event>
 				<Event Id="3129492764" Name="Set_State1_BossFight" ObjectPath="\Events\Default Work Unit\Set_State1_BossFight">
 					<ActionSetState>

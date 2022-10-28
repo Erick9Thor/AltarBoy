@@ -348,18 +348,21 @@ void Hachiko::Scripting::BossController::StartEncounter()
 
 void Hachiko::Scripting::BossController::StartEncounterController()
 {
+    audio_source->PostEvent(Sounds::SET_STATE2_BOSS_FIGHT);
     // Add any effects desired for combat start, for now it only delays while camera is transitioning
     enemy_timer += Time::DeltaTime();
+    audio_source->PostEvent(Sounds::BOSS_ROAR);
     if (enemy_timer < encounter_start_duration)
     {
         return;
     }
+
     SetHpBarActive(true);
     agent->AddToCrowd();
 
 	player_camera->SetDoLookAhead(true);
 	BreakCocoon();
-    audio_source->PostEvent(Sounds::SET_STATE2_BOSS_FIGHT);
+    
 	std::copy(_jumping_pattern_1, _jumping_pattern_1 + JumpUtil::JUMP_PATTERN_SIZE, _current_jumping_pattern);
 
 	state = BossState::COMBAT_FORM;
@@ -512,7 +515,7 @@ void Hachiko::Scripting::BossController::FinishCocoon()
 	hitable = true;
 	second_phase = true;
 	BreakCocoon();
-
+    audio_source->PostEvent(Sounds::SET_STATE3_BOSS_FIGHT);
     obstacle->RemoveObstacle();
     agent->AddToCrowd();
 
@@ -599,7 +602,7 @@ void Hachiko::Scripting::BossController::MeleeAttackController()
 	if (!attacked)
 	{
 		animation->SendTrigger("isMelee");
-
+        audio_source->PostEvent(Sounds::BOSS_MELEE_STAND);
 		CombatManager::AttackStats attack_stats;
 		attack_stats.damage = 2.0f;
 		attack_stats.knockback_distance = 0.0f;
