@@ -67,6 +67,7 @@ namespace AK
                 static const AkUniqueID STAGE1 = 936729722U;
                 static const AkUniqueID STAGE2 = 936729721U;
                 static const AkUniqueID STAGE3 = 936729720U;
+                static const AkUniqueID VICTORY = 2716678721U;
             } // namespace STATE
         } // namespace BOSS_BATTLE_STATES
 

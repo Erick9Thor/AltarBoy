@@ -1830,6 +1830,17 @@
 							</ChildrenList>
 							<ObjectLists/>
 						</BlendContainer>
+						<BlendContainer Name="BossDeath" ID="{A4A06B30-5B36-4109-A12E-19BACFB594D0}" ShortID="363127908">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+								</Reference>
+							</ReferenceList>
+							<ObjectLists/>
+						</BlendContainer>
 					</ChildrenList>
 				</Folder>
 				<Folder Name="Player" ID="{FB7CD1BD-E88B-474D-B27A-C390D0EFA017}" ShortID="411809325">
@@ -2783,14 +2794,9 @@
 				</Folder>
 				<Folder Name="Cinematics" ID="{D9DEF62D-F0E1-4206-86CF-AD13E1128CB1}" ShortID="310417662">
 					<ChildrenList>
-						<Sound Name="Intro" ID="{15A3A9FA-90AA-4E1D-9BE7-EA7233284557}" ShortID="221027909">
+						<BlendContainer Name="IntroCinematic" ID="{C2297FA7-6A95-466A-8EFB-4EE587008364}" ShortID="1069323963">
 							<PropertyList>
 								<Property Name="ListenerRelativeRouting" Type="bool" Value="False"/>
-								<Property Name="Volume" Type="Real64">
-									<ValueList>
-										<Value>-5</Value>
-									</ValueList>
-								</Property>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
@@ -2801,19 +2807,93 @@
 								</Reference>
 							</ReferenceList>
 							<ChildrenList>
-								<AudioFileSource Name="ER_cinematica_masterv2" ID="{438F1F35-38FD-4B6A-A794-C035FC9B9B3E}">
-									<Language>SFX</Language>
-									<AudioFile>ER_cinematica_masterv2.wav</AudioFile>
-									<MediaIDList>
-										<MediaID ID="1003919086"/>
-									</MediaIDList>
-								</AudioFileSource>
+								<Sound Name="Intro" ID="{15A3A9FA-90AA-4E1D-9BE7-EA7233284557}" ShortID="221027909">
+									<PropertyList>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>-5</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="ER_cinematica_masterv2" ID="{438F1F35-38FD-4B6A-A794-C035FC9B9B3E}">
+											<Language>SFX</Language>
+											<AudioFile>ER_cinematica_masterv2.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="1003919086"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="ER_cinematica_masterv2" ID="{438F1F35-38FD-4B6A-A794-C035FC9B9B3E}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="VoiceEffect" ID="{94E3EB6E-45DD-4B50-AE2B-679FC18D2883}" ShortID="770303398">
+									<PropertyList>
+										<Property Name="InitialDelay" Type="Real64">
+											<ValueList>
+												<Value>17.5</Value>
+											</ValueList>
+										</Property>
+										<Property Name="OverrideEffect" Type="bool" Value="True"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+										</Reference>
+										<Reference Name="Effect0">
+											<Custom CreatedFrom="{940CCB47-F031-4C6A-B0E6-726CAC418C02}">
+												<Effect Name="Church_Small_Wood (Custom)" ID="{889B1D4B-D7B0-4E55-94F9-006FA660C5A2}" ShortID="661152191" PluginName="Wwise RoomVerb" CompanyID="0" PluginID="118" PluginType="3">
+													<PropertyList>
+														<Property Name="DecayTime" Type="Real32" Value="1.3"/>
+														<Property Name="Density" Type="Real32" Value="27"/>
+														<Property Name="ERLevel" Type="Real32" Value="-24"/>
+														<Property Name="ERPattern" Type="int32" Value="6"/>
+														<Property Name="Filter1Freq" Type="Real32" Value="490"/>
+														<Property Name="Filter1Gain" Type="Real32" Value="-5.5"/>
+														<Property Name="Filter1InsertPos" Type="int32" Value="2"/>
+														<Property Name="Filter2InsertPos" Type="int32" Value="0"/>
+														<Property Name="Filter3Freq" Type="Real32" Value="11000"/>
+														<Property Name="Filter3Gain" Type="Real32" Value="-7"/>
+														<Property Name="HFDamping" Type="Real32" Value="3.7"/>
+														<Property Name="PreDelay" Type="Real32" Value="18"/>
+														<Property Name="Quality" Type="int32" Value="12"/>
+														<Property Name="ReverbLevel" Type="Real32" Value="-23"/>
+														<Property Name="RoomSize" Type="Real32" Value="20"/>
+													</PropertyList>
+												</Effect>
+											</Custom>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="ES_Sci Fi Voice Clip 663 - SFX Producer" ID="{254A7AE9-F933-462D-A8B1-C5527E8B695B}">
+											<Language>SFX</Language>
+											<AudioFile>ES_Sci Fi Voice Clip 663 - SFX Producer.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="267500250"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="ES_Sci Fi Voice Clip 663 - SFX Producer" ID="{254A7AE9-F933-462D-A8B1-C5527E8B695B}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
 							</ChildrenList>
 							<ObjectLists/>
-							<ActiveSourceList>
-								<ActiveSource Name="ER_cinematica_masterv2" ID="{438F1F35-38FD-4B6A-A794-C035FC9B9B3E}" Platform="Linked"/>
-							</ActiveSourceList>
-						</Sound>
+						</BlendContainer>
 					</ChildrenList>
 				</Folder>
 			</ChildrenList>

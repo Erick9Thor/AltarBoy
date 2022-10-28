@@ -51,6 +51,7 @@ namespace Hachiko::Sounds
 	constexpr const wchar_t* SET_STATE2_BOSS_FIGHT = L"Set_State2_BossFight";
 	constexpr const wchar_t* SET_STATE3_BOSS_FIGHT = L"Set_State3_BossFight";
 	constexpr const wchar_t* SET_STATE_DEFEATED = L"Set_State_Defeated";
+	constexpr const wchar_t* SET_STATE_VICTORY = L"Set_State_Victory";
 
 	constexpr const wchar_t* PLAY_COMBAT_MUSIC = L"Play_Combat"; // Deprecated
 	constexpr const wchar_t* STOP_COMBAT_MUSIC = L"Stop_Combat"; // Deprecated

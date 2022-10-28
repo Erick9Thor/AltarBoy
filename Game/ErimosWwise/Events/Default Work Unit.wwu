@@ -279,7 +279,7 @@
 						<Action Name="" ID="{C3FA0533-8AA2-4EFB-B181-FC08AB36C89B}" ShortID="596128091">
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="Intro" ID="{15A3A9FA-90AA-4E1D-9BE7-EA7233284557}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+									<ObjectRef Name="IntroCinematic" ID="{C2297FA7-6A95-466A-8EFB-4EE587008364}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>

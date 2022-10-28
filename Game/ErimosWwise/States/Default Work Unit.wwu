@@ -57,6 +57,7 @@
 						<State Name="Stage2" ID="{B7696B1A-498C-46A0-B1CA-1EFD809FE3AE}"/>
 						<State Name="Stage3" ID="{1B3F4FD0-8F6D-4FE2-81DE-74BCEDF83928}"/>
 						<State Name="Dead" ID="{21CCAE23-5F45-4988-8F8A-80974A2F86EB}"/>
+						<State Name="Victory" ID="{5FA91604-4C94-44AD-98BB-54A312B158B5}"/>
 					</ChildrenList>
 				</StateGroup>
 			</ChildrenList>
