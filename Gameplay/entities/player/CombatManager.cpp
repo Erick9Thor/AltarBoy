@@ -1105,7 +1105,7 @@ void Hachiko::Scripting::CombatManager::HitEnemy(EnemyController* enemy, int dam
 
 void Hachiko::Scripting::CombatManager::HitEnemy(BossController* enemy, int damage, float knockback, float3 knockback_dir, bool is_from_player, bool is_ranged)
 {
-	enemy->RegisterHit(damage * 5); // Damage by default is 1, Boss needs an equivalent damage cause he has more life than basic enemies
+	enemy->RegisterHit(damage * 2); // Damage by default is 1, Boss needs an equivalent damage cause he has more life than basic enemies
 }
 
 void Hachiko::Scripting::CombatManager::HitPlayer(int damage, float knockback, float3 knockback_dir)

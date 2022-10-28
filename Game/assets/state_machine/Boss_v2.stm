@@ -203,3 +203,11 @@ transitions:
     transition_target: GettingUpJump
     transition_trigger: isGettingUpJump
     transition_blend: 300
+  - transition_source: Melee
+    transition_target: Walk
+    transition_trigger: isWalk
+    transition_blend: 300
+  - transition_source: Summon_Crystal
+    transition_target: Walk
+    transition_trigger: isWalk
+    transition_blend: 300

@@ -30,7 +30,7 @@ namespace Hachiko
 
 			bool CheckPreviousStalagmite(int idx);
 
-			void DestroyAllStalagmites();
+			void DestroyAllStalagmites(bool force = false);
 
 			bool AllStalactitesCollapsed();
 

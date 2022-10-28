@@ -224,6 +224,10 @@ namespace Hachiko
 			// The offset relative to the player position where the boss should
 			// land:
 			SERIALIZE_FIELD(float, _jump_offset);
+
+			SERIALIZE_FIELD(float, _damage_AOE);
+
+
 			JumpingState _jumping_state;
 			float3 _jump_start_position;
 			float3 _jump_mid_position;
