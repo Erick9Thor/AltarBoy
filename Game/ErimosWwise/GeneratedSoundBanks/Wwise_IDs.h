@@ -16,8 +16,10 @@ namespace AK
         static const AkUniqueID PLAY_BEETLEATTACK = 4275867775U;
         static const AkUniqueID PLAY_BEETLEDEATH = 3318027631U;
         static const AkUniqueID PLAY_BOSSBREATHE = 1064356868U;
+        static const AkUniqueID PLAY_BOSSHITFLOOR = 2570105658U;
         static const AkUniqueID PLAY_BOSSMELEESTAND = 866952685U;
         static const AkUniqueID PLAY_BOSSMUSIC = 3463024606U;
+        static const AkUniqueID PLAY_BOSSPREJUMP = 3957245444U;
         static const AkUniqueID PLAY_BOSSROAR = 1490429921U;
         static const AkUniqueID PLAY_CHECKPOINT = 2962822744U;
         static const AkUniqueID PLAY_COMBAT = 513571230U;

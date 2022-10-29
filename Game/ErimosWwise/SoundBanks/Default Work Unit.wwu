@@ -114,8 +114,10 @@
 						<ObjectRef Name="Set_State3_BossFight" ID="{5208E28A-D477-4010-BB0B-C66E6240293E}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_BossBreathe" ID="{6D7BC92C-033E-40E9-AB9E-CF8E1959E2CD}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_BossMusic" ID="{93BAF0FF-2F54-4345-BAB0-7FBDABDE2904}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Play_BossHitFloor" ID="{437A0E43-143E-4568-83B2-E8CFEED29511}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Set_State2_BossFight" ID="{567DC4F3-C692-45DC-A7B6-4CFBE9E66346}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Set_State_Defeated" ID="{36DCBD87-7AD2-46C4-A983-939230547915}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Play_BossPreJump" ID="{CA22960E-3A37-477D-B643-9C02C2787206}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Set_State1_BossFight" ID="{FE322C64-0026-4C6E-92A8-DCABFA3366B0}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_BossRoar" ID="{2AAEC1AA-3C8F-4D16-BE79-2F8D1F384AB3}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_BossMeleeStand" ID="{5723808B-C20C-4F26-936E-6D6CB2C6D340}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>

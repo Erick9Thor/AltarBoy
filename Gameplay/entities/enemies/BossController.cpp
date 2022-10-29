@@ -807,6 +807,12 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
             }
 
             // Boss is waiting for jump here:
+            // SFX
+            if (_current_jumping_mode == JumpingMode::BASIC_ATTACK)
+            {
+                audio_source->PostEvent(Sounds::BOSS_PRE_JUMP);
+            }
+
             break;
         }
 
@@ -997,6 +1003,8 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
 
     case JumpingState::POST_DESCENDING_DELAY:
     {
+        audio_source->PostEvent(Sounds::BOSS_HIT_FLOOR);
+
         if (_jumping_timer < _jump_post_descending_delay)
         {
             break;

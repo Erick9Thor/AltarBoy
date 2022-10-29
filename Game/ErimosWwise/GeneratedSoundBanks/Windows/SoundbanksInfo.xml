@@ -206,7 +206,7 @@
 				</Event>
 			</IncludedEvents>
 		</SoundBank>
-		<SoundBank Id="1560169506" Language="SFX" Hash="1365894990">
+		<SoundBank Id="1560169506" Language="SFX" Hash="3335287457">
 			<ObjectPath>\SoundBanks\Default Work Unit\Boss</ObjectPath>
 			<ShortName>Boss</ShortName>
 			<Path>Boss.bnk</Path>
@@ -216,6 +216,14 @@
 						<File Id="97924898" Language="SFX">
 							<ShortName>ES_Creature Growl - SFX Producer.wav</ShortName>
 							<Path>SFX\ES_Creature Growl - SFX Producer_761168BC.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="2570105658" Name="Play_BossHitFloor" ObjectPath="\Events\Default Work Unit\Play_BossHitFloor">
+					<IncludedMemoryFiles>
+						<File Id="91551775" Language="SFX">
+							<ShortName>ES_Glass Boom - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Glass Boom - SFX Producer_E4F8AB07.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -262,6 +270,14 @@
 					<ActionSetState>
 						<ActionSetStateEntry Id="936729722" Name="Stage1" ObjectPath="\States\Default Work Unit\Boss_battle_states\Stage1"/>
 					</ActionSetState>
+				</Event>
+				<Event Id="3957245444" Name="Play_BossPreJump" ObjectPath="\Events\Default Work Unit\Play_BossPreJump">
+					<IncludedMemoryFiles>
+						<File Id="955556891" Language="SFX">
+							<ShortName>ES_Monster Growl 3 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Monster Growl 3 - SFX Producer_DEB92DE6.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
 				</Event>
 				<Event Id="1490429921" Name="Play_BossRoar" ObjectPath="\Events\Default Work Unit\Play_BossRoar">
 					<IncludedMemoryFiles>

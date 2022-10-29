@@ -489,6 +489,28 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Play_BossPreJump" ID="{CA22960E-3A37-477D-B643-9C02C2787206}">
+					<ChildrenList>
+						<Action Name="" ID="{947647E4-9113-4EF0-81E9-2490DDC5E42B}" ShortID="415388537">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Voice" ID="{2210AC87-90D5-481C-BC73-D229E2AFAF3D}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_BossHitFloor" ID="{437A0E43-143E-4568-83B2-E8CFEED29511}">
+					<ChildrenList>
+						<Action Name="" ID="{559493CF-1DB9-4BDE-BDCD-994537E6E310}" ShortID="581708645">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="HitFloor" ID="{CE64D091-AE03-46B6-954C-48F4C400C1A7}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

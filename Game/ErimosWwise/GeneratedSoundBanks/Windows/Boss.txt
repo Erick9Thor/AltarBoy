@@ -5,8 +5,10 @@ Event	ID	Name			Wwise Object Path	Notes
 	1064356868	Play_BossBreathe			\Default Work Unit\Play_BossBreathe	
 	1482465818	Set_State_Defeated			\Default Work Unit\Set_State_Defeated	
 	1490429921	Play_BossRoar			\Default Work Unit\Play_BossRoar	
+	2570105658	Play_BossHitFloor			\Default Work Unit\Play_BossHitFloor	
 	3129492764	Set_State1_BossFight			\Default Work Unit\Set_State1_BossFight	
 	3463024606	Play_BossMusic			\Default Work Unit\Play_BossMusic	
+	3957245444	Play_BossPreJump			\Default Work Unit\Play_BossPreJump	
 
 Switch Group	ID	Name			Wwise Object Path	Notes
 	2702523344	Gameplay_Switch			\Music\Gameplay_Switch	
@@ -40,10 +42,12 @@ Game Parameter	ID	Name			Wwise Object Path	Notes
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	31154168	Defeated-138bpm4-4_L4M-P0	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\Defeated-138bpm4-4_L4M-P0_D79FB2B7.wem		\Interactive Music Hierarchy\Music\Erimos Music Switch Container\Defeated\Defeated-138bpm4-4_L4M-P0\Defeated-138bpm4-4_L4M-P0		1502676
+	91551775	Boom	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\ES_Glass Boom - SFX Producer_E4F8AB07.wem		\Actor-Mixer Hierarchy\Default Work Unit\Enemies\Boss\HitFloor\Boom		291930
 	97924898	IdleBreathe	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\ES_Creature Growl - SFX Producer_761168BC.wem		\Actor-Mixer Hierarchy\Default Work Unit\Enemies\Boss\IdleBreathe		1463804
 	101484339	Boss_Stage3_155bpm	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\Boss_Stage3_155bpm_D79FB2B7.wem		\Interactive Music Hierarchy\Music\Erimos Music Switch Container\Boss Battle Music Switch\Stage3\Boss_Stage3_155bpm		28540128
 	144556513	MeleeStand	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\ES_Monster Growl 11 - SFX Producer_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Enemies\Boss\MeleeStand		262208
 	482588252	Boss_Stage2_155bpm	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\Boss_Stage2_155bpm_D79FB2B7.wem		\Interactive Music Hierarchy\Music\Erimos Music Switch Container\Boss Battle Music Switch\Stage2\Boss_Stage2_155bpm		19621416
 	742142085	ER_Boss_Step 1	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\ER_Boss_Step 1_D79FB2B7.wem		\Interactive Music Hierarchy\Music\Erimos Music Switch Container\Boss Battle Music Switch\Stage1\ER_Boss_Step 1		10110860
 	929986589	Roar	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\249686__cylon8472__cthulhu-growl_7B7E03DE.wem		\Actor-Mixer Hierarchy\Default Work Unit\Enemies\Boss\Roar		411076
+	955556891	Voice	C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\ES_Monster Growl 3 - SFX Producer_DEB92DE6.wem		\Actor-Mixer Hierarchy\Default Work Unit\Enemies\Boss\Voice\Voice		203388
 

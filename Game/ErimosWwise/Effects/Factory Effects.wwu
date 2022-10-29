@@ -1458,7 +1458,7 @@
 								</Effect>
 								<Effect Name="Space_Dreaming" ID="{4FF7C4B2-37B0-4DFF-8E8A-1420102AE2DD}" PluginName="Wwise RoomVerb" CompanyID="0" PluginID="118" PluginType="3">
 									<PropertyList>
-										<Property Name="DecayTime" Type="Real32" Value="5.8"/>
+										<Property Name="DecayTime" Type="Real32" Value="2.5"/>
 										<Property Name="Density" Type="Real32" Value="100"/>
 										<Property Name="Diffusion" Type="Real32" Value="53"/>
 										<Property Name="DryLevel" Type="Real32" Value="-96"/>
@@ -1472,7 +1472,7 @@
 										<Property Name="Filter3Freq" Type="Real32" Value="10620"/>
 										<Property Name="Filter3Gain" Type="Real32" Value="-17.5"/>
 										<Property Name="HFDamping" Type="Real32" Value="7.05"/>
-										<Property Name="PreDelay" Type="Real32" Value="200"/>
+										<Property Name="PreDelay" Type="Real32" Value="50"/>
 										<Property Name="Quality" Type="int32" Value="6"/>
 										<Property Name="ReverbLevel" Type="Real32" Value="-19"/>
 										<Property Name="RoomShape" Type="Real32" Value="81"/>

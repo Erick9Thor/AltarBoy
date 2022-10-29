@@ -24,6 +24,8 @@ namespace Hachiko::Sounds
 	constexpr const wchar_t* BOSS_ROAR = L"Play_BossRoar";
 	constexpr const wchar_t* BOSS_MELEE_STAND = L"Play_BossMeleeStand";
 	constexpr const wchar_t* BOSS_BREATHE = L"Play_BossBreathe";
+	constexpr const wchar_t* BOSS_PRE_JUMP = L"Play_BossPreJump";
+	constexpr const wchar_t* BOSS_HIT_FLOOR = L"Play_BossHitFloor";
 
 	// Gauntlet
 	constexpr const wchar_t* GAUNTLET_START = L"Play_GaunletStart";
