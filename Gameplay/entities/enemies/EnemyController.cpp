@@ -1115,6 +1115,8 @@ void Hachiko::Scripting::EnemyController::StartParasiteState()
 	_parasite_dropped = true;
 
 	_parasite_dissolving_time_progress = 0;
+
+	_parasite->SetOutlineType(Outline::Type::PRIMARY);
 }
 
 void Hachiko::Scripting::EnemyController::UpdateParasiteState()
@@ -1135,6 +1137,8 @@ Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::TransitionsP
 {
 	if (_parasite_dissolving_time_progress >= _parasite_dissolve_time)
 	{
+		_parasite->SetOutlineType(Outline::Type::NONE);
+
 		return EnemyState::SUPER_DEAD;
 	}
 
