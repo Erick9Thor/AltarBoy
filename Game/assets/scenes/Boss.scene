@@ -48789,13 +48789,13 @@ child:
             enabled: true
             position: [0, 0, 7]
             rotation: [180, 89.98, 180]
-            scale: [2.273, 2.222, 2.273]
+            scale: [5, 5, 5]
           - !<billboard>
             id: 12290082396248286991
             type: 21
             enabled: true
             play_on_awake: false
-            texture_id: 11589188989502843529
+            texture_id: 4488105343313725014
             tiles: [1, 1]
             flip: [false, true]
             billboard_lifetime: 5
