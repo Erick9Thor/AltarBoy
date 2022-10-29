@@ -130,14 +130,19 @@ namespace Hachiko
 
         HACHIKO_API void SetCastingShadow(bool value);
 
-        [[nodiscard]] bool IsOutlined() const
+        HACHIKO_API [[nodiscard]] bool IsOutlined() const
         {
             return outline_type != Outline::Type::NONE;
         }
 
-        [[nodiscard]] Outline::Type GetOutlineType() const
+        HACHIKO_API [[nodiscard]] Outline::Type GetOutlineType() const
         {
             return outline_type;
+        }
+
+        HACHIKO_API void SetOutlineType(Outline::Type type)
+        {
+            outline_type = type;
         }
 
         void DrawGui() override;
