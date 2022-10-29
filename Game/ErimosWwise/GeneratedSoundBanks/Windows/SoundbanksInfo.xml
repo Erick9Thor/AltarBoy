@@ -11,7 +11,7 @@
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="626769978" Language="SFX" Hash="2521124729">
+		<SoundBank Id="626769978" Language="SFX" Hash="130131417">
 			<ObjectPath>\SoundBanks\Default Work Unit\BackgroundMusic</ObjectPath>
 			<ShortName>BackgroundMusic</ShortName>
 			<Path>BackgroundMusic.bnk</Path>
@@ -206,7 +206,7 @@
 				</Event>
 			</IncludedEvents>
 		</SoundBank>
-		<SoundBank Id="1560169506" Language="SFX" Hash="2318423866">
+		<SoundBank Id="1560169506" Language="SFX" Hash="1365894990">
 			<ObjectPath>\SoundBanks\Default Work Unit\Boss</ObjectPath>
 			<ShortName>Boss</ShortName>
 			<Path>Boss.bnk</Path>
@@ -215,7 +215,7 @@
 					<IncludedMemoryFiles>
 						<File Id="97924898" Language="SFX">
 							<ShortName>ES_Creature Growl - SFX Producer.wav</ShortName>
-							<Path>SFX\ES_Creature Growl - SFX Producer_FFE80C18.wem</Path>
+							<Path>SFX\ES_Creature Growl - SFX Producer_761168BC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -267,7 +267,7 @@
 					<IncludedMemoryFiles>
 						<File Id="929986589" Language="SFX">
 							<ShortName>249686__cylon8472__cthulhu-growl.wav</ShortName>
-							<Path>SFX\249686__cylon8472__cthulhu-growl_5C46884A.wem</Path>
+							<Path>SFX\249686__cylon8472__cthulhu-growl_7B7E03DE.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -406,7 +406,7 @@
 				</SwitchGroup>
 			</SwitchGroups>
 		</SoundBank>
-		<SoundBank Id="3768541028" Language="SFX" Hash="765205705">
+		<SoundBank Id="3768541028" Language="SFX" Hash="139120723">
 			<ObjectPath>\SoundBanks\Default Work Unit\Attacks</ObjectPath>
 			<ShortName>Attacks</ShortName>
 			<Path>Attacks.bnk</Path>
@@ -586,29 +586,29 @@
 				</Event>
 				<Event Id="1996518743" Name="Play_WormDeath" ObjectPath="\Events\Default Work Unit\Play_WormDeath">
 					<IncludedMemoryFiles>
-						<File Id="644673135" Language="SFX">
-							<ShortName>Dragon roar.wav</ShortName>
-							<Path>SFX\Dragon roar_6DDFAEFA.wem</Path>
+						<File Id="745835708" Language="SFX">
+							<ShortName>ES_Dinosaur Bleat 4 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Dinosaur Bleat 4 - SFX Producer_9BE136B8.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
 				<Event Id="3900269399" Name="Play_WormHide" ObjectPath="\Events\Default Work Unit\Play_WormHide">
 					<IncludedMemoryFiles>
-						<File Id="142787767" Language="SFX">
-							<ShortName>Dragon roar.wav</ShortName>
-							<Path>SFX\Dragon roar_C54B14D7.wem</Path>
+						<File Id="197652279" Language="SFX">
+							<ShortName>ES_Dinosaur Bleat 1 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Dinosaur Bleat 1 - SFX Producer_10C4C929.wem</Path>
 						</File>
 						<File Id="668240954" Language="SFX">
 							<ShortName>WormGiantSpawn.wav</ShortName>
-							<Path>SFX\WormGiantSpawn_37332E10.wem</Path>
+							<Path>SFX\WormGiantSpawn_010BCBE2.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
 				<Event Id="4242710327" Name="Play_WormRoar" ObjectPath="\Events\Default Work Unit\Play_WormRoar">
 					<IncludedMemoryFiles>
-						<File Id="34852454" Language="SFX">
-							<ShortName>dragon-low-roar-mammel-growl-94668.wav</ShortName>
-							<Path>SFX\dragon-low-roar-mammel-growl-94668_F5743E19.wem</Path>
+						<File Id="358856772" Language="SFX">
+							<ShortName>ES_Dinosaur Groan 3 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Dinosaur Groan 3 - SFX Producer_0BE557C7.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -627,7 +627,7 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="3909959462" Language="SFX" Hash="276777983">
+		<SoundBank Id="3909959462" Language="SFX" Hash="2976994994">
 			<ObjectPath>\SoundBanks\Default Work Unit\Enviroment</ObjectPath>
 			<ShortName>Enviroment</ShortName>
 			<Path>Enviroment.bnk</Path>

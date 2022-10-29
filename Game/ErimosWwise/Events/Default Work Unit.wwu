@@ -290,7 +290,7 @@
 						<Action Name="" ID="{8669638F-2CDC-4D3F-B084-CA4D1A295974}" ShortID="524879933">
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="WormRoar" ID="{72E8272F-7641-4D38-9A67-C5547C903C68}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+									<ObjectRef Name="WormSpawn" ID="{A1A57D6F-0138-477C-9A9C-C3D88EF66A09}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
@@ -312,7 +312,7 @@
 						<Action Name="" ID="{206AD5E1-24C1-4509-BDAA-50318F6BB787}" ShortID="548448368">
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="WormDeath" ID="{73DC3121-6AE8-4502-9CE4-4C0B4260FB78}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+									<ObjectRef Name="WormDeath" ID="{89ACD02B-8681-4714-8780-3943DA1F5073}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
