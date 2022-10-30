@@ -137,7 +137,7 @@ void Hachiko::Scripting::GauntletManager::StartGauntlet()
 
 	// Notify audio manager
 	_audio_manager->RegisterGaunlet();
-	_audio_manager->GetAudioSource()->PostEvent(Sounds::GAUNTLET_START);
+	_audio_manager->PlayGaunletStart();
 
 	// Set the camera to its position if there is an anchor set
 	if (_camera_anchor && _central_anchor)
@@ -200,10 +200,10 @@ void Hachiko::Scripting::GauntletManager::CheckRoundStatus()
 		++current_round;
 		if (IsFinished())
 		{
-			_audio_manager->GetAudioSource()->PostEvent(Sounds::GAUNTLET_COMPLETE);
+			_audio_manager->PlayGaunletComplete();
 			return;
 		}
-		_audio_manager->GetAudioSource()->PostEvent(Sounds::GAUNTLET_NEXT_ROUND);
+		_audio_manager->PlayGaunletNextRound();
 		SpawnRound(current_round);
 	}	
 }

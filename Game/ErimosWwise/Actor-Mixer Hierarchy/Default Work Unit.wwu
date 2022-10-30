@@ -834,17 +834,6 @@
 										<ActiveSource Name="249686__cylon8472__cthulhu-growl" ID="{72E42D6B-FE51-4BAA-9D5D-E56CAA9B226A}" Platform="Linked"/>
 									</ActiveSourceList>
 								</Sound>
-								<Sound Name="Death" ID="{D0BA9B57-B5AF-4B4A-B6C3-57F7A8EF318B}" ShortID="685070087">
-									<ReferenceList>
-										<Reference Name="Conversion">
-											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
-										</Reference>
-										<Reference Name="OutputBus">
-											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
-										</Reference>
-									</ReferenceList>
-									<ObjectLists/>
-								</Sound>
 								<Sound Name="MeleeStand" ID="{96F91E02-3963-4C24-84FB-0414DB0FDF0E}" ShortID="75207228">
 									<PropertyList>
 										<Property Name="3DSpatialization" Type="int16" Value="1"/>
@@ -1089,17 +1078,170 @@
 									</ChildrenList>
 									<ObjectLists/>
 								</RandomSequenceContainer>
-								<RandomSequenceContainer Name="HitFloor" ID="{CE64D091-AE03-46B6-954C-48F4C400C1A7}" ShortID="537671107">
+								<RandomSequenceContainer Name="Footsteps" ID="{7EFF1146-05F3-4167-94E9-7A44FCA9626B}" ShortID="114386429">
 									<PropertyList>
 										<Property Name="3DSpatialization" Type="int16" Value="1"/>
-										<Property Name="MaxSoundPerInstance" Type="int16">
-											<ValueList>
-												<Value>1</Value>
-											</ValueList>
+										<Property Name="Pitch" Type="int32">
+											<ModifierList>
+												<ModifierInfo>
+													<Modifier Name="" ID="{4091977A-353E-48B2-812F-EBF10B2CF6E7}">
+														<PropertyList>
+															<Property Name="Enabled" Type="bool" Value="True"/>
+															<Property Name="Max" Type="Real64" Value="500"/>
+														</PropertyList>
+													</Modifier>
+												</ModifierInfo>
+											</ModifierList>
 										</Property>
+										<Property Name="PlayMechanismLoop" Type="bool" Value="True"/>
+										<Property Name="PlayMechanismStepOrContinuous" Type="int16" Value="0"/>
 										<Property Name="UseMaxSoundPerInstance" Type="bool">
 											<ValueList>
 												<Value>True</Value>
+											</ValueList>
+										</Property>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>30</Value>
+											</ValueList>
+											<ModifierList>
+												<ModifierInfo>
+													<Modifier Name="" ID="{DF200BA1-D8EA-4082-A9E0-2ECB8D8AEC5F}">
+														<PropertyList>
+															<Property Name="Enabled" Type="bool" Value="True"/>
+															<Property Name="Max" Type="Real64" Value="10"/>
+															<Property Name="Min" Type="Real64" Value="-10"/>
+														</PropertyList>
+													</Modifier>
+												</ModifierInfo>
+											</ModifierList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+										</Reference>
+										<Reference Name="Effect0" PluginName="Wwise RoomVerb" CompanyID="0" PluginID="118" PluginType="3">
+											<ObjectRef Name="Room_Small" ID="{577F1466-A63B-47F7-98BD-C56E433F8B5D}" WorkUnitID="{E8613F7D-BAD3-45CD-A3ED-505576F31277}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<Sound Name="ES_Earthquake Tremor 2 - SFX Producer" ID="{1C7B9AF1-BC94-45C8-AEB2-C056C88E5D44}" ShortID="769041480">
+											<PropertyList>
+												<Property Name="Lowpass" Type="int16">
+													<ValueList>
+														<Value>25</Value>
+													</ValueList>
+												</Property>
+												<Property Name="Pitch" Type="int32">
+													<ModifierList>
+														<ModifierInfo>
+															<Modifier Name="" ID="{FF29DA33-C914-489B-B4C7-977F8C473D8E}"/>
+														</ModifierInfo>
+													</ModifierList>
+												</Property>
+												<Property Name="Weight" Type="Real64">
+													<ValueList>
+														<Value>30</Value>
+													</ValueList>
+												</Property>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="ES_Earthquake Tremor 2 - SFX Producer" ID="{4F3E520A-812E-47F2-B9FB-6CFFD9EF3DFC}">
+													<PropertyList>
+														<Property Name="FadeOutDuration" Type="Real64" Value="0.273808695652175"/>
+														<Property Name="FadeOutShape" Type="int16" Value="0"/>
+														<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+														<Property Name="TrimEnd" Type="Real64" Value="0.53240579710145"/>
+													</PropertyList>
+													<Language>SFX</Language>
+													<AudioFile>ES_Earthquake Tremor 2 - SFX Producer.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="960655361"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ObjectLists/>
+											<ActiveSourceList>
+												<ActiveSource Name="ES_Earthquake Tremor 2 - SFX Producer" ID="{4F3E520A-812E-47F2-B9FB-6CFFD9EF3DFC}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="ES_Earthquake Tremor 3 - SFX Producer" ID="{6072B9C5-3DC9-45F7-9B88-41F3918F05FB}" ShortID="951652176">
+											<PropertyList>
+												<Property Name="Lowpass" Type="int16">
+													<ValueList>
+														<Value>25</Value>
+													</ValueList>
+												</Property>
+												<Property Name="Weight" Type="Real64">
+													<ValueList>
+														<Value>30</Value>
+													</ValueList>
+												</Property>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="ES_Earthquake Tremor 3 - SFX Producer" ID="{DDD7FBC6-CDEC-4549-80DC-EB7FB065BE57}">
+													<PropertyList>
+														<Property Name="FadeOutDuration" Type="Real64" Value="0.4224"/>
+														<Property Name="FadeOutShape" Type="int16" Value="0"/>
+														<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+														<Property Name="TrimEnd" Type="Real64" Value="0.669257142857142"/>
+													</PropertyList>
+													<Language>SFX</Language>
+													<AudioFile>ES_Earthquake Tremor 3 - SFX Producer.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="921763871"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ObjectLists/>
+											<ActiveSourceList>
+												<ActiveSource Name="ES_Earthquake Tremor 3 - SFX Producer" ID="{DDD7FBC6-CDEC-4549-80DC-EB7FB065BE57}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
+									<ObjectLists/>
+								</RandomSequenceContainer>
+								<Sound Name="BossLaugh" ID="{2A3BA01A-46C5-45C3-B77C-5BC46AA728AF}" ShortID="369224443">
+									<PropertyList>
+										<Property Name="Pitch" Type="int32">
+											<ValueList>
+												<Value>-200</Value>
+											</ValueList>
+											<ModifierList>
+												<ModifierInfo>
+													<Modifier Name="" ID="{F6DD352A-B6AF-490F-B5D0-4F3C29C33742}">
+														<PropertyList>
+															<Property Name="Enabled" Type="bool" Value="True"/>
+															<Property Name="Max" Type="Real64" Value="150"/>
+															<Property Name="Min" Type="Real64" Value="-100"/>
+														</PropertyList>
+													</Modifier>
+												</ModifierInfo>
+											</ModifierList>
+										</Property>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>8</Value>
 											</ValueList>
 										</Property>
 									</PropertyList>
@@ -1112,11 +1254,64 @@
 										</Reference>
 									</ReferenceList>
 									<ChildrenList>
+										<AudioFileSource Name="ES_Devil Laugh 2 - SFX Producer" ID="{AC1A560B-23C7-4143-A05A-06B28758A186}">
+											<Language>SFX</Language>
+											<AudioFile>ES_Devil Laugh 2 - SFX Producer.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="376674477"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="ES_Devil Laugh 2 - SFX Producer" ID="{AC1A560B-23C7-4143-A05A-06B28758A186}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<BlendContainer Name="FloorBoom" ID="{1266B89B-CB17-46A3-B51D-3D28B68EE361}" ShortID="36755270">
+									<PropertyList>
+										<Property Name="3DSpatialization" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<Sound Name="ES_Earthquake Tremor 5 - SFX Producer" ID="{45863891-8845-4669-ABE3-D2EFD85DF589}" ShortID="255701785">
+											<PropertyList>
+												<Property Name="3DSpatialization" Type="int16" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="ES_Earthquake Tremor 5 - SFX Producer" ID="{563F9259-144E-46DC-93E9-6C97966F063F}">
+													<Language>SFX</Language>
+													<AudioFile>ES_Earthquake Tremor 5 - SFX Producer.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="761932427"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ObjectLists/>
+											<ActiveSourceList>
+												<ActiveSource Name="ES_Earthquake Tremor 5 - SFX Producer" ID="{563F9259-144E-46DC-93E9-6C97966F063F}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
 										<Sound Name="Boom" ID="{13F623ED-9AA3-445B-9806-9AA1F4775422}" ShortID="908636236">
 											<PropertyList>
-												<Property Name="MakeUpGain" Type="Real64">
+												<Property Name="3DSpatialization" Type="int16" Value="1"/>
+												<Property Name="Lowpass" Type="int16">
 													<ValueList>
-														<Value>10</Value>
+														<Value>40</Value>
 													</ValueList>
 												</Property>
 												<Property Name="OverrideEffect" Type="bool" Value="True"/>
@@ -1133,11 +1328,13 @@
 													</ModifierList>
 												</Property>
 												<Property Name="Volume" Type="Real64">
+													<ValueList>
+														<Value>20</Value>
+													</ValueList>
 													<ModifierList>
 														<ModifierInfo>
 															<Modifier Name="" ID="{3CE76A55-F75B-43FD-99AE-BA3ABA991CC9}">
 																<PropertyList>
-																	<Property Name="Enabled" Type="bool" Value="True"/>
 																	<Property Name="Max" Type="Real64" Value="10"/>
 																</PropertyList>
 															</Modifier>
@@ -1149,6 +1346,9 @@
 												<Reference Name="Conversion">
 													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
 												</Reference>
+												<Reference Name="Effect0" PluginName="Wwise RoomVerb" CompanyID="0" PluginID="118" PluginType="3">
+													<ObjectRef Name="Room_Large" ID="{AD8EFAFC-7121-4D5F-BE4D-B13FBD6CEBAE}" WorkUnitID="{E8613F7D-BAD3-45CD-A3ED-505576F31277}"/>
+												</Reference>
 												<Reference Name="OutputBus">
 													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
 												</Reference>
@@ -1156,9 +1356,11 @@
 											<ChildrenList>
 												<AudioFileSource Name="ES_Glass Boom - SFX Producer" ID="{6C9466CC-E320-4BD5-B4F4-54924F5C11C5}">
 													<PropertyList>
+														<Property Name="FadeOutDuration" Type="Real64" Value="0.360626086956522"/>
 														<Property Name="FadeOutShape" Type="int16" Value="0"/>
 														<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
 														<Property Name="TrimBegin" Type="Real64" Value="0.991721739130434"/>
+														<Property Name="TrimEnd" Type="Real64" Value="1.60779130434783"/>
 													</PropertyList>
 													<Language>SFX</Language>
 													<AudioFile>ES_Glass Boom - SFX Producer.wav</AudioFile>
@@ -1172,9 +1374,129 @@
 												<ActiveSource Name="ES_Glass Boom - SFX Producer" ID="{6C9466CC-E320-4BD5-B4F4-54924F5C11C5}" Platform="Linked"/>
 											</ActiveSourceList>
 										</Sound>
+										<Sound Name="ES_Earthquake Tremor 2 - SFX Producer" ID="{759F06F4-9595-449B-9C5E-565EDB286248}" ShortID="908845983">
+											<PropertyList>
+												<Property Name="Volume" Type="Real64">
+													<ValueList>
+														<Value>12</Value>
+													</ValueList>
+												</Property>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="ES_Earthquake Tremor 2 - SFX Producer" ID="{4BB1D98A-478F-491E-AC33-6249FD00993D}">
+													<Language>SFX</Language>
+													<AudioFile>ES_Earthquake Tremor 2 - SFX Producer.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="546278332"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ObjectLists/>
+											<ActiveSourceList>
+												<ActiveSource Name="ES_Earthquake Tremor 2 - SFX Producer" ID="{4BB1D98A-478F-491E-AC33-6249FD00993D}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
 									</ChildrenList>
 									<ObjectLists/>
-								</RandomSequenceContainer>
+								</BlendContainer>
+								<BlendContainer Name="Death" ID="{C5786BD2-F7D3-4B94-AA7E-ADA4571EB150}" ShortID="121606125">
+									<PropertyList>
+										<Property Name="MakeUpGain" Type="Real64">
+											<ValueList>
+												<Value>10</Value>
+											</ValueList>
+										</Property>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>8</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<Sound Name="Low" ID="{D0BA9B57-B5AF-4B4A-B6C3-57F7A8EF318B}" ShortID="685070087">
+											<PropertyList>
+												<Property Name="Volume" Type="Real64">
+													<ValueList>
+														<Value>10</Value>
+													</ValueList>
+												</Property>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="ES_Monster Groan 6 - SFX Producer" ID="{A21A683F-2CAB-4ADC-9FBC-5DE4E70CD452}">
+													<Language>SFX</Language>
+													<AudioFile>ES_Monster Groan 6 - SFX Producer.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="416633218"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ObjectLists/>
+											<ActiveSourceList>
+												<ActiveSource Name="ES_Monster Groan 6 - SFX Producer" ID="{A21A683F-2CAB-4ADC-9FBC-5DE4E70CD452}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="High" ID="{F7D69A2C-ABAA-403D-B225-A23F0A8B94E8}" ShortID="716852189">
+											<PropertyList>
+												<Property Name="Pitch" Type="int32">
+													<ValueList>
+														<Value>100</Value>
+													</ValueList>
+												</Property>
+												<Property Name="Volume" Type="Real64">
+													<ValueList>
+														<Value>12</Value>
+													</ValueList>
+												</Property>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="ES_Dinosaur Groan 3 - SFX Producer" ID="{40E678DB-5FD3-4544-A27D-CF903701014A}">
+													<Language>SFX</Language>
+													<AudioFile>ES_Dinosaur Groan 3 - SFX Producer.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="960851544"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ObjectLists/>
+											<ActiveSourceList>
+												<ActiveSource Name="ES_Dinosaur Groan 3 - SFX Producer" ID="{40E678DB-5FD3-4544-A27D-CF903701014A}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
+									<ObjectLists/>
+								</BlendContainer>
 							</ChildrenList>
 						</Folder>
 						<Folder Name="Worm" ID="{0AFA0BB5-7670-4010-B2AC-8CAE14C853F1}" ShortID="677591503">

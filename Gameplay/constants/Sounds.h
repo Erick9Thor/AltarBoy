@@ -21,11 +21,16 @@ namespace Hachiko::Sounds
 	constexpr const wchar_t* WORM_HIDE = L"Play_WormHide";
 	constexpr const wchar_t* WORM_DEATH = L"Play_WormDeath";
 
+	// Boss
 	constexpr const wchar_t* BOSS_ROAR = L"Play_BossRoar";
 	constexpr const wchar_t* BOSS_MELEE_STAND = L"Play_BossMeleeStand";
 	constexpr const wchar_t* BOSS_BREATHE = L"Play_BossBreathe";
 	constexpr const wchar_t* BOSS_PRE_JUMP = L"Play_BossPreJump";
 	constexpr const wchar_t* BOSS_HIT_FLOOR = L"Play_BossHitFloor";
+	constexpr const wchar_t* BOSS_FOOTSTEPS = L"Play_BossFootsteps";
+	constexpr const wchar_t* STOP_BOSS_FOOTSTEPS = L"Stop_BossFootsteps";
+	constexpr const wchar_t* BOSS_LAUGH = L"Play_BossLaugh";
+	constexpr const wchar_t* BOSS_DEATH = L"Play_BossDeath";
 
 	// Gauntlet
 	constexpr const wchar_t* GAUNTLET_START = L"Play_GaunletStart";

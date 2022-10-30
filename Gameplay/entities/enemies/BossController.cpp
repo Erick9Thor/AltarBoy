@@ -277,6 +277,7 @@ void Hachiko::Scripting::BossController::CombatController()
     if (combat_stats->_current_hp <= 0)
     {
         KillEnemies();
+        audio_source->PostEvent(Sounds::BOSS_DEATH);
         animation->SendTrigger("isDeath");
         state = BossState::DEAD;
         return;
@@ -427,8 +428,6 @@ void Hachiko::Scripting::BossController::StartCocoon()
     initial_position.y = transform->GetGlobalPosition().y;
     transform->LookAtTarget(initial_position);
     agent->SetTargetPosition(initial_position);
-
-    
 }
 
 void Hachiko::Scripting::BossController::CocoonController()
@@ -450,6 +449,7 @@ void Hachiko::Scripting::BossController::CocoonController()
         if (Distance(current_pos, initial_position) <= agent->GetRadius())
         {
             animation->SendTrigger("isCacoonLoop");
+            audio_source->PostEvent(Sounds::STOP_BOSS_FOOTSTEPS);
 
             moving_to_initial_pos = false;
             transform->SetGlobalPosition(initial_position);
@@ -511,6 +511,7 @@ void Hachiko::Scripting::BossController::InitCocoonGauntlet()
     {
         laser->GetComponent<LaserController>()->_toggle_activation = true;
     }
+    audio_source->PostEvent(Sounds::GAUNTLET_NEXT_ROUND);
     // Start spawning enemies
     gauntlet->StartGauntlet();
 }
@@ -561,6 +562,7 @@ void Hachiko::Scripting::BossController::FinishCocoon()
 void Hachiko::Scripting::BossController::Chase()
 {
     ChangeStateText("Chasing player.");
+    audio_source->PostEvent(Sounds::BOSS_FOOTSTEPS);
     if (animation->IsAnimationStopped())
     {
         animation->SendTrigger("isWalk");
@@ -659,7 +661,7 @@ void Hachiko::Scripting::BossController::SpawnCrystals()
 {
 	ChangeStateText("Spawning crystals.");
     animation->SendTrigger("isSummonCrystal");
-
+    audio_source->PostEvent(Sounds::BOSS_LAUGH);
     if (_explosive_crystals.empty())
     {
         return;

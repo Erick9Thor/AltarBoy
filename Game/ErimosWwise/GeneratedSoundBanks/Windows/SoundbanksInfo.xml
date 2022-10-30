@@ -206,7 +206,7 @@
 				</Event>
 			</IncludedEvents>
 		</SoundBank>
-		<SoundBank Id="1560169506" Language="SFX" Hash="3335287457">
+		<SoundBank Id="1560169506" Language="SFX" Hash="3048658572">
 			<ObjectPath>\SoundBanks\Default Work Unit\Boss</ObjectPath>
 			<ShortName>Boss</ShortName>
 			<Path>Boss.bnk</Path>
@@ -219,11 +219,54 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
+				<Event Id="694925737" Name="Play_BossDeath" ObjectPath="\Events\Default Work Unit\Play_BossDeath">
+					<IncludedMemoryFiles>
+						<File Id="416633218" Language="SFX">
+							<ShortName>ES_Monster Groan 6 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Monster Groan 6 - SFX Producer_10C4C929.wem</Path>
+						</File>
+						<File Id="960851544" Language="SFX">
+							<ShortName>ES_Dinosaur Groan 3 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Dinosaur Groan 3 - SFX Producer_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+					<ActionSetState>
+						<ActionSetStateEntry Id="2716678721" Name="Victory" ObjectPath="\States\Default Work Unit\Boss_battle_states\Victory"/>
+					</ActionSetState>
+				</Event>
+				<Event Id="993878670" Name="Play_BossFootsteps" ObjectPath="\Events\Default Work Unit\Play_BossFootsteps">
+					<IncludedMemoryFiles>
+						<File Id="921763871" Language="SFX">
+							<ShortName>ES_Earthquake Tremor 3 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Earthquake Tremor 3 - SFX Producer_8D3F1047.wem</Path>
+						</File>
+						<File Id="960655361" Language="SFX">
+							<ShortName>ES_Earthquake Tremor 2 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Earthquake Tremor 2 - SFX Producer_D44A4282.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
 				<Event Id="2570105658" Name="Play_BossHitFloor" ObjectPath="\Events\Default Work Unit\Play_BossHitFloor">
 					<IncludedMemoryFiles>
 						<File Id="91551775" Language="SFX">
 							<ShortName>ES_Glass Boom - SFX Producer.wav</ShortName>
-							<Path>SFX\ES_Glass Boom - SFX Producer_E4F8AB07.wem</Path>
+							<Path>SFX\ES_Glass Boom - SFX Producer_783A3FAC.wem</Path>
+						</File>
+						<File Id="546278332" Language="SFX">
+							<ShortName>ES_Earthquake Tremor 2 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Earthquake Tremor 2 - SFX Producer_10C4C929.wem</Path>
+						</File>
+						<File Id="761932427" Language="SFX">
+							<ShortName>ES_Earthquake Tremor 5 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Earthquake Tremor 5 - SFX Producer_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="4292759136" Name="Play_BossLaugh" ObjectPath="\Events\Default Work Unit\Play_BossLaugh">
+					<IncludedMemoryFiles>
+						<File Id="376674477" Language="SFX">
+							<ShortName>ES_Devil Laugh 2 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Devil Laugh 2 - SFX Producer_10C4C929.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -313,6 +356,7 @@
 						<ActionSetStateEntry Id="2044049779" Name="Dead" ObjectPath="\States\Default Work Unit\Boss_battle_states\Dead"/>
 					</ActionSetState>
 				</Event>
+				<Event Id="2499789540" Name="Stop_BossFootsteps" ObjectPath="\Events\Default Work Unit\Stop_BossFootsteps"/>
 			</IncludedEvents>
 			<GameParameters>
 				<GameParameter Id="3963624107" Name="EnemyAware" ObjectPath="\Game Parameters\Music\EnemyAware"/>
@@ -328,6 +372,9 @@
 					<States/>
 				</StateGroup>
 				<StateGroup Id="2044049779" Name="Dead" ObjectPath="\States\Default Work Unit\Boss_battle_states\Dead" GUID="{21CCAE23-5F45-4988-8F8A-80974A2F86EB}">
+					<States/>
+				</StateGroup>
+				<StateGroup Id="2716678721" Name="Victory" ObjectPath="\States\Default Work Unit\Boss_battle_states\Victory" GUID="{5FA91604-4C94-44AD-98BB-54A312B158B5}">
 					<States/>
 				</StateGroup>
 				<StateGroup Id="2746189348" Name="Boss_battle_states" ObjectPath="\States\Default Work Unit\Boss_battle_states" GUID="{0E9BFD09-6921-4435-A7C0-6A8BD48A118D}">

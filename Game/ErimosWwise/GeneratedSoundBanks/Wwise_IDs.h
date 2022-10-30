@@ -16,7 +16,10 @@ namespace AK
         static const AkUniqueID PLAY_BEETLEATTACK = 4275867775U;
         static const AkUniqueID PLAY_BEETLEDEATH = 3318027631U;
         static const AkUniqueID PLAY_BOSSBREATHE = 1064356868U;
+        static const AkUniqueID PLAY_BOSSDEATH = 694925737U;
+        static const AkUniqueID PLAY_BOSSFOOTSTEPS = 993878670U;
         static const AkUniqueID PLAY_BOSSHITFLOOR = 2570105658U;
+        static const AkUniqueID PLAY_BOSSLAUGH = 4292759136U;
         static const AkUniqueID PLAY_BOSSMELEESTAND = 866952685U;
         static const AkUniqueID PLAY_BOSSMUSIC = 3463024606U;
         static const AkUniqueID PLAY_BOSSPREJUMP = 3957245444U;
@@ -53,6 +56,7 @@ namespace AK
         static const AkUniqueID SET_STATE2_BOSSFIGHT = 422367531U;
         static const AkUniqueID SET_STATE3_BOSSFIGHT = 129783526U;
         static const AkUniqueID SET_STATE_DEFEATED = 1482465818U;
+        static const AkUniqueID STOP_BOSSFOOTSTEPS = 2499789540U;
         static const AkUniqueID STOP_COMBAT = 913896232U;
         static const AkUniqueID STOP_NAVIGATION = 445689598U;
         static const AkUniqueID STOP_PEBBLE = 707649828U;
