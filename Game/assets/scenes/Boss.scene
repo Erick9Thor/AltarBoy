@@ -35,7 +35,7 @@ child:
         enabled: true
         frustum:
           near_distance: 1
-          far_distance: 100
+          far_distance: 88
           fov: 70
           position: [-85.36, 20.2, -48.15]
           front: [0, -0.8192, -0.5736]
@@ -13285,6 +13285,7 @@ child:
         class_name: PillarCheckpoint
         "'_respawn_go@GameObject*'": 314563168739567085
         "'_activation_range@float'": 5
+        "'_light_go@GameObject*'": 0
     child:
       - id: 6932258953929295121
         name: Root
@@ -41246,7 +41247,7 @@ child:
             "'_randomized_duration_min@float'": 0.2
             "'_randomized_duration_max@float'": 3
             "'_automatic_lerp_duration@float'": 1
-            "'_initial_emissive_color@float4'": [1, 0.3, 0.9, 0]
+            "'_initial_emissive_color@float4'": [0.304, 0, 1, 0]
       - id: 7642381795486415529
         name: arches inner002
         enabled: true
@@ -48788,13 +48789,13 @@ child:
             enabled: true
             position: [0, 0, 7]
             rotation: [180, 89.98, 180]
-            scale: [2.273, 2.222, 2.273]
+            scale: [5, 5, 5]
           - !<billboard>
             id: 12290082396248286991
             type: 21
             enabled: true
             play_on_awake: false
-            texture_id: 11589188989502843529
+            texture_id: 4488105343313725014
             tiles: [1, 1]
             flip: [false, true]
             billboard_lifetime: 5
