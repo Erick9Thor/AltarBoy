@@ -3995,7 +3995,7 @@
 									<PropertyList>
 										<Property Name="Volume" Type="Real64">
 											<ValueList>
-												<Value>-5</Value>
+												<Value>-8</Value>
 											</ValueList>
 										</Property>
 									</PropertyList>
@@ -4073,6 +4073,36 @@
 									<ObjectLists/>
 									<ActiveSourceList>
 										<ActiveSource Name="ES_Sci Fi Voice Clip 663 - SFX Producer" ID="{254A7AE9-F933-462D-A8B1-C5527E8B695B}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Cutscene_effects" ID="{D52B76EC-0A39-4FFC-9FC4-134765DB343F}" ShortID="940513850">
+									<PropertyList>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>8</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Cutscene_effects" ID="{D89F40DF-BC41-4951-88A4-961414276400}">
+											<Language>SFX</Language>
+											<AudioFile>Cutscene_effects.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="203035445"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="Cutscene_effects" ID="{D89F40DF-BC41-4951-88A4-961414276400}" Platform="Linked"/>
 									</ActiveSourceList>
 								</Sound>
 							</ChildrenList>
