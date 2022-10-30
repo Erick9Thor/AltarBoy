@@ -1320,13 +1320,15 @@ void Hachiko::Scripting::PlayerController::CheckNearbyParasytes(const float3& cu
 		}
 		std::vector<GameObject*>& enemies = pack->children;
 
-		float parasyte_pickup_distance = 1.5f;
+		float parasyte_pickup_distance = 3.5f;
 
 		if (_magic_parasyte && _magic_parasyte->IsActive())
 		{
 			if (parasyte_pickup_distance >= _player_transform->GetGlobalPosition().Distance(_magic_parasyte->GetTransform()->GetGlobalPosition()))
 			{
-				ActivateTooltip();
+				// If there is a nearby parasyte tooltip of the normal parasyte would be the one appearing
+				// This will never happen on our level layout so its fine
+				ActivateTooltip(_magic_parasyte->GetTransform()->GetGlobalPosition());
 				if (Input::IsKeyDown(Input::KeyCode::KEY_F) || Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_B))
 				{
 					PickupParasite(nullptr, true);
