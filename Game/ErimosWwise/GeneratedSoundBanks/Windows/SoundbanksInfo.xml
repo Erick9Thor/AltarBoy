@@ -11,7 +11,7 @@
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="626769978" Language="SFX" Hash="130131417">
+		<SoundBank Id="626769978" Language="SFX" Hash="2881484009">
 			<ObjectPath>\SoundBanks\Default Work Unit\BackgroundMusic</ObjectPath>
 			<ShortName>BackgroundMusic</ShortName>
 			<Path>BackgroundMusic.bnk</Path>
@@ -206,7 +206,7 @@
 				</Event>
 			</IncludedEvents>
 		</SoundBank>
-		<SoundBank Id="1560169506" Language="SFX" Hash="1540677915">
+		<SoundBank Id="1560169506" Language="SFX" Hash="1427935163">
 			<ObjectPath>\SoundBanks\Default Work Unit\Boss</ObjectPath>
 			<ShortName>Boss</ShortName>
 			<Path>Boss.bnk</Path>
@@ -238,11 +238,11 @@
 					<IncludedMemoryFiles>
 						<File Id="921763871" Language="SFX">
 							<ShortName>ES_Earthquake Tremor 3 - SFX Producer.wav</ShortName>
-							<Path>SFX\ES_Earthquake Tremor 3 - SFX Producer_8D3F1047.wem</Path>
+							<Path>SFX\ES_Earthquake Tremor 3 - SFX Producer_54A5D7CC.wem</Path>
 						</File>
 						<File Id="960655361" Language="SFX">
 							<ShortName>ES_Earthquake Tremor 2 - SFX Producer.wav</ShortName>
-							<Path>SFX\ES_Earthquake Tremor 2 - SFX Producer_D44A4282.wem</Path>
+							<Path>SFX\ES_Earthquake Tremor 2 - SFX Producer_4265BBCA.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -250,7 +250,7 @@
 					<IncludedMemoryFiles>
 						<File Id="91551775" Language="SFX">
 							<ShortName>ES_Glass Boom - SFX Producer.wav</ShortName>
-							<Path>SFX\ES_Glass Boom - SFX Producer_783A3FAC.wem</Path>
+							<Path>SFX\ES_Glass Boom - SFX Producer_7126D421.wem</Path>
 						</File>
 						<File Id="546278332" Language="SFX">
 							<ShortName>ES_Earthquake Tremor 2 - SFX Producer.wav</ShortName>
@@ -318,7 +318,7 @@
 					<IncludedMemoryFiles>
 						<File Id="955556891" Language="SFX">
 							<ShortName>ES_Monster Growl 3 - SFX Producer.wav</ShortName>
-							<Path>SFX\ES_Monster Growl 3 - SFX Producer_DEB92DE6.wem</Path>
+							<Path>SFX\ES_Monster Growl 3 - SFX Producer_35413582.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -473,7 +473,7 @@
 				</SwitchGroup>
 			</SwitchGroups>
 		</SoundBank>
-		<SoundBank Id="3768541028" Language="SFX" Hash="139120723">
+		<SoundBank Id="3768541028" Language="SFX" Hash="3572768907">
 			<ObjectPath>\SoundBanks\Default Work Unit\Attacks</ObjectPath>
 			<ShortName>Attacks</ShortName>
 			<Path>Attacks.bnk</Path>
@@ -553,9 +553,9 @@
 				</Event>
 				<Event Id="1126614951" Name="Play_GaunletNextRound" ObjectPath="\Events\Default Work Unit\Play_GaunletNextRound">
 					<IncludedMemoryFiles>
-						<File Id="887762306" Language="SFX">
-							<ShortName>ES_Gong Cymbal Crash 1 - SFX Producer.wav</ShortName>
-							<Path>SFX\ES_Gong Cymbal Crash 1 - SFX Producer_00CDCE25.wem</Path>
+						<File Id="298947520" Language="SFX">
+							<ShortName>ES_Gong Hit Cymbal - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Gong Hit Cymbal - SFX Producer_3B4C46C1.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -655,19 +655,19 @@
 					<IncludedMemoryFiles>
 						<File Id="745835708" Language="SFX">
 							<ShortName>ES_Dinosaur Bleat 4 - SFX Producer.wav</ShortName>
-							<Path>SFX\ES_Dinosaur Bleat 4 - SFX Producer_9BE136B8.wem</Path>
+							<Path>SFX\ES_Dinosaur Bleat 4 - SFX Producer_F9ACB2CC.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
 				<Event Id="3900269399" Name="Play_WormHide" ObjectPath="\Events\Default Work Unit\Play_WormHide">
 					<IncludedMemoryFiles>
-						<File Id="197652279" Language="SFX">
-							<ShortName>ES_Dinosaur Bleat 1 - SFX Producer.wav</ShortName>
-							<Path>SFX\ES_Dinosaur Bleat 1 - SFX Producer_10C4C929.wem</Path>
+						<File Id="416633218" Language="SFX">
+							<ShortName>ES_Monster Groan 6 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Monster Groan 6 - SFX Producer_10C4C929.wem</Path>
 						</File>
 						<File Id="668240954" Language="SFX">
 							<ShortName>WormGiantSpawn.wav</ShortName>
-							<Path>SFX\WormGiantSpawn_010BCBE2.wem</Path>
+							<Path>SFX\WormGiantSpawn_9AC49AFB.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -675,7 +675,7 @@
 					<IncludedMemoryFiles>
 						<File Id="358856772" Language="SFX">
 							<ShortName>ES_Dinosaur Groan 3 - SFX Producer.wav</ShortName>
-							<Path>SFX\ES_Dinosaur Groan 3 - SFX Producer_0BE557C7.wem</Path>
+							<Path>SFX\ES_Dinosaur Groan 3 - SFX Producer_283CBA08.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -694,7 +694,7 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="3909959462" Language="SFX" Hash="2976994994">
+		<SoundBank Id="3909959462" Language="SFX" Hash="2601821336">
 			<ObjectPath>\SoundBanks\Default Work Unit\Enviroment</ObjectPath>
 			<ShortName>Enviroment</ShortName>
 			<Path>Enviroment.bnk</Path>
@@ -780,6 +780,38 @@
 						<File Id="293397634" Language="SFX">
 							<ShortName>Splash-centipede.wav</ShortName>
 							<Path>SFX\Splash-centipede_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="3250624050" Name="Play_StalagmiteCeilingCrack" ObjectPath="\Events\Default Work Unit\Play_StalagmiteCeilingCrack">
+					<IncludedMemoryFiles>
+						<File Id="124169010" Language="SFX">
+							<ShortName>ES_Ceiling Crack Wood - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Ceiling Crack Wood - SFX Producer_7E2452FB.wem</Path>
+						</File>
+						<File Id="416998960" Language="SFX">
+							<ShortName>ES_Swoosh 09 Short - Jon Bjork.wav</ShortName>
+							<Path>SFX\ES_Swoosh 09 Short - Jon Bjork_9BF8B48B.wem</Path>
+						</File>
+						<File Id="836889846" Language="SFX">
+							<ShortName>ES_Avalanche Rock Cracks 2 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Avalanche Rock Cracks 2 - SFX Producer_5EFAD7E5.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="2603336188" Name="Play_StalagmiteGroundImpact" ObjectPath="\Events\Default Work Unit\Play_StalagmiteGroundImpact">
+					<IncludedMemoryFiles>
+						<File Id="223048066" Language="SFX">
+							<ShortName>ES_Sonic Boom 4 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Sonic Boom 4 - SFX Producer_C67080E1.wem</Path>
+						</File>
+						<File Id="803151951" Language="SFX">
+							<ShortName>ES_Rock Debris Spill 2 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Rock Debris Spill 2 - SFX Producer_62AA4E6C.wem</Path>
+						</File>
+						<File Id="1018062011" Language="SFX">
+							<ShortName>ES_Earthquake Tremor Rocks 2 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Earthquake Tremor Rocks 2 - SFX Producer_6DA68DF6.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>

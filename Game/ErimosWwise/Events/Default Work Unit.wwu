@@ -301,7 +301,7 @@
 						<Action Name="" ID="{D8D27281-6CE3-4FEE-8F65-525ABBA33942}" ShortID="241284816">
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="WormAttack" ID="{8AC589FC-B000-4D88-8913-C0161A1579E6}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+									<ObjectRef Name="Fire" ID="{8AC589FC-B000-4D88-8913-C0161A1579E6}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
@@ -620,6 +620,28 @@
 							<ReferenceList>
 								<Reference Name="Target">
 									<ObjectRef Name="Victory" ID="{5FA91604-4C94-44AD-98BB-54A312B158B5}" WorkUnitID="{58D3A6EC-B8FF-4FD8-B774-6F4619FF9B9B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_StalagmiteCeilingCrack" ID="{C0EB5CD0-421F-466E-895F-80AE7B542994}">
+					<ChildrenList>
+						<Action Name="" ID="{5549CD29-B30B-431E-8571-EABEE5C5DBBC}" ShortID="675258228">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Ceiling Crack" ID="{37F02A4E-D502-454C-BE1E-2C3193BA1596}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_StalagmiteGroundImpact" ID="{39EDCACC-115D-460B-A4BC-3491A724BFF6}">
+					<ChildrenList>
+						<Action Name="" ID="{B644832E-E0BB-44A2-90BE-A6FD6225C04A}" ShortID="398017316">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Ground Impact" ID="{D6076A34-FB53-4915-949D-14644737C76B}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>

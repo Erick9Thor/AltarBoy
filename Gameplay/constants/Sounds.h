@@ -48,6 +48,8 @@ namespace Hachiko::Sounds
 	constexpr const wchar_t* PLAY_SPLASH = L"Play_Splash";
 	constexpr const wchar_t* PLAY_DOOR_OPENING = L"Play_DoorOpening";
 	constexpr const wchar_t* PLAY_CHECKPOINT = L"Play_Checkpoint";
+	constexpr const wchar_t* STALAGMITE_CEILING_CRACK = L"Play_StalagmiteCeilingCrack";
+	constexpr const wchar_t* STALAGMITE_GROUND_IMPACT = L"Play_StalagmiteGroundImpact";
 
 	// Background Music
 	// TODO: Rename this events in wwise
