@@ -59,7 +59,7 @@ public:
 	/// Sets a gameobject as the camera objective to follow
 	/// </summary>
 	/// <param name="objective"></param>
-	void SetObjective(GameObject* objective) { _objective = objective; };
+	void SetObjective(GameObject* objective, bool teleport = false);
 
 	/// <summary>
 	/// Toggles the camera lookahead functionality

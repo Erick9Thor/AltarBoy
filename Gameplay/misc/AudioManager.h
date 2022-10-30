@@ -37,6 +37,7 @@ namespace Hachiko
 			void PlayEnemyDeath(EnemyType enemy_type);
 			void PlaySpawnWorm();
 
+			ComponentAudioSource* GetAudioSource() { return _audio_source; }
 		private:
 			bool updated = false;
 			bool _in_combat = false;
