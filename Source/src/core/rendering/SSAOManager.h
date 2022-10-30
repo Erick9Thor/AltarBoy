@@ -28,7 +28,8 @@ namespace Hachiko
         void BlurSSAO() const;
         void DrawSSAO(
             const GBuffer& g_buffer, 
-            const float4x4& camera_view_proj, 
+            const float4x4& camera_view, 
+            const float4x4& camera_proj, 
             unsigned fb_width, 
             unsigned fb_height) const;
         void BindSSAOTexture(unsigned int position) const;
@@ -36,7 +37,6 @@ namespace Hachiko
         void ShowInEditorUI();
         void SaveConfig(YAML::Node& node) const;
         void LoadConfig(const YAML::Node& node);
-
 
     private:
         float _radius = SSAOConstants::DEFAULT_RADIUS;
