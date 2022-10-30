@@ -11,7 +11,7 @@
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="626769978" Language="SFX" Hash="2881484009">
+		<SoundBank Id="626769978" Language="SFX" Hash="9508401">
 			<ObjectPath>\SoundBanks\Default Work Unit\BackgroundMusic</ObjectPath>
 			<ShortName>BackgroundMusic</ShortName>
 			<Path>BackgroundMusic.bnk</Path>
@@ -19,6 +19,10 @@
 				<Event Id="513571230" Name="Play_Combat" ObjectPath="\Events\Music\Play_Combat"/>
 				<Event Id="2953314807" Name="Play_IntroCinematic" ObjectPath="\Events\Default Work Unit\Play_IntroCinematic">
 					<IncludedMemoryFiles>
+						<File Id="203035445" Language="SFX">
+							<ShortName>Cutscene_effects.wav</ShortName>
+							<Path>SFX\Cutscene_effects_10C4C929.wem</Path>
+						</File>
 						<File Id="267500250" Language="SFX">
 							<ShortName>ES_Sci Fi Voice Clip 663 - SFX Producer.wav</ShortName>
 							<Path>SFX\ES_Sci Fi Voice Clip 663 - SFX Producer_10C4C929.wem</Path>
