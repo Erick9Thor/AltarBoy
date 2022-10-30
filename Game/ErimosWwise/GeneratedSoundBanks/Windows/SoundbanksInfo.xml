@@ -206,7 +206,7 @@
 				</Event>
 			</IncludedEvents>
 		</SoundBank>
-		<SoundBank Id="1560169506" Language="SFX" Hash="3048658572">
+		<SoundBank Id="1560169506" Language="SFX" Hash="1540677915">
 			<ObjectPath>\SoundBanks\Default Work Unit\Boss</ObjectPath>
 			<ShortName>Boss</ShortName>
 			<Path>Boss.bnk</Path>
@@ -350,6 +350,10 @@
 						<File Id="31154168" Language="SFX">
 							<ShortName>Defeated-138bpm4-4_L4M-P0.wav</ShortName>
 							<Path>SFX\Defeated-138bpm4-4_L4M-P0_D79FB2B7.wem</Path>
+						</File>
+						<File Id="421868321" Language="SFX">
+							<ShortName>ES_Devil Laugh 1 - SFX Producer.wav</ShortName>
+							<Path>SFX\ES_Devil Laugh 1 - SFX Producer_10C4C929.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 					<ActionSetState>

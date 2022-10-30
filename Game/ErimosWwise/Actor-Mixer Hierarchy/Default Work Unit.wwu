@@ -784,13 +784,18 @@
 										<Property Name="IsGlobalLimit" Type="int16" Value="1"/>
 										<Property Name="MakeUpGain" Type="Real64">
 											<ValueList>
-												<Value>20</Value>
+												<Value>-5</Value>
 											</ValueList>
 										</Property>
 										<Property Name="MaxReachedBehavior" Type="int16" Value="1"/>
 										<Property Name="MaxSoundPerInstance" Type="int16">
 											<ValueList>
 												<Value>1</Value>
+											</ValueList>
+										</Property>
+										<Property Name="Pitch" Type="int32">
+											<ValueList>
+												<Value>200</Value>
 											</ValueList>
 										</Property>
 										<Property Name="UseMaxSoundPerInstance" Type="bool">
@@ -800,7 +805,7 @@
 										</Property>
 										<Property Name="Volume" Type="Real64">
 											<ValueList>
-												<Value>5</Value>
+												<Value>40</Value>
 											</ValueList>
 										</Property>
 									</PropertyList>
@@ -1221,7 +1226,7 @@
 									</ChildrenList>
 									<ObjectLists/>
 								</RandomSequenceContainer>
-								<Sound Name="BossLaugh" ID="{2A3BA01A-46C5-45C3-B77C-5BC46AA728AF}" ShortID="369224443">
+								<Sound Name="BossSpawnCrystalLaugh" ID="{2A3BA01A-46C5-45C3-B77C-5BC46AA728AF}" ShortID="369224443">
 									<PropertyList>
 										<Property Name="Pitch" Type="int32">
 											<ValueList>
@@ -1497,6 +1502,52 @@
 									</ChildrenList>
 									<ObjectLists/>
 								</BlendContainer>
+								<Sound Name="BossWinsLaugh" ID="{7F85AFF2-9484-4887-B270-5BDA6C4A9B1F}" ShortID="728023110">
+									<PropertyList>
+										<Property Name="3DSpatialization" Type="int16" Value="1"/>
+										<Property Name="InitialDelay" Type="Real64">
+											<ValueList>
+												<Value>0.5</Value>
+											</ValueList>
+											<ModifierList>
+												<ModifierInfo>
+													<Modifier Name="" ID="{A474D7DF-87E5-46D8-8B62-022E0139DB77}">
+														<PropertyList>
+															<Property Name="Enabled" Type="bool" Value="True"/>
+															<Property Name="Max" Type="Real64" Value="0.5"/>
+														</PropertyList>
+													</Modifier>
+												</ModifierInfo>
+											</ModifierList>
+										</Property>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>-5</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="ES_Devil Laugh 1 - SFX Producer" ID="{DBA5F561-45FA-4162-B03D-CD2343E77CCB}">
+											<Language>SFX</Language>
+											<AudioFile>ES_Devil Laugh 1 - SFX Producer.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="421868321"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="ES_Devil Laugh 1 - SFX Producer" ID="{DBA5F561-45FA-4162-B03D-CD2343E77CCB}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
 							</ChildrenList>
 						</Folder>
 						<Folder Name="Worm" ID="{0AFA0BB5-7670-4010-B2AC-8CAE14C853F1}" ShortID="677591503">

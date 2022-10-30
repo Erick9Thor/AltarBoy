@@ -444,6 +444,13 @@
 								</Reference>
 							</ReferenceList>
 						</Action>
+						<Action Name="" ID="{26315B67-8295-4253-A1E5-8059A7F06786}" ShortID="233551274">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="BossWinsLaugh" ID="{7F85AFF2-9484-4887-B270-5BDA6C4A9B1F}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
 					</ChildrenList>
 				</Event>
 				<Event Name="Play_BossRoar" ID="{2AAEC1AA-3C8F-4D16-BE79-2F8D1F384AB3}">
@@ -581,7 +588,7 @@
 						<Action Name="" ID="{90A6F6D7-86C0-46CC-8B96-EA68CE0E275D}" ShortID="750987143">
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="BossLaugh" ID="{2A3BA01A-46C5-45C3-B77C-5BC46AA728AF}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+									<ObjectRef Name="BossSpawnCrystalLaugh" ID="{2A3BA01A-46C5-45C3-B77C-5BC46AA728AF}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
