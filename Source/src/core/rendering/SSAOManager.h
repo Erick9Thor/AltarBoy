@@ -12,9 +12,9 @@ namespace Hachiko
             1.0f / static_cast<float>(SSAOConstants::KERNEL_SIZE);
         constexpr int NOISE_SIZE = 4;
         constexpr int NOISE_PIXELS = NOISE_SIZE * NOISE_SIZE;
-        constexpr float DEFAULT_RADIUS = 0.5f;
-        constexpr float DEFAULT_BIAS = 0.1f;
-        constexpr float DEFAULT_POWER = 1.0f;
+        constexpr float DEFAULT_RADIUS = 3.31f;
+        constexpr float DEFAULT_BIAS = 0.76f;
+        constexpr float DEFAULT_POWER = 4.48f;
     } // namespace SSAOConstants
 
     class SSAOManager
