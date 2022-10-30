@@ -5,14 +5,14 @@ component:
   - !<transform>
     type: 1
     enabled: true
-    position: [-428.9, -24.83, 75.84]
-    rotation: [180, -69.5, 180]
-    scale: [5.145, 4.938, 5.145]
+    position: [692.6, -62.89, 471.5]
+    rotation: [0, 14.25, 0]
+    scale: [11.69, 10.97, 11.69]
   - !<transform_2d>
     type: 10
     enabled: true
     position: [0, 0, 0]
-    size: [1194, 637]
+    size: [1, 1]
     scale: [1, 1]
     rotation: [0, 0, 0, 1]
     pivot: [0.5, 0.5]
@@ -28,7 +28,7 @@ child:
         type: 1
         enabled: true
         position: [0, 0, 0]
-        rotation: [-0, 0, -0]
+        rotation: [0, 0, 0]
         scale: [1, 1, 1]
       - !<transform_2d>
         type: 10
@@ -66,7 +66,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<transform_2d>
             type: 10
@@ -103,7 +103,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<transform_2d>
             type: 10
@@ -141,7 +141,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0, 0, 0]
-                rotation: [-0, 0, -0]
+                rotation: [0, 0, 0]
                 scale: [1, 1, 1]
               - !<transform_2d>
                 type: 10
@@ -179,7 +179,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [-0, 0, -0]
+                    rotation: [0, 0, 0]
                     scale: [1, 1, 1]
                   - !<transform_2d>
                     type: 10
@@ -216,7 +216,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [-0, 0, -0]
+                    rotation: [0, 0, 0]
                     scale: [1, 1, 1]
                   - !<transform_2d>
                     type: 10
@@ -253,7 +253,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [-0, 0, -0]
+                    rotation: [0, 0, 0]
                     scale: [1, 1, 1]
                   - !<transform_2d>
                     type: 10
@@ -290,7 +290,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [-0, 0, -0]
+                    rotation: [0, 0, 0]
                     scale: [1, 1, 1]
                   - !<transform_2d>
                     type: 10
@@ -327,7 +327,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0, 0, 0]
-                rotation: [-0, 0, -0]
+                rotation: [0, 0, 0]
                 scale: [1, 1, 1]
               - !<transform_2d>
                 type: 10
@@ -365,7 +365,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [-0, 0, -0]
+                    rotation: [0, 0, 0]
                     scale: [1, 1, 1]
                   - !<transform_2d>
                     type: 10
@@ -402,7 +402,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [-0, 0, -0]
+                    rotation: [0, 0, 0]
                     scale: [1, 1, 1]
                   - !<transform_2d>
                     type: 10
@@ -439,7 +439,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [-0, 0, -0]
+                    rotation: [0, 0, 0]
                     scale: [1, 1, 1]
                   - !<transform_2d>
                     type: 10
@@ -476,7 +476,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [-0, 0, -0]
+                    rotation: [0, 0, 0]
                     scale: [1, 1, 1]
                   - !<transform_2d>
                     type: 10
@@ -506,6 +506,43 @@ child:
                     image_y_tiles: 2
                     image_tiles_per_second: 14
                     fill_window: false
+              - name: Health_capsule_extra
+                enabled: true
+                component:
+                  - !<transform>
+                    type: 1
+                    enabled: true
+                    position: [-43.01, 5.03, -72.94]
+                    rotation: [-180, 69.5, -180]
+                    scale: [0.1944, 0.2026, 0.1944]
+                  - !<transform_2d>
+                    type: 10
+                    enabled: true
+                    position: [6.8, -1.2, 0]
+                    size: [1, 1]
+                    scale: [1, 1]
+                    rotation: [0, 0, 0, 1]
+                    pivot: [0.5, 0.5]
+                    anchor: [0.5, 0.5]
+                  - !<canvas_renderer>
+                    type: 9
+                    enabled: true
+                    scale_ui: false
+                    original_size_x: 0
+                    original_size_y: 0
+                  - !<image>
+                    type: 11
+                    enabled: true
+                    image_id: 15478304056567162071
+                    hover_image_id: 0
+                    image_color: [1, 0.0211, 0.9628, 1]
+                    hover_image_color: [1, 1, 1, 1]
+                    image_is_tiled: true
+                    image_randomize_initial_frame: false
+                    image_x_tiles: 7
+                    image_y_tiles: 2
+                    image_tiles_per_second: 14
+                    fill_window: false
           - name: Stamina
             enabled: false
             component:
@@ -513,7 +550,7 @@ child:
                 type: 1
                 enabled: true
                 position: [0, 0, 0]
-                rotation: [-0, 0, -0]
+                rotation: [0, 0, 0]
                 scale: [1, 1, 1]
               - !<progress_bar>
                 type: 13
@@ -540,7 +577,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [-0, 0, -0]
+                    rotation: [0, 0, 0]
                     scale: [1, 1, 1]
                   - !<transform_2d>
                     type: 10
@@ -577,7 +614,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [-0, 0, -0]
+                    rotation: [0, 0, 0]
                     scale: [1, 1, 1]
                   - !<transform_2d>
                     type: 10
@@ -614,7 +651,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<transform_2d>
             type: 10
@@ -651,7 +688,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<transform_2d>
             type: 10
@@ -688,7 +725,7 @@ child:
         type: 1
         enabled: true
         position: [0, 0, 0]
-        rotation: [-0, 0, -0]
+        rotation: [0, 0, 0]
         scale: [0.4417, 0.45, 0.4417]
       - !<transform_2d>
         type: 10
@@ -725,7 +762,7 @@ child:
         type: 1
         enabled: true
         position: [-0.7397, 3.369, -63.07]
-        rotation: [0, 20.48, -0]
+        rotation: [0, 20.48, 0]
         scale: [0.4417, 0.45, 0.4417]
       - !<transform_2d>
         type: 10
@@ -746,6 +783,80 @@ child:
         type: 11
         enabled: true
         image_id: 407881782410796713
+        hover_image_id: 0
+        image_color: [1, 1, 1, 1]
+        hover_image_color: [1, 1, 1, 1]
+        image_is_tiled: false
+        image_randomize_initial_frame: false
+        image_x_tiles: 1
+        image_y_tiles: 1
+        image_tiles_per_second: 1
+        fill_window: false
+  - name: Vignette
+    enabled: false
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-43.01, 5.03, -72.94]
+        rotation: [-180, 69.5, 180]
+        scale: [0.1944, 0.2026, 0.1944]
+      - !<transform_2d>
+        type: 10
+        enabled: true
+        position: [0, 0, 0]
+        size: [1288, 696]
+        scale: [1, 1]
+        rotation: [0, 0, 0, 1]
+        pivot: [0.5, 0.5]
+        anchor: [0.5, 0.5]
+      - !<canvas_renderer>
+        type: 9
+        enabled: true
+        scale_ui: false
+        original_size_x: 0
+        original_size_y: 0
+      - !<image>
+        type: 11
+        enabled: true
+        image_id: 10523760409150182962
+        hover_image_id: 0
+        image_color: [1, 1, 1, 0.6078]
+        hover_image_color: [1, 1, 1, 1]
+        image_is_tiled: false
+        image_randomize_initial_frame: false
+        image_x_tiles: 1
+        image_y_tiles: 1
+        image_tiles_per_second: 1
+        fill_window: true
+  - name: DeathScreen
+    enabled: false
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-43.01, 5.03, -72.94]
+        rotation: [-180, 69.5, 180]
+        scale: [0.1944, 0.2026, 0.1944]
+      - !<transform_2d>
+        type: 10
+        enabled: true
+        position: [0, 0, 0]
+        size: [967, 317]
+        scale: [1, 1]
+        rotation: [0, 0, 0, 1]
+        pivot: [0.5, 0.5]
+        anchor: [0.5, 0.5]
+      - !<canvas_renderer>
+        type: 9
+        enabled: true
+        scale_ui: true
+        original_size_x: 1133
+        original_size_y: 630
+      - !<image>
+        type: 11
+        enabled: true
+        image_id: 4375169993337302887
         hover_image_id: 0
         image_color: [1, 1, 1, 1]
         hover_image_color: [1, 1, 1, 1]

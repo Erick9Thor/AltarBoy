@@ -4,8 +4,8 @@
 #include <vector>
 #include "Batching/TextureBatch.h"
 
-#define MAX_POINT_LIGHTS 1200
-#define MAX_SPOT_LIGHTS 4
+#define MAX_POINT_LIGHTS 500
+#define MAX_SPOT_LIGHTS 100
 
 namespace Hachiko
 {
@@ -60,7 +60,7 @@ namespace Hachiko
         bool Init() override;
         bool CleanUp() override;
 
-        [[nodiscard]] Program* GetProgram(Program::PROGRAMS program) const
+        [[nodiscard]] Program* GetProgram(Program::Programs program) const
         {
             return programs[static_cast<int>(program)];
         }
@@ -73,6 +73,10 @@ namespace Hachiko
 
         void* CreatePersistentBuffers(unsigned& buffer_id, int binding_point, unsigned size);
 
+        void CreatePrograms();
+        void DeletePrograms();
+        void RecompilePrograms();
+
     private:
         static char* LoadShaderSource(const char* shader_file_name);
         unsigned int CompileShader(unsigned type, const char* source) const;
@@ -80,7 +84,7 @@ namespace Hachiko
         Program* CreateProgram(const char* vtx_shader_path, const char* frg_shader_path);
         void CreateGLSLIncludes() const;
 
-        Program* programs[static_cast<int>(Program::PROGRAMS::COUNT)];
+        Program* programs[static_cast<int>(Program::Programs::COUNT)];
 
         // Assume the shader already manages its binding points
         void CreateUBO(UBOPoints binding_point, unsigned size);

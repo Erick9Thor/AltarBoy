@@ -5,6 +5,8 @@
 #include "entities/crystals/CrystalExplosion.h"
 #include "entities/enemies/EnemyController.h"
 #include "entities/player/PlayerController.h"
+#include "entities/enemies/BossController.h"
+
 #include "constants/Sounds.h"
 #include "constants/Scenes.h"
 
@@ -25,12 +27,14 @@ Hachiko::Scripting::CrystalExplosion::CrystalExplosion(GameObject* game_object)
 	, _shake_intensity(0.1f)
 	, _seconds_shaking(0.8f)
 	, _should_regen(true)
+	, damage_effect_duration(0.5f)
 {
 }
 
 void Hachiko::Scripting::CrystalExplosion::OnAwake()
 {
 	enemies = Scenes::GetEnemiesContainer();
+	boss = Scenes::GetBoss();
 	_stats = game_object->GetComponent<Stats>();
 	_audio_source = game_object->GetComponent<ComponentAudioSource>();
 	_transform = game_object->GetTransform();
@@ -38,6 +42,7 @@ void Hachiko::Scripting::CrystalExplosion::OnAwake()
 	obstacle = game_object->GetComponent<ComponentObstacle>();
 
 	_initial_transform = game_object->GetTransform()->GetGlobalMatrix();
+	crystal_geometry = game_object->FindDescendantWithName("Geo");
 }
 
 void Hachiko::Scripting::CrystalExplosion::OnStart()
@@ -51,7 +56,23 @@ void Hachiko::Scripting::CrystalExplosion::OnUpdate()
 	{
 		return;
 	}
-	
+
+	if (damage_effect_remaining_time >= 0.0f)
+	{
+		damage_effect_remaining_time -= Time::DeltaTime();
+	}
+
+	if (damage_effect_remaining_time >= 0.0f)
+	{
+		float progress = damage_effect_remaining_time / damage_effect_duration;
+		crystal_geometry->ChangeEmissiveColor(float4(1.0f, 1.0f, 1.0f, progress), true);
+	}
+	else
+	{
+		crystal_geometry->ResetEmissive(true);
+	}
+
+
 	if (!_stats->IsAlive())
 	{
 		if (cp_animation->IsAnimationStopped())
@@ -103,7 +124,11 @@ void Hachiko::Scripting::CrystalExplosion::StartExplosion()
 void Hachiko::Scripting::CrystalExplosion::CheckRadiusExplosion()
 {
 	GameObject* player = Scenes::GetPlayer();
-	if (_detecting_radius >= game_object->GetTransform()->GetGlobalPosition().Distance(player->GetTransform()->GetGlobalPosition()) && player->GetComponent<PlayerController>()->IsAlive())
+
+	float3 position = game_object->GetTransform()->GetGlobalPosition();
+
+	if (_detecting_radius >= position.Distance(player->GetTransform()->GetGlobalPosition())
+		&& player->GetComponent<PlayerController>()->IsAlive())
 	{
 		StartExplosion();
 	}
@@ -113,7 +138,7 @@ void Hachiko::Scripting::CrystalExplosion::ExplodeCrystal()
 {
 	_is_exploding = false;
 	_stats->ReceiveDamage(_stats->_max_hp);
-	
+
 	// Desable billboards
 	for (GameObject* child : _explosion_effect->children)
 	{
@@ -128,6 +153,11 @@ void Hachiko::Scripting::CrystalExplosion::ExplodeCrystal()
 		{
 			check_hit.insert(check_hit.end(), enemy_pack->children.begin(), enemy_pack->children.end());
 		}
+	}
+
+	if (boss != nullptr)
+	{
+		check_hit.push_back(boss);
 	}
 
 	check_hit.push_back(Scenes::GetPlayer());
@@ -147,6 +177,7 @@ void Hachiko::Scripting::CrystalExplosion::ExplodeCrystal()
 	{
 		EnemyController* enemy_controller = element->GetComponent<EnemyController>();
 		PlayerController* player_controller = element->GetComponent<PlayerController>();
+		BossController* boss_controller = element->GetComponent<BossController>();
 
 		float3 relative_dir = element->GetTransform()->GetGlobalPosition() - _transform->GetGlobalPosition();
 		relative_dir.y = 0.0f;
@@ -159,6 +190,11 @@ void Hachiko::Scripting::CrystalExplosion::ExplodeCrystal()
 		if (player_controller != nullptr)
 		{
 			player_controller->RegisterHit(_stats->_attack_power, true, relative_dir.Normalized(), false, PlayerController::DamageType::CRYSTAL);
+		}
+
+		if (boss_controller != nullptr)
+		{
+			boss_controller->RegisterHit(_stats->_attack_power);
 		}
 	}
 }
@@ -201,6 +237,8 @@ float3 Hachiko::Scripting::CrystalExplosion::GetShakeOffset()
 void Hachiko::Scripting::CrystalExplosion::RegisterHit(int damage)
 {
 	if (!_stats) return;
+
+	damage_effect_remaining_time = damage_effect_duration;
 
 	_stats->ReceiveDamage(damage);
 

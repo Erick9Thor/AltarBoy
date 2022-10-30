@@ -21,6 +21,14 @@ namespace Hachiko::Sounds
 	constexpr const wchar_t* WORM_HIDE = L"Play_WormHide";
 	constexpr const wchar_t* WORM_DEATH = L"Play_WormDeath";
 
+	// Gauntlet
+	constexpr const wchar_t* GAUNTLET_START = L"Play_WormSpawn";
+	constexpr const wchar_t* GAUNTLET_NEXT_ROUND = L"Play_WormRoar";
+	constexpr const wchar_t* GAUNTLET_COMPLETE = L"Play_WormDeath";
+
+	// Checkpoint
+	constexpr const wchar_t* CHECKPOINT_ACTIVATE = L"Play_Dash";
+
 	// Enviroment
 	constexpr const wchar_t* CRYSTAL = L"Play_Crystal";
 	constexpr const wchar_t* PLAY_WIND = L"Play_Wind";

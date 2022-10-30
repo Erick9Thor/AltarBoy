@@ -20,7 +20,9 @@
 #include "components/ComponentTransform2D.h"
 #include "components/ComponentDirLight.h"
 #include "components/ComponentImage.h"
+#include "components/ComponentTransform.h"
 #include "components/ComponentVideo.h"
+#include "core/rendering/StandaloneGLTexture.h"
 
 #ifdef _DEBUG
 #include "core/ErrorHandler.h"
@@ -48,6 +50,8 @@ bool Hachiko::ModuleRender::Init()
 
     bloom_manager.Initialize();
 
+    ssao_manager.SetupSSAO(fb_width, fb_height);
+
 #ifdef _DEBUG
     glEnable(GL_DEBUG_OUTPUT); // Enable output callback
     glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
@@ -58,12 +62,17 @@ bool Hachiko::ModuleRender::Init()
     fps_log = std::vector<float>(n_bins);
     ms_log = std::vector<float>(n_bins);
 
-    draw_skybox = App->preferences->GetEditorPreference()->GetDrawSkybox();
-    draw_navmesh = App->preferences->GetEditorPreference()->GetDrawNavmesh();
-    shadow_pass_enabled = App->preferences->GetEditorPreference()->GetShadowPassEnabled();
+    EditorPreferences* __restrict editor_preferences = 
+        App->preferences->GetEditorPreference();
+
+    draw_skybox = editor_preferences->GetDrawSkybox();
+    draw_navmesh = editor_preferences->GetDrawNavmesh();
+    shadow_pass_enabled = editor_preferences->GetShadowPassEnabled();
 
     shadow_manager.SetGaussianBlurringEnabled(
-        App->preferences->GetEditorPreference()->GetShadowMapGaussianBlurringEnabled());
+        editor_preferences->GetShadowMapGaussianBlurringEnabled());
+
+    ssao_enabled = editor_preferences->GetSSAOEnabled();
 
     // Create noise texture for general use (dissolve effect)
     CreateNoiseTexture();
@@ -150,6 +159,9 @@ void Hachiko::ModuleRender::ManageResolution(const ComponentCamera* camera)
 
     // Resize textures of bloom:
     bloom_manager.Resize(fb_width, fb_height);
+
+    // Resize SSAO texture:
+    ssao_manager.ResizeSSAO(fb_width, fb_height);
 }
 
 void Hachiko::ModuleRender::CreateContext()
@@ -318,8 +330,8 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
         batch_manager->AddDrawComponent(target.mesh_renderer);
     }
 
-    // Draw collected meshes with geometry pass rogram:
-    program = App->program->GetProgram(Program::PROGRAMS::DEFERRED_GEOMETRY);
+    // Draw collected meshes with geometry pass program:
+    program = App->program->GetProgram(Program::Programs::DEFERRED_GEOMETRY);
 
     program->Activate();
 
@@ -329,7 +341,18 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
     batch_manager->DrawOpaqueBatches(program);
     Program::Deactivate();
 
-    // Read the emissive texture, copy it and blur it band write to another texture:
+    if (ssao_enabled)
+    {
+        ssao_manager.DrawSSAO(
+            g_buffer, 
+            scene->GetCullingCamera()->GetFrustum().ViewMatrix(), 
+            scene->GetCullingCamera()->GetFrustum().ProjectionMatrix(), 
+            fb_width, 
+            fb_height);
+    }
+
+    // Read the emissive texture, copy it and blur it band write to another
+    // texture:
     bloom_manager.ApplyBloom(g_buffer.GetEmissiveTexture());
 
     // ------------------------------ LIGHT PASS ------------------------------
@@ -338,7 +361,7 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Use Deferred rendering lighting pass program:
-    program = App->program->GetProgram(Program::PROGRAMS::DEFERRED_LIGHTING);
+    program = App->program->GetProgram(Program::Programs::DEFERRED_LIGHTING);
     program->Activate();
 
     // Bind shadow specific necessary uniforms for lighting pass:
@@ -346,6 +369,9 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
 
     // Bind ImageBasedLighting uniforms
     scene->GetSkybox()->BindImageBasedLightingUniforms(program);
+
+    // Bind SSAO flag:
+    program->BindUniformBool("ssao_enabled", ssao_enabled);
 
     // Bind all g-buffer textures:
     g_buffer.BindTextures();
@@ -358,9 +384,15 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
     // Bind blurred out emissive texture from bloom_manager:
     bloom_manager.BindForReading();
 
+    if (ssao_enabled)
+    {
+        // Bind SSAO texture to texture slot 10:
+        ssao_manager.BindSSAOTexture(10);
+    }
+
     // Bind deferred rendering mode. This can be configured from the editor,
     // and shader sets the fragment color according to this mode:
-    int render_shadows = static_cast<int>(shadow_pass_enabled);
+    const int render_shadows = static_cast<int>(shadow_pass_enabled);
     program->BindUniformInts(Uniforms::ShadowMap::RENDER_MODE, 1, &render_shadows);
     program->BindUniformInts(Uniforms::DeferredRendering::MODE, 1, &deferred_mode);
 
@@ -386,8 +418,10 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
    
     // ----------------------------- FOG -----------------------------
 
-    // Fog is drawn before forward pass because it doesnt apply its values to gbuffer
-    // And we want to ensure that all the forward rendered objects are properly visible
+    // Fog is drawn before forward pass because it doesn't apply its values to
+    // g-buffer and we want to ensure that all the forward rendered objects are
+    // properly visible.
+
     const Scene::FogConfig& fog = scene->GetFogConfig();
     if (fog.enabled)
     {
@@ -396,7 +430,7 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
         g_buffer.BindForReading();
         g_buffer.BindFogTextures();
 
-        program = App->program->GetProgram(Program::PROGRAMS::FOG_PROGRAM);
+        program = App->program->GetProgram(Program::Programs::FOG);
         program->Activate();
 
         EnableBlending();
@@ -415,7 +449,7 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
     }
 
     // ----------------------------- FORWARD PASS -----------------------------
-    // 
+
     // Clear Transparent Batches:
     batch_manager->ClearTransparentBatchesDrawList();
 
@@ -423,7 +457,8 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
     if (render_forward_pass)
     {
         // Get transparent meshes:
-        const std::vector<RenderTarget>& transparent_targets = render_list.GetTransparentTargets();
+        const std::vector<RenderTarget>& transparent_targets = 
+            render_list.GetTransparentTargets();
 
         if (transparent_targets.size() > 0)
         {
@@ -435,7 +470,7 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
             }
 
             // Forward rendering pass for transparent game objects:
-            program = App->program->GetProgram(Program::PROGRAMS::FORWARD);
+            program = App->program->GetProgram(Program::Programs::FORWARD);
             program->Activate();
 
             EnableBlending();
@@ -446,7 +481,7 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
 
     DrawParticles(scene, camera);
       
-    // ----------------------------- POST PROCCESS -----------------------------
+    // ----------------------------- POST PROCCESS ----------------------------
 }
 
 void Hachiko::ModuleRender::DrawParticles(Scene* scene, ComponentCamera* camera) const
@@ -459,7 +494,7 @@ void Hachiko::ModuleRender::DrawParticles(Scene* scene, ComponentCamera* camera)
     const auto& scene_particles = scene->GetSceneParticles();
     if (!scene_particles.empty())
     {
-        Program* particle_program = App->program->GetProgram(Program::PROGRAMS::PARTICLE);
+        Program* particle_program = App->program->GetProgram(Program::Programs::PARTICLE);
         particle_program->Activate();
         for (auto& particle : scene_particles)
         {
@@ -510,13 +545,16 @@ bool Hachiko::ModuleRender::DrawToShadowMap(
 
     // Draw collected meshes with shadow mapping program:
     const Program* program = 
-        App->program->GetProgram(Program::PROGRAMS::SHADOW_MAPPING);
+        App->program->GetProgram(Program::Programs::SHADOW_MAPPING);
     program->Activate();
 
     // Bind shadow map generation specific necessary uniforms:
     shadow_manager.BindShadowMapGenerationPassUniforms(program);
     // Bind shadow map fbo for drawing and adjust viewport size etc.:
     shadow_manager.BindBufferForDrawing();
+
+    //Disable to cull for both faces
+    glDisable(GL_CULL_FACE);
 
     if ((draw_config & DRAW_CONFIG_OPAQUE) != 0)
     {
@@ -556,6 +594,9 @@ bool Hachiko::ModuleRender::DrawToShadowMap(
         batch_manager->DrawTransparentBatches(program);
     }
 
+    //Enable back to face culling
+    glEnable(GL_CULL_FACE);
+
     // Unbind shadow map fbo:
     ShadowManager::UnbindBuffer();
 
@@ -563,7 +604,7 @@ bool Hachiko::ModuleRender::DrawToShadowMap(
 
     // Smooth out the shadow map by applying gaussian filtering:
     shadow_manager.ApplyGaussianBlur(
-        App->program->GetProgram(Program::PROGRAMS::GAUSSIAN_FILTERING));
+        App->program->GetProgram(Program::Programs::GAUSSIAN_FILTERING));
 
     return true;
 }
@@ -714,9 +755,22 @@ void Hachiko::ModuleRender::OptionsMenu()
     ImGui::TextWrapped("Bloom");
     ImGui::Separator();
     bloom_manager.DrawEditorContent();
+
+    ImGui::NewLine();
+    ImGui::TextWrapped("Ambient Occlusion");
+    ImGui::Separator();
+    bool ssao_mode_changed = Widgets::Checkbox("SSAO enabled", &ssao_enabled);
+    if (ssao_mode_changed)
+    {
+        App->preferences->GetEditorPreference()->SetSSAOEnabled(ssao_enabled);
+    }
+    if (ssao_enabled)
+    {
+        ssao_manager.ShowInEditorUI();
+    }
 }
 
-void Hachiko::ModuleRender::LoadingScreenOptions() 
+void Hachiko::ModuleRender::LoadingScreenOptions() const
 {
     ImGui::NewLine();
 
@@ -775,6 +829,11 @@ void Hachiko::ModuleRender::DeferredOptions()
     if (Widgets::RadioButton("Emissive", deferred_mode == 6))
     {
         deferred_mode = 6;
+    }
+
+    if (Widgets::RadioButton("SSAO Color", deferred_mode == 7))
+    {
+        deferred_mode = 7;
     }
 
     Widgets::Checkbox("Forward Rendering Pass", &render_forward_pass);
@@ -1049,7 +1108,7 @@ void Hachiko::ModuleRender::DrawLoadingScreen(const float delta)
 {
     OPTICK_CATEGORY("DrawLoadingScreen", Optick::Category::Rendering);
 
-    Program* img_program = App->program->GetProgram(Program::PROGRAMS::UI_IMAGE);
+    Program* img_program = App->program->GetProgram(Program::Programs::UI_IMAGE);
 
     glDepthFunc(GL_ALWAYS);
 

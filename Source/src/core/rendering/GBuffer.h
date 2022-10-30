@@ -18,6 +18,8 @@ public:
     void BindForDrawing() const;
     void BindFogTextures() const;
     void UnbindFogTextures() const;
+    void BindSSAOTextures() const;
+    void UnbindSSAOTextures() const;
     [[nodiscard]] bool IsGenerated() const;
 
     [[nodiscard]] unsigned int GetEmissiveTexture() const;

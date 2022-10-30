@@ -430,9 +430,25 @@ void Hachiko::GeometryBatch::GenerateBuffers()
 
 void Hachiko::GeometryBatch::ImGuiWindow() 
 {
-    for (unsigned i = 0; i < components.size(); ++i)
+    ImGui::TextWrapped("- Amount of mesh resources: %i", resources.size());
+    ImGui::TextWrapped("- Amount of components: %i", components.size());
+
+    if (ImGui::TreeNodeEx(&components, ImGuiTreeNodeFlags_None, "Components"))
     {
-        ImGui::TextWrapped(components[i]->GetGameObject()->name.c_str());
+        for (unsigned i = 0; i < components.size(); ++i)
+        {
+            ImGui::TextWrapped(components[i]->GetGameObject()->name.c_str());
+        }
+        ImGui::TreePop();
     }
+    if (ImGui::TreeNodeEx(&resources, ImGuiTreeNodeFlags_None, "Meshes"))
+    {
+        for (auto& resource : resources)
+        {
+            ImGui::TextWrapped("%llu", resource.first->GetID());
+        }
+        ImGui::TreePop();
+    }
+
     texture_batch->ImGuiWindow();
 }

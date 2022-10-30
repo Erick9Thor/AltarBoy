@@ -256,6 +256,13 @@ void Hachiko::Scripting::PlayerController::OnStart()
 	}
 
 	_aim_indicator_billboard->Stop();
+
+	if (_level_manager->increased_health)
+	{
+		IncreaseHealth();
+	}
+
+	UpdateHealthBar();
 }
 
 void Hachiko::Scripting::PlayerController::OnUpdate()
@@ -386,9 +393,13 @@ math::float3 Hachiko::Scripting::PlayerController::GetRaycastPosition(
 
 	if (Input::IsGamepadModeOn())
 	{
-		// TODO: Check the Look at of the player to not force the user move the stick because it's not accurate
 		const math::float2 gamepad_normalized_position =
 			math::float2(Input::GetAxisNormalized(Input::GameControllerAxis::CONTROLLER_AXIS_LEFTX), Input::GetAxisNormalized(Input::GameControllerAxis::CONTROLLER_AXIS_LEFTY));
+
+		if (gamepad_normalized_position.x <= 0.2 && gamepad_normalized_position.x >= -0.2 && gamepad_normalized_position.y <= 0.2 && gamepad_normalized_position.y >= -0.2)
+		{
+			return current_position + _player_transform->GetFront();
+		}
 
 		const math::float2 gamepad_position_view =
 			ComponentCamera::ScreenPositionToView(gamepad_normalized_position);
@@ -1214,46 +1225,46 @@ void Hachiko::Scripting::PlayerController::AttackController()
 			const Weapon& weapon = GetCurrentWeapon();
 			CombatManager* combat_manager = _combat_manager->GetComponent<CombatManager>();
 
-			//// UNCOMMENT THIS SECTION IF YOU WANT TO DEBUG DRAW ATTACK HIT BOXES
-			//if (attack.stats.type == CombatManager::AttackType::CONE)
-			//{
-			//	_attack_indicator->SetActive(true);
-			//}
-			//else
-			//{
-			//	if (combat_manager)
-			//	{
-			//		Debug::DebugDraw(combat_manager->CreateAttackHitbox(GetMeleeAttackOrigin(attack.stats.range), attack.stats), weapon.color.Float3Part());
-			//	}
-			//}
+//// UNCOMMENT THIS SECTION IF YOU WANT TO DEBUG DRAW ATTACK HIT BOXES
+//if (attack.stats.type == CombatManager::AttackType::CONE)
+//{
+//	_attack_indicator->SetActive(true);
+//}
+//else
+//{
+//	if (combat_manager)
+//	{
+//		Debug::DebugDraw(combat_manager->CreateAttackHitbox(GetMeleeAttackOrigin(attack.stats.range), attack.stats), weapon.color.Float3Part());
+//	}
+//}
 
-			if (_attack_current_delay > 0.f)
+if (_attack_current_delay > 0.f)
+{
+	_attack_current_delay -= Time::DeltaTimeScaled();
+
+	if (_attack_current_delay <= 0.f)
+	{
+		int hit_count = 0;
+
+		if (combat_manager)
+		{
+			// Offset the center of the attack if its a rectangle
+			if (attack.stats.type == CombatManager::AttackType::RECTANGLE)
 			{
-				_attack_current_delay -= Time::DeltaTimeScaled();
-				
-				if (_attack_current_delay <= 0.f)
-				{
-					int hit_count = 0;
-
-					if (combat_manager)
-					{
-						// Offset the center of the attack if its a rectangle
-						if (attack.stats.type == CombatManager::AttackType::RECTANGLE)
-						{
-							hit_count = combat_manager->PlayerMeleeAttack(GetMeleeAttackOrigin(attack.stats.range), attack.stats);
-						}
-						else
-						{
-							hit_count = combat_manager->PlayerMeleeAttack(_player_transform->GetGlobalMatrix(), attack.stats);
-						}
-					}
-					if (hit_count > 0)
-					{
-						_ammo_count = math::Clamp(_ammo_count += hit_count, 0, MAX_AMMO);
-						UpdateAmmoUI();
-					}
-				}
+				hit_count = combat_manager->PlayerMeleeAttack(GetMeleeAttackOrigin(attack.stats.range), attack.stats);
 			}
+			else
+			{
+				hit_count = combat_manager->PlayerMeleeAttack(_player_transform->GetGlobalMatrix(), attack.stats);
+			}
+		}
+		if (hit_count > 0)
+		{
+			_ammo_count = math::Clamp(_ammo_count += hit_count, 0, MAX_AMMO);
+			UpdateAmmoUI();
+		}
+	}
+}
 		}
 	}
 
@@ -1309,9 +1320,26 @@ void Hachiko::Scripting::PlayerController::CheckNearbyParasytes(const float3& cu
 		}
 		std::vector<GameObject*>& enemies = pack->children;
 
+		float parasyte_pickup_distance = 1.5f;
+
+		if (_magic_parasyte && _magic_parasyte->IsActive())
+		{
+			if (parasyte_pickup_distance >= _player_transform->GetGlobalPosition().Distance(_magic_parasyte->GetTransform()->GetGlobalPosition()))
+			{
+				ActivateTooltip();
+				if (Input::IsKeyDown(Input::KeyCode::KEY_F) || Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_B))
+				{
+					PickupParasite(nullptr, true);
+					_magic_parasyte->SetActive(false);
+					DeactivateTooltip();
+				}
+				return;
+			}
+		}
+
 		for (int i = 0; i < enemies.size(); ++i)
 		{
-			if (enemies[i]->active && 2.5f >= _player_transform->GetGlobalPosition().Distance(enemies[i]->GetTransform()->GetGlobalPosition()))
+			if (enemies[i]->active && parasyte_pickup_distance >= _player_transform->GetGlobalPosition().Distance(enemies[i]->GetTransform()->GetGlobalPosition()))
 			{
 				EnemyController* enemy_controller = enemies[i]->GetComponent<EnemyController>();
 
@@ -1352,11 +1380,15 @@ void Hachiko::Scripting::PlayerController::CheckNearbyParasytes(const float3& cu
 	DeactivateTooltip();
 }
 
-void Hachiko::Scripting::PlayerController::PickupParasite(EnemyController* enemy_controller)
+void Hachiko::Scripting::PlayerController::PickupParasite(EnemyController* enemy_controller, bool magic_parasyte)
 {
 	_state = PlayerState::PICK_UP;
 
-	enemy_controller->GetParasite();
+	if (enemy_controller)
+	{
+		enemy_controller->GetParasite();
+	}
+	
 
 	// Make player invulnerable for a period of time:
 	_invulnerability_time_remaining = _invulnerability_time;
@@ -1368,6 +1400,11 @@ void Hachiko::Scripting::PlayerController::PickupParasite(EnemyController* enemy
 	_heal_fade_progress = 1.0f;
 	_enable_heal_particles = true;
 
+	if (magic_parasyte)
+	{
+		IncreaseHealth();
+	}
+
 	UpdateHealthBar();
 
 	if (_ui_damage && _ui_damage->IsActive())
@@ -1377,7 +1414,10 @@ void Hachiko::Scripting::PlayerController::PickupParasite(EnemyController* enemy
 	}
 
 	// Select a random weapon:
-	ChangeWeapon(RandomUtil::RandomIntBetween(1, weapons.size() - 1));
+	if (!magic_parasyte)
+	{
+		ChangeWeapon(RandomUtil::RandomIntBetween(1, weapons.size() - 1));
+	}
 }
 
 bool Hachiko::Scripting::PlayerController::RegisterHit(int damage_received, float knockback, float3 direction, bool force_dmg, DamageType dmg_by)
@@ -1690,6 +1730,11 @@ void Hachiko::Scripting::PlayerController::UpdateHealthBar()
 		return;
 	}
 
+	if (hp_cells.size() < 5 && _hp_cell_extra)
+	{
+		_hp_cell_extra->GetComponent(Component::Type::IMAGE)->Disable();
+	}
+
 	// Disable cells 
 	for (int i = 0; i < hp_cells.size(); ++i)
 	{
@@ -1809,6 +1854,15 @@ void Hachiko::Scripting::PlayerController::UpdateVignete()
 	}
 
 	_lh_vfx_current_time += Time::DeltaTimeScaled();
+}
+
+void  Hachiko::Scripting::PlayerController::IncreaseHealth()
+{
+	_level_manager->increased_health = true;
+	hp_cells.push_back(_hp_cell_extra);
+	_combat_stats->_max_hp = 5;
+	_combat_stats->Heal(_combat_stats->_max_hp);
+	UpdateHealthBar();
 }
 
 void Hachiko::Scripting::PlayerController::UpdateEmissives()

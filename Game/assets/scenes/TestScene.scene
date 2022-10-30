@@ -16369,13 +16369,13 @@ child:
             enabled: true
             position: [-10.16, 0, -4.389]
             rotation: [180, -34.75, 180]
-            scale: [5.166, 4.938, 5.166]
+            scale: [5, 5, 5]
           - !<billboard>
             id: 2606673768377146625
             type: 21
             enabled: true
             play_on_awake: false
-            texture_id: 11589188989502843529
+            texture_id: 4488105343313725014
             tiles: [1, 1]
             flip: [false, true]
             billboard_lifetime: 5

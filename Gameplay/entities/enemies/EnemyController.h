@@ -89,6 +89,12 @@ namespace Hachiko
 
             bool IsAttacking() const { return _state == EnemyState::ATTACKING; }
 
+            // The worm attack is completely separated from the worm itself once its shot
+            void SpitController();
+
+            bool CheckValidPath();
+            bool CheckValidPath(float3 position);
+
         private:
             struct StateBehaviour {
                 std::function<void()> Start = nullptr;
@@ -178,6 +184,11 @@ namespace Hachiko
             void WormUpdateHitState();
             void WormEndHitState();
             EnemyState WormTransitionsHitState();
+            // HIDEN
+            void WormStartHidenState();
+            void WormUpdateHidenState();
+            void WormEndHidenState();
+            EnemyState WormTransitionsHidenState();
 
             bool forced_state = false;
             EnemyState _force_state = EnemyState::INVALID;
@@ -189,6 +200,7 @@ namespace Hachiko
             SERIALIZE_FIELD(float, _attack_range);
             SERIALIZE_FIELD(float, _attack_delay);
             SERIALIZE_FIELD(float, _idle_cooldown);
+            SERIALIZE_FIELD(float, _patrol_cooldown);
             SERIALIZE_FIELD(float, _spawning_time);
             SERIALIZE_FIELD(float, _chase_cooldown);
             float _chase_remaining_cooldown;
@@ -252,6 +264,7 @@ namespace Hachiko
             float _acceleration = 0.0f;
             float _speed = 0.0f;
             float _current_idle_cooldown = 0.0f;
+            float _current_patrol_cooldown = 0.0f;
             float _enraged = 0.0f;
             float _enemy_dissolve_time = 1.0f;
             float _enemy_dissolving_time_progress = 0.0f;
@@ -271,11 +284,14 @@ namespace Hachiko
 
             bool _immune = false;
             bool _attack_landing = false;
+            bool _spit_shot = false;
             bool _attack_alt = false;
 
             SERIALIZE_FIELD(float, damage_effect_duration);
             float damage_effect_progress = 0.0f;
 
+            bool _valid_path = false;
+            float _timer_check_path = 0.0f;
 
             EnemyType _enemy_type = EnemyType::BEETLE;
 

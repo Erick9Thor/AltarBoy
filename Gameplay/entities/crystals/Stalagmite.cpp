@@ -18,27 +18,39 @@ void Hachiko::Scripting::Stalagmite::ActiveEffects()
 	_explosion_effect->SetActive(true);
 }
 
-void Hachiko::Scripting::Stalagmite::Falling(float fall_progress)
+void Hachiko::Scripting::Stalagmite::Falling(float fall_progress, const GameObject* player)
 {
-	float3 _stalagmite_position = GEO
-		->GetComponent<ComponentTransform>()->GetLocalPosition();
+	float3 _stalagmite_position = GEO->GetTransform()->GetLocalPosition();
 
 	_stalagmite_position.y = Lerp(50.f, 0.f, fall_progress);
 
 
-	GEO->GetComponent<ComponentTransform>()
-		->SetLocalPosition(_stalagmite_position);
+	GEO->GetTransform()->SetLocalPosition(_stalagmite_position);
 
 	if (fall_progress == 1.f)
 	{
 		_obstacle_comp->AddObstacle();
+
+		float3 player_pos = player->GetTransform()->GetGlobalPosition();
+		float3 stalagmite_pos = _obstacle_comp->GetGameObject()->GetTransform()->GetGlobalPosition();
+		stalagmite_pos.y = player_pos.y;
+		if (Distance(player_pos, stalagmite_pos) <= 2.0f)
+		{
+			float dir_module = (player_pos - stalagmite_pos).Normalize();
+			float3 dir = (player_pos - stalagmite_pos).Normalized() * (2.0f - dir_module);
+			float3 corrected_position = Navigation::GetCorrectedPosition(player_pos + dir, float3(2.0f, 2.0f, 2.0f));
+			player->GetTransform()->SetGlobalPosition(corrected_position);
+		}
 	}
 }
 
 void Hachiko::Scripting::Stalagmite::Dissolved()
 {
 
-	_obstacle_comp->RemoveObstacle();
+	if (_obstacle && _obstacle_comp)
+	{
+		_obstacle_comp->RemoveObstacle();
+	}
 
 	_stalagmite_collapsed = false;
 
