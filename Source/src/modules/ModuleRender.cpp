@@ -366,7 +366,7 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene,
     // texture:
     bloom_manager.ApplyBloom(g_buffer.GetEmissiveTexture());
 
-    const bool drew_outlines = DrawOutlines(scene, batch_manager);
+    const bool drew_outlines = DrawOutlines(batch_manager);
 
     // ------------------------------ LIGHT PASS ------------------------------
 
@@ -555,10 +555,8 @@ void Hachiko::ModuleRender::DrawParticles(Scene* scene, ComponentCamera* camera)
     DisableBlending();
 }
 
-bool Hachiko::ModuleRender::DrawOutlines(Scene* scene, BatchManager* batch_manager) 
+bool Hachiko::ModuleRender::DrawOutlines(BatchManager* batch_manager) 
 {
-    // TODO: Make const if still can.
-
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, outline_texture->GetFrameBufferId());
     glClearColor(0.0, 0.0, 0.0, 0.0);
     glClear(GL_STENCIL_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
@@ -592,7 +590,7 @@ bool Hachiko::ModuleRender::DrawOutlines(Scene* scene, BatchManager* batch_manag
 void Hachiko::ModuleRender::ExecuteSingleOutlinePass(
     Outline::Config& outline_config,
     BatchManager* batch_manager, 
-    const bool should_clear_draw_lists_after)
+    const bool should_clear_draw_lists_after) const
 {
     const Program* program = 
         App->program->GetProgram(Program::Programs::STENCIL);
@@ -634,7 +632,6 @@ bool Hachiko::ModuleRender::ExecuteFullOutlinePass(
     }
 
     Outline::Config outline = GetOutlineConfigFromType(outline_type);
-    //Outline::Config fill = GetOutlineConfigFromType(Outline::Type::NONE);
 
     batch_manager->ClearOpaqueBatchesDrawList();
     batch_manager->ClearTransparentBatchesDrawList();
@@ -662,12 +659,11 @@ Hachiko::Outline::Config Hachiko::ModuleRender::GetOutlineConfigFromType(
     switch (type)
     {
         case Outline::Type::PRIMARY:
-            //return Outline::Config {0.03f, float4(0.16f, 0.816f, 0.925f, 1.0f)};
             return Outline::Config {0.03f, float4(0.8f, 0.8f, 0.8f, 0.9f)};
         case Outline::Type::SECONDARY:
             return Outline::Config {0.03f, float4(1.0f, 0.11f, 0.11f, 1.0f)};
-        case Outline::Type::NONE:
         default:
+        case Outline::Type::NONE:
             return Outline::Config {0.0f, float4(0.0f, 0.0f, 0.0f, 0.0f)};
     }
 }

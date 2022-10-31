@@ -178,11 +178,11 @@ namespace Hachiko
             BatchManager* batch_manager, 
             DrawConfig draw_config);
 
-        bool DrawOutlines(Scene* scene, BatchManager* batch_manager);
+        bool DrawOutlines(BatchManager* batch_manager);
         void ExecuteSingleOutlinePass(
             Outline::Config& outline_config,
             BatchManager* batch_manager, 
-            bool should_clear_draw_lists_after = false);
+            bool should_clear_draw_lists_after = false) const;
         bool ExecuteFullOutlinePass(
             Outline::Type outline_type, 
             BatchManager* batch_manager);

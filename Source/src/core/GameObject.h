@@ -10,7 +10,7 @@
 #include "utils/UUID.h"
 #include "components/Component.h"
 #include "resources/Resource.h"
-#include "core/rendering/OutlineType.h"
+#include "core/rendering/Outline.h"
 
 #if defined(HACHIKO_API)
 // Do Nothing

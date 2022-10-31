@@ -1,6 +1,6 @@
 #pragma once
 
-#include "OutlineType.h"
+#include "Outline.h"
 
 #include <MathGeoLib.h>
 #include <vector>

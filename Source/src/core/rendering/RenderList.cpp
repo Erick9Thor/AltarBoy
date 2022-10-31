@@ -1,7 +1,6 @@
 #include "core/hepch.h"
 #include "RenderList.h"
 
-#include "components/ComponentTransform.h"
 #include "components/ComponentCamera.h"
 #include "components/ComponentMeshRenderer.h"
 
@@ -21,7 +20,6 @@ void Hachiko::RenderList::Update(const Frustum& camera_frustum, Quadtree* quadtr
         targets_list.clear();
     }
 
-    //outline_targets.clear();
     CollectMeshes(camera_frustum, quadtree);
 }
 

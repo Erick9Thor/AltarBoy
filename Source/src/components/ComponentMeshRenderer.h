@@ -184,7 +184,6 @@ namespace Hachiko
         bool visible = true;
         bool navigable = false;
         bool is_casting_shadow = true;
-        //bool draw_outline = false;
         Outline::Type outline_type = Outline::Type::NONE;
 
         AABB aabb;

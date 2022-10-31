@@ -76,15 +76,7 @@ void Hachiko::GBuffer::Generate()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT4, GL_TEXTURE_2D, _emissive_texture, 0);  
 
-    // Generate depth color buffer as texture:
-    /*glGenTextures(1, &_depth_texture);
-    glBindTexture(GL_TEXTURE_2D, _depth_texture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH24_STENCIL8, default_width, default_height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_TEXTURE_2D, _depth_texture, 0);*/
-
-
+    // Generate depth & stencil color buffer as texture:
     glGenRenderbuffers(1, &_depth_stencil_buffer);
     glBindRenderbuffer(GL_RENDERBUFFER, _depth_stencil_buffer);
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, default_width, default_width);
@@ -152,10 +144,7 @@ void Hachiko::GBuffer::Resize(int width, int height) const
     glBindTexture(GL_TEXTURE_2D, _emissive_texture);
     glTexImage2D(GL_TEXTURE_2D, 0, GetEmissiveTextureInternalFormat(), width, height, 0, GetEmissiveTextureFormat(), GetEmissiveTextureType(), NULL);
 
-    // Depth color stored in g buffer:
-    //glBindTexture(GL_TEXTURE_2D, _depth_texture);
-    //glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
-
+    // Depth&Stencil color stored in g buffer:
     glBindTexture(GL_TEXTURE_2D, 0);
     glBindRenderbuffer(GL_RENDERBUFFER, _depth_stencil_buffer);
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
