@@ -27,7 +27,7 @@ child:
         type: 1
         enabled: true
         position: [0, 0, 0]
-        rotation: [-0, 0, -0]
+        rotation: [0, 0, 0]
         scale: [1, 1, 1]
       - !<camera>
         id: 18001305682756485085
@@ -53,14 +53,14 @@ child:
         type: 1
         enabled: true
         position: [0, 0, 0]
-        rotation: [-0, 0, -0]
+        rotation: [0, 0, 0]
         scale: [1, 1, 1]
       - !<transform_2d>
         id: 3983201684690593019
         type: 10
         enabled: true
         position: [0, 0, 0]
-        size: [1866, 1006]
+        size: [1, 1]
         scale: [1, 1]
         rotation: [0, 0, 0, 1]
         pivot: [0.5, 0.5]
@@ -98,14 +98,14 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<transform_2d>
             id: 4765053955944909810
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1866, 1006]
+            size: [1883, 955]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -121,7 +121,7 @@ child:
             id: 11903064509535993690
             type: 11
             enabled: true
-            image_id: 3086097473457666917
+            image_id: 16323259349951258815
             hover_image_id: 0
             image_color: [1, 1, 1, 1]
             hover_image_color: [1, 1, 1, 1]
@@ -129,7 +129,7 @@ child:
             image_randomize_initial_frame: false
             image_x_tiles: 4
             image_y_tiles: 2
-            image_tiles_per_second: 16
+            image_tiles_per_second: 15
             fill_window: true
       - id: 12216311029793036440
         name: button_play
@@ -140,15 +140,15 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<transform_2d>
             id: 11573762086171599171
             type: 10
             enabled: true
-            position: [55, 55, 0]
+            position: [55, 175, 0]
             size: [438, 158]
-            scale: [0.45, 0.45]
+            scale: [0.75, 0.75]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
             anchor: [0.5, 0.5]
@@ -186,15 +186,15 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<transform_2d>
             id: 12485261860033650679
             type: 10
             enabled: true
-            position: [150, -15, 0]
+            position: [212, 35, 0]
             size: [700, 174]
-            scale: [0.45, 0.45]
+            scale: [0.75, 0.75]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
             anchor: [0.5, 0.5]
@@ -232,15 +232,15 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<transform_2d>
             id: 4231912232200162890
             type: 10
             enabled: true
-            position: [137, -90, 0]
+            position: [190, -105, 0]
             size: [663, 160]
-            scale: [0.45, 0.45]
+            scale: [0.75, 0.75]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
             anchor: [0.5, 0.5]
@@ -278,15 +278,15 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<transform_2d>
             id: 12612247618848250662
             type: 10
             enabled: true
-            position: [55, -170, 0]
+            position: [55, -235, 0]
             size: [432, 147]
-            scale: [0.45, 0.45]
+            scale: [0.75, 0.75]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
             anchor: [0.5, 0.5]
@@ -324,14 +324,14 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<transform_2d>
             id: 3158429781987651114
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1842, 1042]
+            size: [1883, 955]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -347,7 +347,7 @@ child:
             id: 3288816736132035746
             type: 11
             enabled: true
-            image_id: 11218389582422756760
+            image_id: 15682809513181324453
             hover_image_id: 0
             image_color: [1, 1, 1, 1]
             hover_image_color: [1, 1, 1, 1]
@@ -355,7 +355,7 @@ child:
             image_randomize_initial_frame: false
             image_x_tiles: 4
             image_y_tiles: 2
-            image_tiles_per_second: 10
+            image_tiles_per_second: 8
             fill_window: true
       - id: 831669987700788447
         name: settings
@@ -366,14 +366,14 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<transform_2d>
             id: 12505313811313725007
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1842, 1042]
+            size: [1883, 955]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -389,7 +389,7 @@ child:
             id: 4807624678484144569
             type: 11
             enabled: true
-            image_id: 11322285367643034639
+            image_id: 8310248914318604258
             hover_image_id: 0
             image_color: [1, 1, 1, 1]
             hover_image_color: [1, 1, 1, 1]
@@ -408,7 +408,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<transform_2d>
             id: 2030388677375672639
@@ -436,7 +436,7 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<transform_2d>
             id: 2531125604461379895
@@ -478,15 +478,15 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [-0, 0, -0]
+            rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<transform_2d>
             id: 7637097761508394094
             type: 10
             enabled: true
-            position: [200, -200, 0]
+            position: [300, -317.8, 0]
             size: [206, 70]
-            scale: [0.6, 0.6]
+            scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
             anchor: [0.5, 0.5]

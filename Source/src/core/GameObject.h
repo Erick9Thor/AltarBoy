@@ -236,6 +236,10 @@ namespace Hachiko
 
         const OBB* GetFirstMeshRendererOBB() const;
 
+        void SimplifyChildren();
+    private:
+        void Simplify(GameObject* target);
+
     public:
         std::string name;
         Scene* scene_owner = nullptr;

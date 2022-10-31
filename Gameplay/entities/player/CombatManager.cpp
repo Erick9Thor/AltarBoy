@@ -418,24 +418,33 @@ Hachiko::Scripting::EnemyController* Hachiko::Scripting::CombatManager::FindBull
 
 Hachiko::Scripting::BossController* Hachiko::Scripting::CombatManager::FindBulletClosestBoss(GameObject* bullet, float bullet_size, LineSegment& trajectory, float& closest_hit)
 {
-	BossController* hit_target = nullptr;
-	float3 bullet_position = bullet->GetTransform()->GetGlobalPosition();
-
-	float3 boss_position = _boss_controller->GetGameObject()->GetTransform()->GetGlobalPosition();
-	ComponentAgent* agent = _boss_controller->GetGameObject()->GetComponent<ComponentAgent>();
-
-	Sphere hitbox = Sphere(boss_position, agent->GetRadius() + bullet_size);
-	if (trajectory.Intersects(hitbox)) {
-		float hit_distance = bullet_position.Distance(boss_position);
-		if (_boss_controller && hit_distance < closest_hit)
-		{
-
-			closest_hit = hit_distance;
-			hit_target = _boss_controller;
-		}
+	if (!_boss_controller)
+	{
+		return nullptr;
 	}
 
-	return hit_target;
+	const float3 bullet_position = bullet->GetTransform()->GetGlobalPosition();
+	const float3 boss_position = 
+		_boss_controller->GetGameObject()->GetTransform()->GetGlobalPosition();
+
+	const ComponentAgent* agent = 
+		_boss_controller->GetGameObject()->GetComponent<ComponentAgent>();
+	const Sphere hit_box(boss_position, agent->GetRadius() + bullet_size);
+
+	if (!trajectory.Intersects(hit_box)) 
+	{
+		return nullptr;
+	}
+
+	const float hit_distance = bullet_position.Distance(boss_position);
+
+	if (hit_distance < closest_hit)
+	{
+		closest_hit = hit_distance;
+		return _boss_controller;
+	}
+
+	return nullptr;
 }
 
 Hachiko::GameObject* Hachiko::Scripting::CombatManager::FindBulletClosestObstacleHit(GameObject* bullet, float bullet_size, LineSegment& trajectory, float& closest_hit)
