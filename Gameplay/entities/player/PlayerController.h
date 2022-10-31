@@ -144,23 +144,9 @@ namespace Hachiko
 				return ret_value;
 			}
 
-			void ActivateTooltip()
-			{
-				if (Input::IsGamepadModeOn())
-				{
-					_controller_tooltip_display->GetComponent(Component::Type::IMAGE)->Enable();
-				}
-				else
-				{
-					_keyboard_tooltip_display->GetComponent(Component::Type::IMAGE)->Enable();
-				}
-			}
+			void ActivateTooltip(const float3& position);
+			void DeactivateTooltip();
 
-			void DeactivateTooltip()
-			{
-				_controller_tooltip_display->GetComponent(Component::Type::IMAGE)->Disable();
-				_keyboard_tooltip_display->GetComponent(Component::Type::IMAGE)->Disable();
-			}
 
 			float3 GetCamBasicPos()
 			{
@@ -224,7 +210,7 @@ namespace Hachiko
 			void AttackController();
 
 			void CheckNearbyParasytes(const math::float3& current_position);
-			void PickupParasite(EnemyController* enemy_contr);
+			void PickupParasite(EnemyController* enemy_contr, bool magic_parasyte = false);
 			void RecieveKnockback(const math::float3 direction);
 
 			void CheckState();
@@ -233,6 +219,8 @@ namespace Hachiko
 			void StopParticles();
 			void UpdateEmissives();
 			void UpdateVignete();
+
+			void IncreaseHealth();
 
 		public:
 			SERIALIZE_FIELD(PlayerState, _state);
@@ -296,6 +284,8 @@ namespace Hachiko
 			SERIALIZE_FIELD(GameObject*, _hp_cell_2);
 			SERIALIZE_FIELD(GameObject*, _hp_cell_3);
 			SERIALIZE_FIELD(GameObject*, _hp_cell_4);
+			SERIALIZE_FIELD(GameObject*, _hp_cell_extra);
+			SERIALIZE_FIELD(GameObject*, _magic_parasyte);
 			std::vector<GameObject*> hp_cells;
 
 			SERIALIZE_FIELD(GameObject*, _ammo_cell_1);
@@ -314,6 +304,7 @@ namespace Hachiko
 
 			SERIALIZE_FIELD(GameObject*, _keyboard_tooltip_display);
 			SERIALIZE_FIELD(GameObject*, _controller_tooltip_display);
+			SERIALIZE_FIELD(float, tooltip_y_offset);
 
 			SERIALIZE_FIELD(GameObject*, _camera);
 			SERIALIZE_FIELD(GameObject*, _ui_damage);

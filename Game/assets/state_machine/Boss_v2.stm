@@ -5,37 +5,49 @@ clips:
     clips_id: 0
     clips_loop: false
   - clip_name: Idle
-    clips_id: 15624865312698842939
+    clips_id: 767640600913033404
     clips_loop: true
   - clip_name: PreJump
-    clips_id: 6103712202122124022
+    clips_id: 17492262643519893637
     clips_loop: false
   - clip_name: JumpLoop
-    clips_id: 8472508599445821371
+    clips_id: 11761423270617396321
     clips_loop: true
   - clip_name: Landing
-    clips_id: 6458655694255360625
+    clips_id: 15092448800544752182
     clips_loop: false
   - clip_name: PreJumpCrystal
-    clips_id: 6103712202122124022
+    clips_id: 17492262643519893637
     clips_loop: false
   - clip_name: JumpLoopCrystal
-    clips_id: 5087455231924682520
+    clips_id: 9299839480059627585
     clips_loop: true
   - clip_name: LandingCrystal
-    clips_id: 16680156801604147497
+    clips_id: 18089934624294278593
     clips_loop: false
   - clip_name: Summon_Crystal
-    clips_id: 15715921008022030383
+    clips_id: 10980884407496095838
     clips_loop: false
   - clip_name: Melee
-    clips_id: 3826725608397155219
+    clips_id: 7239467492030558950
     clips_loop: false
   - clip_name: CacoonLoop
-    clips_id: 10885988367813539343
+    clips_id: 15672072251363635959
     clips_loop: true
   - clip_name: CacoonComingOut
-    clips_id: 10208218159186516886
+    clips_id: 5586961564275297036
+    clips_loop: false
+  - clip_name: Walk
+    clips_id: 1673060140110565685
+    clips_loop: true
+  - clip_name: Death
+    clips_id: 16654007059019933875
+    clips_loop: false
+  - clip_name: GetingUpCrystalJump
+    clips_id: 15337879428432313686
+    clips_loop: false
+  - clip_name: GettingUpJump
+    clips_id: 4140608260917557051
     clips_loop: false
 nodes:
   - node_name: Idle
@@ -62,6 +74,14 @@ nodes:
     node_clip_name: CacoonLoop
   - node_name: CacoonComingOut
     node_clip_name: CacoonComingOut
+  - node_name: Walk
+    node_clip_name: Walk
+  - node_name: Death
+    node_clip_name: Death
+  - node_name: GetingUpCrystalJump
+    node_clip_name: GetingUpCrystalJump
+  - node_name: GettingUpJump
+    node_clip_name: GettingUpJump
 transitions:
   - transition_source: ANY
     transition_target: Idle
@@ -150,4 +170,44 @@ transitions:
   - transition_source: CacoonLoop
     transition_target: CacoonComingOut
     transition_trigger: isCacoonComingOut
+    transition_blend: 300
+  - transition_source: Idle
+    transition_target: Walk
+    transition_trigger: isWalk
+    transition_blend: 300
+  - transition_source: Idle
+    transition_target: Death
+    transition_trigger: isDeath
+    transition_blend: 300
+  - transition_source: ANY
+    transition_target: Walk
+    transition_trigger: isWalk
+    transition_blend: 300
+  - transition_source: ANY
+    transition_target: Death
+    transition_trigger: isDeath
+    transition_blend: 300
+  - transition_source: LandingCrystal
+    transition_target: GetingUpCrystalJump
+    transition_trigger: isGetingUpCrystalJump
+    transition_blend: 300
+  - transition_source: Landing
+    transition_target: GettingUpJump
+    transition_trigger: isGettingUpJump
+    transition_blend: 300
+  - transition_source: ANY
+    transition_target: GetingUpCrystalJump
+    transition_trigger: isGetingUpCrystalJump
+    transition_blend: 300
+  - transition_source: ANY
+    transition_target: GettingUpJump
+    transition_trigger: isGettingUpJump
+    transition_blend: 300
+  - transition_source: Melee
+    transition_target: Walk
+    transition_trigger: isWalk
+    transition_blend: 300
+  - transition_source: Summon_Crystal
+    transition_target: Walk
+    transition_trigger: isWalk
     transition_blend: 300

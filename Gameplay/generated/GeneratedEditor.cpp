@@ -186,6 +186,7 @@ void Hachiko::Scripting::EnemyController::OnEditor()
 	Editor::Show("Attack Range", _attack_range);
 	Editor::Show("Attack Delay", _attack_delay);
 	Editor::Show("Idle Cooldown", _idle_cooldown);
+	Editor::Show("Patrol Cooldown", _patrol_cooldown);
 	Editor::Show("Spawning Time", _spawning_time);
 	Editor::Show("Chase Cooldown", _chase_cooldown);
 	Editor::Show("Spawn Pos", _spawn_pos);
@@ -394,6 +395,7 @@ void Hachiko::Scripting::DoorController::OnEditor()
 void Hachiko::Scripting::DynamicCamera::OnEditor()
 {
 	Editor::Show("Speed", _speed);
+	Editor::Show("Enable After", _enable_after);
 }
 
 void Hachiko::Scripting::FancyLights::OnEditor()
@@ -410,6 +412,7 @@ void Hachiko::Scripting::GauntletManager::OnEditor()
 	Editor::Show("Complete Wait Time", _complete_wait_time);
 	Editor::Show("Door Controller 1", _door_controller_1);
 	Editor::Show("Door Controller 2", _door_controller_2);
+	Editor::Show("Closing Door", _closing_door);
 	Editor::Show("Pack 1", _pack_1);
 	Editor::Show("Pack 2", _pack_2);
 	Editor::Show("Pack 3", _pack_3);
@@ -476,7 +479,14 @@ void Hachiko::Scripting::TimeManager::OnEditor()
 
 void Hachiko::Scripting::Tutorial::OnEditor()
 {
+	Editor::Show("Tutorial Keyboard Movement", _tutorial_keyboard_movement);
+	Editor::Show("Tutorial Controller Movement", _tutorial_controller_movement);
+	Editor::Show("Tutorial Keyboard Attacks", _tutorial_keyboard_attacks);
+	Editor::Show("Tutorial Controller Attacks", _tutorial_controller_attacks);
+	Editor::Show("Tutorial Keyboard Pickup", _tutorial_keyboard_pickup);
+	Editor::Show("Tutorial Controller Pickup", _tutorial_controller_pickup);
 	Editor::Show("First Enemy", _first_enemy);
+	Editor::Show("Tutorials Screen Shown", _tutorials_screen_shown);
 }
 
 void Hachiko::Scripting::BackToMainMenu::OnEditor()

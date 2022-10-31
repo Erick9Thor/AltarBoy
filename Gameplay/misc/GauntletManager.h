@@ -39,6 +39,7 @@ namespace Hachiko
 
 			SERIALIZE_FIELD(GameObject*, _door_controller_1);
 			SERIALIZE_FIELD(GameObject*, _door_controller_2);
+			SERIALIZE_FIELD(GameObject*, _closing_door);
 
 			SERIALIZE_FIELD(GameObject*, _pack_1);
 			SERIALIZE_FIELD(GameObject*, _pack_2);
@@ -67,6 +68,7 @@ namespace Hachiko
 			AudioManager* _audio_manager = nullptr;
 			std::vector<GameObject*> _enemy_packs{};
 			std::vector<DoorController*> _doors{};
+			float _elapsed_time = 0.0f;
 			// Camera change values
 			PlayerCamera* _main_camera = nullptr;
 		};

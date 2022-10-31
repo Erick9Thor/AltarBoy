@@ -47,10 +47,12 @@ void Hachiko::Scripting::Stalagmite::Falling(float fall_progress, const GameObje
 
 void Hachiko::Scripting::Stalagmite::Dissolved()
 {
-	if (_obstacle_comp != NULL)
+
+	if (_obstacle && _obstacle_comp)
 	{
 		_obstacle_comp->RemoveObstacle();
 	}
+
 	_stalagmite_collapsed = false;
 
 	// After it being dissolved we move the GEO out of the way
