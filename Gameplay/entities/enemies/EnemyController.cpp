@@ -170,7 +170,9 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 
 void Hachiko::Scripting::EnemyController::OnStart()
 {
-	if (_enemy_body != nullptr)
+	const bool enemy_body_exists = _enemy_body != nullptr;
+
+	if (enemy_body_exists)
 	{
 		_enemy_body->SetActive(true);
 	}
@@ -185,6 +187,10 @@ void Hachiko::Scripting::EnemyController::OnStart()
 	{
 		_state = EnemyState::SPAWNING;
 		states_behaviour[static_cast<int>(_state)].Start();
+	}
+	else if (enemy_body_exists)
+	{
+		_enemy_body->SetOutlineType(Outline::Type::SECONDARY);
 	}
 }
 
@@ -599,6 +605,7 @@ void Hachiko::Scripting::EnemyController::StartSpawningState()
 	if (_enemy_body)
 	{
 		_enemy_body->SetActive(true);
+		_enemy_body->SetOutlineType(Outline::Type::NONE);
 	}
 	if (_parasite)
 	{
@@ -626,6 +633,7 @@ void Hachiko::Scripting::EnemyController::UpdateSpawningState()
 
 void Hachiko::Scripting::EnemyController::EndSpawningState()
 {
+	_enemy_body->SetOutlineType(Outline::Type::SECONDARY);
 	_enemy_body->ChangeDissolveProgress(1, true);
 	_component_agent->AddToCrowd();
 }
@@ -1070,6 +1078,11 @@ void Hachiko::Scripting::EnemyController::StartDeadState()
 	_enemy_dissolving_time_progress = 0;
 	_audio_manager->PlayEnemyDeath(_enemy_type);
 	animation->SendTrigger("isDead");
+
+	if (_enemy_body)
+	{
+		_enemy_body->SetOutlineType(Outline::Type::NONE);
+	}
 }
 
 void Hachiko::Scripting::EnemyController::UpdateDeadState()
@@ -1196,6 +1209,7 @@ void Hachiko::Scripting::EnemyController::WormUpdateSpawningState()
 
 void Hachiko::Scripting::EnemyController::WormEndSpawningState()
 {
+	_enemy_body->SetOutlineType(Outline::Type::SECONDARY);
 	_enemy_body->ChangeDissolveProgress(1, true);
 	_component_agent->AddToCrowd();
 }
