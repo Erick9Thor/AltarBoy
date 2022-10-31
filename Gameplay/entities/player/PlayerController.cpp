@@ -177,7 +177,10 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	{
 		_parasite_pickup_billboard = _parasite_pickup_effect->GetComponent<ComponentBillboard>();
 	}
-
+	if (_death_screen != nullptr)
+	{
+		_death_screen->GetComponent(Component::Type::IMAGE)->Disable();
+	}
 	
 	if (_aim_indicator != nullptr)
 	{
@@ -328,7 +331,7 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 			{
 				if (_death_screen != nullptr)
 				{
-					_death_screen->SetActive(false);
+					_death_screen->GetComponent(Component::Type::IMAGE)->Disable();
 				}
 				if (_level_manager->_level > 2) {
 					_level_manager->ReloadBossScene();
@@ -363,7 +366,7 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 
 				if (_death_screen != nullptr)
 				{
-					_death_screen->SetActive(true);
+					_death_screen->GetComponent(Component::Type::IMAGE)->Enable();
 				}
 			}
 		}
