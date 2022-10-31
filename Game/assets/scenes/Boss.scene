@@ -17435,6 +17435,9 @@ child:
             "'_explosion_effect@GameObject*'": 10911416324140914553
             "'GEO@GameObject*'": 15996682042762499497
             "'_obstacle@GameObject*'": 11850650101229300412
+          - id: 14906271790909668611
+            type: 20
+            enabled: true
         child:
           - id: 15996682042762499497
             name: GEO
@@ -17564,6 +17567,9 @@ child:
             "'_explosion_effect@GameObject*'": 2728275270455617385
             "'GEO@GameObject*'": 15297600043890398573
             "'_obstacle@GameObject*'": 414565784233431002
+          - id: 16000379869366725851
+            type: 20
+            enabled: true
         child:
           - id: 2728275270455617385
             name: ExplosionIndicatorHelper
@@ -17693,6 +17699,9 @@ child:
             "'_explosion_effect@GameObject*'": 15989802717215742593
             "'GEO@GameObject*'": 765973592566041530
             "'_obstacle@GameObject*'": 416915677995048205
+          - id: 17647106570654978750
+            type: 20
+            enabled: true
         child:
           - id: 15989802717215742593
             name: ExplosionIndicatorHelper
@@ -17822,6 +17831,9 @@ child:
             "'_explosion_effect@GameObject*'": 16461087962254981589
             "'GEO@GameObject*'": 11859464153445871674
             "'_obstacle@GameObject*'": 9789222532829589869
+          - id: 4993140309520143069
+            type: 20
+            enabled: true
         child:
           - id: 16461087962254981589
             name: ExplosionIndicatorHelper
@@ -44884,7 +44896,7 @@ child:
         "'_fog_max_density@float'": 0.015
         "'_fog_min_density@float'": 0.005
         "'_audio_manager_go@GameObject*'": 3361489421654677551
-        "'_player_sound_manager_go@GameObject*'": 0
+        "'_player_sound_manager_go@GameObject*'": 16788642605404128480
         "'_victory_screen@GameObject*'": 11894863846231363565
       - !<script>
         id: 9673773846935216921
@@ -59127,6 +59139,9 @@ child:
         "'_laser_wall_duration@float'": 6
         "'_laser_jump_height@float'": 25
         "'_melee_trail_right@GameObject*'": 1968852265813518482
+      - id: 2077916399870569819
+        type: 20
+        enabled: true
     child:
       - id: 5774307797641624833
         name: Bones2

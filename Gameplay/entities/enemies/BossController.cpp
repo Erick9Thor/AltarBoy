@@ -8,6 +8,8 @@
 #include "entities/Stats.h"
 #include "constants/Scenes.h"
 #include "components/ComponentObstacle.h"
+#include "components/ComponentAudioSource.h"
+#include "constants/Sounds.h"
 
 #include "entities/player/CombatVisualEffectsPool.h"
 
@@ -71,6 +73,7 @@ void Hachiko::Scripting::BossController::OnAwake()
     agent->SetMaxSpeed(combat_stats->_move_speed);
     agent->RemoveFromCrowd();
     obstacle = game_object->GetComponent<ComponentObstacle>();
+    audio_source = game_object->GetComponent<ComponentAudioSource>();
     obstacle->AddObstacle();
 
 	animation = game_object->GetComponent<ComponentAnimation>();
@@ -128,7 +131,7 @@ void Hachiko::Scripting::BossController::OnStart()
 {
 	animation->StartAnimating();
 	animation->SendTrigger("isCacoonLoop");
-
+    audio_source->PostEvent(Sounds::BOSS_BREATHE);
 	OverrideCameraOffset();
 }
 
@@ -273,6 +276,7 @@ void Hachiko::Scripting::BossController::CombatController()
     if (combat_stats->_current_hp <= 0)
     {
         KillEnemies();
+        audio_source->PostEvent(Sounds::BOSS_DEATH);
         animation->SendTrigger("isDeath");
         state = BossState::DEAD;
         return;
@@ -360,14 +364,16 @@ void Hachiko::Scripting::BossController::StartEncounter()
 void Hachiko::Scripting::BossController::StartEncounterController()
 {
 
-
     // Add any effects desired for combat start, for now it only delays while camera is transitioning
+    audio_source->PostEvent(Sounds::BOSS_ROAR);
+    
     enemy_timer += Time::DeltaTime();
     if (enemy_timer < encounter_start_duration)
     {
         cocoons_parent->ChangeDissolveProgress(1 - enemy_timer / encounter_start_duration, true);
         return;
     }
+    audio_source->PostEvent(Sounds::SET_STATE2_BOSS_FIGHT);
 
     for (GameObject* crystal : cocoons_parent->children)
     {
@@ -415,7 +421,7 @@ void Hachiko::Scripting::BossController::StartCocoon()
     time_elapse = 0.0;
     SetUpCocoon();
     FocusCameraOnBoss(true);
-
+    audio_source->PostEvent(Sounds::SET_STATE1_BOSS_FIGHT);
     //Remove all stalactites and enemies
     _stalagmite_manager->DestroyAllStalagmites(true);
     KillEnemies();
@@ -425,8 +431,6 @@ void Hachiko::Scripting::BossController::StartCocoon()
     initial_position.y = transform->GetGlobalPosition().y;
     transform->LookAtTarget(initial_position);
     agent->SetTargetPosition(initial_position);
-
-    
 }
 
 void Hachiko::Scripting::BossController::CocoonController()
@@ -448,6 +452,7 @@ void Hachiko::Scripting::BossController::CocoonController()
         if (Distance(current_pos, initial_position) <= agent->GetRadius())
         {
             animation->SendTrigger("isCacoonLoop");
+            audio_source->PostEvent(Sounds::STOP_BOSS_FOOTSTEPS);
 
             moving_to_initial_pos = false;
             transform->SetGlobalPosition(initial_position);
@@ -517,6 +522,7 @@ void Hachiko::Scripting::BossController::InitCocoonGauntlet()
     {
         laser->GetComponent<LaserController>()->_toggle_activation = true;
     }
+    audio_source->PostEvent(Sounds::GAUNTLET_NEXT_ROUND);
     // Start spawning enemies
     gauntlet->StartGauntlet();
 }
@@ -543,7 +549,7 @@ void Hachiko::Scripting::BossController::FinishCocoon()
 	hitable = true;
 	second_phase = true;
 	BreakCocoon();
-
+    audio_source->PostEvent(Sounds::SET_STATE3_BOSS_FIGHT);
     obstacle->RemoveObstacle();
     agent->AddToCrowd();
 
@@ -567,6 +573,7 @@ void Hachiko::Scripting::BossController::FinishCocoon()
 void Hachiko::Scripting::BossController::Chase()
 {
     ChangeStateText("Chasing player.");
+    audio_source->PostEvent(Sounds::BOSS_FOOTSTEPS);
     if (animation->IsAnimationStopped())
     {
         animation->SendTrigger("isWalk");
@@ -637,6 +644,7 @@ void Hachiko::Scripting::BossController::MeleeAttackController()
 
     if (!attacked)
     {
+        audio_source->PostEvent(Sounds::BOSS_MELEE_STAND);
         CombatManager::AttackStats attack_stats;
         attack_stats.damage = 1.0f;
         attack_stats.knockback_distance = 0.0f;
@@ -664,7 +672,7 @@ void Hachiko::Scripting::BossController::SpawnCrystals()
 {
 	ChangeStateText("Spawning crystals.");
     animation->SendTrigger("isSummonCrystal");
-
+    audio_source->PostEvent(Sounds::BOSS_LAUGH);
     if (_explosive_crystals.empty())
     {
         return;
@@ -812,6 +820,12 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
             }
 
             // Boss is waiting for jump here:
+            // SFX
+            if (_current_jumping_mode == JumpingMode::BASIC_ATTACK)
+            {
+                audio_source->PostEvent(Sounds::BOSS_PRE_JUMP);
+            }
+
             break;
         }
 
@@ -1002,6 +1016,8 @@ void Hachiko::Scripting::BossController::ExecuteJumpingState()
 
     case JumpingState::POST_DESCENDING_DELAY:
     {
+        audio_source->PostEvent(Sounds::BOSS_HIT_FLOOR);
+
         if (_jumping_timer < _jump_post_descending_delay)
         {
             break;
