@@ -126,7 +126,7 @@ void Hachiko::Scripting::DynamicCamera::OnFinish(bool skipping)
     _level_manager->BlockInputs(false);
     // If skipping teleport the camera
     _player_camera->SetObjective(Scenes::GetPlayer(), skipping);
-    _player_camera->RevertRelativePosition(0.05f);
+    _player_camera->RevertRelativePosition(0.0f);
     if(_enable_after)
     {
         _enable_after->SetActiveNonRecursive(true);

@@ -25,8 +25,8 @@ Hachiko is a custom built C++ Game Engine developed by Akita Interactive.
 * **Claudia Martín** - [Linkedin](https://www.linkedin.com/in/claudia-martin-5848721b7)
 * **Eduard Gállego** - [Linkedin](https://www.linkedin.com/in/eduardgallegorodriguez)
 * **Eduardo Godoy** - [Linkedin](https://www.linkedin.com/in/eduardo-godoy-saavedra)
-* **Ehsan Ali** - [Linkedin](https://www.linkedin.com/in/ehsan-zareh-6497831b7)
-* **Isabel Augusta** - [Linkedin](https://www.linkedin.com/in/isabel-lammens-516bba1bb)
+* **Ehsan Zareh** - [Linkedin](https://www.linkedin.com/in/ehsan-zareh-6497831b7)
+* **Isabel Lammens** - [Linkedin](https://www.linkedin.com/in/isabel-lammens-516bba1bb)
 * **Phan Minh Hieu** - [Linkedin](https://www.linkedin.com/in/hnguyen7596)
 
 ### Sound 🔊

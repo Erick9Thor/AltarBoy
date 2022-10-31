@@ -49,6 +49,7 @@ namespace Hachiko
         HACHIKO_API void Stop() override;
 
     private:
+        bool initialized = false;
         ParticleSystem::Emitter::State emitter_state = ParticleSystem::Emitter::State::STOPPED;
 
         //sections

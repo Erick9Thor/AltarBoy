@@ -8,6 +8,7 @@ namespace Hachiko
     class ComponentTransform;
     class ComponentImage;
     class ComponentAudioSource;
+    class ComponentPointLight;
     namespace Scripting
     {
         class LevelManager;
@@ -29,6 +30,7 @@ namespace Hachiko
         private:
             SERIALIZE_FIELD(GameObject*, _respawn_go);
             SERIALIZE_FIELD(float, _activation_range);
+            SERIALIZE_FIELD(GameObject*, _light_go);
 
             GameObject* _player = nullptr;
             LevelManager* _level_manager = nullptr;
