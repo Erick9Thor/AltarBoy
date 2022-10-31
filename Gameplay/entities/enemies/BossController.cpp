@@ -80,6 +80,7 @@ void Hachiko::Scripting::BossController::OnAwake()
 
     if (_melee_trail_right != nullptr)
     {
+        _melee_trail_right->SetTimeScaleMode(TimeScaleMode::SCALED);
         _weapon_trail_billboard_right = _melee_trail_right->GetComponent<ComponentBillboard>();
     }
 
