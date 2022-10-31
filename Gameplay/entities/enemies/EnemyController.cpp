@@ -297,6 +297,7 @@ void Hachiko::Scripting::EnemyController::SetVfx()
 	
 	if (_blood_trail != nullptr)
 	{
+		_blood_trail->SetTimeScaleMode(TimeScaleMode::SCALED);
 		_blood_trail_billboard = _blood_trail->GetComponent<ComponentBillboard>();
 		_blood_trail_billboard->Disable();
 	}
@@ -313,6 +314,7 @@ void Hachiko::Scripting::EnemyController::SetUpWormVfx()
 {
 	if (_small_dust)
 	{
+		_small_dust->SetTimeScaleMode(TimeScaleMode::SCALED);
 		_small_dust_particles = _small_dust->GetComponent<ComponentParticleSystem>();
 		if (_small_dust_particles)
 		{
@@ -321,6 +323,7 @@ void Hachiko::Scripting::EnemyController::SetUpWormVfx()
 	}
 	if (_big_dust)
 	{
+		_big_dust->SetTimeScaleMode(TimeScaleMode::SCALED);
 		_big_dust_particles = _big_dust->GetComponent<ComponentParticleSystem>();
 		if (_big_dust_particles)
 		{
@@ -329,6 +332,7 @@ void Hachiko::Scripting::EnemyController::SetUpWormVfx()
 	}
 	if (_inner_indicator)
 	{
+		_inner_indicator->SetTimeScaleMode(TimeScaleMode::SCALED);
 		_inner_indicator_billboard = _inner_indicator->GetComponent<ComponentBillboard>();
 		if (_inner_indicator_billboard)
 		{
@@ -337,6 +341,7 @@ void Hachiko::Scripting::EnemyController::SetUpWormVfx()
 	}
 	if (_outer_indicator)
 	{
+		_outer_indicator->SetTimeScaleMode(TimeScaleMode::SCALED);
 		_outer_indicator_billboard = _outer_indicator->GetComponent<ComponentBillboard>();
 		if (_outer_indicator_billboard)
 		{
@@ -345,6 +350,7 @@ void Hachiko::Scripting::EnemyController::SetUpWormVfx()
 	}
 	if (_projectile_particles)
 	{
+		_projectile_particles->SetTimeScaleMode(TimeScaleMode::SCALED);
 		_projectile_particles_comp = _projectile_particles->GetComponent<ComponentParticleSystem>();
 		if (_projectile_particles_comp)
 		{
@@ -353,6 +359,7 @@ void Hachiko::Scripting::EnemyController::SetUpWormVfx()
 	}
 	if (_explosion_particles)
 	{
+		_explosion_particles->SetTimeScaleMode(TimeScaleMode::SCALED);
 		_explosion_particles_comp = _explosion_particles->GetComponent<ComponentParticleSystem>();
 		if (_explosion_particles_comp)
 		{
@@ -1349,6 +1356,7 @@ Hachiko::Scripting::EnemyState Hachiko::Scripting::EnemyController::WormTransiti
 
 void Hachiko::Scripting::EnemyController::WormStartHidenState()
 {
+	_audio_source->PostEvent(Sounds::WORM_HIDE);
 	animation->SendTrigger("isHide");
 }
 

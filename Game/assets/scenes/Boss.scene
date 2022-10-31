@@ -17414,58 +17414,62 @@ child:
         type: 15
         enabled: true
         class_name: StalagmiteManager
-        "'_falling_cooldown@float'": 2
+        "'_falling_cooldown@float'": 0
     child:
-      - id: 11721815587432998699
+      - id: 5565429991876922444
         name: Stalagmite
-        enabled: false
+        enabled: true
         component:
           - !<transform>
-            id: 2649090375786163165
+            id: 12932382310477181451
             type: 1
             enabled: true
             position: [-8.373, 2.213, 4.24]
             rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<script>
-            id: 1071290772165776161
+            id: 16395168194645461523
             type: 15
             enabled: true
             class_name: Stalagmite
-            "'_explosion_effect@GameObject*'": 10911416324140914553
-            "'GEO@GameObject*'": 15996682042762499497
-            "'_obstacle@GameObject*'": 11850650101229300412
+            "'_explosion_effect@GameObject*'": 13892096944012812049
+            "'_area_indicator@GameObject*'": 9413623746064240291
+            "'GEO@GameObject*'": 1673224758276880430
+            "'_obstacle@GameObject*'": 9253323707638924896
+          - id: 1975128765887071499
+            type: 20
+            enabled: true
         child:
-          - id: 15996682042762499497
+          - id: 1673224758276880430
             name: GEO
-            enabled: false
+            enabled: true
             component:
               - !<transform>
-                id: 6473785998072298583
+                id: 7015911245086602206
                 type: 1
                 enabled: true
                 position: [0.1, 0, 1.3]
                 rotation: [-90, 0, 0]
                 scale: [50, 50, 50]
               - !<animation>
-                id: 7497092237840345843
+                id: 9570346852649736516
                 type: 14
                 enabled: true
                 state_machine: 0
             child:
-              - id: 9000956942645967657
+              - id: 7367701491158721482
                 name: LaserBlock
-                enabled: false
+                enabled: true
                 component:
                   - !<transform>
-                    id: 12109752543964942160
+                    id: 13543888403985799211
                     type: 1
                     enabled: true
                     position: [-0.0009, 0.0551, 0]
                     rotation: [90, 0, 0]
                     scale: [0.054, 0.06, 0.055]
                   - !<mesh_renderer>
-                    id: 6314848797398618136
+                    id: 3792250890173801566
                     type: 2
                     enabled: true
                     mesh_id: 1654487118907036717
@@ -17474,19 +17478,19 @@ child:
                     casting_shadow: false
                     material_id: 6750369022920963075
                     tint_color: [1, 1, 1, 1]
-              - id: 14188283524640776615
+              - id: 15565009433397470376
                 name: rockSpike_01
-                enabled: false
+                enabled: true
                 component:
                   - !<transform>
-                    id: 9052741058868578902
+                    id: 18124445444865010353
                     type: 1
                     enabled: true
                     position: [0.0001, 0.0251, -0.1496]
                     rotation: [-180, 0, 0]
                     scale: [0.2794, 0.2794, 0.2794]
                   - !<mesh_renderer>
-                    id: 17509110848163838452
+                    id: 776282035221013660
                     type: 2
                     enabled: true
                     mesh_id: 5123642657171642590
@@ -17495,31 +17499,31 @@ child:
                     casting_shadow: true
                     material_id: 3759531071522823328
                     tint_color: [1, 1, 1, 0.5176]
-          - id: 10911416324140914553
+          - id: 13892096944012812049
             name: ExplosionIndicatorHelper
-            enabled: false
+            enabled: true
             component:
               - !<transform>
-                id: 3511779851298289230
+                id: 15736933698617392276
                 type: 1
                 enabled: true
                 position: [0, -1.3, 0]
                 rotation: [0, 7.901, 0]
-                scale: [6, 0.1, 6]
+                scale: [5, 0.1, 5]
             child:
-              - id: 1448170226279848223
+              - id: 7283308832384167530
                 name: Cylinder001
-                enabled: false
+                enabled: true
                 component:
                   - !<transform>
-                    id: 15406978807600991986
+                    id: 17434459078228765441
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
                     rotation: [-90, 0, 0]
                     scale: [1, 1, 1]
                   - !<mesh_renderer>
-                    id: 15280442406414516745
+                    id: 13715594143218887930
                     type: 2
                     enabled: true
                     mesh_id: 10210867973034302559
@@ -17528,123 +17532,115 @@ child:
                     casting_shadow: true
                     material_id: 6462450398853139216
                     tint_color: [1, 1, 1, 1]
-          - id: 11850650101229300412
+          - id: 9253323707638924896
             name: StObstacle
-            enabled: false
+            enabled: true
             component:
               - !<transform>
-                id: 10713284914098201095
+                id: 4690341882102203106
                 type: 1
                 enabled: true
                 position: [0.2085, -1.595, -0.2]
                 rotation: [0, 0, 0]
                 scale: [1, 1, 1]
               - !<obstacle>
-                id: 16079261992711057743
+                id: 13520713439235289769
                 type: 18
                 enabled: true
                 obstacle_type: 0
                 obstacle_size: [2.5, 3, 1]
-      - id: 4967915288861739678
+          - id: 9413623746064240291
+            name: AreaIndicator
+            enabled: true
+            component:
+              - !<transform>
+                id: 11845426248664931976
+                type: 1
+                enabled: true
+                position: [0, -1, 0]
+                rotation: [0, 0, 0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 15023735470945919322
+                type: 21
+                enabled: true
+                play_on_awake: true
+                texture_id: 15537058005441777461
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 2, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 0
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 0
+                color_gradient: [[0.763, 0, 0, 0, 0]]
+                animation_section: false
+                color_section: true
+                size_section: true
+                size_over_time: [true, false, 0, [70, 10], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 0
+                projection: true
+                randomize_tiles: false
+      - id: 5545900867663138915
         name: Stalagmite
-        enabled: false
+        enabled: true
         component:
           - !<transform>
-            id: 6127038437101504297
+            id: 11065777737503891866
             type: 1
             enabled: true
             position: [-8.373, 2.213, 4.24]
             rotation: [0, 0, 0]
             scale: [1, 1, 1]
           - !<script>
-            id: 376131660777375584
+            id: 1641956595847369664
             type: 15
             enabled: true
             class_name: Stalagmite
-            "'_explosion_effect@GameObject*'": 2728275270455617385
-            "'GEO@GameObject*'": 15297600043890398573
-            "'_obstacle@GameObject*'": 414565784233431002
+            "'_explosion_effect@GameObject*'": 5779231902450704358
+            "'_area_indicator@GameObject*'": 14186773155590732109
+            "'GEO@GameObject*'": 5423312685184506696
+            "'_obstacle@GameObject*'": 11030275890626146147
+          - id: 12829970224503393798
+            type: 20
+            enabled: true
         child:
-          - id: 2728275270455617385
-            name: ExplosionIndicatorHelper
-            enabled: false
-            component:
-              - !<transform>
-                id: 4097960143515607210
-                type: 1
-                enabled: true
-                position: [0, -1.3, 0]
-                rotation: [0, 7.901, 0]
-                scale: [6, 0.1, 6]
-            child:
-              - id: 14776442407289963930
-                name: Cylinder001
-                enabled: false
-                component:
-                  - !<transform>
-                    id: 4859699803126214453
-                    type: 1
-                    enabled: true
-                    position: [0, 0, 0]
-                    rotation: [-90, 0, 0]
-                    scale: [1, 1, 1]
-                  - !<mesh_renderer>
-                    id: 9283053140519360714
-                    type: 2
-                    enabled: true
-                    mesh_id: 10210867973034302559
-                    navigable: false
-                    visible: true
-                    casting_shadow: true
-                    material_id: 6462450398853139216
-                    tint_color: [1, 1, 1, 1]
-          - id: 414565784233431002
-            name: StObstacle
-            enabled: false
-            component:
-              - !<transform>
-                id: 10027583606315967612
-                type: 1
-                enabled: true
-                position: [0.2085, -1.595, -0.2]
-                rotation: [0, 0, 0]
-                scale: [1, 1, 1]
-              - !<obstacle>
-                id: 16142131826265358273
-                type: 18
-                enabled: true
-                obstacle_type: 0
-                obstacle_size: [2.5, 3, 1]
-          - id: 15297600043890398573
+          - id: 5423312685184506696
             name: GEO
-            enabled: false
+            enabled: true
             component:
               - !<transform>
-                id: 16944151684643053753
+                id: 15552289636003868909
                 type: 1
                 enabled: true
                 position: [0.1, 0, 1.3]
                 rotation: [-90, 0, 0]
                 scale: [50, 50, 50]
               - !<animation>
-                id: 3115407179890499296
+                id: 15173822899360985957
                 type: 14
                 enabled: true
                 state_machine: 0
             child:
-              - id: 9981393681472264516
+              - id: 4565467573555640162
                 name: LaserBlock
-                enabled: false
+                enabled: true
                 component:
                   - !<transform>
-                    id: 968426699707489613
+                    id: 1402956461080046628
                     type: 1
                     enabled: true
                     position: [-0.0009, 0.0551, 0]
                     rotation: [90, 0, 0]
                     scale: [0.054, 0.06, 0.055]
                   - !<mesh_renderer>
-                    id: 12174281326015107119
+                    id: 17067155003695714788
                     type: 2
                     enabled: true
                     mesh_id: 1654487118907036717
@@ -17653,19 +17649,19 @@ child:
                     casting_shadow: false
                     material_id: 6750369022920963075
                     tint_color: [1, 1, 1, 1]
-              - id: 6552275243525247112
+              - id: 17840018261096836756
                 name: rockSpike_01
-                enabled: false
+                enabled: true
                 component:
                   - !<transform>
-                    id: 9796550695154597655
+                    id: 13510685877442300851
                     type: 1
                     enabled: true
                     position: [0.0001, 0.0251, -0.1496]
-                    rotation: [180, 0, 0]
+                    rotation: [-180, 0, 0]
                     scale: [0.2794, 0.2794, 0.2794]
                   - !<mesh_renderer>
-                    id: 8071677752936523521
+                    id: 11314126545939097355
                     type: 2
                     enabled: true
                     mesh_id: 5123642657171642590
@@ -17674,51 +17670,31 @@ child:
                     casting_shadow: true
                     material_id: 3759531071522823328
                     tint_color: [1, 1, 1, 0.5176]
-      - id: 10867754605659108850
-        name: Stalagmite
-        enabled: false
-        component:
-          - !<transform>
-            id: 49867585627485412
-            type: 1
-            enabled: true
-            position: [-8.373, 2.213, 4.24]
-            rotation: [0, 0, 0]
-            scale: [1, 1, 1]
-          - !<script>
-            id: 12153387124008897392
-            type: 15
-            enabled: true
-            class_name: Stalagmite
-            "'_explosion_effect@GameObject*'": 15989802717215742593
-            "'GEO@GameObject*'": 765973592566041530
-            "'_obstacle@GameObject*'": 416915677995048205
-        child:
-          - id: 15989802717215742593
+          - id: 5779231902450704358
             name: ExplosionIndicatorHelper
-            enabled: false
+            enabled: true
             component:
               - !<transform>
-                id: 1525311757061998542
+                id: 12797423505097958865
                 type: 1
                 enabled: true
                 position: [0, -1.3, 0]
                 rotation: [0, 7.901, 0]
-                scale: [6, 0.1, 6]
+                scale: [5, 0.1, 5]
             child:
-              - id: 10880691139492269905
+              - id: 6203222654264089297
                 name: Cylinder001
-                enabled: false
+                enabled: true
                 component:
                   - !<transform>
-                    id: 12773165573569332075
+                    id: 5115155413423443987
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
                     rotation: [-90, 0, 0]
                     scale: [1, 1, 1]
                   - !<mesh_renderer>
-                    id: 7554722810794928739
+                    id: 10293751536452652511
                     type: 2
                     enabled: true
                     mesh_id: 10210867973034302559
@@ -17727,53 +17703,115 @@ child:
                     casting_shadow: true
                     material_id: 6462450398853139216
                     tint_color: [1, 1, 1, 1]
-          - id: 416915677995048205
+          - id: 11030275890626146147
             name: StObstacle
-            enabled: false
+            enabled: true
             component:
               - !<transform>
-                id: 14687209528218020362
+                id: 7972910362127033148
                 type: 1
                 enabled: true
                 position: [0.2085, -1.595, -0.2]
                 rotation: [0, 0, 0]
                 scale: [1, 1, 1]
               - !<obstacle>
-                id: 8671569286899332145
+                id: 6350456790814683433
                 type: 18
                 enabled: true
                 obstacle_type: 0
                 obstacle_size: [2.5, 3, 1]
-          - id: 765973592566041530
-            name: GEO
-            enabled: false
+          - id: 14186773155590732109
+            name: AreaIndicator
+            enabled: true
             component:
               - !<transform>
-                id: 3393308742551915329
+                id: 18180283451578813332
+                type: 1
+                enabled: true
+                position: [0, -1, 0]
+                rotation: [0, 0, 0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 15434507692670947386
+                type: 21
+                enabled: true
+                play_on_awake: true
+                texture_id: 15537058005441777461
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 2, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 0
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 0
+                color_gradient: [[0.763, 0, 0, 0, 0]]
+                animation_section: false
+                color_section: true
+                size_section: true
+                size_over_time: [true, false, 0, [70, 10], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 0
+                projection: true
+                randomize_tiles: false
+      - id: 7480464828849645421
+        name: Stalagmite
+        enabled: true
+        component:
+          - !<transform>
+            id: 8841428495117734209
+            type: 1
+            enabled: true
+            position: [-8.373, 2.213, 4.24]
+            rotation: [0, 0, 0]
+            scale: [1, 1, 1]
+          - !<script>
+            id: 12874964621986860119
+            type: 15
+            enabled: true
+            class_name: Stalagmite
+            "'_explosion_effect@GameObject*'": 11423150771632049081
+            "'_area_indicator@GameObject*'": 13821001488949587182
+            "'GEO@GameObject*'": 13187593741148471239
+            "'_obstacle@GameObject*'": 2079748087180028629
+          - id: 4768424840200931796
+            type: 20
+            enabled: true
+        child:
+          - id: 13187593741148471239
+            name: GEO
+            enabled: true
+            component:
+              - !<transform>
+                id: 4055743209076532552
                 type: 1
                 enabled: true
                 position: [0.1, 0, 1.3]
                 rotation: [-90, 0, 0]
                 scale: [50, 50, 50]
               - !<animation>
-                id: 17590266362065422358
+                id: 17418154628122394211
                 type: 14
                 enabled: true
                 state_machine: 0
             child:
-              - id: 10070976957407572424
+              - id: 12899931266058187793
                 name: LaserBlock
-                enabled: false
+                enabled: true
                 component:
                   - !<transform>
-                    id: 5121410293849818095
+                    id: 13886064460348516879
                     type: 1
                     enabled: true
                     position: [-0.0009, 0.0551, 0]
                     rotation: [90, 0, 0]
                     scale: [0.054, 0.06, 0.055]
                   - !<mesh_renderer>
-                    id: 2099798101438962194
+                    id: 8402639134496487528
                     type: 2
                     enabled: true
                     mesh_id: 1654487118907036717
@@ -17782,19 +17820,19 @@ child:
                     casting_shadow: false
                     material_id: 6750369022920963075
                     tint_color: [1, 1, 1, 1]
-              - id: 7802340323864699373
+              - id: 13145475310283275210
                 name: rockSpike_01
-                enabled: false
+                enabled: true
                 component:
                   - !<transform>
-                    id: 15170628052533650011
+                    id: 4891551528808595638
                     type: 1
                     enabled: true
                     position: [0.0001, 0.0251, -0.1496]
-                    rotation: [180, 0, 0]
+                    rotation: [-180, 0, 0]
                     scale: [0.2794, 0.2794, 0.2794]
                   - !<mesh_renderer>
-                    id: 14950992462997716358
+                    id: 7145185459042378043
                     type: 2
                     enabled: true
                     mesh_id: 5123642657171642590
@@ -17803,51 +17841,31 @@ child:
                     casting_shadow: true
                     material_id: 3759531071522823328
                     tint_color: [1, 1, 1, 0.5176]
-      - id: 4557363606287660226
-        name: Stalagmite
-        enabled: false
-        component:
-          - !<transform>
-            id: 16807409497255399930
-            type: 1
-            enabled: true
-            position: [-8.373, 2.213, 4.24]
-            rotation: [0, 0, 0]
-            scale: [1, 1, 1]
-          - !<script>
-            id: 5982004209139108771
-            type: 15
-            enabled: true
-            class_name: Stalagmite
-            "'_explosion_effect@GameObject*'": 16461087962254981589
-            "'GEO@GameObject*'": 11859464153445871674
-            "'_obstacle@GameObject*'": 9789222532829589869
-        child:
-          - id: 16461087962254981589
+          - id: 11423150771632049081
             name: ExplosionIndicatorHelper
-            enabled: false
+            enabled: true
             component:
               - !<transform>
-                id: 17515416179291896378
+                id: 9084492425218437626
                 type: 1
                 enabled: true
                 position: [0, -1.3, 0]
                 rotation: [0, 7.901, 0]
-                scale: [6, 0.1, 6]
+                scale: [5, 0.1, 5]
             child:
-              - id: 6328601518126297350
+              - id: 2990561051358129391
                 name: Cylinder001
-                enabled: false
+                enabled: true
                 component:
                   - !<transform>
-                    id: 10623636683228742502
+                    id: 12659417804214898693
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
                     rotation: [-90, 0, 0]
                     scale: [1, 1, 1]
                   - !<mesh_renderer>
-                    id: 17418317237510473906
+                    id: 16034398804810442586
                     type: 2
                     enabled: true
                     mesh_id: 10210867973034302559
@@ -17856,53 +17874,115 @@ child:
                     casting_shadow: true
                     material_id: 6462450398853139216
                     tint_color: [1, 1, 1, 1]
-          - id: 9789222532829589869
+          - id: 2079748087180028629
             name: StObstacle
-            enabled: false
+            enabled: true
             component:
               - !<transform>
-                id: 8558783709498947980
+                id: 9894529545765891575
                 type: 1
                 enabled: true
                 position: [0.2085, -1.595, -0.2]
                 rotation: [0, 0, 0]
                 scale: [1, 1, 1]
               - !<obstacle>
-                id: 9313337437753582575
+                id: 9061649338341633809
                 type: 18
                 enabled: true
                 obstacle_type: 0
                 obstacle_size: [2.5, 3, 1]
-          - id: 11859464153445871674
-            name: GEO
-            enabled: false
+          - id: 13821001488949587182
+            name: AreaIndicator
+            enabled: true
             component:
               - !<transform>
-                id: 1286291112533986957
+                id: 8517138306538035758
+                type: 1
+                enabled: true
+                position: [0, -1, 0]
+                rotation: [0, 0, 0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 12495412719771731218
+                type: 21
+                enabled: true
+                play_on_awake: true
+                texture_id: 15537058005441777461
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 2, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 0
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 0
+                color_gradient: [[0.763, 0, 0, 0, 0]]
+                animation_section: false
+                color_section: true
+                size_section: true
+                size_over_time: [true, false, 0, [70, 10], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 0
+                projection: true
+                randomize_tiles: false
+      - id: 2322981315519880378
+        name: Stalagmite
+        enabled: true
+        component:
+          - !<transform>
+            id: 18264375007474678312
+            type: 1
+            enabled: true
+            position: [-8.373, 2.213, 4.24]
+            rotation: [0, 0, 0]
+            scale: [1, 1, 1]
+          - !<script>
+            id: 10493218968405659322
+            type: 15
+            enabled: true
+            class_name: Stalagmite
+            "'_explosion_effect@GameObject*'": 11574187640777123908
+            "'_area_indicator@GameObject*'": 11099239297292374363
+            "'GEO@GameObject*'": 14496861931000630961
+            "'_obstacle@GameObject*'": 14004950563005085772
+          - id: 6061138073632089830
+            type: 20
+            enabled: true
+        child:
+          - id: 14496861931000630961
+            name: GEO
+            enabled: true
+            component:
+              - !<transform>
+                id: 14381271289719949830
                 type: 1
                 enabled: true
                 position: [0.1, 0, 1.3]
                 rotation: [-90, 0, 0]
                 scale: [50, 50, 50]
               - !<animation>
-                id: 7159568038484595346
+                id: 15688439593207642507
                 type: 14
                 enabled: true
                 state_machine: 0
             child:
-              - id: 8324247226565876263
+              - id: 9737434255990039489
                 name: LaserBlock
-                enabled: false
+                enabled: true
                 component:
                   - !<transform>
-                    id: 16085912941801931826
+                    id: 13944701692936265731
                     type: 1
                     enabled: true
                     position: [-0.0009, 0.0551, 0]
                     rotation: [90, 0, 0]
                     scale: [0.054, 0.06, 0.055]
                   - !<mesh_renderer>
-                    id: 6148717867214994599
+                    id: 4346624439671310061
                     type: 2
                     enabled: true
                     mesh_id: 1654487118907036717
@@ -17911,19 +17991,19 @@ child:
                     casting_shadow: false
                     material_id: 6750369022920963075
                     tint_color: [1, 1, 1, 1]
-              - id: 9124387435577169518
+              - id: 16650260773741771079
                 name: rockSpike_01
-                enabled: false
+                enabled: true
                 component:
                   - !<transform>
-                    id: 7149621591312188693
+                    id: 5963046367883220606
                     type: 1
                     enabled: true
                     position: [0.0001, 0.0251, -0.1496]
-                    rotation: [180, 0, 0]
+                    rotation: [-180, 0, 0]
                     scale: [0.2794, 0.2794, 0.2794]
                   - !<mesh_renderer>
-                    id: 7641024532987479641
+                    id: 4049536023140792356
                     type: 2
                     enabled: true
                     mesh_id: 5123642657171642590
@@ -17932,6 +18012,94 @@ child:
                     casting_shadow: true
                     material_id: 3759531071522823328
                     tint_color: [1, 1, 1, 0.5176]
+          - id: 11574187640777123908
+            name: ExplosionIndicatorHelper
+            enabled: true
+            component:
+              - !<transform>
+                id: 7270433260107041608
+                type: 1
+                enabled: true
+                position: [0, -1.3, 0]
+                rotation: [0, 7.901, 0]
+                scale: [5, 0.1, 5]
+            child:
+              - id: 12779606696712913935
+                name: Cylinder001
+                enabled: true
+                component:
+                  - !<transform>
+                    id: 17555396881912573527
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0]
+                    rotation: [-90, 0, 0]
+                    scale: [1, 1, 1]
+                  - !<mesh_renderer>
+                    id: 6326112954677085688
+                    type: 2
+                    enabled: true
+                    mesh_id: 10210867973034302559
+                    navigable: false
+                    visible: true
+                    casting_shadow: true
+                    material_id: 6462450398853139216
+                    tint_color: [1, 1, 1, 1]
+          - id: 14004950563005085772
+            name: StObstacle
+            enabled: true
+            component:
+              - !<transform>
+                id: 10376335007763476383
+                type: 1
+                enabled: true
+                position: [0.2085, -1.595, -0.2]
+                rotation: [0, 0, 0]
+                scale: [1, 1, 1]
+              - !<obstacle>
+                id: 12836983902676105770
+                type: 18
+                enabled: true
+                obstacle_type: 0
+                obstacle_size: [2.5, 3, 1]
+          - id: 11099239297292374363
+            name: AreaIndicator
+            enabled: true
+            component:
+              - !<transform>
+                id: 11724856632329010527
+                type: 1
+                enabled: true
+                position: [0, -1, 0]
+                rotation: [0, 0, 0]
+                scale: [1, 1, 1]
+              - !<billboard>
+                id: 14351165083188396343
+                type: 21
+                enabled: true
+                play_on_awake: true
+                texture_id: 15537058005441777461
+                tiles: [1, 1]
+                flip: [false, false]
+                billboard_lifetime: 1
+                properties: [1, 2, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                animation_speed: 0
+                total_tiles: 1
+                animation_loop: false
+                color_cycles: 0
+                color_gradient: [[0.763, 0, 0, 0, 0]]
+                animation_section: false
+                color_section: true
+                size_section: true
+                size_over_time: [true, false, 0, [70, 10], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation_section: false
+                rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_size: [true, true, 0, [1, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                blend_factor: 0
+                projection: true
+                randomize_tiles: false
   - id: 452776920222929379
     name: 2022_10_08_boss_03
     enabled: true
@@ -44884,7 +45052,7 @@ child:
         "'_fog_max_density@float'": 0.015
         "'_fog_min_density@float'": 0.005
         "'_audio_manager_go@GameObject*'": 3361489421654677551
-        "'_player_sound_manager_go@GameObject*'": 0
+        "'_player_sound_manager_go@GameObject*'": 16788642605404128480
         "'_victory_screen@GameObject*'": 11894863846231363565
       - !<script>
         id: 9673773846935216921
@@ -44892,7 +45060,7 @@ child:
         enabled: true
         class_name: PauseMenu
         "'_pause_ui@GameObject*'": 6176356638000236994
-        "'_player_hud@GameObject*'": 0
+        "'_player_hud@GameObject*'": 13351007835304516731
         "'_resume_button@ComponentButton*'": 15539445419105017024
         "'_quit_button@ComponentButton*'": 8547481213687600992
     child:
@@ -59127,6 +59295,9 @@ child:
         "'_laser_wall_duration@float'": 6
         "'_laser_jump_height@float'": 25
         "'_melee_trail_right@GameObject*'": 1968852265813518482
+      - id: 2077916399870569819
+        type: 20
+        enabled: true
     child:
       - id: 5774307797641624833
         name: Bones2
