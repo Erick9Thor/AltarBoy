@@ -246,7 +246,7 @@ void Hachiko::Scripting::BossController::StateTransitionController()
 	case BossState::WAITING_ENCOUNTER:
 		break;
 	case BossState::STARTING_ENCOUNTER:
-		animation->SendTrigger("isCacoonComingOut");
+		
 		StartEncounter();
 		break;
 	case BossState::COMBAT_FORM:
@@ -368,7 +368,11 @@ void Hachiko::Scripting::BossController::StartEncounterController()
         cocoons_parent->ChangeDissolveProgress(1 - enemy_timer / encounter_start_duration, true);
         return;
     }
-    cocoons_parent->SetActive(false);
+
+    for (GameObject* crystal : cocoons_parent->children)
+    {
+        crystal->SetActive(false);
+    }
     SetHpBarActive(true);
     agent->AddToCrowd();
 
