@@ -292,6 +292,7 @@ void Hachiko::Scripting::EnemyController::SetVfx()
 	if (_blood_trail != nullptr)
 	{
 		_blood_trail_billboard = _blood_trail->GetComponent<ComponentBillboard>();
+		_blood_trail_billboard->Disable();
 	}
 
 	switch (_enemy_type)
@@ -494,7 +495,7 @@ void Hachiko::Scripting::EnemyController::ResetEnemy()
 
 	if (_blood_trail_billboard != nullptr)
 	{
-		_blood_trail_billboard->Disable();
+		_blood_trail_billboard->Stop();
 	}
 
 	if (_inner_indicator_billboard != nullptr)
