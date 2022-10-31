@@ -287,9 +287,11 @@ void Hachiko::Scripting::EnemyController::SetStats()
 
 void Hachiko::Scripting::EnemyController::SetVfx()
 {
+	_blood_trail = game_object->FindDescendantWithName("BloodTrail");
+	
 	if (_blood_trail != nullptr)
 	{
-		_blood_trail_particles = _blood_trail->GetComponent<ComponentParticleSystem>();
+		_blood_trail_billboard = _blood_trail->GetComponent<ComponentBillboard>();
 	}
 
 	switch (_enemy_type)
@@ -435,10 +437,10 @@ void Hachiko::Scripting::EnemyController::RegisterHit(int damage, float3 directi
 		}
 	}
 
-	if (_blood_trail_particles != nullptr)
+	if (_blood_trail_billboard != nullptr)
 	{
-		_blood_trail_particles->Enable();
-		_blood_trail_particles->Restart();
+		_blood_trail_billboard->Enable();
+		_blood_trail_billboard->Restart();
 	}
 
 	_combat_stats->ReceiveDamage(damage);
@@ -490,9 +492,9 @@ void Hachiko::Scripting::EnemyController::ResetEnemy()
 		_parasite->SetActive(false);
 	}
 
-	if (_blood_trail_particles != nullptr)
+	if (_blood_trail_billboard != nullptr)
 	{
-		_blood_trail_particles->Disable();
+		_blood_trail_billboard->Disable();
 	}
 
 	if (_inner_indicator_billboard != nullptr)
