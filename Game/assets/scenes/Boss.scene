@@ -11134,9 +11134,9 @@ child:
             id: 16324367102356953260
             type: 1
             enabled: true
-            position: [-81.39, 1.128, -61.82]
+            position: [-82.15, 1.128, -60.76]
             rotation: [0, -88.02, 0]
-            scale: [9.875, 9.875, 9.875]
+            scale: [7.383, 7.383, 7.383]
           - !<animation>
             id: 6335942210061430721
             type: 14
@@ -11525,6 +11525,1622 @@ child:
                     component:
                       - !<transform>
                         id: 6372648941151967775
+                        type: 1
+                        enabled: true
+                        position: [0.1457, 0.2564, 0.2724]
+                        rotation: [0, 0, 0]
+                        scale: [1, 1, 1]
+      - id: 10650994310132965556
+        name: StaticCrystal
+        enabled: true
+        component:
+          - !<transform>
+            id: 8126180099178785520
+            type: 1
+            enabled: true
+            position: [-80.78, 1.128, -60.14]
+            rotation: [0, -59.15, 0]
+            scale: [7.43, 7.43, 7.434]
+          - !<animation>
+            id: 13393354894611566576
+            type: 14
+            enabled: true
+            state_machine: 14686609166423751852
+          - id: 5512556411554915434
+            type: 20
+            enabled: true
+          - !<script>
+            id: 13243913712379258592
+            type: 15
+            enabled: true
+            class_name: Stats
+            "'_attack_power@int'": 2
+            "'_attack_cd@float'": 2
+            "'_attack_range@float'": 3.5
+            "'_move_speed@float'": 0
+            "'_max_hp@int'": 1
+            "'_current_hp@int'": 3
+          - !<script>
+            id: 4284807223087649588
+            type: 15
+            enabled: true
+            class_name: CrystalExplosion
+            "'_explosion_indicator_helper@GameObject*'": 0
+            "'_explosion_effect@GameObject*'": 0
+            "'_shake_intensity@float'": 0.2
+            "'_seconds_shaking@float'": 5
+            "'_crashing_index@unsigned'": 0
+            "'_detecting_radius@float'": 2
+            "'_explosion_radius@float'": 5
+            "'_timer_explosion@float'": 0
+            "'_explosive_crystal@bool'": false
+            "'_regen_time@float'": 5
+            "'_should_regen@bool'": true
+            "'damage_effect_duration@float'": 0.5
+        child:
+          - id: 1373826432828410078
+            name: Geo
+            enabled: true
+            component:
+              - !<transform>
+                id: 533556234873370543
+                type: 1
+                enabled: true
+                position: [-0.0117, 0, -0.0866]
+                rotation: [0, 0, 0]
+                scale: [1, 1, 1]
+            child:
+              - id: 11302953705163600133
+                name: crystalSpike_mesh_Part_1_$AssimpFbx$_RotationPivot
+                enabled: true
+                component:
+                  - !<transform>
+                    id: 17121232097181567340
+                    type: 1
+                    enabled: true
+                    position: [-0.0762, 0.4947, 0.1023]
+                    rotation: [0, 0, 0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 13294630212574744460
+                    name: crystalSpike_mesh_Part_1_$AssimpFbx$_RotationPivotInverse
+                    enabled: true
+                    component:
+                      - !<transform>
+                        id: 8751801424301498556
+                        type: 1
+                        enabled: true
+                        position: [0.0762, -0.4947, -0.1023]
+                        rotation: [0, 0, 0]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 15742687703920888001
+                        name: crystalSpike_mesh_Part_1_$AssimpFbx$_ScalingPivot
+                        enabled: true
+                        component:
+                          - !<transform>
+                            id: 6360742100993431270
+                            type: 1
+                            enabled: true
+                            position: [-0.0762, 0.4947, 0.1023]
+                            rotation: [0, 0, 0]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 18248385950225638600
+                            name: crystalSpike_mesh_Part_1_$AssimpFbx$_ScalingPivotInverse
+                            enabled: true
+                            component:
+                              - !<transform>
+                                id: 16181647684505828028
+                                type: 1
+                                enabled: true
+                                position: [0.0762, -0.4947, -0.1023]
+                                rotation: [0, 0, 0]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 523219584542261858
+                                name: crystalSpike_mesh_Part_1
+                                enabled: true
+                                component:
+                                  - !<transform>
+                                    id: 12192338385342537011
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [0, 0, 0]
+                                    scale: [1, 1, 1]
+                                  - !<mesh_renderer>
+                                    id: 5764689248539795931
+                                    type: 2
+                                    enabled: true
+                                    mesh_id: 10175395471774891078
+                                    navigable: false
+                                    visible: true
+                                    casting_shadow: true
+                                    material_id: 15711698613413314858
+                                    tint_color: [1, 1, 1, 0.7843]
+              - id: 4124888976256368746
+                name: crystalSpike_mesh_Part_2_$AssimpFbx$_RotationPivot
+                enabled: true
+                component:
+                  - !<transform>
+                    id: 7333159594658298568
+                    type: 1
+                    enabled: true
+                    position: [0.0911, 0.2996, 0.0456]
+                    rotation: [0, 0, 0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 14658796935621423291
+                    name: crystalSpike_mesh_Part_2_$AssimpFbx$_RotationPivotInverse
+                    enabled: true
+                    component:
+                      - !<transform>
+                        id: 4103273754480262335
+                        type: 1
+                        enabled: true
+                        position: [-0.0911, -0.2996, -0.0456]
+                        rotation: [0, 0, 0]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 10115853714726003778
+                        name: crystalSpike_mesh_Part_2_$AssimpFbx$_ScalingPivot
+                        enabled: true
+                        component:
+                          - !<transform>
+                            id: 10859061514147293512
+                            type: 1
+                            enabled: true
+                            position: [0.0911, 0.2996, 0.0456]
+                            rotation: [0, 0, 0]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 16288855650947392980
+                            name: crystalSpike_mesh_Part_2_$AssimpFbx$_ScalingPivotInverse
+                            enabled: true
+                            component:
+                              - !<transform>
+                                id: 8047283320762652418
+                                type: 1
+                                enabled: true
+                                position: [-0.0911, -0.2996, -0.0456]
+                                rotation: [0, 0, 0]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 4627210735039611956
+                                name: crystalSpike_mesh_Part_2
+                                enabled: true
+                                component:
+                                  - !<transform>
+                                    id: 16327343936520802419
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [0, 0, 0]
+                                    scale: [1, 1, 1]
+                                  - !<mesh_renderer>
+                                    id: 5932288446291299561
+                                    type: 2
+                                    enabled: true
+                                    mesh_id: 6229385771345559983
+                                    navigable: false
+                                    visible: true
+                                    casting_shadow: true
+                                    material_id: 15711698613413314858
+                                    tint_color: [1, 1, 1, 0.7843]
+              - id: 2906525909532448893
+                name: crystalSpike_mesh_Part_3_$AssimpFbx$_RotationPivot
+                enabled: true
+                component:
+                  - !<transform>
+                    id: 13033385441588224017
+                    type: 1
+                    enabled: true
+                    position: [0.187, 0.4844, 0.0622]
+                    rotation: [0, 0, 0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 13953089395520630977
+                    name: crystalSpike_mesh_Part_3_$AssimpFbx$_RotationPivotInverse
+                    enabled: true
+                    component:
+                      - !<transform>
+                        id: 6451916542630779337
+                        type: 1
+                        enabled: true
+                        position: [-0.187, -0.4844, -0.0622]
+                        rotation: [0, 0, 0]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 8734493057085754494
+                        name: crystalSpike_mesh_Part_3_$AssimpFbx$_ScalingPivot
+                        enabled: true
+                        component:
+                          - !<transform>
+                            id: 14831476358199784193
+                            type: 1
+                            enabled: true
+                            position: [0.187, 0.4844, 0.0622]
+                            rotation: [0, 0, 0]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 13830766907758803410
+                            name: crystalSpike_mesh_Part_3_$AssimpFbx$_ScalingPivotInverse
+                            enabled: true
+                            component:
+                              - !<transform>
+                                id: 15292556946416727052
+                                type: 1
+                                enabled: true
+                                position: [-0.187, -0.4844, -0.0622]
+                                rotation: [0, 0, 0]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 2683633349898259405
+                                name: crystalSpike_mesh_Part_3
+                                enabled: true
+                                component:
+                                  - !<transform>
+                                    id: 11747833127335825089
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [0, 0, 0]
+                                    scale: [1, 1, 1]
+                                  - !<mesh_renderer>
+                                    id: 13817169906258419937
+                                    type: 2
+                                    enabled: true
+                                    mesh_id: 903393536084662082
+                                    navigable: false
+                                    visible: true
+                                    casting_shadow: true
+                                    material_id: 15711698613413314858
+                                    tint_color: [1, 1, 1, 0.3922]
+              - id: 826520547738437364
+                name: crystalSpike_mesh_Part_4_$AssimpFbx$_RotationPivot
+                enabled: true
+                component:
+                  - !<transform>
+                    id: 10222108521919391793
+                    type: 1
+                    enabled: true
+                    position: [0.1453, 0.2564, 0.2718]
+                    rotation: [0, 0, 0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 12452861314691684851
+                    name: crystalSpike_mesh_Part_4_$AssimpFbx$_RotationPivotInverse
+                    enabled: true
+                    component:
+                      - !<transform>
+                        id: 17754803713503399780
+                        type: 1
+                        enabled: true
+                        position: [-0.1453, -0.2564, -0.2718]
+                        rotation: [0, 0, 0]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 6142512445018443550
+                        name: crystalSpike_mesh_Part_4_$AssimpFbx$_ScalingPivot
+                        enabled: true
+                        component:
+                          - !<transform>
+                            id: 2958941117809999192
+                            type: 1
+                            enabled: true
+                            position: [0.1453, 0.2564, 0.2718]
+                            rotation: [0, 0, 0]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 15258973216803615091
+                            name: crystalSpike_mesh_Part_4_$AssimpFbx$_ScalingPivotInverse
+                            enabled: true
+                            component:
+                              - !<transform>
+                                id: 7887185344585585095
+                                type: 1
+                                enabled: true
+                                position: [-0.1453, -0.2564, -0.2718]
+                                rotation: [0, 0, 0]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 16221220676118738220
+                                name: crystalSpike_mesh_Part_4
+                                enabled: true
+                                component:
+                                  - !<transform>
+                                    id: 4679657543386304680
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [0, 0, 0]
+                                    scale: [1, 1, 1]
+                                  - !<mesh_renderer>
+                                    id: 8238384309005097901
+                                    type: 2
+                                    enabled: true
+                                    mesh_id: 17479070581851126897
+                                    navigable: false
+                                    visible: true
+                                    casting_shadow: true
+                                    material_id: 15711698613413314858
+                                    tint_color: [1, 1, 1, 0.3922]
+          - id: 15256229823136101157
+            name: Bones
+            enabled: true
+            component:
+              - !<transform>
+                id: 4950750525176415828
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [0, 0, 0]
+                scale: [1, 1, 1]
+            child:
+              - id: 1510650064840923095
+                name: Root
+                enabled: true
+                component:
+                  - !<transform>
+                    id: 2381535437976595006
+                    type: 1
+                    enabled: true
+                    position: [-0.0003, 0, -0.0006]
+                    rotation: [0, 0, 0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 5088428148373868498
+                    name: Up
+                    enabled: true
+                    component:
+                      - !<transform>
+                        id: 6765791939433721385
+                        type: 1
+                        enabled: true
+                        position: [-0.0759, 0.4947, 0.1029]
+                        rotation: [0, 0, 0]
+                        scale: [1, 1, 1]
+                  - id: 2247766663184440193
+                    name: Down
+                    enabled: true
+                    component:
+                      - !<transform>
+                        id: 2503189359947352310
+                        type: 1
+                        enabled: true
+                        position: [0.0915, 0.2996, 0.0463]
+                        rotation: [0, 0, 0]
+                        scale: [1, 1, 1]
+                  - id: 14344829965594580300
+                    name: Middle
+                    enabled: true
+                    component:
+                      - !<transform>
+                        id: 4456245359827174580
+                        type: 1
+                        enabled: true
+                        position: [0.1873, 0.4844, 0.0629]
+                        rotation: [0, 0, 0]
+                        scale: [1, 1, 1]
+                  - id: 11491983313988032197
+                    name: Down_two
+                    enabled: true
+                    component:
+                      - !<transform>
+                        id: 2416067228806339446
+                        type: 1
+                        enabled: true
+                        position: [0.1457, 0.2564, 0.2724]
+                        rotation: [0, 0, 0]
+                        scale: [1, 1, 1]
+      - id: 13500254248988401136
+        name: StaticCrystal
+        enabled: true
+        component:
+          - !<transform>
+            id: 4340665269897646739
+            type: 1
+            enabled: true
+            position: [-83.82, 1.128, -59.96]
+            rotation: [-180, -35.03, -180]
+            scale: [5.279, 5.279, 5.282]
+          - !<animation>
+            id: 9435586467720836573
+            type: 14
+            enabled: true
+            state_machine: 14686609166423751852
+          - id: 6275344869751658413
+            type: 20
+            enabled: true
+          - !<script>
+            id: 17740059796631115951
+            type: 15
+            enabled: true
+            class_name: Stats
+            "'_attack_power@int'": 2
+            "'_attack_cd@float'": 2
+            "'_attack_range@float'": 3.5
+            "'_move_speed@float'": 0
+            "'_max_hp@int'": 1
+            "'_current_hp@int'": 3
+          - !<script>
+            id: 9860835622816721713
+            type: 15
+            enabled: true
+            class_name: CrystalExplosion
+            "'_explosion_indicator_helper@GameObject*'": 0
+            "'_explosion_effect@GameObject*'": 0
+            "'_shake_intensity@float'": 0.2
+            "'_seconds_shaking@float'": 5
+            "'_crashing_index@unsigned'": 0
+            "'_detecting_radius@float'": 2
+            "'_explosion_radius@float'": 5
+            "'_timer_explosion@float'": 0
+            "'_explosive_crystal@bool'": false
+            "'_regen_time@float'": 5
+            "'_should_regen@bool'": true
+            "'damage_effect_duration@float'": 0.5
+        child:
+          - id: 8901936930191146217
+            name: Geo
+            enabled: true
+            component:
+              - !<transform>
+                id: 13404416624485130517
+                type: 1
+                enabled: true
+                position: [-0.0117, 0, -0.0866]
+                rotation: [0, 0, 0]
+                scale: [1, 1, 1]
+            child:
+              - id: 2007202744331257717
+                name: crystalSpike_mesh_Part_1_$AssimpFbx$_RotationPivot
+                enabled: true
+                component:
+                  - !<transform>
+                    id: 14316311566961400216
+                    type: 1
+                    enabled: true
+                    position: [-0.0762, 0.4947, 0.1023]
+                    rotation: [0, 0, 0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 1339231832298398677
+                    name: crystalSpike_mesh_Part_1_$AssimpFbx$_RotationPivotInverse
+                    enabled: true
+                    component:
+                      - !<transform>
+                        id: 13122478184497488295
+                        type: 1
+                        enabled: true
+                        position: [0.0762, -0.4947, -0.1023]
+                        rotation: [0, 0, 0]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 4663094451840519590
+                        name: crystalSpike_mesh_Part_1_$AssimpFbx$_ScalingPivot
+                        enabled: true
+                        component:
+                          - !<transform>
+                            id: 7000530291834365664
+                            type: 1
+                            enabled: true
+                            position: [-0.0762, 0.4947, 0.1023]
+                            rotation: [0, 0, 0]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 15709292886252120779
+                            name: crystalSpike_mesh_Part_1_$AssimpFbx$_ScalingPivotInverse
+                            enabled: true
+                            component:
+                              - !<transform>
+                                id: 6810751229384101263
+                                type: 1
+                                enabled: true
+                                position: [0.0762, -0.4947, -0.1023]
+                                rotation: [0, 0, 0]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 1073311010395247942
+                                name: crystalSpike_mesh_Part_1
+                                enabled: true
+                                component:
+                                  - !<transform>
+                                    id: 11363069345368459787
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [0, 0, 0]
+                                    scale: [1, 1, 1]
+                                  - !<mesh_renderer>
+                                    id: 3841853377786125638
+                                    type: 2
+                                    enabled: true
+                                    mesh_id: 10175395471774891078
+                                    navigable: false
+                                    visible: true
+                                    casting_shadow: true
+                                    material_id: 15711698613413314858
+                                    tint_color: [1, 1, 1, 0.7843]
+              - id: 3431006225561383005
+                name: crystalSpike_mesh_Part_2_$AssimpFbx$_RotationPivot
+                enabled: true
+                component:
+                  - !<transform>
+                    id: 14917713579383134629
+                    type: 1
+                    enabled: true
+                    position: [0.0911, 0.2996, 0.0456]
+                    rotation: [0, 0, 0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 9950968107881696407
+                    name: crystalSpike_mesh_Part_2_$AssimpFbx$_RotationPivotInverse
+                    enabled: true
+                    component:
+                      - !<transform>
+                        id: 3524142723009426405
+                        type: 1
+                        enabled: true
+                        position: [-0.0911, -0.2996, -0.0456]
+                        rotation: [0, 0, 0]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 16961630071784194364
+                        name: crystalSpike_mesh_Part_2_$AssimpFbx$_ScalingPivot
+                        enabled: true
+                        component:
+                          - !<transform>
+                            id: 7996742573234262798
+                            type: 1
+                            enabled: true
+                            position: [0.0911, 0.2996, 0.0456]
+                            rotation: [0, 0, 0]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 6052255605726506493
+                            name: crystalSpike_mesh_Part_2_$AssimpFbx$_ScalingPivotInverse
+                            enabled: true
+                            component:
+                              - !<transform>
+                                id: 7092000506422961616
+                                type: 1
+                                enabled: true
+                                position: [-0.0911, -0.2996, -0.0456]
+                                rotation: [0, 0, 0]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 16439733900989442284
+                                name: crystalSpike_mesh_Part_2
+                                enabled: true
+                                component:
+                                  - !<transform>
+                                    id: 5848941066435202750
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [0, 0, 0]
+                                    scale: [1, 1, 1]
+                                  - !<mesh_renderer>
+                                    id: 1810487527560201108
+                                    type: 2
+                                    enabled: true
+                                    mesh_id: 6229385771345559983
+                                    navigable: false
+                                    visible: true
+                                    casting_shadow: true
+                                    material_id: 15711698613413314858
+                                    tint_color: [1, 1, 1, 0.7843]
+              - id: 7197439589880932760
+                name: crystalSpike_mesh_Part_3_$AssimpFbx$_RotationPivot
+                enabled: true
+                component:
+                  - !<transform>
+                    id: 668747384899368811
+                    type: 1
+                    enabled: true
+                    position: [0.187, 0.4844, 0.0622]
+                    rotation: [0, 0, 0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 3612934861286548159
+                    name: crystalSpike_mesh_Part_3_$AssimpFbx$_RotationPivotInverse
+                    enabled: true
+                    component:
+                      - !<transform>
+                        id: 6335129478984979764
+                        type: 1
+                        enabled: true
+                        position: [-0.187, -0.4844, -0.0622]
+                        rotation: [0, 0, 0]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 11247936167422795374
+                        name: crystalSpike_mesh_Part_3_$AssimpFbx$_ScalingPivot
+                        enabled: true
+                        component:
+                          - !<transform>
+                            id: 17734794291768677085
+                            type: 1
+                            enabled: true
+                            position: [0.187, 0.4844, 0.0622]
+                            rotation: [0, 0, 0]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 15152475873133200879
+                            name: crystalSpike_mesh_Part_3_$AssimpFbx$_ScalingPivotInverse
+                            enabled: true
+                            component:
+                              - !<transform>
+                                id: 11577120948953713065
+                                type: 1
+                                enabled: true
+                                position: [-0.187, -0.4844, -0.0622]
+                                rotation: [0, 0, 0]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 14944272274680468097
+                                name: crystalSpike_mesh_Part_3
+                                enabled: true
+                                component:
+                                  - !<transform>
+                                    id: 5412221769255509157
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [0, 0, 0]
+                                    scale: [1, 1, 1]
+                                  - !<mesh_renderer>
+                                    id: 15888292795040533592
+                                    type: 2
+                                    enabled: true
+                                    mesh_id: 903393536084662082
+                                    navigable: false
+                                    visible: true
+                                    casting_shadow: true
+                                    material_id: 15711698613413314858
+                                    tint_color: [1, 1, 1, 0.3922]
+              - id: 12976994730971795180
+                name: crystalSpike_mesh_Part_4_$AssimpFbx$_RotationPivot
+                enabled: true
+                component:
+                  - !<transform>
+                    id: 6876110580646462068
+                    type: 1
+                    enabled: true
+                    position: [0.1453, 0.2564, 0.2718]
+                    rotation: [0, 0, 0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 2030048920439647652
+                    name: crystalSpike_mesh_Part_4_$AssimpFbx$_RotationPivotInverse
+                    enabled: true
+                    component:
+                      - !<transform>
+                        id: 9318691030108979776
+                        type: 1
+                        enabled: true
+                        position: [-0.1453, -0.2564, -0.2718]
+                        rotation: [0, 0, 0]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 1112019370018714567
+                        name: crystalSpike_mesh_Part_4_$AssimpFbx$_ScalingPivot
+                        enabled: true
+                        component:
+                          - !<transform>
+                            id: 1069267867126481244
+                            type: 1
+                            enabled: true
+                            position: [0.1453, 0.2564, 0.2718]
+                            rotation: [0, 0, 0]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 12028014926158852390
+                            name: crystalSpike_mesh_Part_4_$AssimpFbx$_ScalingPivotInverse
+                            enabled: true
+                            component:
+                              - !<transform>
+                                id: 8697283886249371356
+                                type: 1
+                                enabled: true
+                                position: [-0.1453, -0.2564, -0.2718]
+                                rotation: [0, 0, 0]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 15184750593927085675
+                                name: crystalSpike_mesh_Part_4
+                                enabled: true
+                                component:
+                                  - !<transform>
+                                    id: 17305336724756266256
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [0, 0, 0]
+                                    scale: [1, 1, 1]
+                                  - !<mesh_renderer>
+                                    id: 10404587620826789543
+                                    type: 2
+                                    enabled: true
+                                    mesh_id: 17479070581851126897
+                                    navigable: false
+                                    visible: true
+                                    casting_shadow: true
+                                    material_id: 15711698613413314858
+                                    tint_color: [1, 1, 1, 0.3922]
+          - id: 4061814710526155716
+            name: Bones
+            enabled: true
+            component:
+              - !<transform>
+                id: 6709402814656105533
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [0, 0, 0]
+                scale: [1, 1, 1]
+            child:
+              - id: 8443204385532745131
+                name: Root
+                enabled: true
+                component:
+                  - !<transform>
+                    id: 12528299814956717281
+                    type: 1
+                    enabled: true
+                    position: [-0.0003, 0, -0.0006]
+                    rotation: [0, 0, 0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 3020724139807332219
+                    name: Up
+                    enabled: true
+                    component:
+                      - !<transform>
+                        id: 6085837567465690432
+                        type: 1
+                        enabled: true
+                        position: [-0.0759, 0.4947, 0.1029]
+                        rotation: [0, 0, 0]
+                        scale: [1, 1, 1]
+                  - id: 3995218789455016316
+                    name: Down
+                    enabled: true
+                    component:
+                      - !<transform>
+                        id: 15328955517280017265
+                        type: 1
+                        enabled: true
+                        position: [0.0915, 0.2996, 0.0463]
+                        rotation: [0, 0, 0]
+                        scale: [1, 1, 1]
+                  - id: 12659954515374054163
+                    name: Middle
+                    enabled: true
+                    component:
+                      - !<transform>
+                        id: 8058181883292953128
+                        type: 1
+                        enabled: true
+                        position: [0.1873, 0.4844, 0.0629]
+                        rotation: [0, 0, 0]
+                        scale: [1, 1, 1]
+                  - id: 937538515455876895
+                    name: Down_two
+                    enabled: true
+                    component:
+                      - !<transform>
+                        id: 16531227032223195136
+                        type: 1
+                        enabled: true
+                        position: [0.1457, 0.2564, 0.2724]
+                        rotation: [0, 0, 0]
+                        scale: [1, 1, 1]
+      - id: 6409042544019039537
+        name: StaticCrystal
+        enabled: true
+        component:
+          - !<transform>
+            id: 1105771602435919490
+            type: 1
+            enabled: true
+            position: [-78.14, 1.128, -60.27]
+            rotation: [-180, -46.69, -180]
+            scale: [6.257, 6.257, 6.26]
+          - !<animation>
+            id: 8014423799243566370
+            type: 14
+            enabled: true
+            state_machine: 14686609166423751852
+          - id: 1919210927315058612
+            type: 20
+            enabled: true
+          - !<script>
+            id: 12947072737778380547
+            type: 15
+            enabled: true
+            class_name: Stats
+            "'_attack_power@int'": 2
+            "'_attack_cd@float'": 2
+            "'_attack_range@float'": 3.5
+            "'_move_speed@float'": 0
+            "'_max_hp@int'": 1
+            "'_current_hp@int'": 3
+          - !<script>
+            id: 16402676357416539863
+            type: 15
+            enabled: true
+            class_name: CrystalExplosion
+            "'_explosion_indicator_helper@GameObject*'": 0
+            "'_explosion_effect@GameObject*'": 0
+            "'_shake_intensity@float'": 0.2
+            "'_seconds_shaking@float'": 5
+            "'_crashing_index@unsigned'": 0
+            "'_detecting_radius@float'": 2
+            "'_explosion_radius@float'": 5
+            "'_timer_explosion@float'": 0
+            "'_explosive_crystal@bool'": false
+            "'_regen_time@float'": 5
+            "'_should_regen@bool'": true
+            "'damage_effect_duration@float'": 0.5
+        child:
+          - id: 18110449753150817775
+            name: Geo
+            enabled: true
+            component:
+              - !<transform>
+                id: 13238790710643668459
+                type: 1
+                enabled: true
+                position: [-0.0117, 0, -0.0866]
+                rotation: [0, 0, 0]
+                scale: [1, 1, 1]
+            child:
+              - id: 12116170539663540785
+                name: crystalSpike_mesh_Part_1_$AssimpFbx$_RotationPivot
+                enabled: true
+                component:
+                  - !<transform>
+                    id: 3960715493992576452
+                    type: 1
+                    enabled: true
+                    position: [-0.0762, 0.4947, 0.1023]
+                    rotation: [0, 0, 0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 18125460765290268709
+                    name: crystalSpike_mesh_Part_1_$AssimpFbx$_RotationPivotInverse
+                    enabled: true
+                    component:
+                      - !<transform>
+                        id: 1861469503067760286
+                        type: 1
+                        enabled: true
+                        position: [0.0762, -0.4947, -0.1023]
+                        rotation: [0, 0, 0]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 11855431068722968492
+                        name: crystalSpike_mesh_Part_1_$AssimpFbx$_ScalingPivot
+                        enabled: true
+                        component:
+                          - !<transform>
+                            id: 11839243703837082215
+                            type: 1
+                            enabled: true
+                            position: [-0.0762, 0.4947, 0.1023]
+                            rotation: [0, 0, 0]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 4933310207975495168
+                            name: crystalSpike_mesh_Part_1_$AssimpFbx$_ScalingPivotInverse
+                            enabled: true
+                            component:
+                              - !<transform>
+                                id: 9887910674016779929
+                                type: 1
+                                enabled: true
+                                position: [0.0762, -0.4947, -0.1023]
+                                rotation: [0, 0, 0]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 15389854586279834155
+                                name: crystalSpike_mesh_Part_1
+                                enabled: true
+                                component:
+                                  - !<transform>
+                                    id: 16340986224289540370
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [0, 0, 0]
+                                    scale: [1, 1, 1]
+                                  - !<mesh_renderer>
+                                    id: 229472391031264487
+                                    type: 2
+                                    enabled: true
+                                    mesh_id: 10175395471774891078
+                                    navigable: false
+                                    visible: true
+                                    casting_shadow: true
+                                    material_id: 15711698613413314858
+                                    tint_color: [1, 1, 1, 0.7843]
+              - id: 10775126617962758156
+                name: crystalSpike_mesh_Part_2_$AssimpFbx$_RotationPivot
+                enabled: true
+                component:
+                  - !<transform>
+                    id: 888490126524483740
+                    type: 1
+                    enabled: true
+                    position: [0.0911, 0.2996, 0.0456]
+                    rotation: [0, 0, 0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 17162158853637529473
+                    name: crystalSpike_mesh_Part_2_$AssimpFbx$_RotationPivotInverse
+                    enabled: true
+                    component:
+                      - !<transform>
+                        id: 14986232617183672780
+                        type: 1
+                        enabled: true
+                        position: [-0.0911, -0.2996, -0.0456]
+                        rotation: [0, 0, 0]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 4866055821810567556
+                        name: crystalSpike_mesh_Part_2_$AssimpFbx$_ScalingPivot
+                        enabled: true
+                        component:
+                          - !<transform>
+                            id: 11558086450591099606
+                            type: 1
+                            enabled: true
+                            position: [0.0911, 0.2996, 0.0456]
+                            rotation: [0, 0, 0]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 13566113877934218278
+                            name: crystalSpike_mesh_Part_2_$AssimpFbx$_ScalingPivotInverse
+                            enabled: true
+                            component:
+                              - !<transform>
+                                id: 14298832564148989065
+                                type: 1
+                                enabled: true
+                                position: [-0.0911, -0.2996, -0.0456]
+                                rotation: [0, 0, 0]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 14140305757428448710
+                                name: crystalSpike_mesh_Part_2
+                                enabled: true
+                                component:
+                                  - !<transform>
+                                    id: 10108533343452723375
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [0, 0, 0]
+                                    scale: [1, 1, 1]
+                                  - !<mesh_renderer>
+                                    id: 15384687665876457784
+                                    type: 2
+                                    enabled: true
+                                    mesh_id: 6229385771345559983
+                                    navigable: false
+                                    visible: true
+                                    casting_shadow: true
+                                    material_id: 15711698613413314858
+                                    tint_color: [1, 1, 1, 0.7843]
+              - id: 2215731934344881310
+                name: crystalSpike_mesh_Part_3_$AssimpFbx$_RotationPivot
+                enabled: true
+                component:
+                  - !<transform>
+                    id: 1306230560909949856
+                    type: 1
+                    enabled: true
+                    position: [0.187, 0.4844, 0.0622]
+                    rotation: [0, 0, 0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 7658847861661080296
+                    name: crystalSpike_mesh_Part_3_$AssimpFbx$_RotationPivotInverse
+                    enabled: true
+                    component:
+                      - !<transform>
+                        id: 5826055751102395102
+                        type: 1
+                        enabled: true
+                        position: [-0.187, -0.4844, -0.0622]
+                        rotation: [0, 0, 0]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 9190069619296173767
+                        name: crystalSpike_mesh_Part_3_$AssimpFbx$_ScalingPivot
+                        enabled: true
+                        component:
+                          - !<transform>
+                            id: 3540712883504719142
+                            type: 1
+                            enabled: true
+                            position: [0.187, 0.4844, 0.0622]
+                            rotation: [0, 0, 0]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 5313393691391387404
+                            name: crystalSpike_mesh_Part_3_$AssimpFbx$_ScalingPivotInverse
+                            enabled: true
+                            component:
+                              - !<transform>
+                                id: 505913633526923970
+                                type: 1
+                                enabled: true
+                                position: [-0.187, -0.4844, -0.0622]
+                                rotation: [0, 0, 0]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 5310576214467003611
+                                name: crystalSpike_mesh_Part_3
+                                enabled: true
+                                component:
+                                  - !<transform>
+                                    id: 14669869270891097912
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [0, 0, 0]
+                                    scale: [1, 1, 1]
+                                  - !<mesh_renderer>
+                                    id: 5272417828101925541
+                                    type: 2
+                                    enabled: true
+                                    mesh_id: 903393536084662082
+                                    navigable: false
+                                    visible: true
+                                    casting_shadow: true
+                                    material_id: 15711698613413314858
+                                    tint_color: [1, 1, 1, 0.3922]
+              - id: 7064386499830597912
+                name: crystalSpike_mesh_Part_4_$AssimpFbx$_RotationPivot
+                enabled: true
+                component:
+                  - !<transform>
+                    id: 13053415696140871571
+                    type: 1
+                    enabled: true
+                    position: [0.1453, 0.2564, 0.2718]
+                    rotation: [0, 0, 0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 5487247363615250979
+                    name: crystalSpike_mesh_Part_4_$AssimpFbx$_RotationPivotInverse
+                    enabled: true
+                    component:
+                      - !<transform>
+                        id: 11081717911236853460
+                        type: 1
+                        enabled: true
+                        position: [-0.1453, -0.2564, -0.2718]
+                        rotation: [0, 0, 0]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 11139725106783296592
+                        name: crystalSpike_mesh_Part_4_$AssimpFbx$_ScalingPivot
+                        enabled: true
+                        component:
+                          - !<transform>
+                            id: 12605847577425185297
+                            type: 1
+                            enabled: true
+                            position: [0.1453, 0.2564, 0.2718]
+                            rotation: [0, 0, 0]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 6544531045339787426
+                            name: crystalSpike_mesh_Part_4_$AssimpFbx$_ScalingPivotInverse
+                            enabled: true
+                            component:
+                              - !<transform>
+                                id: 9744166179329898493
+                                type: 1
+                                enabled: true
+                                position: [-0.1453, -0.2564, -0.2718]
+                                rotation: [0, 0, 0]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 13026248039348732186
+                                name: crystalSpike_mesh_Part_4
+                                enabled: true
+                                component:
+                                  - !<transform>
+                                    id: 14692740833843736745
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [0, 0, 0]
+                                    scale: [1, 1, 1]
+                                  - !<mesh_renderer>
+                                    id: 3502004371462270155
+                                    type: 2
+                                    enabled: true
+                                    mesh_id: 17479070581851126897
+                                    navigable: false
+                                    visible: true
+                                    casting_shadow: true
+                                    material_id: 15711698613413314858
+                                    tint_color: [1, 1, 1, 0.3922]
+          - id: 10801833506733002943
+            name: Bones
+            enabled: true
+            component:
+              - !<transform>
+                id: 8737806279113011011
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [0, 0, 0]
+                scale: [1, 1, 1]
+            child:
+              - id: 18152720915838582943
+                name: Root
+                enabled: true
+                component:
+                  - !<transform>
+                    id: 1601936352713662048
+                    type: 1
+                    enabled: true
+                    position: [-0.0003, 0, -0.0006]
+                    rotation: [0, 0, 0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 5181739162321053282
+                    name: Up
+                    enabled: true
+                    component:
+                      - !<transform>
+                        id: 14495310105015099970
+                        type: 1
+                        enabled: true
+                        position: [-0.0759, 0.4947, 0.1029]
+                        rotation: [0, 0, 0]
+                        scale: [1, 1, 1]
+                  - id: 14793383083040496033
+                    name: Down
+                    enabled: true
+                    component:
+                      - !<transform>
+                        id: 18242101190352886810
+                        type: 1
+                        enabled: true
+                        position: [0.0915, 0.2996, 0.0463]
+                        rotation: [0, 0, 0]
+                        scale: [1, 1, 1]
+                  - id: 7008543510009930146
+                    name: Middle
+                    enabled: true
+                    component:
+                      - !<transform>
+                        id: 16934103709673956217
+                        type: 1
+                        enabled: true
+                        position: [0.1873, 0.4844, 0.0629]
+                        rotation: [0, 0, 0]
+                        scale: [1, 1, 1]
+                  - id: 11261038697850678383
+                    name: Down_two
+                    enabled: true
+                    component:
+                      - !<transform>
+                        id: 11530083183020315017
+                        type: 1
+                        enabled: true
+                        position: [0.1457, 0.2564, 0.2724]
+                        rotation: [0, 0, 0]
+                        scale: [1, 1, 1]
+      - id: 18178862927258141391
+        name: StaticCrystal
+        enabled: true
+        component:
+          - !<transform>
+            id: 8470088199103008991
+            type: 1
+            enabled: true
+            position: [-79.88, 1.128, -61.82]
+            rotation: [0, -88.02, 0]
+            scale: [9.776, 9.776, 9.781]
+          - !<animation>
+            id: 10738236207036929627
+            type: 14
+            enabled: true
+            state_machine: 14686609166423751852
+          - id: 2484721379546454647
+            type: 20
+            enabled: true
+          - !<script>
+            id: 18410920710504660486
+            type: 15
+            enabled: true
+            class_name: Stats
+            "'_attack_power@int'": 2
+            "'_attack_cd@float'": 2
+            "'_attack_range@float'": 3.5
+            "'_move_speed@float'": 0
+            "'_max_hp@int'": 1
+            "'_current_hp@int'": 3
+          - !<script>
+            id: 1387150828921627241
+            type: 15
+            enabled: true
+            class_name: CrystalExplosion
+            "'_explosion_indicator_helper@GameObject*'": 0
+            "'_explosion_effect@GameObject*'": 0
+            "'_shake_intensity@float'": 0.2
+            "'_seconds_shaking@float'": 5
+            "'_crashing_index@unsigned'": 0
+            "'_detecting_radius@float'": 2
+            "'_explosion_radius@float'": 5
+            "'_timer_explosion@float'": 0
+            "'_explosive_crystal@bool'": false
+            "'_regen_time@float'": 5
+            "'_should_regen@bool'": true
+            "'damage_effect_duration@float'": 0.5
+        child:
+          - id: 12654953992903386457
+            name: Geo
+            enabled: true
+            component:
+              - !<transform>
+                id: 17830615370886099845
+                type: 1
+                enabled: true
+                position: [-0.0117, 0, -0.0866]
+                rotation: [0, 0, 0]
+                scale: [1, 1, 1]
+            child:
+              - id: 4306514601464532248
+                name: crystalSpike_mesh_Part_1_$AssimpFbx$_RotationPivot
+                enabled: true
+                component:
+                  - !<transform>
+                    id: 2583369472144199830
+                    type: 1
+                    enabled: true
+                    position: [-0.0762, 0.4947, 0.1023]
+                    rotation: [0, 0, 0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 9150630547153503722
+                    name: crystalSpike_mesh_Part_1_$AssimpFbx$_RotationPivotInverse
+                    enabled: true
+                    component:
+                      - !<transform>
+                        id: 17823817469859235237
+                        type: 1
+                        enabled: true
+                        position: [0.0762, -0.4947, -0.1023]
+                        rotation: [0, 0, 0]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 12243995164290367468
+                        name: crystalSpike_mesh_Part_1_$AssimpFbx$_ScalingPivot
+                        enabled: true
+                        component:
+                          - !<transform>
+                            id: 12472359898673232067
+                            type: 1
+                            enabled: true
+                            position: [-0.0762, 0.4947, 0.1023]
+                            rotation: [0, 0, 0]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 5527612604493060894
+                            name: crystalSpike_mesh_Part_1_$AssimpFbx$_ScalingPivotInverse
+                            enabled: true
+                            component:
+                              - !<transform>
+                                id: 4257285056775006888
+                                type: 1
+                                enabled: true
+                                position: [0.0762, -0.4947, -0.1023]
+                                rotation: [0, 0, 0]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 4994589159329977095
+                                name: crystalSpike_mesh_Part_1
+                                enabled: true
+                                component:
+                                  - !<transform>
+                                    id: 1302351726034987740
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [0, 0, 0]
+                                    scale: [1, 1, 1]
+                                  - !<mesh_renderer>
+                                    id: 12712414776754853313
+                                    type: 2
+                                    enabled: true
+                                    mesh_id: 10175395471774891078
+                                    navigable: false
+                                    visible: true
+                                    casting_shadow: true
+                                    material_id: 15711698613413314858
+                                    tint_color: [1, 1, 1, 0.7843]
+              - id: 7409630145548056991
+                name: crystalSpike_mesh_Part_2_$AssimpFbx$_RotationPivot
+                enabled: true
+                component:
+                  - !<transform>
+                    id: 2750275786668752666
+                    type: 1
+                    enabled: true
+                    position: [0.0911, 0.2996, 0.0456]
+                    rotation: [0, 0, 0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 5713927589859193446
+                    name: crystalSpike_mesh_Part_2_$AssimpFbx$_RotationPivotInverse
+                    enabled: true
+                    component:
+                      - !<transform>
+                        id: 6036212920726065134
+                        type: 1
+                        enabled: true
+                        position: [-0.0911, -0.2996, -0.0456]
+                        rotation: [0, 0, 0]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 8954472699768915733
+                        name: crystalSpike_mesh_Part_2_$AssimpFbx$_ScalingPivot
+                        enabled: true
+                        component:
+                          - !<transform>
+                            id: 8144091956954852193
+                            type: 1
+                            enabled: true
+                            position: [0.0911, 0.2996, 0.0456]
+                            rotation: [0, 0, 0]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 9106751861869969994
+                            name: crystalSpike_mesh_Part_2_$AssimpFbx$_ScalingPivotInverse
+                            enabled: true
+                            component:
+                              - !<transform>
+                                id: 11378730785732322843
+                                type: 1
+                                enabled: true
+                                position: [-0.0911, -0.2996, -0.0456]
+                                rotation: [0, 0, 0]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 8669983884300089895
+                                name: crystalSpike_mesh_Part_2
+                                enabled: true
+                                component:
+                                  - !<transform>
+                                    id: 16098455020503929382
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [0, 0, 0]
+                                    scale: [1, 1, 1]
+                                  - !<mesh_renderer>
+                                    id: 14089786240596859328
+                                    type: 2
+                                    enabled: true
+                                    mesh_id: 6229385771345559983
+                                    navigable: false
+                                    visible: true
+                                    casting_shadow: true
+                                    material_id: 15711698613413314858
+                                    tint_color: [1, 1, 1, 0.7843]
+              - id: 2972205713930160962
+                name: crystalSpike_mesh_Part_3_$AssimpFbx$_RotationPivot
+                enabled: true
+                component:
+                  - !<transform>
+                    id: 5536361427481483116
+                    type: 1
+                    enabled: true
+                    position: [0.187, 0.4844, 0.0622]
+                    rotation: [0, 0, 0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 10396111820044576705
+                    name: crystalSpike_mesh_Part_3_$AssimpFbx$_RotationPivotInverse
+                    enabled: true
+                    component:
+                      - !<transform>
+                        id: 2810714566895511904
+                        type: 1
+                        enabled: true
+                        position: [-0.187, -0.4844, -0.0622]
+                        rotation: [0, 0, 0]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 9686574910599070957
+                        name: crystalSpike_mesh_Part_3_$AssimpFbx$_ScalingPivot
+                        enabled: true
+                        component:
+                          - !<transform>
+                            id: 8643847260903426819
+                            type: 1
+                            enabled: true
+                            position: [0.187, 0.4844, 0.0622]
+                            rotation: [0, 0, 0]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 10727743312552195842
+                            name: crystalSpike_mesh_Part_3_$AssimpFbx$_ScalingPivotInverse
+                            enabled: true
+                            component:
+                              - !<transform>
+                                id: 5215347405617431889
+                                type: 1
+                                enabled: true
+                                position: [-0.187, -0.4844, -0.0622]
+                                rotation: [0, 0, 0]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 9669047747739277026
+                                name: crystalSpike_mesh_Part_3
+                                enabled: true
+                                component:
+                                  - !<transform>
+                                    id: 17523617406427070142
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [0, 0, 0]
+                                    scale: [1, 1, 1]
+                                  - !<mesh_renderer>
+                                    id: 17657036480955761616
+                                    type: 2
+                                    enabled: true
+                                    mesh_id: 903393536084662082
+                                    navigable: false
+                                    visible: true
+                                    casting_shadow: true
+                                    material_id: 15711698613413314858
+                                    tint_color: [1, 1, 1, 0.3922]
+              - id: 4508799359537975767
+                name: crystalSpike_mesh_Part_4_$AssimpFbx$_RotationPivot
+                enabled: true
+                component:
+                  - !<transform>
+                    id: 17905393112090234087
+                    type: 1
+                    enabled: true
+                    position: [0.1453, 0.2564, 0.2718]
+                    rotation: [0, 0, 0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 3187665064587507465
+                    name: crystalSpike_mesh_Part_4_$AssimpFbx$_RotationPivotInverse
+                    enabled: true
+                    component:
+                      - !<transform>
+                        id: 12887252844161827085
+                        type: 1
+                        enabled: true
+                        position: [-0.1453, -0.2564, -0.2718]
+                        rotation: [0, 0, 0]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 16007793828193920126
+                        name: crystalSpike_mesh_Part_4_$AssimpFbx$_ScalingPivot
+                        enabled: true
+                        component:
+                          - !<transform>
+                            id: 17452608037932140264
+                            type: 1
+                            enabled: true
+                            position: [0.1453, 0.2564, 0.2718]
+                            rotation: [0, 0, 0]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 15463466675403325427
+                            name: crystalSpike_mesh_Part_4_$AssimpFbx$_ScalingPivotInverse
+                            enabled: true
+                            component:
+                              - !<transform>
+                                id: 7495961582442564875
+                                type: 1
+                                enabled: true
+                                position: [-0.1453, -0.2564, -0.2718]
+                                rotation: [0, 0, 0]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 12065998767177734156
+                                name: crystalSpike_mesh_Part_4
+                                enabled: true
+                                component:
+                                  - !<transform>
+                                    id: 12769886301275086250
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [0, 0, 0]
+                                    scale: [1, 1, 1]
+                                  - !<mesh_renderer>
+                                    id: 15103046396127137764
+                                    type: 2
+                                    enabled: true
+                                    mesh_id: 17479070581851126897
+                                    navigable: false
+                                    visible: true
+                                    casting_shadow: true
+                                    material_id: 15711698613413314858
+                                    tint_color: [1, 1, 1, 0.3922]
+          - id: 15679548061212292921
+            name: Bones
+            enabled: true
+            component:
+              - !<transform>
+                id: 6713854088376023859
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [0, 0, 0]
+                scale: [1, 1, 1]
+            child:
+              - id: 783652900199464833
+                name: Root
+                enabled: true
+                component:
+                  - !<transform>
+                    id: 13464922698905757379
+                    type: 1
+                    enabled: true
+                    position: [-0.0003, 0, -0.0006]
+                    rotation: [0, 0, 0]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 18246450609272369201
+                    name: Up
+                    enabled: true
+                    component:
+                      - !<transform>
+                        id: 17161784645988819189
+                        type: 1
+                        enabled: true
+                        position: [-0.0759, 0.4947, 0.1029]
+                        rotation: [0, 0, 0]
+                        scale: [1, 1, 1]
+                  - id: 17864084363458567067
+                    name: Down
+                    enabled: true
+                    component:
+                      - !<transform>
+                        id: 9014312836058493593
+                        type: 1
+                        enabled: true
+                        position: [0.0915, 0.2996, 0.0463]
+                        rotation: [0, 0, 0]
+                        scale: [1, 1, 1]
+                  - id: 17746276958792511545
+                    name: Middle
+                    enabled: true
+                    component:
+                      - !<transform>
+                        id: 2446445465644214556
+                        type: 1
+                        enabled: true
+                        position: [0.1873, 0.4844, 0.0629]
+                        rotation: [0, 0, 0]
+                        scale: [1, 1, 1]
+                  - id: 14769515856542693351
+                    name: Down_two
+                    enabled: true
+                    component:
+                      - !<transform>
+                        id: 18203959854109676227
                         type: 1
                         enabled: true
                         position: [0.1457, 0.2564, 0.2724]
@@ -57453,7 +59069,7 @@ child:
         type: 18
         enabled: true
         obstacle_type: 0
-        obstacle_size: [3, 1, 1]
+        obstacle_size: [4.6, 5.8, 7.2]
       - !<script>
         id: 11378721403546581066
         type: 15
