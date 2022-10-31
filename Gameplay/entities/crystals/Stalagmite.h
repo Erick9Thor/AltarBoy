@@ -82,6 +82,7 @@ namespace Hachiko
 			SERIALIZE_FIELD(GameObject*, _obstacle);
 
 			ComponentObstacle* _obstacle_comp = nullptr;
+			ComponentAudioSource* _audio_source = nullptr;
 
 			bool _stalagmite_collapsed = false;
 		};

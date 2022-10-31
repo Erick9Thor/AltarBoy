@@ -1,5 +1,7 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "Stalagmite.h"
+#include "constants/Sounds.h"
+#include "components/ComponentAudioSource.h"
 
 Hachiko::Scripting::Stalagmite::Stalagmite(GameObject* game_object)
 	: Script(game_object, "Stalagmite")
@@ -11,6 +13,7 @@ void Hachiko::Scripting::Stalagmite::ActiveStalagmite()
 	game_object->SetActive(true);
 	game_object->ChangeDissolveProgress(1.0f, true);
 	_obstacle_comp = _obstacle->GetComponent<ComponentObstacle>();
+	_audio_source = game_object->GetComponent<ComponentAudioSource>();
 }
 
 void Hachiko::Scripting::Stalagmite::ActiveEffects()
@@ -18,6 +21,7 @@ void Hachiko::Scripting::Stalagmite::ActiveEffects()
 	_explosion_effect->SetActive(false);
 	_area_indicator->SetActive(true);
 	_area_indicator->GetComponent<ComponentBillboard>()->Restart();
+	_audio_source->PostEvent(Sounds::STALAGMITE_CEILING_CRACK);
 }
 
 void Hachiko::Scripting::Stalagmite::Falling(float fall_progress, const GameObject* player)
@@ -30,6 +34,7 @@ void Hachiko::Scripting::Stalagmite::Falling(float fall_progress, const GameObje
 
 	if (fall_progress == 1.f)
 	{
+		_audio_source->PostEvent(Sounds::STALAGMITE_GROUND_IMPACT);
 		_obstacle_comp->AddObstacle();
 		_explosion_effect->SetActive(false);
 		float3 player_pos = player->GetTransform()->GetGlobalPosition();
