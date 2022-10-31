@@ -20,11 +20,10 @@ Hachiko::Scripting::BossController::BossController(GameObject* game_object)
     , second_phase(false)
     , hp_bar_go(nullptr)
     , crystal_target_go(nullptr)
-    , cocoon_placeholder_go(nullptr)
+    , cocoons_parent(nullptr)
     , gauntlet_go(nullptr)
     , _explosive_crystals({})
     , _current_index_crystals(0)
-    , start_encounter_range(0.0f)
     , camera_transition_speed(2.0f)
     , encounter_start_duration(2.0f)
     , pre_combat_camera_offset(float3(0.f, 13.f, 8.f))
@@ -250,7 +249,7 @@ void Hachiko::Scripting::BossController::StateTransitionController()
 	case BossState::WAITING_ENCOUNTER:
 		break;
 	case BossState::STARTING_ENCOUNTER:
-		animation->SendTrigger("isCacoonComingOut");
+		
 		StartEncounter();
 		break;
 	case BossState::COMBAT_FORM:
@@ -371,11 +370,15 @@ void Hachiko::Scripting::BossController::StartEncounterController()
     enemy_timer += Time::DeltaTime();
     if (enemy_timer < encounter_start_duration)
     {
-        cocoon_placeholder_go->ChangeDissolveProgress(1 - enemy_timer / encounter_start_duration, true);
+        cocoons_parent->ChangeDissolveProgress(1 - enemy_timer / encounter_start_duration, true);
         return;
     }
     audio_source->PostEvent(Sounds::SET_STATE2_BOSS_FIGHT);
-    cocoon_placeholder_go->SetActive(false);
+
+    for (GameObject* crystal : cocoons_parent->children)
+    {
+        crystal->SetActive(false);
+    }
     SetHpBarActive(true);
     agent->AddToCrowd();
 
@@ -458,9 +461,14 @@ void Hachiko::Scripting::BossController::CocoonController()
             agent->RemoveFromCrowd();
             obstacle->AddObstacle();
 
-            cocoon_placeholder_go->SetActive(true);
-            cocoon_placeholder_go->ChangeDissolveProgress(1.f, true);
-            cocoon_placeholder_go->GetComponent<CrystalExplosion>()->RegenCrystal();
+
+            for (GameObject* crystal: cocoons_parent->children)
+            {
+                crystal->SetActive(true);
+                crystal->ChangeDissolveProgress(1.f, true);
+                crystal->GetComponent<CrystalExplosion>()->RegenCrystal();
+            }
+            
         }
         return;
     }
@@ -500,7 +508,10 @@ void Hachiko::Scripting::BossController::SetUpCocoon()
 
 void Hachiko::Scripting::BossController::BreakCocoon()
 {
-    cocoon_placeholder_go->GetComponent<CrystalExplosion>()->DestroyCrystal();
+    for (GameObject* crystal: cocoons_parent->children)
+    {
+        crystal->GetComponent<CrystalExplosion>()->DestroyCrystal();
+    }
     animation->SendTrigger("isCacoonComingOut");
 }
 
