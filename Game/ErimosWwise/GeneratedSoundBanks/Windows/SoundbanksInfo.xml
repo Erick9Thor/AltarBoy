@@ -210,7 +210,7 @@
 				</Event>
 			</IncludedEvents>
 		</SoundBank>
-		<SoundBank Id="1560169506" Language="SFX" Hash="1427935163">
+		<SoundBank Id="1560169506" Language="SFX" Hash="3218273179">
 			<ObjectPath>\SoundBanks\Default Work Unit\Boss</ObjectPath>
 			<ShortName>Boss</ShortName>
 			<Path>Boss.bnk</Path>
@@ -330,7 +330,7 @@
 					<IncludedMemoryFiles>
 						<File Id="929986589" Language="SFX">
 							<ShortName>249686__cylon8472__cthulhu-growl.wav</ShortName>
-							<Path>SFX\249686__cylon8472__cthulhu-growl_7B7E03DE.wem</Path>
+							<Path>SFX\249686__cylon8472__cthulhu-growl_F4F8EAAA.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>

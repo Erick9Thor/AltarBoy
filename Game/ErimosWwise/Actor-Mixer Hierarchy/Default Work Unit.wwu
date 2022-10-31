@@ -1094,11 +1094,6 @@
 									<PropertyList>
 										<Property Name="3DSpatialization" Type="int16" Value="1"/>
 										<Property Name="IsGlobalLimit" Type="int16" Value="1"/>
-										<Property Name="MakeUpGain" Type="Real64">
-											<ValueList>
-												<Value>-5</Value>
-											</ValueList>
-										</Property>
 										<Property Name="MaxReachedBehavior" Type="int16" Value="1"/>
 										<Property Name="MaxSoundPerInstance" Type="int16">
 											<ValueList>
@@ -1117,7 +1112,7 @@
 										</Property>
 										<Property Name="Volume" Type="Real64">
 											<ValueList>
-												<Value>40</Value>
+												<Value>20</Value>
 											</ValueList>
 										</Property>
 									</PropertyList>
@@ -1133,11 +1128,11 @@
 										<AudioFileSource Name="249686__cylon8472__cthulhu-growl" ID="{72E42D6B-FE51-4BAA-9D5D-E56CAA9B226A}">
 											<PropertyList>
 												<Property Name="FadeInDuration" Type="Real64" Value="0.566458689202553"/>
-												<Property Name="FadeOutDuration" Type="Real64" Value="0.404818669841722"/>
+												<Property Name="FadeOutDuration" Type="Real64" Value="0.242462454628364"/>
 												<Property Name="FadeOutShape" Type="int16" Value="0"/>
 												<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
 												<Property Name="TrimBegin" Type="Real64" Value="1.69372761913983"/>
-												<Property Name="TrimEnd" Type="Real64" Value="4.02370931291071"/>
+												<Property Name="TrimEnd" Type="Real64" Value="3.96959057450625"/>
 											</PropertyList>
 											<Language>SFX</Language>
 											<AudioFile>249686__cylon8472__cthulhu-growl.wav</AudioFile>

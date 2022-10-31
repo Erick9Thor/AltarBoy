@@ -366,7 +366,6 @@ void Hachiko::Scripting::BossController::StartEncounterController()
 {
 
     // Add any effects desired for combat start, for now it only delays while camera is transitioning
-    audio_source->PostEvent(Sounds::SET_STATE2_BOSS_FIGHT);
     audio_source->PostEvent(Sounds::BOSS_ROAR);
     
     enemy_timer += Time::DeltaTime();
@@ -375,6 +374,7 @@ void Hachiko::Scripting::BossController::StartEncounterController()
         cocoon_placeholder_go->ChangeDissolveProgress(1 - enemy_timer / encounter_start_duration, true);
         return;
     }
+    audio_source->PostEvent(Sounds::SET_STATE2_BOSS_FIGHT);
     cocoon_placeholder_go->SetActive(false);
     SetHpBarActive(true);
     agent->AddToCrowd();
