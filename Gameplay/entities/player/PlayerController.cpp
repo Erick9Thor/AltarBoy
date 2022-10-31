@@ -105,6 +105,7 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	if (_attack_indicator)
 	{
 		_attack_indicator->SetActive(false);
+		_attack_indicator->SetTimeScaleMode(TimeScaleMode::SCALED);
 	}
 	if (_ui_damage)
 	{
@@ -266,6 +267,7 @@ void Hachiko::Scripting::PlayerController::OnStart()
 	}
 
 	UpdateHealthBar();
+
 }
 
 void Hachiko::Scripting::PlayerController::OnUpdate()

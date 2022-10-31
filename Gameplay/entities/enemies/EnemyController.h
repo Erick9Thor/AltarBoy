@@ -234,14 +234,16 @@ namespace Hachiko
             ComponentAnimation* animation = nullptr;
             CombatManager* _combat_manager = nullptr;
             ComponentAudioSource* _audio_source = nullptr;
-            ComponentBillboard* _blood_trail_billboard = nullptr;
+
+        	ComponentBillboard* _blood_trail_billboard = nullptr;
             ComponentParticleSystem* _small_dust_particles = nullptr;
             ComponentParticleSystem* _big_dust_particles = nullptr;
             ComponentBillboard* _inner_indicator_billboard = nullptr;
             ComponentBillboard* _outer_indicator_billboard = nullptr;
             ComponentParticleSystem* _projectile_particles_comp = nullptr;
             ComponentParticleSystem* _explosion_particles_comp = nullptr;
-            ComponentAgent* _component_agent = nullptr;
+
+        	ComponentAgent* _component_agent = nullptr;
 
             Quat _spawn_rot;
 

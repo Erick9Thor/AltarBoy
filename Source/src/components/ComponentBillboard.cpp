@@ -350,10 +350,9 @@ void Hachiko::ComponentBillboard::Update()
     }
 
     const float unscaled = static_cast<float>(EngineTimer::delta_time);
-    /* const float delta_time = GetTimeScaleMode() == TimeScaleMode::SCALED
+    const float delta_time = GetTimeScaleMode() == TimeScaleMode::SCALED
         ? unscaled * Time::GetTimeScale()
-        : unscaled;*/
-    const float delta_time = Time::DeltaTimeScaled();
+        : unscaled;
 
     elapsed_time += delta_time;
 
