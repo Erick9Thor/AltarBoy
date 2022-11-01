@@ -15166,7 +15166,7 @@ child:
                     type: 21
                     enabled: true
                     play_on_awake: false
-                    texture_id: 13797193746573438142
+                    texture_id: 10242432137367189901
                     tiles: [2, 2]
                     flip: [false, false]
                     billboard_lifetime: 1
@@ -15204,7 +15204,7 @@ child:
                     type: 21
                     enabled: true
                     play_on_awake: false
-                    texture_id: 5977712486753396843
+                    texture_id: 2662030464565795704
                     tiles: [1, 1]
                     flip: [false, false]
                     billboard_lifetime: 1
@@ -15709,7 +15709,7 @@ child:
                     type: 21
                     enabled: true
                     play_on_awake: false
-                    texture_id: 13797193746573438142
+                    texture_id: 10242432137367189901
                     tiles: [2, 2]
                     flip: [false, false]
                     billboard_lifetime: 1
@@ -15747,7 +15747,7 @@ child:
                     type: 21
                     enabled: true
                     play_on_awake: false
-                    texture_id: 5977712486753396843
+                    texture_id: 2662030464565795704
                     tiles: [1, 1]
                     flip: [false, false]
                     billboard_lifetime: 1
@@ -16252,7 +16252,7 @@ child:
                     type: 21
                     enabled: true
                     play_on_awake: false
-                    texture_id: 13797193746573438142
+                    texture_id: 10242432137367189901
                     tiles: [2, 2]
                     flip: [false, false]
                     billboard_lifetime: 1
@@ -16290,7 +16290,7 @@ child:
                     type: 21
                     enabled: true
                     play_on_awake: false
-                    texture_id: 5977712486753396843
+                    texture_id: 2662030464565795704
                     tiles: [1, 1]
                     flip: [false, false]
                     billboard_lifetime: 1
@@ -16795,7 +16795,7 @@ child:
                     type: 21
                     enabled: true
                     play_on_awake: false
-                    texture_id: 13797193746573438142
+                    texture_id: 10242432137367189901
                     tiles: [2, 2]
                     flip: [false, false]
                     billboard_lifetime: 1
@@ -16833,7 +16833,7 @@ child:
                     type: 21
                     enabled: true
                     play_on_awake: false
-                    texture_id: 5977712486753396843
+                    texture_id: 2662030464565795704
                     tiles: [1, 1]
                     flip: [false, false]
                     billboard_lifetime: 1
@@ -17338,7 +17338,7 @@ child:
                     type: 21
                     enabled: true
                     play_on_awake: false
-                    texture_id: 13797193746573438142
+                    texture_id: 10242432137367189901
                     tiles: [2, 2]
                     flip: [false, false]
                     billboard_lifetime: 1
@@ -17376,7 +17376,7 @@ child:
                     type: 21
                     enabled: true
                     play_on_awake: false
-                    texture_id: 5977712486753396843
+                    texture_id: 2662030464565795704
                     tiles: [1, 1]
                     flip: [false, false]
                     billboard_lifetime: 1
