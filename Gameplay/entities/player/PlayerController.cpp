@@ -317,6 +317,11 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 			// Handle player the input
 			HandleInputAndStatus();
 		}
+		else
+		{
+			CancelAttack();
+			_state = PlayerState::IDLE;
+		}
 
 		// Run attack simulation
 		AttackController();
