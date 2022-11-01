@@ -178,6 +178,7 @@ namespace Hachiko
             SERIALIZE_FIELD(GameObject*, _shot_vfx);
 
             ComponentParticleSystem* _charge_particles;
+            ComponentBillboard* _charge_billboard;
             ComponentParticleSystem* _shot_particles;
         };
     } // namespace Scripting
