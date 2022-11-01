@@ -867,7 +867,7 @@ bool Hachiko::Scripting::PlayerController::IsFalling() const
 
 bool Hachiko::Scripting::PlayerController::IsPickUp() const
 {
-	return _state == PlayerState::PICK_UP;
+	return _state == PlayerState::PICK_UP && !animation->IsAnimationStopped();
 }
 
 bool Hachiko::Scripting::PlayerController::IsDying() const
