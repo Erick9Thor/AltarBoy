@@ -274,6 +274,14 @@ void Hachiko::Scripting::CrystalExplosion::ResetCrystal()
 	_current_explosion_timer = 0.f;
 	_current_regen_time = 0.f;
 
+	if (crystal_geometry)
+	{
+		crystal_geometry->SetOutlineType(
+			_explosive_crystal
+			? Outline::Type::SECONDARY
+			: Outline::Type::PRIMARY);
+	}
+
 	if (_explosion_indicator_helper)
 	{
 		_explosion_indicator_helper->SetActive(false);
@@ -313,6 +321,11 @@ void Hachiko::Scripting::CrystalExplosion::DestroyCrystal()
 		_is_destroyed = true;
 		cp_animation->SendTrigger("isExploding");
 	}
+
+	if (crystal_geometry)
+	{
+		crystal_geometry->SetOutlineType(Outline::Type::NONE);
+	}
 }
 
 void Hachiko::Scripting::CrystalExplosion::RegenCrystal()
@@ -321,5 +334,13 @@ void Hachiko::Scripting::CrystalExplosion::RegenCrystal()
 	if (cp_animation)
 	{
 		cp_animation->SendTrigger("isRegenerating");
+	}
+
+	if (crystal_geometry)
+	{
+		crystal_geometry->SetOutlineType(
+			_explosive_crystal
+			? Outline::Type::SECONDARY
+			: Outline::Type::PRIMARY);
 	}
 }
