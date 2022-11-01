@@ -92,6 +92,9 @@ namespace Hachiko
             // The worm attack is completely separated from the worm itself once its shot
             void SpitController();
 
+            bool CheckValidPath();
+            bool CheckValidPath(float3 position);
+
         private:
             struct StateBehaviour {
                 std::function<void()> Start = nullptr;
@@ -197,6 +200,7 @@ namespace Hachiko
             SERIALIZE_FIELD(float, _attack_range);
             SERIALIZE_FIELD(float, _attack_delay);
             SERIALIZE_FIELD(float, _idle_cooldown);
+            SERIALIZE_FIELD(float, _patrol_cooldown);
             SERIALIZE_FIELD(float, _spawning_time);
             SERIALIZE_FIELD(float, _chase_cooldown);
             float _chase_remaining_cooldown;
@@ -204,7 +208,7 @@ namespace Hachiko
             
             SERIALIZE_FIELD(GameObject*, _enemy_body);
             SERIALIZE_FIELD(GameObject*, _parasite);
-            SERIALIZE_FIELD(GameObject*, _blood_trail);
+            GameObject* _blood_trail = nullptr;
             SERIALIZE_FIELD(GameObject*, _small_dust);
             SERIALIZE_FIELD(GameObject*, _big_dust);
             SERIALIZE_FIELD(GameObject*, _attack_zone);
@@ -230,14 +234,16 @@ namespace Hachiko
             ComponentAnimation* animation = nullptr;
             CombatManager* _combat_manager = nullptr;
             ComponentAudioSource* _audio_source = nullptr;
-            ComponentParticleSystem* _blood_trail_particles = nullptr; 
+
+        	ComponentBillboard* _blood_trail_billboard = nullptr;
             ComponentParticleSystem* _small_dust_particles = nullptr;
             ComponentParticleSystem* _big_dust_particles = nullptr;
             ComponentBillboard* _inner_indicator_billboard = nullptr;
             ComponentBillboard* _outer_indicator_billboard = nullptr;
             ComponentParticleSystem* _projectile_particles_comp = nullptr;
             ComponentParticleSystem* _explosion_particles_comp = nullptr;
-            ComponentAgent* _component_agent = nullptr;
+
+        	ComponentAgent* _component_agent = nullptr;
 
             Quat _spawn_rot;
 
@@ -260,6 +266,7 @@ namespace Hachiko
             float _acceleration = 0.0f;
             float _speed = 0.0f;
             float _current_idle_cooldown = 0.0f;
+            float _current_patrol_cooldown = 0.0f;
             float _enraged = 0.0f;
             float _enemy_dissolve_time = 1.0f;
             float _enemy_dissolving_time_progress = 0.0f;
@@ -285,6 +292,8 @@ namespace Hachiko
             SERIALIZE_FIELD(float, damage_effect_duration);
             float damage_effect_progress = 0.0f;
 
+            bool _valid_path = false;
+            float _timer_check_path = 0.0f;
 
             EnemyType _enemy_type = EnemyType::BEETLE;
 

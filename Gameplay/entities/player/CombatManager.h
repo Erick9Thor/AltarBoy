@@ -137,6 +137,7 @@ namespace Hachiko
             // What to do when system wants to register a hit
             void HitObstacle(GameObject* obstacle, float damage);
             void HitEnemy(EnemyController* enemy, int damage, float knockback = 0, float3 knockback_dir = float3::zero, bool is_from_player = false, bool is_ranged = false);
+            void HitEnemy(BossController* enemy, int damage, float knockback = 0, float3 knockback_dir = float3::zero, bool is_from_player = false, bool is_ranged = false);
             void HitPlayer(int damage, float knockback = 0, float3 knockback_dir = float3::zero);
 
             // Bullet specific management operations
@@ -149,6 +150,7 @@ namespace Hachiko
 
             // Processes hit and returns hit distance to check what to damage
             EnemyController* FindBulletClosestEnemyHit(GameObject* bullet, float bullet_size, LineSegment& trajectory, float& closest_hit);
+            BossController* FindBulletClosestBoss(GameObject* bullet, float bullet_size, LineSegment& trajectory, float& closest_hit);
             GameObject* FindBulletClosestObstacleHit(GameObject* bullet, float bullet_size, LineSegment& trajectory, float& closest_hit);
 
             // Enemy management

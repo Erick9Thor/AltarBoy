@@ -4,8 +4,8 @@
 #include <vector>
 #include "Batching/TextureBatch.h"
 
-#define MAX_POINT_LIGHTS 1200
-#define MAX_SPOT_LIGHTS 4
+#define MAX_POINT_LIGHTS 500
+#define MAX_SPOT_LIGHTS 100
 
 namespace Hachiko
 {

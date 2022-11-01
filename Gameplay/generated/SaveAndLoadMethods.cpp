@@ -919,6 +919,8 @@ void Hachiko::Scripting::EnemyController::OnSave(YAML::Node& node) const
 
 	node["'_idle_cooldown@float'"] = _idle_cooldown;
 
+	node["'_patrol_cooldown@float'"] = _patrol_cooldown;
+
 	node["'_spawning_time@float'"] = _spawning_time;
 
 	node["'_chase_cooldown@float'"] = _chase_cooldown;
@@ -1060,6 +1062,11 @@ void Hachiko::Scripting::EnemyController::OnLoad()
 	if (load_node["'_idle_cooldown@float'"].IsDefined())
 	{
 		_idle_cooldown = load_node["'_idle_cooldown@float'"].as<float>();
+	}
+
+	if (load_node["'_patrol_cooldown@float'"].IsDefined())
+	{
+		_patrol_cooldown = load_node["'_patrol_cooldown@float'"].as<float>();
 	}
 
 	if (load_node["'_spawning_time@float'"].IsDefined())
@@ -2557,6 +2564,15 @@ void Hachiko::Scripting::DoorController::OnLoad()
 void Hachiko::Scripting::DynamicCamera::OnSave(YAML::Node& node) const
 {
 	node["'_speed@float'"] = _speed;
+
+	if (_enable_after != nullptr)
+	{
+		node["'_enable_after@GameObject*'"] = _enable_after->GetID();
+	}
+	else
+	{
+		node["'_enable_after@GameObject*'"] = 0;
+	}
 }
 
 void Hachiko::Scripting::DynamicCamera::OnLoad()
@@ -2564,6 +2580,11 @@ void Hachiko::Scripting::DynamicCamera::OnLoad()
 	if (load_node["'_speed@float'"].IsDefined())
 	{
 		_speed = load_node["'_speed@float'"].as<float>();
+	}
+
+	if (load_node["'_enable_after@GameObject*'"].IsDefined())
+	{
+		_enable_after = SceneManagement::FindInCurrentScene(load_node["'_enable_after@GameObject*'"].as<unsigned long long>());
 	}
 }
 
@@ -2620,6 +2641,15 @@ void Hachiko::Scripting::GauntletManager::OnSave(YAML::Node& node) const
 	else
 	{
 		node["'_door_controller_2@GameObject*'"] = 0;
+	}
+
+	if (_closing_door != nullptr)
+	{
+		node["'_closing_door@GameObject*'"] = _closing_door->GetID();
+	}
+	else
+	{
+		node["'_closing_door@GameObject*'"] = 0;
 	}
 
 	if (_pack_1 != nullptr)
@@ -2702,6 +2732,11 @@ void Hachiko::Scripting::GauntletManager::OnLoad()
 	if (load_node["'_door_controller_2@GameObject*'"].IsDefined())
 	{
 		_door_controller_2 = SceneManagement::FindInCurrentScene(load_node["'_door_controller_2@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_closing_door@GameObject*'"].IsDefined())
+	{
+		_closing_door = SceneManagement::FindInCurrentScene(load_node["'_closing_door@GameObject*'"].as<unsigned long long>());
 	}
 
 	if (load_node["'_pack_1@GameObject*'"].IsDefined())
@@ -3067,6 +3102,60 @@ void Hachiko::Scripting::TimeManager::OnLoad()
 
 void Hachiko::Scripting::Tutorial::OnSave(YAML::Node& node) const
 {
+	if (_tutorial_keyboard_movement != nullptr)
+	{
+		node["'_tutorial_keyboard_movement@GameObject*'"] = _tutorial_keyboard_movement->GetID();
+	}
+	else
+	{
+		node["'_tutorial_keyboard_movement@GameObject*'"] = 0;
+	}
+
+	if (_tutorial_controller_movement != nullptr)
+	{
+		node["'_tutorial_controller_movement@GameObject*'"] = _tutorial_controller_movement->GetID();
+	}
+	else
+	{
+		node["'_tutorial_controller_movement@GameObject*'"] = 0;
+	}
+
+	if (_tutorial_keyboard_attacks != nullptr)
+	{
+		node["'_tutorial_keyboard_attacks@GameObject*'"] = _tutorial_keyboard_attacks->GetID();
+	}
+	else
+	{
+		node["'_tutorial_keyboard_attacks@GameObject*'"] = 0;
+	}
+
+	if (_tutorial_controller_attacks != nullptr)
+	{
+		node["'_tutorial_controller_attacks@GameObject*'"] = _tutorial_controller_attacks->GetID();
+	}
+	else
+	{
+		node["'_tutorial_controller_attacks@GameObject*'"] = 0;
+	}
+
+	if (_tutorial_keyboard_pickup != nullptr)
+	{
+		node["'_tutorial_keyboard_pickup@GameObject*'"] = _tutorial_keyboard_pickup->GetID();
+	}
+	else
+	{
+		node["'_tutorial_keyboard_pickup@GameObject*'"] = 0;
+	}
+
+	if (_tutorial_controller_pickup != nullptr)
+	{
+		node["'_tutorial_controller_pickup@GameObject*'"] = _tutorial_controller_pickup->GetID();
+	}
+	else
+	{
+		node["'_tutorial_controller_pickup@GameObject*'"] = 0;
+	}
+
 	if (_first_enemy != nullptr)
 	{
 		node["'_first_enemy@GameObject*'"] = _first_enemy->GetID();
@@ -3075,13 +3164,50 @@ void Hachiko::Scripting::Tutorial::OnSave(YAML::Node& node) const
 	{
 		node["'_first_enemy@GameObject*'"] = 0;
 	}
+
+	node["'_tutorials_screen_shown@int'"] = _tutorials_screen_shown;
 }
 
 void Hachiko::Scripting::Tutorial::OnLoad()
 {
+	if (load_node["'_tutorial_keyboard_movement@GameObject*'"].IsDefined())
+	{
+		_tutorial_keyboard_movement = SceneManagement::FindInCurrentScene(load_node["'_tutorial_keyboard_movement@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_tutorial_controller_movement@GameObject*'"].IsDefined())
+	{
+		_tutorial_controller_movement = SceneManagement::FindInCurrentScene(load_node["'_tutorial_controller_movement@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_tutorial_keyboard_attacks@GameObject*'"].IsDefined())
+	{
+		_tutorial_keyboard_attacks = SceneManagement::FindInCurrentScene(load_node["'_tutorial_keyboard_attacks@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_tutorial_controller_attacks@GameObject*'"].IsDefined())
+	{
+		_tutorial_controller_attacks = SceneManagement::FindInCurrentScene(load_node["'_tutorial_controller_attacks@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_tutorial_keyboard_pickup@GameObject*'"].IsDefined())
+	{
+		_tutorial_keyboard_pickup = SceneManagement::FindInCurrentScene(load_node["'_tutorial_keyboard_pickup@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_tutorial_controller_pickup@GameObject*'"].IsDefined())
+	{
+		_tutorial_controller_pickup = SceneManagement::FindInCurrentScene(load_node["'_tutorial_controller_pickup@GameObject*'"].as<unsigned long long>());
+	}
+
 	if (load_node["'_first_enemy@GameObject*'"].IsDefined())
 	{
 		_first_enemy = SceneManagement::FindInCurrentScene(load_node["'_first_enemy@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_tutorials_screen_shown@int'"].IsDefined())
+	{
+		_tutorials_screen_shown = load_node["'_tutorials_screen_shown@int'"].as<int>();
 	}
 }
 

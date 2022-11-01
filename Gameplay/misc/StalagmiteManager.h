@@ -30,7 +30,7 @@ namespace Hachiko
 
 			bool CheckPreviousStalagmite(int idx);
 
-			void DestroyAllStalagmites();
+			void DestroyAllStalagmites(bool force = false);
 
 			bool AllStalactitesCollapsed();
 
@@ -41,7 +41,7 @@ namespace Hachiko
 
 		private:
 
-			float falling_elapsed = 0.0f;
+			float falling_elapsed = -1.f;
 			float cooldown_elapsed = 0.0f;
 			float _falling_time = 0.5f;
 			float _total_dissolving_time = 2.5f;
@@ -60,7 +60,7 @@ namespace Hachiko
 			SERIALIZE_FIELD(float, _falling_cooldown);
 
 
-			float _stalactites_life = 25.0f;
+			float _stalactites_life = 35.0f;
 			float _stalactites_timer = 0.0f;
 
 			// STALAGMITE
