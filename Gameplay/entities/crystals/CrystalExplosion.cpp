@@ -45,6 +45,12 @@ void Hachiko::Scripting::CrystalExplosion::OnAwake()
 
 	_initial_transform = game_object->GetTransform()->GetGlobalMatrix();
 	crystal_geometry = game_object->FindDescendantWithName("Geo");
+
+	GameObject* boss_spawn_go = game_object->FindDescendantWithName("SpawnEffect");
+	if (boss_spawn_go)
+	{
+		spawn_billboard = boss_spawn_go->GetComponent<ComponentBillboard>();
+	}
 }
 
 void Hachiko::Scripting::CrystalExplosion::OnStart()
@@ -287,6 +293,14 @@ void Hachiko::Scripting::CrystalExplosion::ResetCrystal()
 		_explosion_indicator_helper->SetActive(false);
 	}
 
+
+	
+	if (spawn_billboard)
+	{
+		spawn_billboard->Stop();
+		spawn_billboard->Disable();
+	}
+
 	if (obstacle)
 	{
 		obstacle->Enable();
@@ -343,4 +357,14 @@ void Hachiko::Scripting::CrystalExplosion::RegenCrystal()
 			? Outline::Type::SECONDARY
 			: Outline::Type::PRIMARY);
 	}
+}
+
+void Hachiko::Scripting::CrystalExplosion::SpawnEffect()
+{
+	if(spawn_billboard)
+	{
+		spawn_billboard->Enable();
+		spawn_billboard->Start();
+	}
+	_audio_source->PostEvent(Sounds::PLAY_LASER_HIT);
 }

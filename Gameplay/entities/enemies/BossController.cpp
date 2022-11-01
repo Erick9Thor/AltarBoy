@@ -730,7 +730,7 @@ void Hachiko::Scripting::BossController::SpawnCrystals()
 
     _current_index_crystals = _current_index_crystals % _explosive_crystals.size();
 
-    const GameObject* current_crystal_to_spawn =
+    GameObject* current_crystal_to_spawn =
         _explosive_crystals[_current_index_crystals];
 
     if (current_crystal_to_spawn == nullptr)
@@ -749,6 +749,7 @@ void Hachiko::Scripting::BossController::SpawnCrystals()
 
     current_crystal_to_spawn->FindDescendantWithName("ExplosionIndicatorHelper")->SetActive(false);
     current_crystal_to_spawn->GetTransform()->SetGlobalPosition(emitter_position);
+    current_crystal_to_spawn->GetComponent<CrystalExplosion>()->SpawnEffect();
 
     _current_index_crystals = (_current_index_crystals + 1) % _explosive_crystals.size();
 }
