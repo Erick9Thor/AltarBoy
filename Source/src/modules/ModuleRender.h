@@ -217,9 +217,11 @@ namespace Hachiko
 
         StandaloneGLTexture* outline_texture;
         StandaloneGLTexture* outline_texture_temp;
+        // TODO: Save these maybe? Right now these values are used and can be
+        // tweaked through editor, but the tweaked values are not saved.
         BlurConfig outline_blur_config = {
-            0.43f,
-            1.93f,
+            0.65f,
+            1.05f,
             BlurPixelSize::Type::Gaussian5x5};
         bool draw_outlines = true;
 
