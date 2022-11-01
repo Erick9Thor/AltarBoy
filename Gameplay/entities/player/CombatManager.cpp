@@ -47,6 +47,9 @@ void Hachiko::Scripting::CombatManager::OnAwake()
 	_charge_particles = _charge_vfx->GetComponent<ComponentParticleSystem>();
 	_shot_particles = _shot_vfx->GetComponent<ComponentParticleSystem>();
 
+
+	_charge_particles->Stop();
+
 	if (_player)
 	{
 		_player_controller = _player->GetComponent<PlayerController>();
@@ -231,10 +234,6 @@ void Hachiko::Scripting::CombatManager::RunBulletSimulation()
 			continue;
 		}
 
-		if (stats.current_charge >= stats.charge_time)
-		{
-			_charge_particles->Stop();
-		}
 
 		// Just update th ui once
 		if (stats.update_ui)
@@ -326,16 +325,17 @@ bool Hachiko::Scripting::CombatManager::CheckBulletCollisions(unsigned bullet_id
 
 void Hachiko::Scripting::CombatManager::ActivateBullet(unsigned bullet_idx)
 {
+	_charge_particles->Restart();
 	_bullet_stats[bullet_idx].alive = true;
 	_bullet_stats[bullet_idx].current_charge = 0.f;
 	_bullet_stats[bullet_idx].elapsed_lifetime = 0.f;
-
 	_bullets[bullet_idx]->GetTransform()->SetGlobalScale(float3(_bullet_stats[bullet_idx].size));
 	//_bullets[bullet_idx]->SetActive(true);
 }
 
 void Hachiko::Scripting::CombatManager::DeactivateBullet(unsigned bullet_idx)
 {
+	_charge_particles->Stop();
 	_bullet_stats[bullet_idx].alive = false;
 	_bullets[bullet_idx]->SetActive(false);
 }
@@ -517,10 +517,7 @@ void Hachiko::Scripting::CombatManager::SerializeEnemyPacks()
 
 int Hachiko::Scripting::CombatManager::ChargeBullet(ComponentTransform* emitter_transform, BulletStats new_stats)
 {
-	_charge_particles->Play();
-	_charge_particles->Restart();
-
-	// We use a pointer to represent when there is no bullet shoot
+		// We use a pointer to represent when there is no bullet shoot
 	for (unsigned i = 0; i < _bullets.size(); i++)
 	{
 		BulletStats& stats = _bullet_stats[i];
@@ -544,7 +541,7 @@ int Hachiko::Scripting::CombatManager::ChargeBullet(ComponentTransform* emitter_
 bool Hachiko::Scripting::CombatManager::ShootBullet(unsigned bullet_index)
 {
 	BulletStats& stats = _bullet_stats[bullet_index];
-
+	_charge_particles->Stop();
 	if (stats.current_charge >= stats.charge_time)
 	{
 		stats.shot = true;
@@ -559,7 +556,6 @@ bool Hachiko::Scripting::CombatManager::ShootBullet(unsigned bullet_index)
 
 void Hachiko::Scripting::CombatManager::StopBullet(unsigned bullet_index)
 {
-	_charge_particles->Stop();
 	DeactivateBullet(bullet_index);
 }
 
