@@ -99,7 +99,7 @@ int Hachiko::Scripting::CombatManager::PlayerRectangleAttack(const float4x4& ori
 	int hit = 0;
 
 	hit += ProcessAgentsOBB(hitbox, attack_stats, origin.Col3(3), true);
-	hit += ProcessBossOBB(hitbox, attack_stats);
+	hit += ProcessBossOBB(hitbox, attack_stats, true);
 
 	// Take the values after enemies and boss, not obstacles such as crystals:
 	hit_enemies = hit > 0;
@@ -937,7 +937,7 @@ int Hachiko::Scripting::CombatManager::ProcessPlayerCircle(const float3& attack_
 	return 0;
 }
 
-int Hachiko::Scripting::CombatManager::ProcessBossOBB(const OBB& attack_box, const AttackStats& attack_stats)
+int Hachiko::Scripting::CombatManager::ProcessBossOBB(const OBB& attack_box, const AttackStats& attack_stats, bool is_from_player)
 {
 	if (!_boss_controller || !_boss_controller->IsAlive())
 	{
@@ -946,7 +946,7 @@ int Hachiko::Scripting::CombatManager::ProcessBossOBB(const OBB& attack_box, con
 
 	if (OBBHitsAgent(_boss, attack_box))
 	{
-		_boss_controller->RegisterHit(attack_stats.damage);
+		_boss_controller->RegisterHit(attack_stats.damage, is_from_player);
 		return 1;
 	}
 	
@@ -1115,7 +1115,7 @@ void Hachiko::Scripting::CombatManager::HitEnemy(EnemyController* enemy, int dam
 
 void Hachiko::Scripting::CombatManager::HitEnemy(BossController* enemy, int damage, float knockback, float3 knockback_dir, bool is_from_player, bool is_ranged)
 {
-	enemy->RegisterHit(damage * 2); // Damage by default is 1, Boss needs an equivalent damage cause he has more life than basic enemies
+	enemy->RegisterHit(damage * 2, is_from_player, is_ranged); // Damage by default is 1, Boss needs an equivalent damage cause he has more life than basic enemies
 }
 
 void Hachiko::Scripting::CombatManager::HitPlayer(int damage, float knockback, float3 knockback_dir)

@@ -17493,6 +17493,9 @@ child:
             position: [-8.373, 2.213, 4.24]
             rotation: [0, 0, 0]
             scale: [1, 1, 1]
+          - id: 1975128765887071499
+            type: 20
+            enabled: true
           - !<script>
             id: 16395168194645461523
             type: 15
@@ -17502,9 +17505,6 @@ child:
             "'_area_indicator@GameObject*'": 9413623746064240291
             "'GEO@GameObject*'": 1673224758276880430
             "'_obstacle@GameObject*'": 9253323707638924896
-          - id: 1975128765887071499
-            type: 20
-            enabled: true
         child:
           - id: 1673224758276880430
             name: GEO
@@ -17667,6 +17667,9 @@ child:
             position: [-8.373, 2.213, 4.24]
             rotation: [0, 0, 0]
             scale: [1, 1, 1]
+          - id: 12829970224503393798
+            type: 20
+            enabled: true
           - !<script>
             id: 1641956595847369664
             type: 15
@@ -17676,9 +17679,6 @@ child:
             "'_area_indicator@GameObject*'": 14186773155590732109
             "'GEO@GameObject*'": 5423312685184506696
             "'_obstacle@GameObject*'": 11030275890626146147
-          - id: 12829970224503393798
-            type: 20
-            enabled: true
         child:
           - id: 5423312685184506696
             name: GEO
@@ -17841,6 +17841,9 @@ child:
             position: [-8.373, 2.213, 4.24]
             rotation: [0, 0, 0]
             scale: [1, 1, 1]
+          - id: 4768424840200931796
+            type: 20
+            enabled: true
           - !<script>
             id: 12874964621986860119
             type: 15
@@ -17850,9 +17853,6 @@ child:
             "'_area_indicator@GameObject*'": 13821001488949587182
             "'GEO@GameObject*'": 13187593741148471239
             "'_obstacle@GameObject*'": 2079748087180028629
-          - id: 4768424840200931796
-            type: 20
-            enabled: true
         child:
           - id: 13187593741148471239
             name: GEO
@@ -18015,6 +18015,9 @@ child:
             position: [-8.373, 2.213, 4.24]
             rotation: [0, 0, 0]
             scale: [1, 1, 1]
+          - id: 6061138073632089830
+            type: 20
+            enabled: true
           - !<script>
             id: 10493218968405659322
             type: 15
@@ -18024,9 +18027,6 @@ child:
             "'_area_indicator@GameObject*'": 11099239297292374363
             "'GEO@GameObject*'": 14496861931000630961
             "'_obstacle@GameObject*'": 14004950563005085772
-          - id: 6061138073632089830
-            type: 20
-            enabled: true
         child:
           - id: 14496861931000630961
             name: GEO
@@ -52968,27 +52968,28 @@ child:
               shape: true
               lights: false
               renderer: true
-              texture: false
+              texture: true
             parameters:
-              duration: 0.3
+              duration: 1
               loop: true
-              life: [true, true, 0, [0.3, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-              speed: [true, true, 0, [-30, 5], 0.5, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-              size: [true, true, 0, [0.1, 0.5], 0.25, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+              life: [true, true, 0, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+              speed: [true, true, 0, [-5, 5], 0.5, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+              size: [true, true, 0, [1.3, 0.5], 0.25, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
               rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
               delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
               properties: [1, 0, 0, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
             emission:
-              rate: [true, true, 0, [71.4, 10], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+              rate: [true, true, 0, [55.5, 10], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
               rate_burst: [true, true, 0, [22.4, 10], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
               burst: true
             emitter_shape:
               type: 2
-              properties: [360, 0, [0, 0, 0], 0.5, 0, [0, 0, 0], [10, 10, 10], 0.5]
+              properties: [360, 0, [0, 0, 0], 0.5, 0, [0, 0, 0], [3, 3, 3], 0.5]
             texture:
-              tiles: [1, 1]
+              texture_id: 3291545039621372658
+              tiles: [2, 1]
               flip: [false, false]
-              total_tiles: 1
+              total_tiles: 2
             modifiers:
               velocity:
                 active: false
@@ -53007,18 +53008,18 @@ child:
                 y_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 z_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
               animation:
-                active: false
-                animation_speed: 0
+                active: true
+                animation_speed: 0.1
                 blend_factor: 0
-                fit_to_lifetime: false
+                fit_to_lifetime: true
               noise:
                 active: true
                 separate_axes: false
                 strength:
-                  x: [true, true, 0, [11.4, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  x: [true, true, 0, [4.5, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                   y: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                   z: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                position: [true, true, 0, [18.3, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                position: [true, true, 0, [5, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 rotation: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 scale: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
           - !<billboard>
@@ -60575,6 +60576,9 @@ child:
         enabled: true
         obstacle_type: 0
         obstacle_size: [4.6, 5.8, 7.2]
+      - id: 2077916399870569819
+        type: 20
+        enabled: true
       - !<script>
         id: 11378721403546581066
         type: 15
@@ -60632,9 +60636,6 @@ child:
         "'_laser_wall_duration@float'": 6
         "'_laser_jump_height@float'": 25
         "'_melee_trail_right@GameObject*'": 1968852265813518482
-      - id: 2077916399870569819
-        type: 20
-        enabled: true
     child:
       - id: 5774307797641624833
         name: Bones2
@@ -62472,6 +62473,82 @@ child:
                     blend_factor: 0.1
                     projection: true
                     randomize_tiles: false
+      - id: 14534016685163276922
+        name: BloodTrail
+        enabled: true
+        component:
+          - !<transform>
+            id: 15255274558406599135
+            type: 1
+            enabled: true
+            position: [-0.0913, 4.483, 0.2697]
+            rotation: [0, 0, 0]
+            scale: [1, 1, 1]
+          - !<billboard>
+            id: 12412866436608855332
+            type: 21
+            enabled: true
+            play_on_awake: false
+            texture_id: 7671775771891381600
+            tiles: [4, 1]
+            flip: [false, false]
+            billboard_lifetime: 0.3
+            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 0.073
+            total_tiles: 4
+            animation_loop: false
+            color_cycles: 1
+            color_gradient: [[0, 0, 0, 0, 0], [1, 1, 1, 0, 1]]
+            animation_section: true
+            color_section: false
+            size_section: false
+            size_over_time: [true, false, 0, [30, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 0
+            projection: true
+            randomize_tiles: false
+      - id: 1219186580833597395
+        name: BloodTrail2
+        enabled: true
+        component:
+          - !<transform>
+            id: 7874585405962824026
+            type: 1
+            enabled: true
+            position: [-0.0654, 4.683, 0.27]
+            rotation: [0, 0, 0]
+            scale: [1, 1, 1]
+          - !<billboard>
+            id: 9291060827996077036
+            type: 21
+            enabled: true
+            play_on_awake: false
+            texture_id: 7671775771891381600
+            tiles: [4, 1]
+            flip: [true, true]
+            billboard_lifetime: 0.3
+            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 0.073
+            total_tiles: 4
+            animation_loop: false
+            color_cycles: 1
+            color_gradient: [[0, 0, 0, 0, 0], [1, 1, 1, 0, 1]]
+            animation_section: true
+            color_section: false
+            size_section: false
+            size_over_time: [true, false, 0, [30, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [2, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 0
+            projection: true
+            randomize_tiles: false
   - id: 8486348767385368021
     name: Heal_VFX
     enabled: true
