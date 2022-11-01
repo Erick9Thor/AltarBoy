@@ -45,10 +45,12 @@ void Hachiko::Scripting::CombatManager::OnAwake()
 	_enemy_packs_container = Scenes::GetEnemiesContainer();
 
 	_charge_particles = _charge_vfx->GetComponent<ComponentParticleSystem>();
+	_charge_billboard = _charge_vfx->GetComponent<ComponentBillboard>();
 	_shot_particles = _shot_vfx->GetComponent<ComponentParticleSystem>();
 
 
 	_charge_particles->Stop();
+	_charge_billboard->Stop();
 
 	if (_player)
 	{
@@ -326,6 +328,7 @@ bool Hachiko::Scripting::CombatManager::CheckBulletCollisions(unsigned bullet_id
 void Hachiko::Scripting::CombatManager::ActivateBullet(unsigned bullet_idx)
 {
 	_charge_particles->Restart();
+	_charge_billboard->Restart();
 	_bullet_stats[bullet_idx].alive = true;
 	_bullet_stats[bullet_idx].current_charge = 0.f;
 	_bullet_stats[bullet_idx].elapsed_lifetime = 0.f;
@@ -336,6 +339,7 @@ void Hachiko::Scripting::CombatManager::ActivateBullet(unsigned bullet_idx)
 void Hachiko::Scripting::CombatManager::DeactivateBullet(unsigned bullet_idx)
 {
 	_charge_particles->Stop();
+	_charge_billboard->Stop();
 	_bullet_stats[bullet_idx].alive = false;
 	_bullets[bullet_idx]->SetActive(false);
 }
@@ -542,6 +546,7 @@ bool Hachiko::Scripting::CombatManager::ShootBullet(unsigned bullet_index)
 {
 	BulletStats& stats = _bullet_stats[bullet_index];
 	_charge_particles->Stop();
+	_charge_billboard->Stop();
 	if (stats.current_charge >= stats.charge_time)
 	{
 		stats.shot = true;

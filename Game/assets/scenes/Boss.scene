@@ -14376,7 +14376,7 @@ child:
         type: 15
         enabled: true
         class_name: CombatManager
-        "'_charge_vfx@GameObject*'": 12475935004774220811
+        "'_charge_vfx@GameObject*'": 2248347991038953828
         "'_shot_vfx@GameObject*'": 12669409742756114836
       - !<script>
         id: 388435313101566773
@@ -51357,80 +51357,6 @@ child:
                 position: [true, true, 0, [24.9, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 rotation: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
                 scale: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-      - id: 12475935004774220811
-        name: ChargingParticles
-        enabled: true
-        component:
-          - !<transform>
-            id: 12617039586674761248
-            type: 1
-            enabled: true
-            position: [0.0042, 3.193, 2.772]
-            rotation: [-90, -0, -180]
-            scale: [2, 2, 2]
-          - !<particle_system>
-            id: 5012644533516502143
-            type: 22
-            enabled: true
-            sections:
-              parameters: true
-              emission: true
-              shape: true
-              lights: false
-              renderer: true
-              texture: false
-            parameters:
-              duration: 0.3
-              loop: true
-              life: [true, true, 0, [0.3, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-              speed: [true, true, 0, [-30, 5], 0.5, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-              size: [true, true, 0, [0.1, 0.5], 0.25, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-              rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-              delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-              properties: [1, 0, 0, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            emission:
-              rate: [true, true, 0, [71.4, 10], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-              rate_burst: [true, true, 0, [22.4, 10], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-              burst: true
-            emitter_shape:
-              type: 2
-              properties: [360, 0, [0, 0, 0], 0.5, 0, [0, 0, 0], [10, 10, 10], 0.5]
-            texture:
-              tiles: [1, 1]
-              flip: [false, false]
-              total_tiles: 1
-            modifiers:
-              velocity:
-                active: false
-                speed: [true, true, 0, [-40, 0], 0.001, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-              size:
-                active: false
-                size: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-              color:
-                active: true
-                color_gradient: [[0.5434, 0, 1, 0, 0.0303], [0.2212, 0.9569, 0, 0, 0.8551], [0, 0, 0, 0, 1]]
-                color_cycles: 1
-              force:
-                active: false
-                rotation: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                x_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                y_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                z_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-              animation:
-                active: false
-                animation_speed: 0
-                blend_factor: 0
-                fit_to_lifetime: false
-              noise:
-                active: true
-                separate_axes: false
-                strength:
-                  x: [true, true, 0, [11.4, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                  y: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                  z: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                position: [true, true, 0, [18.3, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                rotation: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                scale: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
       - id: 629950022488313243
         name: Damage_VFX
         enabled: true
@@ -53021,6 +52947,107 @@ child:
                 blend_factor: 0
                 projection: true
                 randomize_tiles: false
+      - id: 2248347991038953828
+        name: ChargingParticles
+        enabled: true
+        component:
+          - !<transform>
+            id: 5274755948544528623
+            type: 1
+            enabled: true
+            position: [-0.65, 3.19, 4.78]
+            rotation: [-90, -0.0003, -100.2]
+            scale: [2, 2, 2]
+          - !<particle_system>
+            id: 9659174892129642220
+            type: 22
+            enabled: true
+            sections:
+              parameters: true
+              emission: true
+              shape: true
+              lights: false
+              renderer: true
+              texture: false
+            parameters:
+              duration: 0.3
+              loop: true
+              life: [true, true, 0, [0.3, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+              speed: [true, true, 0, [-30, 5], 0.5, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+              size: [true, true, 0, [0.1, 0.5], 0.25, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+              rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+              delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+              properties: [1, 0, 0, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            emission:
+              rate: [true, true, 0, [71.4, 10], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+              rate_burst: [true, true, 0, [22.4, 10], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+              burst: true
+            emitter_shape:
+              type: 2
+              properties: [360, 0, [0, 0, 0], 0.5, 0, [0, 0, 0], [10, 10, 10], 0.5]
+            texture:
+              tiles: [1, 1]
+              flip: [false, false]
+              total_tiles: 1
+            modifiers:
+              velocity:
+                active: false
+                speed: [true, true, 0, [-40, 0], 0.001, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+              size:
+                active: false
+                size: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+              color:
+                active: true
+                color_gradient: [[0.5434, 0, 1, 0, 0.0303], [0.2212, 0.9569, 0, 0, 0.8551], [0, 0, 0, 0, 1]]
+                color_cycles: 1
+              force:
+                active: false
+                rotation: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                x_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                y_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                z_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+              animation:
+                active: false
+                animation_speed: 0
+                blend_factor: 0
+                fit_to_lifetime: false
+              noise:
+                active: true
+                separate_axes: false
+                strength:
+                  x: [true, true, 0, [11.4, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  y: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  z: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                position: [true, true, 0, [18.3, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                scale: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+          - !<billboard>
+            id: 2027583930993689468
+            type: 21
+            enabled: true
+            play_on_awake: false
+            texture_id: 10440603901550816228
+            tiles: [1, 1]
+            flip: [false, false]
+            billboard_lifetime: 600
+            properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 0
+            total_tiles: 1
+            animation_loop: true
+            color_cycles: 1
+            color_gradient: [[0.0759, 0.9538, 0.0221, 0, 0.9895]]
+            animation_section: false
+            color_section: true
+            size_section: false
+            size_over_time: [true, false, 0, [5, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: true
+            rotation_over_time: [true, false, 0, [300, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0.3, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [1, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 0
+            projection: true
+            randomize_tiles: false
   - id: 5950535678204865675
     name: CombatVisualEffectsPool
     enabled: true
